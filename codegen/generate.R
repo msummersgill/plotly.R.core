@@ -28,6 +28,9 @@ perform_codegen <- function(outdir = ".", scope = CODEGEN_SCOPE) {
   save(.validators, .named_colors, .named_colorscales,
        file = file.path(outdir, "R", "sysdata.rda"), compress = "xz")
 
+  .named_colorscales <<- .named_colorscales # used by type_doc()
+  write_datatypes(nodes, validators, schema, outdir)
+
   message(sprintf(
     "Generated %d validators (%d compound, %d compound array) for traces: %s",
     length(validators),

@@ -72,7 +72,9 @@ info_array_items <- function(items) {
 build_validator_params <- function(nodes) {
   nodes$superclass <- base_validator(nodes)
   # Child property names per compound key, for unknown-property errors.
-  children <- split(nodes$name, nodes$parent)
+  # (Compound-array element nodes are reached through their array property.)
+  is_prop <- nodes$kind != "compound_element"
+  children <- split(nodes$name[is_prop], nodes$parent[is_prop])
 
   out <- vector("list", nrow(nodes))
   names(out) <- nodes$key

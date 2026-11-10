@@ -15,6 +15,14 @@ expect_error <- function(expr, pattern) {
   invisible(TRUE)
 }
 json <- function(x) as.character(to_JSON(x))
+# Drop graph-object classes (recursively) to compare with plain lists
+plain <- function(x) {
+  if (is.list(x)) {
+    x <- unclass(x)
+    x[] <- lapply(x, plain)
+  }
+  x
+}
 
 # Data arrays ----------------------------------------------------------------
 stopifnot(
@@ -106,16 +114,16 @@ expect_error(vc(c(0, 2), "layout.xaxis.domain"), "interval \\[0, 1\\]")
 
 # Compound objects, titles, compound arrays ---------------------------------------
 m <- vc(list(size = 10, color = "red", line = list(width = 2)), "scatter.marker")
-stopifnot(identical(m, list(size = 10, color = "red", line = list(width = 2))))
-stopifnot(identical(vc(list(), "scatter.marker"), structure(list(), names = character())))
+stopifnot(identical(plain(m), list(size = 10, color = "red", line = list(width = 2))))
+stopifnot(identical(plain(vc(list(), "scatter.marker")), structure(list(), names = character())))
 expect_error(vc(list(sise = 10), "scatter.marker"), "Did you mean \"size\"")
 expect_error(vc(list(10), "scatter.marker"), "Invalid value")
 expect_error(vc(list(line = list(width = -1)), "scatter.marker"), "'width' property of scatter.marker.line")
 
 stopifnot(
-  identical(vc("My plot", "layout.title"), list(text = "My plot")),
-  identical(vc(list(text = "A", x = 0.5), "layout.title"), list(text = "A", x = 0.5)),
-  identical(vc(list(list(bounds = c("sat", "mon"))), "layout.xaxis.rangebreaks"),
+  identical(plain(vc("My plot", "layout.title")), list(text = "My plot")),
+  identical(plain(vc(list(text = "A", x = 0.5), "layout.title")), list(text = "A", x = 0.5)),
+  identical(plain(vc(list(list(bounds = c("sat", "mon"))), "layout.xaxis.rangebreaks")),
             list(list(bounds = list("sat", "mon"))))
 )
 expect_error(vc(list(bounds = c("sat", "mon")), "layout.xaxis.rangebreaks"), "list of objects")
@@ -129,8 +137,8 @@ expect_error(validate_trace(list(x = 1, colour = "red")), "Invalid property spec
 lay <- validate_layout(list(title = "T", xaxis = list(title = "X", range = c(0, 5)),
                             yaxis2 = list(overlaying = "y"), showlegend = FALSE))
 stopifnot(
-  identical(lay$title, list(text = "T")),
-  identical(lay$xaxis$title, list(text = "X")),
+  identical(plain(lay$title), list(text = "T")),
+  identical(plain(lay$xaxis$title), list(text = "X")),
   identical(lay$yaxis2$overlaying, "y")
 )
 expect_error(validate_layout(list(xaxis0 = list())), "Invalid property")

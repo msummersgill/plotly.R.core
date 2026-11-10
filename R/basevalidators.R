@@ -35,9 +35,11 @@ LAYOUT_SUBPLOT_IDS <- c("coloraxis", "geo", "legend", "map", "mapbox", "polar",
 #' @param v Value to validate.
 #' @param key Validator key, e.g. `"scatter.marker.size"`.
 #' @param entry Validator entry; looked up from `key` by default.
+#' @param skip_invalid If `TRUE`, invalid properties of compound objects are
+#'   dropped instead of raising an error.
 #' @return The coerced value, ready for JSON serialisation.
 #' @noRd
-validate_coerce <- function(v, key, entry = get_validator(key)) {
+validate_coerce <- function(v, key, entry = get_validator(key), skip_invalid = FALSE) {
   if (is.null(v)) return(NULL)
   if (is.null(entry)) stop("No validator for '", key, "'", call. = FALSE)
   switch(entry$superclass,
@@ -56,9 +58,9 @@ validate_coerce <- function(v, key, entry = get_validator(key)) {
     "FlaglistValidator" = vc_flaglist(v, key, entry),
     "AnyValidator" = vc_any(v, key, entry),
     "InfoArrayValidator" = vc_info_array(v, key, entry),
-    "CompoundValidator" = vc_compound(v, key, entry),
-    "TitleValidator" = vc_title(v, key, entry),
-    "CompoundArrayValidator" = vc_compound_array(v, key, entry),
+    "CompoundValidator" = vc_compound(v, key, entry, skip_invalid),
+    "TitleValidator" = vc_title(v, key, entry, skip_invalid),
+    "CompoundArrayValidator" = vc_compound_array(v, key, entry, skip_invalid),
     stop("Unknown validator '", entry$superclass, "' for '", key, "'", call. = FALSE)
   )
 }
@@ -440,9 +442,20 @@ raise_invalid_prop <- function(name, key, entry) {
 
 empty_object <- function() structure(list(), names = character())
 
-vc_compound <- function(v, key, entry) {
+# Compound values are returned as graph objects: named lists classed
+# c(<data_class>, "plotly_obj"), e.g. c("go_scatter_marker", "plotly_obj").
+as_graph_object <- function(x, entry) {
+  class(x) <- c(entry$data_class, "plotly_obj")
+  x
+}
+
+INVALID_CONDITIONS <- c("plotly_invalid_value", "plotly_invalid_property")
+
+vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
+  if (inherits(v, entry$data_class)) return(v) # already validated
   if (is.data.frame(v) || !is.list(v)) raise_invalid_val(v, key, entry)
-  if (!length(v)) return(empty_object())
+  v <- unclass(v)
+  if (!length(v)) return(as_graph_object(empty_object(), entry))
   nms <- names(v)
   if (is.null(nms) || any(!nzchar(nms))) raise_invalid_val(v, key, entry)
   if (anyDuplicated(nms)) {
@@ -461,27 +474,38 @@ vc_compound <- function(v, key, entry) {
       next
     }
     ck <- child_key(key, name)
-    if (is.na(ck)) raise_invalid_prop(name, key, entry)
-    val <- validate_coerce(v[[i]], ck)
+    if (is.na(ck)) {
+      if (skip_invalid) next
+      raise_invalid_prop(name, key, entry)
+    }
+    val <- if (skip_invalid) {
+      tryCatch(validate_coerce(v[[i]], ck, skip_invalid = TRUE), error = function(e) {
+        if (inherits(e, INVALID_CONDITIONS)) NULL else stop(e)
+      })
+    } else {
+      validate_coerce(v[[i]], ck)
+    }
     if (!is.null(val)) out[i] <- list(val)
   }
-  out[!vapply(out, is.null, logical(1))]
+  as_graph_object(out[!vapply(out, is.null, logical(1))], entry)
 }
 
 # A title may be given as a string, shorthand for list(text = <string>).
-vc_title <- function(v, key, entry) {
+vc_title <- function(v, key, entry, skip_invalid = FALSE) {
   v <- as_char_if_factor(v)
   if (is.character(v) || is.numeric(v)) {
     if (length(v) != 1L) raise_invalid_val(v, key, entry)
     v <- list(text = as.character(v))
   }
-  vc_compound(v, key, entry)
+  vc_compound(v, key, entry, skip_invalid)
 }
 
-vc_compound_array <- function(v, key, entry) {
-  if (is.data.frame(v) || !is.list(v) || !is.null(names(v))) raise_invalid_val(v, key, entry)
+vc_compound_array <- function(v, key, entry, skip_invalid = FALSE) {
+  if (is.data.frame(v) || !is.list(v) || inherits(v, "plotly_obj") || !is.null(names(v))) {
+    raise_invalid_val(v, key, entry)
+  }
   element <- get_validator(entry$element_key)
-  lapply(v, validate_coerce, key = entry$element_key, entry = element)
+  lapply(v, validate_coerce, key = entry$element_key, entry = element, skip_invalid = skip_invalid)
 }
 
 # Traces and figure data -------------------------------------------------------
@@ -496,6 +520,10 @@ validate_trace <- function(trace) {
   if (!is.list(trace) || is.data.frame(trace)) {
     stop("A trace must be a named list, not ", value_type(trace), call. = FALSE)
   }
+  if (inherits(trace, "plotly_obj") && !is.null(trace$type) &&
+      inherits(trace, get_validator(trace$type)$data_class %||% "")) {
+    return(trace)
+  }
   type <- trace$type %||% "scatter"
   entry <- if (is.character(type) && length(type) == 1L) get_validator(type)
   if (is.null(entry$trace_type)) {
@@ -503,8 +531,10 @@ validate_trace <- function(trace) {
                  format_value(type), paste(sort(available_trace_types()), collapse = ", ")),
          call. = FALSE)
   }
-  trace$type <- type
-  vc_compound(trace, type, entry)
+  trace <- unclass(trace)
+  trace$type <- NULL
+  out <- vc_compound(trace, type, entry)
+  add_trace_type(out, type)
 }
 
 # Validate figure data: an unnamed list of traces.
