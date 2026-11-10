@@ -1,5 +1,5 @@
 HTMLWidgets.widget({
-  name: "plotlyr",
+  name: "plotly_R_core",
   type: "output",
 
   factory: function(el, width, height) {

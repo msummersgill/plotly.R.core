@@ -12,7 +12,7 @@
 PROJECT_ROOT <- normalizePath(".")
 PLOTLYJS_DIR <- file.path(PROJECT_ROOT, "inst", "htmlwidgets", "lib", "plotlyjs")
 SCHEMA_PATH <- file.path(PROJECT_ROOT, "codegen", "resources", "plot-schema.json")
-WIDGET_YAML <- file.path(PROJECT_ROOT, "inst", "htmlwidgets", "plotlyr.yaml")
+WIDGET_YAML <- file.path(PROJECT_ROOT, "inst", "htmlwidgets", "plotly_R_core.yaml")
 VERSION_FILE <- file.path(PROJECT_ROOT, "R", "zz-gen-version.R")
 
 # Copy plotly.js assets from a plotly.js package root (a git clone, or an

@@ -17,7 +17,7 @@ plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL) {
   )
   attr(x, "TOJSON_FUNC") <- to_JSON
   htmlwidgets::createWidget(
-    name = "plotlyr",
+    name = "plotly_R_core",
     x = x,
     width = width,
     height = height,
