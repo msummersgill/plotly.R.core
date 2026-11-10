@@ -28,7 +28,7 @@ stopifnot(identical(class(tr2$marker$line), c("go_scatter_marker_line", "plotly_
 
 # Every constructor in scope exists and builds an empty object
 ns <- asNamespace("plotly.R.core")
-ctors <- grep("^go_", getNamespaceExports("plotly.R.core"), value = TRUE)
+ctors <- setdiff(grep("^go_", getNamespaceExports("plotly.R.core"), value = TRUE), "go_figure")
 stopifnot(length(ctors) == 66L)
 for (fn in ctors) {
   obj <- get(fn, ns)()

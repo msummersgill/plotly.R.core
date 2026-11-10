@@ -30,6 +30,7 @@ perform_codegen <- function(outdir = ".", scope = CODEGEN_SCOPE) {
 
   .named_colorscales <<- .named_colorscales # used by type_doc()
   write_datatypes(nodes, validators, schema, outdir)
+  write_figure(validators, outdir)
 
   message(sprintf(
     "Generated %d validators (%d compound, %d compound array) for traces: %s",

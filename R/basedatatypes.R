@@ -54,7 +54,7 @@ add_trace_type <- function(x, type) {
 # paper_bgcolor) win over splitting.
 set_magic_property <- function(props, key, entry, name, value, skip_invalid = FALSE) {
   if (!is.na(child_key(key, name)) || (!is.null(entry$trace_type) && name == "type")) {
-    props[[name]] <- value
+    props[name] <- list(value)
     return(props)
   }
   pos <- gregexpr("_", name, fixed = TRUE)[[1L]]

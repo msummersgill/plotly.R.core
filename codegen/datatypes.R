@@ -214,7 +214,7 @@ write_datatypes <- function(nodes, validators, schema, outdir = ".") {
   version <- schema_version(outdir)
   # Remove stale generated files before writing.
   stale <- list.files(file.path(outdir, "R"), "^zz-gen-.*\\.R$", full.names = TRUE)
-  unlink(stale[basename(stale) != "zz-gen-version.R"])
+  unlink(stale[!basename(stale) %in% c("zz-gen-version.R", "zz-gen-figure.R")])
   files <- character()
   for (root in unique(roots)) {
     keys <- compound_keys[roots == root]

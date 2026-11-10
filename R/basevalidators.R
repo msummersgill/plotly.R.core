@@ -516,7 +516,7 @@ available_trace_types <- function() {
 }
 
 # Validate one trace (a named list with an optional `type`, default "scatter").
-validate_trace <- function(trace) {
+validate_trace <- function(trace, skip_invalid = FALSE) {
   if (!is.list(trace) || is.data.frame(trace)) {
     stop("A trace must be a named list, not ", value_type(trace), call. = FALSE)
   }
@@ -533,19 +533,19 @@ validate_trace <- function(trace) {
   }
   trace <- unclass(trace)
   trace$type <- NULL
-  out <- vc_compound(trace, type, entry)
+  out <- vc_compound(trace, type, entry, skip_invalid)
   add_trace_type(out, type)
 }
 
 # Validate figure data: an unnamed list of traces.
-validate_data <- function(data) {
+# A single trace (a graph object, or a named list) is also accepted.
+validate_data <- function(data, skip_invalid = FALSE) {
   if (is.null(data)) return(list())
   if (!is.list(data) || is.data.frame(data)) stop("Figure data must be a list of traces", call. = FALSE)
-  if (!is.null(names(data)) && !is.null(data$type)) data <- list(data)
-  unname(lapply(data, validate_trace))
+  if (inherits(data, "plotly_obj") || !is.null(names(data))) data <- list(data)
+  unname(lapply(data, validate_trace, skip_invalid = skip_invalid))
 }
 
-validate_layout <- function(layout) {
-  if (is.null(layout)) return(empty_object())
-  validate_coerce(layout, "layout")
+validate_layout <- function(layout, skip_invalid = FALSE) {
+  validate_coerce(layout %||% list(), "layout", skip_invalid = skip_invalid)
 }
