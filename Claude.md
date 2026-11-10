@@ -31,7 +31,7 @@
 - Shiny integration and plotly proxy objects with functionality matching existing R package
 - Quarto integration with functionality matching existing R package
 - Static image export with the Kaleido package
-
+ 
 ## Out of scope
 
 - Translation from ggplot2 to plotly figures
@@ -67,19 +67,27 @@
 - listviewer
 - png
 - knitr
+- reticulate (only for Kaleido static image export)
 
 ## R libraries that are not acceptable dependencies in any form
 
 - dplyr (use data.table instead)
-- nibble (use data.table instead)
+- tibble (use data.table instead)
 - tidyr (use data.table and Base R instead)
-- vectors (use Base R instead)
+- vctrs (use Base R instead)
 - purrr (use Base R instead)
 - scales 
 - httr (use curl instead)
 - magrittr (use Base R pipe |> instead)
 - lazyeval
-- rlang
-- reticulate
-- cp11
+- cpp11
 - forcats
+
+# Conventions
+
+- Tests are plain base R scripts in `tests/*.R` (use `stopifnot()`), run by `R CMD check`. Do not use testthat or tinytest.
+- Generated graph objects follow plotly.py: one constructor per compound schema node, named after its path (e.g. `go_scatter()`, `go_scatter_marker()`, `go_layout_xaxis()`), each with generated roxygen docs. Validator parameters are generated as data (like plotly.py's `_validators.json`) and interpreted by hand-written base validators.
+- Generated R files are prefixed `zz-gen-` and committed. Do not edit them by hand.
+- `Rscript commands.R updateplotlyjs [version]` updates the bundled plotly.js from npm. `updateplotlyjsdev [path]` uses a local clone.
+- Once `src/` exists, NAMESPACE must contain `useDynLib(plotly.r, .registration = TRUE)` before running roxygen. The C init function is `R_init_plotly_r`.
+

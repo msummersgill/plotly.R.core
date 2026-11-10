@@ -1,17 +1,30 @@
 Package: plotly.r
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
+Title: Create Interactive Web Graphics via 'plotly.js'
+Version: 0.0.0.9000
 Authors@R: c(
-    person(
-      "Jane", "Doe",
-      email = "jane@example.com",
-      role = c("aut", "cre")
-    )
+    person("Matthew", "Summersgill", email = "matthew.summersgill@hpinc.com",
+           role = c("aut", "cre")),
+    person("Plotly Technologies Inc.", role = "cph",
+           comment = "Bundled 'plotly.js' library")
   )
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
-License: What license is it under?
+Description: Create interactive web graphics with the 'plotly.js' JavaScript
+    library. Graph objects, their validation and their documentation are
+    generated from the 'plotly.js' plot schema, following the design of the
+    'plotly' Python package. Includes an 'express' interface for quick
+    figures, 'htmlwidgets' rendering, 'shiny' and 'quarto' integration, and
+    static image export with 'Kaleido'.
+License: MIT + file LICENSE
+Depends: R (>= 4.1.0)
+Imports:
+    data.table,
+    htmlwidgets,
+    jsonlite
+Suggests:
+    knitr,
+    reticulate,
+    rmarkdown,
+    shiny
 Encoding: UTF-8
-LazyData: true
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2

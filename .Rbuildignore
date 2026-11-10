@@ -1,2 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^CLAUDE\.md$
+^\.claude$
+^commands\.R$
+^codegen$
+^LICENSE\.md$
