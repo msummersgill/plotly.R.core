@@ -19,3 +19,16 @@ stopifnot(
 # Bundled plotly.js is present and matches the yaml dependency version
 js <- system.file("htmlwidgets/lib/plotlyjs/plotly.min.js", package = "plotly.R.core")
 stopifnot(nzchar(js), file.size(js) > 1e6)
+
+# Date-times keep millisecond precision (format(x, "%OS3") would truncate .123 to .122)
+to_JSON <- plotly.R.core:::to_JSON
+t <- as.POSIXct(c("2024-01-02 03:04:05.123", "2024-01-02 03:04:06", NA), tz = "UTC")
+t[4] <- as.POSIXct("2024-01-02 23:59:59.9996", tz = "UTC")   # rounds into the next day
+stopifnot(
+  as.character(to_JSON(list(x = t))) ==
+    '{"x":["2024-01-02 03:04:05.123","2024-01-02 03:04:06",null,"2024-01-03 00:00:00"]}',
+  as.character(to_JSON(list(x = I(t[1])))) == '{"x":["2024-01-02 03:04:05.123"]}',
+  as.character(to_JSON(list(x = as.POSIXlt(t[1])))) == '{"x":"2024-01-02 03:04:05.123"}',
+  as.character(to_JSON(list(x = as.POSIXct("2024-06-01 12:00:00.5", tz = "America/New_York")))) ==
+    '{"x":"2024-06-01 12:00:00.500"}'
+)

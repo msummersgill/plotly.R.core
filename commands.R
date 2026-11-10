@@ -4,6 +4,7 @@
 #   Rscript commands.R updateplotlyjs              # latest plotly.js from npm
 #   Rscript commands.R updateplotlyjs 4.2.0        # specific version from npm
 #   Rscript commands.R updateplotlyjsdev ~/Documents/plotly.js  # local clone
+#   Rscript commands.R codegen                     # regenerate from the schema
 #
 # Updating plotly.js copies the bundle, locales and licence into
 # inst/htmlwidgets/lib/plotlyjs, the schema into codegen/resources, and
@@ -86,12 +87,19 @@ update_plotlyjs_dev <- function(path = "~/Documents/plotly.js") {
   install_plotlyjs_from(normalizePath(path, mustWork = TRUE))
 }
 
+# Generate validators (and, later, graph objects) from the plotly.js schema.
+codegen <- function() {
+  for (f in c("utils.R", "validators.R", "generate.R")) source(file.path(PROJECT_ROOT, "codegen", f))
+  perform_codegen(PROJECT_ROOT)
+}
+
 if (sys.nframe() == 0L) {
   args <- commandArgs(trailingOnly = TRUE)
   cmd <- if (length(args)) args[[1]] else ""
   switch(cmd,
     updateplotlyjs = update_plotlyjs(if (length(args) > 1) args[[2]] else "latest"),
     updateplotlyjsdev = update_plotlyjs_dev(if (length(args) > 1) args[[2]] else "~/Documents/plotly.js"),
-    stop("Usage: Rscript commands.R <updateplotlyjs [version] | updateplotlyjsdev [path]>")
+    codegen = codegen(),
+    stop("Usage: Rscript commands.R <codegen | updateplotlyjs [version] | updateplotlyjsdev [path]>")
   )
 }

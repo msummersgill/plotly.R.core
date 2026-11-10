@@ -56,6 +56,8 @@
 - viridisLite
 - base64enc
 - promises
+- grDevices (base R)
+- utils (base R)
 
 ## R libraries that are acceptable suggests
 
