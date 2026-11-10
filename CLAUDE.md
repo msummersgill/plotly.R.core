@@ -12,7 +12,7 @@
 
 - plotly.js clone: ~/Documents/plotly.js
 - plotly.py clone: ~/Documents/plotly.py
-- Original R implementation clone: ~/Documents/plotly
+- Original R implementation clone: ~/Documents/plotly.R (package `plotly`)
 - Original R Documentation clone: ~/Documents/plotly.r-docs
 
 # Scope
