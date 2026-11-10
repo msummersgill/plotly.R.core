@@ -1,4 +1,4 @@
-library(plotly.r)
+library(plotly.R.core)
 
 fig <- list(data = list(list(type = "scatter", x = 1:3, y = c(1, NA, 3))))
 w <- plotly_widget(fig)
@@ -17,5 +17,5 @@ stopifnot(
 )
 
 # Bundled plotly.js is present and matches the yaml dependency version
-js <- system.file("htmlwidgets/lib/plotlyjs/plotly.min.js", package = "plotly.r")
+js <- system.file("htmlwidgets/lib/plotlyjs/plotly.min.js", package = "plotly.R.core")
 stopifnot(nzchar(js), file.size(js) > 1e6)

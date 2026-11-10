@@ -1,4 +1,4 @@
-# Development commands for plotly.r (the R counterpart of plotly.py/commands.py).
+# Development commands for plotly.R.core (the R counterpart of plotly.py/commands.py).
 # Not part of the built package. Run from the package root, e.g.
 #
 #   Rscript commands.R updateplotlyjs              # latest plotly.js from npm

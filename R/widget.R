@@ -21,7 +21,7 @@ plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL) {
     x = x,
     width = width,
     height = height,
-    package = "plotly.r",
+    package = "plotly.R.core",
     elementId = elementId,
     sizingPolicy = htmlwidgets::sizingPolicy(
       browser.fill = TRUE,

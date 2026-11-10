@@ -1,6 +1,6 @@
 # Objective
 
-- Create a new R package, plotly.r, wrapping the plotly.js library with similar design principles as the plotly.py package. (See plotly.py/Contributing.md)
+- Create a new R package, plotly.R.core, wrapping the plotly.js library with similar design principles as the plotly.py package. (See plotly.py/Contributing.md)
 - Code Generation should be used to generate R objects, methods, and documentation based on the plotly schema, ensuring long term maintainability
 - Codebase should be as minimal as possible, with as few R package and system dependencies as possible
 - R functions should ideally be compatible with existing plotly R package to allow (partial) backwards compatibility for most plotting code
@@ -89,5 +89,5 @@
 - Generated graph objects follow plotly.py: one constructor per compound schema node, named after its path (e.g. `go_scatter()`, `go_scatter_marker()`, `go_layout_xaxis()`), each with generated roxygen docs. Validator parameters are generated as data (like plotly.py's `_validators.json`) and interpreted by hand-written base validators.
 - Generated R files are prefixed `zz-gen-` and committed. Do not edit them by hand.
 - `Rscript commands.R updateplotlyjs [version]` updates the bundled plotly.js from npm. `updateplotlyjsdev [path]` uses a local clone.
-- Once `src/` exists, NAMESPACE must contain `useDynLib(plotly.r, .registration = TRUE)` before running roxygen. The C init function is `R_init_plotly_r`.
+- Once `src/` exists, NAMESPACE must contain `useDynLib(plotly.R.core, .registration = TRUE)` before running roxygen. The C init function is `R_init_plotly_R_core`.
 
