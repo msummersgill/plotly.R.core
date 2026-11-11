@@ -152,7 +152,7 @@ describe_validator <- function(entry, name) {
                                  head, entry$base, entry$base),
     FlaglistValidator = paste0(sprintf("%s a flaglist and may be specified as a string containing:\n      - Any combination of %s joined with '+' characters (e.g. '%s')",
                                        head, paste0('"', entry$flags, '"', collapse = ", "), paste(utils::head(entry$flags, 2L), collapse = "+")),
-                               if (length(entry$extras)) paste0("\n        OR exactly one of ", paste0('"', entry$extras, '"', collapse = ", ")) else "", arr),
+                               if (length(entry$extras)) paste0("\n        OR exactly one of ", paste(vapply(entry$extras, function(e) if (is.character(e)) paste0('"', e, '"') else toupper(as.character(e)), ""), collapse = ", ")) else "", arr),
     AnyValidator = paste(head, "any value"),
     InfoArrayValidator = sprintf("%s an array of %s%d element(s), each validated separately",
                                  head, if (isTRUE(entry$free_length)) "up to " else "", length(entry$items$validators)),
@@ -394,12 +394,14 @@ vc_subplotid <- function(v, key, entry) {
 
 vc_flaglist <- function(v, key, entry) {
   v <- as_char_if_factor(simplify_list(v))
+  # non-string extras, e.g. automargin = TRUE
+  if (is_scalar(v) && !is.character(v) && any(vapply(entry$extras, identical, logical(1), v))) return(v)
   if (!is.character(v)) raise_invalid_val(v, key, entry)
   check_scalar_or_array(v, key, entry)
   u <- unique(v[!is.na(v)])
   coerce1 <- function(s) {
     s <- trimws(s)
-    if (s %in% entry$extras) return(s)
+    if (s %in% unlist(Filter(is.character, entry$extras))) return(s)
     parts <- trimws(strsplit(s, "[,+]")[[1L]])
     if (length(parts) && all(parts %in% entry$flags)) paste(parts, collapse = "+") else NA_character_
   }

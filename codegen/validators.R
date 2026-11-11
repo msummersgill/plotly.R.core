@@ -44,7 +44,7 @@ simple_params <- function(data, val_type, superclass, key, nodes) {
   }
   if (val_type %in% c("flaglist")) {
     p$flags <- unlist(p$flags)
-    p$extras <- unlist(p$extras) %||% character()
+    p$extras <- p$extras %||% list() # may mix strings and booleans
   }
   if (val_type == "info_array") p$items <- info_array_items(p$items)
   if (val_type == "color" && !is.null(nodes)) {

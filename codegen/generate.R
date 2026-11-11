@@ -22,7 +22,8 @@ perform_codegen <- function(outdir = ".", scope = CODEGEN_SCOPE) {
 
   .validators <- validators
   .named_colors <- read_named_colors(file.path(outdir, "codegen", "resources", "named-colors.txt"))
-  save(.validators, .named_colors, file = file.path(outdir, "R", "sysdata.rda"), compress = "xz")
+  .config_options <- sort(names(schema$config))
+  save(.validators, .named_colors, .config_options, file = file.path(outdir, "R", "sysdata.rda"), compress = "xz")
 
   write_datatypes(nodes, validators, schema, outdir)
   write_figure(validators, outdir)

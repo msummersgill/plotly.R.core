@@ -1,12 +1,18 @@
 #' Render a figure as an htmlwidget
 #'
-#' @param fig A [go_figure()], or a list with `data` (list of traces),
-#'   `layout`, `frames` and `config` elements.
-#' @param width,height Widget size in CSS units, or `NULL` to fill the
-#'   container.
+#' `plotly_widget()` and `as_widget()` turn a figure into an htmlwidget,
+#' which is what printing a figure does. Use them to embed figures with
+#' htmltools or [htmlwidgets::saveWidget()].
+#'
+#' @param fig A [go_figure()], a figure from a `px_*()` function, or a list
+#'   with `data` (list of traces), `layout`, `frames` and `config` elements.
+#' @param x A figure, [plot_ly()] object or htmlwidget.
+#' @param width,height Widget size in CSS units, or `NULL` for the layout's
+#'   `width`/`height` or to fill the container.
 #' @param elementId Optional element id for the widget.
 #' @param config Plotly.js configuration options (e.g.
-#'   `list(displayModeBar = FALSE)`), merged over `fig$config`.
+#'   `list(displayModeBar = FALSE)`), merged over those set with [config()].
+#' @param ... Passed to `plotly_widget()`.
 #' @return An object of class `htmlwidget`.
 #' @details If the figure's layout has no `template`, the default template
 #'   (see [default_template()]) is applied.
@@ -20,27 +26,63 @@ plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL, co
     if (!identical(tpl, "none")) layout$template <- get_template(tpl)
   }
   if (!length(layout)) layout <- structure(list(), names = character())
+  setting <- function(name) attr(fig, paste0("plotly_", name), exact = TRUE) %||% fig[[name]]
+  cfg <- utils::modifyList(setting("config") %||% list(), config %||% list())
   x <- list(
     data = unname(fig$data %||% list()),
     layout = layout,
     frames = unname(fig$frames %||% list()),
-    config = utils::modifyList(fig$config %||% list(), config %||% list())
+    config = if (length(cfg)) cfg else structure(list(), names = character()),
+    source = setting("source") %||% "A",
+    shinyEvents = I(setting("shinyEvents") %||% DEFAULT_EVENTS)
   )
-  if (!length(x$config)) x$config <- structure(list(), names = character())
+  for (k in c("keys", "sets", "frameKeys", "highlight")) {
+    if (!is.null(setting(k))) x[[k]] <- setting(k)
+  }
+  if (!is.null(setting("selectize"))) x$selectize <- lp_selectize_json(setting("selectize"))
   attr(x, "TOJSON_FUNC") <- to_JSON
+  deps <- list()
+  if (!is.null(cfg$locale) && cfg$locale != "en") deps <- c(deps, list(locale_dependency(cfg$locale)))
+  if (identical(setting("mathjax"), "cdn")) deps <- c(deps, list(mathjax_dependency()))
+  if (!is.null(x$sets)) deps <- c(deps, lp_crosstalk_deps(x$highlight))
   htmlwidgets::createWidget(
     name = "plotly_R_core",
     x = x,
-    width = width,
-    height = height,
+    width = width %||% layout$width,
+    height = height %||% layout$height,
     package = "plotly.R.core",
     elementId = elementId,
+    dependencies = deps,
     sizingPolicy = htmlwidgets::sizingPolicy(
       browser.fill = TRUE,
       padding = 0,
       defaultWidth = "100%",
       defaultHeight = 400
     )
+  )
+}
+
+#' @rdname plotly_widget
+#' @export
+as_widget <- function(x, ...) {
+  if (inherits(x, "htmlwidget") && !is_legacy_plot(x)) return(x)
+  if (is_legacy_plot(x)) return(legacy_widget(x, ...))
+  plotly_widget(x, ...)
+}
+
+locale_dependency <- function(locale) {
+  htmltools::htmlDependency(
+    name = paste0("plotly-locale-", locale), version = plotlyjs_version(),
+    src = "htmlwidgets/lib/plotlyjs/locales", script = paste0(locale, ".js"),
+    package = "plotly.R.core", all_files = FALSE
+  )
+}
+
+mathjax_dependency <- function() {
+  htmltools::htmlDependency(
+    name = "mathjax", version = "2.7.5",
+    src = c(href = "https://cdn.jsdelivr.net/npm/mathjax@2.7.5"),
+    script = "MathJax.js?config=TeX-AMS-MML_SVG"
   )
 }
 

@@ -20,6 +20,14 @@
 \code{x}, invisibly, for \code{print()}.
 }
 \description{
-Printing a figure renders it with \code{\link[=plotly_widget]{plotly_widget()}}: in the RStudio
-viewer, a browser, or inline in R Markdown and Quarto documents.
+Printing a figure renders it with \code{\link[=plotly_widget]{plotly_widget()}} in the RStudio viewer
+or a browser. In R Markdown and Quarto documents, figures are rendered
+inline: as interactive widgets in HTML output, sized by the chunk options
+\code{fig.width}/\code{fig.height} (\code{fig-width}/\code{fig-height} in Quarto) unless the
+layout sets a size; and, for other formats (PDF, Word, ...), as static
+images made with Kaleido (see \code{\link[=save_image]{save_image()}}) when it is available.
+}
+\details{
+Set the chunk option \code{plotly.static = TRUE} to use static images in HTML
+output too, or \code{plotly.static = FALSE} to always use a widget.
 }

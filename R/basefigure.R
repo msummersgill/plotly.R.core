@@ -53,10 +53,12 @@ new_figure <- function(data, layout, frames = list()) {
   structure(list(data = data, layout = layout, frames = frames), class = "go_figure")
 }
 
-# Rebuild `fig` with new parts, keeping its subplot grid and other attributes.
+# Rebuild `fig` with new parts, keeping its other attributes (subplot grid,
+# config, event settings, trendline results, ...).
 modify_figure <- function(fig, data = fig$data, layout = fig$layout, frames = fig$frames) {
   out <- new_figure(data, layout, frames %||% list())
-  for (a in c("grid_ref", "grid_str", "px_trendlines")) attr(out, a) <- attr(fig, a)
+  keep <- setdiff(names(attributes(fig)), c("names", "class"))
+  for (a in keep) attr(out, a) <- attr(fig, a)
   out
 }
 
@@ -112,8 +114,15 @@ set_figure_part <- function(fig, name, value) {
 
 #' Print or knit a figure
 #'
-#' Printing a figure renders it with [plotly_widget()]: in the RStudio
-#' viewer, a browser, or inline in R Markdown and Quarto documents.
+#' Printing a figure renders it with [plotly_widget()] in the RStudio viewer
+#' or a browser. In R Markdown and Quarto documents, figures are rendered
+#' inline: as interactive widgets in HTML output, sized by the chunk options
+#' `fig.width`/`fig.height` (`fig-width`/`fig-height` in Quarto) unless the
+#' layout sets a size; and, for other formats (PDF, Word, ...), as static
+#' images made with Kaleido (see [save_image()]) when it is available.
+#'
+#' Set the chunk option `plotly.static = TRUE` to use static images in HTML
+#' output too, or `plotly.static = FALSE` to always use a widget.
 #'
 #' @param x A `go_figure` object.
 #' @param ... Passed on to the htmlwidget print or knit_print method.
@@ -128,7 +137,32 @@ print.go_figure <- function(x, ...) {
 #' @param options Chunk options (from knitr).
 #' @exportS3Method knitr::knit_print
 knit_print.go_figure <- function(x, ..., options = NULL) {
+  static <- options$plotly.static %||% !knitr::is_html_output()
+  if (isTRUE(static)) {
+    img <- knit_static_image(x, options)
+    if (!is.null(img)) return(img)
+  }
   knitr::knit_print(plotly_widget(x), ..., options = options)
+}
+
+# Render a figure to an image file for knitr with Kaleido; NULL (falling back
+# to knitr's widget screenshot handling) if Kaleido isn't available.
+knit_static_image <- function(x, options) {
+  ok <- requireNamespace("reticulate", quietly = TRUE) &&
+    isTRUE(tryCatch(reticulate::py_module_available("kaleido"), error = function(e) FALSE))
+  if (!ok) {
+    message("Kaleido is not available, so the figure is included as an htmlwidget ",
+            "(see ?save_image for installing it)")
+    return(NULL)
+  }
+  dpi <- options$dpi %||% 96
+  width <- x$layout$width %||% round((options$fig.width %||% 7) * dpi)
+  height <- x$layout$height %||% round((options$fig.height %||% 5) * dpi)
+  ext <- if (knitr::is_latex_output()) "pdf" else "png"
+  path <- knitr::fig_path(paste0(".", ext), options)
+  dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
+  save_image(x, path, width = width, height = height, scale = if (ext == "png") 2 else NULL)
+  knitr::knit_print(knitr::include_graphics(path), options = options)
 }
 
 # Adding traces -----------------------------------------------------------------
@@ -140,6 +174,9 @@ check_row_col_pair <- function(row, col, what = "row and col") {
 
 #' Add traces to a figure
 #'
+#' `add_trace()` adds one trace and `add_traces()` several. (For [plot_ly()]
+#' objects, see [add_trace()].)
+#'
 #' @param fig A `go_figure` object.
 #' @param trace A trace: a graph object such as [go_scatter()], or a named
 #'   list with a `type` element (default `"scatter"`).
@@ -150,12 +187,13 @@ check_row_col_pair <- function(row, col, what = "row and col") {
 #'   (see the `specs` argument of [make_subplots()]).
 #' @param exclude_empty_subplots If `TRUE`, don't add the trace to subplots
 #'   that have no traces or layout objects yet.
+#' @param ... Unused.
 #' @param data A list of traces.
 #' @param rows,cols,secondary_ys Per-trace grid cells and secondary y flags
 #'   for `add_traces()`; a single value applies to every trace.
 #' @return The modified figure.
 #' @seealso The generated `add_<trace type>()` functions, e.g. [add_scatter()].
-#' @export
+#' @name add_traces
 #' @examples
 #' go_figure() |>
 #'   add_trace(go_scatter(x = 1:3, y = 1:3)) |>
@@ -163,8 +201,12 @@ check_row_col_pair <- function(row, col, what = "row and col") {
 #'
 #' make_subplots(rows = 1, cols = 2) |>
 #'   add_trace(go_scatter(y = 1:3), row = 1, col = 2)
-add_trace <- function(fig, trace, row = NULL, col = NULL, secondary_y = NULL,
-                      exclude_empty_subplots = FALSE) {
+NULL
+
+#' @rdname add_traces
+#' @export
+add_trace.go_figure <- function(fig, trace, row = NULL, col = NULL, secondary_y = NULL,
+                                exclude_empty_subplots = FALSE, ...) {
   check_figure(fig)
   check_row_col_pair(row, col)
   if (!is.null(row) && is_multi_cell(row, col)) {
@@ -177,7 +219,7 @@ add_trace <- function(fig, trace, row = NULL, col = NULL, secondary_y = NULL,
              exclude_empty_subplots = exclude_empty_subplots)
 }
 
-#' @rdname add_trace
+#' @rdname add_traces
 #' @export
 add_traces <- function(fig, data, rows = NULL, cols = NULL, secondary_ys = NULL,
                        exclude_empty_subplots = FALSE) {

@@ -238,8 +238,8 @@ domain)?$"} or \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.}
 \item{automargin}{Determines whether long tick labels automatically grow
 the figure margins. Any combination of \code{"height"},
 \code{"width"}, \code{"left"}, \code{"right"}, \code{"top"},
-\code{"bottom"} joined with \code{"+"}, or one of \code{"TRUE"},
-\code{"FALSE"}.}
+\code{"bottom"} joined with \code{"+"}, or one of \code{TRUE},
+\code{FALSE}.}
 
 \item{autorange}{Determines whether or not the range of this axis is
 computed in relation to the input data. See `rangemode` for more info.

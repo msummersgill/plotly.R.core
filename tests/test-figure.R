@@ -40,7 +40,7 @@ stopifnot(
   identical(vapply(fig$data, `[[`, "", "name"), c("a", "b", "c"))
 )
 expect_error(add_scatter(fig, marker_size = -1), "'size' property of scatter.marker")
-expect_error(add_trace(list(), go_scatter()), "Expected a go_figure")
+expect_error(add_trace(list(), go_scatter()), "Don.t know how to add a trace")
 
 # update_layout: merging, magic underscores, overwrite, NULL ------------------------
 fig <- fig |>

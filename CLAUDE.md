@@ -49,6 +49,7 @@
 - data.table
 - curl
 - jsonlite
+- graphics (base R)
 - htmltools
 - htmlwidgets
 - roxygen2
@@ -71,6 +72,7 @@
 - png
 - knitr
 - reticulate (only for Kaleido static image export)
+- crosstalk (only for linked highlighting; Suggests, not Imports, because it imports lazyeval)
 
 ## R libraries that are not acceptable dependencies in any form
 
@@ -100,5 +102,9 @@
 - In px code, `args` is an environment (exact `$` matching, NULL values kept like Python's None). Never use `$` on user-supplied or template lists where partial matching could hit another name; use `[[`.
 - Inside data.table's `[`, only a lone variable name is evaluated in the calling scope; any expression in `i` sees column names first. Compute indices first (`o <- order(...); dt[o]`).
 - A length-1 vector wrapped in `I()` is kept as a JSON array by the serialiser and the validators.
+- Legacy plotly R API compatibility lives in R/compat-*.R (internal helpers prefixed `lp_`), ported from ~/Documents/plotly.R without its banned dependencies. In that code `%||l%` is the legacy package's `%||%` (also falls back for zero-length values). plot_ly() objects are lazy htmlwidgets of class c("plotly_R_core", "plotly", "htmlwidget"); legacy_figure() builds them into validated go_figures. tests/test-compat.R compares with fixtures from codegen/fixtures/legacy_fixtures.R (needs the legacy plotly package).
+- Crosstalk linking (highlight(), highlight_key()) lives in R/compat-highlight.R and the crosstalk section of inst/htmlwidgets/plotly_R_core.js (a port of the legacy widget's TraceManager). plot_ly() builds keep `key` and `set` in the traces; legacy_figure() moves them to the widget settings `keys`, `sets` and `frameKeys`, and the JS puts them back on the traces before plotting. selectize.js comes from the crosstalk package; colourpicker is bundled in inst/htmlwidgets/lib/colourpicker (MIT).
+- Figure-level widget settings (config, event source, Shiny events, keys, mathjax) are stored as go_figure attributes `plotly_<name>` (p$x$<name> for plot_ly() objects); modify_figure() keeps all attributes.
+- Shiny events, proxy calls, crosstalk linking and Kaleido export can't run in R CMD check; when changing them, test manually (headless Chrome via chromote for Shiny; reticulate with kaleido 0.2 and >= 1.0).
 - Once `src/` exists, NAMESPACE must contain `useDynLib(plotly.R.core, .registration = TRUE)` before running roxygen. The C init function is `R_init_plotly_R_core`.
 

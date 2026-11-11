@@ -21,9 +21,16 @@ and following the design of the [plotly Python package](https://github.com/plotl
   templates. Output is tested against plotly.py on 72 cases.
 - **Minimal dependencies.** data.table, htmlwidgets and jsonlite.
 
-> **Status:** early development. Graph objects, figures, subplots, templates
-> and Plotly Express are in place; Shiny, Quarto, compatibility with the
-> legacy plotly package and static image export are still to come.
+- **Shiny, R Markdown and Quarto.** `plotlyOutput()`/`renderPlotly()`,
+  `event_data()` and `plotlyProxy()` work as in the plotly R package; figures
+  render inline in documents, as static images in PDF/Word output.
+- **Static images.** `save_image()` exports PNG, JPEG, WebP, SVG and PDF with
+  Kaleido.
+- **Compatible with existing plotly R code.** `plot_ly()`, `add_*()`,
+  `layout()`, `subplot()` and friends build the same figures as the plotly R
+  package (tested against it), on top of the validated graph objects.
+
+> **Status:** early development; the API may change.
 
 ## Installation
 
@@ -118,6 +125,65 @@ add_scatter(fig, x = mtcars$wt, y = mtcars$mpg, mode = "dots")
 #>       - Any combination of "lines", "markers", "text" joined with '+' characters (e.g. 'lines+markers')
 #>         OR exactly one of "none"
 ```
+
+## Shiny
+
+```r
+library(shiny)
+ui <- fluidPage(plotlyOutput("plot"), verbatimTextOutput("click"))
+server <- function(input, output, session) {
+  output$plot <- renderPlotly(px_scatter(px_data_iris(), x = "sepal_width", y = "sepal_length"))
+  output$click <- renderPrint(event_data("plotly_click"))
+}
+shinyApp(ui, server)
+```
+
+`plotlyProxy()` and `plotlyProxyInvoke()` update a rendered plot (e.g.
+`"extendTraces"`, `"relayout"`) without redrawing it.
+
+## Linked highlighting (crosstalk)
+
+Plots made from the same `highlight_key()` data are linked in the browser,
+without Shiny: selecting points in one highlights them in the others (needs
+the crosstalk package).
+
+```r
+d <- highlight_key(mtcars, ~cyl, group = "Cylinders")
+subplot(
+  plot_ly(d, x = ~wt, y = ~mpg) |> add_markers(),
+  plot_ly(d, x = ~factor(cyl)) |> add_histogram()
+) |> highlight(on = "plotly_selected", color = "red", selectize = TRUE)
+```
+
+They also link with other crosstalk-compatible widgets (e.g. arranged with
+`crosstalk::bscols()`).
+
+## Static images
+
+```r
+# needs Python with kaleido (and plotly): reticulate::py_install(c("kaleido", "plotly"))
+save_image(fig, "figure.png", width = 800, height = 500, scale = 2)
+save_image(fig, "figure.pdf")
+```
+
+In R Markdown and Quarto, figures in PDF or Word output are included as static
+images automatically when Kaleido is available.
+
+## Existing plotly R code
+
+Code written for the plotly R package keeps working:
+
+```r
+plot_ly(mtcars, x = ~wt, y = ~mpg, color = ~factor(cyl), size = ~hp) |>
+  add_lines(data = data.frame(wt = c(2, 5), mpg = c(30, 12)), inherit = FALSE,
+            x = ~wt, y = ~mpg, color = I("black")) |>
+  layout(title = "Motor Trend cars")
+```
+
+`legacy_figure()` converts such a plot to a `go_figure` for further editing.
+Not supported: `ggplotly()`, Chart Studio (`api_*()`), `orca()`/`export()` (use
+`save_image()`), and the dplyr verbs re-exported by plotly (use dplyr or
+data.table directly). Use the base pipe `|>` instead of `%>%`.
 
 ## Development
 

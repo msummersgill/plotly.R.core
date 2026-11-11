@@ -6,7 +6,9 @@ Authors@R: c(
     person("Matthew", "Summersgill", email = "matthew.summersgill@hpinc.com",
            role = c("aut", "cre")),
     person("Plotly Technologies Inc.", role = "cph",
-           comment = "Bundled 'plotly.js' library; templates and datasets from 'plotly.py'")
+           comment = "Bundled 'plotly.js' library; templates and datasets from 'plotly.py'"),
+    person("Dean", "Attali", role = "cph",
+           comment = "Bundled 'colourpicker' library")
   )
 Description: Create interactive web graphics with the 'plotly.js' JavaScript
     library. Graph objects, their validation and their documentation are
@@ -19,13 +21,20 @@ Depends: R (>= 4.1.0)
 Imports:
     base64enc,
     data.table,
+    graphics,
     grDevices,
+    htmltools,
     htmlwidgets,
     jsonlite,
+    promises,
+    RColorBrewer,
     stats,
-    utils
+    utils,
+    viridisLite
 Suggests:
+    crosstalk,
     knitr,
+    listviewer,
     png,
     reticulate,
     rmarkdown,

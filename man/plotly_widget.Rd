@@ -2,6 +2,7 @@
 % Please edit documentation in R/widget.R
 \name{plotly_widget}
 \alias{plotly_widget}
+\alias{as_widget}
 \title{Render a figure as an htmlwidget}
 \usage{
 plotly_widget(
@@ -11,24 +12,32 @@ plotly_widget(
   elementId = NULL,
   config = NULL
 )
+
+as_widget(x, ...)
 }
 \arguments{
-\item{fig}{A \code{\link[=go_figure]{go_figure()}}, or a list with \code{data} (list of traces),
-\code{layout}, \code{frames} and \code{config} elements.}
+\item{fig}{A \code{\link[=go_figure]{go_figure()}}, a figure from a \verb{px_*()} function, or a list
+with \code{data} (list of traces), \code{layout}, \code{frames} and \code{config} elements.}
 
-\item{width, height}{Widget size in CSS units, or \code{NULL} to fill the
-container.}
+\item{width, height}{Widget size in CSS units, or \code{NULL} for the layout's
+\code{width}/\code{height} or to fill the container.}
 
 \item{elementId}{Optional element id for the widget.}
 
 \item{config}{Plotly.js configuration options (e.g.
-\code{list(displayModeBar = FALSE)}), merged over \code{fig$config}.}
+\code{list(displayModeBar = FALSE)}), merged over those set with \code{\link[=config]{config()}}.}
+
+\item{x}{A figure, \code{\link[=plot_ly]{plot_ly()}} object or htmlwidget.}
+
+\item{...}{Passed to \code{plotly_widget()}.}
 }
 \value{
 An object of class \code{htmlwidget}.
 }
 \description{
-Render a figure as an htmlwidget
+\code{plotly_widget()} and \code{as_widget()} turn a figure into an htmlwidget,
+which is what printing a figure does. Use them to embed figures with
+htmltools or \code{\link[htmlwidgets:saveWidget]{htmlwidgets::saveWidget()}}.
 }
 \details{
 If the figure's layout has no \code{template}, the default template

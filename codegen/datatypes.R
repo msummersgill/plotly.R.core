@@ -85,7 +85,9 @@ type_doc <- function(e) {
     SubplotidValidator = sprintf("Subplot id: %s, %s, %s, ...", rd_code_str(e$base),
                                  rd_code_str(paste0(e$base, "2")), rd_code_str(paste0(e$base, "3"))),
     FlaglistValidator = paste0("Any combination of ", rd_quoted_list(e$flags), " joined with ", rd_code_str("+"),
-                               if (length(e$extras)) paste0(", or one of ", rd_quoted_list(e$extras)) else "", arr),
+                               if (length(e$extras)) paste0(", or one of ", paste(vapply(e$extras, function(x) {
+                                 if (is.character(x)) rd_code_str(x) else rd_code(toupper(as.character(x)))
+                               }, ""), collapse = ", ")) else "", arr),
     AnyValidator = "Any value",
     InfoArrayValidator = sprintf("Vector or list of %s%d element(s)",
                                  if (isTRUE(e$free_length)) "up to " else "", length(e$items$validators)),

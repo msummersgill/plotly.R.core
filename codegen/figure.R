@@ -42,6 +42,8 @@ add_trace_source <- function(trace, validators) {
     sprintf("%s <- function(", fn),
     wrap_args(args),
     ") {",
+    "  # plot_ly() objects get the legacy plotly package's behaviour",
+    sprintf('  if (is_legacy_plot(fig)) return(legacy_add_dispatch("%s", environment(), list(...)))', trace),
     sprintf('  trace <- plotly_object("%s", NULL, environment(), list(...), skip_invalid)', trace),
     sprintf("  add_trace(fig, trace, row = row, col = col%s)", if (has_xy) ", secondary_y = secondary_y" else ""),
     "}",

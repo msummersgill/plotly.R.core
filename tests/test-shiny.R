@@ -1,0 +1,47 @@
+# Shiny bindings, widget settings and knitr output (the event/proxy round trip
+# needs a browser and is not tested here).
+library(plotly.R.core)
+
+expect_error <- function(expr, pattern) {
+  msg <- tryCatch({ expr; NULL }, error = function(e) conditionMessage(e))
+  if (is.null(msg)) stop("Expected an error matching '", pattern, "' but none was raised", call. = FALSE)
+  if (!grepl(pattern, msg)) stop("Error message did not match '", pattern, "':\n", msg, call. = FALSE)
+  invisible(TRUE)
+}
+
+fig <- go_figure(go_scatter(y = 1:3)) |>
+  event_source("src") |>
+  event_register("plotly_legendclick") |>
+  event_unregister("plotly_hover") |>
+  config(scrollZoom = TRUE, locale = "de")
+w <- as_widget(fig)
+stopifnot(
+  identical(w$x$source, "src"),
+  "plotly_legendclick" %in% w$x$shinyEvents,
+  !"plotly_hover" %in% w$x$shinyEvents,
+  isTRUE(w$x$config$scrollZoom), identical(w$x$config$locale, "de"),
+  any(vapply(w$dependencies, `[[`, "", "name") == "plotly-locale-de")
+)
+# settings survive figure operations
+fig2 <- update_layout(fig, title = "T")
+stopifnot(identical(attr(fig2, "plotly_source"), "src"))
+expect_error(config(fig, scrolZoom = TRUE), "Invalid config option")
+expect_error(config(fig, locale = "xx"), "Unknown locale")
+expect_error(event_register(fig, "plotly_bogus"), "should be one of")
+
+w <- as_widget(config(fig, mathjax = "cdn"))
+stopifnot(any(vapply(w$dependencies, `[[`, "", "name") == "mathjax"))
+
+if (requireNamespace("shiny", quietly = TRUE)) {
+  out <- plotlyOutput("plot", height = "300px")
+  stopifnot(inherits(out, "shiny.tag.list") || inherits(out, "shiny.tag"),
+            grepl("plotly_R_core", as.character(out)))
+  stopifnot(is.function(renderPlotly(go_figure())))
+  expect_error(event_data("plotly_click", session = NULL), "No reactive domain")
+  expect_error(plotlyProxy("plot", session = NULL), "server function")
+  expect_error(plotlyProxyInvoke(list(), "restyle"), "proxy object")
+}
+
+# legacy plot_ly() objects render through the same widget
+lw <- as_widget(plot_ly(mtcars, x = ~wt, y = ~mpg, type = "scatter", mode = "markers", source = "cars"))
+stopifnot(inherits(lw, "htmlwidget"), identical(lw$x$source, "cars"), length(lw$x$data) == 1L)

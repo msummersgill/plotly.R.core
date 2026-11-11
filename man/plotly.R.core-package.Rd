@@ -14,6 +14,7 @@ Create interactive web graphics with the 'plotly.js' JavaScript library. Graph o
 Other contributors:
 \itemize{
   \item Plotly Technologies Inc. (Bundled 'plotly.js' library; templates and datasets from 'plotly.py') [copyright holder]
+  \item Dean Attali (Bundled 'colourpicker' library) [copyright holder]
 }
 
 }

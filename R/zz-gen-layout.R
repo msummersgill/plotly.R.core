@@ -6397,8 +6397,8 @@ go_layout_updatemenu_pad <- function(
 #' @param automargin Determines whether long tick labels automatically grow
 #'   the figure margins. Any combination of \code{"height"},
 #'   \code{"width"}, \code{"left"}, \code{"right"}, \code{"top"},
-#'   \code{"bottom"} joined with \code{"+"}, or one of \code{"TRUE"},
-#'   \code{"FALSE"}.
+#'   \code{"bottom"} joined with \code{"+"}, or one of \code{TRUE},
+#'   \code{FALSE}.
 #' @param autorange \strong{\code{go_layout_xaxis()}}: Determines whether
 #'   or not the range of this axis is computed in relation to the input
 #'   data. See `rangemode` for more info. If `range` is provided and it has
@@ -7289,8 +7289,8 @@ go_layout_xaxis_unifiedhovertitle <- function(
 #' @param automargin Determines whether long tick labels automatically grow
 #'   the figure margins. Any combination of \code{"height"},
 #'   \code{"width"}, \code{"left"}, \code{"right"}, \code{"top"},
-#'   \code{"bottom"} joined with \code{"+"}, or one of \code{"TRUE"},
-#'   \code{"FALSE"}.
+#'   \code{"bottom"} joined with \code{"+"}, or one of \code{TRUE},
+#'   \code{FALSE}.
 #' @param autorange Determines whether or not the range of this axis is
 #'   computed in relation to the input data. See `rangemode` for more info.
 #'   If `range` is provided and it has a value for both the lower and upper

@@ -22,6 +22,8 @@ add_bar <- function(
     yperiod0 = NULL, yperiodalignment = NULL, zorder = NULL, row = NULL,
     col = NULL, secondary_y = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("bar", environment(), list(...)))
   trace <- plotly_object("bar", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
@@ -41,6 +43,8 @@ add_barpolar <- function(
     visible = NULL, width = NULL, row = NULL, col = NULL,
     skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("barpolar", environment(), list(...)))
   trace <- plotly_object("barpolar", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -69,6 +73,8 @@ add_box <- function(
     yperiodalignment = NULL, zorder = NULL, row = NULL, col = NULL,
     secondary_y = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("box", environment(), list(...)))
   trace <- plotly_object("box", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
@@ -89,6 +95,8 @@ add_candlestick <- function(
     yhoverformat = NULL, zorder = NULL, row = NULL, col = NULL,
     secondary_y = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("candlestick", environment(), list(...)))
   trace <- plotly_object("candlestick", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
@@ -105,6 +113,8 @@ add_carpet <- function(
     y = NULL, yaxis = NULL, zorder = NULL, row = NULL, col = NULL,
     secondary_y = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("carpet", environment(), list(...)))
   trace <- plotly_object("carpet", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
@@ -125,6 +135,8 @@ add_choropleth <- function(
     zauto = NULL, zmax = NULL, zmid = NULL, zmin = NULL, row = NULL,
     col = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("choropleth", environment(), list(...)))
   trace <- plotly_object("choropleth", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -145,6 +157,8 @@ add_choroplethmap <- function(
     z = NULL, zauto = NULL, zmax = NULL, zmid = NULL, zmin = NULL,
     row = NULL, col = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("choroplethmap", environment(), list(...)))
   trace <- plotly_object("choroplethmap", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -166,6 +180,8 @@ add_cone <- function(
     x = NULL, xhoverformat = NULL, y = NULL, yhoverformat = NULL, z = NULL,
     zhoverformat = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("cone", environment(), list(...)))
   trace <- plotly_object("cone", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -192,6 +208,8 @@ add_contour <- function(
     zmin = NULL, zorder = NULL, row = NULL, col = NULL, secondary_y = NULL,
     skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("contour", environment(), list(...)))
   trace <- plotly_object("contour", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
@@ -212,6 +230,8 @@ add_contourcarpet <- function(
     zmid = NULL, zmin = NULL, zorder = NULL, row = NULL, col = NULL,
     secondary_y = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("contourcarpet", environment(), list(...)))
   trace <- plotly_object("contourcarpet", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
@@ -230,6 +250,8 @@ add_densitymap <- function(
     uirevision = NULL, visible = NULL, z = NULL, zauto = NULL, zmax = NULL,
     zmid = NULL, zmin = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("densitymap", environment(), list(...)))
   trace <- plotly_object("densitymap", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -255,6 +277,8 @@ add_funnel <- function(
     yperiodalignment = NULL, zorder = NULL, row = NULL, col = NULL,
     secondary_y = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("funnel", environment(), list(...)))
   trace <- plotly_object("funnel", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
@@ -274,6 +298,8 @@ add_funnelarea <- function(
     uid = NULL, uirevision = NULL, values = NULL, visible = NULL,
     row = NULL, col = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("funnelarea", environment(), list(...)))
   trace <- plotly_object("funnelarea", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -300,6 +326,8 @@ add_heatmap <- function(
     zorder = NULL, zsmooth = NULL, row = NULL, col = NULL,
     secondary_y = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("heatmap", environment(), list(...)))
   trace <- plotly_object("heatmap", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
@@ -326,6 +354,8 @@ add_histogram <- function(
     yhoverformat = NULL, zorder = NULL, row = NULL, col = NULL,
     secondary_y = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("histogram", environment(), list(...)))
   trace <- plotly_object("histogram", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
@@ -350,6 +380,8 @@ add_histogram2d <- function(
     zmin = NULL, zsmooth = NULL, row = NULL, col = NULL, secondary_y = NULL,
     skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("histogram2d", environment(), list(...)))
   trace <- plotly_object("histogram2d", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
@@ -375,6 +407,8 @@ add_histogram2dcontour <- function(
     zhoverformat = NULL, zmax = NULL, zmid = NULL, zmin = NULL, row = NULL,
     col = NULL, secondary_y = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("histogram2dcontour", environment(), list(...)))
   trace <- plotly_object("histogram2dcontour", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
@@ -395,6 +429,8 @@ add_icicle <- function(
     uid = NULL, uirevision = NULL, values = NULL, visible = NULL,
     row = NULL, col = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("icicle", environment(), list(...)))
   trace <- plotly_object("icicle", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -412,6 +448,8 @@ add_image <- function(
     z = NULL, zmax = NULL, zmin = NULL, zorder = NULL, zsmooth = NULL,
     row = NULL, col = NULL, secondary_y = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("image", environment(), list(...)))
   trace <- plotly_object("image", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
@@ -426,6 +464,8 @@ add_indicator <- function(
     value = NULL, visible = NULL, row = NULL, col = NULL,
     skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("indicator", environment(), list(...)))
   trace <- plotly_object("indicator", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -448,6 +488,8 @@ add_isosurface <- function(
     xhoverformat = NULL, y = NULL, yhoverformat = NULL, z = NULL,
     zhoverformat = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("isosurface", environment(), list(...)))
   trace <- plotly_object("isosurface", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -472,6 +514,8 @@ add_mesh3d <- function(
     zcalendar = NULL, zhoverformat = NULL, row = NULL, col = NULL,
     skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("mesh3d", environment(), list(...)))
   trace <- plotly_object("mesh3d", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -492,6 +536,8 @@ add_ohlc <- function(
     yhoverformat = NULL, zorder = NULL, row = NULL, col = NULL,
     secondary_y = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("ohlc", environment(), list(...)))
   trace <- plotly_object("ohlc", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
@@ -507,6 +553,8 @@ add_parcats <- function(
     uirevision = NULL, visible = NULL, row = NULL, col = NULL,
     skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("parcats", environment(), list(...)))
   trace <- plotly_object("parcats", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -522,6 +570,8 @@ add_parcoords <- function(
     unselected = NULL, visible = NULL, row = NULL, col = NULL,
     skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("parcoords", environment(), list(...)))
   trace <- plotly_object("parcoords", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -543,6 +593,8 @@ add_pie <- function(
     uid = NULL, uirevision = NULL, values = NULL, visible = NULL,
     row = NULL, col = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("pie", environment(), list(...)))
   trace <- plotly_object("pie", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -563,6 +615,8 @@ add_quiver <- function(
     y0 = NULL, yaxis = NULL, yhoverformat = NULL, row = NULL, col = NULL,
     secondary_y = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("quiver", environment(), list(...)))
   trace <- plotly_object("quiver", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
@@ -578,6 +632,8 @@ add_sankey <- function(
     uirevision = NULL, valueformat = NULL, valuesuffix = NULL,
     visible = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("sankey", environment(), list(...)))
   trace <- plotly_object("sankey", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -604,6 +660,8 @@ add_scatter <- function(
     yperiod = NULL, yperiod0 = NULL, yperiodalignment = NULL, zorder = NULL,
     row = NULL, col = NULL, secondary_y = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scatter", environment(), list(...)))
   trace <- plotly_object("scatter", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
@@ -625,6 +683,8 @@ add_scatter3d <- function(
     z = NULL, zcalendar = NULL, zhoverformat = NULL, row = NULL, col = NULL,
     skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scatter3d", environment(), list(...)))
   trace <- plotly_object("scatter3d", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -645,6 +705,8 @@ add_scattercarpet <- function(
     xaxis = NULL, yaxis = NULL, zorder = NULL, row = NULL, col = NULL,
     secondary_y = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scattercarpet", environment(), list(...)))
   trace <- plotly_object("scattercarpet", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
@@ -665,6 +727,8 @@ add_scattergeo <- function(
     uirevision = NULL, unselected = NULL, visible = NULL, row = NULL,
     col = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scattergeo", environment(), list(...)))
   trace <- plotly_object("scattergeo", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -689,6 +753,8 @@ add_scattergl <- function(
     yperiodalignment = NULL, row = NULL, col = NULL, secondary_y = NULL,
     skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scattergl", environment(), list(...)))
   trace <- plotly_object("scattergl", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
@@ -709,6 +775,8 @@ add_scattermap <- function(
     unselected = NULL, visible = NULL, row = NULL, col = NULL,
     skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scattermap", environment(), list(...)))
   trace <- plotly_object("scattermap", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -730,6 +798,8 @@ add_scatterpolar <- function(
     unselected = NULL, visible = NULL, row = NULL, col = NULL,
     skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scatterpolar", environment(), list(...)))
   trace <- plotly_object("scatterpolar", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -750,6 +820,8 @@ add_scatterpolargl <- function(
     thetaunit = NULL, uid = NULL, uirevision = NULL, unselected = NULL,
     visible = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scatterpolargl", environment(), list(...)))
   trace <- plotly_object("scatterpolargl", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -770,6 +842,8 @@ add_scattersmith <- function(
     unselected = NULL, visible = NULL, row = NULL, col = NULL,
     skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scattersmith", environment(), list(...)))
   trace <- plotly_object("scattersmith", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -790,6 +864,8 @@ add_scatterternary <- function(
     unselected = NULL, visible = NULL, row = NULL, col = NULL,
     skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scatterternary", environment(), list(...)))
   trace <- plotly_object("scatterternary", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -808,6 +884,8 @@ add_splom <- function(
     visible = NULL, xaxes = NULL, xhoverformat = NULL, yaxes = NULL,
     yhoverformat = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("splom", environment(), list(...)))
   trace <- plotly_object("splom", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -829,6 +907,8 @@ add_streamtube <- function(
     x = NULL, xhoverformat = NULL, y = NULL, yhoverformat = NULL, z = NULL,
     zhoverformat = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("streamtube", environment(), list(...)))
   trace <- plotly_object("streamtube", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -849,6 +929,8 @@ add_sunburst <- function(
     uirevision = NULL, values = NULL, visible = NULL, row = NULL,
     col = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("sunburst", environment(), list(...)))
   trace <- plotly_object("sunburst", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -871,6 +953,8 @@ add_surface <- function(
     yhoverformat = NULL, z = NULL, zcalendar = NULL, zhoverformat = NULL,
     row = NULL, col = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("surface", environment(), list(...)))
   trace <- plotly_object("surface", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -885,6 +969,8 @@ add_table <- function(
     uid = NULL, uirevision = NULL, visible = NULL, row = NULL, col = NULL,
     skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("table", environment(), list(...)))
   trace <- plotly_object("table", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -904,6 +990,8 @@ add_treemap <- function(
     tiling = NULL, uid = NULL, uirevision = NULL, values = NULL,
     visible = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("treemap", environment(), list(...)))
   trace <- plotly_object("treemap", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -928,6 +1016,8 @@ add_violin <- function(
     yhoverformat = NULL, zorder = NULL, row = NULL, col = NULL,
     secondary_y = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("violin", environment(), list(...)))
   trace <- plotly_object("violin", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
@@ -951,6 +1041,8 @@ add_volume <- function(
     yhoverformat = NULL, z = NULL, zhoverformat = NULL, row = NULL,
     col = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("volume", environment(), list(...)))
   trace <- plotly_object("volume", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col)
 }
@@ -977,6 +1069,8 @@ add_waterfall <- function(
     yperiod0 = NULL, yperiodalignment = NULL, zorder = NULL, row = NULL,
     col = NULL, secondary_y = NULL, skip_invalid = FALSE
 ) {
+  # plot_ly() objects get the legacy plotly package's behaviour
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("waterfall", environment(), list(...)))
   trace <- plotly_object("waterfall", NULL, environment(), list(...), skip_invalid)
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
