@@ -109,7 +109,10 @@ fig6$layout$title <- "New"
 stopifnot(identical(fig6$layout$title$text, "New"))
 fig6$data[[4L]] <- list(y = 1:2)
 stopifnot(inherits(fig6$data[[4L]], "go_scatter"))
-expect_error(fig6$frames <- list(), "only `data` and `layout`")
+expect_error(fig6$frame <- list(), "only `data`, `layout` and `frames`")
+fig6$frames <- list(list(name = "a", data = list(list(y = 1:2))))
+stopifnot(inherits(fig6$frames[[1L]]$data[[1L]], "go_scatter"), identical(fig6$frames[[1L]]$name, "a"))
+expect_error(fig6$frames <- list(list(nme = "a")), "Invalid frame properties: nme")
 
 # Rendering -------------------------------------------------------------------------------
 w <- plotly_widget(fig)

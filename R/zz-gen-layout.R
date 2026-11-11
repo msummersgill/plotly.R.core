@@ -880,12 +880,8 @@ go_layout_annotation_hoverlabel_font <- function(
 #'   `colorscale` may be a palette name string of the following list:
 #'   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
 #'   Colorscale: a vector of colors, a two-column data.frame of (value,
-#'   color), or one of the named colorscales \code{"Blackbody"},
-#'   \code{"Bluered"}, \code{"Blues"}, \code{"Cividis"}, \code{"Earth"},
-#'   \code{"Electric"}, \code{"Greens"}, \code{"Greys"}, \code{"Hot"},
-#'   \code{"Jet"}, \code{"Picnic"}, \code{"Portland"}, \code{"Rainbow"},
-#'   \code{"RdBu"}, \code{"Reds"}, \code{"Viridis"}, \code{"YlGnBu"},
-#'   \code{"YlOrRd"}.
+#'   color), or the name of a sequential, diverging or cyclical scale in
+#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
 #' @param dtick Sets the step in-between ticks on this color bar. Use with
 #'   `tick0`. Must be a positive number. Note: unlike on x/y axes, the
 #'   special "log" and "date" string forms ("L<f>", "D1", "D2", "M<n>") are
@@ -1200,30 +1196,20 @@ go_layout_coloraxis_colorbar_title_font <- function(
 #'   initialise properties from (constructors). Named arguments take precedence.
 #' @param diverging Sets the default diverging colorscale. Note that
 #'   `autocolorscale` must be true for this attribute to work. Colorscale:
-#'   a vector of colors, a two-column data.frame of (value, color), or one
-#'   of the named colorscales \code{"Blackbody"}, \code{"Bluered"},
-#'   \code{"Blues"}, \code{"Cividis"}, \code{"Earth"}, \code{"Electric"},
-#'   \code{"Greens"}, \code{"Greys"}, \code{"Hot"}, \code{"Jet"},
-#'   \code{"Picnic"}, \code{"Portland"}, \code{"Rainbow"}, \code{"RdBu"},
-#'   \code{"Reds"}, \code{"Viridis"}, \code{"YlGnBu"}, \code{"YlOrRd"}.
+#'   a vector of colors, a two-column data.frame of (value, color), or the
+#'   name of a sequential, diverging or cyclical scale in
+#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
 #' @param sequential Sets the default sequential colorscale for positive
 #'   values. Note that `autocolorscale` must be true for this attribute to
 #'   work. Colorscale: a vector of colors, a two-column data.frame of
-#'   (value, color), or one of the named colorscales \code{"Blackbody"},
-#'   \code{"Bluered"}, \code{"Blues"}, \code{"Cividis"}, \code{"Earth"},
-#'   \code{"Electric"}, \code{"Greens"}, \code{"Greys"}, \code{"Hot"},
-#'   \code{"Jet"}, \code{"Picnic"}, \code{"Portland"}, \code{"Rainbow"},
-#'   \code{"RdBu"}, \code{"Reds"}, \code{"Viridis"}, \code{"YlGnBu"},
-#'   \code{"YlOrRd"}.
+#'   (value, color), or the name of a sequential, diverging or cyclical
+#'   scale in \code{\link{px_colors}()} (append \code{"_r"} to reverse).
 #' @param sequentialminus Sets the default sequential colorscale for
 #'   negative values. Note that `autocolorscale` must be true for this
 #'   attribute to work. Colorscale: a vector of colors, a two-column
-#'   data.frame of (value, color), or one of the named colorscales
-#'   \code{"Blackbody"}, \code{"Bluered"}, \code{"Blues"},
-#'   \code{"Cividis"}, \code{"Earth"}, \code{"Electric"}, \code{"Greens"},
-#'   \code{"Greys"}, \code{"Hot"}, \code{"Jet"}, \code{"Picnic"},
-#'   \code{"Portland"}, \code{"Rainbow"}, \code{"RdBu"}, \code{"Reds"},
-#'   \code{"Viridis"}, \code{"YlGnBu"}, \code{"YlOrRd"}.
+#'   data.frame of (value, color), or the name of a sequential, diverging
+#'   or cyclical scale in \code{\link{px_colors}()} (append \code{"_r"} to
+#'   reverse).
 #' @param ... Further properties, including nested properties in
 #'   "magic underscore" form, e.g. \code{marker_size = 10} for
 #'   \code{marker = list(size = 10)}.

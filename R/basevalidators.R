@@ -42,6 +42,11 @@ LAYOUT_SUBPLOT_IDS <- c("coloraxis", "geo", "legend", "map", "mapbox", "polar",
 validate_coerce <- function(v, key, entry = get_validator(key), skip_invalid = FALSE) {
   if (is.null(v)) return(NULL)
   if (is.null(entry)) stop("No validator for '", key, "'", call. = FALSE)
+  # I(x) marks a length-1 vector as an array; keep the mark through coercion.
+  if (inherits(v, "AsIs") && is.atomic(v) && length(v) == 1L) {
+    out <- validate_coerce(unclass_asis(v), key, entry, skip_invalid)
+    return(if (is.atomic(out) && length(out) == 1L && !inherits(out, "AsIs")) I(out) else out)
+  }
   switch(entry$superclass,
     "DataArrayValidator" = vc_data_array(v, key, entry),
     "EnumeratedValidator" = vc_enumerated(v, key, entry),
@@ -63,6 +68,12 @@ validate_coerce <- function(v, key, entry = get_validator(key), skip_invalid = F
     "CompoundArrayValidator" = vc_compound_array(v, key, entry, skip_invalid),
     stop("Unknown validator '", entry$superclass, "' for '", key, "'", call. = FALSE)
   )
+}
+
+unclass_asis <- function(v) {
+  class(v) <- setdiff(class(v), "AsIs")
+  if (!length(class(v))) v <- unclass(v)
+  v
 }
 
 # Errors ---------------------------------------------------------------------
@@ -134,7 +145,8 @@ describe_validator <- function(entry, name) {
     ColorscaleValidator = paste0(head, " a colorscale and may be specified as:\n",
                                  "      - A vector of colors, spaced evenly from 0 to 1\n",
                                  "      - A list of c(value, color) pairs, or a two-column data.frame, with values from 0 to 1\n",
-                                 "      - One of the named colorscales: ", paste(.named_colorscales, collapse = ", ")),
+                                 "      - The name of a sequential, diverging or cyclical scale in px_colors (case-insensitive;\n",
+                                 "        append \"_r\" to reverse), e.g. \"Viridis\", \"RdBu_r\""),
     AngleValidator = paste0(head, " an angle in degrees, wrapped to the interval [-180, 180)", arr),
     SubplotidValidator = sprintf("%s an identifier of a subplot of type '%s': the string '%s' optionally followed by an integer >= 1",
                                  head, entry$base, entry$base),
@@ -174,7 +186,9 @@ check_scalar_or_array <- function(v, key, entry) {
 # Simple validators ----------------------------------------------------------
 
 vc_data_array <- function(v, key, entry) {
-  if (is.data.frame(v) || (is.list(v) && !is.null(names(v)))) raise_invalid_val(v, key, entry)
+  # A data.frame is 2D data (e.g. customdata): serialised as rows of values.
+  if (is.data.frame(v)) return(v)
+  if (is.list(v) && !is.null(names(v))) raise_invalid_val(v, key, entry)
   if (!is.atomic(v) && !is.list(v)) raise_invalid_val(v, key, entry)
   v <- as_char_if_factor(v)
   if (is.atomic(v) && length(v) == 1L && !is.matrix(v)) v <- I(v)
@@ -215,7 +229,11 @@ vc_boolean <- function(v, key, entry) {
 vc_string <- function(v, key, entry) {
   v <- as_char_if_factor(simplify_list(v))
   if (all_na(v)) v <- as.character(v)
-  if (is.numeric(v) && !isTRUE(entry$strict)) v <- as.character(v)
+  if (is.numeric(v) && !isTRUE(entry$strict)) {
+    # plotly.py keeps numeric arrays as they are; single numbers become strings
+    if (isTRUE(entry$array_ok) && length(v) > 1L && is.null(entry$values)) return(as.vector(v))
+    v <- as.character(v)
+  }
   if (!is.character(v)) raise_invalid_val(v, key, entry)
   check_scalar_or_array(v, key, entry)
   bad <- logical(length(v))
@@ -310,9 +328,9 @@ vc_colorlist <- function(v, key, entry) {
 vc_colorscale <- function(v, key, entry) {
   v <- as_char_if_factor(v)
   if (is.character(v) && length(v) == 1L) {
-    i <- match(tolower(v), tolower(.named_colorscales))
-    if (is.na(i)) raise_invalid_val(v, key, entry)
-    return(.named_colorscales[[i]])
+    named <- named_colorscale(v)
+    if (is.null(named)) raise_invalid_val(v, key, entry)
+    v <- named
   }
   if (is.character(v) && length(v) > 1L) {
     cols <- coerce_colors(v)
@@ -335,6 +353,22 @@ vc_colorscale <- function(v, key, entry) {
     if (anyNA(stops) || any(stops < 0 | stops > 1) || anyNA(cols)) raise_invalid_val(v, key, entry)
   }
   unname(Map(function(s, col) list(s, col), stops, cols))
+}
+
+# Named colorscales: the sequential, diverging and cyclical scales of
+# px_colors, matched case-insensitively ("_r" reverses), as in plotly.py.
+named_colorscale <- function(name) {
+  if (is.null(the$named_colorscales)) {
+    scales <- c(px_colors$sequential, px_colors$diverging, px_colors$cyclical)
+    names(scales) <- tolower(names(scales))
+    the$named_colorscales <- scales[!duplicated(names(scales), fromLast = TRUE)]
+  }
+  key <- tolower(name)
+  reverse <- endsWith(key, "_r")
+  if (reverse) key <- substr(key, 1L, nchar(key) - 2L)
+  cols <- the$named_colorscales[[key]]
+  if (is.null(cols)) return(NULL)
+  if (reverse) rev(cols) else cols
 }
 
 # Other simple validators ----------------------------------------------------
@@ -389,8 +423,8 @@ vc_info_array <- function(v, key, entry) {
     if (length(el) == 1L && is.atomic(el) && is.na(el)) return(NA)
     validate_coerce(el, paste0(key, "[", idx, "]"), item)
   }
-  is_2d <- is.matrix(v) || (is.list(v) && length(v) > 0L && !is_scalar(v[[1L]]))
-  if (is_2d && identical(as.character(dims), "1")) raise_invalid_val(v, key, entry)
+  is_2d <- !identical(as.character(dims), "1") &&
+    (is.matrix(v) || (is.list(v) && length(v) > 0L && (is.list(v[[1L]]) || (is.atomic(v[[1L]]) && length(v[[1L]]) > 1L))))
   if (is_2d) {
     rows <- if (is.matrix(v)) lapply(seq_len(nrow(v)), function(i) v[i, ]) else v
     return(lapply(seq_along(rows), function(i) {

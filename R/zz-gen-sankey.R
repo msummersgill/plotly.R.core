@@ -109,12 +109,8 @@
 #'   `colorscale` may be a palette name string of the following list:
 #'   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
 #'   Colorscale: a vector of colors, a two-column data.frame of (value,
-#'   color), or one of the named colorscales \code{"Blackbody"},
-#'   \code{"Bluered"}, \code{"Blues"}, \code{"Cividis"}, \code{"Earth"},
-#'   \code{"Electric"}, \code{"Greens"}, \code{"Greys"}, \code{"Hot"},
-#'   \code{"Jet"}, \code{"Picnic"}, \code{"Portland"}, \code{"Rainbow"},
-#'   \code{"RdBu"}, \code{"Reds"}, \code{"Viridis"}, \code{"YlGnBu"},
-#'   \code{"YlOrRd"}.
+#'   color), or the name of a sequential, diverging or cyclical scale in
+#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
 #' @param colorscales List of named lists or
 #'   \code{\link{go_sankey_link_concentrationscales}()} objects.
 #' @param column If there is a layout grid, use the domain for this column

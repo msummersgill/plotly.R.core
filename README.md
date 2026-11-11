@@ -15,11 +15,15 @@ and following the design of the [plotly Python package](https://github.com/plotl
 - **Subplots.** `make_subplots()` is a port of plotly.py's, tested against its
   output; traces and layout objects are placed with `row`, `col` and
   `secondary_y`.
+- **Plotly Express.** All 35 `px.*` functions plus `imshow` as `px_scatter()`,
+  `px_line()`, `px_bar()`, `px_histogram()`, ... with faceting, marginals,
+  trendlines, animation, the `px.data` datasets, `px.colors` palettes and
+  templates. Output is tested against plotly.py on 72 cases.
 - **Minimal dependencies.** data.table, htmlwidgets and jsonlite.
 
-> **Status:** early development. Graph objects, figures and subplots are in
-> place; plotly.express equivalents, Shiny, Quarto, templates and static image
-> export are still to come.
+> **Status:** early development. Graph objects, figures, subplots, templates
+> and Plotly Express are in place; Shiny, Quarto, compatibility with the
+> legacy plotly package and static image export are still to come.
 
 ## Installation
 
@@ -28,7 +32,24 @@ and following the design of the [plotly Python package](https://github.com/plotl
 install.packages("path/to/plotly.R.core", repos = NULL, type = "source")
 ```
 
-## Example: a 2D scatter plot
+## Example: Plotly Express
+
+```r
+library(plotly.R.core)
+
+px_scatter(
+  px_data_gapminder(year = 2007),
+  x = "gdpPercap", y = "lifeExp", size = "pop", color = "continent",
+  hover_name = "country", log_x = TRUE, size_max = 60, title = "Gapminder 2007"
+)
+```
+
+![Bubble chart of GDP per capita against life expectancy in 2007, sized by population and coloured by continent](man/figures/README-px-gapminder.png)
+
+Column arguments take column names, vectors, or one-sided formulas evaluated
+in the data (`x = ~ log10(gdpPercap)`).
+
+## Example: a 2D scatter plot with graph objects
 
 ```r
 library(plotly.R.core)

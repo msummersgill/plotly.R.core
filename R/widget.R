@@ -1,20 +1,32 @@
 #' Render a figure as an htmlwidget
 #'
-#' @param fig A list with `data` (list of traces), `layout` and `config`
-#'   elements.
+#' @param fig A [go_figure()], or a list with `data` (list of traces),
+#'   `layout`, `frames` and `config` elements.
 #' @param width,height Widget size in CSS units, or `NULL` to fill the
 #'   container.
 #' @param elementId Optional element id for the widget.
+#' @param config Plotly.js configuration options (e.g.
+#'   `list(displayModeBar = FALSE)`), merged over `fig$config`.
 #' @return An object of class `htmlwidget`.
+#' @details If the figure's layout has no `template`, the default template
+#'   (see [default_template()]) is applied.
 #' @export
 #' @examples
 #' plotly_widget(list(data = list(list(type = "bar", x = 1:3, y = c(2, 5, 3)))))
-plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL) {
+plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL, config = NULL) {
+  layout <- unclass(fig$layout %||% list())
+  if (is.null(layout$template)) {
+    tpl <- default_template()
+    if (!identical(tpl, "none")) layout$template <- get_template(tpl)
+  }
+  if (!length(layout)) layout <- structure(list(), names = character())
   x <- list(
     data = unname(fig$data %||% list()),
-    layout = fig$layout %||% structure(list(), names = character()),
-    config = fig$config %||% structure(list(), names = character())
+    layout = layout,
+    frames = unname(fig$frames %||% list()),
+    config = utils::modifyList(fig$config %||% list(), config %||% list())
   )
+  if (!length(x$config)) x$config <- structure(list(), names = character())
   attr(x, "TOJSON_FUNC") <- to_JSON
   htmlwidgets::createWidget(
     name = "plotly_R_core",
@@ -37,7 +49,7 @@ plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL) {
 to_JSON <- function(x, ...) {
   jsonlite::toJSON(
     prepare_json(x), digits = NA, auto_unbox = TRUE, force = TRUE,
-    null = "null", na = "null", ...
+    null = "null", na = "null", dataframe = "values", ...
   )
 }
 

@@ -23,32 +23,22 @@ initialise properties from (constructors). Named arguments take precedence.}
 
 \item{diverging}{Sets the default diverging colorscale. Note that
 `autocolorscale` must be true for this attribute to work. Colorscale:
-a vector of colors, a two-column data.frame of (value, color), or one
-of the named colorscales \code{"Blackbody"}, \code{"Bluered"},
-\code{"Blues"}, \code{"Cividis"}, \code{"Earth"}, \code{"Electric"},
-\code{"Greens"}, \code{"Greys"}, \code{"Hot"}, \code{"Jet"},
-\code{"Picnic"}, \code{"Portland"}, \code{"Rainbow"}, \code{"RdBu"},
-\code{"Reds"}, \code{"Viridis"}, \code{"YlGnBu"}, \code{"YlOrRd"}.}
+a vector of colors, a two-column data.frame of (value, color), or the
+name of a sequential, diverging or cyclical scale in
+\code{\link{px_colors}()} (append \code{"_r"} to reverse).}
 
 \item{sequential}{Sets the default sequential colorscale for positive
 values. Note that `autocolorscale` must be true for this attribute to
 work. Colorscale: a vector of colors, a two-column data.frame of
-(value, color), or one of the named colorscales \code{"Blackbody"},
-\code{"Bluered"}, \code{"Blues"}, \code{"Cividis"}, \code{"Earth"},
-\code{"Electric"}, \code{"Greens"}, \code{"Greys"}, \code{"Hot"},
-\code{"Jet"}, \code{"Picnic"}, \code{"Portland"}, \code{"Rainbow"},
-\code{"RdBu"}, \code{"Reds"}, \code{"Viridis"}, \code{"YlGnBu"},
-\code{"YlOrRd"}.}
+(value, color), or the name of a sequential, diverging or cyclical
+scale in \code{\link{px_colors}()} (append \code{"_r"} to reverse).}
 
 \item{sequentialminus}{Sets the default sequential colorscale for
 negative values. Note that `autocolorscale` must be true for this
 attribute to work. Colorscale: a vector of colors, a two-column
-data.frame of (value, color), or one of the named colorscales
-\code{"Blackbody"}, \code{"Bluered"}, \code{"Blues"},
-\code{"Cividis"}, \code{"Earth"}, \code{"Electric"}, \code{"Greens"},
-\code{"Greys"}, \code{"Hot"}, \code{"Jet"}, \code{"Picnic"},
-\code{"Portland"}, \code{"Rainbow"}, \code{"RdBu"}, \code{"Reds"},
-\code{"Viridis"}, \code{"YlGnBu"}, \code{"YlOrRd"}.}
+data.frame of (value, color), or the name of a sequential, diverging
+or cyclical scale in \code{\link{px_colors}()} (append \code{"_r"} to
+reverse).}
 
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}

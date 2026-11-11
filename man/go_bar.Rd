@@ -1241,12 +1241,8 @@ object.}
   palette name string of the following list:
   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
   Colorscale: a vector of colors, a two-column data.frame of (value,
-  color), or one of the named colorscales \code{"Blackbody"},
-  \code{"Bluered"}, \code{"Blues"}, \code{"Cividis"}, \code{"Earth"},
-  \code{"Electric"}, \code{"Greens"}, \code{"Greys"}, \code{"Hot"},
-  \code{"Jet"}, \code{"Picnic"}, \code{"Portland"}, \code{"Rainbow"},
-  \code{"RdBu"}, \code{"Reds"}, \code{"Viridis"}, \code{"YlGnBu"},
-  \code{"YlOrRd"}.
+  color), or the name of a sequential, diverging or cyclical scale in
+  \code{\link{px_colors}()} (append \code{"_r"} to reverse).
 
   \strong{\code{go_bar_marker_line()}}: Sets the colorscale. Has an
   effect only if in `marker.line.color` is set to a numerical array. The
@@ -1259,12 +1255,8 @@ object.}
   may be a palette name string of the following list:
   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
   Colorscale: a vector of colors, a two-column data.frame of (value,
-  color), or one of the named colorscales \code{"Blackbody"},
-  \code{"Bluered"}, \code{"Blues"}, \code{"Cividis"}, \code{"Earth"},
-  \code{"Electric"}, \code{"Greens"}, \code{"Greys"}, \code{"Hot"},
-  \code{"Jet"}, \code{"Picnic"}, \code{"Portland"}, \code{"Rainbow"},
-  \code{"RdBu"}, \code{"Reds"}, \code{"Viridis"}, \code{"YlGnBu"},
-  \code{"YlOrRd"}.}
+  color), or the name of a sequential, diverging or cyclical scale in
+  \code{\link{px_colors}()} (append \code{"_r"} to reverse).}
 
 \item{cornerradius}{Sets the rounding of corners. May be an integer
 number of pixels, or a percentage of bar width (as a string ending in

@@ -149,12 +149,8 @@
 #'   following list:
 #'   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
 #'   Colorscale: a vector of colors, a two-column data.frame of (value,
-#'   color), or one of the named colorscales \code{"Blackbody"},
-#'   \code{"Bluered"}, \code{"Blues"}, \code{"Cividis"}, \code{"Earth"},
-#'   \code{"Electric"}, \code{"Greens"}, \code{"Greys"}, \code{"Hot"},
-#'   \code{"Jet"}, \code{"Picnic"}, \code{"Portland"}, \code{"Rainbow"},
-#'   \code{"RdBu"}, \code{"Reds"}, \code{"Viridis"}, \code{"YlGnBu"},
-#'   \code{"YlOrRd"}.
+#'   color), or the name of a sequential, diverging or cyclical scale in
+#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
 #' @param connectgaps Determines whether or not gaps (i.e. \{nan\} or
 #'   missing values) in the provided data arrays are connected. Logical.
 #' @param customdata Assigns extra data each datum. This may be useful when

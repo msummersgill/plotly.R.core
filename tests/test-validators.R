@@ -31,7 +31,9 @@ stopifnot(
   json(list(x = vc(5, "scatter.x"))) == '{"x":[5]}',       # length 1 stays an array
   inherits(vc(as.Date("2024-01-01") + 0:1, "scatter.x"), "Date")
 )
-expect_error(vc(data.frame(a = 1), "scatter.x"), "Invalid value of type 'data.frame'")
+stopifnot(json(list(customdata = vc(data.frame(a = 1:2, b = c("x", "y")), "scatter.customdata"))) ==
+          '{"customdata":[[1,"x"],[2,"y"]]}')
+expect_error(vc(list(a = 1), "scatter.x"), "Invalid value of type 'list'")
 
 # Numbers and integers ---------------------------------------------------------
 stopifnot(
@@ -89,7 +91,9 @@ stopifnot(
   identical(vc("gray50", "scatter.marker.color"), "rgba(127,127,127,1)"),   # R color name
   identical(vc(c(1, 2, 3), "scatter.marker.color"), c(1, 2, 3)),            # numeric: has colorscale
   identical(vc(c("red", NA), "scatter.marker.color"), c("red", NA)),
-  identical(vc("viridis", "scatter.marker.colorscale"), "Viridis"),
+  length(vc("viridis", "scatter.marker.colorscale")) == 10L,                # expanded like plotly.py
+  identical(vc("viridis", "scatter.marker.colorscale")[[1L]], list(0, "#440154")),
+  identical(vc("Viridis_r", "scatter.marker.colorscale")[[1L]], list(0, "#fde725")),
   json(vc(c("red", "blue"), "scatter.marker.colorscale")) == '[[0,"red"],[1,"blue"]]',
   json(vc(data.frame(v = c(0, 1), c = c("red", "blue")), "scatter.marker.colorscale")) ==
     '[[0,"red"],[1,"blue"]]',
@@ -98,7 +102,7 @@ stopifnot(
 expect_error(vc("notacolor", "scatter.marker.color"), "is a color")
 expect_error(vc(c("red", "nope"), "scatter.marker.color"), "Invalid elements include: \"nope\"")
 expect_error(vc(1, "scatter.line.color"), "type 'numeric'")             # no colorscale sibling
-expect_error(vc("Nonexistent", "scatter.marker.colorscale"), "named colorscales")
+expect_error(vc("Nonexistent", "scatter.marker.colorscale"), "px_colors")
 expect_error(vc(list(c(0, "red"), c(2, "blue")), "scatter.marker.colorscale"), "colorscale")
 
 # Angles and info arrays ---------------------------------------------------------

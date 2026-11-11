@@ -8,13 +8,18 @@ stopifnot(
   identical(w$x$data[[1]]$type, "scatter")
 )
 
-# Serialisation: scalars unboxed, NA -> null, empty layout -> {}
+# Serialisation: scalars unboxed, NA -> null; the default template is applied
 json <- as.character(attr(w$x, "TOJSON_FUNC")(w$x))
 stopifnot(
   grepl('"type":"scatter"', json, fixed = TRUE),
   grepl('"y":[1,null,3]', json, fixed = TRUE),
-  grepl('"layout":{}', json, fixed = TRUE)
+  grepl('"template":{"layout":{"autotypenumbers"', json, fixed = TRUE)
 )
+old <- default_template("none")
+json <- as.character(attr(plotly_widget(fig)$x, "TOJSON_FUNC")(plotly_widget(fig)$x))
+default_template(old)
+stopifnot(grepl('"layout":{}', json, fixed = TRUE))
+stopifnot(identical(default_template(), "plotly"))
 
 # Bundled plotly.js is present and matches the yaml dependency version
 js <- system.file("htmlwidgets/lib/plotlyjs/plotly.min.js", package = "plotly.R.core")

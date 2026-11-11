@@ -13,7 +13,7 @@ Create interactive web graphics with the 'plotly.js' JavaScript library. Graph o
 
 Other contributors:
 \itemize{
-  \item Plotly Technologies Inc. (Bundled 'plotly.js' library) [copyright holder]
+  \item Plotly Technologies Inc. (Bundled 'plotly.js' library; templates and datasets from 'plotly.py') [copyright holder]
 }
 
 }

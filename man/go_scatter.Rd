@@ -1118,12 +1118,9 @@ Inf].}
   from the lowest to the highest value of the scatter plot along that
   axis, or from the center to the most distant point from it, if
   orientation is "radial". Colorscale: a vector of colors, a two-column
-  data.frame of (value, color), or one of the named colorscales
-  \code{"Blackbody"}, \code{"Bluered"}, \code{"Blues"},
-  \code{"Cividis"}, \code{"Earth"}, \code{"Electric"}, \code{"Greens"},
-  \code{"Greys"}, \code{"Hot"}, \code{"Jet"}, \code{"Picnic"},
-  \code{"Portland"}, \code{"Rainbow"}, \code{"RdBu"}, \code{"Reds"},
-  \code{"Viridis"}, \code{"YlGnBu"}, \code{"YlOrRd"}.
+  data.frame of (value, color), or the name of a sequential, diverging
+  or cyclical scale in \code{\link{px_colors}()} (append \code{"_r"} to
+  reverse).
 
   \strong{\code{go_scatter_marker()}}: Sets the colorscale. Has an
   effect only if in `marker.color` is set to a numerical array. The
@@ -1136,12 +1133,8 @@ Inf].}
   palette name string of the following list:
   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
   Colorscale: a vector of colors, a two-column data.frame of (value,
-  color), or one of the named colorscales \code{"Blackbody"},
-  \code{"Bluered"}, \code{"Blues"}, \code{"Cividis"}, \code{"Earth"},
-  \code{"Electric"}, \code{"Greens"}, \code{"Greys"}, \code{"Hot"},
-  \code{"Jet"}, \code{"Picnic"}, \code{"Portland"}, \code{"Rainbow"},
-  \code{"RdBu"}, \code{"Reds"}, \code{"Viridis"}, \code{"YlGnBu"},
-  \code{"YlOrRd"}.
+  color), or the name of a sequential, diverging or cyclical scale in
+  \code{\link{px_colors}()} (append \code{"_r"} to reverse).
 
   \strong{\code{go_scatter_marker_line()}}: Sets the colorscale. Has an
   effect only if in `marker.line.color` is set to a numerical array. The
@@ -1154,12 +1147,8 @@ Inf].}
   may be a palette name string of the following list:
   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
   Colorscale: a vector of colors, a two-column data.frame of (value,
-  color), or one of the named colorscales \code{"Blackbody"},
-  \code{"Bluered"}, \code{"Blues"}, \code{"Cividis"}, \code{"Earth"},
-  \code{"Electric"}, \code{"Greens"}, \code{"Greys"}, \code{"Hot"},
-  \code{"Jet"}, \code{"Picnic"}, \code{"Portland"}, \code{"Rainbow"},
-  \code{"RdBu"}, \code{"Reds"}, \code{"Viridis"}, \code{"YlGnBu"},
-  \code{"YlOrRd"}.}
+  color), or the name of a sequential, diverging or cyclical scale in
+  \code{\link{px_colors}()} (append \code{"_r"} to reverse).}
 
 \item{start}{Sets the gradient start value. It is given as the absolute
 position on the axis determined by the orientiation. E.g., if

@@ -4,22 +4,35 @@
 \alias{plotly_widget}
 \title{Render a figure as an htmlwidget}
 \usage{
-plotly_widget(fig, width = NULL, height = NULL, elementId = NULL)
+plotly_widget(
+  fig,
+  width = NULL,
+  height = NULL,
+  elementId = NULL,
+  config = NULL
+)
 }
 \arguments{
-\item{fig}{A list with \code{data} (list of traces), \code{layout} and \code{config}
-elements.}
+\item{fig}{A \code{\link[=go_figure]{go_figure()}}, or a list with \code{data} (list of traces),
+\code{layout}, \code{frames} and \code{config} elements.}
 
 \item{width, height}{Widget size in CSS units, or \code{NULL} to fill the
 container.}
 
 \item{elementId}{Optional element id for the widget.}
+
+\item{config}{Plotly.js configuration options (e.g.
+\code{list(displayModeBar = FALSE)}), merged over \code{fig$config}.}
 }
 \value{
 An object of class \code{htmlwidget}.
 }
 \description{
 Render a figure as an htmlwidget
+}
+\details{
+If the figure's layout has no \code{template}, the default template
+(see \code{\link[=default_template]{default_template()}}) is applied.
 }
 \examples{
 plotly_widget(list(data = list(list(type = "bar", x = 1:3, y = c(2, 5, 3)))))

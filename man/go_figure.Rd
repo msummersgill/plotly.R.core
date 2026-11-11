@@ -4,7 +4,7 @@
 \alias{go_figure}
 \title{Create a figure}
 \usage{
-go_figure(data = NULL, layout = NULL, skip_invalid = FALSE)
+go_figure(data = NULL, layout = NULL, frames = NULL, skip_invalid = FALSE)
 }
 \arguments{
 \item{data}{A trace (e.g. from \code{\link[=go_scatter]{go_scatter()}}), a list of traces, or a
@@ -12,6 +12,10 @@ figure (or a list with \code{data} and \code{layout} elements) to copy. Traces m
 be graph objects or named lists with a \code{type} element.}
 
 \item{layout}{A \code{\link[=go_layout]{go_layout()}} object or a named list of layout properties.}
+
+\item{frames}{Animation frames: a list of named lists with \code{name}, \code{data}
+(a list of traces), and optionally \code{layout}, \code{group}, \code{traces} and
+\code{baseframe} elements (see \url{https://plotly.com/javascript/animations/}).}
 
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties instead of
 raising an error.}

@@ -123,15 +123,6 @@ base_validator <- function(nodes) {
   out
 }
 
-# Named colorscales built into plotly.js, parsed from the colorscale
-# description (e.g. "... palette name string of the following list: A,B,C.").
-plotly_colorscale_names <- function(schema) {
-  desc <- schema$traces$scatter$attributes$marker$colorscale$description
-  m <- regmatches(desc, regexpr("following list: [A-Za-z,]+", desc))
-  if (!length(m)) stop("Could not find named colorscales in the schema")
-  strsplit(sub("following list: ", "", m), ",", fixed = TRUE)[[1L]]
-}
-
 read_named_colors <- function(path = file.path("codegen", "resources", "named-colors.txt")) {
   x <- readLines(path)
   x[nzchar(x) & !startsWith(x, "#")]

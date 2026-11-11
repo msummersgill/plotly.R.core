@@ -89,7 +89,7 @@ update_plotlyjs_dev <- function(path = "~/Documents/plotly.js") {
 
 # Generate validators (and, later, graph objects) from the plotly.js schema.
 codegen <- function() {
-  for (f in c("utils.R", "validators.R", "datatypes.R", "figure.R", "generate.R")) source(file.path(PROJECT_ROOT, "codegen", f))
+  for (f in c("utils.R", "validators.R", "datatypes.R", "figure.R", "colors.R", "generate.R")) source(file.path(PROJECT_ROOT, "codegen", f))
   perform_codegen(PROJECT_ROOT)
 }
 

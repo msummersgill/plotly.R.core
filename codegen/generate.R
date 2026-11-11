@@ -22,13 +22,11 @@ perform_codegen <- function(outdir = ".", scope = CODEGEN_SCOPE) {
 
   .validators <- validators
   .named_colors <- read_named_colors(file.path(outdir, "codegen", "resources", "named-colors.txt"))
-  .named_colorscales <- plotly_colorscale_names(schema)
-  save(.validators, .named_colors, .named_colorscales,
-       file = file.path(outdir, "R", "sysdata.rda"), compress = "xz")
+  save(.validators, .named_colors, file = file.path(outdir, "R", "sysdata.rda"), compress = "xz")
 
-  .named_colorscales <<- .named_colorscales # used by type_doc()
   write_datatypes(nodes, validators, schema, outdir)
   write_figure(validators, outdir)
+  write_colors(outdir)
 
   message(sprintf(
     "Generated %d validators (%d compound, %d compound array) for traces: %s",

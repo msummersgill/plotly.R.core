@@ -20,6 +20,9 @@
 #'   figure (or a list with `data` and `layout` elements) to copy. Traces may
 #'   be graph objects or named lists with a `type` element.
 #' @param layout A [go_layout()] object or a named list of layout properties.
+#' @param frames Animation frames: a list of named lists with `name`, `data`
+#'   (a list of traces), and optionally `layout`, `group`, `traces` and
+#'   `baseframe` elements (see <https://plotly.com/javascript/animations/>).
 #' @param skip_invalid If `TRUE`, silently drop invalid properties instead of
 #'   raising an error.
 #' @return A `go_figure` object.
@@ -34,24 +37,52 @@
 #'   add_scatter(x = 1:3, y = c(3, 2, 1), mode = "markers") |>
 #'   update_layout(xaxis_title = "x")
 #' if (interactive()) print(fig)
-go_figure <- function(data = NULL, layout = NULL, skip_invalid = FALSE) {
+go_figure <- function(data = NULL, layout = NULL, frames = NULL, skip_invalid = FALSE) {
   if (inherits(data, "go_figure") || (is.list(data) && !is.data.frame(data) && !inherits(data, "plotly_obj") &&
-                                      !is.null(names(data)) && all(names(data) %in% c("data", "layout")))) {
+                                      !is.null(names(data)) && all(names(data) %in% c("data", "layout", "frames")))) {
     src <- unclass(data)
     data <- src$data
     layout <- layout %||% src$layout
+    frames <- frames %||% src$frames
   }
-  new_figure(validate_data(data, skip_invalid), validate_layout(layout, skip_invalid))
+  new_figure(validate_data(data, skip_invalid), validate_layout(layout, skip_invalid),
+             validate_frames(frames, skip_invalid))
 }
 
-new_figure <- function(data, layout) structure(list(data = data, layout = layout), class = "go_figure")
+new_figure <- function(data, layout, frames = list()) {
+  structure(list(data = data, layout = layout, frames = frames), class = "go_figure")
+}
 
-# Rebuild `fig` with new data and/or layout, keeping its subplot grid.
-modify_figure <- function(fig, data = fig$data, layout = fig$layout) {
-  out <- new_figure(data, layout)
-  attr(out, "grid_ref") <- attr(fig, "grid_ref")
-  attr(out, "grid_str") <- attr(fig, "grid_str")
+# Rebuild `fig` with new parts, keeping its subplot grid and other attributes.
+modify_figure <- function(fig, data = fig$data, layout = fig$layout, frames = fig$frames) {
+  out <- new_figure(data, layout, frames %||% list())
+  for (a in c("grid_ref", "grid_str", "px_trendlines")) attr(out, a) <- attr(fig, a)
   out
+}
+
+FRAME_PROPS <- c("name", "data", "layout", "group", "traces", "baseframe")
+
+validate_frames <- function(frames, skip_invalid = FALSE) {
+  if (is.null(frames)) return(list())
+  if (!is.list(frames) || is.data.frame(frames) || !is.null(names(frames))) {
+    stop("`frames` must be an unnamed list of frames", call. = FALSE)
+  }
+  lapply(frames, function(f) {
+    f <- unclass(f)
+    if (!is.list(f) || (length(f) && is.null(names(f)))) stop("Each frame must be a named list", call. = FALSE)
+    bad <- setdiff(names(f), FRAME_PROPS)
+    if (length(bad)) {
+      stop(sprintf("Invalid frame properties: %s\n    Valid properties: %s",
+                   paste(bad, collapse = ", "), paste(FRAME_PROPS, collapse = ", ")), call. = FALSE)
+    }
+    if (!is.null(f$name)) f$name <- as.character(f$name)
+    if (!is.null(f$group)) f$group <- as.character(f$group)
+    if (!is.null(f$baseframe)) f$baseframe <- as.character(f$baseframe)
+    if (!is.null(f$traces)) f$traces <- I(as.integer(f$traces))
+    if (!is.null(f$data)) f$data <- validate_data(f$data, skip_invalid)
+    if (!is.null(f$layout)) f$layout <- validate_layout(f$layout, skip_invalid)
+    f
+  })
 }
 
 check_figure <- function(fig) {
@@ -72,8 +103,10 @@ set_figure_part <- function(fig, name, value) {
     modify_figure(fig, data = validate_data(value))
   } else if (identical(name, "layout")) {
     modify_figure(fig, layout = validate_layout(value))
+  } else if (identical(name, "frames")) {
+    modify_figure(fig, frames = validate_frames(value))
   } else {
-    stop("A figure has only `data` and `layout` elements", call. = FALSE)
+    stop("A figure has only `data`, `layout` and `frames` elements", call. = FALSE)
   }
 }
 
@@ -204,8 +237,11 @@ update_object <- function(obj, key, patch, overwrite = FALSE) {
       next
     }
     child <- get_validator(ck)
-    mergeable <- !overwrite && child$superclass %in% c("CompoundValidator", "TitleValidator") &&
-      is.list(val) && is.list(obj[[name]])
+    is_compound <- child$superclass %in% c("CompoundValidator", "TitleValidator")
+    # An empty unnamed list is a no-op (as an empty dict is in plotly.py); an
+    # empty named list (e.g. empty_object()) sets an empty object.
+    if (is_compound && is.list(val) && !length(val) && is.null(names(val))) next
+    mergeable <- !overwrite && is_compound && is.list(val) && (is.list(obj[[name]]) || is.null(obj[[name]]))
     obj[name] <- list(if (mergeable) update_object(obj[[name]], ck, val, overwrite) else val)
   }
   obj <- obj[!vapply(obj, is.null, logical(1))]
@@ -215,7 +251,7 @@ update_object <- function(obj, key, patch, overwrite = FALSE) {
 }
 
 combine_patch <- function(patch, dots) {
-  if (!is.null(patch) && (!is.list(patch) || is.null(names(patch)))) {
+  if (!is.null(patch) && (!is.list(patch) || (length(patch) && is.null(names(patch))))) {
     stop("`patch` must be a named list or graph object", call. = FALSE)
   }
   if (length(dots) && (is.null(names(dots)) || any(!nzchar(names(dots))))) {
