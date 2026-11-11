@@ -34,3 +34,16 @@ cases <- list(
   hide_legend = quote(plot_ly(mtcars, x = ~wt, y = ~mpg, color = ~factor(cyl)) |> hide_legend()),
   colorbar = quote(plot_ly(mtcars, x = ~wt, y = ~mpg, color = ~hp) |> colorbar(title = "HP"))
 )
+
+# add_sf() cases (need the sf package; North Carolina counties shipped with sf)
+nc5 <- quote(sf::st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)[1:5, ])
+sf_cases <- list(
+  sf_polygons = bquote(plot_ly(.(nc5))),
+  sf_split = bquote(plot_ly(.(nc5)) |> add_sf(split = ~NAME, color = I("gray40"), text = ~NAME, hoverinfo = "text")),
+  sf_color = bquote(plot_ly(.(nc5), color = ~AREA)),
+  sf_lines = bquote(plot_ly(sf::st_cast(.(nc5), "MULTILINESTRING"))),
+  sf_points = bquote(plot_ly(sf::st_centroid(.(nc5)))),
+  sf_geo = bquote(plot_geo(.(nc5)) |> add_sf()),
+  sf_markers_layer = bquote(plot_ly(.(nc5)) |> add_sf() |> add_sf(data = sf::st_centroid(.(nc5)), color = I("red")))
+)
+if (requireNamespace("sf", quietly = TRUE)) cases <- c(cases, sf_cases)

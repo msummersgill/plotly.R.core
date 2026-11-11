@@ -38,6 +38,7 @@ Suggests:
     png,
     reticulate,
     rmarkdown,
+    sf,
     shiny
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

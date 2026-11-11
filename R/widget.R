@@ -36,7 +36,7 @@ plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL, co
     source = setting("source") %||% "A",
     shinyEvents = I(setting("shinyEvents") %||% DEFAULT_EVENTS)
   )
-  for (k in c("keys", "sets", "frameKeys", "highlight")) {
+  for (k in c("keys", "sets", "frameKeys", "highlight", "fitBounds")) {
     if (!is.null(setting(k))) x[[k]] <- setting(k)
   }
   if (!is.null(setting("selectize"))) x$selectize <- lp_selectize_json(setting("selectize"))

@@ -2,7 +2,8 @@
  * htmlwidgets binding for plotly.R.core.
  *
  * x = {data, layout, config, frames, source, shinyEvents, keys, and for
- *      crosstalk linking: sets, frameKeys, highlight, selectize}
+ *      crosstalk linking: sets, frameKeys, highlight, selectize; fitBounds:
+ *      {mapId: [west, south, east, north]} initial views of map subplots}
  *
  * In Shiny, registered plotly.js events are sent to the server as the input
  * "<event>-<source>" (read with event_data()), and messages from
@@ -511,6 +512,24 @@
     return function() { handles.forEach(function(h) { h.close(); }); };
   }
 
+  // add_sf() on map subplots: fit the initial view to the data
+  function fitMapBounds(gd, x) {
+    Object.keys(x.fitBounds || {}).forEach(function(id) {
+      var sp = gd._fullLayout && gd._fullLayout[id] && gd._fullLayout[id]._subplot;
+      if (sp && sp.map && sp.map.cameraForBounds) {
+        // set through plotly.js so its layout (and relayout events) agree
+        var b = x.fitBounds[id];
+        var cam = sp.map.cameraForBounds([[b[0], b[1]], [b[2], b[3]]], {padding: 10});
+        if (!cam) return;
+        var center = cam.center.toArray ? cam.center.toArray() : [cam.center.lng, cam.center.lat];
+        var update = {};
+        update[id + ".center"] = {lon: center[0], lat: center[1]};
+        update[id + ".zoom"] = cam.zoom;
+        Plotly.relayout(gd, update);
+      }
+    });
+  }
+
   HTMLWidgets.widget({
     name: "plotly_R_core",
     type: "output",
@@ -538,6 +557,7 @@
           var plot = Plotly.newPlot(el, figure);
           plot.then(function() {
             registerShinyEvents(el, el, x);
+            fitMapBounds(el, x);
             if (hasCrosstalk(x)) closeCrosstalk = registerCrosstalk(el, x);
           });
         },

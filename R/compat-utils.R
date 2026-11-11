@@ -59,6 +59,8 @@ lp_eval_attrs <- function(x, data) {
 
 # Grouping variables of a dplyr grouped_df, read without depending on dplyr.
 lp_group_vars <- function(d) {
+  # add_sf() data marks its group column with this attribute
+  if (!is.null(attr(d, "plotly_groups"))) return(attr(d, "plotly_groups"))
   if (!inherits(d, "grouped_df")) return(character())
   setdiff(names(attr(d, "groups")), ".rows")
 }

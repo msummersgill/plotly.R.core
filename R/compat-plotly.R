@@ -727,7 +727,7 @@ legacy_figure <- function(p) {
     warning(conditionMessage(e), "\n(invalid attributes are ignored)", call. = FALSE)
     go_figure(x$data, x$layout, x$frames %||l% NULL, skip_invalid = TRUE)
   })
-  for (k in c("config", "source", "shinyEvents", "mathjax", "keys", "sets", "frameKeys", "highlight", "selectize")) {
+  for (k in c("config", "source", "shinyEvents", "mathjax", "keys", "sets", "frameKeys", "highlight", "selectize", "fitBounds")) {
     if (!is.null(x[[k]])) attr(fig, paste0("plotly_", k)) <- x[[k]]
   }
   fig

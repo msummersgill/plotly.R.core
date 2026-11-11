@@ -49,6 +49,10 @@ plotly_build <- function(p, registerFrames = TRUE) {
   if (length(frame_mapping) > 1) warning("Only one `frame` variable is allowed", call. = FALSE)
 
   if (length(p$x$attrs) == 0) p$x$attrs <- NULL
+  # one (unevaluated) trace with sf data: add an sf layer
+  if (length(p$x$attrs) == 1 && !inherits(p$x$attrs[[1]], "plotly_eval") && inherits(plotly_data(p), "sf")) {
+    p <- add_sf(p)
+  }
   if (is.null(p$x$attrs[[1]][["type"]]) && length(p$x$attrs) > 1) p$x$attrs[[1]] <- NULL
   is_evaled <- function(x) inherits(x, "plotly_eval")
   to_eval <- p$x$attrs[!vapply(p$x$attrs, is_evaled, logical(1))]
@@ -72,9 +76,9 @@ plotly_build <- function(p, registerFrames = TRUE) {
   for (d in dats) for (ax in names(attr(d, "titles"))) {
     path <- attr(d, "titles")[[ax]]
     if (length(path) == 2L) {
-      p$x$layout[[path[[1]]]][[path[[2]]]]$title <- p$x$layout[[path[[1]]]][[path[[2]]]]$title %||l% ax
+      p$x$layout[[path[[1]]]][[path[[2]]]]$title <- p$x$layout[[path[[1]]]][[path[[2]]]]$title %||l% lp_default(ax)
     } else {
-      p$x$layout[[path]]$title <- p$x$layout[[path]]$title %||l% ax
+      p$x$layout[[path]]$title <- p$x$layout[[path]]$title %||l% lp_default(ax)
     }
   }
   p$x$attrs <- lapply(p$x$attrs, function(x) structure(x, class = "plotly_eval"))
@@ -122,6 +126,7 @@ plotly_build <- function(p, registerFrames = TRUE) {
   p$x$data <- unname(c(p$x$data, traces))
   p <- lp_supply_defaults(p)
   p <- lp_cartesian2geo(p)
+  p <- lp_fit_bounds(p)
   p <- lp_populate_categorical_axes(p)
   p <- lp_translate_linebreaks(p)
   p <- lp_verify_mode(p)
@@ -398,7 +403,7 @@ lp_map_size <- function(traces, stroke = FALSE) {
     single <- length(u) == 1
     pick <- function(path) if (single) u else if (lp_array_ok(type, path)) sizes
     if (stroke) {
-      if (lp_has_attr(type, "marker")) trace$marker$line <- lp_modify_list(list(width = lp_default(pick(c("marker", "line", "width")))), trace$marker$line)
+      if (lp_has_attr(type, "marker.line")) trace$marker$line <- lp_modify_list(list(width = lp_default(pick(c("marker", "line", "width")))), trace$marker$line)
       for (a in c("error_y", "error_x")) {
         if (lp_has_attr(type, a)) trace[[a]] <- lp_modify_list(list(thickness = lp_default(pick(c(a, "thickness")))), trace[[a]])
       }
@@ -439,7 +444,7 @@ lp_color_fill <- function(trace, rgba, is_colorway = FALSE, stroke = FALSE) {
   single <- length(u) == 1
   dflt <- if (is_colorway) function(x) lp_prefix_class(lp_default(x), "colorway") else lp_default
   if (stroke) {
-    if (lp_has_attr(type, "marker")) {
+    if (lp_has_attr(type, "marker.line")) {
       col <- if (single) u else if (lp_array_ok(type, c("marker", "line", "color"))) rgba
       trace$marker$line <- lp_modify_list(list(color = dflt(col)), trace$marker$line)
     }
@@ -531,8 +536,11 @@ lp_map_color <- function(traces, stroke = FALSE, title = "", colorway, na.color 
       } else {
         o <- obj
         o$color <- lp_default(color[[i]])
-        if (stroke) traces[[i]]$marker$line <- lp_modify_list(o, traces[[i]]$marker$line)
-        else traces[[i]]$marker <- lp_modify_list(o, traces[[i]]$marker)
+        if (stroke) {
+          if (lp_has_attr(traces[[i]]$type %||l% "scatter", "marker.line")) traces[[i]]$marker$line <- lp_modify_list(o, traces[[i]]$marker$line)
+        } else {
+          traces[[i]]$marker <- lp_modify_list(o, traces[[i]]$marker)
+        }
         if (has_line[[i]]) {
           if (has_line_color[[i]]) traces[[i]]$line <- lp_modify_list(o, traces[[i]]$line)
           else warning("line.color doesn't (yet) support data arrays", call. = FALSE)
@@ -659,9 +667,12 @@ lp_translate_linebreaks <- function(p) {
   p
 }
 
+# Does obj contain a value that isn't a default? (Default-marked lists, such
+# as colorscales, count as defaults as a whole.)
 lp_user_specified <- function(obj) {
   if (!length(obj)) return(FALSE)
-  !all(unlist(rapply(obj, lp_is_default, how = "list")))
+  user <- function(v) if (lp_is_default(v)) FALSE else if (is.list(v)) any(vapply(v, user, logical(1))) else TRUE
+  user(obj)
 }
 
 lp_verify_mode <- function(p) {

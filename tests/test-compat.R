@@ -29,6 +29,7 @@ normalise <- function(x) {
     t$frame <- NULL
     t$key <- NULL
     t$set <- NULL
+    t[["_bbox"]] <- NULL  # add_sf()'s internal bounding box
     if (identical(t$type, "pie")) t$marker$color <- NULL
     t$marker$line$colorbar <- NULL
     t$marker$line$showscale <- NULL
@@ -39,6 +40,7 @@ normalise <- function(x) {
     t
   }
   x$layout$template <- NULL
+  x$layout$mapType <- NULL  # legacy internal
   x$data <- lapply(x$data, fix_trace)
   x$frames <- lapply(x$frames, function(f) { f$data <- lapply(f$data, fix_trace); f })
   x <- clean(x)
@@ -106,4 +108,19 @@ if (requireNamespace("crosstalk", quietly = TRUE)) {
   w <- as_widget(plot_ly(mtcars, x = ~wt, y = ~mpg))
   stopifnot(is.null(w$x$sets), is.null(w$x$highlight), !"crosstalk" %in% vapply(w$dependencies, `[[`, "", "name"))
   stopifnot(identical(attrs_selected(showlegend = TRUE), list(showlegend = TRUE, opacity = 1)))
+}
+
+# add_sf(): map views, internal fields removed, crosstalk keys per coordinate
+if (requireNamespace("sf", quietly = TRUE)) {
+  nc <- sf::st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)[1:5, ]
+  w <- suppressWarnings(as_widget(plot_mapbox(nc)))
+  stopifnot(identical(w$x$data[[1]]$type, "scattermap"), is.null(w$x$data[[1]][["_bbox"]]),
+            length(w$x$fitBounds$map) == 4L, abs(w$x$layout$map$center$lat - 36.33) < 0.1)
+  w <- as_widget(plot_ly(sf::st_set_crs(sf::st_geometry(nc), NA) |> sf::st_sf()))
+  stopifnot(identical(w$x$layout$xaxis$scaleanchor, "y"), is.null(w$x$data[[1]][["_bbox"]]))
+  stopifnot(inherits(tryCatch(add_sf(plot_ly(mtcars)), error = identity), "error"))
+  if (requireNamespace("crosstalk", quietly = TRUE)) {
+    w <- suppressMessages(as_widget(plot_ly(highlight_key(nc, ~NAME))))
+    stopifnot(length(w$x$keys[[1]]) == length(w$x$data[[1]]$x), "Ashe" %in% unlist(w$x$keys))
+  }
 }

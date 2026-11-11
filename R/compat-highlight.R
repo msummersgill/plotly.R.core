@@ -226,13 +226,14 @@ lp_supply_highlight_attrs <- function(p) {
   p
 }
 
-# legacy_figure(): move keys and sets out of the traces and frames.
+# legacy_figure(): move keys and sets out of the traces and frames (and drop
+# add_sf()'s internal bounding boxes).
 lp_extract_keys <- function(x) {
   take <- function(traces, what) {
     v <- lapply(traces, `[[`, what)
     if (all(vapply(v, is.null, logical(1)))) NULL else v
   }
-  drop <- function(traces) lapply(traces, function(tr) { tr$key <- NULL; tr$set <- NULL; tr })
+  drop <- function(traces) lapply(traces, function(tr) { tr$key <- NULL; tr$set <- NULL; tr[["_bbox"]] <- NULL; tr })
   x$keys <- take(x$data, "key")
   x$sets <- take(x$data, "set")
   x$data <- drop(x$data)

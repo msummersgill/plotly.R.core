@@ -181,6 +181,8 @@ plot_ly(mtcars, x = ~wt, y = ~mpg, color = ~factor(cyl), size = ~hp) |>
 ```
 
 `legacy_figure()` converts such a plot to a `go_figure` for further editing.
+Simple features data (the sf package) are drawn with `add_sf()`, or by
+`plot_ly()`, `plot_geo()` and `plot_mapbox()` directly.
 Not supported: `ggplotly()`, Chart Studio (`api_*()`), `orca()`/`export()` (use
 `save_image()`), and the dplyr verbs re-exported by plotly (use dplyr or
 data.table directly). Use the base pipe `|>` instead of `%>%`.
