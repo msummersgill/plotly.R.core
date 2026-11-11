@@ -19,8 +19,8 @@ a \verb{px_*()} function with \code{trendline = "ols"}, one row per trendline, l
 plotly.py's \code{px.get_trendline_results()}.
 }
 \examples{
-fig <- px_scatter(px_data_tips(), x = "total_bill", y = "tip", color = "smoker",
-                  trendline = "ols")
+fig <- px_data_tips() |>
+  px_scatter(x = ~total_bill, y = ~tip, color = ~smoker, trendline = "ols")
 res <- px_get_trendline_results(fig)
 summary(res$px_fit_results[[1]])
 }

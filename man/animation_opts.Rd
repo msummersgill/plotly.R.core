@@ -48,5 +48,5 @@ Controls animations of \code{\link[=plot_ly]{plot_ly()}} objects with a \code{fr
 }
 \examples{
 df <- data.frame(x = rep(1:5, 3), y = runif(15), t = rep(1:3, each = 5))
-plot_ly(df, x = ~x, y = ~y, frame = ~t) |> animation_opts(1000, easing = "elastic")
+df |> plot_ly(x = ~x, y = ~y, frame = ~t) |> animation_opts(1000, easing = "elastic")
 }

@@ -98,9 +98,10 @@ Mapbox-based traces, it uses the MapLibre-based \code{scattermap} and
 \code{choroplethmap} traces (no access token is needed).
 }
 \examples{
-plot_ly(mtcars, x = ~wt, y = ~mpg, color = ~factor(cyl), size = ~hp) |>
+mtcars |> plot_ly(x = ~wt, y = ~mpg, color = ~factor(cyl), size = ~hp) |>
   layout(title = "Motor Trend cars")
-plot_ly(economics_like <- data.frame(t = 1:20, v = cumsum(rnorm(20))), x = ~t, y = ~v) |>
+data.frame(t = 1:20, v = cumsum(rnorm(20))) |>
+  plot_ly(x = ~t, y = ~v) |>
   add_lines()
 }
 \seealso{

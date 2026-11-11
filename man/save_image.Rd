@@ -42,7 +42,7 @@ Kaleido.
 }
 \examples{
 \dontrun{
-fig <- px_scatter(px_data_iris(), x = "sepal_width", y = "sepal_length", color = "species")
+fig <- px_data_iris() |> px_scatter(x = ~sepal_width, y = ~sepal_length, color = ~species)
 save_image(fig, tempfile(fileext = ".png"), width = 800, height = 500, scale = 2)
 save_image(fig, tempfile(fileext = ".svg"))
 }

@@ -22,6 +22,6 @@ does). For a \code{\link[=go_figure]{go_figure()}} it returns the htmlwidget tha
 would produce.
 }
 \examples{
-p <- plot_ly(mtcars, x = ~wt, y = ~mpg, color = ~factor(cyl))
+p <- mtcars |> plot_ly(x = ~wt, y = ~mpg, color = ~factor(cyl))
 length(plotly_build(p)$x$data)
 }

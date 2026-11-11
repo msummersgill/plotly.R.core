@@ -12,10 +12,10 @@
 #' @family plotly express
 #' @export
 #' @examples
-#' df <- px_data_iris()
-#' px_scatter(df, x = "sepal_width", y = "sepal_length", color = "species",
-#'            size = "petal_length", hover_data = "petal_width")
-#' px_scatter(px_data_tips(), x = "total_bill", y = "tip", facet_col = "time", trendline = "ols")
+#' px_data_iris() |>
+#'   px_scatter(x = ~sepal_width, y = ~sepal_length, color = ~species,
+#'              size = ~petal_length, hover_data = ~petal_width)
+#' px_data_tips() |> px_scatter(x = ~total_bill, y = ~tip, facet_col = ~time, trendline = "ols")
 px_scatter <- function(
     data_frame = NULL, x = NULL, y = NULL, color = NULL, symbol = NULL,
     size = NULL, hover_name = NULL, hover_data = NULL, custom_data = NULL,
@@ -48,7 +48,7 @@ px_scatter <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_density_contour(px_data_tips(), x = "total_bill", y = "tip")
+#' px_data_tips() |> px_density_contour(x = ~total_bill, y = ~tip)
 px_density_contour <- function(
     data_frame = NULL, x = NULL, y = NULL, z = NULL, color = NULL,
     facet_row = NULL, facet_col = NULL, facet_col_wrap = 0,
@@ -78,7 +78,7 @@ px_density_contour <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_density_heatmap(px_data_tips(), x = "total_bill", y = "tip", marginal_x = "histogram")
+#' px_data_tips() |> px_density_heatmap(x = ~total_bill, y = ~tip, marginal_x = "histogram")
 px_density_heatmap <- function(
     data_frame = NULL, x = NULL, y = NULL, z = NULL, facet_row = NULL,
     facet_col = NULL, facet_col_wrap = 0, facet_row_spacing = NULL,
@@ -105,9 +105,8 @@ px_density_heatmap <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' df <- px_data_gapminder()
-#' px_line(df[df$continent == "Oceania"], x = "year", y = "lifeExp", color = "country",
-#'         markers = TRUE)
+#' px_data_gapminder()[continent == "Oceania"] |>
+#'   px_line(x = ~year, y = ~lifeExp, color = ~country, markers = TRUE)
 px_line <- function(
     data_frame = NULL, x = NULL, y = NULL, line_group = NULL, color = NULL,
     line_dash = NULL, symbol = NULL, hover_name = NULL, hover_data = NULL,
@@ -138,8 +137,8 @@ px_line <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_area(px_data_gapminder(), x = "year", y = "pop", color = "continent",
-#'         line_group = "country")
+#' px_data_gapminder() |>
+#'   px_area(x = ~year, y = ~pop, color = ~continent, line_group = ~country)
 px_area <- function(
     data_frame = NULL, x = NULL, y = NULL, line_group = NULL, color = NULL,
     pattern_shape = NULL, symbol = NULL, hover_name = NULL,
@@ -168,7 +167,7 @@ px_area <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_bar(px_data_tips(), x = "day", y = "total_bill", color = "sex", barmode = "group")
+#' px_data_tips() |> px_bar(x = ~day, y = ~total_bill, color = ~sex, barmode = "group")
 px_bar <- function(
     data_frame = NULL, x = NULL, y = NULL, color = NULL,
     pattern_shape = NULL, facet_row = NULL, facet_col = NULL,
@@ -199,10 +198,10 @@ px_bar <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' df <- data.frame(task = c("A", "B", "C"),
-#'                  start = c("2009-01-01", "2009-03-05", "2009-02-20"),
-#'                  finish = c("2009-02-28", "2009-04-15", "2009-05-30"))
-#' px_timeline(df, x_start = "start", x_end = "finish", y = "task")
+#' data.frame(task = c("A", "B", "C"),
+#'            start = c("2009-01-01", "2009-03-05", "2009-02-20"),
+#'            finish = c("2009-02-28", "2009-04-15", "2009-05-30")) |>
+#'   px_timeline(x_start = ~start, x_end = ~finish, y = ~task)
 px_timeline <- function(
     data_frame = NULL, x_start = NULL, x_end = NULL, y = NULL, color = NULL,
     pattern_shape = NULL, facet_row = NULL, facet_col = NULL,
@@ -232,7 +231,7 @@ px_timeline <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_histogram(px_data_tips(), x = "total_bill", color = "sex", marginal = "rug", nbins = 20)
+#' px_data_tips() |> px_histogram(x = ~total_bill, color = ~sex, marginal = "rug", nbins = 20)
 px_histogram <- function(
     data_frame = NULL, x = NULL, y = NULL, color = NULL,
     pattern_shape = NULL, facet_row = NULL, facet_col = NULL,
@@ -263,7 +262,7 @@ px_histogram <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_ecdf(px_data_tips(), x = "total_bill", color = "sex")
+#' px_data_tips() |> px_ecdf(x = ~total_bill, color = ~sex)
 px_ecdf <- function(
     data_frame = NULL, x = NULL, y = NULL, color = NULL, text = NULL,
     line_dash = NULL, symbol = NULL, facet_row = NULL, facet_col = NULL,
@@ -293,7 +292,7 @@ px_ecdf <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_violin(px_data_tips(), y = "total_bill", x = "day", color = "smoker", box = TRUE)
+#' px_data_tips() |> px_violin(y = ~total_bill, x = ~day, color = ~smoker, box = TRUE)
 px_violin <- function(
     data_frame = NULL, x = NULL, y = NULL, color = NULL, facet_row = NULL,
     facet_col = NULL, facet_col_wrap = 0, facet_row_spacing = NULL,
@@ -323,7 +322,7 @@ px_violin <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_box(px_data_tips(), x = "time", y = "total_bill", points = "all")
+#' px_data_tips() |> px_box(x = ~time, y = ~total_bill, points = "all")
 px_box <- function(
     data_frame = NULL, x = NULL, y = NULL, color = NULL, facet_row = NULL,
     facet_col = NULL, facet_col_wrap = 0, facet_row_spacing = NULL,
@@ -349,7 +348,7 @@ px_box <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_strip(px_data_tips(), x = "total_bill", y = "day", color = "sex")
+#' px_data_tips() |> px_strip(x = ~total_bill, y = ~day, color = ~sex)
 px_strip <- function(
     data_frame = NULL, x = NULL, y = NULL, color = NULL, facet_row = NULL,
     facet_col = NULL, facet_col_wrap = 0, facet_row_spacing = NULL,
@@ -375,8 +374,8 @@ px_strip <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_scatter_3d(px_data_iris(), x = "sepal_length", y = "sepal_width", z = "petal_width",
-#'               color = "species")
+#' px_data_iris() |>
+#'   px_scatter_3d(x = ~sepal_length, y = ~sepal_width, z = ~petal_width, color = ~species)
 px_scatter_3d <- function(
     data_frame = NULL, x = NULL, y = NULL, z = NULL, color = NULL,
     symbol = NULL, size = NULL, text = NULL, hover_name = NULL,
@@ -406,9 +405,8 @@ px_scatter_3d <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' df <- px_data_gapminder()
-#' px_line_3d(df[df$continent == "Europe"], x = "gdpPercap", y = "pop", z = "year",
-#'            color = "country")
+#' px_data_gapminder()[continent == "Europe"] |>
+#'   px_line_3d(x = ~gdpPercap, y = ~pop, z = ~year, color = ~country)
 px_line_3d <- function(
     data_frame = NULL, x = NULL, y = NULL, z = NULL, color = NULL,
     line_dash = NULL, text = NULL, line_group = NULL, symbol = NULL,
@@ -437,8 +435,8 @@ px_line_3d <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_scatter_ternary(px_data_election(), a = "Joly", b = "Coderre", c = "Bergeron",
-#'                    color = "winner")
+#' px_data_election() |>
+#'   px_scatter_ternary(a = ~Joly, b = ~Coderre, c = ~Bergeron, color = ~winner)
 px_scatter_ternary <- function(
     data_frame = NULL, a = NULL, b = NULL, c = NULL, color = NULL,
     symbol = NULL, size = NULL, text = NULL, hover_name = NULL,
@@ -464,8 +462,7 @@ px_scatter_ternary <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' df <- px_data_election()[1:5]
-#' px_line_ternary(df, a = "Joly", b = "Coderre", c = "Bergeron")
+#' px_data_election()[1:5] |> px_line_ternary(a = ~Joly, b = ~Coderre, c = ~Bergeron)
 px_line_ternary <- function(
     data_frame = NULL, a = NULL, b = NULL, c = NULL, color = NULL,
     line_dash = NULL, line_group = NULL, symbol = NULL, hover_name = NULL,
@@ -490,7 +487,7 @@ px_line_ternary <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_scatter_polar(px_data_wind(), r = "frequency", theta = "direction", color = "strength")
+#' px_data_wind() |> px_scatter_polar(r = ~frequency, theta = ~direction, color = ~strength)
 px_scatter_polar <- function(
     data_frame = NULL, r = NULL, theta = NULL, color = NULL, symbol = NULL,
     size = NULL, hover_name = NULL, hover_data = NULL, custom_data = NULL,
@@ -518,8 +515,8 @@ px_scatter_polar <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_line_polar(px_data_wind(), r = "frequency", theta = "direction", color = "strength",
-#'               line_close = TRUE)
+#' px_data_wind() |>
+#'   px_line_polar(r = ~frequency, theta = ~direction, color = ~strength, line_close = TRUE)
 px_line_polar <- function(
     data_frame = NULL, r = NULL, theta = NULL, color = NULL,
     line_dash = NULL, hover_name = NULL, hover_data = NULL,
@@ -547,7 +544,7 @@ px_line_polar <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_bar_polar(px_data_wind(), r = "frequency", theta = "direction", color = "strength")
+#' px_data_wind() |> px_bar_polar(r = ~frequency, theta = ~direction, color = ~strength)
 px_bar_polar <- function(
     data_frame = NULL, r = NULL, theta = NULL, color = NULL,
     pattern_shape = NULL, hover_name = NULL, hover_data = NULL,
@@ -575,8 +572,8 @@ px_bar_polar <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_choropleth(px_data_gapminder(year = 2007), locations = "iso_alpha",
-#'               color = "lifeExp", hover_name = "country")
+#' px_data_gapminder(year = 2007) |>
+#'   px_choropleth(locations = ~iso_alpha, color = ~lifeExp, hover_name = ~country)
 px_choropleth <- function(
     data_frame = NULL, lat = NULL, lon = NULL, locations = NULL,
     locationmode = NULL, geojson = NULL, featureidkey = NULL, color = NULL,
@@ -604,8 +601,8 @@ px_choropleth <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_scatter_geo(px_data_gapminder(year = 2007), locations = "iso_alpha", size = "pop",
-#'                color = "continent")
+#' px_data_gapminder(year = 2007) |>
+#'   px_scatter_geo(locations = ~iso_alpha, size = ~pop, color = ~continent)
 px_scatter_geo <- function(
     data_frame = NULL, lat = NULL, lon = NULL, locations = NULL,
     locationmode = NULL, geojson = NULL, featureidkey = NULL, color = NULL,
@@ -635,8 +632,8 @@ px_scatter_geo <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' df <- px_data_gapminder(year = 2007)
-#' px_line_geo(df[df$continent == "Oceania"], locations = "iso_alpha")
+#' px_data_gapminder(year = 2007)[continent == "Oceania"] |>
+#'   px_line_geo(locations = ~iso_alpha)
 px_line_geo <- function(
     data_frame = NULL, lat = NULL, lon = NULL, locations = NULL,
     locationmode = NULL, geojson = NULL, featureidkey = NULL, color = NULL,
@@ -665,9 +662,9 @@ px_line_geo <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' df <- px_data_carshare()
-#' px_scatter_map(df, lat = "centroid_lat", lon = "centroid_lon", color = "peak_hour",
-#'                size = "car_hours", zoom = 10)
+#' px_data_carshare() |>
+#'   px_scatter_map(lat = ~centroid_lat, lon = ~centroid_lon, color = ~peak_hour,
+#'                  size = ~car_hours, zoom = 10)
 px_scatter_map <- function(
     data_frame = NULL, lat = NULL, lon = NULL, color = NULL, text = NULL,
     hover_name = NULL, hover_data = NULL, custom_data = NULL, size = NULL,
@@ -692,10 +689,10 @@ px_scatter_map <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_choropleth_map(px_data_election(), geojson = px_data_election_geojson(),
-#'                   locations = "district",
-#'                   featureidkey = "properties.district", color = "Bergeron",
-#'                   center = list(lat = 45.5517, lon = -73.7073), zoom = 9)
+#' px_data_election() |>
+#'   px_choropleth_map(geojson = px_data_election_geojson(), locations = ~district,
+#'                     featureidkey = "properties.district", color = ~Bergeron,
+#'                     center = list(lat = 45.5517, lon = -73.7073), zoom = 9)
 px_choropleth_map <- function(
     data_frame = NULL, geojson = NULL, featureidkey = NULL, locations = NULL,
     color = NULL, hover_name = NULL, hover_data = NULL, custom_data = NULL,
@@ -720,8 +717,8 @@ px_choropleth_map <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' df <- px_data_carshare()
-#' px_density_map(df, lat = "centroid_lat", lon = "centroid_lon", z = "car_hours", radius = 10)
+#' px_data_carshare() |>
+#'   px_density_map(lat = ~centroid_lat, lon = ~centroid_lon, z = ~car_hours, radius = 10)
 px_density_map <- function(
     data_frame = NULL, lat = NULL, lon = NULL, z = NULL, hover_name = NULL,
     hover_data = NULL, custom_data = NULL, animation_frame = NULL,
@@ -745,8 +742,8 @@ px_density_map <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' df <- px_data_carshare()[1:20]
-#' px_line_map(df, lat = "centroid_lat", lon = "centroid_lon", zoom = 10)
+#' px_data_carshare()[1:20] |>
+#'   px_line_map(lat = ~centroid_lat, lon = ~centroid_lon, zoom = 10)
 px_line_map <- function(
     data_frame = NULL, lat = NULL, lon = NULL, color = NULL, text = NULL,
     hover_name = NULL, hover_data = NULL, custom_data = NULL,
@@ -771,8 +768,8 @@ px_line_map <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_scatter_matrix(px_data_iris(), dimensions = c("sepal_width", "sepal_length",
-#'                   "petal_width"), color = "species")
+#' px_data_iris() |>
+#'   px_scatter_matrix(dimensions = ~c(sepal_width, sepal_length, petal_width), color = ~species)
 px_scatter_matrix <- function(
     data_frame = NULL, dimensions = NULL, color = NULL, symbol = NULL,
     size = NULL, hover_name = NULL, hover_data = NULL, custom_data = NULL,
@@ -798,9 +795,9 @@ px_scatter_matrix <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_parallel_coordinates(px_data_iris(), color = "species_id",
-#'                         dimensions = c("sepal_width", "sepal_length", "petal_width",
-#'                                        "petal_length"))
+#' px_data_iris() |>
+#'   px_parallel_coordinates(color = ~species_id,
+#'                           dimensions = ~c(sepal_width, sepal_length, petal_width, petal_length))
 px_parallel_coordinates <- function(
     data_frame = NULL, dimensions = NULL, color = NULL, labels = NULL,
     color_continuous_scale = NULL, range_color = NULL,
@@ -823,7 +820,7 @@ px_parallel_coordinates <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_parallel_categories(px_data_tips(), dimensions = c("sex", "smoker", "day"), color = "size")
+#' px_data_tips() |> px_parallel_categories(dimensions = ~c(sex, smoker, day), color = ~size)
 px_parallel_categories <- function(
     data_frame = NULL, dimensions = NULL, color = NULL, labels = NULL,
     color_continuous_scale = NULL, range_color = NULL,
@@ -845,8 +842,7 @@ px_parallel_categories <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' df <- px_data_tips()
-#' px_pie(df, values = "tip", names = "day", hole = 0.3)
+#' px_data_tips() |> px_pie(values = ~tip, names = ~day, hole = 0.3)
 px_pie <- function(
     data_frame = NULL, names = NULL, values = NULL, color = NULL,
     facet_row = NULL, facet_col = NULL, facet_col_wrap = 0,
@@ -871,7 +867,7 @@ px_pie <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_sunburst(px_data_tips(), path = c("day", "time", "sex"), values = "total_bill")
+#' px_data_tips() |> px_sunburst(path = ~c(day, time, sex), values = ~total_bill)
 px_sunburst <- function(
     data_frame = NULL, names = NULL, values = NULL, parents = NULL,
     path = NULL, ids = NULL, color = NULL, color_continuous_scale = NULL,
@@ -894,9 +890,9 @@ px_sunburst <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' df <- px_data_gapminder(year = 2007)
-#' px_treemap(df, path = list(px_constant("world"), "continent", "country"),
-#'            values = "pop", color = "lifeExp")
+#' px_data_gapminder(year = 2007) |>
+#'   px_treemap(path = list(px_constant("world"), ~continent, ~country),
+#'              values = ~pop, color = ~lifeExp)
 px_treemap <- function(
     data_frame = NULL, names = NULL, values = NULL, parents = NULL,
     ids = NULL, path = NULL, color = NULL, color_continuous_scale = NULL,
@@ -920,7 +916,7 @@ px_treemap <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' px_icicle(px_data_tips(), path = c("day", "time", "sex"), values = "total_bill")
+#' px_data_tips() |> px_icicle(path = ~c(day, time, sex), values = ~total_bill)
 px_icicle <- function(
     data_frame = NULL, names = NULL, values = NULL, parents = NULL,
     path = NULL, ids = NULL, color = NULL, color_continuous_scale = NULL,
@@ -944,9 +940,9 @@ px_icicle <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' df <- data.frame(stage = c("Visit", "Download", "Sign up", "Purchase"), number = c(39,
-#'                  27.4, 20.6, 11))
-#' px_funnel(df, x = "number", y = "stage")
+#' data.frame(stage = c("Visit", "Download", "Sign up", "Purchase"),
+#'            number = c(39, 27.4, 20.6, 11)) |>
+#'   px_funnel(x = ~number, y = ~stage)
 px_funnel <- function(
     data_frame = NULL, x = NULL, y = NULL, color = NULL, facet_row = NULL,
     facet_col = NULL, facet_col_wrap = 0, facet_row_spacing = NULL,
@@ -972,9 +968,9 @@ px_funnel <- function(
 #' @family plotly express
 #' @export
 #' @examples
-#' df <- data.frame(stage = c("Visit", "Download", "Sign up", "Purchase"), number = c(39,
-#'                  27.4, 20.6, 11))
-#' px_funnel_area(df, values = "number", names = "stage")
+#' data.frame(stage = c("Visit", "Download", "Sign up", "Purchase"),
+#'            number = c(39, 27.4, 20.6, 11)) |>
+#'   px_funnel_area(values = ~number, names = ~stage)
 px_funnel_area <- function(
     data_frame = NULL, names = NULL, values = NULL, color = NULL,
     color_discrete_sequence = NULL, color_discrete_map = NULL,

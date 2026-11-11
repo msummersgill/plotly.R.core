@@ -138,3 +138,14 @@ for (i in seq_len(nrow(cases) %||% length(cases))) {
 if (length(failures)) {
   stop(length(failures), " px case(s) differ from plotly.py:\n", paste(failures, collapse = "\n"), call. = FALSE)
 }
+
+# Formula column references, including ~c(...) for multi-column arguments
+d <- px_data_tips()
+f1 <- px_sunburst(d, path = ~c(day, time, sex), values = ~total_bill)
+f2 <- px_sunburst(d, path = c("day", "time", "sex"), values = "total_bill")
+stopifnot(identical(unclass(f1$data[[1]])[c("ids", "labels", "parents", "values")],
+                    unclass(f2$data[[1]])[c("ids", "labels", "parents", "values")]))
+f1 <- px_scatter_matrix(px_data_iris(), dimensions = ~c(sepal_width, petal_width), color = ~species)
+stopifnot(length(f1$data[[1]]$dimensions) == 2L)
+f1 <- px_scatter(d, x = ~total_bill, y = ~tip, hover_data = ~c(size, day))
+stopifnot(grepl("size=", f1$data[[1]]$hovertemplate), grepl("day=", f1$data[[1]]$hovertemplate))

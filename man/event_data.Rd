@@ -43,7 +43,7 @@ properties (e.g. axis ranges after zooming).
 if (interactive() && requireNamespace("shiny", quietly = TRUE)) {
   ui <- shiny::fluidPage(plotlyOutput("plot"), shiny::verbatimTextOutput("click"))
   server <- function(input, output, session) {
-    output$plot <- renderPlotly(px_scatter(px_data_iris(), x = "sepal_width", y = "sepal_length"))
+    output$plot <- renderPlotly(px_data_iris() |> px_scatter(x = ~sepal_width, y = ~sepal_length))
     output$click <- shiny::renderPrint(event_data("plotly_click"))
   }
   shiny::shinyApp(ui, server)

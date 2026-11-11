@@ -35,8 +35,8 @@ with none are assumed to be EPSG:4326. The initial view fits the data.
 \examples{
 \dontshow{if (requireNamespace("sf", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 nc <- sf::st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
-plot_ly(nc)
-plot_ly(nc) |> add_sf(color = ~AREA, split = ~NAME, hoverinfo = "text", text = ~NAME)
-plot_geo(nc) |> add_sf(color = I("gray50"))
+nc |> plot_ly()
+nc |> plot_ly() |> add_sf(color = ~AREA, split = ~NAME, hoverinfo = "text", text = ~NAME)
+nc |> plot_geo() |> add_sf(color = I("gray50"))
 \dontshow{\}) # examplesIf}
 }

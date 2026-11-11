@@ -20,6 +20,6 @@ valid for plotly.js are dropped with a warning, as the legacy plotly
 package warns about them.
 }
 \examples{
-fig <- legacy_figure(plot_ly(mtcars, x = ~wt, y = ~mpg))
+fig <- mtcars |> plot_ly(x = ~wt, y = ~mpg) |> legacy_figure()
 fig <- update_traces(fig, marker_size = 10)
 }

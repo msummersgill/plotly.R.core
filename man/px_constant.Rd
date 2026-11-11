@@ -28,7 +28,7 @@ to \code{color_discrete_map}, \code{symbol_map}, \code{line_dash_map} or
 \code{pattern_shape_map} to use the data values themselves (e.g. colors).
 }
 \examples{
-df <- px_data_iris()
-px_scatter(df, x = "sepal_width", y = "sepal_length", color = px_constant("all flowers"))
-px_scatter(df, x = px_range("index"), y = "sepal_length")
+px_data_iris() |>
+  px_scatter(x = ~sepal_width, y = ~sepal_length, color = px_constant("all flowers"))
+px_data_iris() |> px_scatter(x = px_range("index"), y = ~sepal_length)
 }

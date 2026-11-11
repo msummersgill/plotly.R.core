@@ -67,15 +67,15 @@ selection. Requires the crosstalk package.
 }
 \examples{
 \dontshow{if (requireNamespace("crosstalk", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-d <- highlight_key(mtcars, ~cyl)
-p <- plot_ly(d, x = ~wt, y = ~mpg) |> add_markers()
+d <- mtcars |> highlight_key(~cyl)
+p <- d |> plot_ly(x = ~wt, y = ~mpg) |> add_markers()
 highlight(p, on = "plotly_selected", color = "red")
 
 # two linked views of the same data
 s <- highlight_key(data.frame(x = 1:10, y = (1:10)^2, g = rep(c("a", "b"), 5)))
 subplot(
-  plot_ly(s, x = ~x, y = ~y) |> add_markers(),
-  plot_ly(s, x = ~g) |> add_histogram()
+  s |> plot_ly(x = ~x, y = ~y) |> add_markers(),
+  s |> plot_ly(x = ~g) |> add_histogram()
 ) |> highlight(on = "plotly_selected", dynamic = TRUE)
 \dontshow{\}) # examplesIf}
 }

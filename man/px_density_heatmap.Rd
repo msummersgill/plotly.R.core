@@ -89,7 +89,7 @@ one-sided formula evaluated in \code{data_frame} (e.g. \code{~ log(pop)}),
 in bold in the hover tooltip.}
 
 \item{hover_data}{Extra data to show in the hover tooltip: column names (a
-character vector), or a named list with column names as names and values
+character vector or a formula such as \code{~c(a, b)}), or a named list with column names as names and values
 \code{TRUE} (default formatting), \code{FALSE} (hide the column, e.g. one shown by
 default), a d3-format string such as \code{":.3f"}, a vector of data, or a list
 of a format string or \code{TRUE} and a vector of data.}
@@ -196,7 +196,7 @@ colored rectangular tiles to visualize the 2D distribution of an aggregate
 function \code{histfunc} (e.g. the count or sum) of the value \code{z}.
 }
 \examples{
-px_density_heatmap(px_data_tips(), x = "total_bill", y = "tip", marginal_x = "histogram")
+px_data_tips() |> px_density_heatmap(x = ~total_bill, y = ~tip, marginal_x = "histogram")
 }
 \seealso{
 Other plotly express: 

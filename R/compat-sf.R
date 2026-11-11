@@ -25,9 +25,9 @@
 #' @export
 #' @examplesIf requireNamespace("sf", quietly = TRUE)
 #' nc <- sf::st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
-#' plot_ly(nc)
-#' plot_ly(nc) |> add_sf(color = ~AREA, split = ~NAME, hoverinfo = "text", text = ~NAME)
-#' plot_geo(nc) |> add_sf(color = I("gray50"))
+#' nc |> plot_ly()
+#' nc |> plot_ly() |> add_sf(color = ~AREA, split = ~NAME, hoverinfo = "text", text = ~NAME)
+#' nc |> plot_geo() |> add_sf(color = I("gray50"))
 add_sf <- function(p, ..., x = ~x, y = ~y, data = NULL, inherit = TRUE) {
   if (!requireNamespace("sf", quietly = TRUE)) {
     stop("add_sf() needs the sf package: install.packages(\"sf\")", call. = FALSE)

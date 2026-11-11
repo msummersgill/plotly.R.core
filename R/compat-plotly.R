@@ -41,9 +41,10 @@
 #' @seealso [add_trace()], [layout()], [subplot()], [plotly_build()]
 #' @export
 #' @examples
-#' plot_ly(mtcars, x = ~wt, y = ~mpg, color = ~factor(cyl), size = ~hp) |>
+#' mtcars |> plot_ly(x = ~wt, y = ~mpg, color = ~factor(cyl), size = ~hp) |>
 #'   layout(title = "Motor Trend cars")
-#' plot_ly(economics_like <- data.frame(t = 1:20, v = cumsum(rnorm(20))), x = ~t, y = ~v) |>
+#' data.frame(t = 1:20, v = cumsum(rnorm(20))) |>
+#'   plot_ly(x = ~t, y = ~v) |>
 #'   add_lines()
 plot_ly <- function(data = data.frame(), ..., type = NULL, name, color, colors = NULL, alpha = NULL,
                     stroke, strokes = NULL, alpha_stroke = 1, size, sizes = c(10, 100), span, spans = c(1, 20),
@@ -180,7 +181,7 @@ add_data <- function(p, data = NULL) {
 #' @examples
 #' go_figure() |> add_trace(go_scatter(y = c(1, 3, 2)))
 #'
-#' plot_ly(mtcars, x = ~wt, y = ~mpg) |>
+#' mtcars |> plot_ly(x = ~wt, y = ~mpg) |>
 #'   add_markers(color = ~factor(cyl)) |>
 #'   add_lines(data = data.frame(wt = c(2, 5), mpg = c(30, 12)), color = I("black"))
 add_trace <- function(fig, ...) UseMethod("add_trace")
@@ -412,7 +413,7 @@ legacy_add_dispatch <- function(type, env, dots) {
 #' @return The modified plot.
 #' @export
 #' @examples
-#' plot_ly(mtcars, x = ~wt, y = ~mpg) |> layout(title = "Cars", xaxis = list(title = "Weight"))
+#' mtcars |> plot_ly(x = ~wt, y = ~mpg) |> layout(title = "Cars", xaxis = list(title = "Weight"))
 layout <- function(p, ..., data = NULL) UseMethod("layout")
 
 #' @export
@@ -450,7 +451,7 @@ layout.shiny.tag.list <- function(p, ..., data = NULL) {
 #' @return The modified plot.
 #' @export
 #' @examples
-#' plot_ly(mtcars, x = ~wt, y = ~mpg, color = ~factor(cyl)) |> style(marker.size = 12, traces = 2)
+#' mtcars |> plot_ly(x = ~wt, y = ~mpg, color = ~factor(cyl)) |> style(marker.size = 12, traces = 2)
 style <- function(p, ..., traces = NULL) {
   vals <- list(...)
   if (inherits(p, "go_figure")) {
@@ -614,7 +615,7 @@ LP_EASINGS <- c("linear", "quad", "cubic", "sin", "exp", "circle", "elastic", "b
 #' @export
 #' @examples
 #' df <- data.frame(x = rep(1:5, 3), y = runif(15), t = rep(1:3, each = 5))
-#' plot_ly(df, x = ~x, y = ~y, frame = ~t) |> animation_opts(1000, easing = "elastic")
+#' df |> plot_ly(x = ~x, y = ~y, frame = ~t) |> animation_opts(1000, easing = "elastic")
 animation_opts <- function(p, frame = 500, transition = frame, easing = "linear", redraw = TRUE, mode = "immediate") {
   p$animation <- lp_animation_format(frame, transition, easing, redraw, mode)
   p
@@ -716,7 +717,7 @@ lp_strip <- function(x) {
 #' @return A [go_figure()] (with the plot's config, event and key settings).
 #' @export
 #' @examples
-#' fig <- legacy_figure(plot_ly(mtcars, x = ~wt, y = ~mpg))
+#' fig <- mtcars |> plot_ly(x = ~wt, y = ~mpg) |> legacy_figure()
 #' fig <- update_traces(fig, marker_size = 10)
 legacy_figure <- function(p) {
   b <- plotly_build(p)

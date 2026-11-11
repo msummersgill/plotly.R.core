@@ -22,5 +22,5 @@ Sets attributes on the traces of a \code{\link[=plot_ly]{plot_ly()}} object afte
 \code{marker.color}.
 }
 \examples{
-plot_ly(mtcars, x = ~wt, y = ~mpg, color = ~factor(cyl)) |> style(marker.size = 12, traces = 2)
+mtcars |> plot_ly(x = ~wt, y = ~mpg, color = ~factor(cyl)) |> style(marker.size = 12, traces = 2)
 }

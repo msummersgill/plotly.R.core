@@ -25,8 +25,9 @@ px_parallel_categories(
 column names to be used in the other arguments; if \code{NULL}, a data frame is
 built from the vectors given in the other arguments.}
 
-\item{dimensions}{Column names in \code{data_frame} (a character vector), or a
-list of column names and vectors. Values from these columns are used for
+\item{dimensions}{Column names in \code{data_frame} (a character vector or a
+formula such as \code{~c(a, b)}), or a list of column names, formulas and
+vectors. Values from these columns are used for
 multidimensional visualization.}
 
 \item{color}{A column name in \code{data_frame}, a vector of values, a
@@ -76,7 +77,7 @@ then plotted as a polyline mark through a set of parallel axes, one for
 each of the \code{dimensions}.
 }
 \examples{
-px_parallel_categories(px_data_tips(), dimensions = c("sex", "smoker", "day"), color = "size")
+px_data_tips() |> px_parallel_categories(dimensions = ~c(sex, smoker, day), color = ~size)
 }
 \seealso{
 Other plotly express: 

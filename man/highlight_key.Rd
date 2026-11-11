@@ -25,8 +25,8 @@ in the others (see \code{\link[=highlight]{highlight()}}). Requires the crosstal
 }
 \examples{
 \dontshow{if (requireNamespace("crosstalk", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-d <- highlight_key(mtcars, ~cyl, group = "Cylinders")
-plot_ly(d, x = ~wt, y = ~mpg) |> highlight(selectize = TRUE)
+d <- mtcars |> highlight_key(~cyl, group = "Cylinders")
+d |> plot_ly(x = ~wt, y = ~mpg) |> highlight(selectize = TRUE)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

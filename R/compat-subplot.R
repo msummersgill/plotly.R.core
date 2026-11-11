@@ -20,8 +20,8 @@
 #' @return A [plot_ly()]-style object.
 #' @export
 #' @examples
-#' p1 <- plot_ly(mtcars, x = ~wt, y = ~mpg, type = "scatter", mode = "markers")
-#' p2 <- plot_ly(mtcars, x = ~hp, y = ~mpg, type = "scatter", mode = "markers")
+#' p1 <- mtcars |> plot_ly(x = ~wt, y = ~mpg, type = "scatter", mode = "markers")
+#' p2 <- mtcars |> plot_ly(x = ~hp, y = ~mpg, type = "scatter", mode = "markers")
 #' subplot(p1, p2, shareY = TRUE, titleX = TRUE)
 subplot <- function(..., nrows = 1, widths = NULL, heights = NULL, margin = 0.02, shareX = FALSE,
                     shareY = FALSE, titleX = shareX, titleY = shareY, which_layout = "merge") {

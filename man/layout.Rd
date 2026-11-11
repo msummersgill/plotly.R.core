@@ -22,5 +22,5 @@ data (as in the legacy plotly package). For a \code{\link[=go_figure]{go_figure(
 \code{\link[=update_layout]{update_layout()}}. For a matrix, \code{\link[graphics:layout]{graphics::layout()}} is called.
 }
 \examples{
-plot_ly(mtcars, x = ~wt, y = ~mpg) |> layout(title = "Cars", xaxis = list(title = "Weight"))
+mtcars |> plot_ly(x = ~wt, y = ~mpg) |> layout(title = "Cars", xaxis = list(title = "Weight"))
 }

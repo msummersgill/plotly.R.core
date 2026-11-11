@@ -44,17 +44,18 @@ install.packages("path/to/plotly.R.core", repos = NULL, type = "source")
 ```r
 library(plotly.R.core)
 
-px_scatter(
-  px_data_gapminder(year = 2007),
-  x = "gdpPercap", y = "lifeExp", size = "pop", color = "continent",
-  hover_name = "country", log_x = TRUE, size_max = 60, title = "Gapminder 2007"
-)
+px_data_gapminder(year = 2007) |>
+  px_scatter(
+    x = ~gdpPercap, y = ~lifeExp, size = ~pop, color = ~continent,
+    hover_name = ~country, log_x = TRUE, size_max = 60, title = "Gapminder 2007"
+  )
 ```
 
 ![Bubble chart of GDP per capita against life expectancy in 2007, sized by population and coloured by continent](man/figures/README-px-gapminder.png)
 
-Column arguments take column names, vectors, or one-sided formulas evaluated
-in the data (`x = ~ log10(gdpPercap)`).
+Column arguments take one-sided formulas evaluated in the data (`x = ~gdpPercap`,
+`x = ~log10(gdpPercap)`, `path = ~c(continent, country)` for several columns),
+column names as strings (as in plotly.py), or vectors.
 
 ## Example: a 2D scatter plot with graph objects
 
@@ -132,7 +133,7 @@ add_scatter(fig, x = mtcars$wt, y = mtcars$mpg, mode = "dots")
 library(shiny)
 ui <- fluidPage(plotlyOutput("plot"), verbatimTextOutput("click"))
 server <- function(input, output, session) {
-  output$plot <- renderPlotly(px_scatter(px_data_iris(), x = "sepal_width", y = "sepal_length"))
+  output$plot <- renderPlotly(px_data_iris() |> px_scatter(x = ~sepal_width, y = ~sepal_length))
   output$click <- renderPrint(event_data("plotly_click"))
 }
 shinyApp(ui, server)
@@ -148,10 +149,10 @@ without Shiny: selecting points in one highlights them in the others (needs
 the crosstalk package).
 
 ```r
-d <- highlight_key(mtcars, ~cyl, group = "Cylinders")
+d <- mtcars |> highlight_key(~cyl, group = "Cylinders")
 subplot(
-  plot_ly(d, x = ~wt, y = ~mpg) |> add_markers(),
-  plot_ly(d, x = ~factor(cyl)) |> add_histogram()
+  d |> plot_ly(x = ~wt, y = ~mpg) |> add_markers(),
+  d |> plot_ly(x = ~factor(cyl)) |> add_histogram()
 ) |> highlight(on = "plotly_selected", color = "red", selectize = TRUE)
 ```
 
@@ -174,7 +175,7 @@ images automatically when Kaleido is available.
 Code written for the plotly R package keeps working:
 
 ```r
-plot_ly(mtcars, x = ~wt, y = ~mpg, color = ~factor(cyl), size = ~hp) |>
+mtcars |> plot_ly(x = ~wt, y = ~mpg, color = ~factor(cyl), size = ~hp) |>
   add_lines(data = data.frame(wt = c(2, 5), mpg = c(30, 12)), inherit = FALSE,
             x = ~wt, y = ~mpg, color = I("black")) |>
   layout(title = "Motor Trend cars")

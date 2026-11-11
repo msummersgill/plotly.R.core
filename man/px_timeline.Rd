@@ -99,13 +99,13 @@ one-sided formula evaluated in \code{data_frame} (e.g. \code{~ log(pop)}),
 in bold in the hover tooltip.}
 
 \item{hover_data}{Extra data to show in the hover tooltip: column names (a
-character vector), or a named list with column names as names and values
+character vector or a formula such as \code{~c(a, b)}), or a named list with column names as names and values
 \code{TRUE} (default formatting), \code{FALSE} (hide the column, e.g. one shown by
 default), a d3-format string such as \code{":.3f"}, a vector of data, or a list
 of a format string or \code{TRUE} and a vector of data.}
 
-\item{custom_data}{Column names (a character vector), or a list of column
-names and vectors. Values from these columns are added to the traces'
+\item{custom_data}{Column names (a character vector or a formula such as
+\code{~c(a, b)}), or a list of column names, formulas and vectors. Values from these columns are added to the traces'
 \code{customdata} (e.g. for use in Shiny events) without appearing in the hover
 tooltip.}
 
@@ -194,10 +194,10 @@ rectangular mark on an x axis of type \code{date}, spanning from \code{x_start} 
 \code{x_end}.
 }
 \examples{
-df <- data.frame(task = c("A", "B", "C"),
-                 start = c("2009-01-01", "2009-03-05", "2009-02-20"),
-                 finish = c("2009-02-28", "2009-04-15", "2009-05-30"))
-px_timeline(df, x_start = "start", x_end = "finish", y = "task")
+data.frame(task = c("A", "B", "C"),
+           start = c("2009-01-01", "2009-03-05", "2009-02-20"),
+           finish = c("2009-02-28", "2009-04-15", "2009-05-30")) |>
+  px_timeline(x_start = ~start, x_end = ~finish, y = ~task)
 }
 \seealso{
 Other plotly express: 

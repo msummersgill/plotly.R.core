@@ -17,7 +17,7 @@
 #' @return A built object.
 #' @export
 #' @examples
-#' p <- plot_ly(mtcars, x = ~wt, y = ~mpg, color = ~factor(cyl))
+#' p <- mtcars |> plot_ly(x = ~wt, y = ~mpg, color = ~factor(cyl))
 #' length(plotly_build(p)$x$data)
 plotly_build <- function(p, registerFrames = TRUE) {
   if (inherits(p, "go_figure")) return(plotly_widget(p))

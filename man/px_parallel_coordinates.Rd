@@ -24,8 +24,9 @@ px_parallel_coordinates(
 column names to be used in the other arguments; if \code{NULL}, a data frame is
 built from the vectors given in the other arguments.}
 
-\item{dimensions}{Column names in \code{data_frame} (a character vector), or a
-list of column names and vectors. Values from these columns are used for
+\item{dimensions}{Column names in \code{data_frame} (a character vector or a
+formula such as \code{~c(a, b)}), or a list of column names, formulas and
+vectors. Values from these columns are used for
 multidimensional visualization.}
 
 \item{color}{A column name in \code{data_frame}, a vector of values, a
@@ -70,9 +71,9 @@ a polyline mark which traverses a set of parallel axes, one for each of
 the \code{dimensions}.
 }
 \examples{
-px_parallel_coordinates(px_data_iris(), color = "species_id",
-                        dimensions = c("sepal_width", "sepal_length", "petal_width",
-                                       "petal_length"))
+px_data_iris() |>
+  px_parallel_coordinates(color = ~species_id,
+                          dimensions = ~c(sepal_width, sepal_length, petal_width, petal_length))
 }
 \seealso{
 Other plotly express: 

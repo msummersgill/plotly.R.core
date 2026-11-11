@@ -104,7 +104,7 @@ are shortcuts for common trace types of \code{\link[=plot_ly]{plot_ly()}} object
 \examples{
 go_figure() |> add_trace(go_scatter(y = c(1, 3, 2)))
 
-plot_ly(mtcars, x = ~wt, y = ~mpg) |>
+mtcars |> plot_ly(x = ~wt, y = ~mpg) |>
   add_markers(color = ~factor(cyl)) |>
   add_lines(data = data.frame(wt = c(2, 5), mpg = c(30, 12)), color = I("black"))
 }

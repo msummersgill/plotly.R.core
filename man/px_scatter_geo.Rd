@@ -122,13 +122,13 @@ one-sided formula evaluated in \code{data_frame} (e.g. \code{~ log(pop)}),
 in bold in the hover tooltip.}
 
 \item{hover_data}{Extra data to show in the hover tooltip: column names (a
-character vector), or a named list with column names as names and values
+character vector or a formula such as \code{~c(a, b)}), or a named list with column names as names and values
 \code{TRUE} (default formatting), \code{FALSE} (hide the column, e.g. one shown by
 default), a d3-format string such as \code{":.3f"}, a vector of data, or a list
 of a format string or \code{TRUE} and a vector of data.}
 
-\item{custom_data}{Column names (a character vector), or a list of column
-names and vectors. Values from these columns are added to the traces'
+\item{custom_data}{Column names (a character vector or a formula such as
+\code{~c(a, b)}), or a list of column names, formulas and vectors. Values from these columns are added to the traces'
 \code{customdata} (e.g. for use in Shiny events) without appearing in the hover
 tooltip.}
 
@@ -228,8 +228,8 @@ In a geographic scatter plot, each row of \code{data_frame} is represented by a
 symbol mark on a map.
 }
 \examples{
-px_scatter_geo(px_data_gapminder(year = 2007), locations = "iso_alpha", size = "pop",
-               color = "continent")
+px_data_gapminder(year = 2007) |>
+  px_scatter_geo(locations = ~iso_alpha, size = ~pop, color = ~continent)
 }
 \seealso{
 Other plotly express: 

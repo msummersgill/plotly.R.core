@@ -109,7 +109,7 @@ one-sided formula evaluated in \code{data_frame} (e.g. \code{~ log(pop)}),
 in bold in the hover tooltip.}
 
 \item{hover_data}{Extra data to show in the hover tooltip: column names (a
-character vector), or a named list with column names as names and values
+character vector or a formula such as \code{~c(a, b)}), or a named list with column names as names and values
 \code{TRUE} (default formatting), \code{FALSE} (hide the column, e.g. one shown by
 default), a d3-format string such as \code{":.3f"}, a vector of data, or a list
 of a format string or \code{TRUE} and a vector of data.}
@@ -226,7 +226,7 @@ In a Empirical Cumulative Distribution Function (ECDF) plot, rows of
 supplied and \code{orientation} is \code{h}) is drawn as a line.
 }
 \examples{
-px_ecdf(px_data_tips(), x = "total_bill", color = "sex")
+px_data_tips() |> px_ecdf(x = ~total_bill, color = ~sex)
 }
 \seealso{
 Other plotly express: 

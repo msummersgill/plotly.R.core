@@ -68,15 +68,15 @@ lp_shared_data <- function(dat) {
 #' @seealso [highlight_key()], [crosstalk::bscols()] to arrange linked views.
 #' @export
 #' @examplesIf requireNamespace("crosstalk", quietly = TRUE)
-#' d <- highlight_key(mtcars, ~cyl)
-#' p <- plot_ly(d, x = ~wt, y = ~mpg) |> add_markers()
+#' d <- mtcars |> highlight_key(~cyl)
+#' p <- d |> plot_ly(x = ~wt, y = ~mpg) |> add_markers()
 #' highlight(p, on = "plotly_selected", color = "red")
 #'
 #' # two linked views of the same data
 #' s <- highlight_key(data.frame(x = 1:10, y = (1:10)^2, g = rep(c("a", "b"), 5)))
 #' subplot(
-#'   plot_ly(s, x = ~x, y = ~y) |> add_markers(),
-#'   plot_ly(s, x = ~g) |> add_histogram()
+#'   s |> plot_ly(x = ~x, y = ~y) |> add_markers(),
+#'   s |> plot_ly(x = ~g) |> add_histogram()
 #' ) |> highlight(on = "plotly_selected", dynamic = TRUE)
 highlight <- function(p, on = "plotly_click", off, persistent = getOption("persistent", FALSE),
                       dynamic = FALSE, color = NULL, selectize = FALSE, defaultValues = NULL,
@@ -165,8 +165,8 @@ attrs_selected <- function(opacity = 1, ...) {
 #' @seealso [highlight()]
 #' @export
 #' @examplesIf requireNamespace("crosstalk", quietly = TRUE)
-#' d <- highlight_key(mtcars, ~cyl, group = "Cylinders")
-#' plot_ly(d, x = ~wt, y = ~mpg) |> highlight(selectize = TRUE)
+#' d <- mtcars |> highlight_key(~cyl, group = "Cylinders")
+#' d |> plot_ly(x = ~wt, y = ~mpg) |> highlight(selectize = TRUE)
 highlight_key <- function(x, ...) UseMethod("highlight_key")
 
 #' @export

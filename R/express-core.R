@@ -82,9 +82,9 @@ PX_DEFAULT_NAMES <- c("template", "width", "height", "color_discrete_sequence", 
 #' @return An object recognised by the `px_*()` functions.
 #' @export
 #' @examples
-#' df <- px_data_iris()
-#' px_scatter(df, x = "sepal_width", y = "sepal_length", color = px_constant("all flowers"))
-#' px_scatter(df, x = px_range("index"), y = "sepal_length")
+#' px_data_iris() |>
+#'   px_scatter(x = ~sepal_width, y = ~sepal_length, color = px_constant("all flowers"))
+#' px_data_iris() |> px_scatter(x = px_range("index"), y = ~sepal_length)
 px_constant <- function(value, label = NULL) structure(list(value = value, label = label), class = "px_constant")
 
 #' @rdname px_constant
@@ -284,6 +284,13 @@ is_col_list <- function(columns, arg) {
 as_ref_list <- function(x) {
   if (is.null(x)) return(NULL)
   if (is.character(x)) return(as.list(x))
+  # ~c(a, b) refers to several columns: one formula per element
+  if (inherits(x, "formula")) {
+    rhs <- x[[length(x)]]
+    if (is.call(rhs) && identical(rhs[[1L]], as.name("c"))) {
+      return(lapply(as.list(rhs)[-1L], function(e) { f <- x; f[[length(f)]] <- e; f }))
+    }
+  }
   if (is.list(x) && !is.data.frame(x) && !inherits(x, c("px_constant", "px_range"))) return(x)
   list(x)
 }

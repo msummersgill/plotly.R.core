@@ -97,7 +97,7 @@ one-sided formula evaluated in \code{data_frame} (e.g. \code{~ log(pop)}),
 in bold in the hover tooltip.}
 
 \item{hover_data}{Extra data to show in the hover tooltip: column names (a
-character vector), or a named list with column names as names and values
+character vector or a formula such as \code{~c(a, b)}), or a named list with column names as names and values
 \code{TRUE} (default formatting), \code{FALSE} (hide the column, e.g. one shown by
 default), a d3-format string such as \code{":.3f"}, a vector of data, or a list
 of a format string or \code{TRUE} and a vector of data.}
@@ -217,7 +217,7 @@ rectangular mark to visualize the 1D distribution of an aggregate function
 \code{orientation} is \code{"h"}).
 }
 \examples{
-px_histogram(px_data_tips(), x = "total_bill", color = "sex", marginal = "rug", nbins = 20)
+px_data_tips() |> px_histogram(x = ~total_bill, color = ~sex, marginal = "rug", nbins = 20)
 }
 \seealso{
 Other plotly express: 

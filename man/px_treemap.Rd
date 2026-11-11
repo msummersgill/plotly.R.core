@@ -55,8 +55,8 @@ formula evaluated in \code{data_frame} (e.g. \code{~ log(pop)}), \code{\link[=px
 \code{\link[=px_range]{px_range()}}. Values from this column or vector are used to set ids of
 sectors}
 
-\item{path}{Column names in \code{data_frame} (a character vector), or a list
-of column names and vectors. The columns define the hierarchy of sectors,
+\item{path}{Column names in \code{data_frame} (a character vector or a formula
+such as \code{~c(a, b)}), or a list of column names, formulas and vectors. The columns define the hierarchy of sectors,
 from root to leaves. Cannot be combined with \code{ids} or \code{parents}.}
 
 \item{color}{A column name in \code{data_frame}, a vector of values, a
@@ -92,13 +92,13 @@ one-sided formula evaluated in \code{data_frame} (e.g. \code{~ log(pop)}),
 in bold in the hover tooltip.}
 
 \item{hover_data}{Extra data to show in the hover tooltip: column names (a
-character vector), or a named list with column names as names and values
+character vector or a formula such as \code{~c(a, b)}), or a named list with column names as names and values
 \code{TRUE} (default formatting), \code{FALSE} (hide the column, e.g. one shown by
 default), a d3-format string such as \code{":.3f"}, a vector of data, or a list
 of a format string or \code{TRUE} and a vector of data.}
 
-\item{custom_data}{Column names (a character vector), or a list of column
-names and vectors. Values from these columns are added to the traces'
+\item{custom_data}{Column names (a character vector or a formula such as
+\code{~c(a, b)}), or a list of column names, formulas and vectors. Values from these columns are added to the traces'
 \code{customdata} (e.g. for use in Shiny events) without appearing in the hover
 tooltip.}
 
@@ -134,9 +134,9 @@ A \code{\link[=go_figure]{go_figure()}}.
 A treemap plot represents hierarchial data as nested rectangular sectors.
 }
 \examples{
-df <- px_data_gapminder(year = 2007)
-px_treemap(df, path = list(px_constant("world"), "continent", "country"),
-           values = "pop", color = "lifeExp")
+px_data_gapminder(year = 2007) |>
+  px_treemap(path = list(px_constant("world"), ~continent, ~country),
+             values = ~pop, color = ~lifeExp)
 }
 \seealso{
 Other plotly express: 
