@@ -5,9 +5,23 @@
 \alias{add_traces}
 \title{Add traces to a figure}
 \usage{
-add_trace(fig, trace)
+add_trace(
+  fig,
+  trace,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL,
+  exclude_empty_subplots = FALSE
+)
 
-add_traces(fig, data)
+add_traces(
+  fig,
+  data,
+  rows = NULL,
+  cols = NULL,
+  secondary_ys = NULL,
+  exclude_empty_subplots = FALSE
+)
 }
 \arguments{
 \item{fig}{A \code{go_figure} object.}
@@ -15,7 +29,20 @@ add_traces(fig, data)
 \item{trace}{A trace: a graph object such as \code{\link[=go_scatter]{go_scatter()}}, or a named
 list with a \code{type} element (default \code{"scatter"}).}
 
+\item{row, col}{Subplot grid cell for the trace (figures created with
+\code{\link[=make_subplots]{make_subplots()}} only). Either may be \code{"all"} or a vector, to add the
+trace to several cells.}
+
+\item{secondary_y}{If \code{TRUE}, use the secondary y axis of the subplot
+(see the \code{specs} argument of \code{\link[=make_subplots]{make_subplots()}}).}
+
+\item{exclude_empty_subplots}{If \code{TRUE}, don't add the trace to subplots
+that have no traces or layout objects yet.}
+
 \item{data}{A list of traces.}
+
+\item{rows, cols, secondary_ys}{Per-trace grid cells and secondary y flags
+for \code{add_traces()}; a single value applies to every trace.}
 }
 \value{
 The modified figure.
@@ -27,6 +54,9 @@ Add traces to a figure
 go_figure() |>
   add_trace(go_scatter(x = 1:3, y = 1:3)) |>
   add_traces(list(list(type = "scatter", y = 3:1), go_scatter(y = c(2, 2, 2))))
+
+make_subplots(rows = 1, cols = 2) |>
+  add_trace(go_scatter(y = 1:3), row = 1, col = 2)
 }
 \seealso{
 The generated \verb{add_<trace type>()} functions, e.g. \code{\link[=add_scatter]{add_scatter()}}.

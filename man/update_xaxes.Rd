@@ -6,18 +6,29 @@
 \alias{for_each_xaxis}
 \title{Select, update or modify xaxis objects}
 \usage{
-select_xaxes(fig, selector = NULL)
+select_xaxes(fig, selector = NULL, row = NULL, col = NULL)
 
-update_xaxes(fig, patch = NULL, selector = NULL, ..., overwrite = FALSE)
+update_xaxes(
+  fig,
+  patch = NULL,
+  ...,
+  selector = NULL,
+  row = NULL,
+  col = NULL,
+  overwrite = FALSE
+)
 
-for_each_xaxis(fig, fn, selector = NULL)
+for_each_xaxis(fig, fn, selector = NULL, row = NULL, col = NULL)
 }
 \arguments{
 \item{fig}{A \code{go_figure} object.}
 
-\item{selector}{Which objects to use: \code{NULL} (all), a named list of
-property values that must all match, or a function that takes an object
-and returns \code{TRUE} or \code{FALSE}.}
+\item{selector}{Which objects to use: \code{NULL} (all), indices into the
+matching objects, a named list of property values that must all match,
+or a function that takes an object and returns \code{TRUE} or \code{FALSE}.}
+
+\item{row, col}{Only objects in this subplot grid row and/or column
+(figures created with \code{\link{make_subplots}()} only).}
 
 \item{patch}{A named list or \code{\link{go_layout_xaxis}()} object of property updates.}
 
@@ -38,8 +49,4 @@ Work with all of a figure's layout xaxis objects (\code{xaxis}, \code{xaxis2}, \
 their properties like \code{\link{update_layout}()} does, and \code{for_each_xaxis()}
 replaces each one with the result of \code{fn}. The base object (e.g.
 \code{xaxis}) is always included, even if it has not been set yet.
-}
-\examples{
-fig <- go_figure() |> update_xaxes(title_text = "xaxis")
-names(select_xaxes(fig))
 }

@@ -29,7 +29,7 @@ stopifnot(identical(class(tr2$marker$line), c("go_scatter_marker_line", "plotly_
 # Every constructor in scope exists and builds an empty object
 ns <- asNamespace("plotly.R.core")
 ctors <- setdiff(grep("^go_", getNamespaceExports("plotly.R.core"), value = TRUE), "go_figure")
-stopifnot(length(ctors) == 66L)
+stopifnot(length(ctors) == 979L)
 for (fn in ctors) {
   obj <- get(fn, ns)()
   stopifnot(inherits(obj, fn), inherits(obj, "plotly_obj"))
@@ -56,7 +56,7 @@ expect_error(go_scatter(colour = "red"), "Invalid property .* go_scatter: 'colou
 expect_error(go_scatter(marker_sise = 3), "Did you mean \"size\"")
 expect_error(go_scatter(marker = list(size = -1)), "'size' property of scatter.marker")
 expect_error(go_scatter(type = "bar"), "does not match go_scatter")
-expect_error(go_layout(scene = list()), "Invalid property")   # outside the generated scope
+expect_error(go_layout(scen = list()), "Did you mean \"scene\"")
 
 # skip_invalid drops bad properties at every level
 t7 <- go_scatter(list(x = 1, bogus = 2, marker = list(size = -1, color = "red")), skip_invalid = TRUE)

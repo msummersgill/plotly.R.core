@@ -2,10 +2,13 @@
 % Please edit documentation in R/zz-gen-layout.R
 \name{go_layout_hoverlabel}
 \alias{go_layout_hoverlabel}
-\title{Layout hoverlabel}
+\alias{go_layout_hoverlabel_font}
+\alias{go_layout_hoverlabel_grouptitlefont}
+\title{Layout hoverlabel objects}
 \usage{
 go_layout_hoverlabel(
   arg = NULL,
+  ...,
   align = NULL,
   bgcolor = NULL,
   bordercolor = NULL,
@@ -13,71 +16,134 @@ go_layout_hoverlabel(
   grouptitlefont = NULL,
   namelength = NULL,
   showarrow = NULL,
+  skip_invalid = FALSE
+)
+
+go_layout_hoverlabel_font(
+  arg = NULL,
   ...,
+  color = NULL,
+  family = NULL,
+  lineposition = NULL,
+  shadow = NULL,
+  size = NULL,
+  style = NULL,
+  textcase = NULL,
+  variant = NULL,
+  weight = NULL,
+  skip_invalid = FALSE
+)
+
+go_layout_hoverlabel_grouptitlefont(
+  arg = NULL,
+  ...,
+  color = NULL,
+  family = NULL,
+  lineposition = NULL,
+  shadow = NULL,
+  size = NULL,
+  style = NULL,
+  textcase = NULL,
+  variant = NULL,
+  weight = NULL,
   skip_invalid = FALSE
 )
 }
 \arguments{
 \item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{align}{Sets the horizontal alignment of the text content within
-  hover label box. Has an effect only if the hover label text spans two
-  or more lines
-
-  One of \code{"left"}, \code{"right"}, \code{"auto"}.}
-
-\item{bgcolor}{Sets the background color of all hover labels on graph
-
-  Color: a CSS color string or R color name.}
-
-\item{bordercolor}{Sets the border color of all hover labels on graph.
-
-  Color: a CSS color string or R color name.}
-
-\item{font}{Sets the default hover label font used by all traces on the
-  graph.
-
-  Named list or \code{\link{go_layout_hoverlabel_font}()} object.}
-
-\item{grouptitlefont}{Sets the font for group titles in hover (unified
-  modes). Defaults to `hoverlabel.font`.
-
-  Named list or \code{\link{go_layout_hoverlabel_grouptitlefont}()}
-  object.}
-
-\item{namelength}{Sets the default length (in number of characters) of
-  the trace name in the hover labels for all traces. -1 shows the whole
-  name regardless of length. 0-3 shows the first 0-3 characters, and an
-  integer >3 will show the whole name if it is less than that many
-  characters, but if it is longer, will truncate to `namelength - 3`
-  characters and add an ellipsis.
-
-  Integer in the interval [-1, Inf].}
-
-\item{showarrow}{Sets whether or not to show the hover label
-  arrow/triangle pointing to the data point.
-
-  Logical.}
+initialise properties from (constructors). Named arguments take precedence.}
 
 \item{...}{Further properties, including nested properties in
 "magic underscore" form, e.g. \code{marker_size = 10} for
 \code{marker = list(size = 10)}.}
 
+\item{align}{Sets the horizontal alignment of the text content within
+hover label box. Has an effect only if the hover label text spans two
+or more lines One of \code{"left"}, \code{"right"}, \code{"auto"}.}
+
+\item{bgcolor}{Sets the background color of all hover labels on graph
+Color: a CSS color string or R color name.}
+
+\item{bordercolor}{Sets the border color of all hover labels on graph.
+Color: a CSS color string or R color name.}
+
+\item{font}{Sets the default hover label font used by all traces on the
+graph. Named list or \code{\link{go_layout_hoverlabel_font}()} object.}
+
+\item{grouptitlefont}{Sets the font for group titles in hover (unified
+modes). Defaults to `hoverlabel.font`. Named list or
+\code{\link{go_layout_hoverlabel_grouptitlefont}()} object.}
+
+\item{namelength}{Sets the default length (in number of characters) of
+the trace name in the hover labels for all traces. -1 shows the whole
+name regardless of length. 0-3 shows the first 0-3 characters, and an
+integer >3 will show the whole name if it is less than that many
+characters, but if it is longer, will truncate to `namelength - 3`
+characters and add an ellipsis. Integer in the interval [-1, Inf].}
+
+\item{showarrow}{Sets whether or not to show the hover label
+arrow/triangle pointing to the data point. Logical.}
+
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
+
+\item{color}{Color: a CSS color string or R color name.}
+
+\item{family}{HTML font family - the typeface that will be applied by
+the web browser. The web browser can only apply a font if it is
+available on the system where it runs. Provide multiple font families,
+separated by commas, to indicate the order in which to apply fonts if
+they aren't available. String.}
+
+\item{lineposition}{Sets the kind of decoration line(s) with text, such
+as an "under", "over" or "through" as well as combinations e.g.
+"under+over", etc. Any combination of \code{"under"}, \code{"over"},
+\code{"through"} joined with \code{"+"}, or one of \code{"none"}.}
+
+\item{shadow}{Sets the shape and color of the shadow behind text. "auto"
+places minimal shadow and applies contrast text font color. See
+https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
+additional options. String.}
+
+\item{size}{Number in the interval [1, Inf].}
+
+\item{style}{Sets whether a font should be styled with a normal or
+italic face from its family. One of \code{"normal"}, \code{"italic"}.}
+
+\item{textcase}{Sets capitalization of text. It can be used to make text
+appear in all-uppercase or all-lowercase, or with each word
+capitalized. One of \code{"normal"}, \code{"word caps"},
+\code{"upper"}, \code{"lower"}.}
+
+\item{variant}{Sets the variant of the font. One of \code{"normal"},
+\code{"small-caps"}, \code{"all-small-caps"},
+\code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.}
+
+\item{weight}{Sets the weight (or boldness) of the font. Integer in the
+interval [1, 1000].}
 }
 \value{
-A \code{go_layout_hoverlabel} graph object.
+Each \code{go_*()} function returns a graph object of the same
+  class as its name; \code{add_*()} functions return the modified figure.
 }
 \description{
 Properties of \code{layout.hoverlabel}.
 }
 \details{
-Creates a validated \code{go_layout_hoverlabel} graph object (a named
-list). Every property is checked against the plotly.js schema when the
-object is created or modified (see \code{\link{plotly_obj-modify}()}).
+\code{go_layout_hoverlabel()} and the nested object constructors below
+create validated graph objects (named lists). Every property is checked
+against the plotly.js schema when an object is created or modified (see
+\code{\link{plotly_obj-modify}()}).
+
+Nested objects documented here:
+\describe{
+\item{\code{go_layout_hoverlabel_font()}}{\code{layout.hoverlabel.font}:
+Sets the default hover label font used by all traces on the graph.}
+\item{\code{go_layout_hoverlabel_grouptitlefont()}}{\code{layout.hoverlabel.grouptitlefont}:
+Sets the font for group titles in hover (unified modes). Defaults to
+`hoverlabel.font`.}
+}
 }
 \seealso{
-Parent object: \code{\link{go_layout}()}
+\code{\link{go_layout}()}
 }

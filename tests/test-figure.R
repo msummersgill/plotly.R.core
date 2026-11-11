@@ -24,7 +24,7 @@ copy <- go_figure(list(data = list(list(y = 1)), layout = list(width = 500)))  #
 stopifnot(identical(copy$layout$width, 500), identical(copy$data[[1L]]$type, "scatter"))
 stopifnot(identical(go_figure(fig), fig))
 
-expect_error(go_figure(list(list(type = "bar"))), "Invalid trace type")
+expect_error(go_figure(list(list(type = "bogus"))), "Invalid trace type")
 expect_error(go_figure(layout = list(widht = 500)), "Did you mean \"width\"")
 f2 <- go_figure(list(list(y = 1, bogus = 2)), layout = list(widht = 500), skip_invalid = TRUE)
 stopifnot(identical(names(f2$data[[1L]]), c("type", "y")), length(f2$layout) == 0L)

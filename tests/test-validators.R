@@ -131,7 +131,7 @@ expect_error(vc(list(bounds = c("sat", "mon")), "layout.xaxis.rangebreaks"), "li
 # Traces and layout -----------------------------------------------------------------
 tr <- validate_trace(list(x = 1:3, y = c(2, 4, 3), mode = "markers", marker = list(size = 8)))
 stopifnot(identical(tr$type, "scatter"), identical(tr$marker$size, 8))
-expect_error(validate_trace(list(type = "bar", x = 1)), "Available trace types: scatter")
+expect_error(validate_trace(list(type = "bogus", x = 1)), "Available trace types: bar, barpolar, box")
 expect_error(validate_trace(list(x = 1, colour = "red")), "Invalid property specified for object of type go_scatter: 'colour'")
 
 lay <- validate_layout(list(title = "T", xaxis = list(title = "X", range = c(0, 5)),

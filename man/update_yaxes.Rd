@@ -6,18 +6,39 @@
 \alias{for_each_yaxis}
 \title{Select, update or modify yaxis objects}
 \usage{
-select_yaxes(fig, selector = NULL)
+select_yaxes(fig, selector = NULL, row = NULL, col = NULL, secondary_y = NULL)
 
-update_yaxes(fig, patch = NULL, selector = NULL, ..., overwrite = FALSE)
+update_yaxes(
+  fig,
+  patch = NULL,
+  ...,
+  selector = NULL,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL,
+  overwrite = FALSE
+)
 
-for_each_yaxis(fig, fn, selector = NULL)
+for_each_yaxis(
+  fig,
+  fn,
+  selector = NULL,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL
+)
 }
 \arguments{
 \item{fig}{A \code{go_figure} object.}
 
-\item{selector}{Which objects to use: \code{NULL} (all), a named list of
-property values that must all match, or a function that takes an object
-and returns \code{TRUE} or \code{FALSE}.}
+\item{selector}{Which objects to use: \code{NULL} (all), indices into the
+matching objects, a named list of property values that must all match,
+or a function that takes an object and returns \code{TRUE} or \code{FALSE}.}
+
+\item{row, col}{Only objects in this subplot grid row and/or column
+(figures created with \code{\link{make_subplots}()} only).}
+
+\item{secondary_y}{Only secondary (\code{TRUE}) or primary (\code{FALSE}) y axes.}
 
 \item{patch}{A named list or \code{\link{go_layout_yaxis}()} object of property updates.}
 
@@ -38,8 +59,4 @@ Work with all of a figure's layout yaxis objects (\code{yaxis}, \code{yaxis2}, \
 their properties like \code{\link{update_layout}()} does, and \code{for_each_yaxis()}
 replaces each one with the result of \code{fn}. The base object (e.g.
 \code{yaxis}) is always included, even if it has not been set yet.
-}
-\examples{
-fig <- go_figure() |> update_yaxes(title_text = "yaxis")
-names(select_yaxes(fig))
 }

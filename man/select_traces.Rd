@@ -6,20 +6,41 @@
 \alias{for_each_trace}
 \title{Select, update or modify traces}
 \usage{
-select_traces(fig, selector = NULL)
+select_traces(fig, selector = NULL, row = NULL, col = NULL, secondary_y = NULL)
 
-update_traces(fig, patch = NULL, selector = NULL, ..., overwrite = FALSE)
+update_traces(
+  fig,
+  patch = NULL,
+  ...,
+  selector = NULL,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL,
+  overwrite = FALSE
+)
 
-for_each_trace(fig, fn, selector = NULL)
+for_each_trace(
+  fig,
+  fn,
+  selector = NULL,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL
+)
 }
 \arguments{
 \item{fig}{A \code{go_figure} object.}
 
 \item{selector}{Which traces to use: \code{NULL} (all), a trace type such as
-\code{"scatter"}, trace indices, a named list of property values that must
-all match (names may use magic underscores, e.g.
+\code{"scatter"}, indices into the matching traces, a named list of property
+values that must all match (names may use magic underscores, e.g.
 \code{list(marker_color = "red")}), or a function that takes a trace and
 returns \code{TRUE} or \code{FALSE}.}
+
+\item{row, col}{Only traces in this subplot grid row and/or column.}
+
+\item{secondary_y}{Only traces on secondary (\code{TRUE}) or primary (\code{FALSE})
+y axes.}
 
 \item{patch}{A named list of property updates.}
 
@@ -35,9 +56,11 @@ If it returns anything other than a list, the trace is left unchanged.}
 modified figure.
 }
 \description{
-\code{select_traces()} returns the traces matching \code{selector}.
-\code{update_traces()} updates their properties like \code{\link[=update_layout]{update_layout()}} does.
-\code{for_each_trace()} replaces each one with the result of \code{fn}.
+\code{select_traces()} returns the traces matching \code{selector} (and, for
+figures created with \code{\link[=make_subplots]{make_subplots()}}, the grid cell given by \code{row},
+\code{col} and \code{secondary_y}). \code{update_traces()} updates their properties like
+\code{\link[=update_layout]{update_layout()}} does. \code{for_each_trace()} replaces each one with the
+result of \code{fn}.
 }
 \examples{
 fig <- go_figure() |>

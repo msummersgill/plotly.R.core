@@ -2,69 +2,59 @@
 % Please edit documentation in R/zz-gen-layout.R
 \name{go_layout_margin}
 \alias{go_layout_margin}
-\title{Layout margin}
+\title{Layout margin objects}
 \usage{
 go_layout_margin(
   arg = NULL,
+  ...,
   autoexpand = NULL,
   b = NULL,
   l = NULL,
   pad = NULL,
   r = NULL,
   t = NULL,
-  ...,
   skip_invalid = FALSE
 )
 }
 \arguments{
 \item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{autoexpand}{Turns on/off margin expansion computations. Legends,
-  colorbars, updatemenus, sliders, axis rangeselector and rangeslider
-  are allowed to push the margins by defaults.
-
-  Logical.}
-
-\item{b}{Sets the bottom margin (in px).
-
-  Number in the interval [0, Inf].}
-
-\item{l}{Sets the left margin (in px).
-
-  Number in the interval [0, Inf].}
-
-\item{pad}{Sets the amount of padding (in px) between the plotting area
-  and the axis lines
-
-  Number in the interval [0, Inf].}
-
-\item{r}{Sets the right margin (in px).
-
-  Number in the interval [0, Inf].}
-
-\item{t}{Sets the top margin (in px).
-
-  Number in the interval [0, Inf].}
+initialise properties from (constructors). Named arguments take precedence.}
 
 \item{...}{Further properties, including nested properties in
 "magic underscore" form, e.g. \code{marker_size = 10} for
 \code{marker = list(size = 10)}.}
 
+\item{autoexpand}{Turns on/off margin expansion computations. Legends,
+colorbars, updatemenus, sliders, axis rangeselector and rangeslider
+are allowed to push the margins by defaults. Logical.}
+
+\item{b}{Sets the bottom margin (in px). Number in the interval [0,
+Inf].}
+
+\item{l}{Sets the left margin (in px). Number in the interval [0, Inf].}
+
+\item{pad}{Sets the amount of padding (in px) between the plotting area
+and the axis lines Number in the interval [0, Inf].}
+
+\item{r}{Sets the right margin (in px). Number in the interval [0, Inf].}
+
+\item{t}{Sets the top margin (in px). Number in the interval [0, Inf].}
+
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
 }
 \value{
-A \code{go_layout_margin} graph object.
+Each \code{go_*()} function returns a graph object of the same
+  class as its name; \code{add_*()} functions return the modified figure.
 }
 \description{
 Properties of \code{layout.margin}.
 }
 \details{
-Creates a validated \code{go_layout_margin} graph object (a named list).
-Every property is checked against the plotly.js schema when the object is
+\code{go_layout_margin()} create validated graph objects (named lists).
+Every property is checked against the plotly.js schema when an object is
 created or modified (see \code{\link{plotly_obj-modify}()}).
 }
 \seealso{
-Parent object: \code{\link{go_layout}()}
+\code{\link{go_layout}()}
 }

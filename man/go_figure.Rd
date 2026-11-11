@@ -35,5 +35,5 @@ fig <- fig |>
 if (interactive()) print(fig)
 }
 \seealso{
-\code{\link[=add_trace]{add_trace()}}, \code{\link[=update_layout]{update_layout()}}, \code{\link[=update_traces]{update_traces()}}
+\code{\link[=make_subplots]{make_subplots()}}, \code{\link[=add_trace]{add_trace()}}, \code{\link[=update_layout]{update_layout()}}, \code{\link[=update_traces]{update_traces()}}
 }

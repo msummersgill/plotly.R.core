@@ -3,18 +3,23 @@
 Interactive web graphics for R, built on [plotly.js](https://github.com/plotly/plotly.js)
 and following the design of the [plotly Python package](https://github.com/plotly/plotly.py).
 
-- **Graph objects generated from the plotly.js schema.** Every trace and layout
-  object has a `go_*()` constructor (`go_scatter()`, `go_scatter_marker()`,
-  `go_layout_xaxis()`, ...) with documentation generated from the schema.
+- **Graph objects generated from the plotly.js schema.** All 47 trace types and
+  every layout object have a `go_*()` constructor (`go_scatter()`,
+  `go_bar_marker()`, `go_layout_xaxis()`, ... 979 in total) with documentation
+  generated from the schema.
 - **Validation.** Every property is checked when objects are created or
   modified, with plotly.py-style error messages and "Did you mean" suggestions.
-- **Figures as values.** `go_figure()`, `add_scatter()`, `update_layout()`,
-  `update_traces()`, `update_xaxes()` and friends return new figures, so they
-  chain with the base R pipe `|>`.
+- **Figures as values.** `go_figure()`, `add_<trace>()`, `update_layout()`,
+  `update_traces()`, `update_xaxes()`, `add_annotation()` and friends return
+  new figures, so they chain with the base R pipe `|>`.
+- **Subplots.** `make_subplots()` is a port of plotly.py's, tested against its
+  output; traces and layout objects are placed with `row`, `col` and
+  `secondary_y`.
 - **Minimal dependencies.** data.table, htmlwidgets and jsonlite.
 
-> **Status:** early development. The initial pass generates the scatter trace
-> and core layout objects (axes, title, legend, margins, fonts, hover labels).
+> **Status:** early development. Graph objects, figures and subplots are in
+> place; plotly.express equivalents, Shiny, Quarto, templates and static image
+> export are still to come.
 
 ## Installation
 
@@ -54,6 +59,30 @@ fig
 
 Printing a figure renders it in the RStudio viewer or a browser, and inline in
 R Markdown and Quarto documents.
+
+## Example: subplots
+
+```r
+fig <- make_subplots(
+  rows = 2, cols = 2,
+  specs = list(
+    list(list(secondary_y = TRUE), list(type = "domain")),
+    list(list(colspan = 2), NULL)
+  ),
+  subplot_titles = c("Scatter + secondary y", "Pie", "Bar across both columns")
+) |>
+  add_scatter(x = mtcars$wt, y = mtcars$mpg, mode = "markers", name = "mpg", row = 1, col = 1) |>
+  add_scatter(x = sort(mtcars$wt), y = sort(mtcars$hp), mode = "lines", name = "hp",
+              row = 1, col = 1, secondary_y = TRUE) |>
+  add_pie(labels = c("4", "6", "8"), values = as.vector(table(mtcars$cyl)), row = 1, col = 2) |>
+  add_bar(x = rownames(mtcars), y = mtcars$qsec, name = "qsec", row = 2, col = 1) |>
+  update_yaxes(title_text = "hp", row = 1, col = 1, secondary_y = TRUE) |>
+  update_layout(showlegend = FALSE)
+```
+
+![A 2x2 subplot grid with a scatter plot and secondary y axis, a pie chart, and a bar chart spanning the bottom row](man/figures/README-subplots.png)
+
+## Graph objects and validation
 
 Nested properties can also be written with "magic underscores", as in plotly.py:
 `marker_size = 12` is the same as `marker = list(size = 12)`. Invalid values are

@@ -6,336 +6,563 @@
 \usage{
 go_layout(
   arg = NULL,
+  ...,
+  activeselection = NULL,
+  activeshape = NULL,
+  annotations = NULL,
   autosize = NULL,
   autotypenumbers = NULL,
+  barcornerradius = NULL,
+  bargap = NULL,
+  bargroupgap = NULL,
+  barmode = NULL,
+  barnorm = NULL,
+  boxgap = NULL,
+  boxgroupgap = NULL,
+  boxmode = NULL,
   calendar = NULL,
   clickanywhere = NULL,
   clickmode = NULL,
+  coloraxis = NULL,
+  colorscale = NULL,
   colorway = NULL,
   computed = NULL,
   datarevision = NULL,
   dragmode = NULL,
   editrevision = NULL,
+  extendfunnelareacolors = NULL,
+  extendiciclecolors = NULL,
+  extendpiecolors = NULL,
+  extendsunburstcolors = NULL,
+  extendtreemapcolors = NULL,
   font = NULL,
+  funnelareacolorway = NULL,
+  funnelgap = NULL,
+  funnelgroupgap = NULL,
+  funnelmode = NULL,
+  geo = NULL,
+  grid = NULL,
   height = NULL,
+  hiddenlabels = NULL,
   hoveranywhere = NULL,
   hoverdistance = NULL,
   hoverlabel = NULL,
   hovermode = NULL,
   hoversort = NULL,
   hoversubplots = NULL,
+  iciclecolorway = NULL,
+  images = NULL,
   legend = NULL,
+  map = NULL,
   margin = NULL,
   meta = NULL,
   minreducedheight = NULL,
   minreducedwidth = NULL,
+  modebar = NULL,
+  newselection = NULL,
+  newshape = NULL,
   paper_bgcolor = NULL,
+  piecolorway = NULL,
   plot_bgcolor = NULL,
+  polar = NULL,
+  scattergap = NULL,
+  scattermode = NULL,
+  scene = NULL,
   selectdirection = NULL,
   selectionrevision = NULL,
+  selections = NULL,
   separators = NULL,
+  shapes = NULL,
   showlegend = NULL,
+  sliders = NULL,
+  smith = NULL,
   spikedistance = NULL,
+  sunburstcolorway = NULL,
   template = NULL,
+  ternary = NULL,
   title = NULL,
+  transition = NULL,
+  treemapcolorway = NULL,
   uirevision = NULL,
+  uniformtext = NULL,
+  updatemenus = NULL,
+  violingap = NULL,
+  violingroupgap = NULL,
+  violinmode = NULL,
+  waterfallgap = NULL,
+  waterfallgroupgap = NULL,
+  waterfallmode = NULL,
   width = NULL,
   xaxis = NULL,
   yaxis = NULL,
-  ...,
   skip_invalid = FALSE
 )
 }
 \arguments{
 \item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{autosize}{Determines whether or not a layout width or height that
-  has been left undefined by the user is initialized on each relayout.
-  Note that, regardless of this attribute, an undefined layout width or
-  height is always initialized on the first call to plot.
-
-  Logical.}
-
-\item{autotypenumbers}{Using "strict" a numeric string in trace data is
-  not converted to a number. Using "convert types" a numeric string in
-  trace data may be treated as a number during automatic axis `type`
-  detection. This is the default value; however it could be overridden
-  for individual axes.
-
-  One of \code{"convert types"}, \code{"strict"}.}
-
-\item{calendar}{Sets the default calendar system to use for interpreting
-  and displaying dates throughout the plot.
-
-  One of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},
-  \code{"ethiopian"}, \code{"gregorian"}, \code{"hebrew"},
-  \code{"islamic"}, \code{"jalali"}, \code{"julian"}, \code{"mayan"},
-  \code{"nanakshahi"}, \code{"nepali"}, \code{"persian"},
-  \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.}
-
-\item{clickanywhere}{If true, `plotly_click` events will fire for any
-  click position within the plot area, not just over traces. When
-  clicking where there is no trace data, the event will have an empty
-  `points` array but will include `xvals` and `yvals` with click
-  coordinates in data space, and `xPixel` and `yPixel` with click
-  coordinates in pixels, relative to the top-left corner of the graph
-  div.
-
-  Logical.}
-
-\item{clickmode}{Determines the mode of single click interactions.
-  "event" is the default value and emits the `plotly_click` event. In
-  addition this mode emits the `plotly_selected` event in drag modes
-  "lasso" and "select", but with no event data attached (kept for
-  compatibility reasons). The "select" flag enables selecting single
-  data points via click. This mode also supports persistent selections,
-  meaning that pressing Shift while clicking, adds to / subtracts from
-  an existing selection. "select" with `hovermode`: "x" can be
-  confusing, consider explicitly setting `hovermode`: "closest" when
-  using this feature. Selection events are sent accordingly as long as
-  "event" flag is set as well. When the "event" flag is missing,
-  `plotly_click` and `plotly_selected` events are not fired.
-
-  Any combination of \code{"event"}, \code{"select"} joined with
-  \code{"+"}, or one of \code{"none"}.}
-
-\item{colorway}{Sets the default trace colors.
-
-  Vector of colors.}
-
-\item{computed}{Placeholder for exporting automargin-impacting values
-  namely `margin.t`, `margin.b`, `margin.l` and `margin.r` in
-  "full-json" mode.
-
-  Any value.}
-
-\item{datarevision}{If provided, a changed value tells `Plotly.react`
-  that one or more data arrays has changed. This way you can modify
-  arrays in-place rather than making a complete new copy for an
-  incremental change. If NOT provided, `Plotly.react` assumes that data
-  arrays are being treated as immutable, thus any data array with a
-  different identity from its predecessor contains new data.
-
-  Any value.}
-
-\item{dragmode}{Determines the mode of drag interactions. "select" and
-  "lasso" apply only to scatter traces with markers or text. "orbit" and
-  "turntable" apply only to 3D scenes.
-
-  One of \code{"zoom"}, \code{"pan"}, \code{"select"}, \code{"lasso"},
-  \code{"drawclosedpath"}, \code{"drawopenpath"}, \code{"drawline"},
-  \code{"drawrect"}, \code{"drawcircle"}, \code{"orbit"},
-  \code{"turntable"}, \code{FALSE}.}
-
-\item{editrevision}{Controls persistence of user-driven changes in
-  `editable: true` configuration, other than trace names and axis
-  titles. Defaults to `layout.uirevision`.
-
-  Any value.}
-
-\item{font}{Sets the global font. Note that fonts used in traces and
-  other layout components inherit from the global font.
-
-  Named list or \code{\link{go_layout_font}()} object.}
-
-\item{height}{Sets the plot's height (in px).
-
-  Number in the interval [10, Inf].}
-
-\item{hoveranywhere}{If true, `plotly_hover` events will fire for any
-  cursor position within the plot area, not just over traces. When the
-  cursor is not over a trace, the event will have an empty `points`
-  array but will include `xvals` and `yvals` with cursor coordinates in
-  data space, and `xPixel` and `yPixel` with cursor coordinates in
-  pixels, relative to the top-left corner of the graph div. A
-  `plotly_unhover` event fires when the cursor leaves the plot area.
-
-  Logical.}
-
-\item{hoverdistance}{Sets the default distance (in pixels) to look for
-  data to add hover labels (-1 means no cutoff, 0 means no looking for
-  data). This is only a real distance for hovering on point-like
-  objects, like scatter points. For area-like objects (bars, scatter
-  fills, etc) hovering is on inside the area and off outside, but these
-  objects will not supersede hover on point-like objects in case of
-  conflict.
-
-  Integer in the interval [-1, Inf].}
-
-\item{hoverlabel}{Named list or \code{\link{go_layout_hoverlabel}()}
-object.}
-
-\item{hovermode}{Determines the mode of hover interactions. If
-  "closest", a single hoverlabel will appear for the "closest" point
-  within the `hoverdistance`. If "x" (or "y"), multiple hoverlabels will
-  appear for multiple points at the "closest" x- (or y-) coordinate
-  within the `hoverdistance`, with the caveat that no more than one
-  hoverlabel will appear per trace. If "x unified" (or "y unified"), a
-  single hoverlabel will appear multiple points at the closest x- (or
-  y-) coordinate within the `hoverdistance` with the caveat that no more
-  than one hoverlabel will appear per trace. In this mode, spikelines
-  are enabled by default perpendicular to the specified axis. If false,
-  hover interactions are disabled.
-
-  One of \code{"x"}, \code{"y"}, \code{"closest"}, \code{"x unified"},
-  \code{"y unified"}, \code{FALSE}.}
-
-\item{hoversort}{Determines the order of items shown in unified hover
-  labels. If "trace", items are sorted by trace index. If "value
-  descending", items are sorted by value from largest to smallest. If
-  "value ascending", items are sorted by value from smallest to largest.
-  Only applies when `hovermode` is "x unified" or "y unified".
-
-  One of \code{"trace"}, \code{"value descending"}, \code{"value
-  ascending"}.}
-
-\item{hoversubplots}{Determines expansion of hover effects to other
-  subplots If "single" just the axis pair of the primary point is
-  included without overlaying subplots. If "overlaying" all subplots
-  using the main axis and occupying the same space are included. If
-  "axis", also include stacked subplots using the same axis when
-  `hovermode` is set to "x", "x unified", "y" or "y unified".
-
-  One of \code{"single"}, \code{"overlaying"}, \code{"axis"}.}
-
-\item{legend}{Named list or \code{\link{go_layout_legend}()} object.}
-
-\item{margin}{Named list or \code{\link{go_layout_margin}()} object.}
-
-\item{meta}{Assigns extra meta information that can be used in various
-  `text` attributes. Attributes such as the graph, axis and colorbar
-  `title.text`, annotation `text` `trace.name` in legend items,
-  `rangeselector`, `updatemenus` and `sliders` `label` text all support
-  `meta`. One can access `meta` fields using template strings:
-  `\%\{meta[i]\}` where `i` is the index of the `meta` item in question.
-  `meta` can also be an object for example `\{key: value\}` which can be
-  accessed \%\{meta[key]\}.
-
-  Any value.}
-
-\item{minreducedheight}{Minimum height of the plot with
-  margin.automargin applied (in px)
-
-  Number in the interval [2, Inf].}
-
-\item{minreducedwidth}{Minimum width of the plot with margin.automargin
-  applied (in px)
-
-  Number in the interval [2, Inf].}
-
-\item{paper_bgcolor}{Sets the background color of the paper where the
-  graph is drawn.
-
-  Color: a CSS color string or R color name.}
-
-\item{plot_bgcolor}{Sets the background color of the plotting area
-  in-between x and y axes.
-
-  Color: a CSS color string or R color name.}
-
-\item{selectdirection}{When `dragmode` is set to "select", this limits
-  the selection of the drag to horizontal, vertical or diagonal. "h"
-  only allows horizontal selection, "v" only vertical, "d" only diagonal
-  and "any" sets no limit.
-
-  One of \code{"h"}, \code{"v"}, \code{"d"}, \code{"any"}.}
-
-\item{selectionrevision}{Controls persistence of user-driven changes in
-  selected points from all traces.
-
-  Any value.}
-
-\item{separators}{Sets the decimal and thousand separators. For example,
-  ". " puts a '.' before decimals and a space between thousands. In
-  English locales, dflt is ".," but other locales may alter this
-  default.
-
-  String.}
-
-\item{showlegend}{Determines whether or not a legend is drawn. Default
-  is `true` if there is a trace to show and any of these: a) Two or more
-  traces would by default be shown in the legend. b) One pie trace is
-  shown in the legend. c) One trace is explicitly given with
-  `showlegend: true`.
-
-  Logical.}
-
-\item{spikedistance}{Sets the default distance (in pixels) to look for
-  data to draw spikelines to (-1 means no cutoff, 0 means no looking for
-  data). As with hoverdistance, distance does not apply to area-like
-  objects. In addition, some objects can be hovered on but will not
-  generate spikelines, such as scatter fills.
-
-  Integer in the interval [-1, Inf].}
-
-\item{template}{Default attributes to be applied to the plot. Templates
-  can be created from existing plots using `Plotly.makeTemplate`, or
-  created manually. They should be objects with format: `\{layout:
-  layoutTemplate, data: \{[type]: [traceTemplate, ...]\}, ...\}`
-  `layoutTemplate` and `traceTemplate` are objects matching the
-  attribute structure of `layout` and a data trace.  Trace templates are
-  applied cyclically to traces of each type. Container arrays (eg
-  `annotations`) have special handling: An object ending in `defaults`
-  (eg `annotationdefaults`) is applied to each array item. But if an
-  item has a `templateitemname` key we look in the template array for an
-  item with matching `name` and apply that instead. If no matching
-  `name` is found we mark the item invisible. Any named template item
-  not referenced is appended to the end of the array, so you can use
-  this for a watermark annotation or a logo image, for example. To omit
-  one of these items on the plot, make an item with matching
-  `templateitemname` and `visible: false`.
-
-  Any value.}
-
-\item{title}{String (the title text), named list or
-\code{\link{go_layout_title}()} object.}
-
-\item{uirevision}{Used to allow user interactions with the plot to
-  persist after `Plotly.react` calls that are unaware of these
-  interactions. If `uirevision` is omitted, or if it is given and it
-  changed from the previous `Plotly.react` call, the exact new figure is
-  used. If `uirevision` is truthy and did NOT change, any attribute that
-  has been affected by user interactions and did not receive a different
-  value in the new figure will keep the interaction value.
-  `layout.uirevision` attribute serves as the default for `uirevision`
-  attributes in various sub-containers. For finer control you can set
-  these sub-attributes directly. For example, if your app separately
-  controls the data on the x and y axes you might set
-  `xaxis.uirevision="time"` and `yaxis.uirevision="cost"`. Then if only
-  the y data is changed, you can update `yaxis.uirevision="quantity"`
-  and the y axis range will reset but the x axis range will retain any
-  user-driven zoom.
-
-  Any value.}
-
-\item{width}{Sets the plot's width (in px).
-
-  Number in the interval [10, Inf].}
-
-\item{xaxis}{Named list or \code{\link{go_layout_xaxis}()} object.}
-
-\item{yaxis}{Named list or \code{\link{go_layout_yaxis}()} object.}
+initialise properties from (constructors). Named arguments take precedence.}
 
 \item{...}{Further properties, including nested properties in
 "magic underscore" form, e.g. \code{marker_size = 10} for
 \code{marker = list(size = 10)}.}
 
+\item{activeselection}{Named list or
+\code{\link{go_layout_activeselection}()} object.}
+
+\item{activeshape}{Named list or \code{\link{go_layout_activeshape}()}
+object.}
+
+\item{annotations}{List of named lists or
+\code{\link{go_layout_annotation}()} objects.}
+
+\item{autosize}{Determines whether or not a layout width or height that
+has been left undefined by the user is initialized on each relayout.
+Note that, regardless of this attribute, an undefined layout width or
+height is always initialized on the first call to plot. Logical.}
+
+\item{autotypenumbers}{Using "strict" a numeric string in trace data is
+not converted to a number. Using "convert types" a numeric string in
+trace data may be treated as a number during automatic axis `type`
+detection. This is the default value; however it could be overridden
+for individual axes. One of \code{"convert types"}, \code{"strict"}.}
+
+\item{barcornerradius}{Sets the rounding of bar corners. May be an
+integer number of pixels, or a percentage of bar width (as a string
+ending in \%). Any value.}
+
+\item{bargap}{Sets the gap (in plot fraction) between bars of adjacent
+location coordinates. Number in the interval [0, 1].}
+
+\item{bargroupgap}{Sets the gap (in plot fraction) between bars of the
+same location coordinate. Number in the interval [0, 1].}
+
+\item{barmode}{Determines how bars at the same location coordinate are
+displayed on the graph. With "stack", the bars are stacked on top of
+one another With "relative", the bars are stacked on top of one
+another, with negative values below the axis, positive values above
+With "group", the bars are plotted next to one another centered around
+the shared location. With "overlay", the bars are plotted over one
+another, you might need to reduce "opacity" to see multiple bars. One
+of \code{"stack"}, \code{"group"}, \code{"overlay"},
+\code{"relative"}.}
+
+\item{barnorm}{Sets the normalization for bar traces on the graph. With
+"fraction", the value of each bar is divided by the sum of all values
+at that location coordinate. "percent" is the same but multiplied by
+100 to show percentages. One of \code{""}, \code{"fraction"},
+\code{"percent"}.}
+
+\item{boxgap}{Sets the gap (in plot fraction) between boxes of adjacent
+location coordinates. Has no effect on traces that have "width" set.
+Number in the interval [0, 1].}
+
+\item{boxgroupgap}{Sets the gap (in plot fraction) between boxes of the
+same location coordinate. Has no effect on traces that have "width"
+set. Number in the interval [0, 1].}
+
+\item{boxmode}{Determines how boxes at the same location coordinate are
+displayed on the graph. If "group", the boxes are plotted next to one
+another centered around the shared location. If "overlay", the boxes
+are plotted over one another, you might need to set "opacity" to see
+them multiple boxes. Has no effect on traces that have "width" set.
+One of \code{"group"}, \code{"overlay"}.}
+
+\item{calendar}{Sets the default calendar system to use for interpreting
+and displaying dates throughout the plot. One of \code{"chinese"},
+\code{"coptic"}, \code{"discworld"}, \code{"ethiopian"},
+\code{"gregorian"}, \code{"hebrew"}, \code{"islamic"},
+\code{"jalali"}, \code{"julian"}, \code{"mayan"}, \code{"nanakshahi"},
+\code{"nepali"}, \code{"persian"}, \code{"taiwan"}, \code{"thai"},
+\code{"ummalqura"}.}
+
+\item{clickanywhere}{If true, `plotly_click` events will fire for any
+click position within the plot area, not just over traces. When
+clicking where there is no trace data, the event will have an empty
+`points` array but will include `xvals` and `yvals` with click
+coordinates in data space, and `xPixel` and `yPixel` with click
+coordinates in pixels, relative to the top-left corner of the graph
+div. Logical.}
+
+\item{clickmode}{Determines the mode of single click interactions.
+"event" is the default value and emits the `plotly_click` event. In
+addition this mode emits the `plotly_selected` event in drag modes
+"lasso" and "select", but with no event data attached (kept for
+compatibility reasons). The "select" flag enables selecting single
+data points via click. This mode also supports persistent selections,
+meaning that pressing Shift while clicking, adds to / subtracts from
+an existing selection. "select" with `hovermode`: "x" can be
+confusing, consider explicitly setting `hovermode`: "closest" when
+using this feature. Selection events are sent accordingly as long as
+"event" flag is set as well. When the "event" flag is missing,
+`plotly_click` and `plotly_selected` events are not fired. Any
+combination of \code{"event"}, \code{"select"} joined with \code{"+"},
+or one of \code{"none"}.}
+
+\item{coloraxis}{Named list or \code{\link{go_layout_coloraxis}()}
+object.}
+
+\item{colorscale}{Named list or \code{\link{go_layout_colorscale}()}
+object.}
+
+\item{colorway}{Sets the default trace colors. Vector of colors.}
+
+\item{computed}{Placeholder for exporting automargin-impacting values
+namely `margin.t`, `margin.b`, `margin.l` and `margin.r` in
+"full-json" mode. Any value.}
+
+\item{datarevision}{If provided, a changed value tells `Plotly.react`
+that one or more data arrays has changed. This way you can modify
+arrays in-place rather than making a complete new copy for an
+incremental change. If NOT provided, `Plotly.react` assumes that data
+arrays are being treated as immutable, thus any data array with a
+different identity from its predecessor contains new data. Any value.}
+
+\item{dragmode}{Determines the mode of drag interactions. "select" and
+"lasso" apply only to scatter traces with markers or text. "orbit" and
+"turntable" apply only to 3D scenes. One of \code{"zoom"},
+\code{"pan"}, \code{"select"}, \code{"lasso"},
+\code{"drawclosedpath"}, \code{"drawopenpath"}, \code{"drawline"},
+\code{"drawrect"}, \code{"drawcircle"}, \code{"orbit"},
+\code{"turntable"}, \code{FALSE}.}
+
+\item{editrevision}{Controls persistence of user-driven changes in
+`editable: true` configuration, other than trace names and axis
+titles. Defaults to `layout.uirevision`. Any value.}
+
+\item{extendfunnelareacolors}{If `true`, the funnelarea slice colors
+(whether given by `funnelareacolorway` or inherited from `colorway`)
+will be extended to three times its original length by first repeating
+every color 20\% lighter then each color 20\% darker. This is intended
+to reduce the likelihood of reusing the same color when you have many
+slices, but you can set `false` to disable. Colors provided in the
+trace, using `marker.colors`, are never extended. Logical.}
+
+\item{extendiciclecolors}{If `true`, the icicle slice colors (whether
+given by `iciclecolorway` or inherited from `colorway`) will be
+extended to three times its original length by first repeating every
+color 20\% lighter then each color 20\% darker. This is intended to
+reduce the likelihood of reusing the same color when you have many
+slices, but you can set `false` to disable. Colors provided in the
+trace, using `marker.colors`, are never extended. Logical.}
+
+\item{extendpiecolors}{If `true`, the pie slice colors (whether given by
+`piecolorway` or inherited from `colorway`) will be extended to three
+times its original length by first repeating every color 20\% lighter
+then each color 20\% darker. This is intended to reduce the likelihood
+of reusing the same color when you have many slices, but you can set
+`false` to disable. Colors provided in the trace, using
+`marker.colors`, are never extended. Logical.}
+
+\item{extendsunburstcolors}{If `true`, the sunburst slice colors
+(whether given by `sunburstcolorway` or inherited from `colorway`)
+will be extended to three times its original length by first repeating
+every color 20\% lighter then each color 20\% darker. This is intended
+to reduce the likelihood of reusing the same color when you have many
+slices, but you can set `false` to disable. Colors provided in the
+trace, using `marker.colors`, are never extended. Logical.}
+
+\item{extendtreemapcolors}{If `true`, the treemap slice colors (whether
+given by `treemapcolorway` or inherited from `colorway`) will be
+extended to three times its original length by first repeating every
+color 20\% lighter then each color 20\% darker. This is intended to
+reduce the likelihood of reusing the same color when you have many
+slices, but you can set `false` to disable. Colors provided in the
+trace, using `marker.colors`, are never extended. Logical.}
+
+\item{font}{Sets the global font. Note that fonts used in traces and
+other layout components inherit from the global font. Named list or
+\code{\link{go_layout_font}()} object.}
+
+\item{funnelareacolorway}{Sets the default funnelarea slice colors.
+Defaults to the main `colorway` used for trace colors. If you specify
+a new list here it can still be extended with lighter and darker
+colors, see `extendfunnelareacolors`. Vector of colors.}
+
+\item{funnelgap}{Sets the gap (in plot fraction) between bars of
+adjacent location coordinates. Number in the interval [0, 1].}
+
+\item{funnelgroupgap}{Sets the gap (in plot fraction) between bars of
+the same location coordinate. Number in the interval [0, 1].}
+
+\item{funnelmode}{Determines how bars at the same location coordinate
+are displayed on the graph. With "stack", the bars are stacked on top
+of one another With "group", the bars are plotted next to one another
+centered around the shared location. With "overlay", the bars are
+plotted over one another, you might need to reduce "opacity" to see
+multiple bars. One of \code{"stack"}, \code{"group"},
+\code{"overlay"}.}
+
+\item{geo}{Named list or \code{\link{go_layout_geo}()} object.}
+
+\item{grid}{Named list or \code{\link{go_layout_grid}()} object.}
+
+\item{height}{Sets the plot's height (in px). Number in the interval
+[10, Inf].}
+
+\item{hiddenlabels}{hiddenlabels is the funnelarea & pie chart analog of
+visible:'legendonly' but it can contain many labels, and can
+simultaneously hide slices from several pies/funnelarea charts Data
+array: a vector, factor, Date/POSIXct vector, matrix or list.}
+
+\item{hoveranywhere}{If true, `plotly_hover` events will fire for any
+cursor position within the plot area, not just over traces. When the
+cursor is not over a trace, the event will have an empty `points`
+array but will include `xvals` and `yvals` with cursor coordinates in
+data space, and `xPixel` and `yPixel` with cursor coordinates in
+pixels, relative to the top-left corner of the graph div. A
+`plotly_unhover` event fires when the cursor leaves the plot area.
+Logical.}
+
+\item{hoverdistance}{Sets the default distance (in pixels) to look for
+data to add hover labels (-1 means no cutoff, 0 means no looking for
+data). This is only a real distance for hovering on point-like
+objects, like scatter points. For area-like objects (bars, scatter
+fills, etc) hovering is on inside the area and off outside, but these
+objects will not supersede hover on point-like objects in case of
+conflict. Integer in the interval [-1, Inf].}
+
+\item{hoverlabel}{Named list or \code{\link{go_layout_hoverlabel}()}
+object.}
+
+\item{hovermode}{Determines the mode of hover interactions. If
+"closest", a single hoverlabel will appear for the "closest" point
+within the `hoverdistance`. If "x" (or "y"), multiple hoverlabels will
+appear for multiple points at the "closest" x- (or y-) coordinate
+within the `hoverdistance`, with the caveat that no more than one
+hoverlabel will appear per trace. If "x unified" (or "y unified"), a
+single hoverlabel will appear multiple points at the closest x- (or
+y-) coordinate within the `hoverdistance` with the caveat that no more
+than one hoverlabel will appear per trace. In this mode, spikelines
+are enabled by default perpendicular to the specified axis. If false,
+hover interactions are disabled. One of \code{"x"}, \code{"y"},
+\code{"closest"}, \code{"x unified"}, \code{"y unified"},
+\code{FALSE}.}
+
+\item{hoversort}{Determines the order of items shown in unified hover
+labels. If "trace", items are sorted by trace index. If "value
+descending", items are sorted by value from largest to smallest. If
+"value ascending", items are sorted by value from smallest to largest.
+Only applies when `hovermode` is "x unified" or "y unified". One of
+\code{"trace"}, \code{"value descending"}, \code{"value ascending"}.}
+
+\item{hoversubplots}{Determines expansion of hover effects to other
+subplots If "single" just the axis pair of the primary point is
+included without overlaying subplots. If "overlaying" all subplots
+using the main axis and occupying the same space are included. If
+"axis", also include stacked subplots using the same axis when
+`hovermode` is set to "x", "x unified", "y" or "y unified". One of
+\code{"single"}, \code{"overlaying"}, \code{"axis"}.}
+
+\item{iciclecolorway}{Sets the default icicle slice colors. Defaults to
+the main `colorway` used for trace colors. If you specify a new list
+here it can still be extended with lighter and darker colors, see
+`extendiciclecolors`. Vector of colors.}
+
+\item{images}{List of named lists or \code{\link{go_layout_image}()}
+objects.}
+
+\item{legend}{Named list or \code{\link{go_layout_legend}()} object.}
+
+\item{map}{Named list or \code{\link{go_layout_map}()} object.}
+
+\item{margin}{Named list or \code{\link{go_layout_margin}()} object.}
+
+\item{meta}{Assigns extra meta information that can be used in various
+`text` attributes. Attributes such as the graph, axis and colorbar
+`title.text`, annotation `text` `trace.name` in legend items,
+`rangeselector`, `updatemenus` and `sliders` `label` text all support
+`meta`. One can access `meta` fields using template strings:
+`\%\{meta[i]\}` where `i` is the index of the `meta` item in question.
+`meta` can also be an object for example `\{key: value\}` which can be
+accessed \%\{meta[key]\}. Any value.}
+
+\item{minreducedheight}{Minimum height of the plot with
+margin.automargin applied (in px) Number in the interval [2, Inf].}
+
+\item{minreducedwidth}{Minimum width of the plot with margin.automargin
+applied (in px) Number in the interval [2, Inf].}
+
+\item{modebar}{Named list or \code{\link{go_layout_modebar}()} object.}
+
+\item{newselection}{Named list or \code{\link{go_layout_newselection}()}
+object.}
+
+\item{newshape}{Named list or \code{\link{go_layout_newshape}()} object.}
+
+\item{paper_bgcolor}{Sets the background color of the paper where the
+graph is drawn. Color: a CSS color string or R color name.}
+
+\item{piecolorway}{Sets the default pie slice colors. Defaults to the
+main `colorway` used for trace colors. If you specify a new list here
+it can still be extended with lighter and darker colors, see
+`extendpiecolors`. Vector of colors.}
+
+\item{plot_bgcolor}{Sets the background color of the plotting area
+in-between x and y axes. Color: a CSS color string or R color name.}
+
+\item{polar}{Named list or \code{\link{go_layout_polar}()} object.}
+
+\item{scattergap}{Sets the gap (in plot fraction) between scatter points
+of adjacent location coordinates. Defaults to `bargap`. Number in the
+interval [0, 1].}
+
+\item{scattermode}{Determines how scatter points at the same location
+coordinate are displayed on the graph. With "group", the scatter
+points are plotted next to one another centered around the shared
+location. With "overlay", the scatter points are plotted over one
+another, you might need to reduce "opacity" to see multiple scatter
+points. One of \code{"group"}, \code{"overlay"}.}
+
+\item{scene}{Named list or \code{\link{go_layout_scene}()} object.}
+
+\item{selectdirection}{When `dragmode` is set to "select", this limits
+the selection of the drag to horizontal, vertical or diagonal. "h"
+only allows horizontal selection, "v" only vertical, "d" only diagonal
+and "any" sets no limit. One of \code{"h"}, \code{"v"}, \code{"d"},
+\code{"any"}.}
+
+\item{selectionrevision}{Controls persistence of user-driven changes in
+selected points from all traces. Any value.}
+
+\item{selections}{List of named lists or
+\code{\link{go_layout_selection}()} objects.}
+
+\item{separators}{Sets the decimal and thousand separators. For example,
+". " puts a '.' before decimals and a space between thousands. In
+English locales, dflt is ".," but other locales may alter this
+default. String.}
+
+\item{shapes}{List of named lists or \code{\link{go_layout_shape}()}
+objects.}
+
+\item{showlegend}{Determines whether or not a legend is drawn. Default
+is `true` if there is a trace to show and any of these: a) Two or more
+traces would by default be shown in the legend. b) One pie trace is
+shown in the legend. c) One trace is explicitly given with
+`showlegend: true`. Logical.}
+
+\item{sliders}{List of named lists or \code{\link{go_layout_slider}()}
+objects.}
+
+\item{smith}{Named list or \code{\link{go_layout_smith}()} object.}
+
+\item{spikedistance}{Sets the default distance (in pixels) to look for
+data to draw spikelines to (-1 means no cutoff, 0 means no looking for
+data). As with hoverdistance, distance does not apply to area-like
+objects. In addition, some objects can be hovered on but will not
+generate spikelines, such as scatter fills. Integer in the interval
+[-1, Inf].}
+
+\item{sunburstcolorway}{Sets the default sunburst slice colors. Defaults
+to the main `colorway` used for trace colors. If you specify a new
+list here it can still be extended with lighter and darker colors, see
+`extendsunburstcolors`. Vector of colors.}
+
+\item{template}{Default attributes to be applied to the plot. Templates
+can be created from existing plots using `Plotly.makeTemplate`, or
+created manually. They should be objects with format: `\{layout:
+layoutTemplate, data: \{[type]: [traceTemplate, ...]\}, ...\}`
+`layoutTemplate` and `traceTemplate` are objects matching the
+attribute structure of `layout` and a data trace.  Trace templates are
+applied cyclically to traces of each type. Container arrays (eg
+`annotations`) have special handling: An object ending in `defaults`
+(eg `annotationdefaults`) is applied to each array item. But if an
+item has a `templateitemname` key we look in the template array for an
+item with matching `name` and apply that instead. If no matching
+`name` is found we mark the item invisible. Any named template item
+not referenced is appended to the end of the array, so you can use
+this for a watermark annotation or a logo image, for example. To omit
+one of these items on the plot, make an item with matching
+`templateitemname` and `visible: false`. Any value.}
+
+\item{ternary}{Named list or \code{\link{go_layout_ternary}()} object.}
+
+\item{title}{String (the title text), named list or
+\code{\link{go_layout_title}()} object.}
+
+\item{transition}{Sets transition options used during Plotly.react
+updates. Named list or \code{\link{go_layout_transition}()} object.}
+
+\item{treemapcolorway}{Sets the default treemap slice colors. Defaults
+to the main `colorway` used for trace colors. If you specify a new
+list here it can still be extended with lighter and darker colors, see
+`extendtreemapcolors`. Vector of colors.}
+
+\item{uirevision}{Used to allow user interactions with the plot to
+persist after `Plotly.react` calls that are unaware of these
+interactions. If `uirevision` is omitted, or if it is given and it
+changed from the previous `Plotly.react` call, the exact new figure is
+used. If `uirevision` is truthy and did NOT change, any attribute that
+has been affected by user interactions and did not receive a different
+value in the new figure will keep the interaction value.
+`layout.uirevision` attribute serves as the default for `uirevision`
+attributes in various sub-containers. For finer control you can set
+these sub-attributes directly. For example, if your app separately
+controls the data on the x and y axes you might set
+`xaxis.uirevision="time"` and `yaxis.uirevision="cost"`. Then if only
+the y data is changed, you can update `yaxis.uirevision="quantity"`
+and the y axis range will reset but the x axis range will retain any
+user-driven zoom. Any value.}
+
+\item{uniformtext}{Named list or \code{\link{go_layout_uniformtext}()}
+object.}
+
+\item{updatemenus}{List of named lists or
+\code{\link{go_layout_updatemenu}()} objects.}
+
+\item{violingap}{Sets the gap (in plot fraction) between violins of
+adjacent location coordinates. Has no effect on traces that have
+"width" set. Number in the interval [0, 1].}
+
+\item{violingroupgap}{Sets the gap (in plot fraction) between violins of
+the same location coordinate. Has no effect on traces that have
+"width" set. Number in the interval [0, 1].}
+
+\item{violinmode}{Determines how violins at the same location coordinate
+are displayed on the graph. If "group", the violins are plotted next
+to one another centered around the shared location. If "overlay", the
+violins are plotted over one another, you might need to set "opacity"
+to see them multiple violins. Has no effect on traces that have
+"width" set. One of \code{"group"}, \code{"overlay"}.}
+
+\item{waterfallgap}{Sets the gap (in plot fraction) between bars of
+adjacent location coordinates. Number in the interval [0, 1].}
+
+\item{waterfallgroupgap}{Sets the gap (in plot fraction) between bars of
+the same location coordinate. Number in the interval [0, 1].}
+
+\item{waterfallmode}{Determines how bars at the same location coordinate
+are displayed on the graph. With "group", the bars are plotted next to
+one another centered around the shared location. With "overlay", the
+bars are plotted over one another, you might need to reduce "opacity"
+to see multiple bars. One of \code{"group"}, \code{"overlay"}.}
+
+\item{width}{Sets the plot's width (in px). Number in the interval [10,
+Inf].}
+
+\item{xaxis}{Named list or \code{\link{go_layout_xaxis}()} object.}
+
+\item{yaxis}{Named list or \code{\link{go_layout_yaxis}()} object.}
+
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
 }
 \value{
-A \code{go_layout} graph object.
+Each \code{go_*()} function returns a graph object of the same
+  class as its name; \code{add_*()} functions return the modified figure.
 }
 \description{
 Layout properties of a figure: axes, title, legend, margins, fonts and
 other settings that are not specific to a trace.
 }
 \details{
-Creates a validated \code{go_layout} graph object (a named list). Every
-property is checked against the plotly.js schema when the object is
+\code{go_layout()} create validated graph objects (named lists). Every
+property is checked against the plotly.js schema when an object is
 created or modified (see \code{\link{plotly_obj-modify}()}).
 }
 \examples{
 go_layout(title = "My plot", xaxis = list(title = "x", range = c(0, 10)))
+}
+\seealso{
+\code{\link{go_figure}()}, \code{\link{update_layout}()}
 }

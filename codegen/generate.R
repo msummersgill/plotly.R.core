@@ -1,12 +1,10 @@
 # Codegen entry point (the R counterpart of plotly.py/codegen/__init__.py).
 # Run with `Rscript commands.R codegen` from the package root.
 
-# Which parts of the schema to generate. NULL generates everything; the
-# initial pass covers a simple 2D scatter plot.
-CODEGEN_SCOPE <- list(
-  traces = "scatter",
-  layout = c("xaxis", "yaxis", "title", "font", "legend", "margin", "hoverlabel")
-)
+# Which parts of the schema to generate: NULL generates everything, or
+# list(traces = <trace names>, layout = <layout compound properties>) limits
+# the output (simple layout properties are always included).
+CODEGEN_SCOPE <- NULL
 
 perform_codegen <- function(outdir = ".", scope = CODEGEN_SCOPE) {
   schema <- read_schema(file.path(outdir, "codegen", "resources", "plot-schema.json"))

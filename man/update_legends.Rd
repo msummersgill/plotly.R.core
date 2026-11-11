@@ -6,18 +6,29 @@
 \alias{for_each_legend}
 \title{Select, update or modify legend objects}
 \usage{
-select_legends(fig, selector = NULL)
+select_legends(fig, selector = NULL, row = NULL, col = NULL)
 
-update_legends(fig, patch = NULL, selector = NULL, ..., overwrite = FALSE)
+update_legends(
+  fig,
+  patch = NULL,
+  ...,
+  selector = NULL,
+  row = NULL,
+  col = NULL,
+  overwrite = FALSE
+)
 
-for_each_legend(fig, fn, selector = NULL)
+for_each_legend(fig, fn, selector = NULL, row = NULL, col = NULL)
 }
 \arguments{
 \item{fig}{A \code{go_figure} object.}
 
-\item{selector}{Which objects to use: \code{NULL} (all), a named list of
-property values that must all match, or a function that takes an object
-and returns \code{TRUE} or \code{FALSE}.}
+\item{selector}{Which objects to use: \code{NULL} (all), indices into the
+matching objects, a named list of property values that must all match,
+or a function that takes an object and returns \code{TRUE} or \code{FALSE}.}
+
+\item{row, col}{Only objects in this subplot grid row and/or column
+(figures created with \code{\link{make_subplots}()} only).}
 
 \item{patch}{A named list or \code{\link{go_layout_legend}()} object of property updates.}
 
@@ -38,8 +49,4 @@ Work with all of a figure's layout legend objects (\code{legend}, \code{legend2}
 their properties like \code{\link{update_layout}()} does, and \code{for_each_legend()}
 replaces each one with the result of \code{fn}. The base object (e.g.
 \code{legend}) is always included, even if it has not been set yet.
-}
-\examples{
-fig <- go_figure() |> update_legends(title_text = "legend")
-names(select_legends(fig))
 }

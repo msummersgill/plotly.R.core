@@ -91,5 +91,9 @@
 - Generated graph objects follow plotly.py: one constructor per compound schema node, named after its path (e.g. `go_scatter()`, `go_scatter_marker()`, `go_layout_xaxis()`), each with generated roxygen docs. Validator parameters are generated as data (like plotly.py's `_validators.json`) and interpreted by hand-written base validators.
 - Generated R files are prefixed `zz-gen-` and committed. Do not edit them by hand.
 - `Rscript commands.R updateplotlyjs [version]` updates the bundled plotly.js from npm. `updateplotlyjsdev [path]` uses a local clone.
+- Generated docs are one help page per trace type (go_<trace>(), its nested go_<trace>_*() constructors and add_<trace>()) plus go_layout() and one page per top-level layout object, to keep installed help under CRAN's ~5MB documentation guideline.
+- Generated constructors and add_*() functions put `...` before the property arguments, so property names must be given in full (R would otherwise partially match e.g. `scen` to `scene`).
+- `CODEGEN_SCOPE` in codegen/generate.R is `NULL` (full schema). Set it to a list to limit generation while developing.
+- tests/fixtures/ holds reference output from plotly.py, regenerated with the scripts in codegen/fixtures/. Behaviour ported from plotly.py should be tested against such fixtures.
 - Once `src/` exists, NAMESPACE must contain `useDynLib(plotly.R.core, .registration = TRUE)` before running roxygen. The C init function is `R_init_plotly_R_core`.
 

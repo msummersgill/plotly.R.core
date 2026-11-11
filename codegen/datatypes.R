@@ -138,67 +138,166 @@ object_title <- function(key, kind) {
   paste0(toupper(substr(s, 1L, 1L)), substr(s, 2L, nchar(s)))
 }
 
-constructor_source <- function(key, nodes, validators, schema) {
-  entry <- validators[[key]]
-  node <- nodes[nodes$key == key, ]
-  kind <- node$kind[[1L]]
-  children <- nodes[nodes$parent == key, ]
-  children <- children[order(children$name), ]
-  # Compound-array element entries are reached through their array property.
-  children <- children[children$kind != "compound_element", ]
-  bad <- children$name[children$name %in% RESERVED_ARGS | make.names(children$name) != children$name]
-  if (length(bad)) stop("Property names clash with constructor arguments or are not syntactic: ", paste(bad, collapse = ", "))
+# Example call for a trace constructor, using only properties the trace has.
+trace_example <- function(fn, key, validators) {
+  props <- validators[[key]]$children
+  args <- c(
+    if (all(c("x", "y") %in% props)) c("x = 1:3", "y = c(2, 1, 3)"),
+    if ("markers" %in% validators[[paste0(key, ".mode")]]$flags) 'mode = "markers"',
+    if (!is.null(validators[[paste0(key, ".marker.color")]]) && !"values" %in% props) "marker_color = \"red\""
+  )
+  sprintf("%s(%s)", fn, paste(args, collapse = ", "))
+}
 
-  fn <- entry$data_class
-  title <- if (kind == "trace") paste(tools::toTitleCase(key), "trace") else if (kind == "layout") "Figure layout" else object_title(key, kind)
+# Help pages ---------------------------------------------------------------------
+#
+# Constructors are documented one page per trace type (go_<trace>() with all
+# its nested objects and add_<trace>()), plus one page for go_layout() and one
+# per top-level layout object (go_layout_xaxis() with its nested objects;
+# go_layout_annotation() with add_annotation(); ...). This keeps the help to
+# ~100 pages instead of ~1000. Arguments are documented once per page; when
+# several objects on a page share a property name, each gets its own note.
+
+# Help page key for a compound key: "bar.marker.line" -> "bar",
+# "layout.xaxis.title" -> "layout.xaxis", "layout" -> "layout".
+page_key <- function(key) {
+  parts <- strsplit(key, ".", fixed = TRUE)[[1L]]
+  if (parts[[1L]] == "layout" && length(parts) > 1L) paste(parts[1:2], collapse = ".") else parts[[1L]]
+}
+
+# Arguments of figure functions documented on constructor pages.
+FIGURE_ARG_DOCS <- list(
+  fig = "A \\code{go_figure} object.",
+  row = paste("Subplot grid row (figures created with \\code{\\link{make_subplots}()} only).",
+              "May be \\code{\"all\"} or a vector to address several cells."),
+  col = paste("Subplot grid column (figures created with \\code{\\link{make_subplots}()} only).",
+              "May be \\code{\"all\"} or a vector to address several cells."),
+  secondary_y = "If \\code{TRUE}, use the secondary y axis of the subplot.",
+  exclude_empty_subplots = "If \\code{TRUE}, skip subplots that have no traces or layout objects."
+)
+
+# Visible children (properties) of a compound key.
+child_nodes <- function(key, nodes) {
+  ch <- nodes[nodes$parent == key & nodes$kind != "compound_element", ]
+  ch <- ch[order(ch$name), ]
+  bad <- ch$name[ch$name %in% RESERVED_ARGS | make.names(ch$name) != ch$name]
+  if (length(bad)) stop("Property names clash with constructor arguments or are not syntactic: ", paste(bad, collapse = ", "))
+  ch
+}
+
+object_description <- function(key, nodes, schema) {
+  kind <- nodes$kind[nodes$key == key][[1L]]
   desc <- if (kind == "trace") schema$traces[[key]]$meta$description else if (kind == "layout") {
     "Layout properties of a figure: axes, title, legend, margins, fonts and other settings that are not specific to a trace."
-  } else node$description[[1L]]
-  desc <- rd_escape(format_description(desc %||% ""))
-  if (!nzchar(desc)) desc <- sprintf("Properties of %s.", rd_code(key))
-  parent <- node$parent[[1L]]
-  parent_fn <- if (nzchar(parent)) validators[[parent]]$data_class
+  } else nodes$description[nodes$key == key][[1L]]
+  rd_escape(format_description(if (is.null(desc) || is.na(desc)) "" else desc))
+}
+
+# @param lines for all property arguments of the constructors on a page.
+# `docs` may hold entries for figure function arguments (fig, row, ...);
+# property names that coincide with them share one entry.
+property_param_lines <- function(keys, nodes, validators, docs = list()) {
+  # docs: name -> list of (fn, text)
+  for (key in keys) {
+    fn <- validators[[key]]$data_class
+    ch <- child_nodes(key, nodes)
+    for (i in seq_len(nrow(ch))) {
+      desc <- ch$description[[i]]
+      desc <- if (is.na(desc)) "" else rd_escape(format_description(desc))
+      text <- paste0(if (nzchar(desc)) paste0(desc, " ") else "", type_doc(validators[[ch$key[[i]]]]), ".")
+      docs[[ch$name[[i]]]] <- c(docs[[ch$name[[i]]]], list(list(fn = fn, text = text)))
+    }
+  }
+  unlist(lapply(sort(names(docs)), function(name) {
+    entries <- docs[[name]]
+    texts <- vapply(entries, `[[`, "", "text")
+    if (length(unique(texts)) == 1L) {
+      paras <- texts[[1L]]
+    } else {
+      fns <- vapply(entries, `[[`, "", "fn")
+      paras <- vapply(unique(texts), function(t) {
+        paste0("\\strong{", paste0("\\code{", fns[texts == t], "()}", collapse = ", "), "}: ", t)
+      }, "")
+    }
+    first <- strwrap(paras[[1L]], width = 76L, initial = paste0("#' @param ", name, " "), prefix = "#'   ")
+    rest <- unlist(lapply(paras[-1L], function(p) c("#'", strwrap(p, width = 76L, prefix = "#'   "))))
+    c(first, rest)
+  }))
+}
+
+page_title <- function(page, kind) {
+  if (kind == "trace") return(paste(tools::toTitleCase(page), "traces"))
+  if (page == "layout") return("Figure layout")
+  paste("Layout", sub("^layout\\.", "", page), "objects")
+}
+
+# Roxygen block for a page, attached to its root constructor.
+page_doc <- function(page, keys, nodes, validators, schema, figure_fns) {
+  root_fn <- validators[[page]]$data_class
+  kind <- nodes$kind[nodes$key == page][[1L]]
+  desc <- object_description(page, nodes, schema)
+  if (!nzchar(desc)) desc <- sprintf("Properties of %s.", rd_code(page))
+  nested <- setdiff(keys, page)
+  fig_docs <- list()
+  for (f in figure_fns) {
+    for (a in f$args) fig_docs[[a]] <- c(fig_docs[[a]], list(list(fn = f$fn, text = FIGURE_ARG_DOCS[[a]])))
+  }
 
   lines <- c(
-    paste0("#' ", title),
+    paste0("#' ", page_title(page, kind)),
     "#'",
     roxygen_lines(desc),
     "#'",
     roxygen_lines(paste0(
-      "Creates a validated ", rd_code(fn), " graph object (a named list). ",
-      "Every property is checked against the plotly.js schema when the object is ",
-      "created or modified (see ", rd_link("plotly_obj-modify"), ")."
+      rd_code(paste0(root_fn, "()")), if (length(nested)) " and the nested object constructors below" else "",
+      " create validated graph objects (named lists). Every property is checked against the plotly.js ",
+      "schema when an object is created or modified (see ", rd_link("plotly_obj-modify"), ").",
+      if (length(figure_fns)) paste0(" ", paste(vapply(figure_fns, function(f) rd_code(paste0(f$fn, "()")), ""), collapse = ", "),
+                                     " creates an object and adds it to a figure.") else ""
     )),
+    if (length(nested)) c(
+      "#'",
+      "#' @details Nested objects documented here:",
+      "#' \\describe{",
+      unlist(lapply(nested, function(k) {
+        d <- object_description(k, nodes, schema)
+        roxygen_lines(sprintf("\\item{%s}{%s%s}", rd_code(paste0(validators[[k]]$data_class, "()")),
+                              rd_code(k), if (nzchar(d)) paste0(": ", d) else ""))
+      })),
+      "#' }"
+    ),
     "#'",
     "#' @param arg Optional named list, or graph object of the same type, to",
-    "#'   initialise properties from. Named arguments take precedence.",
-    unlist(lapply(seq_len(nrow(children)), function(i) {
-      ck <- children$key[[i]]
-      param_lines(children$name[[i]], children$description[[i]], type_doc(validators[[ck]]))
-    })),
+    "#'   initialise properties from (constructors). Named arguments take precedence.",
+    property_param_lines(keys, nodes, validators, fig_docs),
     "#' @param ... Further properties, including nested properties in",
     "#'   \"magic underscore\" form, e.g. \\code{marker_size = 10} for",
     "#'   \\code{marker = list(size = 10)}.",
     "#' @param skip_invalid If \\code{TRUE}, silently drop invalid properties",
     "#'   instead of raising an error.",
-    sprintf("#' @return A \\code{%s} graph object.", fn),
-    if (!is.null(parent_fn)) sprintf("#' @seealso Parent object: %s", rd_link(parent_fn)),
+    "#' @return Each \\code{go_*()} function returns a graph object of the same",
+    "#'   class as its name; \\code{add_*()} functions return the modified figure.",
+    sprintf("#' @seealso %s", if (kind == "trace") paste(rd_link("go_figure"), rd_link("add_trace"), sep = ", ")
+            else if (page == "layout") paste(rd_link("go_figure"), rd_link("update_layout"), sep = ", ")
+            else rd_link("go_layout")),
     "#' @noMd",
     "#' @export"
   )
   if (kind == "trace") {
+    lines <- c(lines, "#' @examples", paste0("#' ", trace_example(root_fn, page, validators)))
+  } else if (page == "layout") {
     lines <- c(lines, "#' @examples",
-      sprintf("#' %s(x = 1:3, y = c(2, 1, 3), mode = \"markers\", marker = list(size = 12))", fn),
-      sprintf("#' %s(x = 1:3, y = c(2, 1, 3), marker_color = \"red\", line_dash = \"dot\")", fn))
-  } else if (kind == "layout") {
-    lines <- c(lines, "#' @examples",
-      sprintf("#' %s(title = \"My plot\", xaxis = list(title = \"x\", range = c(0, 10)))", fn))
+               sprintf("#' %s(title = \"My plot\", xaxis = list(title = \"x\", range = c(0, 10)))", root_fn))
   }
+  lines
+}
 
-  args <- c("arg = NULL", paste0(children$name, " = NULL"), "...", "skip_invalid = FALSE")
+constructor_code <- function(key, nodes, validators) {
+  ch <- child_nodes(key, nodes)
+  # Properties come after `...` so they must be named in full (no partial matching).
+  args <- c("arg = NULL", "...", paste0(ch$name, " = NULL"), "skip_invalid = FALSE")
   c(
-    lines,
-    sprintf("%s <- function(", fn),
+    sprintf("%s <- function(", validators[[key]]$data_class),
     wrap_args(args),
     ") {",
     sprintf('  plotly_object("%s", arg, environment(), list(...), skip_invalid)', key),
@@ -207,23 +306,46 @@ constructor_source <- function(key, nodes, validators, schema) {
   )
 }
 
+# Figure functions documented on constructor pages: add_<trace>() on trace
+# pages and add_<annotation, shape, ...>() on layout array element pages.
+page_figure_fns <- function(page, validators) {
+  entry <- validators[[page]]
+  if (!is.null(entry$trace_type)) {
+    has_xy <- all(c("xaxis", "yaxis") %in% entry$children)
+    return(list(list(fn = paste0("add_", page), args = c("fig", "row", "col", if (has_xy) "secondary_y"))))
+  }
+  for (array_key in layout_array_props(validators)) {
+    if (identical(validators[[array_key]]$element_key, page)) {
+      singular <- sub("^layout\\.", "", page)
+      fn <- paste0("add_", if (singular == "image") "layout_" else "", singular)
+      return(list(list(fn = fn, args = c("fig", "row", "col", "secondary_y", "exclude_empty_subplots"))))
+    }
+  }
+  list()
+}
+
 write_datatypes <- function(nodes, validators, schema, outdir = ".") {
   nodes <- as.data.frame(nodes) # base indexing: avoid data.table column scoping
   compound_keys <- names(validators)[vapply(validators, function(v) v$superclass %in% c("CompoundValidator", "TitleValidator"), logical(1))]
-  roots <- sub("\\..*$", "", compound_keys)
+  files_by <- sub("\\..*$", "", compound_keys) # one source file per trace type / layout
+  pages <- vapply(compound_keys, page_key, "")
   version <- schema_version(outdir)
   # Remove stale generated files before writing.
   stale <- list.files(file.path(outdir, "R"), "^zz-gen-.*\\.R$", full.names = TRUE)
   unlink(stale[!basename(stale) %in% c("zz-gen-version.R", "zz-gen-figure.R")])
   files <- character()
-  for (root in unique(roots)) {
-    keys <- compound_keys[roots == root]
-    keys <- keys[order(keys != root, keys)] # root object first
-    src <- c(
-      sprintf("# Generated by codegen/datatypes.R from the plotly.js %s schema. Do not edit by hand.", version),
-      "",
-      unlist(lapply(keys, constructor_source, nodes = nodes, validators = validators, schema = schema))
-    )
+  for (root in unique(files_by)) {
+    src <- c(sprintf("# Generated by codegen/datatypes.R from the plotly.js %s schema. Do not edit by hand.", version), "")
+    for (page in unique(pages[files_by == root])) {
+      keys <- compound_keys[pages == page]
+      keys <- keys[order(keys != page, keys)] # page root first
+      root_fn <- validators[[page]]$data_class
+      src <- c(src, page_doc(page, keys, nodes, validators, schema, page_figure_fns(page, validators)),
+               constructor_code(page, nodes, validators))
+      for (k in setdiff(keys, page)) {
+        src <- c(src, sprintf("#' @rdname %s", root_fn), "#' @export", constructor_code(k, nodes, validators))
+      }
+    }
     non_ascii <- grep("[^\\x01-\\x7F]", src, value = TRUE, perl = TRUE)
     if (length(non_ascii)) {
       stop("Non-ASCII characters in generated docs; add them to ASCII_REPLACEMENTS:\n",
@@ -233,7 +355,8 @@ write_datatypes <- function(nodes, validators, schema, outdir = ".") {
     writeLines(src, path)
     files <- c(files, path)
   }
-  message(sprintf("Wrote %d constructors to %s", length(compound_keys), paste(basename(files), collapse = ", ")))
+  message(sprintf("Wrote %d constructors on %d help pages to %d files", length(compound_keys),
+                  length(unique(pages)), length(files)))
   invisible(files)
 }
 

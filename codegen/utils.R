@@ -81,7 +81,7 @@ schema_nodes <- function(schema, scope = NULL) {
     records <- c(records, walk_attributes(t$attributes, tr))
   }
 
-  layout_attrs <- schema$layout$layoutAttributes
+  layout_attrs <- merged_layout_attributes(schema)
   if (!is.null(scope$layout)) {
     keep <- vapply(names(layout_attrs), function(n) {
       is_simple_node(layout_attrs[[n]]) || n %in% scope$layout || !is.list(layout_attrs[[n]])
@@ -94,6 +94,22 @@ schema_nodes <- function(schema, scope = NULL) {
   nodes <- data.table::rbindlist(records)
   if (anyDuplicated(nodes$key)) stop("Duplicate schema keys: ", paste(nodes$key[duplicated(nodes$key)], collapse = ", "))
   nodes
+}
+
+# Layout attributes including those contributed by trace modules (barmode,
+# boxgap, ...), as plotly.py's LayoutNode does. barpolar's go under polar.
+merged_layout_attributes <- function(schema) {
+  layout <- schema$layout$layoutAttributes
+  for (tr in names(schema$traces)) {
+    extra <- schema$traces[[tr]]$layoutAttributes
+    if (!length(extra)) next
+    if (tr == "barpolar") {
+      for (n in names(extra)) layout$polar[[n]] <- extra[[n]]
+    } else {
+      for (n in setdiff(names(extra), names(layout))) layout[[n]] <- extra[[n]]
+    }
+  }
+  layout
 }
 
 # plotly.py's choice of validator for each node (PlotlyNode.name_base_validator).
