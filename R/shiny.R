@@ -249,7 +249,8 @@ renderPlotly <- function(expr, env = parent.frame(), quoted = FALSE) {
 }
 
 # Turn a figure (or a promise of one) into a widget and record its events so
-# event_data() can warn about unregistered ones.
+# event_data() can warn about unregistered ones. promises is a Suggests: it is
+# always installed with shiny, and this only runs inside renderPlotly().
 prepare_shiny_widget <- function(x) {
   register <- function(fig) {
     w <- as_widget(fig)

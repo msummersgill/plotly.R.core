@@ -56,7 +56,6 @@
 - RColorBrewer
 - viridisLite
 - base64enc
-- promises
 - stats (base R)
 - grDevices (base R)
 - utils (base R)
@@ -65,6 +64,7 @@
 
 - sf
 - shiny
+- promises (only for async renderPlotly(); installed with shiny)
 - rmarkdown
 - MASS
 - Cairo
