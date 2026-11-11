@@ -10,7 +10,7 @@
 
 # Arguments of generated functions that are not object properties.
 FIGURE_RESERVED_ARGS <- c("fig", "arg", "skip_invalid", "row", "col", "secondary_y",
-                          "exclude_empty_subplots")
+                          "exclude_empty_subplots", "data")
 
 # Layout subplot containers (plotly.py BaseLayoutType._subplotid_prop_names).
 SUBPLOT_TYPES <- c("coloraxis", "geo", "legend", "map", "mapbox", "polar",
@@ -35,7 +35,7 @@ add_trace_source <- function(trace, validators) {
   has_xy <- all(c("xaxis", "yaxis") %in% props)
   fn <- paste0("add_", trace)
   extra <- c("row = NULL", "col = NULL", if (has_xy) "secondary_y = NULL")
-  args <- c("fig", "...", paste0(props, " = NULL"), extra, "skip_invalid = FALSE")
+  args <- c("fig", "...", "data = NULL", paste0(props, " = NULL"), extra, "skip_invalid = FALSE")
   c(
     sprintf("#' @rdname %s", entry$data_class), # documented with go_<trace>()
     "#' @export",
@@ -43,8 +43,9 @@ add_trace_source <- function(trace, validators) {
     wrap_args(args),
     ") {",
     "  # plot_ly() objects get the legacy plotly package's behaviour",
-    sprintf('  if (is_legacy_plot(fig)) return(legacy_add_dispatch("%s", environment(), list(...)))', trace),
-    sprintf('  trace <- plotly_object("%s", NULL, environment(), list(...), skip_invalid)', trace),
+    sprintf('  if (is_legacy_plot(fig)) return(legacy_add_dispatch("%s", environment(), c(list(...), list(data = data))))', trace),
+    "  # formula properties (x = ~col) are evaluated in `data` or the figure's data",
+    sprintf('  trace <- plotly_object("%s", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))', trace),
     sprintf("  add_trace(fig, trace, row = row, col = col%s)", if (has_xy) ", secondary_y = secondary_y" else ""),
     "}",
     ""

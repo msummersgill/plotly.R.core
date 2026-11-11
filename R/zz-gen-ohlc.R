@@ -76,6 +76,10 @@
 #'   \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
 #'   \code{"dashdot"}, \code{"longdashdot"}, or a string matching
 #'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
+#' @param data A data frame in which formula properties (e.g. \code{x =
+#'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
+#'   given to \code{\link{go_figure}()}. Only the evaluated values are
+#'   added to the trace.
 #' @param decreasing Named list or \code{\link{go_ohlc_decreasing}()}
 #'   object.
 #' @param family \strong{\code{go_ohlc_hoverlabel_font()}}: HTML font
@@ -370,7 +374,8 @@
 #'   `zorder` appear in front of those with lower `zorder`. Integer.
 #' @param ... Further properties, including nested properties in
 #'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}.
+#'   \code{marker = list(size = 10)}. Property values may be one-sided
+#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return Each \code{go_*()} function returns a graph object of the same

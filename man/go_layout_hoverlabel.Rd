@@ -55,7 +55,8 @@ initialise properties from (constructors). Named arguments take precedence.}
 
 \item{...}{Further properties, including nested properties in
 "magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}.}
+\code{marker = list(size = 10)}. Property values may be one-sided
+formulas, evaluated in \code{data} for \code{add_*()} functions.}
 
 \item{align}{Sets the horizontal alignment of the text content within
 hover label box. Has an effect only if the hover label text spans two

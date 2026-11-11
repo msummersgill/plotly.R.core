@@ -60,7 +60,8 @@ initialise properties from (constructors). Named arguments take precedence.}
 
 \item{...}{Further properties, including nested properties in
 "magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}.}
+\code{marker = list(size = 10)}. Property values may be one-sided
+formulas, evaluated in \code{data} for \code{add_*()} functions.}
 
 \item{layer}{Specifies whether images are drawn below or above traces.
 When `xref` and `yref` are both set to `paper`, image is drawn below

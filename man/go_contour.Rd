@@ -300,6 +300,7 @@ go_contour_textfont(
 add_contour(
   fig,
   ...,
+  data = NULL,
   autocolorscale = NULL,
   autocontour = NULL,
   coloraxis = NULL,
@@ -376,7 +377,8 @@ initialise properties from (constructors). Named arguments take precedence.}
 
 \item{...}{Further properties, including nested properties in
 "magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}.}
+\code{marker = list(size = 10)}. Property values may be one-sided
+formulas, evaluated in \code{data} for \code{add_*()} functions.}
 
 \item{autocolorscale}{Determines whether the colorscale is a default
 palette (`autocolorscale: true`) or the palette determined by
@@ -1234,6 +1236,11 @@ where 0 corresponds to no smoothing. Number in the interval [0, 1.3].}
 "constraint". Number in the interval [0, Inf].}
 
 \item{fig}{A \code{go_figure} object.}
+
+\item{data}{A data frame in which formula properties (e.g. \code{x =
+~col}, \code{marker_size = ~col}) are evaluated. Default: the data
+given to \code{\link{go_figure}()}. Only the evaluated values are
+added to the trace.}
 
 \item{row}{Subplot grid row (figures created with
 \code{\link{make_subplots}()} only). May be \code{"all"} or a vector

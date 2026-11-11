@@ -18,7 +18,12 @@
 #'
 #' @param data A trace (e.g. from [go_scatter()]), a list of traces, or a
 #'   figure (or a list with `data` and `layout` elements) to copy. Traces may
-#'   be graph objects or named lists with a `type` element.
+#'   be graph objects or named lists with a `type` element. Or a data frame:
+#'   the figure starts without traces, and formula properties of later
+#'   `add_<trace>()` calls (e.g. `add_scatter(x = ~col)`) are evaluated in
+#'   it. The data frame is kept with the figure in R (attribute
+#'   `"plotly_data"`) but is not sent to the browser; only the values traces
+#'   use are.
 #' @param layout A [go_layout()] object or a named list of layout properties.
 #' @param frames Animation frames: a list of named lists with `name`, `data`
 #'   (a list of traces), and optionally `layout`, `group`, `traces` and
@@ -37,7 +42,18 @@
 #'   add_scatter(x = 1:3, y = c(3, 2, 1), mode = "markers") |>
 #'   update_layout(xaxis_title = "x")
 #' if (interactive()) print(fig)
+#'
+#' # pipe in a data frame and refer to its columns with formulas
+#' px_data_iris() |>
+#'   go_figure() |>
+#'   add_scatter(x = ~sepal_length, y = ~sepal_width, mode = "markers", name = "sepal") |>
+#'   add_scatter(x = ~petal_length, y = ~petal_width, mode = "markers", name = "petal")
 go_figure <- function(data = NULL, layout = NULL, frames = NULL, skip_invalid = FALSE) {
+  if (is.data.frame(data)) {
+    fig <- go_figure(NULL, layout, frames, skip_invalid)
+    attr(fig, "plotly_data") <- data
+    return(fig)
+  }
   if (inherits(data, "go_figure") || (is.list(data) && !is.data.frame(data) && !inherits(data, "plotly_obj") &&
                                       !is.null(names(data)) && all(names(data) %in% c("data", "layout", "frames")))) {
     src <- unclass(data)
@@ -47,6 +63,16 @@ go_figure <- function(data = NULL, layout = NULL, frames = NULL, skip_invalid = 
   }
   new_figure(validate_data(data, skip_invalid), validate_layout(layout, skip_invalid),
              validate_frames(frames, skip_invalid))
+}
+
+# Data for add_<trace>()'s formula properties: its `data` argument or the
+# figure's (go_figure(<data frame>)).
+trace_data <- function(fig, data = NULL) {
+  data <- data %||% attr(fig, "plotly_data", exact = TRUE)
+  if (!is.null(data) && !is.data.frame(data) && !(is.list(data) && !is.null(names(data)))) {
+    stop("`data` must be a data frame (or a named list)", call. = FALSE)
+  }
+  data
 }
 
 new_figure <- function(data, layout, frames = list()) {

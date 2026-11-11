@@ -62,15 +62,16 @@ column names as strings (as in plotly.py), or vectors.
 ```r
 library(plotly.R.core)
 
-fig <- go_figure() |>
+fig <- mtcars |>
+  go_figure() |>
   add_scatter(
-    x = mtcars$wt,
-    y = mtcars$mpg,
+    x = ~wt,
+    y = ~mpg,
     mode = "markers",
     text = rownames(mtcars),
     marker = list(
       size = 12,
-      color = mtcars$cyl,
+      color = ~cyl,
       colorscale = "Viridis",
       showscale = TRUE,
       colorbar = list(title = "Cylinders")
@@ -85,6 +86,11 @@ fig
 ```
 
 ![Scatter plot of mtcars weight vs. miles per gallon, coloured by cylinders](man/figures/README-mtcars-scatter.png)
+
+A data frame piped into `go_figure()` (or given as `data` to an `add_*()`
+function) lets properties refer to its columns with formulas. Only the values
+used are added to the traces; each `add_*()` call adds exactly one trace (use
+`px_*()` to split data into one trace per group).
 
 Printing a figure renders it in the RStudio viewer or a browser, and inline in
 R Markdown and Quarto documents.

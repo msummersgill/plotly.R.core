@@ -129,6 +129,10 @@
 #'   listening to hover, click and selection events. Note that, "scatter"
 #'   traces also appends customdata items in the markers DOM elements Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param data A data frame in which formula properties (e.g. \code{x =
+#'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
+#'   given to \code{\link{go_figure}()}. Only the evaluated values are
+#'   added to the trace.
 #' @param delaunayaxis Sets the Delaunay axis, which is the axis that is
 #'   perpendicular to the surface of the Delaunay triangulation. It has an
 #'   effect if `i`, `j`, `k` are not provided and `alphahull` is set to
@@ -705,7 +709,8 @@
 #'   are formatted using `zaxis.hoverformat`. String.
 #' @param ... Further properties, including nested properties in
 #'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}.
+#'   \code{marker = list(size = 10)}. Property values may be one-sided
+#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return Each \code{go_*()} function returns a graph object of the same

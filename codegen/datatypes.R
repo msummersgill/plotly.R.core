@@ -171,6 +171,9 @@ page_key <- function(key) {
 # Arguments of figure functions documented on constructor pages.
 FIGURE_ARG_DOCS <- list(
   fig = "A \\code{go_figure} object.",
+  data = paste("A data frame in which formula properties (e.g. \\code{x = ~col},",
+               "\\code{marker_size = ~col}) are evaluated. Default: the data given to",
+               "\\code{\\link{go_figure}()}. Only the evaluated values are added to the trace."),
   row = paste("Subplot grid row (figures created with \\code{\\link{make_subplots}()} only).",
               "May be \\code{\"all\"} or a vector to address several cells."),
   col = paste("Subplot grid column (figures created with \\code{\\link{make_subplots}()} only).",
@@ -275,7 +278,8 @@ page_doc <- function(page, keys, nodes, validators, schema, figure_fns) {
     property_param_lines(keys, nodes, validators, fig_docs),
     "#' @param ... Further properties, including nested properties in",
     "#'   \"magic underscore\" form, e.g. \\code{marker_size = 10} for",
-    "#'   \\code{marker = list(size = 10)}.",
+    "#'   \\code{marker = list(size = 10)}. Property values may be one-sided",
+    "#'   formulas, evaluated in \\code{data} for \\code{add_*()} functions.",
     "#' @param skip_invalid If \\code{TRUE}, silently drop invalid properties",
     "#'   instead of raising an error.",
     "#' @return Each \\code{go_*()} function returns a graph object of the same",
@@ -315,7 +319,7 @@ page_figure_fns <- function(page, validators) {
   entry <- validators[[page]]
   if (!is.null(entry$trace_type)) {
     has_xy <- all(c("xaxis", "yaxis") %in% entry$children)
-    return(list(list(fn = paste0("add_", page), args = c("fig", "row", "col", if (has_xy) "secondary_y"))))
+    return(list(list(fn = paste0("add_", page), args = c("fig", "data", "row", "col", if (has_xy) "secondary_y"))))
   }
   for (array_key in layout_array_props(validators)) {
     if (identical(validators[[array_key]]$element_key, page)) {

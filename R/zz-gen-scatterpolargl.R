@@ -214,6 +214,10 @@
 #' @param dash Sets the style of the lines. One of \code{"dash"},
 #'   \code{"dashdot"}, \code{"dot"}, \code{"longdash"},
 #'   \code{"longdashdot"}, \code{"solid"}.
+#' @param data A data frame in which formula properties (e.g. \code{x =
+#'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
+#'   given to \code{\link{go_figure}()}. Only the evaluated values are
+#'   added to the trace.
 #' @param dr Sets the r coordinate step. Number.
 #' @param dtheta Sets the theta coordinate step. By default, the `dtheta`
 #'   step equals the subplot's period divided by the length of the `r`
@@ -941,7 +945,8 @@
 #'   plotting area only. One of \code{"container"}, \code{"paper"}.
 #' @param ... Further properties, including nested properties in
 #'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}.
+#'   \code{marker = list(size = 10)}. Property values may be one-sided
+#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return Each \code{go_*()} function returns a graph object of the same

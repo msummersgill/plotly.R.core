@@ -10,7 +10,10 @@
 # the constructor's named property arguments (read from `env`) and extra
 # properties in `dots`, which may use plotly.py's "magic underscore" paths
 # (e.g. marker_size = 10). Later sources take precedence.
-plotly_object <- function(key, arg = NULL, env = NULL, dots = list(), skip_invalid = FALSE) {
+#
+# Values may be one-sided formulas (x = ~col): they are evaluated in `data`
+# (add_<trace>()'s data or the figure's), or in their environment.
+plotly_object <- function(key, arg = NULL, env = NULL, dots = list(), skip_invalid = FALSE, data = NULL) {
   entry <- get_validator(key)
   props <- if (is.null(arg)) list() else {
     if (!is.list(arg) || is.data.frame(arg)) {
@@ -23,7 +26,7 @@ plotly_object <- function(key, arg = NULL, env = NULL, dots = list(), skip_inval
   if (!is.null(env)) {
     for (name in entry$children) {
       val <- get(name, envir = env, inherits = FALSE)
-      if (!is.null(val)) props[[name]] <- val
+      if (!is.null(val)) props[[name]] <- eval_formulas(val, data, name)
     }
   }
   if (length(dots)) {
@@ -31,12 +34,28 @@ plotly_object <- function(key, arg = NULL, env = NULL, dots = list(), skip_inval
       stop(sprintf("All arguments to %s() must be named", entry$data_class), call. = FALSE)
     }
     for (i in seq_along(dots)) {
-      props <- set_magic_property(props, key, entry, names(dots)[[i]], dots[[i]], skip_invalid)
+      val <- eval_formulas(dots[[i]], data, names(dots)[[i]])
+      props <- set_magic_property(props, key, entry, names(dots)[[i]], val, skip_invalid)
     }
   }
   out <- vc_compound(props, key, entry, skip_invalid)
   if (!is.null(entry$trace_type)) out <- add_trace_type(out, entry$trace_type)
   out
+}
+
+# Evaluate one-sided formulas (also inside plain nested lists) in `data`.
+eval_formulas <- function(x, data, name) {
+  if (inherits(x, "formula")) {
+    rhs <- x[[length(x)]]
+    return(tryCatch(eval(rhs, if (is.null(data)) list() else data, environment(x)), error = function(e) {
+      stop(sprintf("Couldn't evaluate `%s` for property '%s': %s%s", paste(deparse(x), collapse = " "), name,
+                   conditionMessage(e),
+                   if (is.null(data)) "\n(no data: pass `data` to add_*() or pipe a data frame into go_figure())" else ""),
+           call. = FALSE)
+    }))
+  }
+  if (is.list(x) && !is.data.frame(x) && is.null(oldClass(x))) x[] <- lapply(names(x) %||% seq_along(x), function(n) eval_formulas(x[[n]], data, paste(name, n, sep = "_")))
+  x
 }
 
 # Put the trace type first, as plotly.py does.

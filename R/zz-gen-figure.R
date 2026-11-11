@@ -3,38 +3,40 @@
 #' @rdname go_bar
 #' @export
 add_bar <- function(
-    fig, ..., alignmentgroup = NULL, base = NULL, cliponaxis = NULL,
-    constraintext = NULL, customdata = NULL, dx = NULL, dy = NULL,
-    error_x = NULL, error_y = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, insidetextanchor = NULL, insidetextfont = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
-    name = NULL, offset = NULL, offsetgroup = NULL, opacity = NULL,
-    orientation = NULL, outsidetextfont = NULL, selected = NULL,
-    selectedpoints = NULL, showlegend = NULL, text = NULL, textangle = NULL,
-    textfont = NULL, textposition = NULL, texttemplate = NULL,
-    texttemplatefallback = NULL, uid = NULL, uirevision = NULL,
-    unselected = NULL, visible = NULL, width = NULL, x = NULL, x0 = NULL,
-    xaxis = NULL, xcalendar = NULL, xhoverformat = NULL, xperiod = NULL,
-    xperiod0 = NULL, xperiodalignment = NULL, y = NULL, y0 = NULL,
-    yaxis = NULL, ycalendar = NULL, yhoverformat = NULL, yperiod = NULL,
-    yperiod0 = NULL, yperiodalignment = NULL, zorder = NULL, row = NULL,
-    col = NULL, secondary_y = NULL, skip_invalid = FALSE
+    fig, ..., data = NULL, alignmentgroup = NULL, base = NULL,
+    cliponaxis = NULL, constraintext = NULL, customdata = NULL, dx = NULL,
+    dy = NULL, error_x = NULL, error_y = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    hovertext = NULL, ids = NULL, insidetextanchor = NULL,
+    insidetextfont = NULL, legend = NULL, legendgroup = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    marker = NULL, meta = NULL, name = NULL, offset = NULL,
+    offsetgroup = NULL, opacity = NULL, orientation = NULL,
+    outsidetextfont = NULL, selected = NULL, selectedpoints = NULL,
+    showlegend = NULL, text = NULL, textangle = NULL, textfont = NULL,
+    textposition = NULL, texttemplate = NULL, texttemplatefallback = NULL,
+    uid = NULL, uirevision = NULL, unselected = NULL, visible = NULL,
+    width = NULL, x = NULL, x0 = NULL, xaxis = NULL, xcalendar = NULL,
+    xhoverformat = NULL, xperiod = NULL, xperiod0 = NULL,
+    xperiodalignment = NULL, y = NULL, y0 = NULL, yaxis = NULL,
+    ycalendar = NULL, yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
+    yperiodalignment = NULL, zorder = NULL, row = NULL, col = NULL,
+    secondary_y = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("bar", environment(), list(...)))
-  trace <- plotly_object("bar", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("bar", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("bar", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 
 #' @rdname go_barpolar
 #' @export
 add_barpolar <- function(
-    fig, ..., base = NULL, customdata = NULL, dr = NULL, dtheta = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    fig, ..., data = NULL, base = NULL, customdata = NULL, dr = NULL,
+    dtheta = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
     name = NULL, offset = NULL, opacity = NULL, r = NULL, r0 = NULL,
     selected = NULL, selectedpoints = NULL, showlegend = NULL,
@@ -44,17 +46,18 @@ add_barpolar <- function(
     skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("barpolar", environment(), list(...)))
-  trace <- plotly_object("barpolar", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("barpolar", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("barpolar", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_box
 #' @export
 add_box <- function(
-    fig, ..., alignmentgroup = NULL, boxmean = NULL, boxpoints = NULL,
-    customdata = NULL, dx = NULL, dy = NULL, fillcolor = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
+    fig, ..., data = NULL, alignmentgroup = NULL, boxmean = NULL,
+    boxpoints = NULL, customdata = NULL, dx = NULL, dy = NULL,
+    fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, jitter = NULL, legend = NULL, legendgroup = NULL,
     legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
@@ -74,18 +77,19 @@ add_box <- function(
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("box", environment(), list(...)))
-  trace <- plotly_object("box", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("box", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("box", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 
 #' @rdname go_candlestick
 #' @export
 add_candlestick <- function(
-    fig, ..., close = NULL, customdata = NULL, decreasing = NULL,
-    high = NULL, hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
-    increasing = NULL, legend = NULL, legendgroup = NULL,
+    fig, ..., data = NULL, close = NULL, customdata = NULL,
+    decreasing = NULL, high = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, increasing = NULL, legend = NULL, legendgroup = NULL,
     legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
     line = NULL, low = NULL, meta = NULL, name = NULL, opacity = NULL,
     open = NULL, selectedpoints = NULL, showlegend = NULL, text = NULL,
@@ -96,56 +100,59 @@ add_candlestick <- function(
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("candlestick", environment(), list(...)))
-  trace <- plotly_object("candlestick", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("candlestick", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("candlestick", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 
 #' @rdname go_carpet
 #' @export
 add_carpet <- function(
-    fig, ..., a = NULL, a0 = NULL, aaxis = NULL, b = NULL, b0 = NULL,
-    baxis = NULL, carpet = NULL, cheaterslope = NULL, color = NULL,
-    customdata = NULL, da = NULL, db = NULL, font = NULL, ids = NULL,
-    legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    fig, ..., data = NULL, a = NULL, a0 = NULL, aaxis = NULL, b = NULL,
+    b0 = NULL, baxis = NULL, carpet = NULL, cheaterslope = NULL,
+    color = NULL, customdata = NULL, da = NULL, db = NULL, font = NULL,
+    ids = NULL, legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
     legendwidth = NULL, meta = NULL, name = NULL, opacity = NULL,
     uid = NULL, uirevision = NULL, visible = NULL, x = NULL, xaxis = NULL,
     y = NULL, yaxis = NULL, zorder = NULL, row = NULL, col = NULL,
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("carpet", environment(), list(...)))
-  trace <- plotly_object("carpet", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("carpet", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("carpet", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 
 #' @rdname go_choropleth
 #' @export
 add_choropleth <- function(
-    fig, ..., autocolorscale = NULL, coloraxis = NULL, colorbar = NULL,
-    colorscale = NULL, customdata = NULL, featureidkey = NULL, geo = NULL,
-    geojson = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, locationmode = NULL,
-    locations = NULL, marker = NULL, meta = NULL, name = NULL,
-    reversescale = NULL, selected = NULL, selectedpoints = NULL,
-    showlegend = NULL, showscale = NULL, text = NULL, uid = NULL,
-    uirevision = NULL, unselected = NULL, visible = NULL, z = NULL,
-    zauto = NULL, zmax = NULL, zmid = NULL, zmin = NULL, row = NULL,
-    col = NULL, skip_invalid = FALSE
+    fig, ..., data = NULL, autocolorscale = NULL, coloraxis = NULL,
+    colorbar = NULL, colorscale = NULL, customdata = NULL,
+    featureidkey = NULL, geo = NULL, geojson = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    locationmode = NULL, locations = NULL, marker = NULL, meta = NULL,
+    name = NULL, reversescale = NULL, selected = NULL,
+    selectedpoints = NULL, showlegend = NULL, showscale = NULL, text = NULL,
+    uid = NULL, uirevision = NULL, unselected = NULL, visible = NULL,
+    z = NULL, zauto = NULL, zmax = NULL, zmid = NULL, zmin = NULL,
+    row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("choropleth", environment(), list(...)))
-  trace <- plotly_object("choropleth", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("choropleth", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("choropleth", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_choroplethmap
 #' @export
 add_choroplethmap <- function(
-    fig, ..., autocolorscale = NULL, below = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, customdata = NULL,
+    fig, ..., data = NULL, autocolorscale = NULL, below = NULL,
+    coloraxis = NULL, colorbar = NULL, colorscale = NULL, customdata = NULL,
     featureidkey = NULL, geojson = NULL, hoverinfo = NULL,
     hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
     hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
@@ -158,16 +165,17 @@ add_choroplethmap <- function(
     row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("choroplethmap", environment(), list(...)))
-  trace <- plotly_object("choroplethmap", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("choroplethmap", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("choroplethmap", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_cone
 #' @export
 add_cone <- function(
-    fig, ..., anchor = NULL, autocolorscale = NULL, cauto = NULL,
-    cmax = NULL, cmid = NULL, cmin = NULL, coloraxis = NULL,
+    fig, ..., data = NULL, anchor = NULL, autocolorscale = NULL,
+    cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL, coloraxis = NULL,
     colorbar = NULL, colorscale = NULL, customdata = NULL, hoverinfo = NULL,
     hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
     hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
@@ -181,87 +189,94 @@ add_cone <- function(
     zhoverformat = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("cone", environment(), list(...)))
-  trace <- plotly_object("cone", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("cone", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("cone", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_contour
 #' @export
 add_contour <- function(
-    fig, ..., autocolorscale = NULL, autocontour = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, connectgaps = NULL, contours = NULL,
-    customdata = NULL, dx = NULL, dy = NULL, fillcolor = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hoverongaps = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, line = NULL, meta = NULL,
-    name = NULL, ncontours = NULL, opacity = NULL, reversescale = NULL,
-    showlegend = NULL, showscale = NULL, text = NULL, textfont = NULL,
-    texttemplate = NULL, texttemplatefallback = NULL, transpose = NULL,
-    uid = NULL, uirevision = NULL, visible = NULL, x = NULL, x0 = NULL,
-    xaxis = NULL, xcalendar = NULL, xhoverformat = NULL, xperiod = NULL,
-    xperiod0 = NULL, xperiodalignment = NULL, xtype = NULL, y = NULL,
-    y0 = NULL, yaxis = NULL, ycalendar = NULL, yhoverformat = NULL,
-    yperiod = NULL, yperiod0 = NULL, yperiodalignment = NULL, ytype = NULL,
-    z = NULL, zauto = NULL, zhoverformat = NULL, zmax = NULL, zmid = NULL,
+    fig, ..., data = NULL, autocolorscale = NULL, autocontour = NULL,
+    coloraxis = NULL, colorbar = NULL, colorscale = NULL,
+    connectgaps = NULL, contours = NULL, customdata = NULL, dx = NULL,
+    dy = NULL, fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hoverongaps = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    line = NULL, meta = NULL, name = NULL, ncontours = NULL, opacity = NULL,
+    reversescale = NULL, showlegend = NULL, showscale = NULL, text = NULL,
+    textfont = NULL, texttemplate = NULL, texttemplatefallback = NULL,
+    transpose = NULL, uid = NULL, uirevision = NULL, visible = NULL,
+    x = NULL, x0 = NULL, xaxis = NULL, xcalendar = NULL,
+    xhoverformat = NULL, xperiod = NULL, xperiod0 = NULL,
+    xperiodalignment = NULL, xtype = NULL, y = NULL, y0 = NULL,
+    yaxis = NULL, ycalendar = NULL, yhoverformat = NULL, yperiod = NULL,
+    yperiod0 = NULL, yperiodalignment = NULL, ytype = NULL, z = NULL,
+    zauto = NULL, zhoverformat = NULL, zmax = NULL, zmid = NULL,
     zmin = NULL, zorder = NULL, row = NULL, col = NULL, secondary_y = NULL,
     skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("contour", environment(), list(...)))
-  trace <- plotly_object("contour", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("contour", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("contour", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 
 #' @rdname go_contourcarpet
 #' @export
 add_contourcarpet <- function(
-    fig, ..., a = NULL, a0 = NULL, atype = NULL, autocolorscale = NULL,
-    autocontour = NULL, b = NULL, b0 = NULL, btype = NULL, carpet = NULL,
-    coloraxis = NULL, colorbar = NULL, colorscale = NULL, contours = NULL,
-    customdata = NULL, da = NULL, db = NULL, fillcolor = NULL,
-    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    line = NULL, meta = NULL, name = NULL, ncontours = NULL, opacity = NULL,
-    reversescale = NULL, showlegend = NULL, showscale = NULL, text = NULL,
-    transpose = NULL, uid = NULL, uirevision = NULL, visible = NULL,
-    xaxis = NULL, yaxis = NULL, z = NULL, zauto = NULL, zmax = NULL,
-    zmid = NULL, zmin = NULL, zorder = NULL, row = NULL, col = NULL,
-    secondary_y = NULL, skip_invalid = FALSE
+    fig, ..., data = NULL, a = NULL, a0 = NULL, atype = NULL,
+    autocolorscale = NULL, autocontour = NULL, b = NULL, b0 = NULL,
+    btype = NULL, carpet = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, contours = NULL, customdata = NULL, da = NULL,
+    db = NULL, fillcolor = NULL, hovertext = NULL, ids = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, line = NULL, meta = NULL,
+    name = NULL, ncontours = NULL, opacity = NULL, reversescale = NULL,
+    showlegend = NULL, showscale = NULL, text = NULL, transpose = NULL,
+    uid = NULL, uirevision = NULL, visible = NULL, xaxis = NULL,
+    yaxis = NULL, z = NULL, zauto = NULL, zmax = NULL, zmid = NULL,
+    zmin = NULL, zorder = NULL, row = NULL, col = NULL, secondary_y = NULL,
+    skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("contourcarpet", environment(), list(...)))
-  trace <- plotly_object("contourcarpet", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("contourcarpet", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("contourcarpet", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 
 #' @rdname go_densitymap
 #' @export
 add_densitymap <- function(
-    fig, ..., autocolorscale = NULL, below = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, customdata = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    hovertext = NULL, ids = NULL, lat = NULL, legend = NULL,
-    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, lon = NULL, meta = NULL, name = NULL,
-    opacity = NULL, radius = NULL, reversescale = NULL, showlegend = NULL,
-    showscale = NULL, subplot = NULL, text = NULL, uid = NULL,
-    uirevision = NULL, visible = NULL, z = NULL, zauto = NULL, zmax = NULL,
-    zmid = NULL, zmin = NULL, row = NULL, col = NULL, skip_invalid = FALSE
+    fig, ..., data = NULL, autocolorscale = NULL, below = NULL,
+    coloraxis = NULL, colorbar = NULL, colorscale = NULL, customdata = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL, lat = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, lon = NULL, meta = NULL,
+    name = NULL, opacity = NULL, radius = NULL, reversescale = NULL,
+    showlegend = NULL, showscale = NULL, subplot = NULL, text = NULL,
+    uid = NULL, uirevision = NULL, visible = NULL, z = NULL, zauto = NULL,
+    zmax = NULL, zmid = NULL, zmin = NULL, row = NULL, col = NULL,
+    skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("densitymap", environment(), list(...)))
-  trace <- plotly_object("densitymap", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("densitymap", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("densitymap", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_funnel
 #' @export
 add_funnel <- function(
-    fig, ..., alignmentgroup = NULL, cliponaxis = NULL, connector = NULL,
-    constraintext = NULL, customdata = NULL, dx = NULL, dy = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    fig, ..., data = NULL, alignmentgroup = NULL, cliponaxis = NULL,
+    connector = NULL, constraintext = NULL, customdata = NULL, dx = NULL,
+    dy = NULL, hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
     hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
     insidetextanchor = NULL, insidetextfont = NULL, legend = NULL,
     legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
@@ -278,40 +293,44 @@ add_funnel <- function(
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("funnel", environment(), list(...)))
-  trace <- plotly_object("funnel", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("funnel", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("funnel", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 
 #' @rdname go_funnelarea
 #' @export
 add_funnelarea <- function(
-    fig, ..., aspectratio = NULL, baseratio = NULL, customdata = NULL,
-    dlabel = NULL, domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, insidetextfont = NULL, label0 = NULL, labels = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
-    name = NULL, opacity = NULL, scalegroup = NULL, showlegend = NULL,
-    text = NULL, textfont = NULL, textinfo = NULL, textposition = NULL,
-    texttemplate = NULL, texttemplatefallback = NULL, title = NULL,
-    uid = NULL, uirevision = NULL, values = NULL, visible = NULL,
-    row = NULL, col = NULL, skip_invalid = FALSE
+    fig, ..., data = NULL, aspectratio = NULL, baseratio = NULL,
+    customdata = NULL, dlabel = NULL, domain = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    hovertext = NULL, ids = NULL, insidetextfont = NULL, label0 = NULL,
+    labels = NULL, legend = NULL, legendgroup = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    marker = NULL, meta = NULL, name = NULL, opacity = NULL,
+    scalegroup = NULL, showlegend = NULL, text = NULL, textfont = NULL,
+    textinfo = NULL, textposition = NULL, texttemplate = NULL,
+    texttemplatefallback = NULL, title = NULL, uid = NULL,
+    uirevision = NULL, values = NULL, visible = NULL, row = NULL,
+    col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("funnelarea", environment(), list(...)))
-  trace <- plotly_object("funnelarea", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("funnelarea", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("funnelarea", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_heatmap
 #' @export
 add_heatmap <- function(
-    fig, ..., autocolorscale = NULL, coloraxis = NULL, colorbar = NULL,
-    colorscale = NULL, connectgaps = NULL, customdata = NULL, dx = NULL,
-    dy = NULL, hoverinfo = NULL, hoverlabel = NULL, hoverongaps = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    fig, ..., data = NULL, autocolorscale = NULL, coloraxis = NULL,
+    colorbar = NULL, colorscale = NULL, connectgaps = NULL,
+    customdata = NULL, dx = NULL, dy = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hoverongaps = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, meta = NULL, name = NULL,
     opacity = NULL, reversescale = NULL, showlegend = NULL,
     showscale = NULL, text = NULL, textfont = NULL, texttemplate = NULL,
@@ -327,47 +346,50 @@ add_heatmap <- function(
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("heatmap", environment(), list(...)))
-  trace <- plotly_object("heatmap", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("heatmap", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("heatmap", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 
 #' @rdname go_histogram
 #' @export
 add_histogram <- function(
-    fig, ..., alignmentgroup = NULL, autobinx = NULL, autobiny = NULL,
-    bingroup = NULL, cliponaxis = NULL, constraintext = NULL,
-    cumulative = NULL, customdata = NULL, error_x = NULL, error_y = NULL,
-    histfunc = NULL, histnorm = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, insidetextanchor = NULL, insidetextfont = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
-    name = NULL, nbinsx = NULL, nbinsy = NULL, offsetgroup = NULL,
-    opacity = NULL, orientation = NULL, outsidetextfont = NULL,
-    selected = NULL, selectedpoints = NULL, showlegend = NULL, text = NULL,
-    textangle = NULL, textfont = NULL, textposition = NULL,
-    texttemplate = NULL, texttemplatefallback = NULL, uid = NULL,
-    uirevision = NULL, unselected = NULL, visible = NULL, x = NULL,
-    xaxis = NULL, xbins = NULL, xcalendar = NULL, xhoverformat = NULL,
-    y = NULL, yaxis = NULL, ybins = NULL, ycalendar = NULL,
-    yhoverformat = NULL, zorder = NULL, row = NULL, col = NULL,
-    secondary_y = NULL, skip_invalid = FALSE
+    fig, ..., data = NULL, alignmentgroup = NULL, autobinx = NULL,
+    autobiny = NULL, bingroup = NULL, cliponaxis = NULL,
+    constraintext = NULL, cumulative = NULL, customdata = NULL,
+    error_x = NULL, error_y = NULL, histfunc = NULL, histnorm = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
+    insidetextanchor = NULL, insidetextfont = NULL, legend = NULL,
+    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    legendwidth = NULL, marker = NULL, meta = NULL, name = NULL,
+    nbinsx = NULL, nbinsy = NULL, offsetgroup = NULL, opacity = NULL,
+    orientation = NULL, outsidetextfont = NULL, selected = NULL,
+    selectedpoints = NULL, showlegend = NULL, text = NULL, textangle = NULL,
+    textfont = NULL, textposition = NULL, texttemplate = NULL,
+    texttemplatefallback = NULL, uid = NULL, uirevision = NULL,
+    unselected = NULL, visible = NULL, x = NULL, xaxis = NULL, xbins = NULL,
+    xcalendar = NULL, xhoverformat = NULL, y = NULL, yaxis = NULL,
+    ybins = NULL, ycalendar = NULL, yhoverformat = NULL, zorder = NULL,
+    row = NULL, col = NULL, secondary_y = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("histogram", environment(), list(...)))
-  trace <- plotly_object("histogram", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("histogram", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("histogram", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 
 #' @rdname go_histogram2d
 #' @export
 add_histogram2d <- function(
-    fig, ..., autobinx = NULL, autobiny = NULL, autocolorscale = NULL,
-    bingroup = NULL, coloraxis = NULL, colorbar = NULL, colorscale = NULL,
-    customdata = NULL, histfunc = NULL, histnorm = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    fig, ..., data = NULL, autobinx = NULL, autobiny = NULL,
+    autocolorscale = NULL, bingroup = NULL, coloraxis = NULL,
+    colorbar = NULL, colorscale = NULL, customdata = NULL, histfunc = NULL,
+    histnorm = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, ids = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
     name = NULL, nbinsx = NULL, nbinsy = NULL, opacity = NULL,
     reversescale = NULL, showlegend = NULL, showscale = NULL,
@@ -381,20 +403,21 @@ add_histogram2d <- function(
     skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("histogram2d", environment(), list(...)))
-  trace <- plotly_object("histogram2d", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("histogram2d", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("histogram2d", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 
 #' @rdname go_histogram2dcontour
 #' @export
 add_histogram2dcontour <- function(
-    fig, ..., autobinx = NULL, autobiny = NULL, autocolorscale = NULL,
-    autocontour = NULL, bingroup = NULL, coloraxis = NULL, colorbar = NULL,
-    colorscale = NULL, contours = NULL, customdata = NULL, histfunc = NULL,
-    histnorm = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, ids = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    fig, ..., data = NULL, autobinx = NULL, autobiny = NULL,
+    autocolorscale = NULL, autocontour = NULL, bingroup = NULL,
+    coloraxis = NULL, colorbar = NULL, colorscale = NULL, contours = NULL,
+    customdata = NULL, histfunc = NULL, histnorm = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
     meta = NULL, name = NULL, nbinsx = NULL, nbinsy = NULL,
     ncontours = NULL, opacity = NULL, reversescale = NULL,
@@ -408,16 +431,17 @@ add_histogram2dcontour <- function(
     col = NULL, secondary_y = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("histogram2dcontour", environment(), list(...)))
-  trace <- plotly_object("histogram2dcontour", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("histogram2dcontour", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("histogram2dcontour", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 
 #' @rdname go_icicle
 #' @export
 add_icicle <- function(
-    fig, ..., branchvalues = NULL, count = NULL, customdata = NULL,
-    domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    fig, ..., data = NULL, branchvalues = NULL, count = NULL,
+    customdata = NULL, domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, insidetextfont = NULL, labels = NULL, leaf = NULL,
     legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
@@ -430,16 +454,17 @@ add_icicle <- function(
     row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("icicle", environment(), list(...)))
-  trace <- plotly_object("icicle", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("icicle", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("icicle", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_image
 #' @export
 add_image <- function(
-    fig, ..., colormodel = NULL, customdata = NULL, dx = NULL, dy = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    fig, ..., data = NULL, colormodel = NULL, customdata = NULL, dx = NULL,
+    dy = NULL, hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
     hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
     legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
     legendwidth = NULL, meta = NULL, name = NULL, opacity = NULL,
@@ -449,33 +474,35 @@ add_image <- function(
     row = NULL, col = NULL, secondary_y = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("image", environment(), list(...)))
-  trace <- plotly_object("image", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("image", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("image", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 
 #' @rdname go_indicator
 #' @export
 add_indicator <- function(
-    fig, ..., align = NULL, customdata = NULL, delta = NULL, domain = NULL,
-    gauge = NULL, ids = NULL, legend = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, meta = NULL, mode = NULL,
-    name = NULL, number = NULL, title = NULL, uid = NULL, uirevision = NULL,
-    value = NULL, visible = NULL, row = NULL, col = NULL,
-    skip_invalid = FALSE
+    fig, ..., data = NULL, align = NULL, customdata = NULL, delta = NULL,
+    domain = NULL, gauge = NULL, ids = NULL, legend = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    meta = NULL, mode = NULL, name = NULL, number = NULL, title = NULL,
+    uid = NULL, uirevision = NULL, value = NULL, visible = NULL, row = NULL,
+    col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("indicator", environment(), list(...)))
-  trace <- plotly_object("indicator", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("indicator", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("indicator", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_isosurface
 #' @export
 add_isosurface <- function(
-    fig, ..., autocolorscale = NULL, caps = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, coloraxis = NULL, colorbar = NULL,
-    colorscale = NULL, contour = NULL, customdata = NULL,
+    fig, ..., data = NULL, autocolorscale = NULL, caps = NULL, cauto = NULL,
+    cmax = NULL, cmid = NULL, cmin = NULL, coloraxis = NULL,
+    colorbar = NULL, colorscale = NULL, contour = NULL, customdata = NULL,
     flatshading = NULL, hoverinfo = NULL, hoverlabel = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, isomax = NULL, isomin = NULL, legend = NULL,
@@ -489,22 +516,23 @@ add_isosurface <- function(
     zhoverformat = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("isosurface", environment(), list(...)))
-  trace <- plotly_object("isosurface", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("isosurface", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("isosurface", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_mesh3d
 #' @export
 add_mesh3d <- function(
-    fig, ..., alphahull = NULL, autocolorscale = NULL, cauto = NULL,
-    cmax = NULL, cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, contour = NULL, customdata = NULL,
-    delaunayaxis = NULL, facecolor = NULL, flatshading = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, i = NULL, ids = NULL,
-    intensity = NULL, intensitymode = NULL, j = NULL, k = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    fig, ..., data = NULL, alphahull = NULL, autocolorscale = NULL,
+    cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL, color = NULL,
+    coloraxis = NULL, colorbar = NULL, colorscale = NULL, contour = NULL,
+    customdata = NULL, delaunayaxis = NULL, facecolor = NULL,
+    flatshading = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    i = NULL, ids = NULL, intensity = NULL, intensitymode = NULL, j = NULL,
+    k = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, lighting = NULL,
     lightposition = NULL, meta = NULL, name = NULL, opacity = NULL,
     reversescale = NULL, scene = NULL, showlegend = NULL, showscale = NULL,
@@ -515,18 +543,19 @@ add_mesh3d <- function(
     skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("mesh3d", environment(), list(...)))
-  trace <- plotly_object("mesh3d", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("mesh3d", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("mesh3d", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_ohlc
 #' @export
 add_ohlc <- function(
-    fig, ..., close = NULL, customdata = NULL, decreasing = NULL,
-    high = NULL, hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
-    increasing = NULL, legend = NULL, legendgroup = NULL,
+    fig, ..., data = NULL, close = NULL, customdata = NULL,
+    decreasing = NULL, high = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, increasing = NULL, legend = NULL, legendgroup = NULL,
     legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
     line = NULL, low = NULL, meta = NULL, name = NULL, opacity = NULL,
     open = NULL, selectedpoints = NULL, showlegend = NULL, text = NULL,
@@ -537,114 +566,123 @@ add_ohlc <- function(
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("ohlc", environment(), list(...)))
-  trace <- plotly_object("ohlc", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("ohlc", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("ohlc", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 
 #' @rdname go_parcats
 #' @export
 add_parcats <- function(
-    fig, ..., arrangement = NULL, bundlecolors = NULL, counts = NULL,
-    dimensions = NULL, domain = NULL, hoverinfo = NULL, hoveron = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, labelfont = NULL,
-    legendgrouptitle = NULL, legendwidth = NULL, line = NULL, meta = NULL,
-    name = NULL, sortpaths = NULL, tickfont = NULL, uid = NULL,
-    uirevision = NULL, visible = NULL, row = NULL, col = NULL,
-    skip_invalid = FALSE
+    fig, ..., data = NULL, arrangement = NULL, bundlecolors = NULL,
+    counts = NULL, dimensions = NULL, domain = NULL, hoverinfo = NULL,
+    hoveron = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    labelfont = NULL, legendgrouptitle = NULL, legendwidth = NULL,
+    line = NULL, meta = NULL, name = NULL, sortpaths = NULL,
+    tickfont = NULL, uid = NULL, uirevision = NULL, visible = NULL,
+    row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("parcats", environment(), list(...)))
-  trace <- plotly_object("parcats", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("parcats", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("parcats", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_parcoords
 #' @export
 add_parcoords <- function(
-    fig, ..., customdata = NULL, dimensions = NULL, domain = NULL,
-    ids = NULL, labelangle = NULL, labelfont = NULL, labelside = NULL,
-    legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, line = NULL, meta = NULL, name = NULL,
-    rangefont = NULL, tickfont = NULL, uid = NULL, uirevision = NULL,
-    unselected = NULL, visible = NULL, row = NULL, col = NULL,
-    skip_invalid = FALSE
+    fig, ..., data = NULL, customdata = NULL, dimensions = NULL,
+    domain = NULL, ids = NULL, labelangle = NULL, labelfont = NULL,
+    labelside = NULL, legend = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, line = NULL, meta = NULL,
+    name = NULL, rangefont = NULL, tickfont = NULL, uid = NULL,
+    uirevision = NULL, unselected = NULL, visible = NULL, row = NULL,
+    col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("parcoords", environment(), list(...)))
-  trace <- plotly_object("parcoords", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("parcoords", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("parcoords", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_pie
 #' @export
 add_pie <- function(
-    fig, ..., automargin = NULL, customdata = NULL, direction = NULL,
-    dlabel = NULL, domain = NULL, hole = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    hovertext = NULL, ids = NULL, insidetextfont = NULL,
-    insidetextorientation = NULL, label0 = NULL, labels = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
-    name = NULL, opacity = NULL, outsidetextfont = NULL, pull = NULL,
-    rotation = NULL, scalegroup = NULL, showlegend = NULL, sort = NULL,
-    text = NULL, textfont = NULL, textinfo = NULL, textposition = NULL,
-    texttemplate = NULL, texttemplatefallback = NULL, title = NULL,
-    uid = NULL, uirevision = NULL, values = NULL, visible = NULL,
-    row = NULL, col = NULL, skip_invalid = FALSE
+    fig, ..., data = NULL, automargin = NULL, customdata = NULL,
+    direction = NULL, dlabel = NULL, domain = NULL, hole = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
+    insidetextfont = NULL, insidetextorientation = NULL, label0 = NULL,
+    labels = NULL, legend = NULL, legendgroup = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    marker = NULL, meta = NULL, name = NULL, opacity = NULL,
+    outsidetextfont = NULL, pull = NULL, rotation = NULL, scalegroup = NULL,
+    showlegend = NULL, sort = NULL, text = NULL, textfont = NULL,
+    textinfo = NULL, textposition = NULL, texttemplate = NULL,
+    texttemplatefallback = NULL, title = NULL, uid = NULL,
+    uirevision = NULL, values = NULL, visible = NULL, row = NULL,
+    col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("pie", environment(), list(...)))
-  trace <- plotly_object("pie", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("pie", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("pie", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_quiver
 #' @export
 add_quiver <- function(
-    fig, ..., anchor = NULL, arrowref = NULL, customdata = NULL, dx = NULL,
-    dy = NULL, hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, lengthfactor = NULL,
-    lengthmode = NULL, marker = NULL, meta = NULL, name = NULL,
-    opacity = NULL, selected = NULL, selectedpoints = NULL,
-    showlegend = NULL, text = NULL, textfont = NULL, textposition = NULL,
-    u = NULL, uhoverformat = NULL, uid = NULL, uirevision = NULL,
-    unselected = NULL, v = NULL, vhoverformat = NULL, visible = NULL,
-    x = NULL, x0 = NULL, xaxis = NULL, xhoverformat = NULL, y = NULL,
-    y0 = NULL, yaxis = NULL, yhoverformat = NULL, row = NULL, col = NULL,
-    secondary_y = NULL, skip_invalid = FALSE
+    fig, ..., data = NULL, anchor = NULL, arrowref = NULL,
+    customdata = NULL, dx = NULL, dy = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, ids = NULL, legend = NULL,
+    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    legendwidth = NULL, lengthfactor = NULL, lengthmode = NULL,
+    marker = NULL, meta = NULL, name = NULL, opacity = NULL,
+    selected = NULL, selectedpoints = NULL, showlegend = NULL, text = NULL,
+    textfont = NULL, textposition = NULL, u = NULL, uhoverformat = NULL,
+    uid = NULL, uirevision = NULL, unselected = NULL, v = NULL,
+    vhoverformat = NULL, visible = NULL, x = NULL, x0 = NULL, xaxis = NULL,
+    xhoverformat = NULL, y = NULL, y0 = NULL, yaxis = NULL,
+    yhoverformat = NULL, row = NULL, col = NULL, secondary_y = NULL,
+    skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("quiver", environment(), list(...)))
-  trace <- plotly_object("quiver", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("quiver", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("quiver", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 
 #' @rdname go_sankey
 #' @export
 add_sankey <- function(
-    fig, ..., arrangement = NULL, customdata = NULL, direction = NULL,
-    domain = NULL, hoverinfo = NULL, hoverlabel = NULL, ids = NULL,
-    legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    fig, ..., data = NULL, arrangement = NULL, customdata = NULL,
+    direction = NULL, domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    ids = NULL, legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
     legendwidth = NULL, link = NULL, meta = NULL, name = NULL, node = NULL,
     orientation = NULL, selectedpoints = NULL, textfont = NULL, uid = NULL,
     uirevision = NULL, valueformat = NULL, valuesuffix = NULL,
     visible = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("sankey", environment(), list(...)))
-  trace <- plotly_object("sankey", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("sankey", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("sankey", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_scatter
 #' @export
 add_scatter <- function(
-    fig, ..., alignmentgroup = NULL, cliponaxis = NULL, connectgaps = NULL,
-    customdata = NULL, dx = NULL, dy = NULL, error_x = NULL, error_y = NULL,
-    fill = NULL, fillcolor = NULL, fillgradient = NULL, fillpattern = NULL,
-    groupnorm = NULL, hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
+    fig, ..., data = NULL, alignmentgroup = NULL, cliponaxis = NULL,
+    connectgaps = NULL, customdata = NULL, dx = NULL, dy = NULL,
+    error_x = NULL, error_y = NULL, fill = NULL, fillcolor = NULL,
+    fillgradient = NULL, fillpattern = NULL, groupnorm = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
@@ -661,42 +699,44 @@ add_scatter <- function(
     row = NULL, col = NULL, secondary_y = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scatter", environment(), list(...)))
-  trace <- plotly_object("scatter", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scatter", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("scatter", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 
 #' @rdname go_scatter3d
 #' @export
 add_scatter3d <- function(
-    fig, ..., connectgaps = NULL, customdata = NULL, error_x = NULL,
-    error_y = NULL, error_z = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
-    meta = NULL, mode = NULL, name = NULL, opacity = NULL,
-    projection = NULL, scene = NULL, showlegend = NULL, surfaceaxis = NULL,
-    surfacecolor = NULL, text = NULL, textfont = NULL, textposition = NULL,
-    texttemplate = NULL, texttemplatefallback = NULL, uid = NULL,
-    uirevision = NULL, visible = NULL, x = NULL, xcalendar = NULL,
-    xhoverformat = NULL, y = NULL, ycalendar = NULL, yhoverformat = NULL,
-    z = NULL, zcalendar = NULL, zhoverformat = NULL, row = NULL, col = NULL,
-    skip_invalid = FALSE
+    fig, ..., data = NULL, connectgaps = NULL, customdata = NULL,
+    error_x = NULL, error_y = NULL, error_z = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    line = NULL, marker = NULL, meta = NULL, mode = NULL, name = NULL,
+    opacity = NULL, projection = NULL, scene = NULL, showlegend = NULL,
+    surfaceaxis = NULL, surfacecolor = NULL, text = NULL, textfont = NULL,
+    textposition = NULL, texttemplate = NULL, texttemplatefallback = NULL,
+    uid = NULL, uirevision = NULL, visible = NULL, x = NULL,
+    xcalendar = NULL, xhoverformat = NULL, y = NULL, ycalendar = NULL,
+    yhoverformat = NULL, z = NULL, zcalendar = NULL, zhoverformat = NULL,
+    row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scatter3d", environment(), list(...)))
-  trace <- plotly_object("scatter3d", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scatter3d", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("scatter3d", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_scattercarpet
 #' @export
 add_scattercarpet <- function(
-    fig, ..., a = NULL, b = NULL, carpet = NULL, connectgaps = NULL,
-    customdata = NULL, fill = NULL, fillcolor = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hoveron = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    fig, ..., data = NULL, a = NULL, b = NULL, carpet = NULL,
+    connectgaps = NULL, customdata = NULL, fill = NULL, fillcolor = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
     meta = NULL, mode = NULL, name = NULL, opacity = NULL, selected = NULL,
     selectedpoints = NULL, showlegend = NULL, text = NULL, textfont = NULL,
@@ -706,41 +746,44 @@ add_scattercarpet <- function(
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scattercarpet", environment(), list(...)))
-  trace <- plotly_object("scattercarpet", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scattercarpet", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("scattercarpet", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 
 #' @rdname go_scattergeo
 #' @export
 add_scattergeo <- function(
-    fig, ..., connectgaps = NULL, customdata = NULL, featureidkey = NULL,
-    fill = NULL, fillcolor = NULL, geo = NULL, geojson = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL, lat = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, line = NULL, locationmode = NULL,
-    locations = NULL, lon = NULL, marker = NULL, meta = NULL, mode = NULL,
-    name = NULL, opacity = NULL, selected = NULL, selectedpoints = NULL,
-    showlegend = NULL, text = NULL, textfont = NULL, textposition = NULL,
-    texttemplate = NULL, texttemplatefallback = NULL, uid = NULL,
-    uirevision = NULL, unselected = NULL, visible = NULL, row = NULL,
-    col = NULL, skip_invalid = FALSE
+    fig, ..., data = NULL, connectgaps = NULL, customdata = NULL,
+    featureidkey = NULL, fill = NULL, fillcolor = NULL, geo = NULL,
+    geojson = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, lat = NULL, legend = NULL, legendgroup = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    line = NULL, locationmode = NULL, locations = NULL, lon = NULL,
+    marker = NULL, meta = NULL, mode = NULL, name = NULL, opacity = NULL,
+    selected = NULL, selectedpoints = NULL, showlegend = NULL, text = NULL,
+    textfont = NULL, textposition = NULL, texttemplate = NULL,
+    texttemplatefallback = NULL, uid = NULL, uirevision = NULL,
+    unselected = NULL, visible = NULL, row = NULL, col = NULL,
+    skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scattergeo", environment(), list(...)))
-  trace <- plotly_object("scattergeo", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scattergeo", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("scattergeo", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_scattergl
 #' @export
 add_scattergl <- function(
-    fig, ..., connectgaps = NULL, customdata = NULL, dx = NULL, dy = NULL,
-    error_x = NULL, error_y = NULL, fill = NULL, fillcolor = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    fig, ..., data = NULL, connectgaps = NULL, customdata = NULL, dx = NULL,
+    dy = NULL, error_x = NULL, error_y = NULL, fill = NULL,
+    fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
     meta = NULL, mode = NULL, name = NULL, opacity = NULL, selected = NULL,
     selectedpoints = NULL, showlegend = NULL, text = NULL, textfont = NULL,
@@ -754,15 +797,16 @@ add_scattergl <- function(
     skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scattergl", environment(), list(...)))
-  trace <- plotly_object("scattergl", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scattergl", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("scattergl", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 
 #' @rdname go_scattermap
 #' @export
 add_scattermap <- function(
-    fig, ..., below = NULL, cluster = NULL, connectgaps = NULL,
+    fig, ..., data = NULL, below = NULL, cluster = NULL, connectgaps = NULL,
     customdata = NULL, fill = NULL, fillcolor = NULL, hoverinfo = NULL,
     hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
     hovertext = NULL, ids = NULL, lat = NULL, legend = NULL,
@@ -776,17 +820,18 @@ add_scattermap <- function(
     skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scattermap", environment(), list(...)))
-  trace <- plotly_object("scattermap", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scattermap", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("scattermap", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_scatterpolar
 #' @export
 add_scatterpolar <- function(
-    fig, ..., cliponaxis = NULL, connectgaps = NULL, customdata = NULL,
-    dr = NULL, dtheta = NULL, fill = NULL, fillcolor = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
+    fig, ..., data = NULL, cliponaxis = NULL, connectgaps = NULL,
+    customdata = NULL, dr = NULL, dtheta = NULL, fill = NULL,
+    fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
@@ -799,15 +844,16 @@ add_scatterpolar <- function(
     skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scatterpolar", environment(), list(...)))
-  trace <- plotly_object("scatterpolar", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scatterpolar", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("scatterpolar", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_scatterpolargl
 #' @export
 add_scatterpolargl <- function(
-    fig, ..., connectgaps = NULL, customdata = NULL, dr = NULL,
+    fig, ..., data = NULL, connectgaps = NULL, customdata = NULL, dr = NULL,
     dtheta = NULL, fill = NULL, fillcolor = NULL, hoverinfo = NULL,
     hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
     hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
@@ -821,37 +867,39 @@ add_scatterpolargl <- function(
     visible = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scatterpolargl", environment(), list(...)))
-  trace <- plotly_object("scatterpolargl", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scatterpolargl", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("scatterpolargl", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_scattersmith
 #' @export
 add_scattersmith <- function(
-    fig, ..., cliponaxis = NULL, connectgaps = NULL, customdata = NULL,
-    fill = NULL, fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hoveron = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    hovertext = NULL, ids = NULL, imag = NULL, legend = NULL,
-    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, line = NULL, marker = NULL, meta = NULL,
-    mode = NULL, name = NULL, opacity = NULL, real = NULL, selected = NULL,
-    selectedpoints = NULL, showlegend = NULL, subplot = NULL, text = NULL,
-    textfont = NULL, textposition = NULL, texttemplate = NULL,
-    texttemplatefallback = NULL, uid = NULL, uirevision = NULL,
-    unselected = NULL, visible = NULL, row = NULL, col = NULL,
-    skip_invalid = FALSE
+    fig, ..., data = NULL, cliponaxis = NULL, connectgaps = NULL,
+    customdata = NULL, fill = NULL, fillcolor = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hoveron = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL, imag = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
+    meta = NULL, mode = NULL, name = NULL, opacity = NULL, real = NULL,
+    selected = NULL, selectedpoints = NULL, showlegend = NULL,
+    subplot = NULL, text = NULL, textfont = NULL, textposition = NULL,
+    texttemplate = NULL, texttemplatefallback = NULL, uid = NULL,
+    uirevision = NULL, unselected = NULL, visible = NULL, row = NULL,
+    col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scattersmith", environment(), list(...)))
-  trace <- plotly_object("scattersmith", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scattersmith", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("scattersmith", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_scatterternary
 #' @export
 add_scatterternary <- function(
-    fig, ..., a = NULL, b = NULL, c = NULL, cliponaxis = NULL,
+    fig, ..., data = NULL, a = NULL, b = NULL, c = NULL, cliponaxis = NULL,
     connectgaps = NULL, customdata = NULL, fill = NULL, fillcolor = NULL,
     hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
@@ -865,18 +913,19 @@ add_scatterternary <- function(
     skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scatterternary", environment(), list(...)))
-  trace <- plotly_object("scatterternary", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("scatterternary", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("scatterternary", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_splom
 #' @export
 add_splom <- function(
-    fig, ..., customdata = NULL, diagonal = NULL, dimensions = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    fig, ..., data = NULL, customdata = NULL, diagonal = NULL,
+    dimensions = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
     name = NULL, opacity = NULL, selected = NULL, selectedpoints = NULL,
     showlegend = NULL, showlowerhalf = NULL, showupperhalf = NULL,
@@ -885,39 +934,42 @@ add_splom <- function(
     yhoverformat = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("splom", environment(), list(...)))
-  trace <- plotly_object("splom", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("splom", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("splom", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_streamtube
 #' @export
 add_streamtube <- function(
-    fig, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
-    cmin = NULL, coloraxis = NULL, colorbar = NULL, colorscale = NULL,
-    customdata = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, lighting = NULL,
-    lightposition = NULL, maxdisplayed = NULL, meta = NULL, name = NULL,
-    opacity = NULL, reversescale = NULL, scene = NULL, showlegend = NULL,
-    showscale = NULL, sizeref = NULL, starts = NULL, text = NULL, u = NULL,
-    uhoverformat = NULL, uid = NULL, uirevision = NULL, v = NULL,
-    vhoverformat = NULL, visible = NULL, w = NULL, whoverformat = NULL,
-    x = NULL, xhoverformat = NULL, y = NULL, yhoverformat = NULL, z = NULL,
-    zhoverformat = NULL, row = NULL, col = NULL, skip_invalid = FALSE
+    fig, ..., data = NULL, autocolorscale = NULL, cauto = NULL, cmax = NULL,
+    cmid = NULL, cmin = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, customdata = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    lighting = NULL, lightposition = NULL, maxdisplayed = NULL, meta = NULL,
+    name = NULL, opacity = NULL, reversescale = NULL, scene = NULL,
+    showlegend = NULL, showscale = NULL, sizeref = NULL, starts = NULL,
+    text = NULL, u = NULL, uhoverformat = NULL, uid = NULL,
+    uirevision = NULL, v = NULL, vhoverformat = NULL, visible = NULL,
+    w = NULL, whoverformat = NULL, x = NULL, xhoverformat = NULL, y = NULL,
+    yhoverformat = NULL, z = NULL, zhoverformat = NULL, row = NULL,
+    col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("streamtube", environment(), list(...)))
-  trace <- plotly_object("streamtube", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("streamtube", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("streamtube", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_sunburst
 #' @export
 add_sunburst <- function(
-    fig, ..., branchvalues = NULL, count = NULL, customdata = NULL,
-    domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    fig, ..., data = NULL, branchvalues = NULL, count = NULL,
+    customdata = NULL, domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, insidetextfont = NULL, insidetextorientation = NULL,
     labels = NULL, leaf = NULL, legend = NULL, legendgrouptitle = NULL,
@@ -930,23 +982,24 @@ add_sunburst <- function(
     col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("sunburst", environment(), list(...)))
-  trace <- plotly_object("sunburst", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("sunburst", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("sunburst", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_surface
 #' @export
 add_surface <- function(
-    fig, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
-    cmin = NULL, coloraxis = NULL, colorbar = NULL, colorscale = NULL,
-    connectgaps = NULL, contours = NULL, customdata = NULL,
-    hidesurface = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, lighting = NULL,
-    lightposition = NULL, meta = NULL, name = NULL, opacity = NULL,
-    opacityscale = NULL, reversescale = NULL, scene = NULL,
+    fig, ..., data = NULL, autocolorscale = NULL, cauto = NULL, cmax = NULL,
+    cmid = NULL, cmin = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, connectgaps = NULL, contours = NULL,
+    customdata = NULL, hidesurface = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    lighting = NULL, lightposition = NULL, meta = NULL, name = NULL,
+    opacity = NULL, opacityscale = NULL, reversescale = NULL, scene = NULL,
     showlegend = NULL, showscale = NULL, surfacecolor = NULL, text = NULL,
     uid = NULL, uirevision = NULL, visible = NULL, x = NULL,
     xcalendar = NULL, xhoverformat = NULL, y = NULL, ycalendar = NULL,
@@ -954,32 +1007,34 @@ add_surface <- function(
     row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("surface", environment(), list(...)))
-  trace <- plotly_object("surface", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("surface", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("surface", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_table
 #' @export
 add_table <- function(
-    fig, ..., cells = NULL, columnorder = NULL, columnwidth = NULL,
-    customdata = NULL, domain = NULL, header = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, ids = NULL, legend = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, meta = NULL, name = NULL,
-    uid = NULL, uirevision = NULL, visible = NULL, row = NULL, col = NULL,
-    skip_invalid = FALSE
+    fig, ..., data = NULL, cells = NULL, columnorder = NULL,
+    columnwidth = NULL, customdata = NULL, domain = NULL, header = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, ids = NULL, legend = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    meta = NULL, name = NULL, uid = NULL, uirevision = NULL, visible = NULL,
+    row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("table", environment(), list(...)))
-  trace <- plotly_object("table", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("table", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("table", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_treemap
 #' @export
 add_treemap <- function(
-    fig, ..., branchvalues = NULL, count = NULL, customdata = NULL,
-    domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    fig, ..., data = NULL, branchvalues = NULL, count = NULL,
+    customdata = NULL, domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, insidetextfont = NULL, labels = NULL, legend = NULL,
     legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
@@ -991,16 +1046,17 @@ add_treemap <- function(
     visible = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("treemap", environment(), list(...)))
-  trace <- plotly_object("treemap", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("treemap", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("treemap", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_violin
 #' @export
 add_violin <- function(
-    fig, ..., alignmentgroup = NULL, bandwidth = NULL, box = NULL,
-    customdata = NULL, fillcolor = NULL, hoverinfo = NULL,
+    fig, ..., data = NULL, alignmentgroup = NULL, bandwidth = NULL,
+    box = NULL, customdata = NULL, fillcolor = NULL, hoverinfo = NULL,
     hoverlabel = NULL, hoveron = NULL, hovertemplate = NULL,
     hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
     jitter = NULL, legend = NULL, legendgroup = NULL,
@@ -1017,17 +1073,18 @@ add_violin <- function(
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("violin", environment(), list(...)))
-  trace <- plotly_object("violin", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("violin", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("violin", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 
 #' @rdname go_volume
 #' @export
 add_volume <- function(
-    fig, ..., autocolorscale = NULL, caps = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, coloraxis = NULL, colorbar = NULL,
-    colorscale = NULL, contour = NULL, customdata = NULL,
+    fig, ..., data = NULL, autocolorscale = NULL, caps = NULL, cauto = NULL,
+    cmax = NULL, cmid = NULL, cmin = NULL, coloraxis = NULL,
+    colorbar = NULL, colorscale = NULL, contour = NULL, customdata = NULL,
     flatshading = NULL, hoverinfo = NULL, hoverlabel = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, isomax = NULL, isomin = NULL, legend = NULL,
@@ -1042,36 +1099,39 @@ add_volume <- function(
     col = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("volume", environment(), list(...)))
-  trace <- plotly_object("volume", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("volume", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("volume", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col)
 }
 
 #' @rdname go_waterfall
 #' @export
 add_waterfall <- function(
-    fig, ..., alignmentgroup = NULL, base = NULL, cliponaxis = NULL,
-    connector = NULL, constraintext = NULL, customdata = NULL,
-    decreasing = NULL, dx = NULL, dy = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    hovertext = NULL, ids = NULL, increasing = NULL,
-    insidetextanchor = NULL, insidetextfont = NULL, legend = NULL,
-    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, measure = NULL, meta = NULL, name = NULL,
-    offset = NULL, offsetgroup = NULL, opacity = NULL, orientation = NULL,
-    outsidetextfont = NULL, selectedpoints = NULL, showlegend = NULL,
-    text = NULL, textangle = NULL, textfont = NULL, textinfo = NULL,
-    textposition = NULL, texttemplate = NULL, texttemplatefallback = NULL,
-    totals = NULL, uid = NULL, uirevision = NULL, visible = NULL,
-    width = NULL, x = NULL, x0 = NULL, xaxis = NULL, xhoverformat = NULL,
-    xperiod = NULL, xperiod0 = NULL, xperiodalignment = NULL, y = NULL,
-    y0 = NULL, yaxis = NULL, yhoverformat = NULL, yperiod = NULL,
-    yperiod0 = NULL, yperiodalignment = NULL, zorder = NULL, row = NULL,
-    col = NULL, secondary_y = NULL, skip_invalid = FALSE
+    fig, ..., data = NULL, alignmentgroup = NULL, base = NULL,
+    cliponaxis = NULL, connector = NULL, constraintext = NULL,
+    customdata = NULL, decreasing = NULL, dx = NULL, dy = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
+    increasing = NULL, insidetextanchor = NULL, insidetextfont = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, measure = NULL, meta = NULL,
+    name = NULL, offset = NULL, offsetgroup = NULL, opacity = NULL,
+    orientation = NULL, outsidetextfont = NULL, selectedpoints = NULL,
+    showlegend = NULL, text = NULL, textangle = NULL, textfont = NULL,
+    textinfo = NULL, textposition = NULL, texttemplate = NULL,
+    texttemplatefallback = NULL, totals = NULL, uid = NULL,
+    uirevision = NULL, visible = NULL, width = NULL, x = NULL, x0 = NULL,
+    xaxis = NULL, xhoverformat = NULL, xperiod = NULL, xperiod0 = NULL,
+    xperiodalignment = NULL, y = NULL, y0 = NULL, yaxis = NULL,
+    yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
+    yperiodalignment = NULL, zorder = NULL, row = NULL, col = NULL,
+    secondary_y = NULL, skip_invalid = FALSE
 ) {
   # plot_ly() objects get the legacy plotly package's behaviour
-  if (is_legacy_plot(fig)) return(legacy_add_dispatch("waterfall", environment(), list(...)))
-  trace <- plotly_object("waterfall", NULL, environment(), list(...), skip_invalid)
+  if (is_legacy_plot(fig)) return(legacy_add_dispatch("waterfall", environment(), c(list(...), list(data = data))))
+  # formula properties (x = ~col) are evaluated in `data` or the figure's data
+  trace <- plotly_object("waterfall", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
   add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
 }
 

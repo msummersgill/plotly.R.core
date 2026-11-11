@@ -156,6 +156,10 @@
 #'   listening to hover, click and selection events. Note that, "scatter"
 #'   traces also appends customdata items in the markers DOM elements Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param data A data frame in which formula properties (e.g. \code{x =
+#'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
+#'   given to \code{\link{go_figure}()}. Only the evaluated values are
+#'   added to the trace.
 #' @param domain Named list or \code{\link{go_sunburst_domain}()} object.
 #' @param dtick Sets the step in-between ticks on this color bar. Use with
 #'   `tick0`. Must be a positive number. Note: unlike on x/y axes, the
@@ -732,7 +736,8 @@
 #'   plotting area only. One of \code{"container"}, \code{"paper"}.
 #' @param ... Further properties, including nested properties in
 #'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}.
+#'   \code{marker = list(size = 10)}. Property values may be one-sided
+#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return Each \code{go_*()} function returns a graph object of the same

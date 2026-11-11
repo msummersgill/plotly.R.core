@@ -120,3 +120,26 @@ j <- json(w$x)
 stopifnot(inherits(w, "htmlwidget"),
           grepl('"data":[{"type":"scatter"', j, fixed = TRUE),
           grepl('"title":{"text":"Title"}', j, fixed = TRUE))
+
+# Data frames and formula properties in add_<trace>()
+iris_df <- data.frame(a = 1:4, b = c(2, 4, 6, 8), g = factor(c("x", "y", "x", "y")))
+fig <- iris_df |> go_figure() |>
+  add_scatter(x = ~a, y = ~b * 2, mode = "markers", marker_size = ~a + 5, text = ~g) |>
+  add_bar(data = data.frame(k = c("p", "q"), v = 3:4), x = ~k, y = ~v)
+stopifnot(
+  length(fig$data) == 2L, identical(fig$data[[1]]$y, c(4, 8, 12, 16)),
+  identical(fig$data[[1]]$marker$size, c(6, 7, 8, 9)), identical(fig$data[[1]]$text, c("x", "y", "x", "y")),
+  identical(fig$data[[2]]$x, c("p", "q")),
+  identical(attr(fig, "plotly_data"), iris_df),
+  !is.null(attr(update_layout(fig, title = "t"), "plotly_data"))
+)
+# nested lists, formulas without data, and the data never reaching the JSON
+fig <- go_figure() |> add_scatter(data = iris_df, x = ~a, y = ~b, marker = list(color = ~b))
+stopifnot(identical(fig$data[[1]]$marker$color, iris_df$b))
+stopifnot(identical(go_figure() |> add_bar(x = ~1:3, y = ~c(2, 1, 3)) |> (\(f) f$data[[1]]$y)(), c(2, 1, 3)))
+json <- as.character(plotly_json(go_figure(data.frame(unused_col = 1:3, a = 1:3)) |> add_scatter(x = ~a), jsonedit = FALSE))
+stopifnot(!grepl("unused_col", json))
+err <- tryCatch(go_figure() |> add_scatter(x = ~nope), error = conditionMessage)
+stopifnot(grepl("no data", err))
+err <- tryCatch(go_figure() |> add_scatter(data = 1:3, x = ~a), error = conditionMessage)
+stopifnot(grepl("must be a data frame", err))
