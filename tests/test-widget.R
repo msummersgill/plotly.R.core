@@ -12,7 +12,7 @@ stopifnot(
 json <- as.character(attr(w$x, "TOJSON_FUNC")(w$x))
 stopifnot(
   grepl('"type":"scatter"', json, fixed = TRUE),
-  grepl('"y":[1,null,3]', json, fixed = TRUE),
+  grepl('"y":{"dtype":"f8","bdata":"AAAAAAAA8D+iBwAAAADwfwAAAAAAAAhA"}', json, fixed = TRUE),
   grepl('"template":{"layout":{"autotypenumbers"', json, fixed = TRUE)
 )
 old <- default_template("none")
@@ -37,3 +37,88 @@ stopifnot(
   as.character(to_JSON(list(x = as.POSIXct("2024-06-01 12:00:00.5", tz = "America/New_York")))) ==
     '{"x":"2024-06-01 12:00:00.500"}'
 )
+
+# Numeric arrays in traces are sent as base64 typed arrays (like plotly.py)
+spec <- plotly.R.core:::typed_array_spec
+decode <- function(s) {
+  size <- c(i1 = 1, i2 = 2, i4 = 4, f4 = 4, f8 = 8)[[s$dtype]]
+  readBin(base64enc::base64decode(s$bdata), if (startsWith(s$dtype, "f")) "double" else "integer",
+          n = 1e6, size = size, endian = "little")
+}
+stopifnot(
+  identical(spec(c(1.5, -2, 3))$dtype, "f8"), identical(decode(spec(c(1.5, -2, 3))), c(1.5, -2, 3)),
+  identical(spec(1:3)$dtype, "i1"), identical(decode(spec(c(-5L, 100L))), c(-5L, 100L)),
+  identical(spec(c(1L, 300L))$dtype, "i2"), identical(decode(spec(c(-1L, 300L))), c(-1L, 300L)),
+  identical(spec(c(1L, 1e6L))$dtype, "i4"), identical(decode(spec(c(-1L, 1e6L))), c(-1L, 1e6L)),
+  identical(spec(c(1L, NA))$dtype, "f8"), is.na(decode(spec(c(1L, NA)))[2]),
+  identical(spec(I(2.5))$dtype, "f8"),
+  # doubles that are whole numbers are sent as integers (lossless)
+  identical(spec(c(1, 2, 3))$dtype, "i1"), identical(spec(c(1990, 2007))$dtype, "i2"),
+  identical(decode(spec(c(-70000, 5))), c(-70000L, 5L)), identical(spec(c(-70000, 5))$dtype, "i4"),
+  identical(spec(c(1, NA))$dtype, "f8"), identical(spec(c(1, Inf))$dtype, "f8"),
+  identical(spec(c(3e9, 1))$dtype, "f8"), identical(spec(c(1, 1.5))$dtype, "f8"),
+  identical(spec(numeric())$dtype, "f8")
+)
+
+# float32: as_float32() vectors or options(plotly.R.core.float32 = TRUE)
+x <- c(0.1, 2.5, NA)
+stopifnot(
+  identical(spec(as_float32(x))$dtype, "f4"),
+  isTRUE(all.equal(decode(spec(as_float32(x)))[1:2], x[1:2], tolerance = 1e-7)),
+  is.na(decode(spec(as_float32(x)))[3]),
+  identical(spec(as_float32(c(1, 2)))$dtype, "i1"),          # whole numbers stay lossless
+  identical(spec(x)$dtype, "f8")
+)
+old <- options(plotly.R.core.float32 = TRUE)
+stopifnot(identical(spec(x)$dtype, "f4"), identical(spec(matrix(x[1:2], 1))$dtype, "f4"))
+options(old)
+stopifnot(
+  inherits(as_float32(x)[2:3], "plotly_float32"),
+  inherits(tryCatch(as_float32("a"), error = identity), "error"),
+  inherits(tryCatch(as_float32(Sys.Date()), error = identity), "error")
+)
+# the mark survives validation (graph objects, formulas), px and plot_ly(); plain JSON drops it
+f <- data.frame(a = x) |> go_figure() |>
+  add_scatter(x = ~as_float32(a), y = as_float32(1:3 / 2), marker_size = as_float32(c(1.5, 2, 3)))
+stopifnot(
+  inherits(f$data[[1]]$x, "plotly_float32"), inherits(f$data[[1]]$marker$size, "plotly_float32"),
+  grepl('"x":[0.1,2.5,null]', plotly.R.core:::to_JSON(f$data[[1]]), fixed = TRUE),
+  grepl('"x":{"dtype":"f4"', htmlwidgets:::toJSON(list(x = as_widget(f)$x)), fixed = TRUE)
+)
+d <- px_data_iris()
+d$sepal_length <- as_float32(d$sepal_length)
+stopifnot(
+  inherits(px_scatter(d, x = ~sepal_length, y = ~sepal_width, color = ~species)$data[[1]]$x, "plotly_float32"),
+  inherits(as_widget(plot_ly(d, x = ~sepal_length, y = ~sepal_width, type = "scatter", mode = "markers"))$x$data[[1]]$x,
+           "plotly_float32")
+)
+m <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 2)          # rows: 1 3 5 / 2 4 6
+stopifnot(identical(spec(m)$shape, "2, 3"), identical(decode(spec(m)), c(1L, 3L, 5L, 2L, 4L, 6L)),
+          identical(decode(spec(m + 0.5)), c(1, 3, 5, 2, 4, 6) + 0.5))
+
+enc <- plotly.R.core:::b64_encode
+tr <- enc(list(type = "scatter", x = 1:3, y = 5, ids = I(7), text = c("a", "b"), visible = c(TRUE, FALSE),
+               d = as.Date(c("2024-01-01", "2024-01-02")), f = factor(c("a", "b")),
+               marker = list(size = c(4, 8), line = list(width = 1:2)),
+               geojson = list(bbox = c(1, 2)), range = c(0, 1), z = list(c(1, 2), c(3, 4))))
+stopifnot(
+  identical(tr$x$dtype, "i1"), identical(tr$y, 5), identical(tr$ids$dtype, "i1"),
+  is.character(tr$text), is.logical(tr$visible), inherits(tr$d, "Date"), is.factor(tr$f),
+  identical(tr$marker$size$dtype, "i1"), identical(tr$marker$line$width$dtype, "i1"),
+  identical(tr$geojson$bbox, c(1, 2)), identical(tr$range, c(0, 1)),
+  identical(tr$z, list(c(1, 2), c(3, 4)))               # unnamed lists aren't encoded
+)
+
+# Widget JSON encodes traces and frame traces, not the layout; to_JSON() stays plain
+fig <- list(data = list(list(type = "bar", x = 1:3, y = c(2, 5, 3))),
+            layout = list(xaxis = list(tickvals = c(1, 2))),
+            frames = list(list(name = "a", data = list(list(y = c(1, 2, 3))))))
+w <- plotly_widget(fig)
+j <- jsonlite::fromJSON(as.character(attr(w$x, "TOJSON_FUNC")(w$x)), simplifyVector = FALSE)
+stopifnot(
+  identical(j$data[[1]]$y$dtype, "i1"), identical(j$frames[[1]]$data[[1]]$y$dtype, "i1"),
+  identical(unlist(j$layout$xaxis$tickvals), c(1L, 2L)),
+  grepl('"y":[2,5,3]', as.character(plotly.R.core:::to_JSON(fig)), fixed = TRUE)
+)
+# ... including when htmlwidgets passes its payload (as when printing or saving)
+stopifnot(grepl('"y":{"dtype":"i1"', htmlwidgets:::toJSON(list(x = w$x)), fixed = TRUE))

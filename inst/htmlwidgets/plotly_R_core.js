@@ -67,8 +67,8 @@
 
   function legendEventData(d) {
     var trace = d.data[d.curveNumber];
-    if (!trace.legendgroup) return trace;
-    return d.data.filter(function(t) { return t.legendgroup === trace.legendgroup; });
+    if (!trace.legendgroup) return decodeTypedArrays(clone(trace));
+    return decodeTypedArrays(clone(d.data.filter(function(t) { return t.legendgroup === trace.legendgroup; })));
   }
 
   function registerShinyEvents(gd, el, x) {
@@ -147,6 +147,35 @@
   }
 
   function clone(obj) { return JSON.parse(JSON.stringify(obj)); }
+
+  // Typed array specs ({dtype, bdata[, shape]}, written by the R serialiser)
+  // back to plain arrays, for code that works on the input traces (crosstalk
+  // subsetting, legend event data sent to Shiny).
+  var TYPED_ARRAYS = {i1: Int8Array, u1: Uint8Array, u1c: Uint8ClampedArray, i2: Int16Array,
+                      u2: Uint16Array, i4: Int32Array, u4: Uint32Array, f4: Float32Array, f8: Float64Array};
+  function isTypedArraySpec(v) {
+    return isPlainObject(v) && typeof v.bdata === "string" && TYPED_ARRAYS.hasOwnProperty(v.dtype);
+  }
+  function decodeTypedArraySpec(v) {
+    var bin = atob(v.bdata), bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    var arr = Array.prototype.slice.call(new TYPED_ARRAYS[v.dtype](bytes.buffer));
+    var shape = v.shape ? String(v.shape).split(",").map(Number) : [];
+    if (shape.length !== 2) return arr;
+    var rows = [];
+    for (var r = 0; r < shape[0]; r++) rows.push(arr.slice(r * shape[1], (r + 1) * shape[1]));
+    return rows;
+  }
+  function decodeTypedArrays(obj) {
+    if (Array.isArray(obj)) {
+      for (var i = 0; i < obj.length; i++) obj[i] = decodeTypedArrays(obj[i]);
+    } else if (isTypedArraySpec(obj)) {
+      return decodeTypedArraySpec(obj);
+    } else if (isPlainObject(obj)) {
+      Object.keys(obj).forEach(function(k) { obj[k] = decodeTypedArrays(obj[k]); });
+    }
+    return obj;
+  }
 
   function asArray(k) { return Array.isArray(k) ? k : [k]; }
 
@@ -541,6 +570,8 @@
         renderValue: function(x) {
           registerProxyHandler();
           var config = Object.assign({responsive: true}, x.config || {});
+          // crosstalk subsets the input traces' arrays
+          if (x.sets) { decodeTypedArrays(x.data); decodeTypedArrays(x.frames || []); }
           attachKeys(x.data, x.keys, x.sets);
           (x.frameKeys || []).forEach(function(fk, i) {
             if (x.frames && x.frames[i]) attachKeys(x.frames[i].data, fk.keys, fk.sets);

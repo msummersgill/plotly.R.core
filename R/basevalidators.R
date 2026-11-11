@@ -42,6 +42,11 @@ LAYOUT_SUBPLOT_IDS <- c("coloraxis", "geo", "legend", "map", "mapbox", "polar",
 validate_coerce <- function(v, key, entry = get_validator(key), skip_invalid = FALSE) {
   if (is.null(v)) return(NULL)
   if (is.null(entry)) stop("No validator for '", key, "'", call. = FALSE)
+  # as_float32() marks numbers to be sent in single precision; keep the mark.
+  if (inherits(v, "plotly_float32")) {
+    out <- validate_coerce(unclass_float32(v), key, entry, skip_invalid)
+    return(if (is.double(out)) as_float32(out) else out)
+  }
   # I(x) marks a length-1 vector as an array; keep the mark through coercion.
   if (inherits(v, "AsIs") && is.atomic(v) && length(v) == 1L) {
     out <- validate_coerce(unclass_asis(v), key, entry, skip_invalid)

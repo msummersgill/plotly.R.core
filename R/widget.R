@@ -16,6 +16,14 @@
 #' @return An object of class `htmlwidget`.
 #' @details If the figure's layout has no `template`, the default template
 #'   (see [default_template()]) is applied.
+#'
+#'   Numeric arrays in traces are sent to the browser as base64-encoded typed
+#'   arrays (`{dtype, bdata}` objects, as plotly.py does), which are smaller
+#'   and faster to load than JSON numbers. JavaScript that reads `x.data` in
+#'   [htmlwidgets::onRender()] sees these objects rather than arrays; read the
+#'   plotted values from `el._fullData` instead. [plotly_json()] shows plain
+#'   JSON. Vectors of whole numbers are sent as integers; see [as_float32()]
+#'   to send other numbers in single precision.
 #' @export
 #' @examples
 #' plotly_widget(list(data = list(list(type = "bar", x = 1:3, y = c(2, 5, 3)))))
@@ -40,7 +48,7 @@ plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL, co
     if (!is.null(setting(k))) x[[k]] <- setting(k)
   }
   if (!is.null(setting("selectize"))) x$selectize <- lp_selectize_json(setting("selectize"))
-  attr(x, "TOJSON_FUNC") <- to_JSON
+  attr(x, "TOJSON_FUNC") <- widget_to_JSON
   deps <- list()
   if (!is.null(cfg$locale) && cfg$locale != "en") deps <- c(deps, list(locale_dependency(cfg$locale)))
   if (identical(setting("mathjax"), "cdn")) deps <- c(deps, list(mathjax_dependency()))
@@ -95,9 +103,153 @@ to_JSON <- function(x, ...) {
   )
 }
 
+# Widget serialiser: numeric arrays in traces (and frame traces) are sent as
+# base64-encoded typed arrays, which plotly.js decodes much faster than JSON
+# number lists, like plotly.py's convert_to_base64().
+# htmlwidgets calls it with its payload, list(x = <widget data>, evals, ...).
+widget_to_JSON <- function(x, ...) {
+  if (is.list(x[["x"]])) x[["x"]] <- b64_figure(x[["x"]]) else x <- b64_figure(x)
+  to_JSON(x, ...)
+}
+
+b64_figure <- function(x) {
+  x[["data"]] <- b64_traces(x[["data"]])
+  if (length(x[["frames"]])) {
+    x[["frames"]] <- lapply(x[["frames"]], function(f) {
+      if (is.list(f) && length(f[["data"]])) f[["data"]] <- b64_traces(f[["data"]])
+      f
+    })
+  }
+  x
+}
+
+# Keys plotly.py never encodes (plotly.js reads them without decoding).
+B64_SKIP_KEYS <- c("geojson", "layer", "layers", "range")
+
+b64_traces <- function(traces) {
+  if (!is.list(traces)) return(traces)
+  lapply(traces, b64_encode)
+}
+
+# Like convert_to_base64(): only named entries are encoded, unnamed lists
+# (e.g. a z given as a list of rows) are searched but left as JSON arrays.
+b64_encode <- function(x) {
+  if (!is.list(x) || !length(x)) return(x)
+  nms <- names(x)
+  for (i in seq_along(x)) {
+    key <- if (is.null(nms)) "" else nms[[i]]
+    if (key %in% B64_SKIP_KEYS) next
+    v <- x[[i]]
+    if (nzchar(key) && is_b64_array(v)) {
+      x[[i]] <- typed_array_spec(v)
+    } else if (is.list(v) && !is.data.frame(v)) {
+      x[[i]] <- b64_encode(v)
+    }
+  }
+  x
+}
+
+# Plain numeric vectors that serialise as JSON arrays (length 0 or 1 stays
+# as is, unless wrapped in I()), and numeric matrices; as_float32() vectors too.
+is_b64_array <- function(v) {
+  if (!(is.double(v) || is.integer(v))) return(FALSE)
+  cls <- oldClass(v)
+  if (!all(cls %in% c("AsIs", "plotly_float32"))) return(FALSE)
+  d <- dim(v)
+  if (!is.null(d)) return(length(d) == 2L && length(v) > 0L)
+  length(v) > 1L || (length(v) == 1L && "AsIs" %in% cls)
+}
+
+INT32_MAX <- .Machine$integer.max
+
+# A plotly.js typed array spec: {dtype, bdata[, shape]}. Integers, and doubles
+# that are all whole numbers in the 32-bit range, are sent as the smallest
+# signed integer type that holds them (lossless). Other doubles are float64,
+# or float32 for as_float32() vectors or with options(plotly.R.core.float32 =
+# TRUE). Missing values become NaN (a gap in plotly.js), so integers with
+# missing values are sent as floats.
+typed_array_spec <- function(v, float32 = isTRUE(getOption("plotly.R.core.float32"))) {
+  float32 <- float32 || inherits(v, "plotly_float32")
+  d <- dim(v)
+  v <- unclass(v)
+  if (length(d) == 2L) v <- t(v)
+  v <- as.vector(v)
+  if (is.double(v) && length(v)) {
+    r <- range(v)
+    if (all(is.finite(r)) && r[1] >= -INT32_MAX && r[2] <= INT32_MAX && all(v == trunc(v))) {
+      v <- as.integer(v)
+    }
+  }
+  if (is.integer(v) && anyNA(v)) v <- as.double(v)
+  if (is.integer(v) && length(v)) {
+    r <- range(v)
+    size <- if (r[1] >= -128L && r[2] <= 127L) 1L else if (r[1] >= -32768L && r[2] <= 32767L) 2L else 4L
+    dtype <- c("i1", "i2", NA, "i4")[size]
+  } else {
+    v <- as.double(v)
+    size <- if (float32) 4L else 8L
+    dtype <- if (float32) "f4" else "f8"
+  }
+  out <- list(dtype = dtype,
+              bdata = base64enc::base64encode(writeBin(v, raw(), size = size, endian = "little")))
+  if (length(d) == 2L) out$shape <- paste(d, collapse = ", ")
+  out
+}
+
+#' Send numeric data to the browser in single precision
+#'
+#' Marks a numeric vector or matrix to be sent to plotly.js as a float32
+#' typed array: 4 bytes per value instead of 8, halving the size of the
+#' widget's data and of plotly.js's copy of it. Use it in trace properties,
+#' or on data frame columns used by [px_scatter()] and the other `px_*()`
+#' functions. Set `options(plotly.R.core.float32 = TRUE)` to send all
+#' numeric arrays in single precision.
+#'
+#' Single precision keeps about 7 significant digits: values shown in hover
+#' labels and returned by [event_data()] change (`0.1` becomes
+#' `0.100000001490116`), whole numbers above 2^24 (16,777,216) aren't exact
+#' and numeric times in seconds since 1970 are only accurate to minutes.
+#' Vectors of whole numbers (in the 32-bit integer range) are always sent as
+#' integers without loss, and date-times as text, so neither is affected.
+#' WebGL traces (e.g. [go_scattergl()]) draw in single precision anyway.
+#'
+#' @param x A numeric vector or matrix.
+#' @return `x`, marked with class `plotly_float32`.
+#' @export
+#' @examples
+#' n <- 1e4
+#' data.frame(x = rnorm(n), y = rnorm(n)) |>
+#'   go_figure() |>
+#'   add_scattergl(x = ~as_float32(x), y = ~as_float32(y), mode = "markers")
+as_float32 <- function(x) {
+  if (!is.numeric(x) || is.object(x) && !all(oldClass(x) %in% c("AsIs", "plotly_float32"))) {
+    stop("as_float32() needs a numeric vector or matrix, not an object of class: ",
+         class(x)[1], call. = FALSE)
+  }
+  class(x) <- union("plotly_float32", oldClass(x))
+  x
+}
+
+#' @export
+`[.plotly_float32` <- function(x, ...) as_float32(NextMethod())
+
+#' @export
+print.plotly_float32 <- function(x, ...) {
+  cat("<float32>\n")
+  print(unclass(x), ...)
+  invisible(x)
+}
+
+unclass_float32 <- function(v) {
+  class(v) <- setdiff(oldClass(v), "plotly_float32")
+  if (!length(oldClass(v))) v <- unclass(v)
+  v
+}
+
 # Convert values jsonlite would serialise lossily. Date-times become strings
 # with millisecond precision; other values are left as they are.
 prepare_json <- function(x) {
+  if (inherits(x, "plotly_float32")) return(unclass_float32(x))
   if (inherits(x, "POSIXt")) {
     out <- format_datetime(x)
     if (inherits(x, "AsIs")) out <- I(out)

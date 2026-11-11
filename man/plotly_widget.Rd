@@ -42,6 +42,14 @@ htmltools or \code{\link[htmlwidgets:saveWidget]{htmlwidgets::saveWidget()}}.
 \details{
 If the figure's layout has no \code{template}, the default template
 (see \code{\link[=default_template]{default_template()}}) is applied.
+
+Numeric arrays in traces are sent to the browser as base64-encoded typed
+arrays (\verb{\{dtype, bdata\}} objects, as plotly.py does), which are smaller
+and faster to load than JSON numbers. JavaScript that reads \code{x.data} in
+\code{\link[htmlwidgets:onRender]{htmlwidgets::onRender()}} sees these objects rather than arrays; read the
+plotted values from \code{el._fullData} instead. \code{\link[=plotly_json]{plotly_json()}} shows plain
+JSON. Vectors of whole numbers are sent as integers; see \code{\link[=as_float32]{as_float32()}}
+to send other numbers in single precision.
 }
 \examples{
 plotly_widget(list(data = list(list(type = "bar", x = 1:3, y = c(2, 5, 3)))))
