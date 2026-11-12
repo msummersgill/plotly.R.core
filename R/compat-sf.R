@@ -100,6 +100,8 @@ lp_fortify_sf <- function(model) {
   lcols <- grep("^l", colnames(coords))
   set <- attr(model, "set")
   model <- sf::st_drop_geometry(model)
+  coords <- data.table::as.data.table(coords)
+  model <- data.table::as.data.table(model)
   if (!length(lcols)) {
     d <- cbind(model, coords)
   } else {
@@ -110,15 +112,11 @@ lp_fortify_sf <- function(model) {
               "it might be a good idea to change these names.", call. = FALSE)
     }
     # the last coordinate column is the feature (row) id
-    coords <- as.data.frame(coords)
-    model <- as.data.frame(model)
-    d <- cbind(coords, model[coords[[ncol(coords)]], , drop = FALSE])
-    d <- d[!duplicated(names(d))]
-    group_var <- d[names(d) %in% c("group", "l1", "l2", "l3")]
-    d$group <- Reduce(function(...) paste(..., sep = "-"), group_var)
+    d <- cbind(coords, model[coords[[ncol(coords)]], setdiff(names(model), names(coords)), with = FALSE])
+    group_var <- as.list(d)[names(d) %in% c("group", "l1", "l2", "l3")]
+    data.table::set(d, j = "group", value = Reduce(function(...) paste(..., sep = "-"), group_var))
     attr(d, "plotly_groups") <- "group"
   }
-  row.names(d) <- NULL
   attr(d, "set") <- set
   d
 }
@@ -134,6 +132,7 @@ lp_sf_default_attrs <- function(d) {
 # Build step: initial view from the sf layers' bounding boxes (map view,
 # geo lon/lat ranges, or equal-aspect cartesian axes without grids).
 lp_fit_bounds <- function(p) {
+  if (!any(vapply(p$x$data, function(tr) !is.null(tr[["_bbox"]]), logical(1)))) return(p)
   traces_on <- function(attr, id) lapply(p$x$data, function(tr) if (identical(id, tr[[attr]])) tr[["_bbox"]])
   for (id in unique(grep("^map", unlist(lapply(p$x$data, `[[`, "subplot")), value = TRUE))) {
     rng <- lp_bboxes2range(traces_on("subplot", id), f = 0.01)

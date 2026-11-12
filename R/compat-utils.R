@@ -67,12 +67,25 @@ lp_group_vars <- function(d) {
 
 # Schema lookups ----------------------------------------------------------------------
 
+# Schema lookups made for every trace are memoised here (the schema doesn't
+# change within a session); FALSE marks a path without a validator.
+LP_SCHEMA_CACHE <- new.env(parent = emptyenv())
+
+lp_entry <- function(path) {
+  e <- LP_SCHEMA_CACHE[[path]]
+  if (is.null(e)) {
+    e <- get_validator(path) %||% FALSE
+    assign(path, e, envir = LP_SCHEMA_CACHE)
+  }
+  if (isFALSE(e)) NULL else e
+}
+
 lp_has_attr <- function(types, attr = "marker") {
-  vapply(types, function(t) !is.null(get_validator(paste(t %||l% "scatter", attr, sep = "."))), logical(1))
+  vapply(types, function(t) !is.null(lp_entry(paste0(t %||l% "scatter", ".", attr))), logical(1))
 }
 
 lp_array_ok <- function(type, path) {
-  isTRUE(get_validator(paste(c(type, path), collapse = "."))$array_ok)
+  isTRUE(lp_entry(paste(c(type, path), collapse = "."))$array_ok)
 }
 
 lp_has_fill <- function(trace) {

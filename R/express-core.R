@@ -557,20 +557,24 @@ check_dataframe_all_leaves <- function(df) {
   cols <- names(df)
   ord <- do.call(order, c(unname(as.list(df)), list(na.last = TRUE)))
   df <- df[ord]
-  null_mask <- as.data.frame(lapply(df, is.na))
+  null_mask <- lapply(df, is.na)
   any_null <- Reduce(`|`, null_mask)
   if (any(any_null)) {
-    nm <- null_mask[any_null, , drop = FALSE]
+    nm <- lapply(null_mask, `[`, any_null)
     for (j in seq_along(cols)[-1L]) {
       bad <- !nm[[j]] & nm[[j - 1L]]
       if (any(bad)) stop("None entries cannot have not-None children", call. = FALSE)
     }
   }
-  strs <- do.call(paste0, lapply(df, function(v) ifelse(is.na(v), "", as.character(v))))
-  null_idx <- which(any_null)
-  for (i in seq_len(length(strs) - 1L)) {
-    if (grepl(strs[[i + 1L]], strs[[i]], fixed = TRUE) && (i + 1L) %in% null_idx) {
-      stop("Non-leaves rows are not permitted in the dataframe: row ", i + 1L, " is not a leaf.", call. = FALSE)
+  # only rows with missing values can be non-leaves (plotly.py checks every
+  # pair of consecutive rows; rows without missing values never fail)
+  cand <- which(any_null)
+  cand <- cand[cand > 1L]
+  if (!length(cand)) return(invisible())
+  strs <- do.call(paste0, lapply(df, function(v) { s <- as.character(v); s[is.na(v)] <- ""; s }))
+  for (i in cand) {
+    if (grepl(strs[[i]], strs[[i - 1L]], fixed = TRUE)) {
+      stop("Non-leaves rows are not permitted in the dataframe: row ", i, " is not a leaf.", call. = FALSE)
     }
   }
 }

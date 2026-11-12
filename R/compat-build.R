@@ -91,19 +91,10 @@ plotly_build <- function(p, registerFrames = TRUE) {
     traces <- c(traces, lp_traceify(d[!scale_attrs], d$.plotlyTraceIndex))
     if (i == 1) traces[[1]] <- c(traces[[1]], d[scale_attrs])
   }
+  # (groups were separated with missing values in lp_build_trace())
   traces <- lapply(traces, function(x) {
-    vars <- x$.plotlyVariableMapping
-    if (!length(vars)) return(x)
-    d <- as.data.frame(lapply(stats_named(as.list(vars), vars), function(v) {
-      val <- x[[v]]
-      if (is.null(val)) NULL else val
-    }), stringsAsFactors = FALSE, check.names = FALSE)
-    d <- d[intersect(vars, names(d))]
-    d <- group2NA(d, if (lp_has_group(x)) ".plotlyGroupIndex", ordered = if (inherits(x, "plotly_line")) "x",
-                  retrace.first = inherits(x, "plotly_polygon"))
-    for (v in vars) {
-      entry <- if (v %in% LP_NPSCALES) lp_uniq(d[[v]]) else d[[v]]
-      if (is.null(entry)) x[[v]] <- NULL else x[[v]] <- structure(entry, class = oldClass(x[[v]]))
+    for (v in intersect(x$.plotlyVariableMapping, LP_NPSCALES)) {
+      if (!is.null(x[[v]])) x[[v]] <- structure(lp_uniq(x[[v]]), class = oldClass(x[[v]]))
     }
     x
   })
@@ -160,7 +151,7 @@ lp_build_trace <- function(p, x, id) {
   }
   grps <- if (lp_has_group(trace)) lp_group_vars(dat)
   if (length(grps) && any(lengths(trace) == NROW(dat))) {
-    trace[[".plotlyGroupIndex"]] <- interaction(as.data.frame(dat)[, grps, drop = FALSE])
+    trace[[".plotlyGroupIndex"]] <- lp_group_index(lapply(grps, function(g) dat[[g]]))
   }
   titles <- list()
   for (ax in c("x", "y", "z")) {
@@ -188,10 +179,9 @@ lp_build_trace <- function(p, x, id) {
   tr <- tr[vapply(tr, function(v) is.null(dim(v)) && is.atomic(v), logical(1))]
   n <- max(c(0L, lengths(tr)))
   built <- if (n > 0) {
-    as.data.frame(lapply(tr, function(v) if (length(v) == 1L) rep(v, n) else v),
-                  stringsAsFactors = FALSE, check.names = FALSE)
-  } else data.frame()
-  for (k in names(tr)) if (inherits(tr[[k]], "AsIs")) built[[k]] <- I(built[[k]])
+    data.table::as.data.table(lapply(tr, function(v) if (length(v) == 1L) rep(v, n) else v))
+  } else data.table::data.table()
+  for (k in names(tr)) if (inherits(tr[[k]], "AsIs")) data.table::set(built, j = k, value = I(built[[k]]))
   if (NROW(built) > 0) {
     is_asis <- vapply(built, function(v) inherits(v, "AsIs"), logical(1))
     is_disc <- vapply(built, lp_is_discrete, logical(1))
@@ -199,22 +189,32 @@ lp_build_trace <- function(p, x, id) {
       (!is_asis & is_disc & names(built) %in% c("symbol", "color"))
     if (any(is_split)) {
       paste2 <- function(a, b) if (identical(a, b)) a else paste(a, b, sep = lp_br())
-      split_vars <- built[is_split]
-      built[[".plotlyTraceIndex"]] <- Reduce(paste2, split_vars)
+      split_vars <- as.list(built)[is_split]
+      data.table::set(built, j = ".plotlyTraceIndex", value = Reduce(paste2, split_vars))
       trace$frameOrder <- which(names(split_vars) %in% "frame")
     }
     built <- lp_arrange(built, ".plotlyTraceIndex")
-    complete <- stats::complete.cases(built[names(built) %in% c("x", "y", "z")])
+    pos <- intersect(c("x", "y", "z"), names(built))
+    complete <- if (length(pos)) !Reduce(`|`, lapply(pos, function(k) is.na(built[[k]]))) else rep(TRUE, nrow(built))
     if (any(!complete) && !lp_has_group(trace)) warning("Ignoring ", sum(!complete), " observations", call. = FALSE)
-    built[[".plotlyMissingIndex"]] <- cumsum(!complete)
-    built <- built[complete, , drop = FALSE]
+    data.table::set(built, j = ".plotlyMissingIndex", value = cumsum(!complete))
+    if (!all(complete)) built <- built[complete]
     if (length(grps) && lp_has_group(trace) && isTRUE(trace[["connectgaps"]])) {
       stop("Can't use connectgaps=TRUE when data has group(s).", call. = FALSE)
     }
-    built[[".plotlyGroupIndex"]] <- interaction(built[[".plotlyGroupIndex"]] %||l% rep("", nrow(built)),
-                                                built[[".plotlyMissingIndex"]])
+    data.table::set(built, j = ".plotlyGroupIndex", value = lp_group_index(list(
+      built[[".plotlyGroupIndex"]] %||l% rep("", nrow(built)), built[[".plotlyMissingIndex"]])))
     built <- lp_arrange(built, c(".plotlyTraceIndex", ".plotlyGroupIndex", if (inherits(trace, "plotly_line")) "x"))
     built <- lp_train_data(built, trace)
+    # Separate groups with missing values for all of the layer's traces at
+    # once: nesting in the trace index gives the same result as the legacy
+    # package's group2NA() call on each trace after splitting. That call sees
+    # traces whose class was dropped by `[`, so only lp_has_group()'s
+    # type/mode test applies (no `ordered`, no `retrace.first`).
+    if (lp_has_group(unclass(trace))) {
+      built <- group2NA(built, ".plotlyGroupIndex",
+                        nested = if (".plotlyTraceIndex" %in% names(built)) ".plotlyTraceIndex")
+    }
     trace[[".plotlyVariableMapping"]] <- names(built)
     for (k in names(built)) trace[[k]] <- built[[k]]
   }
@@ -225,13 +225,22 @@ lp_build_trace <- function(p, x, id) {
   out
 }
 
-# dplyr::arrange() replacement (stable; factors by level, strings in C locale).
+# dplyr::arrange() replacement for a data.table, by reference (stable; factors
+# by level, strings in C locale, missing values last).
 lp_arrange <- function(d, vars) {
   vars <- vars[vars %in% names(d)]
-  if (!length(vars)) return(d)
-  keys <- lapply(vars, function(v) { x <- d[[v]]; if (is.factor(x)) as.integer(x) else unclass(x) })
-  o <- do.call(order, c(keys, list(method = "radix")))
-  d[o, , drop = FALSE]
+  if (length(vars)) data.table::setorderv(d, cols = vars, na.last = TRUE)
+  d
+}
+
+# Group ids ordered and grouped like interaction(...) codes (the first
+# variable varies fastest; factors by level, other values as factor() sorts
+# them), without building interaction()'s levels, which multiply.
+lp_group_index <- function(vars) {
+  codes <- lapply(vars, function(v) {
+    if (is.factor(v)) as.integer(v) else match(v, sort(unique(v)))
+  })
+  data.table::frankv(rev(codes), ties.method = "dense", na.last = "keep")
 }
 
 lp_special_attrs <- function(trace) {
@@ -245,30 +254,29 @@ lp_is3d <- function(type) (type %||l% "scatter") %in% c("mesh3d", "scatter3d", "
 lp_train_data <- function(data, trace) {
   if (inherits(trace, "plotly_ribbon")) data <- lp_ribbon_dat(data)
   if (inherits(trace, "plotly_segment")) {
-    data$.plotlyGroupIndex <- seq_len(NROW(data))
+    data.table::set(data, j = ".plotlyGroupIndex", value = seq_len(NROW(data)))
     idx <- rep(seq_len(NROW(data)), each = 2)
-    dat <- data[idx, !grepl("^xend$|^yend$", names(data)), drop = FALSE]
+    keep <- setdiff(names(data), c("xend", "yend"))
+    dat <- data[idx, keep, with = FALSE]
     idx2 <- seq.int(2, NROW(dat), by = 2)
-    dat[idx2, "x"] <- data[["xend"]]
-    dat[idx2, "y"] <- data[["yend"]]
+    data.table::set(dat, i = idx2, j = "x", value = data[["xend"]])
+    data.table::set(dat, i = idx2, j = "y", value = data[["yend"]])
     data <- dat
   }
   data
 }
 
+# The lower edge (ymin) left to right, then the upper edge (ymax) right to
+# left, as one closed path.
 lp_ribbon_dat <- function(dat) {
   n <- nrow(dat)
   if (n == 0) return(dat)
   o <- order(dat[["x"]])
   o2 <- order(dat[["x"]], decreasing = TRUE)
   others <- setdiff(names(dat), c("x", "ymin", "ymax", "y"))
-  tmp <- dat[o, , drop = FALSE]
-  d1 <- cbind(data.frame(x = tmp[["x"]], y = tmp[["ymin"]]), tmp[others])
-  d1 <- rbind(d1, cbind(data.frame(x = tmp[["x"]][n], y = tmp[["ymin"]][n]), tmp[n, others, drop = FALSE]))
-  tmp2 <- dat[o2, , drop = FALSE]
-  d2 <- cbind(data.frame(x = tmp2[["x"]], y = tmp2[["ymax"]]), tmp2[others])
-  out <- rbind(d1, d2)
-  rownames(out) <- NULL
+  rows <- c(o, o[n], o2)
+  out <- data.table::data.table(x = dat[["x"]][rows], y = c(dat[["ymin"]][c(o, o[n])], dat[["ymax"]][o2]))
+  for (k in others) data.table::set(out, j = k, value = dat[[k]][rows])
   out
 }
 
@@ -279,12 +287,14 @@ lp_traceify <- function(dat, x = NULL) {
   if (is.ordered(x)) lvls <- rev(lvls)
   n <- length(x)
   recurse <- function(z, idx) if (is.list(z) && !is.data.frame(z)) lapply(z, recurse, idx) else if (length(z) == n) z[idx] else z
-  lapply(lvls, function(l) {
-    d <- lapply(dat, recurse, idx = x %in% l)
+  # row indices of each level, in one pass
+  rows <- split(seq_len(n), factor(match(x, lvls), levels = seq_along(lvls)))
+  Map(function(l, idx) {
+    d <- lapply(dat, recurse, idx = idx)
     oldClass(d) <- oldClass(dat)
     d$name <- d$name %||l% as.character(l)
     d
-  })
+  }, lvls, rows)
 }
 
 lp_verify_type <- function(trace) {
@@ -791,9 +801,21 @@ lp_verify_attr_spec <- function(p) {
   p
 }
 
+# Validator of attribute `a` of the object at `key` (subplot ids like xaxis2
+# fall back to xaxis), memoised in LP_SCHEMA_CACHE.
+lp_attr_entry <- function(key, a) {
+  path <- paste0(key, ".", a)
+  e <- LP_SCHEMA_CACHE[[path]]
+  if (is.null(e)) {
+    e <- get_validator(path) %||l% get_validator(paste0(key, ".", sub("[0-9]+$", "", a))) %||% FALSE
+    assign(path, e, envir = LP_SCHEMA_CACHE)
+  }
+  if (isFALSE(e)) NULL else e
+}
+
 lp_verify_attr <- function(obj, key) {
   for (a in names(obj)) {
-    entry <- get_validator(paste(key, a, sep = ".")) %||l% get_validator(paste(key, sub("[0-9]+$", "", a), sep = "."))
+    entry <- lp_attr_entry(key, a)
     if (is.null(entry)) next
     is_data <- identical(entry$superclass, "DataArrayValidator")
     is_compound <- entry$superclass %in% c("CompoundValidator", "TitleValidator", "CompoundArrayValidator")

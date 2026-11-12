@@ -149,3 +149,12 @@ f1 <- px_scatter_matrix(px_data_iris(), dimensions = ~c(sepal_width, petal_width
 stopifnot(length(f1$data[[1]]$dimensions) == 2L)
 f1 <- px_scatter(d, x = ~total_bill, y = ~tip, hover_data = ~c(size, day))
 stopifnot(grepl("size=", f1$data[[1]]$hovertemplate), grepl("day=", f1$data[[1]]$hovertemplate))
+
+# hierarchy check: only rows with missing values can be non-leaves
+leaf_err <- function(df) tryCatch({ plotly.R.core:::check_dataframe_all_leaves(data.table::as.data.table(df)); "" },
+                                  error = conditionMessage)
+stopifnot(
+  identical(leaf_err(data.frame(a = c("x", "x", "y"), b = c("p", "q", "r"))), ""),
+  grepl("not a leaf", leaf_err(data.frame(a = c("x", "x"), b = c("p", NA)))),
+  grepl("not-None children", leaf_err(data.frame(a = c("x", NA), b = c("p", "q"))))
+)

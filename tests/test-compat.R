@@ -124,3 +124,19 @@ if (requireNamespace("sf", quietly = TRUE)) {
     stopifnot(length(w$x$keys[[1]]) == length(w$x$data[[1]]$x), "Ashe" %in% unlist(w$x$keys))
   }
 }
+
+# data.table build steps sort copies: the user's data is never modified in place
+d0 <- data.frame(x = c(3, 1, 2, 5, 4), y = c(1, NA, 3, 4, 5), g = c("b", "a", "b", "a", "b"))
+d1 <- d0
+invisible(plotly_build(plot_ly(d1, x = ~x, y = ~y, color = ~g) |> add_lines()))
+invisible(plotly_build(plot_ly(d1, x = ~x, ymin = ~y, ymax = ~y + 1) |> add_ribbons()))
+stopifnot(identical(d0, d1))
+
+# group ids order and group like interaction() codes
+gi <- plotly.R.core:::lp_group_index
+a <- factor(c("q", "p", "q", NA, "p"), levels = c("q", "p")); b <- c(2, 1, 1, 1, 2)
+stopifnot(
+  identical(order(gi(list(a, b))), order(as.integer(interaction(a, b)))),
+  identical(is.na(gi(list(a, b))), is.na(interaction(a, b))),
+  identical(match(gi(list(a, b)), gi(list(a, b))), match(as.integer(interaction(a, b)), as.integer(interaction(a, b))))
+)
