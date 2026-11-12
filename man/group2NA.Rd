@@ -2,7 +2,7 @@
 % Please edit documentation in R/compat-utils.R
 \name{group2NA}
 \alias{group2NA}
-\title{Insert missing values between groups}
+\title{Separate groups with missing values}
 \usage{
 group2NA(
   data,
@@ -13,24 +13,37 @@ group2NA(
 )
 }
 \arguments{
-\item{data}{A data frame.}
+\item{data}{a data frame.}
 
-\item{groupNames}{Grouping column names.}
+\item{groupNames}{character vector of grouping variable(s)}
 
-\item{nested}{Columns defining an outer grouping that is not separated.}
+\item{nested}{other variables that group should be nested
+(i.e., ordered) within.}
 
-\item{ordered}{Columns to order by within each group.}
+\item{ordered}{a variable to arrange by (within nested & groupNames). This
+is useful primarily for ordering by x}
 
-\item{retrace.first}{Repeat the first row of each group (to close polygons).}
+\item{retrace.first}{should the first row of each group be appended to the
+last row? This is useful for enclosing polygons with lines.}
 }
 \value{
-A data frame of the same class as \code{data}.
+a data.frame with rows ordered by: \code{nested},
+then \code{groupNames}, then \code{ordered}. As long as \code{groupNames}
+contains valid variable names, new rows will also be inserted to separate
+the groups.
 }
 \description{
-Sorts data by group and inserts a row of \code{NA}s after each group (on the
-non-group columns), so a single line trace draws each group separately,
-which is faster than one trace per group.
+This function is used internally by plotly, but may also be useful to some
+power users. The details section explains when and why this function is useful.
+}
+\details{
+If a group of scatter traces share the same non-positional characteristics
+(i.e., color, fill, etc), it is more efficient to draw them as a single trace
+with missing values that separate the groups (instead of multiple traces),
+In this case, one should also take care to make sure
+\href{https://plotly.com/r/reference/#scatter-connectgaps}{connectgaps}
+is set to \code{FALSE}.
 }
 \examples{
-group2NA(data.frame(g = c(1, 1, 2, 2), x = 1:4), "g")
+data.frame(g = c(1, 1, 2, 2), x = 1:4) |> group2NA("g")
 }

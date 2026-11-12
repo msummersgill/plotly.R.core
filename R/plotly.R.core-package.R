@@ -12,4 +12,4 @@ NULL
 }
 
 # data.table's .SD, used in px hierarchy aggregation
-utils::globalVariables(".SD")
+utils::globalVariables(c(".SD", ".I", ".N"))

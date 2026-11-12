@@ -250,54 +250,94 @@ lp_lookup <- function(x, table) {
   x
 }
 
-#' Insert missing values between groups
-#'
-#' Sorts data by group and inserts a row of `NA`s after each group (on the
-#' non-group columns), so a single line trace draws each group separately,
-#' which is faster than one trace per group.
-#'
-#' @param data A data frame.
-#' @param groupNames Grouping column names.
-#' @param nested Columns defining an outer grouping that is not separated.
-#' @param ordered Columns to order by within each group.
-#' @param retrace.first Repeat the first row of each group (to close polygons).
-#' @return A data frame of the same class as `data`.
+# Ported verbatim from the legacy plotly package (R/group2NA.R), except that
+# retrace.first defaults to FALSE (no GeomPolygon) and fortify_sf() is
+# lp_fortify_sf().
+
+#' Separate groups with missing values
+#' 
+#' This function is used internally by plotly, but may also be useful to some 
+#' power users. The details section explains when and why this function is useful.
+#' 
+#' @details If a group of scatter traces share the same non-positional characteristics 
+#' (i.e., color, fill, etc), it is more efficient to draw them as a single trace 
+#' with missing values that separate the groups (instead of multiple traces), 
+#' In this case, one should also take care to make sure 
+#' \href{https://plotly.com/r/reference/#scatter-connectgaps}{connectgaps} 
+#' is set to `FALSE`.
+#' 
+#' @param data a data frame.
+#' @param groupNames character vector of grouping variable(s)
+#' @param nested other variables that group should be nested 
+#' (i.e., ordered) within.
+#' @param ordered a variable to arrange by (within nested & groupNames). This
+#' is useful primarily for ordering by x
+#' @param retrace.first should the first row of each group be appended to the 
+#' last row? This is useful for enclosing polygons with lines.
 #' @export
+#' @return a data.frame with rows ordered by: `nested`, 
+#' then `groupNames`, then `ordered`. As long as `groupNames` 
+#' contains valid variable names, new rows will also be inserted to separate 
+#' the groups.
 #' @examples
-#' group2NA(data.frame(g = c(1, 1, 2, 2), x = 1:4), "g")
-group2NA <- function(data, groupNames = "group", nested = NULL, ordered = NULL, retrace.first = FALSE) {
+#' data.frame(g = c(1, 1, 2, 2), x = 1:4) |> group2NA("g")
+group2NA <- function(data, groupNames = "group", nested = NULL, ordered = NULL,
+                     retrace.first = FALSE) {
+  
   if (NROW(data) == 0) return(data)
-  cls <- oldClass(data)
+  
+  # for restoring class information on exit
+  datClass <- oldClass(data)
+  
+  # data.table doesn't play nice with list-columns
+  if (inherits(data, "sf")) data <- lp_fortify_sf(data)
+  
+  # evaluate this lazy argument now (in case we change class of data)
+  retrace <- force(retrace.first)
+  
+  # sanitize variable names (TODO: throw warnings if non-existing vars are referenced?)
   groupNames <- groupNames[groupNames %in% names(data)]
   nested <- nested[nested %in% names(data)]
   ordered <- ordered[ordered %in% names(data)]
+  
   dt <- data.table::as.data.table(data)
+  
+  # if group doesn't exist, just order the rows and exit
   if (!length(groupNames)) {
-    keys <- c(nested, ordered)
-    if (length(keys)) data.table::setorderv(dt, cols = keys)
-    return(structure(dt, class = cls))
+    keyVars <- c(nested, ordered)
+    if (length(keyVars)) data.table::setorderv(dt, cols = keyVars)
+    return(structure(dt, class = datClass))
   }
+  
+  # order the rows
   data.table::setorderv(dt, cols = c(nested, groupNames, ordered))
-  key_vars <- c(nested, groupNames)
-  grp <- do.call(paste, c(unname(as.list(dt[, key_vars, with = FALSE])), sep = "\r"))
-  starts <- which(!duplicated(grp))
-  ends <- c(starts[-1] - 1L, nrow(dt))
-  idx <- unlist(Map(function(s, e) c(s:e, if (retrace.first) s, NA), starts, ends))
-  out <- dt[idx]
-  na_rows <- which(is.na(idx))
-  for (k in key_vars) {
-    v <- out[[k]]
-    v[na_rows] <- v[na_rows - 1L]
-    data.table::set(out, j = k, value = v)
+  
+  # when connectgaps=FALSE, inserting NAs ensures each "group" 
+  # will be visually distinct https://plotly.com/r/reference/#scatter-connectgaps
+  # also, retracing is useful for creating polygon(s) via scatter trace(s)
+  keyVars <- c(nested, groupNames)
+  keyNum <- length(keyVars) + 1
+  idx <- if (retrace) {
+    dt[, c(.I, .I[1], NA), by = keyVars][[keyNum]]
+  } else {
+    dt[, c(.I, NA), by = keyVars][[keyNum]]
+  }
+  dt <- dt[idx]
+  
+  # remove NAs that unnecessarily seperate nested groups
+  # (at least internally, nested really tracks trace index, meaning we don't need 
+  # to seperate them)
+  NAidx <- which(is.na(idx))
+  for (i in seq_along(keyVars)) {
+    dt[[keyVars[[i]]]][NAidx] <- dt[[keyVars[[i]]]][NAidx - 1]
   }
   if (length(nested)) {
-    ng <- do.call(paste, c(unname(as.list(out[, nested, with = FALSE])), sep = "\r"))
-    last <- c(ng[-1] != ng[-length(ng)], TRUE)
-    out <- out[!last | !is.na(idx)]
+    dt <- dt[ dt[, .I[-.N], by = nested][[length(nested) + 1]] ]
   } else {
-    out <- out[-nrow(out)]
+    dt <- dt[-.N]
   }
-  structure(out, class = cls)
+
+  structure(dt, class = datClass)
 }
 
 #' Encode a raster as a data URI

@@ -9,10 +9,19 @@
 Create interactive web graphics with the 'plotly.js' JavaScript library. Graph objects, their validation and their documentation are generated from the 'plotly.js' plot schema, following the design of the 'plotly' Python package. Includes an 'express' interface for quick figures, 'htmlwidgets' rendering, 'shiny' and 'quarto' integration, and static image export with 'Kaleido'.
 }
 \author{
-\strong{Maintainer}: Matthew Summersgill \email{matthew.summersgill@hpinc.com}
+\strong{Maintainer}: Matthew Summersgill \email{matthew.summersgill@gmail.com} (\href{https://orcid.org/0009-0007-2955-5543}{ORCID})
+
+Authors:
+\itemize{
+  \item Carson Sievert \email{cpsievert1@gmail.com} (\href{https://orcid.org/0000-0002-4958-2844}{ORCID})
+  \item Chris Parmer
+}
 
 Other contributors:
 \itemize{
+  \item Toby Hocking [contributor]
+  \item Marianne Corvellec (\href{https://orcid.org/0000-0002-1994-3581}{ORCID}) [contributor]
+  \item Pedro Despouy [contributor]
   \item Plotly Technologies Inc. (Bundled 'plotly.js' library; templates and datasets from 'plotly.py') [copyright holder]
   \item Dean Attali (Bundled 'colourpicker' library) [copyright holder]
 }
