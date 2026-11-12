@@ -4,7 +4,7 @@
 # `key` and its group name the trace's `set`. legacy_figure() moves these out
 # of the traces (they are not plotly.js attributes) into the widget settings
 # `keys`, `sets` and `frameKeys`; the widget JS puts them back and handles
-# selection and filter events (see inst/htmlwidgets/plotly_R_core.js).
+# selection and filter events (see inst/htmlwidgets/plotly_core.js).
 
 LP_CT_KEY <- ".crossTalkKey"
 
@@ -271,7 +271,7 @@ lp_crosstalk_deps <- function(highlight) {
   }
   if (isTRUE(highlight$dynamic)) {
     deps <- c(deps, list(htmltools::htmlDependency(
-      name = "colourpicker", version = "1.1", package = "plotly.R.core", src = "htmlwidgets/lib/colourpicker",
+      name = "colourpicker", version = "1.1", package = "plotly.core", src = "htmlwidgets/lib/colourpicker",
       script = "colourpicker.min.js", stylesheet = "colourpicker.min.css"
     )))
   }

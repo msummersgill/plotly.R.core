@@ -368,6 +368,6 @@ write_datatypes <- function(nodes, validators, schema, outdir = ".") {
 }
 
 schema_version <- function(outdir) {
-  yaml <- readLines(file.path(outdir, "inst", "htmlwidgets", "plotly_R_core.yaml"))
+  yaml <- readLines(file.path(outdir, "inst", "htmlwidgets", "plotly_core.yaml"))
   trimws(sub("^\\s*version:", "", grep("^\\s*version:", yaml, value = TRUE)[[1L]]))
 }

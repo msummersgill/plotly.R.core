@@ -2,7 +2,7 @@
 # files are plotly.py's, bundled in inst/extdata.
 
 read_dataset <- function(name) {
-  path <- system.file("extdata", paste0(name, ".csv.gz"), package = "plotly.R.core")
+  path <- system.file("extdata", paste0(name, ".csv.gz"), package = "plotly.core")
   con <- gzfile(path)
   on.exit(close(con))
   data.table::fread(text = readLines(con, warn = FALSE), encoding = "UTF-8")
@@ -87,7 +87,7 @@ px_data_election <- function() read_dataset("election")
 #' @rdname px_data
 #' @export
 px_data_election_geojson <- function() {
-  path <- system.file("extdata", "election.geojson.gz", package = "plotly.R.core")
+  path <- system.file("extdata", "election.geojson.gz", package = "plotly.core")
   con <- gzfile(path)
   on.exit(close(con))
   jsonlite::parse_json(paste(readLines(con, encoding = "UTF-8"), collapse = "\n"), simplifyVector = FALSE)

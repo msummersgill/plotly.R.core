@@ -81,7 +81,7 @@ image_format <- function(file) {
 }
 
 plotlyjs_bundle_path <- function() {
-  system.file("htmlwidgets", "lib", "plotlyjs", "plotly.min.js", package = "plotly.R.core")
+  system.file("htmlwidgets", "lib", "plotlyjs", "plotly.min.js", package = "plotly.core")
 }
 
 kaleido_v1 <- function(k) {

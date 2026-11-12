@@ -84,20 +84,23 @@ plot_ly <- function(data = data.frame(), ..., type = NULL, name, color, colors =
     visdat = stats_named(list(function() vis), id),
     cur_data = id,
     attrs = stats_named(list(attrs), id),
-    layout = list(width = width, height = height, margin = list(b = 40, l = 60, t = 25, r = 10)),
+    layout = list(width = width, height = height, margin = LP_MARGIN),
     source = source
   )
   legacy_widget_lazy(x)
 }
 
+# The legacy package's default plot margins (tighter than plotly.js's).
+LP_MARGIN <- list(b = 40, l = 60, t = 25, r = 10)
+
 legacy_widget_lazy <- function(x) {
   w <- htmlwidgets::createWidget(
-    name = "plotly_R_core", x = x, width = x$layout$width, height = x$layout$height,
-    package = "plotly.R.core",
+    name = "plotly_core", x = x, width = x$layout$width, height = x$layout$height,
+    package = "plotly.core",
     sizingPolicy = htmlwidgets::sizingPolicy(browser.fill = TRUE, defaultWidth = "100%", defaultHeight = 400, padding = 0),
     preRenderHook = function(w) legacy_widget(w)
   )
-  class(w) <- c("plotly_R_core", "plotly", "htmlwidget")
+  class(w) <- c("plotly_core", "plotly", "htmlwidget")
   w
 }
 

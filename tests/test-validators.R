@@ -1,11 +1,11 @@
 # Tests for the base validators (R/basevalidators.R) driven by the generated
 # validator parameters in R/sysdata.rda.
-library(plotly.R.core)
+library(plotly.core)
 
-vc <- plotly.R.core:::validate_coerce
-validate_trace <- plotly.R.core:::validate_trace
-validate_layout <- plotly.R.core:::validate_layout
-to_JSON <- plotly.R.core:::to_JSON
+vc <- plotly.core:::validate_coerce
+validate_trace <- plotly.core:::validate_trace
+validate_layout <- plotly.core:::validate_layout
+to_JSON <- plotly.core:::to_JSON
 
 # expect_error(expr, pattern): expr must fail with a message matching pattern
 expect_error <- function(expr, pattern) {

@@ -1,4 +1,4 @@
-# Development commands for plotly.R.core (the R counterpart of plotly.py/commands.py).
+# Development commands for plotly.core (the R counterpart of plotly.py/commands.py).
 # Not part of the built package. Run from the package root, e.g.
 #
 #   Rscript commands.R updateplotlyjs              # latest plotly.js from npm
@@ -13,7 +13,7 @@
 PROJECT_ROOT <- normalizePath(".")
 PLOTLYJS_DIR <- file.path(PROJECT_ROOT, "inst", "htmlwidgets", "lib", "plotlyjs")
 SCHEMA_PATH <- file.path(PROJECT_ROOT, "codegen", "resources", "plot-schema.json")
-WIDGET_YAML <- file.path(PROJECT_ROOT, "inst", "htmlwidgets", "plotly_R_core.yaml")
+WIDGET_YAML <- file.path(PROJECT_ROOT, "inst", "htmlwidgets", "plotly_core.yaml")
 VERSION_FILE <- file.path(PROJECT_ROOT, "R", "zz-gen-version.R")
 
 # Copy plotly.js assets from a plotly.js package root (a git clone, or an

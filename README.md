@@ -1,4 +1,4 @@
-# plotly.R.core
+# plotly.core
 
 Interactive web graphics for R, built on [plotly.js](https://github.com/plotly/plotly.js)
 and following the design of the [plotly Python package](https://github.com/plotly/plotly.py).
@@ -42,7 +42,7 @@ install.packages("path/to/plotly.R.core", repos = NULL, type = "source")
 ## Example: Plotly Express
 
 ```r
-library(plotly.R.core)
+library(plotly.core)
 
 px_data_gapminder(year = 2007) |>
   px_scatter(
@@ -60,7 +60,7 @@ column names as strings (as in plotly.py), or vectors.
 ## Example: a 2D scatter plot with graph objects
 
 ```r
-library(plotly.R.core)
+library(plotly.core)
 
 fig <- mtcars |>
   go_figure() |>
@@ -202,7 +202,7 @@ Code generation follows plotly.py's `commands.py` and `codegen/`:
 Rscript commands.R updateplotlyjs        # bundle the latest plotly.js from npm
 Rscript commands.R codegen               # regenerate validators, go_*() constructors and figure functions
 Rscript -e 'roxygen2::roxygenise()'      # rebuild documentation
-R CMD build . && R CMD check --as-cran plotly.R.core_*.tar.gz
+R CMD build . && R CMD check --as-cran plotly.core_*.tar.gz
 ```
 
 Generated files (`R/zz-gen-*.R`, `R/sysdata.rda`) are committed and must not be

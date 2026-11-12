@@ -56,11 +56,11 @@ plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL, co
   if (identical(setting("mathjax"), "cdn")) deps <- c(deps, list(mathjax_dependency()))
   if (!is.null(x$sets)) deps <- c(deps, lp_crosstalk_deps(x$highlight))
   htmlwidgets::createWidget(
-    name = "plotly_R_core",
+    name = "plotly_core",
     x = x,
     width = width %||% layout$width,
     height = height %||% layout$height,
-    package = "plotly.R.core",
+    package = "plotly.core",
     elementId = elementId,
     dependencies = deps,
     sizingPolicy = htmlwidgets::sizingPolicy(
@@ -84,7 +84,7 @@ locale_dependency <- function(locale) {
   htmltools::htmlDependency(
     name = paste0("plotly-locale-", locale), version = plotlyjs_version(),
     src = "htmlwidgets/lib/plotlyjs/locales", script = paste0(locale, ".js"),
-    package = "plotly.R.core", all_files = FALSE
+    package = "plotly.core", all_files = FALSE
   )
 }
 
@@ -206,10 +206,10 @@ INT32_MAX <- .Machine$integer.max
 # A plotly.js typed array spec: {dtype, bdata[, shape]}. Integers, and doubles
 # that are all whole numbers in the 32-bit range, are sent as the smallest
 # signed integer type that holds them (lossless). Other doubles are float64,
-# or float32 for as_float32() vectors or with options(plotly.R.core.float32 =
+# or float32 for as_float32() vectors or with options(plotly.core.float32 =
 # TRUE). Missing values become NaN (a gap in plotly.js), so integers with
 # missing values are sent as floats.
-typed_array_spec <- function(v, float32 = isTRUE(getOption("plotly.R.core.float32"))) {
+typed_array_spec <- function(v, float32 = isTRUE(getOption("plotly.core.float32"))) {
   float32 <- float32 || inherits(v, "plotly_float32")
   d <- dim(v)
   v <- unclass(v)
@@ -243,7 +243,7 @@ typed_array_spec <- function(v, float32 = isTRUE(getOption("plotly.R.core.float3
 #' typed array: 4 bytes per value instead of 8, halving the size of the
 #' widget's data and of plotly.js's copy of it. Use it in trace properties,
 #' or on data frame columns used by [px_scatter()] and the other `px_*()`
-#' functions. Set `options(plotly.R.core.float32 = TRUE)` to send all
+#' functions. Set `options(plotly.core.float32 = TRUE)` to send all
 #' numeric arrays in single precision.
 #'
 #' Single precision keeps about 7 significant digits: values shown in hover

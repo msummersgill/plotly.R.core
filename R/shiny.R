@@ -34,8 +34,10 @@ set_widget_setting <- function(p, name, value) {
 #'   modebar text and number/date formatting.
 #' @param mathjax `"cdn"` to load MathJax from a CDN so LaTeX in `$...$`
 #'   text (see [TeX()]) is rendered.
-#' @param cloud,showSendToCloud Ignored; accepted for compatibility with the
-#'   legacy plotly package.
+#' @param cloud,showSendToCloud Show the modebar button that sends the chart
+#'   to Plotly Cloud (`plotlyServerURL`)? Off by default, because clicking it
+#'   uploads the chart data to an external server. `cloud` is the legacy
+#'   plotly package's name for it.
 #' @return The modified figure.
 #' @export
 #' @examples
@@ -62,12 +64,13 @@ config <- function(p, ..., locale = NULL, mathjax = NULL, cloud = FALSE, showSen
     if (!identical(mathjax, "cdn")) stop("Only `mathjax = \"cdn\"` is supported", call. = FALSE)
     p <- set_widget_setting(p, "mathjax", mathjax)
   }
+  if (!missing(cloud) || !missing(showSendToCloud)) opts$showSendToCloud <- isTRUE(showSendToCloud)
   current <- get_widget_setting(p, "config") %||% list()
   set_widget_setting(p, "config", utils::modifyList(current, opts))
 }
 
 available_locales <- function() {
-  sub("[.]js$", "", list.files(system.file("htmlwidgets", "lib", "plotlyjs", "locales", package = "plotly.R.core"), "[.]js$"))
+  sub("[.]js$", "", list.files(system.file("htmlwidgets", "lib", "plotlyjs", "locales", package = "plotly.core"), "[.]js$"))
 }
 
 #' Wrap text for LaTeX rendering
@@ -230,8 +233,8 @@ event_data <- function(event = c(
 #' @export
 plotlyOutput <- function(outputId, width = "100%", height = "400px", inline = FALSE,
                          reportTheme = TRUE, fill = !inline) {
-  htmlwidgets::shinyWidgetOutput(outputId, name = "plotly_R_core", width = width, height = height,
-                                 package = "plotly.R.core", inline = inline, reportSize = TRUE,
+  htmlwidgets::shinyWidgetOutput(outputId, name = "plotly_core", width = width, height = height,
+                                 package = "plotly.core", inline = inline, reportSize = TRUE,
                                  reportTheme = reportTheme, fill = fill)
 }
 
@@ -243,7 +246,7 @@ renderPlotly <- function(expr, env = parent.frame(), quoted = FALSE) {
     expr <- substitute(expr)
   }
   shiny::installExprFunction(expr, "func", env, quoted)
-  expr2 <- quote(getFromNamespace("prepare_shiny_widget", "plotly.R.core")(func()))
+  expr2 <- quote(getFromNamespace("prepare_shiny_widget", "plotly.core")(func()))
   htmlwidgets::shinyRenderWidget(expr2, plotlyOutput, environment(), quoted,
                                  cacheHint = list(label = "renderPlotly", userExpr = expr))
 }

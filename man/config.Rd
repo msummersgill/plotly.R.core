@@ -25,8 +25,10 @@ modebar text and number/date formatting.}
 \item{mathjax}{\code{"cdn"} to load MathJax from a CDN so LaTeX in \verb{$...$}
 text (see \code{\link[=TeX]{TeX()}}) is rendered.}
 
-\item{cloud, showSendToCloud}{Ignored; accepted for compatibility with the
-legacy plotly package.}
+\item{cloud, showSendToCloud}{Show the modebar button that sends the chart
+to Plotly Cloud (\code{plotlyServerURL})? Off by default, because clicking it
+uploads the chart data to an external server. \code{cloud} is the legacy
+plotly package's name for it.}
 }
 \value{
 The modified figure.

@@ -1,8 +1,8 @@
 # Tests for figures (R/basefigure.R) and the generated figure functions
 # (R/zz-gen-figure.R).
-library(plotly.R.core)
+library(plotly.core)
 
-json <- function(x) as.character(plotly.R.core:::to_JSON(x))
+json <- function(x) as.character(plotly.core:::to_JSON(x))
 expect_error <- function(expr, pattern) {
   msg <- tryCatch({ expr; NULL }, error = function(e) conditionMessage(e))
   if (is.null(msg)) stop("Expected an error matching '", pattern, "' but none was raised", call. = FALSE)

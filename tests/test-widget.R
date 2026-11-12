@@ -1,4 +1,4 @@
-library(plotly.R.core)
+library(plotly.core)
 
 fig <- list(data = list(list(type = "scatter", x = 1:3, y = c(1, NA, 3))))
 w <- plotly_widget(fig)
@@ -22,11 +22,11 @@ stopifnot(grepl('"layout":{}', json, fixed = TRUE))
 stopifnot(identical(default_template(), "plotly"))
 
 # Bundled plotly.js is present and matches the yaml dependency version
-js <- system.file("htmlwidgets/lib/plotlyjs/plotly.min.js", package = "plotly.R.core")
+js <- system.file("htmlwidgets/lib/plotlyjs/plotly.min.js", package = "plotly.core")
 stopifnot(nzchar(js), file.size(js) > 1e6)
 
 # Date-times keep millisecond precision (format(x, "%OS3") would truncate .123 to .122)
-to_JSON <- plotly.R.core:::to_JSON
+to_JSON <- plotly.core:::to_JSON
 t <- as.POSIXct(c("2024-01-02 03:04:05.123", "2024-01-02 03:04:06", NA), tz = "UTC")
 t[4] <- as.POSIXct("2024-01-02 23:59:59.9996", tz = "UTC")   # rounds into the next day
 stopifnot(
@@ -39,7 +39,7 @@ stopifnot(
 )
 
 # Numeric arrays in traces are sent as base64 typed arrays (like plotly.py)
-spec <- plotly.R.core:::typed_array_spec
+spec <- plotly.core:::typed_array_spec
 decode <- function(s) {
   size <- c(i1 = 1, i2 = 2, i4 = 4, f4 = 4, f8 = 8)[[s$dtype]]
   readBin(base64enc::base64decode(s$bdata), if (startsWith(s$dtype, "f")) "double" else "integer",
@@ -60,7 +60,7 @@ stopifnot(
   identical(spec(numeric())$dtype, "f8")
 )
 
-# float32: as_float32() vectors or options(plotly.R.core.float32 = TRUE)
+# float32: as_float32() vectors or options(plotly.core.float32 = TRUE)
 x <- c(0.1, 2.5, NA)
 stopifnot(
   identical(spec(as_float32(x))$dtype, "f4"),
@@ -69,7 +69,7 @@ stopifnot(
   identical(spec(as_float32(c(1, 2)))$dtype, "i1"),          # whole numbers stay lossless
   identical(spec(x)$dtype, "f8")
 )
-old <- options(plotly.R.core.float32 = TRUE)
+old <- options(plotly.core.float32 = TRUE)
 stopifnot(identical(spec(x)$dtype, "f4"), identical(spec(matrix(x[1:2], 1))$dtype, "f4"))
 options(old)
 stopifnot(
@@ -82,7 +82,7 @@ f <- data.frame(a = x) |> go_figure() |>
   add_scatter(x = ~as_float32(a), y = as_float32(1:3 / 2), marker_size = as_float32(c(1.5, 2, 3)))
 stopifnot(
   inherits(f$data[[1]]$x, "plotly_float32"), inherits(f$data[[1]]$marker$size, "plotly_float32"),
-  grepl('"x":[0.1,2.5,null]', plotly.R.core:::to_JSON(f$data[[1]]), fixed = TRUE),
+  grepl('"x":[0.1,2.5,null]', plotly.core:::to_JSON(f$data[[1]]), fixed = TRUE),
   grepl('"x":{"dtype":"f4"', htmlwidgets:::toJSON(list(x = as_widget(f)$x)), fixed = TRUE)
 )
 d <- px_data_iris()
@@ -96,7 +96,7 @@ m <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 2)          # rows: 1 3 5 / 2 4 6
 stopifnot(identical(spec(m)$shape, "2, 3"), identical(decode(spec(m)), c(1L, 3L, 5L, 2L, 4L, 6L)),
           identical(decode(spec(m + 0.5)), c(1, 3, 5, 2, 4, 6) + 0.5))
 
-enc <- plotly.R.core:::b64_encode
+enc <- plotly.core:::b64_encode
 tr <- enc(list(type = "scatter", x = 1:3, y = 5, ids = I(7), text = c("a", "b"), visible = c(TRUE, FALSE),
                d = as.Date(c("2024-01-01", "2024-01-02")), f = factor(c("a", "b")),
                marker = list(size = c(4, 8), line = list(width = 1:2)),
@@ -118,14 +118,14 @@ j <- jsonlite::fromJSON(as.character(attr(w$x, "TOJSON_FUNC")(w$x)), simplifyVec
 stopifnot(
   identical(j$data[[1]]$y$dtype, "i1"), identical(j$frames[[1]]$data[[1]]$y$dtype, "i1"),
   identical(unlist(j$layout$xaxis$tickvals), c(1L, 2L)),
-  grepl('"y":[2,5,3]', as.character(plotly.R.core:::to_JSON(fig)), fixed = TRUE)
+  grepl('"y":[2,5,3]', as.character(plotly.core:::to_JSON(fig)), fixed = TRUE)
 )
 # ... including when htmlwidgets passes its payload (as when printing or saving)
 stopifnot(grepl('"y":{"dtype":"i1"', htmlwidgets:::toJSON(list(x = w$x)), fixed = TRUE))
 
 # Dates and date-times in traces are sent as typed arrays of days / wall-clock
 # ms (marked `rdate`); the widget JS turns them back into these same strings
-ds <- plotly.R.core:::date_array_spec
+ds <- plotly.core:::date_array_spec
 tt <- as.POSIXct(c("2024-03-10 01:59:59", "2024-03-10 03:00:00.25", NA), tz = "America/New_York")
 s <- ds(tt)
 stopifnot(
@@ -138,7 +138,7 @@ stopifnot(
   is.null(ds(as.POSIXct(c("0900-01-01", "2000-01-01"), tz = "UTC"))),   # outside 1000-9999: strings
   is.null(ds(as.POSIXct(c(NA, NA), tz = "UTC")))
 )
-old <- options(plotly.R.core.float32 = TRUE)                           # never single precision
+old <- options(plotly.core.float32 = TRUE)                           # never single precision
 stopifnot(identical(ds(tt)$dtype, "f8"))
 options(old)
 tm <- tt[1:2]

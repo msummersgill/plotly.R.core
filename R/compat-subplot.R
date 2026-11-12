@@ -30,7 +30,20 @@ subplot <- function(..., nrows = 1, widths = NULL, heights = NULL, margin = 0.02
     plots <- plots[[1]]
   }
   plots <- lapply(plots, function(p) {
-    if (inherits(p, "go_figure")) return(plain_value(unclass(p)[c("data", "layout")]))
+    if (inherits(p, "go_figure")) {
+      p <- plain_value(unclass(p)[c("data", "layout")])
+      # the result is a plot_ly() object: use its default margins, not plotly.js's
+      p$layout$margin <- p$layout$margin %||l% LP_MARGIN
+      # go traces leave their default axes out; name them so they are renumbered
+      for (i in seq_along(p$data)) {
+        tr <- p$data[[i]]
+        if (lp_has_attr(tr[["type"]] %||l% "scatter", "xaxis")) {
+          p$data[[i]][["xaxis"]] <- tr[["xaxis"]] %||l% "x"
+          p$data[[i]][["yaxis"]] <- tr[["yaxis"]] %||l% "y"
+        }
+      }
+      return(p)
+    }
     b <- plotly_build(p, registerFrames = FALSE)$x
     b
   })

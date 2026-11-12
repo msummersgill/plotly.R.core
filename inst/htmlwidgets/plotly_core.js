@@ -1,5 +1,5 @@
 /*
- * htmlwidgets binding for plotly.R.core.
+ * htmlwidgets binding for plotly.core.
  *
  * x = {data, layout, config, frames, source, shinyEvents, keys, and for
  *      crosstalk linking: sets, frameKeys, highlight, selectize; fitBounds:
@@ -17,6 +17,11 @@
  * "selection traces" and the other traces are dimmed.
  */
 
+// plotly.js config defaults: no modebar button that uploads the chart to
+// Plotly Cloud (opt in with config(showSendToCloud = TRUE))
+var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
+
+
 (function() {
 
   // Messages from plotlyProxyInvoke(): {id, method, args (JSON string)}
@@ -30,7 +35,7 @@
       var args = typeof msg.args === "string" ? JSON.parse(msg.args) : (msg.args || []);
       if (msg.method === "reconfig") {
         // not a plotly.js method: re-render with a new configuration
-        Plotly.react(gd, gd.data, gd.layout, args[0] || {});
+        Plotly.react(gd, gd.data, gd.layout, Object.assign({}, CONFIG_DEFAULTS, args[0] || {}));
         return;
       }
       if (!Plotly[msg.method]) throw new Error("Unknown plotly.js method " + msg.method);
@@ -599,7 +604,7 @@
   }
 
   HTMLWidgets.widget({
-    name: "plotly_R_core",
+    name: "plotly_core",
     type: "output",
 
     factory: function(el, width, height) {
@@ -608,7 +613,7 @@
       return {
         renderValue: function(x) {
           registerProxyHandler();
-          var config = Object.assign({responsive: true}, x.config || {});
+          var config = Object.assign({}, CONFIG_DEFAULTS, x.config || {});
           restoreDates(x.data);
           (x.frames || []).forEach(function(f) { if (f) restoreDates(f.data); });
           // crosstalk subsets the input traces' arrays

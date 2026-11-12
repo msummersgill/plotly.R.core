@@ -1,4 +1,4 @@
-Package: plotly.R.core
+Package: plotly.core
 Type: Package
 Title: Create Interactive Web Graphics via 'plotly.js'
 Version: 0.0.0.9000

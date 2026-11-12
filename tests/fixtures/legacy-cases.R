@@ -1,5 +1,5 @@
 # plot_ly() cases evaluated with both the legacy plotly package (fixtures) and
-# plotly.R.core (tests/test-compat.R). Use |> rather than %>%.
+# plotly.core (tests/test-compat.R). Use |> rather than %>%.
 cases <- list(
   markers = quote(plot_ly(mtcars, x = ~wt, y = ~mpg)),
   color_discrete = quote(plot_ly(mtcars, x = ~wt, y = ~mpg, color = ~factor(cyl))),

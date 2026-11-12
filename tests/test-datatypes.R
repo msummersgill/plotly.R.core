@@ -1,8 +1,8 @@
 # Tests for the generated go_*() constructors (R/zz-gen-*.R) and graph object
 # behaviour (R/basedatatypes.R).
-library(plotly.R.core)
+library(plotly.core)
 
-to_JSON <- plotly.R.core:::to_JSON
+to_JSON <- plotly.core:::to_JSON
 json <- function(x) as.character(to_JSON(x))
 expect_error <- function(expr, pattern) {
   msg <- tryCatch({ expr; NULL }, error = function(e) conditionMessage(e))
@@ -27,8 +27,8 @@ tr2 <- go_scatter(marker = list(line = list(width = 2)))
 stopifnot(identical(class(tr2$marker$line), c("go_scatter_marker_line", "plotly_obj")))
 
 # Every constructor in scope exists and builds an empty object
-ns <- asNamespace("plotly.R.core")
-ctors <- setdiff(grep("^go_", getNamespaceExports("plotly.R.core"), value = TRUE), "go_figure")
+ns <- asNamespace("plotly.core")
+ctors <- setdiff(grep("^go_", getNamespaceExports("plotly.core"), value = TRUE), "go_figure")
 stopifnot(length(ctors) == 979L)
 for (fn in ctors) {
   obj <- get(fn, ns)()
@@ -79,5 +79,5 @@ stopifnot(inherits(tr$marker, "go_scatter_marker"))
 expect_error(tr$type <- "bar", "Cannot change the type")
 
 # Figure data validation accepts graph objects and plain lists -----------------------
-d <- plotly.R.core:::validate_data(list(tr, list(type = "scatter", y = 1:3)))
+d <- plotly.core:::validate_data(list(tr, list(type = "scatter", y = 1:3)))
 stopifnot(length(d) == 2L, inherits(d[[2L]], "go_scatter"))

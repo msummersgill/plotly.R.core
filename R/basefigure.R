@@ -374,7 +374,8 @@ plain_value <- function(x) {
     x <- unclass(x)
     x[] <- lapply(x, plain_value)
   } else if (inherits(x, "AsIs")) {
-    x <- unclass(x)
+    # drop only AsIs: I(<POSIXct>) must stay a POSIXct
+    oldClass(x) <- setdiff(oldClass(x), "AsIs")
   }
   x
 }

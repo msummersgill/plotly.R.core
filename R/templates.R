@@ -42,7 +42,7 @@ get_template <- function(name) {
 #' @rdname get_template
 #' @export
 template_names <- function() {
-  builtin <- c(sub("[.]json$", "", list.files(system.file("templates", package = "plotly.R.core"), "[.]json$")), "none")
+  builtin <- c(sub("[.]json$", "", list.files(system.file("templates", package = "plotly.core"), "[.]json$")), "none")
   unique(c(builtin, ls(template_registry())))
 }
 
@@ -59,10 +59,10 @@ register_template <- function(name, template) {
 #' @rdname get_template
 #' @export
 default_template <- function(name) {
-  current <- getOption("plotly.R.core.template", "plotly")
+  current <- getOption("plotly.core.template", "plotly")
   if (missing(name)) return(current)
   get_template(name) # validate
-  options(plotly.R.core.template = name)
+  options(plotly.core.template = name)
   invisible(current)
 }
 
@@ -75,7 +75,7 @@ load_template <- function(name) {
   reg <- template_registry()
   if (exists(name, envir = reg, inherits = FALSE)) return(reg[[name]])
   if (name == "none") return(list(data = list(scatter = list(list()))))
-  path <- system.file("templates", paste0(name, ".json"), package = "plotly.R.core")
+  path <- system.file("templates", paste0(name, ".json"), package = "plotly.core")
   if (!nzchar(path)) {
     stop(sprintf("Unknown template '%s'. Available templates: %s", name,
                  paste(template_names(), collapse = ", ")), call. = FALSE)

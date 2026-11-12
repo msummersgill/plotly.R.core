@@ -1,6 +1,6 @@
 # Shiny bindings, widget settings and knitr output (the event/proxy round trip
 # needs a browser and is not tested here).
-library(plotly.R.core)
+library(plotly.core)
 
 expect_error <- function(expr, pattern) {
   msg <- tryCatch({ expr; NULL }, error = function(e) conditionMessage(e))
@@ -35,7 +35,7 @@ stopifnot(any(vapply(w$dependencies, `[[`, "", "name") == "mathjax"))
 if (requireNamespace("shiny", quietly = TRUE)) {
   out <- plotlyOutput("plot", height = "300px")
   stopifnot(inherits(out, "shiny.tag.list") || inherits(out, "shiny.tag"),
-            grepl("plotly_R_core", as.character(out)))
+            grepl("plotly_core", as.character(out)))
   stopifnot(is.function(renderPlotly(go_figure())))
   expect_error(event_data("plotly_click", session = NULL), "No reactive domain")
   expect_error(plotlyProxy("plot", session = NULL), "server function")
@@ -45,3 +45,14 @@ if (requireNamespace("shiny", quietly = TRUE)) {
 # legacy plot_ly() objects render through the same widget
 lw <- as_widget(plot_ly(mtcars, x = ~wt, y = ~mpg, type = "scatter", mode = "markers", source = "cars"))
 stopifnot(inherits(lw, "htmlwidget"), identical(lw$x$source, "cars"), length(lw$x$data) == 1L)
+
+# the Plotly Cloud share button is off by default (JS CONFIG_DEFAULTS); config() opts in
+local({
+  f <- go_figure(go_scatter(y = 1:3))
+  stopifnot(
+    is.null(config(f, scrollZoom = TRUE) |> plotly.core:::get_widget_setting("config") |> (\(x) x$showSendToCloud)()),
+    isTRUE(plotly.core:::get_widget_setting(config(f, showSendToCloud = TRUE), "config")$showSendToCloud),
+    isTRUE(plotly.core:::get_widget_setting(config(f, cloud = TRUE), "config")$showSendToCloud),
+    isFALSE(plotly.core:::get_widget_setting(config(f, cloud = FALSE), "config")$showSendToCloud)
+  )
+})
