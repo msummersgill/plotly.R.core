@@ -3,8 +3,15 @@ Type: Package
 Title: Create Interactive Web Graphics via 'plotly.js'
 Version: 0.0.0.9000
 Authors@R: c(
-    person("Matthew", "Summersgill", email = "matthew.summersgill@hpinc.com",
-           role = c("aut", "cre")),
+    person("Matthew", "Summersgill", email = "matthew.summersgill@gmail.com",
+           role = c("aut", "cre"), comment = c(ORCID = "0009-0007-2955-5543")),
+    person("Carson", "Sievert", role = c("aut"),
+           email = "cpsievert1@gmail.com", comment = c(ORCID = "0000-0002-4958-2844")),
+    person("Chris", "Parmer", role = "aut"),
+    person("Toby", "Hocking", role = "ctb"),
+    person("Marianne", "Corvellec", role = "ctb",
+           comment = c(ORCID = "0000-0002-1994-3581")),
+    person("Pedro", "Despouy", role = "ctb"),
     person("Plotly Technologies Inc.", role = "cph",
            comment = "Bundled 'plotly.js' library; templates and datasets from 'plotly.py'"),
     person("Dean", "Attali", role = "cph",
