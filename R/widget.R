@@ -23,7 +23,9 @@
 #'   [htmlwidgets::onRender()] sees these objects rather than arrays; read the
 #'   plotted values from `el._fullData` instead. [plotly_json()] shows plain
 #'   JSON. Vectors of whole numbers are sent as integers; see [as_float32()]
-#'   to send other numbers in single precision.
+#'   to send other numbers in single precision. Dates and date-times are sent
+#'   as numbers and turned back into "YYYY-MM-DD HH:MM:SS" strings (in the
+#'   vector's time zone) in the browser before plotting.
 #' @export
 #' @examples
 #' plotly_widget(list(data = list(list(type = "bar", x = 1:3, y = c(2, 5, 3)))))
@@ -99,7 +101,7 @@ mathjax_dependency <- function() {
 to_JSON <- function(x, ...) {
   jsonlite::toJSON(
     prepare_json(x), digits = NA, auto_unbox = TRUE, force = TRUE,
-    null = "null", na = "null", dataframe = "values", ...
+    null = "null", na = "null", dataframe = "values", json_verbatim = TRUE, ...
   )
 }
 
@@ -142,6 +144,8 @@ b64_encode <- function(x) {
     v <- x[[i]]
     if (nzchar(key) && is_b64_array(v)) {
       x[[i]] <- typed_array_spec(v)
+    } else if (nzchar(key) && is_b64_date(v)) {
+      x[[i]] <- date_array_spec(v) %||% v
     } else if (is.list(v) && !is.data.frame(v)) {
       x[[i]] <- b64_encode(v)
     }
@@ -158,6 +162,43 @@ is_b64_array <- function(v) {
   d <- dim(v)
   if (!is.null(d)) return(length(d) == 2L && length(v) > 0L)
   length(v) > 1L || (length(v) == 1L && "AsIs" %in% cls)
+}
+
+# Date and date-time vectors (not matrices) that serialise as JSON arrays.
+is_b64_date <- function(v) {
+  if (!inherits(v, c("POSIXt", "Date")) || !is.null(dim(v))) return(FALSE)
+  if (!all(oldClass(v) %in% c("AsIs", "POSIXct", "POSIXlt", "POSIXt", "Date"))) return(FALSE)
+  length(v) > 1L || (length(v) == 1L && inherits(v, "AsIs"))
+}
+
+# Dates as days since 1970 and date-times as milliseconds since 1970 in the
+# object's time zone (wall-clock time), with `rdate` marking them for the
+# widget's JavaScript, which turns them back into the strings to_JSON() would
+# write ("YYYY-MM-DD", "YYYY-MM-DD HH:MM:SS[.mmm]") before plotting: much
+# faster than formatting and escaping strings in R. NULL (send strings) for
+# years outside 1000-9999 or an unknown time zone offset.
+date_array_spec <- function(v) {
+  if (inherits(v, "Date")) {
+    days <- floor(as.numeric(v))
+    rng <- suppressWarnings(range(days, na.rm = TRUE))
+    if (all(is.finite(rng)) && (rng[1] < -354285 || rng[2] > 2932896)) return(NULL)
+    out <- typed_array_spec(days, float32 = FALSE)
+    out$rdate <- "date"
+    return(out)
+  }
+  v <- as.POSIXct(v)
+  secs <- as.numeric(v)
+  off <- as.POSIXlt(v)$gmtoff
+  ok <- !is.na(secs)
+  if (!any(ok)) return(NULL)
+  if (is.null(off) || anyNA(off[ok])) return(NULL)
+  off[!ok] <- 0
+  ms <- round((secs + off) * 1000)
+  rng <- range(ms[ok])
+  if (!all(is.finite(rng)) || rng[1] < -30610224000000 || rng[2] > 253402300799999) return(NULL)
+  out <- typed_array_spec(ms, float32 = FALSE)
+  out$rdate <- "datetime"
+  out
 }
 
 INT32_MAX <- .Machine$integer.max
@@ -252,6 +293,7 @@ prepare_json <- function(x) {
   if (inherits(x, "plotly_float32")) return(unclass_float32(x))
   if (inherits(x, "POSIXt")) {
     out <- format_datetime(x)
+    if (is.null(dim(x)) && (length(out) != 1L || inherits(x, "AsIs"))) return(json_strings(out))
     if (inherits(x, "AsIs")) out <- I(out)
     dim(out) <- dim(x)
     return(out)
@@ -268,11 +310,21 @@ format_datetime <- function(x) {
   tz <- attr(x, "tzone")[1L] %||% ""
   secs <- round(as.numeric(x) * 1000) / 1000
   whole <- floor(secs)
+  out <- format(.POSIXct(whole, tz = tz), "%Y-%m-%d %H:%M:%S")
   ms <- round((secs - whole) * 1000)
-  out <- format(as.POSIXct(whole, origin = "1970-01-01", tz = tz), "%Y-%m-%d %H:%M:%S")
-  out <- ifelse(!is.na(ms) & ms > 0, paste0(out, sprintf(".%03d", as.integer(ms))), out)
+  i <- which(ms > 0)
+  if (length(i)) out[i] <- paste0(out[i], ".", formatC(as.integer(ms[i]), width = 3, flag = "0"))
   out[is.na(x)] <- NA_character_
   out
+}
+
+# A JSON array of strings that need no escaping (e.g. formatted dates), kept
+# as is by jsonlite (json_verbatim): faster than its per-string escaping.
+json_strings <- function(x) {
+  if (!length(x)) return(structure("[]", class = "json"))
+  s <- paste0('"', x, '"')
+  s[is.na(x)] <- "null"
+  structure(paste0("[", paste(s, collapse = ","), "]"), class = "json")
 }
 
 `%||%` <- function(x, y) if (is.null(x)) y else x

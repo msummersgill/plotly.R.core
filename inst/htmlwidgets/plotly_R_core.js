@@ -166,6 +166,45 @@
     for (var r = 0; r < shape[0]; r++) rows.push(arr.slice(r * shape[1], (r + 1) * shape[1]));
     return rows;
   }
+  // Dates and date-times sent as typed arrays (days or wall-clock ms since
+  // 1970, marked with `rdate`) back to the strings R would have written:
+  // "YYYY-MM-DD" and "YYYY-MM-DD HH:MM:SS[.mmm]" (plotly.js reads numbers on
+  // date axes in the viewer's time zone, so they can't be passed as numbers).
+  var DAY_MS = 86400000;
+  function pad(n, w) { var s = String(n); while (s.length < w) s = "0" + s; return s; }
+  function restoreDateSpec(spec) {
+    var vals = decodeTypedArraySpec(spec), isDate = spec.rdate === "date";
+    var out = new Array(vals.length), lastDay = NaN, dayStr = "";
+    for (var i = 0; i < vals.length; i++) {
+      var v = vals[i];
+      if (v !== v || v === null) { out[i] = null; continue; }
+      var ms = isDate ? v * DAY_MS : v;
+      var day = Math.floor(ms / DAY_MS);
+      if (day !== lastDay) {
+        var d = new Date(day * DAY_MS);
+        dayStr = pad(d.getUTCFullYear(), 4) + "-" + pad(d.getUTCMonth() + 1, 2) + "-" + pad(d.getUTCDate(), 2);
+        lastDay = day;
+      }
+      if (isDate) { out[i] = dayStr; continue; }
+      var t = ms - day * DAY_MS, msec = t % 1000, secs = (t - msec) / 1000;
+      out[i] = dayStr + " " + pad(Math.floor(secs / 3600), 2) + ":" + pad(Math.floor(secs / 60) % 60, 2) + ":" +
+        pad(secs % 60, 2) + (msec ? "." + pad(msec, 3) : "");
+    }
+    return out;
+  }
+  function restoreDates(obj) {
+    if (Array.isArray(obj)) {
+      if (obj.length && typeof obj[0] === "object") {
+        for (var i = 0; i < obj.length; i++) obj[i] = restoreDates(obj[i]);
+      }
+    } else if (isTypedArraySpec(obj)) {
+      if (obj.rdate) return restoreDateSpec(obj);
+    } else if (isPlainObject(obj)) {
+      Object.keys(obj).forEach(function(k) { obj[k] = restoreDates(obj[k]); });
+    }
+    return obj;
+  }
+
   function decodeTypedArrays(obj) {
     if (Array.isArray(obj)) {
       for (var i = 0; i < obj.length; i++) obj[i] = decodeTypedArrays(obj[i]);
@@ -570,6 +609,8 @@
         renderValue: function(x) {
           registerProxyHandler();
           var config = Object.assign({responsive: true}, x.config || {});
+          restoreDates(x.data);
+          (x.frames || []).forEach(function(f) { if (f) restoreDates(f.data); });
           // crosstalk subsets the input traces' arrays
           if (x.sets) { decodeTypedArrays(x.data); decodeTypedArrays(x.frames || []); }
           attachKeys(x.data, x.keys, x.sets);

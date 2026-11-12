@@ -103,7 +103,7 @@ tr <- enc(list(type = "scatter", x = 1:3, y = 5, ids = I(7), text = c("a", "b"),
                geojson = list(bbox = c(1, 2)), range = c(0, 1), z = list(c(1, 2), c(3, 4))))
 stopifnot(
   identical(tr$x$dtype, "i1"), identical(tr$y, 5), identical(tr$ids$dtype, "i1"),
-  is.character(tr$text), is.logical(tr$visible), inherits(tr$d, "Date"), is.factor(tr$f),
+  is.character(tr$text), is.logical(tr$visible), identical(tr$d$rdate, "date"), is.factor(tr$f),
   identical(tr$marker$size$dtype, "i1"), identical(tr$marker$line$width$dtype, "i1"),
   identical(tr$geojson$bbox, c(1, 2)), identical(tr$range, c(0, 1)),
   identical(tr$z, list(c(1, 2), c(3, 4)))               # unnamed lists aren't encoded
@@ -122,3 +122,34 @@ stopifnot(
 )
 # ... including when htmlwidgets passes its payload (as when printing or saving)
 stopifnot(grepl('"y":{"dtype":"i1"', htmlwidgets:::toJSON(list(x = w$x)), fixed = TRUE))
+
+# Dates and date-times in traces are sent as typed arrays of days / wall-clock
+# ms (marked `rdate`); the widget JS turns them back into these same strings
+ds <- plotly.R.core:::date_array_spec
+tt <- as.POSIXct(c("2024-03-10 01:59:59", "2024-03-10 03:00:00.25", NA), tz = "America/New_York")
+s <- ds(tt)
+stopifnot(
+  identical(s$rdate, "datetime"), identical(s$dtype, "f8"),
+  identical(decode(s)[1:2], c(as.numeric(as.POSIXct("2024-03-10 01:59:59", tz = "UTC")) * 1000,
+                              as.numeric(as.POSIXct("2024-03-10 03:00:00.25", tz = "UTC")) * 1000)),
+  is.na(decode(s)[3]),
+  identical(ds(as.Date(c("1970-01-02", "2024-01-01")))$rdate, "date"),
+  identical(decode(ds(as.Date(c("1970-01-02", "2024-01-01")))), c(1L, 19723L)),
+  is.null(ds(as.POSIXct(c("0900-01-01", "2000-01-01"), tz = "UTC"))),   # outside 1000-9999: strings
+  is.null(ds(as.POSIXct(c(NA, NA), tz = "UTC")))
+)
+old <- options(plotly.R.core.float32 = TRUE)                           # never single precision
+stopifnot(identical(ds(tt)$dtype, "f8"))
+options(old)
+tm <- tt[1:2]
+dim(tm) <- c(1L, 2L)
+tr <- enc(list(x = tt, y = tt[1], base = I(tt[1]), customdata = as.Date(c("2024-01-01", NA)), z = tm))
+stopifnot(
+  identical(tr$x$rdate, "datetime"), inherits(tr$y, "POSIXct"), identical(tr$base$rdate, "datetime"),
+  identical(tr$customdata$rdate, "date"), inherits(tr$z, "POSIXct")
+)
+# Plain JSON writes date-time arrays directly (json_verbatim)
+stopifnot(
+  identical(as.character(to_JSON(list(x = tt, y = I(tt[1]), z = tt[1], e = tt[0]))),
+            '{"x":["2024-03-10 01:59:59","2024-03-10 03:00:00.250",null],"y":["2024-03-10 01:59:59"],"z":"2024-03-10 01:59:59","e":[]}')
+)

@@ -49,7 +49,9 @@ and faster to load than JSON numbers. JavaScript that reads \code{x.data} in
 \code{\link[htmlwidgets:onRender]{htmlwidgets::onRender()}} sees these objects rather than arrays; read the
 plotted values from \code{el._fullData} instead. \code{\link[=plotly_json]{plotly_json()}} shows plain
 JSON. Vectors of whole numbers are sent as integers; see \code{\link[=as_float32]{as_float32()}}
-to send other numbers in single precision.
+to send other numbers in single precision. Dates and date-times are sent
+as numbers and turned back into "YYYY-MM-DD HH:MM:SS" strings (in the
+vector's time zone) in the browser before plotting.
 }
 \examples{
 plotly_widget(list(data = list(list(type = "bar", x = 1:3, y = c(2, 5, 3)))))
