@@ -21,6 +21,9 @@
 #' length(plotly_build(p)$x$data)
 plotly_build <- function(p, registerFrames = TRUE) {
   if (inherits(p, "go_figure")) return(plotly_widget(p))
+  # a figure given as a list (data, layout, ...), as the legacy package's
+  # plotly_build.list()
+  if (is.list(p) && !is.object(p) && any(c("data", "layout") %in% names(p))) p <- lp_list_plot(p)
   if (!is_legacy_plot(p)) stop("Don't know how to build an object of class ", class(p)[[1L]], call. = FALSE)
   set_last_plot(p)
 
@@ -40,7 +43,14 @@ plotly_build <- function(p, registerFrames = TRUE) {
     }
     x[lengths(x) > 0]
   }, p$x$layoutAttrs %||l% list(), names(p$x$layoutAttrs) %||l% character())
+  # axes given `domain = NULL`: no default domain (plotly.js then lays them
+  # out itself, e.g. the axes of a splom trace)
+  null_domain <- unique(unlist(lapply(p$x$layoutAttrs, function(l) {
+    nms <- grep("^[xyz]axis[0-9]*$", names(l), value = TRUE)
+    nms[vapply(nms, function(n) is.list(l[[n]]) && "domain" %in% names(l[[n]]) && is.null(l[[n]][["domain"]]), logical(1))]
+  })))
   p$x$layoutAttrs <- NULL
+  p$x$nullDomain <- null_domain
   annotations <- c(p$x$layout$annotations, unlist(unname(compact(lapply(layouts, `[[`, "annotations"))), recursive = FALSE))
   for (l in layouts) p$x$layout <- lp_modify_list(p$x$layout, l)
   p$x$layout$annotations <- annotations
@@ -56,6 +66,10 @@ plotly_build <- function(p, registerFrames = TRUE) {
   if (is.null(p$x$attrs[[1]][["type"]]) && length(p$x$attrs) > 1) p$x$attrs[[1]] <- NULL
   is_evaled <- function(x) inherits(x, "plotly_eval")
   to_eval <- p$x$attrs[!vapply(p$x$attrs, is_evaled, logical(1))]
+  to_eval <- lapply(to_eval, function(tr) {
+    if (!is.null(tr[["type"]])) tr[["type"]] <- lp_upgrade_type(tr[["type"]])
+    tr
+  })
   if (lp_is_geo(p)) {
     to_eval <- lapply(to_eval, function(tr) {
       tr[["x"]] <- tr[["x"]] %||l% tr[["lat"]]
@@ -115,7 +129,13 @@ plotly_build <- function(p, registerFrames = TRUE) {
     tr
   })
   p$x$data <- unname(c(p$x$data, traces))
+  p <- lp_apply_transforms(p)
+  p <- lp_upgrade_legacy_polar(p)
   p <- lp_supply_defaults(p)
+  p$x$nullDomain <- NULL
+  p <- lp_upgrade_removed(p)
+  p$x$layout <- lp_dedupe_names(p$x$layout)
+  p$x$data <- lp_dedupe_names(p$x$data)
   p <- lp_cartesian2geo(p)
   p <- lp_fit_bounds(p)
   p <- lp_populate_categorical_axes(p)
@@ -484,7 +504,41 @@ lp_color_fill <- function(trace, rgba, is_colorway = FALSE, stroke = FALSE) {
   trace
 }
 
-lp_map_color <- function(traces, stroke = FALSE, title = "", colorway, na.color = "transparent") {
+# Colorscales given in a trace (as a name, list of [value, color] pairs,
+# two-column matrix or data frame, or list of values and colors) are kept: the
+# color mapping only supplies a default one.
+lp_map_color <- function(traces, ...) {
+  user <- lapply(traces, function(tr) {
+    list(cs = lp_colorscale_json(tr[["colorscale"]]),
+         mcs = if (is.list(tr[["marker"]])) lp_colorscale_json(tr[["marker"]][["colorscale"]]))
+  })
+  traces <- lp_map_color_scale(traces, ...)
+  Map(function(tr, u) {
+    if (!is.null(u$cs) && !lp_is_default(u$cs)) tr[["colorscale"]] <- u$cs
+    if (!is.null(u$mcs) && !lp_is_default(u$mcs) && is.list(tr[["marker"]])) tr[["marker"]][["colorscale"]] <- u$mcs
+    tr
+  }, traces, user)
+}
+
+# The legacy package's colorscale_json(): a colorscale as a name or a list of
+# [value, color] pairs.
+lp_colorscale_json <- function(x) {
+  if (!length(x) || lp_is_default(x)) return(x)
+  if (is.character(x) && !is.matrix(x)) return(x)
+  if (is.matrix(x)) {
+    if (ncol(x) != 2) stop("A colorscale matrix requires two columns", call. = FALSE)
+    x <- as.data.frame(x, stringsAsFactors = FALSE)
+    x[[1]] <- as.numeric(x[[1]])
+  }
+  if (is.data.frame(x)) return(lp_df_rows(x))
+  if (is.list(x) && length(x) == 2 && length(x[[1]]) > 1 && length(x[[1]]) == length(x[[2]]) &&
+      !is.list(x[[1]]) && !anyNA(suppressWarnings(as.numeric(x[[1]][!is.na(x[[1]])])))) {
+    return(Map(function(v, c) list(v, c), as.numeric(x[[1]]), as.character(x[[2]])))
+  }
+  x
+}
+
+lp_map_color_scale <- function(traces, stroke = FALSE, title = "", colorway, na.color = "transparent") {
   color <- if (stroke) {
     lapply(traces, function(x) x[["stroke"]] %||l% x[["color"]])
   } else {
@@ -547,7 +601,9 @@ lp_map_color <- function(traces, stroke = FALSE, title = "", colorway, na.color 
         o <- obj
         o$color <- lp_default(color[[i]])
         if (stroke) {
-          if (lp_has_attr(traces[[i]]$type %||l% "scatter", "marker.line")) traces[[i]]$marker$line <- lp_modify_list(o, traces[[i]]$marker$line)
+          # numeric line colors only where marker.line has a colorscale (plotly.js
+          # ignored them elsewhere, e.g. the stroke of a choropleth)
+          if (lp_has_attr(traces[[i]]$type %||l% "scatter", "marker.line.colorscale")) traces[[i]]$marker$line <- lp_modify_list(o, traces[[i]]$marker$line)
         } else {
           traces[[i]]$marker <- lp_modify_list(o, traces[[i]]$marker)
         }
@@ -610,7 +666,10 @@ lp_supply_defaults <- function(p) {
   } else if (!length(p$x$layout[["grid"]])) {
     types <- vapply(p$x$data, function(tr) tr[["type"]] %||l% "scatter", character(1))
     axes <- unique(unlist(lapply(types, function(t) grep("^[a-z]axis$", get_validator(t)$children, value = TRUE))))
-    for (ax in axes) p$x$layout[[ax]] <- lp_modify_list(list(domain = c(0, 1), automargin = TRUE), p$x$layout[[ax]])
+    for (ax in axes) {
+      dflt <- if (ax %in% p$x$nullDomain) list(automargin = TRUE) else list(domain = c(0, 1), automargin = TRUE)
+      p$x$layout[[ax]] <- lp_modify_list(dflt, p$x$layout[[ax]])
+    }
   }
   p
 }
@@ -816,7 +875,17 @@ lp_attr_entry <- function(key, a) {
 lp_verify_attr <- function(obj, key) {
   for (a in names(obj)) {
     entry <- lp_attr_entry(key, a)
-    if (is.null(entry)) next
+    if (is.null(entry)) {
+      # values the color/size mappings set that the trace type doesn't have
+      # (e.g. marker.color of a pie): plotly.js ignored them
+      parent <- get_validator(key)
+      if (!is.null(parent$children) && !a %in% parent$children && lp_all_generated(obj[[a]])) obj[[a]] <- NULL
+      next
+    }
+    if (lp_is_default(obj[[a]]) && !length(obj[[a]])) {
+      obj[[a]] <- NULL
+      next
+    }
     is_data <- identical(entry$superclass, "DataArrayValidator")
     is_compound <- entry$superclass %in% c("CompoundValidator", "TitleValidator", "CompoundArrayValidator")
     if (!is_data && !isTRUE(entry$array_ok) && !is_compound && is.atomic(obj[[a]])) {
@@ -909,4 +978,165 @@ lp_register_frames <- function(p, frame_mapping = NULL) {
   types <- unique(unlist(lapply(p$x$frames, function(f) vapply(f$data, function(tr) tr$type %||l% "scatter", ""))))
   if (identical(types, "scatter") && lp_is_default(p$animation$frame$redraw)) p$animation$frame$redraw <- lp_default(FALSE)
   lp_animation_button_supply(lp_animation_slider_supply(p, currentvalue = current))
+}
+
+# plotly.js 3 removed the Mapbox-based traces and layout.mapbox (replaced by
+# the MapLibre-based "map" ones, which need no access token) and heatmapgl
+# (use heatmap). Legacy code using them is upgraded.
+LP_REMOVED_TYPES <- c(scattermapbox = "scattermap", choroplethmapbox = "choroplethmap",
+                      densitymapbox = "densitymap", heatmapgl = "heatmap")
+# Mapbox styles that need a Mapbox token, or are gone (Stamen), as their
+# closest MapLibre style
+LP_MAPBOX_STYLES <- c("stamen-terrain" = "outdoors", "stamen-toner" = "light",
+                      "stamen-watercolor" = "outdoors", "satellite-streets" = "satellite-streets")
+
+lp_upgrade_type <- function(type) {
+  if (is.character(type) && length(type) == 1 && type %in% names(LP_REMOVED_TYPES)) LP_REMOVED_TYPES[[type]] else type
+}
+
+lp_upgrade_trace <- function(tr) {
+  tr[["type"]] <- lp_upgrade_type(tr[["type"]])
+  sp <- tr[["subplot"]]
+  if (is.character(sp) && length(sp) == 1) tr[["subplot"]] <- sub("^mapbox", "map", sp)
+  tr
+}
+
+lp_upgrade_map_layout <- function(layout) {
+  nms <- names(layout)
+  if (is.null(nms)) return(layout)
+  i <- grep("^mapbox[0-9]*$", nms)
+  for (j in i) {
+    m <- layout[[j]]
+    if (is.list(m)) {
+      m$accesstoken <- NULL
+      st <- m$style
+      if (is.character(st) && length(st) == 1) {
+        if (st %in% names(LP_MAPBOX_STYLES)) m$style <- LP_MAPBOX_STYLES[[st]]
+        else if (grepl("^mapbox://", st)) m$style <- "basic"
+      }
+      layout[[j]] <- m
+    }
+    new <- sub("^mapbox", "map", nms[[j]])
+    if (is.null(layout[[new]])) {
+      names(layout)[j] <- new
+    } else {
+      # settings of both: the ones given as mapbox win
+      layout[[new]] <- lp_modify_list(layout[[new]], if (is.list(m)) m else list())
+      layout[j] <- list(NULL)
+    }
+  }
+  layout[!vapply(layout, is.null, logical(1))]
+}
+
+lp_upgrade_removed <- function(p) {
+  p$x$data <- lp_upgrade_titles(lapply(p$x$data, lp_upgrade_trace))
+  p$x$layout <- lp_upgrade_titles(lp_upgrade_map_layout(p$x$layout))
+  if (length(p$x$frames)) {
+    p$x$frames <- lapply(p$x$frames, function(f) {
+      if (is.list(f) && length(f$data)) f$data <- lp_upgrade_titles(lapply(f$data, lp_upgrade_trace))
+      if (is.list(f) && length(f$layout)) f$layout <- lp_upgrade_titles(lp_upgrade_map_layout(f$layout))
+      f
+    })
+  }
+  p$x$config$mapboxAccessToken <- NULL
+  p
+}
+
+# Lists with repeated names (e.g. list(showland = TRUE, ..., showland = FALSE))
+# keep the last value, as plotly.js reading the JSON did.
+# Data frames in attribute values (e.g. a colorscale given as a data frame
+# of values and colors) become lists of rows, as the legacy package's JSON
+# (jsonlite's dataframe = "values") wrote them.
+lp_dedupe_names <- function(x) {
+  if (is.data.frame(x)) return(lp_df_rows(x))
+  if (!is.list(x)) return(x)
+  nms <- names(x)
+  if (!is.null(nms)) {
+    named <- nzchar(nms)
+    dup <- named & duplicated(nms, fromLast = TRUE)
+    if (any(dup)) {
+      attrs <- attributes(x)
+      x <- x[!dup]
+      for (a in setdiff(names(attrs), c("names", "row.names"))) attr(x, a) <- attrs[[a]]
+    }
+  }
+  if (length(x)) x[] <- lapply(x, lp_dedupe_names)
+  x
+}
+
+lp_list_plot <- function(fig) {
+  p <- plot_ly()
+  p$x$attrs <- list()
+  p$x$data <- unname(fig$data)
+  # plotly.js's default margins, as the legacy package's as_widget() of a list
+  p$x$layout$margin <- NULL
+  p$x$layout <- lp_modify_list(p$x$layout, fig$layout)
+  if (!is.null(fig$frames)) p$x$frames <- fig$frames
+  if (!is.null(fig$config)) p$x$config <- lp_modify_list(p$x$config, fig$config)
+  p
+}
+
+lp_df_rows <- function(df) {
+  cols <- lapply(unname(as.list(df)), function(v) if (is.factor(v)) as.character(v) else v)
+  if (!length(cols) || !nrow(df)) return(list())
+  do.call(Map, c(list(f = function(...) list(...)), cols))
+}
+
+# Legacy polar charts (scatter traces with r and t, removed in plotly.js 2)
+# as scatterpolar traces: angles t in degrees running clockwise from 0 at the
+# right, the whole chart turned by layout.orientation, and plot_bgcolor as
+# the background.
+lp_upgrade_legacy_polar <- function(p) {
+  polar <- FALSE
+  p$x$data <- lapply(p$x$data, function(tr) {
+    type <- tr[["type"]] %||l% "scatter"
+    if (type %in% c("scatter", "scattergl") && !is.null(tr[["r"]]) && !is.null(tr[["t"]])) {
+      polar <<- TRUE
+      tr[["type"]] <- "scatterpolar"
+      tr[["theta"]] <- tr[["t"]]
+      tr[c("t", "x", "y", "xaxis", "yaxis")] <- NULL
+    }
+    tr
+  })
+  if (!polar) return(p)
+  l <- p$x$layout
+  pol <- l$polar %||l% list()
+  pol$angularaxis <- lp_modify_list(list(direction = "clockwise", rotation = -(l$orientation %||l% 0)),
+                                    lp_modify_list(l$angularaxis, pol$angularaxis))
+  pol$radialaxis <- lp_modify_list(l$radialaxis, pol$radialaxis)
+  if (!length(pol$radialaxis)) pol$radialaxis <- NULL
+  if (!is.null(l$plot_bgcolor) && is.null(pol$bgcolor)) pol$bgcolor <- l$plot_bgcolor
+  l[c("orientation", "angularaxis", "radialaxis")] <- NULL
+  l$polar <- pol
+  p$x$layout <- l
+  p
+}
+
+# titlefont, titleside and titleposition (aliases plotly.js 3 removed) as
+# title.font, title.side and title.position, in any object (axes, colorbars,
+# the layout, legends).
+LP_TITLE_ALIASES <- c(titlefont = "font", titleside = "side", titleposition = "position")
+
+lp_upgrade_titles <- function(x) {
+  if (!is.list(x) || is.data.frame(x)) return(x)
+  nms <- names(x)
+  if (!is.null(nms) && any(names(LP_TITLE_ALIASES) %in% nms)) {
+    t <- x[["title"]]
+    t <- if (is.null(t)) list() else if (is.list(t)) t else list(text = t)
+    for (a in intersect(names(LP_TITLE_ALIASES), nms)) {
+      k <- LP_TITLE_ALIASES[[a]]
+      t[[k]] <- if (is.list(x[[a]]) && is.list(t[[k]])) lp_modify_list(x[[a]], t[[k]]) else t[[k]] %||l% x[[a]]
+      x[[a]] <- NULL
+    }
+    x[["title"]] <- t
+  }
+  if (length(x)) x[] <- lapply(x, lp_upgrade_titles)
+  x
+}
+
+# A value set by the plot_ly() mappings rather than given (defaults and
+# colorway colors, at any depth).
+lp_all_generated <- function(x) {
+  if (lp_is_default(x) || inherits(x, "colorway")) return(TRUE)
+  is.list(x) && length(x) > 0 && all(vapply(x, lp_all_generated, logical(1)))
 }

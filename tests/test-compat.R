@@ -154,3 +154,123 @@ local({
     inherits(s[[1]]$x, "POSIXct")
   )
 })
+
+# ---- Regressions found running the plotly.com/r docs examples -------------
+bd <- function(p) plotly_build(p)$x
+
+# colors given as a color interpolation function (colorRamp())
+b <- bd(plot_ly(type = "mesh3d", x = c(0, 1, 2, 0), y = c(0, 0, 1, 2), z = c(0, 2, 0, 1),
+                i = c(0, 0, 0, 1), j = c(1, 2, 3, 2), k = c(2, 3, 1, 3), intensity = c(0, 0.33, 0.66, 1),
+                color = c(0, 0.33, 0.66, 1), colors = colorRamp(c("red", "green", "blue"))))
+cs <- b$data[[1]]$colorscale
+stopifnot(identical(cs[[1]][[2]], "rgba(255,0,0,1)"), identical(cs[[length(cs)]][[2]], "rgba(0,0,255,1)"))
+invisible(as_widget(plot_ly(z = volcano, type = "heatmap", colors = colorRamp(c("red", "green")))))
+
+# subplot() of a data frame with a column of plots (dplyr's do())
+df <- data.frame(g = c("a", "b"))
+df$p <- list(plot_ly(x = 1:3, y = 1:3, type = "scatter", mode = "markers"),
+             plot_ly(x = 1:3, y = 3:1, type = "scatter", mode = "markers"))
+s <- bd(subplot(df, nrows = 1))
+stopifnot(length(s$data) == 2, identical(s$data[[2]]$xaxis, "x2"))
+
+# plotly_build() of a figure given as a list
+b <- bd(list(data = list(list(x = c(1, 2, 3), y = c(1, 3, 2), type = "bar")),
+             layout = list(title = "A Figure Specified By R List")))
+stopifnot(identical(b$data[[1]]$type, "bar"), identical(b$layout$title, "A Figure Specified By R List"))
+
+# Mapbox traces, layout.mapbox and heatmapgl (removed in plotly.js 3) are upgraded
+b <- bd(plot_ly(type = "scattermapbox", lat = c(45, 46), lon = c(-73, -74), mode = "markers") |>
+          layout(mapbox = list(style = "stamen-terrain", zoom = 3, accesstoken = "x")) |>
+          config(mapboxAccessToken = "x"))
+stopifnot(identical(b$data[[1]]$type, "scattermap"), is.null(b$layout$mapbox), identical(b$layout$map$style, "outdoors"),
+          is.null(b$layout$map$accesstoken), is.null(b$config$mapboxAccessToken))
+stopifnot(identical(bd(plot_ly(z = volcano, type = "heatmapgl"))$data[[1]]$type, "heatmap"))
+invisible(as_widget(plot_ly(type = "densitymapbox", lat = c(45, 46), lon = c(-73, -74), z = c(1, 2))))
+
+# repeated names in a list keep the last value (as plotly.js read the JSON)
+g <- list(showland = TRUE, landcolor = "green", showland = FALSE, landcolor = "red")
+b <- bd(plot_ly(type = "scattergeo", mode = "markers") |> layout(geo = g))
+stopifnot(identical(b$layout$geo$showland, FALSE), identical(b$layout$geo$landcolor, "red"), length(b$layout$geo) == 2)
+invisible(as_widget(plot_ly(type = "scattergeo", mode = "markers") |> layout(geo = g)))
+
+# lat/lon given to plot_geo() are inherited by add_lines()/add_markers()
+b <- bd(plot_geo(lat = c(40.7127, 51.5072), lon = c(-74.0059, 0.1275)) |> add_lines(color = I("blue")))
+stopifnot(identical(b$data[[1]]$type, "scattergeo"), identical(b$data[[1]]$lat, c(40.7127, 51.5072)),
+          identical(b$data[[1]]$lon, c(-74.0059, 0.1275)), is.null(b$data[[1]]$x))
+
+# locale names in any case
+stopifnot(identical(plotly.core:::get_widget_setting(config(plot_ly(), locale = "zh-CN"), "config")$locale, "zh-cn"))
+
+# schema()
+s <- schema(jsonedit = FALSE)
+stopifnot("scatter" %in% names(s$traces), !is.null(s$layout$layoutAttributes))
+
+# transforms (removed in plotly.js 3) are applied in R
+b <- bd(plot_ly(type = "scatter", mode = "markers", x = mtcars$hp, y = mtcars$qsec,
+  transforms = list(list(type = "filter", target = "y", operation = ">", value = mean(mtcars$qsec)))))
+stopifnot(length(b$data) == 1, all(b$data[[1]]$y > mean(mtcars$qsec)), is.null(b$data[[1]]$transforms))
+b <- bd(plot_ly(type = "scatter", mode = "markers", x = mtcars$hp, y = mtcars$qsec, text = rownames(mtcars),
+  transforms = list(list(type = "groupby", groups = mtcars$cyl,
+    styles = list(list(target = 4, value = list(marker = list(color = "blue"))))))))
+stopifnot(length(b$data) == 3, identical(vapply(b$data, `[[`, "", "name"), c("6", "4", "8")),
+          identical(b$data[[2]]$marker$color, "blue"), length(b$data[[2]]$text) == 11)
+d <- data.frame(cut = c("a", "b", "a", "c", "b"), price = c(1, 2, 3, 4, 5))
+b <- bd(plot_ly(d, type = "bar", x = ~cut, y = ~price,
+  transforms = list(list(type = "aggregate", groups = ~cut, aggregations = list(list(target = "y", func = "avg"))))))
+stopifnot(identical(b$data[[1]]$x, c("a", "b", "c")), identical(b$data[[1]]$y, c(2, 3.5, 4)))
+b <- bd(plot_ly(d, type = "scatter", mode = "markers", x = ~price, y = ~cut,
+  transforms = list(list(type = "sort", target = "x", order = "descending"))))
+stopifnot(identical(b$data[[1]]$x, c(5, 4, 3, 2, 1)), identical(b$data[[1]]$y, c("b", "c", "a", "b", "a")))
+
+# colorscales given as a data frame, matrix or list of values and colors are
+# kept (not replaced by the color mapping's default)
+vals <- c(0, 0.5, 1)
+cs_df <- setNames(data.frame(vals, c("#F7FBFF", "#6BAED6", "#08306B")), NULL)
+b <- bd(plot_ly(z = volcano, colorscale = cs_df, type = "heatmap"))
+stopifnot(identical(b$data[[1]]$colorscale, list(list(0, "#F7FBFF"), list(0.5, "#6BAED6"), list(1, "#08306B"))))
+b <- bd(plot_ly(z = volcano, colorscale = cbind(vals, c("red", "white", "blue")), type = "heatmap"))
+stopifnot(identical(b$data[[1]]$colorscale[[3]], list(1, "blue")))
+b <- bd(plot_ly(x = 1:3, y = 1:3, color = 1:3, type = "scatter", mode = "markers",
+                marker = list(colorscale = list(c(0, 1), c("red", "blue")))))
+stopifnot(identical(b$data[[1]]$marker$colorscale, list(list(0, "red"), list(1, "blue"))))
+stopifnot(identical(bd(plot_ly(z = volcano, colorscale = "Greys", type = "heatmap"))$data[[1]]$colorscale, "Greys"))
+
+# layout(mapbox = ) settings are merged into layout.map
+b <- bd(plot_mapbox(lat = c(45, 46), lon = c(-73, -74)) |> add_markers() |>
+          layout(mapbox = list(style = "dark", zoom = 1.5, center = list(lat = 45, lon = -73))))
+stopifnot(identical(b$layout$map$style, "dark"), identical(b$layout$map$zoom, 1.5), is.null(b$layout$mapbox))
+
+# axes given domain = NULL get no default domain (splom lays them out)
+b <- bd(plot_ly(iris) |> add_trace(type = "splom", dimensions = list(list(label = "a", values = ~Sepal.Length),
+          list(label = "b", values = ~Sepal.Width)), color = ~Petal.Length) |>
+        layout(xaxis = list(domain = NULL, ticklen = 4), yaxis = list(domain = NULL)))
+stopifnot(is.null(b$layout$xaxis$domain), identical(b$layout$xaxis$ticklen, 4), is.null(b$nullDomain))
+stopifnot(identical(bd(plot_ly(x = 1:3, y = 1:3, type = "scatter", mode = "markers"))$layout$xaxis$domain, c(0, 1)))
+# figures built from a list use plotly.js's default margins
+stopifnot(is.null(bd(list(data = list(list(x = 1:3, y = 1:3, type = "bar"))))$layout$margin))
+
+# legacy polar charts (scatter with r and t) become scatterpolar
+b <- bd(plot_ly(r = c(1, 2, 3), t = c(0, 90, 180), type = "scatter", mode = "markers") |> layout(orientation = -90))
+stopifnot(identical(b$data[[1]]$type, "scatterpolar"), identical(b$data[[1]]$theta, c(0, 90, 180)),
+          is.null(b$data[[1]]$t), identical(b$layout$polar$angularaxis$rotation, 90),
+          identical(b$layout$polar$angularaxis$direction, "clockwise"), is.null(b$layout$orientation),
+          is.null(b$layout$xaxis))
+invisible(as_widget(plot_ly(r = c(1, 2, 3), t = c(0, 90, 180), type = "scatter", mode = "markers")))
+
+# titlefont, titleside and titleposition (removed in plotly.js 3) move into title
+b <- bd(plot_ly(z = volcano, type = "contour", colorbar = list(title = "T", titleside = "right", titlefont = list(size = 9))) |>
+          layout(xaxis = list(title = "X", titlefont = list(size = 20)), title = "A", titlefont = list(color = "red")))
+ct <- b$data[[1]]$colorbar$title
+stopifnot(identical(ct[order(names(ct))], list(font = list(size = 9), side = "right", text = "T")),
+          identical(b$layout$xaxis$title, list(text = "X", font = list(size = 20))),
+          identical(b$layout$title, list(text = "A", font = list(color = "red"))), is.null(b$layout$titlefont))
+
+# no numeric stroke colors on choropleth borders (no colorscale there)
+d <- data.frame(v = c(10, 200, 3000), code = c("USA", "CAN", "MEX"))
+b <- bd(plot_geo(d, locationmode = "ISO-3") |> add_trace(z = ~v, color = ~v, locations = ~code))
+stopifnot(!is.numeric(b$data[[1]]$marker$line$color))
+f <- withCallingHandlers(legacy_figure(plot_geo(d) |> add_trace(z = ~v, color = ~v, locations = ~code)),
+                         warning = function(w) stop("unexpected warning: ", conditionMessage(w)))
+# mapping values a trace type doesn't have are dropped without warnings
+f <- withCallingHandlers(legacy_figure(plot_ly(labels = c("a", "b"), values = 1:2, type = "pie", color = I("red"))),
+                         warning = function(w) stop("unexpected warning: ", conditionMessage(w)))

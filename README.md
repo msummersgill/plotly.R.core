@@ -191,6 +191,12 @@ mtcars |> plot_ly(x = ~wt, y = ~mpg, color = ~factor(cyl), size = ~hp) |>
 ```
 
 `legacy_figure()` converts such a plot to a `go_figure` for further editing.
+Features plotly.js has since removed are upgraded when the plot is built:
+Mapbox traces and `layout.mapbox` become their MapLibre `map` equivalents (no
+access token needed), `heatmapgl` becomes `heatmap`, legacy polar charts
+(`r`/`t`) become `scatterpolar`, `titlefont`/`titleside` move into `title`, and
+trace `transforms` (filter, groupby, aggregate, sort) are applied in R (so
+buttons that restyle a transform have no effect).
 Simple features data (the sf package) are drawn with `add_sf()`, or by
 `plot_ly()`, `plot_geo()` and `plot_mapbox()` directly.
 Not supported: `ggplotly()`, Chart Studio (`api_*()`), `orca()`/`export()` (use

@@ -89,6 +89,7 @@ stopifnot(
   identical(vc("rgba(0, 0, 255, 0.5)", "scatter.marker.color"), "rgba(0, 0, 255, 0.5)"),
   identical(vc("SteelBlue", "scatter.marker.color"), "SteelBlue"),
   identical(vc("gray50", "scatter.marker.color"), "rgba(127,127,127,1)"),   # R color name
+  identical(vc(c("ffff", "FF0000"), "scatter.marker.color"), c("#ffff", "#ff0000")),  # hex without "#"
   identical(vc(c(1, 2, 3), "scatter.marker.color"), c(1, 2, 3)),            # numeric: has colorscale
   identical(vc(c("red", NA), "scatter.marker.color"), c("red", NA)),
   length(vc("viridis", "scatter.marker.colorscale")) == 10L,                # expanded like plotly.py

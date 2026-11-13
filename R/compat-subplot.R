@@ -29,6 +29,15 @@ subplot <- function(..., nrows = 1, widths = NULL, heights = NULL, margin = 0.02
   if (length(plots) == 1 && is.list(plots[[1]]) && !is_legacy_plot(plots[[1]]) && !inherits(plots[[1]], "go_figure")) {
     plots <- plots[[1]]
   }
+  # a data frame (e.g. from dplyr's do()) with one column holding the plots
+  if (is.data.frame(plots)) {
+    is_plot <- function(p) is_legacy_plot(p) || inherits(p, "go_figure")
+    idx <- which(vapply(plots, function(col) is.list(col) && length(col) && is_plot(col[[1]]), logical(1)))
+    if (length(idx) != 1) {
+      stop("A data frame given to subplot() must have one column holding the plots", call. = FALSE)
+    }
+    plots <- plots[[idx]]
+  }
   plots <- lapply(plots, function(p) {
     if (inherits(p, "go_figure")) {
       p <- plain_value(unclass(p)[c("data", "layout")])
@@ -78,7 +87,7 @@ subplot <- function(..., nrows = 1, widths = NULL, heights = NULL, margin = 0.02
   images <- lapply(layouts, `[[`, "images")
   annotations <- lapply(layouts, function(l) l$annotations)
   pick_axes <- function(lay, letter) {
-    keys <- grep(paste0("^geo|^map|^", letter, "axis"), names(lay), value = TRUE)
+    keys <- grep(paste0("^geo[0-9]*$|^map[0-9]*$|^", letter, "axis"), names(lay), value = TRUE)
     if (!length(keys)) keys <- paste0(letter, "axis")
     out <- lapply(keys, function(k) lay[[k]] %||l% list())
     stats_named(out, keys)
@@ -115,12 +124,12 @@ subplot <- function(..., nrows = 1, widths = NULL, heights = NULL, margin = 0.02
     x_axes[[i]] <- stats_named(x_axes[[i]], names(xm))
     y_axes[[i]] <- stats_named(y_axes[[i]], names(ym))
     for (j in seq_along(x_axes[[i]])) {
-      if (grepl("^geo|^map", names(x_axes[[i]])[j])) next
+      if (grepl("^geo[0-9]*$|^map[0-9]*$", names(x_axes[[i]])[j])) next
       m <- ym[ym %in% sub("y", "yaxis", x_axes[[i]][[j]]$anchor %||l% "y")]
       x_axes[[i]][[j]]$anchor <- sub("axis", "", names(m))
     }
     for (j in seq_along(y_axes[[i]])) {
-      if (grepl("^geo|^map", names(y_axes[[i]])[j])) next
+      if (grepl("^geo[0-9]*$|^map[0-9]*$", names(y_axes[[i]])[j])) next
       m <- xm[xm %in% sub("x", "xaxis", y_axes[[i]][[j]]$anchor %||l% "x")]
       y_axes[[i]][[j]]$anchor <- sub("axis", "", names(m))
     }
@@ -163,7 +172,7 @@ subplot <- function(..., nrows = 1, widths = NULL, heights = NULL, margin = 0.02
   out$layout$annotations <- unlist(Map(lp_reposition, annotations, rows), recursive = FALSE)
   out$layout$shapes <- unlist(Map(lp_reposition, shapes, rows), recursive = FALSE)
   out$layout$images <- unlist(Map(lp_reposition, images, rows), recursive = FALSE)
-  other <- lapply(layouts, function(l) l[!grepl("^[x-y]axis|^geo|^map|annotations|shapes|images", names(l))])
+  other <- lapply(layouts, function(l) l[!grepl("^[x-y]axis|^geo[0-9]*$|^map[0-9]*$|annotations|shapes|images", names(l))])
   if (!identical(which_layout, "merge")) other <- other[which_layout[which_layout %in% seq_along(plots)]]
   out$layout <- Reduce(lp_modify_list, other, out$layout)
   for (k in c("source", "config", "shinyEvents", "highlight", "selectize")) {

@@ -195,6 +195,20 @@ lp_palette_fun <- function(pal) {
 # Interpolate colors in CIE Lab space (like scales::colour_ramp()); values
 # that fall exactly on a palette color return it unchanged.
 lp_ramp <- function(colors) {
+  # a color interpolation function such as colorRamp() (RGB matrix, 0-255)
+  # or one returning colors, of values in [0, 1] (as scales' palettes)
+  if (is.function(colors)) {
+    return(function(x) {
+      out <- rep(NA_character_, length(x))
+      ok <- !is.na(x)
+      if (any(ok)) {
+        res <- colors(pmin(pmax(x[ok], 0), 1))
+        if (is.matrix(res)) res <- grDevices::rgb(res[, 1:3, drop = FALSE], maxColorValue = 255)
+        out[ok] <- res
+      }
+      out
+    })
+  }
   f <- grDevices::colorRamp(colors, space = "Lab", interpolate = "linear")
   hex <- substr(grDevices::rgb(t(grDevices::col2rgb(colors)), maxColorValue = 255), 1, 7)
   m <- length(colors)

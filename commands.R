@@ -44,6 +44,10 @@ install_plotlyjs_from <- function(root) {
     file.copy(locales, file.path(locale_dir, sub("^plotly-locale-", "", basename(locales))))
   )
   if (!all(ok)) stop("Failed to copy some plotly.js files")
+  # the schema shipped with the package, for schema()
+  gz <- gzfile(file.path(PROJECT_ROOT, "inst", "schema", "plot-schema.json.gz"), "w", compression = 9)
+  writeLines(readLines(SCHEMA_PATH, warn = FALSE), gz)
+  close(gz)
 
   yaml <- readLines(WIDGET_YAML)
   yaml <- sub("^(\\s*version:).*$", paste("\\1", version), yaml)

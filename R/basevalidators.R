@@ -296,6 +296,11 @@ coerce_colors <- function(x) {
     grepl(RE_VAR, norm, perl = TRUE) | norm %in% .named_colors
   out <- ifelse(ok, u, NA_character_)
   for (i in which(!ok)) {
+    # hex without "#" (e.g. "ffff"), which plotly.js (tinycolor) also accepts
+    if (grepl("^([a-f0-9]{3}|[a-f0-9]{4}|[a-f0-9]{6}|[a-f0-9]{8})$", norm[[i]], perl = TRUE)) {
+      out[[i]] <- paste0("#", norm[[i]])
+      next
+    }
     rgba <- tryCatch(grDevices::col2rgb(u[[i]], alpha = TRUE), error = function(e) NULL)
     if (!is.null(rgba)) {
       out[[i]] <- sprintf("rgba(%d,%d,%d,%s)", rgba[1L], rgba[2L], rgba[3L],

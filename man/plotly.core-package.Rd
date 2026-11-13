@@ -22,6 +22,13 @@ Other contributors:
   \item Toby Hocking [contributor]
   \item Marianne Corvellec (\href{https://orcid.org/0000-0002-1994-3581}{ORCID}) [contributor]
   \item Pedro Despouy [contributor]
+  \item Matt Dowle (Design of 'data.table' fread.c and fwrite.c, adapted in src/typed_array.c) [contributor]
+  \item Pasha Stetsenko ('data.table' fread.c) [contributor]
+  \item Michael Chirico (\href{https://orcid.org/0000-0003-0787-087X}{ORCID}) ('data.table' fread.c and fwrite.c) [contributor]
+  \item Arun Srinivasan ('data.table' fread.c and fwrite.c) [contributor]
+  \item Benjamin Schwendinger (\href{https://orcid.org/0000-0003-3315-8114}{ORCID}) ('data.table' fread.c and fwrite.c) [contributor]
+  \item Ivan Krylov (\href{https://orcid.org/0000-0002-0172-3812}{ORCID}) ('data.table' fread.c and fwrite.c) [contributor]
+  \item @badasahog (GitHub user; 'data.table' fread.c and fwrite.c) [contributor]
   \item Plotly Technologies Inc. (Bundled 'plotly.js' library; templates and datasets from 'plotly.py') [copyright holder]
   \item Dean Attali (Bundled 'colourpicker' library) [copyright holder]
 }

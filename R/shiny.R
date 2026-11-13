@@ -48,12 +48,16 @@ config <- function(p, ..., locale = NULL, mathjax = NULL, cloud = FALSE, showSen
   if (length(opts) && (is.null(names(opts)) || any(!nzchar(names(opts))))) {
     stop("All config options must be named", call. = FALSE)
   }
+  # options of removed plotly.js features, accepted and ignored
+  opts$mapboxAccessToken <- NULL
   bad <- setdiff(names(opts), .config_options)
   if (length(bad)) {
     stop(sprintf("Invalid config option(s): %s\n    Valid options: %s", paste(bad, collapse = ", "),
                  paste(.config_options, collapse = ", ")), call. = FALSE)
   }
   if (!is.null(locale)) {
+    # plotly.js locale names are lower case ("zh-cn"); "zh-CN" also works
+    if (!locale %in% available_locales() && tolower(locale) %in% available_locales()) locale <- tolower(locale)
     if (!locale %in% available_locales()) {
       stop(sprintf("Unknown locale '%s'. Available locales: %s", locale,
                    paste(available_locales(), collapse = ", ")), call. = FALSE)

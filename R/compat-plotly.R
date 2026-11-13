@@ -110,6 +110,17 @@ legacy_widget_lazy <- function(x) {
 plot_geo <- function(data = data.frame(), ..., offline = FALSE) {
   p <- plot_ly(data, ...)
   p$x$layout$mapType <- "geo"
+  lp_geo2cartesian(p)
+}
+
+# lat/lon given to plot_geo()/plot_mapbox() also serve as x/y, so add_*()
+# functions inherit them (as in the legacy package)
+lp_geo2cartesian <- function(p) {
+  p$x$attrs <- lapply(p$x$attrs, function(tr) {
+    tr[["x"]] <- tr[["x"]] %||l% tr[["lat"]]
+    tr[["y"]] <- tr[["y"]] %||l% tr[["lon"]]
+    tr
+  })
   p
 }
 
@@ -121,7 +132,7 @@ plot_geo <- function(data = data.frame(), ..., offline = FALSE) {
 plot_mapbox <- function(data = data.frame(), ...) {
   p <- plot_ly(data, ...)
   p$x$layout$mapType <- "map"
-  p
+  lp_geo2cartesian(p)
 }
 
 #' @rdname plot_ly

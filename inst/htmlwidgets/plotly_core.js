@@ -21,6 +21,40 @@
 // Plotly Cloud (opt in with config(showSendToCloud = TRUE))
 var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
 
+// Map traces (MapLibre) in pages opened from a file (a saved widget, or a
+// plot shown in the browser from R): plotly.js gives MapLibre its worker as
+// a blob: URL, which MapLibre takes as cross-origin on file:// pages and
+// loads as a module importing it, which Chrome refuses ("Worker failed to
+// load"), leaving maps blank (Chrome runs only classic workers from blob:
+// URLs there). A worker URL ending in ".cjs" makes MapLibre fetch the script
+// and start a classic worker instead, so JavaScript blob URLs get a "#.cjs"
+// fragment there (a fragment does not change what a blob URL refers to), and
+// fetching one drops the worker's final `export{...}` (the worker starts
+// itself, through `self.worker`), which a classic script can't contain.
+(function() {
+  if (typeof window === "undefined" || window.location.protocol !== "file:" ||
+      !window.URL || !URL.createObjectURL || URL.createObjectURL.plotlyCore) return;
+  var create = URL.createObjectURL;
+  var patched = function(obj) {
+    var url = create.apply(URL, arguments);
+    return obj && obj.type === "text/javascript" ? url + "#.cjs" : url;
+  };
+  patched.plotlyCore = true;
+  URL.createObjectURL = patched;
+  if (!window.fetch || !window.Response) return;
+  var fetch0 = window.fetch;
+  window.fetch = function(input) {
+    var res = fetch0.apply(this, arguments);
+    if (typeof input !== "string" || input.indexOf("blob:") !== 0 || !/#\.cjs$/.test(input)) return res;
+    return res.then(function(r) {
+      return r.text().then(function(text) {
+        text = text.replace(/;?\s*export\s*\{[^{}]*\}\s*;?(\s*(\/\*[\s\S]*?\*\/\s*)*)$/, ";$1");
+        return new Response(text, {status: 200, headers: {"Content-Type": "text/javascript"}});
+      });
+    });
+  };
+})();
+
 
 (function() {
 
