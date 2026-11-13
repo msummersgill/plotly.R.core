@@ -12,6 +12,7 @@
 \alias{go_densitymap_legendgrouptitle}
 \alias{go_densitymap_legendgrouptitle_font}
 \alias{add_densitymap}
+\alias{add_densitymap.default}
 \title{Densitymap traces}
 \usage{
 go_densitymap(
@@ -208,7 +209,9 @@ go_densitymap_legendgrouptitle_font(
   skip_invalid = FALSE
 )
 
-add_densitymap(
+add_densitymap(fig, ...)
+
+\method{add_densitymap}{default}(
   fig,
   ...,
   data = NULL,

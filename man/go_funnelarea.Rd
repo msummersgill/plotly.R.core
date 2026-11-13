@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-funnelarea.R
 \name{add_funnelarea}
 \alias{add_funnelarea}
+\alias{add_funnelarea.default}
 \alias{go_funnelarea}
 \alias{go_funnelarea_domain}
 \alias{go_funnelarea_hoverlabel}
@@ -17,7 +18,9 @@
 \alias{go_funnelarea_title_font}
 \title{Funnelarea traces}
 \usage{
-add_funnelarea(
+add_funnelarea(fig, ...)
+
+\method{add_funnelarea}{default}(
   fig,
   ...,
   data = NULL,

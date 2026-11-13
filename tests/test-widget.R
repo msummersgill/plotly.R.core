@@ -77,7 +77,7 @@ stopifnot(
   inherits(tryCatch(as_float32("a"), error = identity), "error"),
   inherits(tryCatch(as_float32(Sys.Date()), error = identity), "error")
 )
-# the mark survives validation (graph objects, formulas), px and plot_ly(); plain JSON drops it
+# the mark survives validation (graph objects, formulas) and px; plain JSON drops it
 f <- data.frame(a = x) |> go_figure() |>
   add_scatter(x = ~as_float32(a), y = as_float32(1:3 / 2), marker_size = as_float32(c(1.5, 2, 3)))
 stopifnot(
@@ -88,9 +88,7 @@ stopifnot(
 d <- px_data_iris()
 d$sepal_length <- as_float32(d$sepal_length)
 stopifnot(
-  inherits(px_scatter(d, x = ~sepal_length, y = ~sepal_width, color = ~species)$data[[1]]$x, "plotly_float32"),
-  inherits(as_widget(plot_ly(d, x = ~sepal_length, y = ~sepal_width, type = "scatter", mode = "markers"))$x$data[[1]]$x,
-           "plotly_float32")
+  inherits(px_scatter(d, x = ~sepal_length, y = ~sepal_width, color = ~species)$data[[1]]$x, "plotly_float32")
 )
 m <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 2)          # rows: 1 3 5 / 2 4 6
 stopifnot(identical(spec(m)$shape, "2, 3"), identical(decode(spec(m)), c(1L, 3L, 5L, 2L, 4L, 6L)),

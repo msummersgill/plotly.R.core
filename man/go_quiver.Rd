@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-quiver.R
 \name{add_quiver}
 \alias{add_quiver}
+\alias{add_quiver.default}
 \alias{go_quiver}
 \alias{go_quiver_hoverlabel}
 \alias{go_quiver_hoverlabel_font}
@@ -25,7 +26,9 @@
 \alias{go_quiver_unselected_textfont}
 \title{Quiver traces}
 \usage{
-add_quiver(
+add_quiver(fig, ...)
+
+\method{add_quiver}{default}(
   fig,
   ...,
   data = NULL,

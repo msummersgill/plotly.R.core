@@ -6,7 +6,8 @@
 #'
 #' @param fig A [go_figure()], a figure from a `px_*()` function, or a list
 #'   with `data` (list of traces), `layout`, `frames` and `config` elements.
-#' @param x A figure, [plot_ly()] object or htmlwidget.
+#' @param x A figure or htmlwidget. `as_widget()` is an S3 generic: the
+#'   plotly package adds a method for its `plot_ly()` objects.
 #' @param width,height Widget size in CSS units, or `NULL` for the layout's
 #'   `width`/`height` or to fill the container.
 #' @param elementId Optional element id for the widget.
@@ -49,12 +50,12 @@ plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL, co
   for (k in c("keys", "sets", "frameKeys", "highlight", "fitBounds")) {
     if (!is.null(setting(k))) x[[k]] <- setting(k)
   }
-  if (!is.null(setting("selectize"))) x$selectize <- lp_selectize_json(setting("selectize"))
+  if (!is.null(setting("selectize"))) x$selectize <- selectize_json(setting("selectize"))
   attr(x, "TOJSON_FUNC") <- widget_to_JSON
   deps <- list()
   if (!is.null(cfg$locale) && cfg$locale != "en") deps <- c(deps, list(locale_dependency(cfg$locale)))
   if (identical(setting("mathjax"), "cdn")) deps <- c(deps, list(mathjax_dependency()))
-  if (!is.null(x$sets)) deps <- c(deps, lp_crosstalk_deps(x$highlight))
+  if (!is.null(x$sets)) deps <- c(deps, crosstalk_deps(x$highlight))
   htmlwidgets::createWidget(
     name = "plotly_core",
     x = x,
@@ -74,10 +75,90 @@ plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL, co
 
 #' @rdname plotly_widget
 #' @export
-as_widget <- function(x, ...) {
-  if (inherits(x, "htmlwidget") && !is_legacy_plot(x)) return(x)
-  if (is_legacy_plot(x)) return(legacy_widget(x, ...))
-  plotly_widget(x, ...)
+as_widget <- function(x, ...) UseMethod("as_widget")
+
+#' @export
+as_widget.default <- function(x, ...) plotly_widget(x, ...)
+
+#' @export
+as_widget.htmlwidget <- function(x, ...) x
+
+# Linked highlighting (crosstalk) --------------------------------------------
+# Figures carry crosstalk settings as "plotly_keys", "plotly_sets",
+# "plotly_highlight" and "plotly_selectize" attributes (set by the plotly
+# package's highlight()); the widget's JavaScript does the linking.
+
+# selectize options with their items as a list of rows
+selectize_json <- function(s) {
+  lapply(s, function(o) {
+    if (is.data.frame(o$items)) {
+      it <- o$items
+      o$items <- lapply(seq_len(nrow(it)), function(i) lapply(as.list(it[i, , drop = FALSE]), as.character))
+    }
+    o
+  })
+}
+
+crosstalk_deps <- function(highlight) {
+  if (!requireNamespace("crosstalk", quietly = TRUE)) {
+    stop("Linked highlighting needs the crosstalk package: install.packages(\"crosstalk\")", call. = FALSE)
+  }
+  deps <- crosstalk::crosstalkLibs()
+  if (!identical(highlight$selectize %||% FALSE, FALSE)) {
+    deps <- c(deps, list(htmltools::htmlDependency(
+      name = "selectize", version = "0.12.4", package = "crosstalk", src = "lib/selectize",
+      script = "js/selectize.min.js", stylesheet = "css/selectize.bootstrap3.css"
+    )))
+  }
+  if (isTRUE(highlight$dynamic)) {
+    deps <- c(deps, list(htmltools::htmlDependency(
+      name = "colourpicker", version = "1.1", package = "plotly.core", src = "htmlwidgets/lib/colourpicker",
+      script = "colourpicker.min.js", stylesheet = "colourpicker.min.css"
+    )))
+  }
+  deps
+}
+
+#' JSON of a plot
+#'
+#' Returns the JSON plotly.js receives for a plot.
+#'
+#' @param p A [go_figure()] or anything [as_widget()] accepts (default: the
+#'   last plot printed).
+#' @param jsonedit Show it in an interactive viewer (needs the listviewer
+#'   package)?
+#' @param pretty Pretty-print the JSON?
+#' @param ... Passed to `listviewer::jsonedit()`.
+#' @return The JSON string (or a listviewer widget).
+#' @export
+#' @examples
+#' cat(plotly_json(go_figure(go_bar(y = 1:3)), jsonedit = FALSE))
+plotly_json <- function(p = last_plot(), jsonedit = interactive(), pretty = TRUE, ...) {
+  x <- as_widget(p)$x
+  json <- to_JSON(x[c("data", "layout", "frames", "config")], pretty = pretty)
+  if (jsonedit && requireNamespace("listviewer", quietly = TRUE)) listviewer::jsonedit(json, mode = "form", ...) else json
+}
+
+#' The last plot
+#'
+#' `last_plot()` returns the plot most recently printed (or, for the plotly
+#' package's `plot_ly()` objects, built). `set_last_plot()` records one; it is
+#' for packages that build plots of their own classes.
+#'
+#' @param p A plot.
+#' @return `last_plot()`: the plot. `set_last_plot()`: `p`, invisibly.
+#' @export
+last_plot <- function() {
+  p <- the$last_plot
+  if (is.null(p)) stop("The last plot doesn't exist", call. = FALSE)
+  p
+}
+
+#' @rdname last_plot
+#' @export
+set_last_plot <- function(p) {
+  the$last_plot <- p
+  invisible(p)
 }
 
 locale_dependency <- function(locale) {

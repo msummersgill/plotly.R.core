@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-scattergeo.R
 \name{add_scattergeo}
 \alias{add_scattergeo}
+\alias{add_scattergeo.default}
 \alias{go_scattergeo}
 \alias{go_scattergeo_hoverlabel}
 \alias{go_scattergeo_hoverlabel_font}
@@ -25,7 +26,9 @@
 \alias{go_scattergeo_unselected_textfont}
 \title{Scattergeo traces}
 \usage{
-add_scattergeo(
+add_scattergeo(fig, ...)
+
+\method{add_scattergeo}{default}(
   fig,
   ...,
   data = NULL,

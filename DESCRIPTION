@@ -42,15 +42,12 @@ Depends: R (>= 4.1.0)
 Imports:
     base64enc,
     data.table,
-    graphics,
     grDevices,
     htmltools,
     htmlwidgets,
     jsonlite,
-    RColorBrewer,
     stats,
-    utils,
-    viridisLite
+    utils
 Suggests:
     crosstalk,
     knitr,
@@ -59,7 +56,6 @@ Suggests:
     promises,
     reticulate,
     rmarkdown,
-    sf,
     shiny
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

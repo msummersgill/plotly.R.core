@@ -14,6 +14,7 @@
 \alias{go_cone_lighting}
 \alias{go_cone_lightposition}
 \alias{add_cone}
+\alias{add_cone.default}
 \title{Cone traces}
 \usage{
 go_cone(
@@ -244,7 +245,9 @@ go_cone_lightposition(
   skip_invalid = FALSE
 )
 
-add_cone(
+add_cone(fig, ...)
+
+\method{add_cone}{default}(
   fig,
   ...,
   data = NULL,

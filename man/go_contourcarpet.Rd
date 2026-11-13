@@ -13,6 +13,7 @@
 \alias{go_contourcarpet_legendgrouptitle_font}
 \alias{go_contourcarpet_line}
 \alias{add_contourcarpet}
+\alias{add_contourcarpet.default}
 \title{Contourcarpet traces}
 \usage{
 go_contourcarpet(
@@ -233,7 +234,9 @@ go_contourcarpet_line(
   skip_invalid = FALSE
 )
 
-add_contourcarpet(
+add_contourcarpet(fig, ...)
+
+\method{add_contourcarpet}{default}(
   fig,
   ...,
   data = NULL,

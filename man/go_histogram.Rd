@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-histogram.R
 \name{add_histogram}
 \alias{add_histogram}
+\alias{add_histogram.default}
 \alias{go_histogram}
 \alias{go_histogram_cumulative}
 \alias{go_histogram_error_x}
@@ -31,7 +32,9 @@
 \alias{go_histogram_ybins}
 \title{Histogram traces}
 \usage{
-add_histogram(
+add_histogram(fig, ...)
+
+\method{add_histogram}{default}(
   fig,
   ...,
   data = NULL,

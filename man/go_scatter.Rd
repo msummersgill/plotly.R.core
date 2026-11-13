@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-scatter.R
 \name{add_scatter}
 \alias{add_scatter}
+\alias{add_scatter.default}
 \alias{go_scatter}
 \alias{go_scatter_error_x}
 \alias{go_scatter_error_y}
@@ -29,7 +30,9 @@
 \alias{go_scatter_unselected_textfont}
 \title{Scatter traces}
 \usage{
-add_scatter(
+add_scatter(fig, ...)
+
+\method{add_scatter}{default}(
   fig,
   ...,
   data = NULL,

@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-parcoords.R
 \name{add_parcoords}
 \alias{add_parcoords}
+\alias{add_parcoords.default}
 \alias{go_parcoords}
 \alias{go_parcoords_dimension}
 \alias{go_parcoords_domain}
@@ -20,7 +21,9 @@
 \alias{go_parcoords_unselected_line}
 \title{Parcoords traces}
 \usage{
-add_parcoords(
+add_parcoords(fig, ...)
+
+\method{add_parcoords}{default}(
   fig,
   ...,
   data = NULL,

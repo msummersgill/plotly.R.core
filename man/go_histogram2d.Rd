@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-histogram2d.R
 \name{add_histogram2d}
 \alias{add_histogram2d}
+\alias{add_histogram2d.default}
 \alias{go_histogram2d}
 \alias{go_histogram2d_colorbar}
 \alias{go_histogram2d_colorbar_tickfont}
@@ -18,7 +19,9 @@
 \alias{go_histogram2d_ybins}
 \title{Histogram2d traces}
 \usage{
-add_histogram2d(
+add_histogram2d(fig, ...)
+
+\method{add_histogram2d}{default}(
   fig,
   ...,
   data = NULL,

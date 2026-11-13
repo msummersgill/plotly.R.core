@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-scattersmith.R
 \name{add_scattersmith}
 \alias{add_scattersmith}
+\alias{add_scattersmith.default}
 \alias{go_scattersmith}
 \alias{go_scattersmith_hoverlabel}
 \alias{go_scattersmith_hoverlabel_font}
@@ -25,7 +26,9 @@
 \alias{go_scattersmith_unselected_textfont}
 \title{Scattersmith traces}
 \usage{
-add_scattersmith(
+add_scattersmith(fig, ...)
+
+\method{add_scattersmith}{default}(
   fig,
   ...,
   data = NULL,

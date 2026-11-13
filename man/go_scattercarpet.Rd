@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-scattercarpet.R
 \name{add_scattercarpet}
 \alias{add_scattercarpet}
+\alias{add_scattercarpet.default}
 \alias{go_scattercarpet}
 \alias{go_scattercarpet_hoverlabel}
 \alias{go_scattercarpet_hoverlabel_font}
@@ -25,7 +26,9 @@
 \alias{go_scattercarpet_unselected_textfont}
 \title{Scattercarpet traces}
 \usage{
-add_scattercarpet(
+add_scattercarpet(fig, ...)
+
+\method{add_scattercarpet}{default}(
   fig,
   ...,
   data = NULL,

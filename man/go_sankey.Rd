@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-sankey.R
 \name{add_sankey}
 \alias{add_sankey}
+\alias{add_sankey.default}
 \alias{go_sankey}
 \alias{go_sankey_domain}
 \alias{go_sankey_hoverlabel}
@@ -20,7 +21,9 @@
 \alias{go_sankey_textfont}
 \title{Sankey traces}
 \usage{
-add_sankey(
+add_sankey(fig, ...)
+
+\method{add_sankey}{default}(
   fig,
   ...,
   data = NULL,

@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-isosurface.R
 \name{add_isosurface}
 \alias{add_isosurface}
+\alias{add_isosurface.default}
 \alias{go_isosurface}
 \alias{go_isosurface_caps}
 \alias{go_isosurface_caps_x}
@@ -27,7 +28,9 @@
 \alias{go_isosurface_surface}
 \title{Isosurface traces}
 \usage{
-add_isosurface(
+add_isosurface(fig, ...)
+
+\method{add_isosurface}{default}(
   fig,
   ...,
   data = NULL,

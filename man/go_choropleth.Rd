@@ -18,6 +18,7 @@
 \alias{go_choropleth_unselected}
 \alias{go_choropleth_unselected_marker}
 \alias{add_choropleth}
+\alias{add_choropleth.default}
 \title{Choropleth traces}
 \usage{
 go_choropleth(
@@ -251,7 +252,9 @@ go_choropleth_unselected_marker(
   skip_invalid = FALSE
 )
 
-add_choropleth(
+add_choropleth(fig, ...)
+
+\method{add_choropleth}{default}(
   fig,
   ...,
   data = NULL,

@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-sunburst.R
 \name{add_sunburst}
 \alias{add_sunburst}
+\alias{add_sunburst.default}
 \alias{go_sunburst}
 \alias{go_sunburst_domain}
 \alias{go_sunburst_hoverlabel}
@@ -23,7 +24,9 @@
 \alias{go_sunburst_textfont}
 \title{Sunburst traces}
 \usage{
-add_sunburst(
+add_sunburst(fig, ...)
+
+\method{add_sunburst}{default}(
   fig,
   ...,
   data = NULL,

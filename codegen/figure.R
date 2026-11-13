@@ -1,7 +1,7 @@
 # Figure function codegen (the R counterpart of plotly.py/codegen/figure.py).
 #
 # Writes R/zz-gen-figure.R with
-#   - add_<trace>() for every trace type,
+#   - add_<trace>() (an S3 generic with a default method) for every trace type,
 #   - select_/update_/for_each_ functions for every layout subplot type
 #     (xaxis, yaxis, scene, ...), and
 #   - add_/select_/update_/for_each_ functions for layout arrays positioned
@@ -36,14 +36,18 @@ add_trace_source <- function(trace, validators) {
   fn <- paste0("add_", trace)
   extra <- c("row = NULL", "col = NULL", if (has_xy) "secondary_y = NULL")
   args <- c("fig", "...", "data = NULL", paste0(props, " = NULL"), extra, "skip_invalid = FALSE")
+  # add_<trace>() is an S3 generic, so other packages (e.g. plotly, for its
+  # plot_ly() objects) can add methods for their own figure classes
   c(
     sprintf("#' @rdname %s", entry$data_class), # documented with go_<trace>()
     "#' @export",
-    sprintf("%s <- function(", fn),
+    sprintf('%s <- function(fig, ...) UseMethod("%s")', fn, fn),
+    "",
+    sprintf("#' @rdname %s", entry$data_class),
+    "#' @export",
+    sprintf("%s.default <- function(", fn),
     wrap_args(args),
     ") {",
-    "  # plot_ly() objects get the legacy plotly package's behaviour",
-    sprintf('  if (is_legacy_plot(fig)) return(legacy_add_dispatch("%s", environment(), c(list(...), list(data = data))))', trace),
     "  # formula properties (x = ~col) are evaluated in `data` or the figure's data",
     sprintf('  trace <- plotly_object("%s", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))', trace),
     sprintf("  add_trace(fig, trace, row = row, col = col%s)", if (has_xy) ", secondary_y = secondary_y" else ""),

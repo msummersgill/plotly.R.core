@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-surface.R
 \name{add_surface}
 \alias{add_surface}
+\alias{add_surface.default}
 \alias{go_surface}
 \alias{go_surface_colorbar}
 \alias{go_surface_colorbar_tickfont}
@@ -23,7 +24,9 @@
 \alias{go_surface_lightposition}
 \title{Surface traces}
 \usage{
-add_surface(
+add_surface(fig, ...)
+
+\method{add_surface}{default}(
   fig,
   ...,
   data = NULL,

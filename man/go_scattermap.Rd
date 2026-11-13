@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-scattermap.R
 \name{add_scattermap}
 \alias{add_scattermap}
+\alias{add_scattermap.default}
 \alias{go_scattermap}
 \alias{go_scattermap_cluster}
 \alias{go_scattermap_hoverlabel}
@@ -22,7 +23,9 @@
 \alias{go_scattermap_unselected_marker}
 \title{Scattermap traces}
 \usage{
-add_scattermap(
+add_scattermap(fig, ...)
+
+\method{add_scattermap}{default}(
   fig,
   ...,
   data = NULL,

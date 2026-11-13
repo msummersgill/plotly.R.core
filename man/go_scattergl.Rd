@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-scattergl.R
 \name{add_scattergl}
 \alias{add_scattergl}
+\alias{add_scattergl.default}
 \alias{go_scattergl}
 \alias{go_scattergl_error_x}
 \alias{go_scattergl_error_y}
@@ -26,7 +27,9 @@
 \alias{go_scattergl_unselected_textfont}
 \title{Scattergl traces}
 \usage{
-add_scattergl(
+add_scattergl(fig, ...)
+
+\method{add_scattergl}{default}(
   fig,
   ...,
   data = NULL,

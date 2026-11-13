@@ -152,14 +152,23 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
   // Crosstalk ---------------------------------------------------------------
 
   // Put keys and sets (not plotly.js attributes) back on the traces, so the
-  // selection logic (and selection traces) can carry them.
+  // selection logic (and selection traces) can carry them. A trace's key is
+  // a single value or {simple: [values]} (the whole trace stands for those
+  // keys, e.g. a fitted line), an array with a key per point, or an array of
+  // arrays (several keys per point).
   function attachKeys(traces, keys, sets) {
     (traces || []).forEach(function(tr, i) {
       var k = (keys || [])[i], s = (sets || [])[i];
       if (k !== undefined && k !== null) {
-        tr.key = k;
-        tr._isSimpleKey = !Array.isArray(k);
-        tr._isNestedKey = Array.isArray(k) && k.some(Array.isArray);
+        if (isPlainObject(k) && "simple" in k) {
+          tr.key = k.simple;
+          tr._isSimpleKey = true;
+          tr._isNestedKey = false;
+        } else {
+          tr.key = k;
+          tr._isSimpleKey = !Array.isArray(k);
+          tr._isNestedKey = Array.isArray(k) && k.some(Array.isArray);
+        }
       }
       if (s !== undefined && s !== null) tr.set = s;
     });

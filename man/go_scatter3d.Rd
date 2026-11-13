@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-scatter3d.R
 \name{add_scatter3d}
 \alias{add_scatter3d}
+\alias{add_scatter3d.default}
 \alias{go_scatter3d}
 \alias{go_scatter3d_error_x}
 \alias{go_scatter3d_error_y}
@@ -30,7 +31,9 @@
 \alias{go_scatter3d_textfont}
 \title{Scatter3d traces}
 \usage{
-add_scatter3d(
+add_scatter3d(fig, ...)
+
+\method{add_scatter3d}{default}(
   fig,
   ...,
   data = NULL,

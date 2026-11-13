@@ -13,7 +13,7 @@ event_unregister(p, event = NULL)
 event_source(p, source)
 }
 \arguments{
-\item{p}{A \code{\link[=go_figure]{go_figure()}} or \code{\link[=plot_ly]{plot_ly()}} object.}
+\item{p}{A \code{\link[=go_figure]{go_figure()}} or plotly htmlwidget.}
 
 \item{event}{An event name (see \code{\link[=event_data]{event_data()}}).}
 

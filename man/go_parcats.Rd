@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-parcats.R
 \name{add_parcats}
 \alias{add_parcats}
+\alias{add_parcats.default}
 \alias{go_parcats}
 \alias{go_parcats_dimension}
 \alias{go_parcats_domain}
@@ -17,7 +18,9 @@
 \alias{go_parcats_tickfont}
 \title{Parcats traces}
 \usage{
-add_parcats(
+add_parcats(fig, ...)
+
+\method{add_parcats}{default}(
   fig,
   ...,
   data = NULL,

@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-scatterpolar.R
 \name{add_scatterpolar}
 \alias{add_scatterpolar}
+\alias{add_scatterpolar.default}
 \alias{go_scatterpolar}
 \alias{go_scatterpolar_hoverlabel}
 \alias{go_scatterpolar_hoverlabel_font}
@@ -25,7 +26,9 @@
 \alias{go_scatterpolar_unselected_textfont}
 \title{Scatterpolar traces}
 \usage{
-add_scatterpolar(
+add_scatterpolar(fig, ...)
+
+\method{add_scatterpolar}{default}(
   fig,
   ...,
   data = NULL,

@@ -21,6 +21,19 @@ validators_env <- function() {
   the$validators
 }
 
+#' Look up property validators
+#'
+#' For packages building on plotly.core (such as plotly): `get_validator()`
+#' returns the validator of a property, by its dotted path in the plotly.js
+#' schema (e.g. `"scatter.marker.symbol"`, `"layout.xaxis"`), or `NULL` if
+#' there is none. Compound validators list their properties in `children`;
+#' trace validators have a `trace_type`. `available_trace_types()` lists the
+#' trace types.
+#'
+#' @param key A dotted property path.
+#' @return A validator (a list), or `NULL`; or a character vector.
+#' @keywords internal
+#' @export
 get_validator <- function(key) {
   env <- validators_env()
   if (exists(key, envir = env, inherits = FALSE)) env[[key]] else NULL
@@ -556,6 +569,8 @@ vc_compound_array <- function(v, key, entry, skip_invalid = FALSE) {
 
 # Traces and figure data -------------------------------------------------------
 
+#' @rdname get_validator
+#' @export
 available_trace_types <- function() {
   keys <- ls(validators_env())
   keys[vapply(keys, function(k) !is.null(get_validator(k)$trace_type), logical(1))]

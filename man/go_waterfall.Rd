@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-waterfall.R
 \name{add_waterfall}
 \alias{add_waterfall}
+\alias{add_waterfall.default}
 \alias{go_waterfall}
 \alias{go_waterfall_connector}
 \alias{go_waterfall_connector_line}
@@ -23,7 +24,9 @@
 \alias{go_waterfall_totals_marker_line}
 \title{Waterfall traces}
 \usage{
-add_waterfall(
+add_waterfall(fig, ...)
+
+\method{add_waterfall}{default}(
   fig,
   ...,
   data = NULL,

@@ -18,6 +18,7 @@
 \alias{go_choroplethmap_unselected}
 \alias{go_choroplethmap_unselected_marker}
 \alias{add_choroplethmap}
+\alias{add_choroplethmap.default}
 \title{Choroplethmap traces}
 \usage{
 go_choroplethmap(
@@ -256,7 +257,9 @@ go_choroplethmap_unselected_marker(
   skip_invalid = FALSE
 )
 
-add_choroplethmap(
+add_choroplethmap(fig, ...)
+
+\method{add_choroplethmap}{default}(
   fig,
   ...,
   data = NULL,

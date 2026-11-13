@@ -42,9 +42,9 @@ if (requireNamespace("shiny", quietly = TRUE)) {
   expect_error(plotlyProxyInvoke(list(), "restyle"), "proxy object")
 }
 
-# legacy plot_ly() objects render through the same widget
-lw <- as_widget(plot_ly(mtcars, x = ~wt, y = ~mpg, type = "scatter", mode = "markers", source = "cars"))
-stopifnot(inherits(lw, "htmlwidget"), identical(lw$x$source, "cars"), length(lw$x$data) == 1L)
+# htmlwidgets keep their settings in x
+lw <- event_register(plotly_widget(go_figure(go_scatter(y = 1:3))), "plotly_hover")
+stopifnot(inherits(lw, "htmlwidget"), "plotly_hover" %in% lw$x$shinyEvents, identical(as_widget(lw), lw))
 
 # the Plotly Cloud share button is off by default (JS CONFIG_DEFAULTS); config() opts in
 local({

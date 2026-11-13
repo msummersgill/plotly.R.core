@@ -27,7 +27,8 @@ with \code{data} (list of traces), \code{layout}, \code{frames} and \code{config
 \item{config}{Plotly.js configuration options (e.g.
 \code{list(displayModeBar = FALSE)}), merged over those set with \code{\link[=config]{config()}}.}
 
-\item{x}{A figure, \code{\link[=plot_ly]{plot_ly()}} object or htmlwidget.}
+\item{x}{A figure or htmlwidget. \code{as_widget()} is an S3 generic: the
+plotly package adds a method for its \code{plot_ly()} objects.}
 
 \item{...}{Passed to \code{plotly_widget()}.}
 }

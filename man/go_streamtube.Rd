@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-streamtube.R
 \name{add_streamtube}
 \alias{add_streamtube}
+\alias{add_streamtube.default}
 \alias{go_streamtube}
 \alias{go_streamtube_colorbar}
 \alias{go_streamtube_colorbar_tickfont}
@@ -17,7 +18,9 @@
 \alias{go_streamtube_starts}
 \title{Streamtube traces}
 \usage{
-add_streamtube(
+add_streamtube(fig, ...)
+
+\method{add_streamtube}{default}(
   fig,
   ...,
   data = NULL,

@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-image.R
 \name{add_image}
 \alias{add_image}
+\alias{add_image.default}
 \alias{go_image}
 \alias{go_image_hoverlabel}
 \alias{go_image_hoverlabel_font}
@@ -9,7 +10,9 @@
 \alias{go_image_legendgrouptitle_font}
 \title{Image traces}
 \usage{
-add_image(
+add_image(fig, ...)
+
+\method{add_image}{default}(
   fig,
   ...,
   data = NULL,

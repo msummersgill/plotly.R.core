@@ -16,6 +16,7 @@
 \alias{go_carpet_legendgrouptitle}
 \alias{go_carpet_legendgrouptitle_font}
 \alias{add_carpet}
+\alias{add_carpet.default}
 \title{Carpet traces}
 \usage{
 go_carpet(
@@ -311,7 +312,9 @@ go_carpet_legendgrouptitle_font(
   skip_invalid = FALSE
 )
 
-add_carpet(
+add_carpet(fig, ...)
+
+\method{add_carpet}{default}(
   fig,
   ...,
   data = NULL,

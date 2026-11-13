@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-treemap.R
 \name{add_treemap}
 \alias{add_treemap}
+\alias{add_treemap.default}
 \alias{go_treemap}
 \alias{go_treemap_domain}
 \alias{go_treemap_hoverlabel}
@@ -26,7 +27,9 @@
 \alias{go_treemap_tiling}
 \title{Treemap traces}
 \usage{
-add_treemap(
+add_treemap(fig, ...)
+
+\method{add_treemap}{default}(
   fig,
   ...,
   data = NULL,

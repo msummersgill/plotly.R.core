@@ -1,18 +1,16 @@
 # Shiny integration and figure-level widget settings (config, event source,
-# registered events). The functions match the legacy plotly R package, and
-# accept both go_figure objects and legacy plot_ly() objects.
+# registered events). The functions match the legacy plotly R package's.
 #
-# For go_figure objects the settings are stored as attributes ("config",
-# "plotly_source", "plotly_events"); legacy objects store them in p$x.
-
-is_legacy_plot <- function(p) inherits(p, "plotly") && inherits(p, "htmlwidget")
+# For go_figure objects the settings are stored as attributes
+# ("plotly_config", "plotly_source", ...); htmlwidgets (including the plotly
+# package's plot_ly() objects) store them in p$x.
 
 get_widget_setting <- function(p, name) {
-  if (is_legacy_plot(p)) p$x[[name]] else attr(p, paste0("plotly_", name), exact = TRUE)
+  if (inherits(p, "htmlwidget")) p$x[[name]] else attr(p, paste0("plotly_", name), exact = TRUE)
 }
 
 set_widget_setting <- function(p, name, value) {
-  if (is_legacy_plot(p)) {
+  if (inherits(p, "htmlwidget")) {
     p$x[[name]] <- value
   } else {
     check_figure(p)
@@ -26,8 +24,10 @@ set_widget_setting <- function(p, name, value) {
 #' Sets options of the plotly.js `config` object (e.g. `displayModeBar`,
 #' `scrollZoom`, `toImageButtonOptions`), which control interaction rather
 #' than appearance. Options are merged with any set previously.
+#' `config()` is an S3 generic, so packages can handle options of their own
+#' plot classes before the default method validates them.
 #'
-#' @param p A [go_figure()] or [plot_ly()] object.
+#' @param p A [go_figure()] or plotly htmlwidget.
 #' @param ... Named configuration options; see
 #'   <https://plotly.com/javascript/configuration-options/>.
 #' @param locale A locale such as `"de"` or `"fr-ch"`, for translated
@@ -43,13 +43,15 @@ set_widget_setting <- function(p, name, value) {
 #' @examples
 #' go_figure(go_scatter(y = 1:3)) |>
 #'   config(displayModeBar = FALSE, scrollZoom = TRUE, locale = "de")
-config <- function(p, ..., locale = NULL, mathjax = NULL, cloud = FALSE, showSendToCloud = cloud) {
+config <- function(p, ...) UseMethod("config")
+
+#' @rdname config
+#' @export
+config.default <- function(p, ..., locale = NULL, mathjax = NULL, cloud = FALSE, showSendToCloud = cloud) {
   opts <- list(...)
   if (length(opts) && (is.null(names(opts)) || any(!nzchar(names(opts))))) {
     stop("All config options must be named", call. = FALSE)
   }
-  # options of removed plotly.js features, accepted and ignored
-  opts$mapboxAccessToken <- NULL
   bad <- setdiff(names(opts), .config_options)
   if (length(bad)) {
     stop(sprintf("Invalid config option(s): %s\n    Valid options: %s", paste(bad, collapse = ", "),
@@ -117,7 +119,7 @@ DEFAULT_EVENTS <- c(
 #' `event_unregister()` removes events. `event_source()` sets the source id
 #' that [event_data()] uses to tell plots apart (default `"A"`).
 #'
-#' @param p A [go_figure()] or [plot_ly()] object.
+#' @param p A [go_figure()] or plotly htmlwidget.
 #' @param event An event name (see [event_data()]).
 #' @param source A string identifying the plot.
 #' @return The modified figure.
@@ -219,7 +221,7 @@ event_data <- function(event = c(
 #'
 #' `plotlyOutput()` creates a plot output element in a Shiny UI;
 #' `renderPlotly()` renders a [go_figure()], a figure from a `px_*()`
-#' function or a [plot_ly()] object (or a promise of one) into it.
+#' function or a plotly htmlwidget (or a promise of one) into it.
 #'
 #' @param outputId Output variable to read the plot from.
 #' @param width,height Size of the plot output, as a valid CSS unit (e.g.

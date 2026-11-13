@@ -15,7 +15,7 @@
 #' Kaleido.
 #'
 #' @param p A [go_figure()], a figure from a `px_*()` function or a
-#'   [plot_ly()] object.
+#'   plotly htmlwidget (anything [as_widget()] accepts).
 #' @param file Output file; the format is taken from the extension (`.png`,
 #'   `.jpeg`, `.jpg`, `.webp`, `.svg` or `.pdf`).
 #' @param ... Unused.

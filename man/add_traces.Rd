@@ -2,9 +2,12 @@
 % Please edit documentation in R/basefigure.R
 \name{add_traces}
 \alias{add_traces}
+\alias{add_trace}
 \alias{add_trace.go_figure}
 \title{Add traces to a figure}
 \usage{
+add_trace(fig, ...)
+
 \method{add_trace}{go_figure}(
   fig,
   trace,
@@ -27,6 +30,8 @@ add_traces(
 \arguments{
 \item{fig}{A \code{go_figure} object.}
 
+\item{...}{Unused.}
+
 \item{trace}{A trace: a graph object such as \code{\link[=go_scatter]{go_scatter()}}, or a named
 list with a \code{type} element (default \code{"scatter"}).}
 
@@ -40,8 +45,6 @@ trace to several cells.}
 \item{exclude_empty_subplots}{If \code{TRUE}, don't add the trace to subplots
 that have no traces or layout objects yet.}
 
-\item{...}{Unused.}
-
 \item{data}{A list of traces.}
 
 \item{rows, cols, secondary_ys}{Per-trace grid cells and secondary y flags
@@ -51,8 +54,9 @@ for \code{add_traces()}; a single value applies to every trace.}
 The modified figure.
 }
 \description{
-\code{add_trace()} adds one trace and \code{add_traces()} several. (For \code{\link[=plot_ly]{plot_ly()}}
-objects, see \code{\link[=add_trace]{add_trace()}}.)
+\code{add_trace()} adds one trace and \code{add_traces()} several. \code{add_trace()} is
+an S3 generic, so packages can add methods for their own figure classes
+(the plotly package does for \code{plot_ly()} objects).
 }
 \examples{
 go_figure() |>
