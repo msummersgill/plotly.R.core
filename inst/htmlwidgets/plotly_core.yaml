@@ -1,5 +1,3 @@
-dependencies:
-  - name: plotly-main
-    version: 4.3.0
-    src: htmlwidgets/lib/plotlyjs
-    script: plotly.min.js
+# plotly.js itself is attached by plotly_widget() (the full bundle, or a
+# partial bundle; see partial_bundle())
+dependencies: []

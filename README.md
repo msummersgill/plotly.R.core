@@ -65,7 +65,7 @@ column names as strings (as in plotly.py), or vectors.
 ```r
 library(plotly.core)
 
-fig <- mtcars |>
+mtcars |>
   go_figure() |>
   add_scatter(
     x = ~wt,
@@ -84,8 +84,6 @@ fig <- mtcars |>
   update_layout(title = "Fuel economy vs. weight (mtcars)") |>
   update_xaxes(title_text = "Weight (1000 lbs)") |>
   update_yaxes(title_text = "Miles per gallon")
-
-fig
 ```
 
 ![Scatter plot of mtcars weight vs. miles per gallon, coloured by cylinders](man/figures/README-mtcars-scatter.png)
@@ -150,6 +148,17 @@ shinyApp(ui, server)
 
 `plotlyProxy()` and `plotlyProxyInvoke()` update a rendered plot (e.g.
 `"extendTraces"`, `"relayout"`) without redrawing it.
+
+## Smaller pages
+
+Figures load the full plotly.js bundle (about 4.8 MB) by default.
+`partial_bundle()` switches a figure to the smallest of plotly.js's partial
+bundles (shipped with the package, 1.2 to 3 MB) that has all its trace types;
+`options(plotly.core.bundle = "auto")` does this for every figure.
+
+```r
+go_figure(go_bar(x = c("a", "b"), y = c(1, 3))) |> partial_bundle()  # plotly-basic.min.js
+```
 
 ## Static images
 

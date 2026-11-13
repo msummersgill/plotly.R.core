@@ -220,3 +220,31 @@ stopifnot(
   identical(shared$data[[4]]$x$rdate, "datetime"),   # different time zone: not shared
   identical(resolve(shared), plain)
 )
+
+# plotly.js bundles: the full one by default; partial_bundle() picks the
+# smallest partial bundle with the figure's trace types
+local({
+  js <- function(w) Filter(function(d) identical(d$name, "plotly-main"), w$dependencies)[[1]]$script
+  bar <- go_figure(go_bar(x = c("a", "b"), y = 1:2))
+  stopifnot(
+    identical(js(plotly_widget(bar)), "plotly.min.js"),
+    identical(js(plotly_widget(partial_bundle(bar))), "plotly-basic.min.js"),
+    identical(js(plotly_widget(partial_bundle(go_figure(go_violin(y = 1:3))))), "plotly-cartesian.min.js"),
+    identical(js(plotly_widget(partial_bundle(go_figure(go_scatter3d(x = 1, y = 1, z = 1))))), "plotly-gl3d.min.js"),
+    # no partial bundle has sunburst
+    identical(js(plotly_widget(partial_bundle(go_figure(go_sunburst(labels = "a", parents = ""))))), "plotly.min.js"),
+    identical(js(plotly_widget(bar, bundle = "cartesian")), "plotly-cartesian.min.js"),
+    # every bundle file exists
+    all(file.exists(vapply(c("full", names(plotly.core:::PLOTLYJS_BUNDLE_TRACES)), plotly.core:::plotlyjs_bundle_file, "")))
+  )
+  # a named bundle without the figure's trace types: the full one, with a warning
+  w <- tryCatch(plotly_widget(go_figure(go_violin(y = 1:3)), bundle = "basic"), warning = identity)
+  stopifnot(inherits(w, "warning"), grepl("violin", conditionMessage(w)))
+  # trace types in animation frames count
+  anim <- partial_bundle(go_figure(go_bar(y = 1:2), frames = list(list(data = list(go_violin(y = 1:3))))))
+  stopifnot(identical(js(plotly_widget(anim)), "plotly-cartesian.min.js"))
+  # the option applies to every figure
+  op <- options(plotly.core.bundle = "auto")
+  on.exit(options(op))
+  stopifnot(identical(js(plotly_widget(bar)), "plotly-basic.min.js"))
+})

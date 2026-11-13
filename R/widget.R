@@ -13,6 +13,10 @@
 #' @param elementId Optional element id for the widget.
 #' @param config Plotly.js configuration options (e.g.
 #'   `list(displayModeBar = FALSE)`), merged over those set with [config()].
+#' @param bundle The plotly.js bundle to load: `"full"`, `"auto"` (the
+#'   smallest bundle with all the figure's trace types) or the name of a
+#'   partial bundle (see [partial_bundle()]). By default, the one set with
+#'   [partial_bundle()], or the `plotly.core.bundle` option (`"full"` if unset).
 #' @param ... Passed to `plotly_widget()`.
 #' @return An object of class `htmlwidget`.
 #' @details If the figure's layout has no `template`, the default template
@@ -30,7 +34,7 @@
 #' @export
 #' @examples
 #' plotly_widget(list(data = list(list(type = "bar", x = 1:3, y = c(2, 5, 3)))))
-plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL, config = NULL) {
+plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL, config = NULL, bundle = NULL) {
   layout <- unclass(fig$layout %||% list())
   if (is.null(layout$template)) {
     tpl <- default_template()
@@ -52,7 +56,8 @@ plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL, co
   }
   if (!is.null(setting("selectize"))) x$selectize <- selectize_json(setting("selectize"))
   attr(x, "TOJSON_FUNC") <- widget_to_JSON
-  deps <- list()
+  bundle <- bundle %||% setting("bundle") %||% getOption("plotly.core.bundle", "full")
+  deps <- list(plotlyjs_dependency(choose_bundle(bundle, figure_trace_types(x))))
   if (!is.null(cfg$locale) && cfg$locale != "en") deps <- c(deps, list(locale_dependency(cfg$locale)))
   if (identical(setting("mathjax"), "cdn")) deps <- c(deps, list(mathjax_dependency()))
   if (!is.null(x$sets)) deps <- c(deps, crosstalk_deps(x$highlight))
@@ -159,6 +164,93 @@ last_plot <- function() {
 set_last_plot <- function(p) {
   the$last_plot <- p
   invisible(p)
+}
+
+# plotly.js bundles -------------------------------------------------------------
+# The full plotly.js bundle and the partial bundles plotly.js publishes (in
+# inst/htmlwidgets/lib/plotlyjs; their trace types are PLOTLYJS_BUNDLE_TRACES,
+# generated with the plotly.js update in commands.R).
+
+#' Use a smaller plotly.js bundle
+#'
+#' By default, figures load the full plotly.js bundle (about 4.8 MB). plotly.js
+#' also publishes partial bundles with fewer trace types, which make pages
+#' (and files saved with [htmlwidgets::saveWidget()]) much smaller:
+#'
+#' * `"basic"`: bar, pie, scatter (about 1.2 MB)
+#' * `"cartesian"`: also box, contour, heatmap, histogram, histogram2d,
+#'   histogram2dcontour, image, scatterternary, violin
+#' * `"finance"`: bar, candlestick, funnel, funnelarea, histogram,
+#'   indicator, ohlc, pie, scatter, waterfall
+#' * `"geo"`: choropleth, scatter, scattergeo
+#' * `"gl2d"`: parcoords, scatter, scattergl, splom
+#' * `"gl3d"`: cone, isosurface, mesh3d, scatter, scatter3d, streamtube,
+#'   surface, volume
+#' * `"map"`: choroplethmap, densitymap, scatter, scattermap
+#'
+#' `type = "auto"` uses the smallest bundle with all the figure's trace types
+#' (including those in animation frames), or the full bundle if none has
+#' them all. Use `options(plotly.core.bundle = "auto")` to do this for every
+#' figure.
+#'
+#' A page has a single plotly.js: when it shows several figures, they should
+#' use the same bundle (or the full one, which is used if any figure needs it).
+#'
+#' @param p A [go_figure()] or plotly htmlwidget.
+#' @param type `"auto"`, `"full"`, or the name of a partial bundle.
+#' @param local,minified Unused: the bundles are always the minified ones
+#'   shipped with the package (kept for compatibility with the plotly package).
+#' @return The figure, which renders with that bundle.
+#' @export
+#' @examples
+#' fig <- go_figure(go_bar(x = c("a", "b"), y = 1:2)) |> partial_bundle()
+partial_bundle <- function(p, type = "auto", local = TRUE, minified = TRUE) {
+  type <- match.arg(type, c("auto", "full", names(PLOTLYJS_BUNDLE_TRACES)))
+  set_widget_setting(p, "bundle", type)
+}
+
+# trace types of a widget payload (traces and frames' traces)
+figure_trace_types <- function(x) {
+  traces <- c(x$data, unlist(lapply(x$frames, `[[`, "data"), recursive = FALSE))
+  unique(vapply(traces, function(tr) as.character(tr[["type"]] %||% "scatter"), ""))
+}
+
+# The bundle to load: "full", or a partial bundle with all `types`
+choose_bundle <- function(bundle, types) {
+  bundle <- match.arg(bundle, c("auto", "full", names(PLOTLYJS_BUNDLE_TRACES)))
+  if (identical(bundle, "full")) return("full")
+  covers <- vapply(PLOTLYJS_BUNDLE_TRACES, function(t) all(types %in% t), logical(1))
+  if (identical(bundle, "auto")) {
+    if (!any(covers)) return("full")
+    candidates <- names(PLOTLYJS_BUNDLE_TRACES)[covers]
+    sizes <- file.size(vapply(candidates, plotlyjs_bundle_file, ""))
+    return(candidates[[which.min(sizes)]])
+  }
+  if (!covers[[bundle]]) {
+    warning(sprintf("The '%s' plotly.js bundle doesn't have trace type(s) %s; using the full bundle", bundle,
+                    paste0("'", setdiff(types, PLOTLYJS_BUNDLE_TRACES[[bundle]]), "'", collapse = ", ")), call. = FALSE)
+    return("full")
+  }
+  bundle
+}
+
+plotlyjs_bundle_file <- function(bundle) {
+  file.path(system.file("htmlwidgets", "lib", "plotlyjs", package = "plotly.core"),
+            if (identical(bundle, "full")) "plotly.min.js" else paste0("plotly-", bundle, ".min.js"))
+}
+
+# All bundles share a dependency name, so a page loads one plotly.js; the full
+# bundle's version is a little higher, so htmltools picks it when a page also
+# has figures with a partial bundle.
+plotlyjs_dependency <- function(bundle = "full") {
+  htmltools::htmlDependency(
+    name = "plotly-main",
+    version = if (identical(bundle, "full")) paste0(plotlyjs_version(), ".1") else plotlyjs_version(),
+    src = "htmlwidgets/lib/plotlyjs",
+    script = basename(plotlyjs_bundle_file(bundle)),
+    package = "plotly.core",
+    all_files = FALSE
+  )
 }
 
 locale_dependency <- function(locale) {
