@@ -15,6 +15,7 @@
 # (add_<trace>()'s data or the figure's), or in their environment.
 plotly_object <- function(key, arg = NULL, env = NULL, dots = list(), skip_invalid = FALSE, data = NULL) {
   entry <- get_validator(key)
+  problems <- list()
   props <- if (is.null(arg)) list() else {
     if (!is.list(arg) || is.data.frame(arg)) {
       stop(sprintf("The first argument to %s() must be a named list or %s object, not %s",
@@ -35,10 +36,20 @@ plotly_object <- function(key, arg = NULL, env = NULL, dots = list(), skip_inval
     }
     for (i in seq_along(dots)) {
       val <- eval_formulas(dots[[i]], data, names(dots)[[i]])
-      props <- set_magic_property(props, key, entry, names(dots)[[i]], val, skip_invalid)
+      props <- tryCatch(set_magic_property(props, key, entry, names(dots)[[i]], val, skip_invalid), error = function(e) {
+        if (!inherits(e, INVALID_CONDITIONS)) stop(e)
+        problems[[length(problems) + 1L]] <<- e
+        props
+      })
     }
   }
-  out <- vc_compound(props, key, entry, skip_invalid)
+  # invalid arguments are reported together with the other invalid properties
+  out <- tryCatch(vc_compound(props, key, entry, skip_invalid), error = function(e) {
+    if (!length(problems) || !inherits(e, INVALID_CONDITIONS)) stop(e)
+    problems <<- c(problems, e$problems %||% list(e))
+    NULL
+  })
+  if (length(problems)) raise_collected(problems)
   if (!is.null(entry$trace_type)) out <- add_trace_type(out, entry$trace_type)
   out
 }

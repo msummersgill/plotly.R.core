@@ -153,3 +153,16 @@ expect_error(validate_layout(list(width = 5)), "interval \\[10, Inf\\]")
 fig <- list(data = list(tr), layout = lay)
 j <- json(plotly_widget(fig)$x)
 stopifnot(grepl('"type":"scatter"', j, fixed = TRUE), grepl('"title":{"text":"T"}', j, fixed = TRUE))
+
+# every invalid property of an object is reported, not just the first
+local({
+  msg <- tryCatch(go_scatter(y = 1:3, marker_sise = 3, foo = 1, mode = "markrs"), error = conditionMessage)
+  stopifnot(grepl("^3 invalid properties", msg), grepl("'sise'", msg), grepl("'foo'", msg), grepl("'mode'", msg))
+  msg <- tryCatch(go_figure(list(list(type = "bar", foo = 1, marker = list(colr = "red")))), error = conditionMessage)
+  stopifnot(grepl("^2 invalid properties", msg))
+  # a single problem keeps its own message
+  msg <- tryCatch(go_scatter(foo = 1), error = conditionMessage)
+  stopifnot(grepl("^Invalid property specified for object of type go_scatter: 'foo'", msg))
+  e <- tryCatch(go_scatter(foo = 1, bar = 2), error = identity)
+  stopifnot(inherits(e, "plotly_invalid_property"), length(e$problems) == 2L)
+})
