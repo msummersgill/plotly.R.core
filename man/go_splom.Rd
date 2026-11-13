@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-splom.R
 \name{add_splom}
 \alias{add_splom}
+\alias{add_splom.default}
 \alias{go_splom}
 \alias{go_splom_diagonal}
 \alias{go_splom_dimension}
@@ -23,7 +24,9 @@
 \alias{go_splom_unselected_marker}
 \title{Splom traces}
 \usage{
-add_splom(
+add_splom(fig, ...)
+
+\method{add_splom}{default}(
   fig,
   ...,
   data = NULL,

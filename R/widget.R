@@ -6,12 +6,17 @@
 #'
 #' @param fig A [go_figure()], a figure from a `px_*()` function, or a list
 #'   with `data` (list of traces), `layout`, `frames` and `config` elements.
-#' @param x A figure, [plot_ly()] object or htmlwidget.
+#' @param x A figure or htmlwidget. `as_widget()` is an S3 generic: the
+#'   plotly package adds a method for its `plot_ly()` objects.
 #' @param width,height Widget size in CSS units, or `NULL` for the layout's
 #'   `width`/`height` or to fill the container.
 #' @param elementId Optional element id for the widget.
 #' @param config Plotly.js configuration options (e.g.
 #'   `list(displayModeBar = FALSE)`), merged over those set with [config()].
+#' @param bundle The plotly.js bundle to load: `"full"`, `"auto"` (the
+#'   smallest bundle with all the figure's trace types) or the name of a
+#'   partial bundle (see [partial_bundle()]). By default, the one set with
+#'   [partial_bundle()], or the `plotly.core.bundle` option (`"full"` if unset).
 #' @param ... Passed to `plotly_widget()`.
 #' @return An object of class `htmlwidget`.
 #' @details If the figure's layout has no `template`, the default template
@@ -29,7 +34,7 @@
 #' @export
 #' @examples
 #' plotly_widget(list(data = list(list(type = "bar", x = 1:3, y = c(2, 5, 3)))))
-plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL, config = NULL) {
+plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL, config = NULL, bundle = NULL) {
   layout <- unclass(fig$layout %||% list())
   if (is.null(layout$template)) {
     tpl <- default_template()
@@ -49,12 +54,13 @@ plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL, co
   for (k in c("keys", "sets", "frameKeys", "highlight", "fitBounds")) {
     if (!is.null(setting(k))) x[[k]] <- setting(k)
   }
-  if (!is.null(setting("selectize"))) x$selectize <- lp_selectize_json(setting("selectize"))
+  if (!is.null(setting("selectize"))) x$selectize <- selectize_json(setting("selectize"))
   attr(x, "TOJSON_FUNC") <- widget_to_JSON
-  deps <- list()
+  bundle <- bundle %||% setting("bundle") %||% getOption("plotly.core.bundle", "full")
+  deps <- list(plotlyjs_dependency(choose_bundle(bundle, figure_trace_types(x))))
   if (!is.null(cfg$locale) && cfg$locale != "en") deps <- c(deps, list(locale_dependency(cfg$locale)))
   if (identical(setting("mathjax"), "cdn")) deps <- c(deps, list(mathjax_dependency()))
-  if (!is.null(x$sets)) deps <- c(deps, lp_crosstalk_deps(x$highlight))
+  if (!is.null(x$sets)) deps <- c(deps, crosstalk_deps(x$highlight))
   htmlwidgets::createWidget(
     name = "plotly_core",
     x = x,
@@ -74,12 +80,222 @@ plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL, co
 
 #' @rdname plotly_widget
 #' @export
-as_widget <- function(x, ...) {
-  if (inherits(x, "htmlwidget") && !is_legacy_plot(x)) return(x)
-  if (is_legacy_plot(x)) return(legacy_widget(x, ...))
-  plotly_widget(x, ...)
+as_widget <- function(x, ...) UseMethod("as_widget")
+
+#' @export
+as_widget.default <- function(x, ...) plotly_widget(x, ...)
+
+#' @export
+as_widget.htmlwidget <- function(x, ...) x
+
+# Linked highlighting (crosstalk) --------------------------------------------
+# Figures carry crosstalk settings as "plotly_keys", "plotly_sets",
+# "plotly_highlight" and "plotly_selectize" attributes (set by the plotly
+# package's highlight()); the widget's JavaScript does the linking.
+
+# selectize options with their items as a list of rows
+selectize_json <- function(s) {
+  lapply(s, function(o) {
+    if (is.data.frame(o$items)) {
+      it <- o$items
+      o$items <- lapply(seq_len(nrow(it)), function(i) lapply(as.list(it[i, , drop = FALSE]), as.character))
+    }
+    o
+  })
 }
 
+#' @rdname set_plotlyjs_dependency
+#' @param highlight Linked-highlighting options (as set by the plotly
+#'   package's `highlight()`): `selectize` and `dynamic` add their libraries.
+#' @export
+crosstalk_deps <- function(highlight = list()) {
+  if (!requireNamespace("crosstalk", quietly = TRUE)) {
+    stop("Linked highlighting needs the crosstalk package: install.packages(\"crosstalk\")", call. = FALSE)
+  }
+  deps <- crosstalk::crosstalkLibs()
+  if (!identical(highlight$selectize %||% FALSE, FALSE)) {
+    deps <- c(deps, list(htmltools::htmlDependency(
+      name = "selectize", version = "0.12.4", package = "crosstalk", src = "lib/selectize",
+      script = "js/selectize.min.js", stylesheet = "css/selectize.bootstrap3.css"
+    )))
+  }
+  if (isTRUE(highlight$dynamic)) {
+    deps <- c(deps, list(htmltools::htmlDependency(
+      name = "colourpicker", version = "1.1", package = "plotly.core", src = "htmlwidgets/lib/colourpicker",
+      script = "colourpicker.min.js", stylesheet = "colourpicker.min.css"
+    )))
+  }
+  deps
+}
+
+#' JSON of a plot
+#'
+#' Returns the JSON plotly.js receives for a plot.
+#'
+#' @param p A [go_figure()] or anything [as_widget()] accepts (default: the
+#'   last plot printed).
+#' @param jsonedit Show it in an interactive viewer (needs the listviewer
+#'   package)?
+#' @param pretty Pretty-print the JSON?
+#' @param ... Passed to `listviewer::jsonedit()`.
+#' @return The JSON string (or a listviewer widget).
+#' @export
+#' @examples
+#' cat(plotly_json(go_figure(go_bar(y = 1:3)), jsonedit = FALSE))
+plotly_json <- function(p = last_plot(), jsonedit = interactive(), pretty = TRUE, ...) {
+  x <- as_widget(p)$x
+  json <- to_JSON(x[c("data", "layout", "frames", "config")], pretty = pretty)
+  if (jsonedit && requireNamespace("listviewer", quietly = TRUE)) listviewer::jsonedit(json, mode = "form", ...) else json
+}
+
+#' The last plot
+#'
+#' `last_plot()` returns the plot most recently printed (or, for the plotly
+#' package's `plot_ly()` objects, built). `set_last_plot()` records one; it is
+#' for packages that build plots of their own classes.
+#'
+#' @param p A plot.
+#' @return `last_plot()`: the plot. `set_last_plot()`: `p`, invisibly.
+#' @export
+last_plot <- function() {
+  p <- the$last_plot
+  if (is.null(p)) stop("The last plot doesn't exist", call. = FALSE)
+  p
+}
+
+#' @rdname last_plot
+#' @export
+set_last_plot <- function(p) {
+  the$last_plot <- p
+  invisible(p)
+}
+
+# plotly.js bundles -------------------------------------------------------------
+# The full plotly.js bundle and the partial bundles plotly.js publishes (in
+# inst/htmlwidgets/lib/plotlyjs; their trace types are PLOTLYJS_BUNDLE_TRACES,
+# generated with the plotly.js update in commands.R).
+
+#' Use a smaller plotly.js bundle
+#'
+#' By default, figures load the full plotly.js bundle (about 4.8 MB). plotly.js
+#' also publishes partial bundles with fewer trace types, which make pages
+#' (and files saved with [htmlwidgets::saveWidget()]) much smaller:
+#'
+#' * `"basic"`: bar, pie, scatter (about 1.2 MB)
+#' * `"cartesian"`: also box, contour, heatmap, histogram, histogram2d,
+#'   histogram2dcontour, image, scatterternary, violin
+#' * `"finance"`: bar, candlestick, funnel, funnelarea, histogram,
+#'   indicator, ohlc, pie, scatter, waterfall
+#' * `"geo"`: choropleth, scatter, scattergeo
+#' * `"gl2d"`: parcoords, scatter, scattergl, splom
+#' * `"gl3d"`: cone, isosurface, mesh3d, scatter, scatter3d, streamtube,
+#'   surface, volume
+#' * `"map"`: choroplethmap, densitymap, scatter, scattermap
+#'
+#' `type = "auto"` uses the smallest bundle with all the figure's trace types
+#' (including those in animation frames), or the full bundle if none has
+#' them all. Use `options(plotly.core.bundle = "auto")` to do this for every
+#' figure.
+#'
+#' A page has a single plotly.js: when it shows several figures, they should
+#' use the same bundle (or the full one, which is used if any figure needs it).
+#'
+#' `partial_bundle()` is an S3 generic, so packages can add methods for their
+#' own figure classes (the plotly package does for `plot_ly()` objects).
+#'
+#' @param p A [go_figure()] or htmlwidget.
+#' @param type `"auto"`, `"full"`, or the name of a partial bundle.
+#' @param local,minified Unused: the bundles are always the minified ones
+#'   shipped with the package (kept for compatibility with the plotly package).
+#' @return The figure, which renders with that bundle.
+#' @export
+#' @examples
+#' fig <- go_figure(go_bar(x = c("a", "b"), y = 1:2)) |> partial_bundle()
+partial_bundle <- function(p, type = "auto", local = TRUE, minified = TRUE) UseMethod("partial_bundle")
+
+#' @export
+partial_bundle.default <- function(p, type = "auto", local = TRUE, minified = TRUE) {
+  type <- match.arg(type, c("auto", "full", names(PLOTLYJS_BUNDLE_TRACES)))
+  p <- set_widget_setting(p, "bundle", type)
+  # a widget: its plotly.js dependency is replaced now
+  if (inherits(p, "htmlwidget")) p <- set_plotlyjs_dependency(p, choose_bundle(type, figure_trace_types(p$x)))
+  p
+}
+
+#' The plotly.js dependency of a widget
+#'
+#' For packages that create widgets with plotly.core's widget (as the plotly
+#' package does): `plotlyjs_dependency()` is the [htmltools::htmlDependency()]
+#' of a plotly.js bundle, and `set_plotlyjs_dependency()` replaces a widget's.
+#' `locale_dependency()`, `mathjax_dependency()` and `crosstalk_deps()` are
+#' the other dependencies [plotly_widget()] attaches (for a locale, MathJax
+#' and linked highlighting).
+#' The dependency must be attached when the widget is created: htmlwidgets
+#' collects dependencies before a widget's `preRenderHook` runs.
+#'
+#' @param bundle `"full"` or the name of a partial bundle (see
+#'   [partial_bundle()]).
+#' @param w An htmlwidget.
+#' @return An `html_dependency` (a list of them for `crosstalk_deps()`), or
+#'   the widget.
+#' @keywords internal
+#' @export
+set_plotlyjs_dependency <- function(w, bundle = "full") {
+  keep <- !vapply(w$dependencies, function(d) identical(d$name, "plotly-main"), logical(1))
+  w$dependencies <- c(list(plotlyjs_dependency(bundle)), w$dependencies[keep])
+  w
+}
+
+# trace types of a widget payload (traces and frames' traces)
+figure_trace_types <- function(x) {
+  traces <- c(x$data, unlist(lapply(x$frames, `[[`, "data"), recursive = FALSE))
+  unique(vapply(traces, function(tr) as.character(tr[["type"]] %||% "scatter"), ""))
+}
+
+# The bundle to load: "full", or a partial bundle with all `types`
+choose_bundle <- function(bundle, types) {
+  bundle <- match.arg(bundle, c("auto", "full", names(PLOTLYJS_BUNDLE_TRACES)))
+  if (identical(bundle, "full")) return("full")
+  covers <- vapply(PLOTLYJS_BUNDLE_TRACES, function(t) all(types %in% t), logical(1))
+  if (identical(bundle, "auto")) {
+    if (!any(covers)) return("full")
+    candidates <- names(PLOTLYJS_BUNDLE_TRACES)[covers]
+    sizes <- file.size(vapply(candidates, plotlyjs_bundle_file, ""))
+    return(candidates[[which.min(sizes)]])
+  }
+  if (!covers[[bundle]]) {
+    warning(sprintf("The '%s' plotly.js bundle doesn't have trace type(s) %s; using the full bundle", bundle,
+                    paste0("'", setdiff(types, PLOTLYJS_BUNDLE_TRACES[[bundle]]), "'", collapse = ", ")), call. = FALSE)
+    return("full")
+  }
+  bundle
+}
+
+plotlyjs_bundle_file <- function(bundle) {
+  file.path(system.file("htmlwidgets", "lib", "plotlyjs", package = "plotly.core"),
+            if (identical(bundle, "full")) "plotly.min.js" else paste0("plotly-", bundle, ".min.js"))
+}
+
+# All bundles share a dependency name, so a page loads one plotly.js. Of the
+# versions, the widget YAML's full bundle has the lowest (it is replaced by
+# the bundle a widget attaches) and an attached full bundle the highest (so
+# htmltools picks it when a page also has figures with a partial bundle).
+#' @rdname set_plotlyjs_dependency
+#' @export
+plotlyjs_dependency <- function(bundle = "full") {
+  htmltools::htmlDependency(
+    name = "plotly-main",
+    version = paste0(plotlyjs_version(), if (identical(bundle, "full")) ".2" else ".1"),
+    src = "htmlwidgets/lib/plotlyjs",
+    script = basename(plotlyjs_bundle_file(bundle)),
+    package = "plotly.core",
+    all_files = FALSE
+  )
+}
+
+#' @rdname set_plotlyjs_dependency
+#' @param locale A plotly.js locale, e.g. `"de"`.
+#' @export
 locale_dependency <- function(locale) {
   htmltools::htmlDependency(
     name = paste0("plotly-locale-", locale), version = plotlyjs_version(),
@@ -88,6 +304,8 @@ locale_dependency <- function(locale) {
   )
 }
 
+#' @rdname set_plotlyjs_dependency
+#' @export
 mathjax_dependency <- function() {
   htmltools::htmlDependency(
     name = "mathjax", version = "2.7.5",

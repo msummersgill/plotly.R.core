@@ -16,6 +16,7 @@
 \alias{go_contour_line}
 \alias{go_contour_textfont}
 \alias{add_contour}
+\alias{add_contour.default}
 \title{Contour traces}
 \usage{
 go_contour(
@@ -297,7 +298,9 @@ go_contour_textfont(
   skip_invalid = FALSE
 )
 
-add_contour(
+add_contour(fig, ...)
+
+\method{add_contour}{default}(
   fig,
   ...,
   data = NULL,

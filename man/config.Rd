@@ -2,9 +2,12 @@
 % Please edit documentation in R/shiny.R
 \name{config}
 \alias{config}
+\alias{config.default}
 \title{Set plotly.js configuration options}
 \usage{
-config(
+config(p, ...)
+
+\method{config}{default}(
   p,
   ...,
   locale = NULL,
@@ -14,7 +17,7 @@ config(
 )
 }
 \arguments{
-\item{p}{A \code{\link[=go_figure]{go_figure()}} or \code{\link[=plot_ly]{plot_ly()}} object.}
+\item{p}{A \code{\link[=go_figure]{go_figure()}} or plotly htmlwidget.}
 
 \item{...}{Named configuration options; see
 \url{https://plotly.com/javascript/configuration-options/}.}
@@ -37,6 +40,8 @@ The modified figure.
 Sets options of the plotly.js \code{config} object (e.g. \code{displayModeBar},
 \code{scrollZoom}, \code{toImageButtonOptions}), which control interaction rather
 than appearance. Options are merged with any set previously.
+\code{config()} is an S3 generic, so packages can handle options of their own
+plot classes before the default method validates them.
 }
 \examples{
 go_figure(go_scatter(y = 1:3)) |>

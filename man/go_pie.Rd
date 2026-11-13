@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-pie.R
 \name{add_pie}
 \alias{add_pie}
+\alias{add_pie.default}
 \alias{go_pie}
 \alias{go_pie_domain}
 \alias{go_pie_hoverlabel}
@@ -18,7 +19,9 @@
 \alias{go_pie_title_font}
 \title{Pie traces}
 \usage{
-add_pie(
+add_pie(fig, ...)
+
+\method{add_pie}{default}(
   fig,
   ...,
   data = NULL,

@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-table.R
 \name{add_table}
 \alias{add_table}
+\alias{add_table.default}
 \alias{go_table}
 \alias{go_table_cells}
 \alias{go_table_cells_fill}
@@ -18,7 +19,9 @@
 \alias{go_table_legendgrouptitle_font}
 \title{Table traces}
 \usage{
-add_table(
+add_table(fig, ...)
+
+\method{add_table}{default}(
   fig,
   ...,
   data = NULL,

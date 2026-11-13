@@ -21,6 +21,19 @@ validators_env <- function() {
   the$validators
 }
 
+#' Look up property validators
+#'
+#' For packages building on plotly.core (such as plotly): `get_validator()`
+#' returns the validator of a property, by its dotted path in the plotly.js
+#' schema (e.g. `"scatter.marker.symbol"`, `"layout.xaxis"`), or `NULL` if
+#' there is none. Compound validators list their properties in `children`;
+#' trace validators have a `trace_type`. `available_trace_types()` lists the
+#' trace types.
+#'
+#' @param key A dotted property path.
+#' @return A validator (a list), or `NULL`; or a character vector.
+#' @keywords internal
+#' @export
 get_validator <- function(key) {
   env <- validators_env()
   if (exists(key, envir = env, inherits = FALSE)) env[[key]] else NULL
@@ -510,6 +523,16 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
   }
   out <- vector("list", length(v))
   names(out) <- nms
+  # invalid properties and values, all reported together (see raise_collected())
+  problems <- list()
+  collect <- function(expr) {
+    if (skip_invalid) return(expr)
+    tryCatch(expr, error = function(e) {
+      if (!inherits(e, INVALID_CONDITIONS)) stop(e)
+      problems[[length(problems) + 1L]] <<- e
+      NULL
+    })
+  }
   for (i in seq_along(v)) {
     name <- nms[[i]]
     if (!is.null(entry$trace_type) && name == "type") {
@@ -522,18 +545,31 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
     ck <- child_key(key, name)
     if (is.na(ck)) {
       if (skip_invalid) next
-      raise_invalid_prop(name, key, entry)
+      collect(raise_invalid_prop(name, key, entry))
+      next
     }
     val <- if (skip_invalid) {
       tryCatch(validate_coerce(v[[i]], ck, skip_invalid = TRUE), error = function(e) {
         if (inherits(e, INVALID_CONDITIONS)) NULL else stop(e)
       })
     } else {
-      validate_coerce(v[[i]], ck)
+      collect(validate_coerce(v[[i]], ck))
     }
     if (!is.null(val)) out[i] <- list(val)
   }
+  if (length(problems)) raise_collected(problems)
   as_graph_object(out[!vapply(out, is.null, logical(1))], entry)
+}
+
+# One error for all the invalid properties of an object: a single one as is,
+# several as a list of their first lines followed by the first one in full.
+raise_collected <- function(problems) {
+  if (length(problems) == 1L) stop(problems[[1L]])
+  first_lines <- vapply(problems, function(e) strsplit(conditionMessage(e), "\n")[[1L]][[1L]], "")
+  msg <- sprintf("%d invalid properties:\n%s\n\n%s", length(problems),
+                 paste0("  * ", first_lines, collapse = "\n"), conditionMessage(problems[[1L]]))
+  stop(structure(class = c("plotly_invalid_property", "error", "condition"),
+                 list(message = msg, call = NULL, problems = problems)))
 }
 
 # A title may be given as a string, shorthand for list(text = <string>).
@@ -556,6 +592,8 @@ vc_compound_array <- function(v, key, entry, skip_invalid = FALSE) {
 
 # Traces and figure data -------------------------------------------------------
 
+#' @rdname get_validator
+#' @export
 available_trace_types <- function() {
   keys <- ls(validators_env())
   keys[vapply(keys, function(k) !is.null(get_validator(k)$trace_type), logical(1))]

@@ -155,6 +155,7 @@ set_figure_part <- function(fig, name, value) {
 #' @return `x`, invisibly, for `print()`.
 #' @export
 print.go_figure <- function(x, ...) {
+  set_last_plot(x)
   print(plotly_widget(x), ...)
   invisible(x)
 }
@@ -200,8 +201,9 @@ check_row_col_pair <- function(row, col, what = "row and col") {
 
 #' Add traces to a figure
 #'
-#' `add_trace()` adds one trace and `add_traces()` several. (For [plot_ly()]
-#' objects, see [add_trace()].)
+#' `add_trace()` adds one trace and `add_traces()` several. `add_trace()` is
+#' an S3 generic, so packages can add methods for their own figure classes
+#' (the plotly package does for `plot_ly()` objects).
 #'
 #' @param fig A `go_figure` object.
 #' @param trace A trace: a graph object such as [go_scatter()], or a named
@@ -228,6 +230,15 @@ check_row_col_pair <- function(row, col, what = "row and col") {
 #' make_subplots(rows = 1, cols = 2) |>
 #'   add_trace(go_scatter(y = 1:3), row = 1, col = 2)
 NULL
+
+#' @rdname add_traces
+#' @export
+add_trace <- function(fig, ...) UseMethod("add_trace")
+
+#' @export
+add_trace.default <- function(fig, ...) {
+  stop("Don't know how to add a trace to an object of class ", class(fig)[[1L]], call. = FALSE)
+}
 
 #' @rdname add_traces
 #' @export

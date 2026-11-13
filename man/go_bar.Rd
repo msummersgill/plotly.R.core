@@ -26,6 +26,7 @@
 \alias{go_bar_unselected_marker}
 \alias{go_bar_unselected_textfont}
 \alias{add_bar}
+\alias{add_bar.default}
 \title{Bar traces}
 \usage{
 go_bar(
@@ -416,7 +417,9 @@ go_bar_unselected_marker(
 
 go_bar_unselected_textfont(arg = NULL, ..., color = NULL, skip_invalid = FALSE)
 
-add_bar(
+add_bar(fig, ...)
+
+\method{add_bar}{default}(
   fig,
   ...,
   data = NULL,

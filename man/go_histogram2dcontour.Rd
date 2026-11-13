@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-histogram2dcontour.R
 \name{add_histogram2dcontour}
 \alias{add_histogram2dcontour}
+\alias{add_histogram2dcontour.default}
 \alias{go_histogram2dcontour}
 \alias{go_histogram2dcontour_colorbar}
 \alias{go_histogram2dcontour_colorbar_tickfont}
@@ -21,7 +22,9 @@
 \alias{go_histogram2dcontour_ybins}
 \title{Histogram2dcontour traces}
 \usage{
-add_histogram2dcontour(
+add_histogram2dcontour(fig, ...)
+
+\method{add_histogram2dcontour}{default}(
   fig,
   ...,
   data = NULL,

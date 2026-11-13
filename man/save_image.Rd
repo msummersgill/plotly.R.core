@@ -11,7 +11,7 @@ kaleido(...)
 }
 \arguments{
 \item{p}{A \code{\link[=go_figure]{go_figure()}}, a figure from a \verb{px_*()} function or a
-\code{\link[=plot_ly]{plot_ly()}} object.}
+plotly htmlwidget (anything \code{\link[=as_widget]{as_widget()}} accepts).}
 
 \item{file}{Output file; the format is taken from the extension (\code{.png},
 \code{.jpeg}, \code{.jpg}, \code{.webp}, \code{.svg} or \code{.pdf}).}

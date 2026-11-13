@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-icicle.R
 \name{add_icicle}
 \alias{add_icicle}
+\alias{add_icicle.default}
 \alias{go_icicle}
 \alias{go_icicle_domain}
 \alias{go_icicle_hoverlabel}
@@ -26,7 +27,9 @@
 \alias{go_icicle_tiling}
 \title{Icicle traces}
 \usage{
-add_icicle(
+add_icicle(fig, ...)
+
+\method{add_icicle}{default}(
   fig,
   ...,
   data = NULL,

@@ -15,9 +15,9 @@ and following the design of the [plotly Python package](https://github.com/plotl
   generated from the schema.
 - **Validation.** Every property is checked when objects are created or
   modified, with plotly.py-style error messages and "Did you mean" suggestions.
-- **Compatible with existing plotly R code.** `plot_ly()`, `add_*()`,
-  `layout()`, `subplot()` and friends build the same figures as the plotly R
-  package (tested against it), on top of the validated graph objects.
+- **The rendering backend for the plotly R package.** plotly's `plot_ly()`
+  and `ggplotly()` plots are rendered by plotly.core, so existing plotly R
+  code gets the same performance work and plotly.js version.
 - **Minimal Dependencies**
 - **Plotly Express Support.** All 35 `px.*` functions plus `imshow` as `px_scatter()`,
   `px_line()`, `px_bar()`, `px_histogram()`, ... with faceting, marginals,
@@ -65,7 +65,7 @@ column names as strings (as in plotly.py), or vectors.
 ```r
 library(plotly.core)
 
-fig <- mtcars |>
+mtcars |>
   go_figure() |>
   add_scatter(
     x = ~wt,
@@ -84,8 +84,6 @@ fig <- mtcars |>
   update_layout(title = "Fuel economy vs. weight (mtcars)") |>
   update_xaxes(title_text = "Weight (1000 lbs)") |>
   update_yaxes(title_text = "Miles per gallon")
-
-fig
 ```
 
 ![Scatter plot of mtcars weight vs. miles per gallon, coloured by cylinders](man/figures/README-mtcars-scatter.png)
@@ -151,22 +149,16 @@ shinyApp(ui, server)
 `plotlyProxy()` and `plotlyProxyInvoke()` update a rendered plot (e.g.
 `"extendTraces"`, `"relayout"`) without redrawing it.
 
-## Linked highlighting (crosstalk)
+## Smaller pages
 
-Plots made from the same `highlight_key()` data are linked in the browser,
-without Shiny: selecting points in one highlights them in the others (needs
-the crosstalk package).
+Figures load the full plotly.js bundle (about 4.8 MB) by default.
+`partial_bundle()` switches a figure to the smallest of plotly.js's partial
+bundles (shipped with the package, 1.2 to 3 MB) that has all its trace types;
+`options(plotly.core.bundle = "auto")` does this for every figure.
 
 ```r
-d <- mtcars |> highlight_key(~cyl, group = "Cylinders")
-subplot(
-  d |> plot_ly(x = ~wt, y = ~mpg) |> add_markers(),
-  d |> plot_ly(x = ~factor(cyl)) |> add_histogram()
-) |> highlight(on = "plotly_selected", color = "red", selectize = TRUE)
+go_figure(go_bar(x = c("a", "b"), y = c(1, 3))) |> partial_bundle()  # plotly-basic.min.js
 ```
-
-They also link with other crosstalk-compatible widgets (e.g. arranged with
-`crosstalk::bscols()`).
 
 ## Static images
 
@@ -181,27 +173,12 @@ images automatically when Kaleido is available.
 
 ## Existing plotly R code
 
-Code written for the plotly R package keeps working:
-
-```r
-mtcars |> plot_ly(x = ~wt, y = ~mpg, color = ~factor(cyl), size = ~hp) |>
-  add_lines(data = data.frame(wt = c(2, 5), mpg = c(30, 12)), inherit = FALSE,
-            x = ~wt, y = ~mpg, color = I("black")) |>
-  layout(title = "Motor Trend cars")
-```
-
-`legacy_figure()` converts such a plot to a `go_figure` for further editing.
-Features plotly.js has since removed are upgraded when the plot is built:
-Mapbox traces and `layout.mapbox` become their MapLibre `map` equivalents (no
-access token needed), `heatmapgl` becomes `heatmap`, legacy polar charts
-(`r`/`t`) become `scatterpolar`, `titlefont`/`titleside` move into `title`, and
-trace `transforms` (filter, groupby, aggregate, sort) are applied in R (so
-buttons that restyle a transform have no effect).
-Simple features data (the sf package) are drawn with `add_sf()`, or by
-`plot_ly()`, `plot_geo()` and `plot_mapbox()` directly.
-Not supported: `ggplotly()`, Chart Studio (`api_*()`), `orca()`/`export()` (use
-`save_image()`), and the dplyr verbs re-exported by plotly (use dplyr or
-data.table directly). Use the base pipe `|>` instead of `%>%`.
+The [plotly](https://github.com/plotly/plotly.R) package's `plot_ly()`,
+`add_*()`, `layout()`, `subplot()`, `highlight()` and `ggplotly()` are built
+on plotly.core: plotly converts its plots to plotly.core figures and renders
+them with plotly.core's widget. The extension points it uses are S3 generics
+here (`add_trace()`, the `add_<trace type>()` functions, `as_widget()` and
+`config()`), plus `get_validator()` and `set_last_plot()`.
 
 ## Development
 

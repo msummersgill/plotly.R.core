@@ -16,6 +16,18 @@ SCHEMA_PATH <- file.path(PROJECT_ROOT, "codegen", "resources", "plot-schema.json
 WIDGET_YAML <- file.path(PROJECT_ROOT, "inst", "htmlwidgets", "plotly_core.yaml")
 VERSION_FILE <- file.path(PROJECT_ROOT, "R", "zz-gen-version.R")
 
+# Partial bundles shipped alongside the full one (plotly.js's "strict"
+# bundle is left out: it is nearly as large as the full one).
+PARTIAL_BUNDLES <- c("basic", "cartesian", "finance", "geo", "gl2d", "gl3d", "map")
+
+# Trace types in a partial bundle, from plotly.js's lib/index-<bundle>.js
+# (scatter is part of every bundle's core).
+bundle_traces <- function(root, bundle) {
+  index <- readLines(file.path(root, "lib", paste0("index-", bundle, ".js")))
+  traces <- sub(".*require\\('\\./([a-z0-9]+)'\\).*", "\\1", grep("require\\('\\./[a-z0-9]+'\\)", index, value = TRUE))
+  sort(unique(c("scatter", setdiff(traces, c("core", "calendars")))))
+}
+
 # Copy plotly.js assets from a plotly.js package root (a git clone, or an
 # unpacked npm tarball) into the package.
 install_plotlyjs_from <- function(root) {
@@ -24,7 +36,8 @@ install_plotlyjs_from <- function(root) {
   sources <- c(
     bundle = file.path(dist, "plotly.min.js"),
     schema = file.path(dist, "plot-schema.json"),
-    license = file.path(root, "LICENSE")
+    license = file.path(root, "LICENSE"),
+    stats::setNames(file.path(dist, paste0("plotly-", PARTIAL_BUNDLES, ".min.js")), PARTIAL_BUNDLES)
   )
   locales <- list.files(dist, "^plotly-locale-.*\\.js$", full.names = TRUE)
   missing <- sources[!file.exists(sources)]
@@ -39,6 +52,7 @@ install_plotlyjs_from <- function(root) {
 
   ok <- c(
     file.copy(sources[["bundle"]], file.path(PLOTLYJS_DIR, "plotly.min.js"), overwrite = TRUE),
+    file.copy(sources[PARTIAL_BUNDLES], file.path(PLOTLYJS_DIR, basename(sources[PARTIAL_BUNDLES])), overwrite = TRUE),
     file.copy(sources[["license"]], file.path(PLOTLYJS_DIR, "LICENSE"), overwrite = TRUE),
     file.copy(sources[["schema"]], SCHEMA_PATH, overwrite = TRUE),
     file.copy(locales, file.path(locale_dir, sub("^plotly-locale-", "", basename(locales))))
@@ -62,7 +76,13 @@ install_plotlyjs_from <- function(root) {
     "#' @export",
     "#' @examples",
     "#' plotlyjs_version()",
-    sprintf('plotlyjs_version <- function() "%s"', version)
+    sprintf('plotlyjs_version <- function() "%s"', version),
+    "",
+    "# Trace types in each partial bundle shipped in inst/htmlwidgets/lib/plotlyjs",
+    "PLOTLYJS_BUNDLE_TRACES <- list(",
+    paste0("  ", PARTIAL_BUNDLES, " = c(", vapply(PARTIAL_BUNDLES, function(b) paste0('"', bundle_traces(root, b), '"', collapse = ", "), ""), ")",
+           c(rep(",", length(PARTIAL_BUNDLES) - 1L), "")),
+    ")"
   ), VERSION_FILE)
 
   message("Updated plotly.js to ", version, " (", length(locales), " locales)")

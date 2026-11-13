@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-indicator.R
 \name{add_indicator}
 \alias{add_indicator}
+\alias{add_indicator.default}
 \alias{go_indicator}
 \alias{go_indicator_delta}
 \alias{go_indicator_delta_decreasing}
@@ -26,7 +27,9 @@
 \alias{go_indicator_title_font}
 \title{Indicator traces}
 \usage{
-add_indicator(
+add_indicator(fig, ...)
+
+\method{add_indicator}{default}(
   fig,
   ...,
   data = NULL,

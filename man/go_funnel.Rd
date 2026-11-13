@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-funnel.R
 \name{add_funnel}
 \alias{add_funnel}
+\alias{add_funnel.default}
 \alias{go_funnel}
 \alias{go_funnel_connector}
 \alias{go_funnel_connector_line}
@@ -21,7 +22,9 @@
 \alias{go_funnel_textfont}
 \title{Funnel traces}
 \usage{
-add_funnel(
+add_funnel(fig, ...)
+
+\method{add_funnel}{default}(
   fig,
   ...,
   data = NULL,

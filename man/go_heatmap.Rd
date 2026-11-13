@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-heatmap.R
 \name{add_heatmap}
 \alias{add_heatmap}
+\alias{add_heatmap.default}
 \alias{go_heatmap}
 \alias{go_heatmap_colorbar}
 \alias{go_heatmap_colorbar_tickfont}
@@ -15,7 +16,9 @@
 \alias{go_heatmap_textfont}
 \title{Heatmap traces}
 \usage{
-add_heatmap(
+add_heatmap(fig, ...)
+
+\method{add_heatmap}{default}(
   fig,
   ...,
   data = NULL,

@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-volume.R
 \name{add_volume}
 \alias{add_volume}
+\alias{add_volume.default}
 \alias{go_volume}
 \alias{go_volume_caps}
 \alias{go_volume_caps_x}
@@ -27,7 +28,9 @@
 \alias{go_volume_surface}
 \title{Volume traces}
 \usage{
-add_volume(
+add_volume(fig, ...)
+
+\method{add_volume}{default}(
   fig,
   ...,
   data = NULL,

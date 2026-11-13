@@ -12,6 +12,7 @@
 \alias{go_candlestick_legendgrouptitle_font}
 \alias{go_candlestick_line}
 \alias{add_candlestick}
+\alias{add_candlestick.default}
 \title{Candlestick traces}
 \usage{
 go_candlestick(
@@ -144,7 +145,9 @@ go_candlestick_legendgrouptitle_font(
 
 go_candlestick_line(arg = NULL, ..., width = NULL, skip_invalid = FALSE)
 
-add_candlestick(
+add_candlestick(fig, ...)
+
+\method{add_candlestick}{default}(
   fig,
   ...,
   data = NULL,

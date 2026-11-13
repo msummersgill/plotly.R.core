@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-violin.R
 \name{add_violin}
 \alias{add_violin}
+\alias{add_violin.default}
 \alias{go_violin}
 \alias{go_violin_box}
 \alias{go_violin_box_line}
@@ -19,7 +20,9 @@
 \alias{go_violin_unselected_marker}
 \title{Violin traces}
 \usage{
-add_violin(
+add_violin(fig, ...)
+
+\method{add_violin}{default}(
   fig,
   ...,
   data = NULL,

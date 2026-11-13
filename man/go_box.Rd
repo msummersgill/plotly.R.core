@@ -14,6 +14,7 @@
 \alias{go_box_unselected}
 \alias{go_box_unselected_marker}
 \alias{add_box}
+\alias{add_box.default}
 \title{Box traces}
 \usage{
 go_box(
@@ -188,7 +189,9 @@ go_box_unselected_marker(
   skip_invalid = FALSE
 )
 
-add_box(
+add_box(fig, ...)
+
+\method{add_box}{default}(
   fig,
   ...,
   data = NULL,

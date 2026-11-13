@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-scatterternary.R
 \name{add_scatterternary}
 \alias{add_scatterternary}
+\alias{add_scatterternary.default}
 \alias{go_scatterternary}
 \alias{go_scatterternary_hoverlabel}
 \alias{go_scatterternary_hoverlabel_font}
@@ -25,7 +26,9 @@
 \alias{go_scatterternary_unselected_textfont}
 \title{Scatterternary traces}
 \usage{
-add_scatterternary(
+add_scatterternary(fig, ...)
+
+\method{add_scatterternary}{default}(
   fig,
   ...,
   data = NULL,

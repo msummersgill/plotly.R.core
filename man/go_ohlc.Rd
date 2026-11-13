@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-ohlc.R
 \name{add_ohlc}
 \alias{add_ohlc}
+\alias{add_ohlc.default}
 \alias{go_ohlc}
 \alias{go_ohlc_decreasing}
 \alias{go_ohlc_decreasing_line}
@@ -14,7 +15,9 @@
 \alias{go_ohlc_line}
 \title{Ohlc traces}
 \usage{
-add_ohlc(
+add_ohlc(fig, ...)
+
+\method{add_ohlc}{default}(
   fig,
   ...,
   data = NULL,

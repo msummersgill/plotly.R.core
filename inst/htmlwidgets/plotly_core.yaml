@@ -1,3 +1,6 @@
+# The full plotly.js bundle, so every widget has plotly.js. plotly_widget()
+# also attaches the bundle it uses (see plotlyjs_dependency()), at a higher
+# version, which replaces this one.
 dependencies:
   - name: plotly-main
     version: 4.3.0

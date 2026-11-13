@@ -2,6 +2,7 @@
 % Please edit documentation in R/zz-gen-figure.R, R/zz-gen-mesh3d.R
 \name{add_mesh3d}
 \alias{add_mesh3d}
+\alias{add_mesh3d.default}
 \alias{go_mesh3d}
 \alias{go_mesh3d_colorbar}
 \alias{go_mesh3d_colorbar_tickfont}
@@ -17,7 +18,9 @@
 \alias{go_mesh3d_lightposition}
 \title{Mesh3d traces}
 \usage{
-add_mesh3d(
+add_mesh3d(fig, ...)
+
+\method{add_mesh3d}{default}(
   fig,
   ...,
   data = NULL,

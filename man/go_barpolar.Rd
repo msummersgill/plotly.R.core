@@ -21,6 +21,7 @@
 \alias{go_barpolar_unselected_marker}
 \alias{go_barpolar_unselected_textfont}
 \alias{add_barpolar}
+\alias{add_barpolar.default}
 \title{Barpolar traces}
 \usage{
 go_barpolar(
@@ -312,7 +313,9 @@ go_barpolar_unselected_textfont(
   skip_invalid = FALSE
 )
 
-add_barpolar(
+add_barpolar(fig, ...)
+
+\method{add_barpolar}{default}(
   fig,
   ...,
   data = NULL,

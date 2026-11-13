@@ -10,7 +10,8 @@ plotly_widget(
   width = NULL,
   height = NULL,
   elementId = NULL,
-  config = NULL
+  config = NULL,
+  bundle = NULL
 )
 
 as_widget(x, ...)
@@ -27,7 +28,13 @@ with \code{data} (list of traces), \code{layout}, \code{frames} and \code{config
 \item{config}{Plotly.js configuration options (e.g.
 \code{list(displayModeBar = FALSE)}), merged over those set with \code{\link[=config]{config()}}.}
 
-\item{x}{A figure, \code{\link[=plot_ly]{plot_ly()}} object or htmlwidget.}
+\item{bundle}{The plotly.js bundle to load: \code{"full"}, \code{"auto"} (the
+smallest bundle with all the figure's trace types) or the name of a
+partial bundle (see \code{\link[=partial_bundle]{partial_bundle()}}). By default, the one set with
+\code{\link[=partial_bundle]{partial_bundle()}}, or the \code{plotly.core.bundle} option (\code{"full"} if unset).}
+
+\item{x}{A figure or htmlwidget. \code{as_widget()} is an S3 generic: the
+plotly package adds a method for its \code{plot_ly()} objects.}
 
 \item{...}{Passed to \code{plotly_widget()}.}
 }
