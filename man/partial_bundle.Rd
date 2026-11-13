@@ -7,7 +7,7 @@
 partial_bundle(p, type = "auto", local = TRUE, minified = TRUE)
 }
 \arguments{
-\item{p}{A \code{\link[=go_figure]{go_figure()}} or plotly htmlwidget.}
+\item{p}{A \code{\link[=go_figure]{go_figure()}} or htmlwidget.}
 
 \item{type}{\code{"auto"}, \code{"full"}, or the name of a partial bundle.}
 
@@ -43,6 +43,9 @@ figure.
 
 A page has a single plotly.js: when it shows several figures, they should
 use the same bundle (or the full one, which is used if any figure needs it).
+
+\code{partial_bundle()} is an S3 generic, so packages can add methods for their
+own figure classes (the plotly package does for \code{plot_ly()} objects).
 }
 \examples{
 fig <- go_figure(go_bar(x = c("a", "b"), y = 1:2)) |> partial_bundle()

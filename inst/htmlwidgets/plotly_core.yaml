@@ -1,3 +1,8 @@
-# plotly.js itself is attached by plotly_widget() (the full bundle, or a
-# partial bundle; see partial_bundle())
-dependencies: []
+# The full plotly.js bundle, so every widget has plotly.js. plotly_widget()
+# also attaches the bundle it uses (see plotlyjs_dependency()), at a higher
+# version, which replaces this one.
+dependencies:
+  - name: plotly-main
+    version: 4.3.0
+    src: htmlwidgets/lib/plotlyjs
+    script: plotly.min.js
