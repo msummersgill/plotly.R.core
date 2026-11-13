@@ -188,17 +188,49 @@ date_array_spec <- function(v) {
   }
   v <- as.POSIXct(v)
   secs <- as.numeric(v)
-  off <- as.POSIXlt(v)$gmtoff
   ok <- !is.na(secs)
   if (!any(ok)) return(NULL)
-  if (is.null(off) || anyNA(off[ok])) return(NULL)
-  off[!ok] <- 0
+  off <- utc_offsets(secs, ok, attr(v, "tzone"))
+  if (is.null(off)) return(NULL)
   ms <- round((secs + off) * 1000)
   rng <- range(ms[ok])
   if (!all(is.finite(rng)) || rng[1] < -30610224000000 || rng[2] > 253402300799999) return(NULL)
-  out <- typed_array_spec(ms, float32 = FALSE)
+  out <- if (rng[1] >= -INT32_MAX && rng[2] <= INT32_MAX) {
+    typed_array_spec(ms, float32 = FALSE)
+  } else {
+    # outside the 32-bit range (any date-time not within 24 days of 1970):
+    # float64, without typed_array_spec()'s whole-number checks
+    list(dtype = "f8", bdata = base64enc::base64encode(writeBin(ms, raw(), size = 8L, endian = "little")))
+  }
   out$rdate <- "datetime"
   out
+}
+
+# UTC offsets in seconds (0 for missing values) of date-times `secs` (seconds
+# since 1970) in time zone `tz`, or NULL if any is unknown. Offsets only change
+# at time zone transitions, which are at whole seconds and at most one per 15
+# minutes, so they are looked up once per 15-minute bin (with as.POSIXlt(),
+# which is slow) and per value only in bins holding a transition.
+utc_offsets <- function(secs, ok, tz) {
+  bin <- floor(secs[ok] / 900)
+  ub <- unique(bin)
+  gmtoff <- function(s) as.POSIXlt(.POSIXct(s, tz = tz))$gmtoff
+  start <- gmtoff(ub * 900)
+  end <- gmtoff(ub * 900 + 899)
+  if (is.null(start) || is.null(end) || anyNA(start) || anyNA(end)) return(NULL)
+  off <- numeric(length(secs))
+  mixed <- start != end
+  if (!any(mixed) && all(start == start[1L])) {
+    off[ok] <- start[1L] # one offset throughout (e.g. UTC, or no DST change)
+    return(off)
+  }
+  off[ok] <- start[match(bin, ub)]
+  if (any(mixed)) {
+    i <- which(ok)[bin %in% ub[mixed]]
+    off[i] <- gmtoff(secs[i])
+    if (anyNA(off[i])) return(NULL)
+  }
+  off
 }
 
 INT32_MAX <- .Machine$integer.max
@@ -215,7 +247,10 @@ typed_array_spec <- function(v, float32 = isTRUE(getOption("plotly.core.float32"
   v <- unclass(v)
   if (length(d) == 2L) v <- t(v)
   v <- as.vector(v)
-  if (is.double(v) && length(v)) {
+  # whole numbers can be sent as integers; most doubles are not, which the
+  # first few values usually show without scanning them all with range()
+  h <- v[seq_len(min(length(v), 64L))]
+  if (is.double(v) && length(v) && !anyNA(h) && all(h == trunc(h))) {
     r <- range(v)
     if (all(is.finite(r)) && r[1] >= -INT32_MAX && r[2] <= INT32_MAX && all(v == trunc(v))) {
       v <- as.integer(v)

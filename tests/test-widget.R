@@ -153,3 +153,17 @@ stopifnot(
   identical(as.character(to_JSON(list(x = tt, y = I(tt[1]), z = tt[1], e = tt[0]))),
             '{"x":["2024-03-10 01:59:59","2024-03-10 03:00:00.250",null],"y":["2024-03-10 01:59:59"],"z":"2024-03-10 01:59:59","e":[]}')
 )
+
+# UTC offsets looked up per 15-minute bin match as.POSIXlt() for every value,
+# including values next to DST transitions and with fractional seconds
+for (tz in c("America/Chicago", "Europe/London", "Australia/Lord_Howe", "UTC", "")) {
+  set.seed(1)
+  s <- c(as.numeric(as.POSIXct("2024-03-10 01:59:59", tz = "America/Chicago")) + c(-0.5, 0, 0.5, 1, 1.5),
+         runif(5000, 1.6e9, 1.8e9), NA)
+  t <- .POSIXct(s, tz = tz)
+  off <- as.POSIXlt(t)$gmtoff
+  off[is.na(s)] <- 0
+  stopifnot(identical(as.numeric(plotly.core:::utc_offsets(s, !is.na(s), tz)), as.numeric(off)))
+  sp <- ds(t)
+  stopifnot(identical(decode(sp)[!is.na(s)], round((s + off) * 1000)[!is.na(s)]))
+}
