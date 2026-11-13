@@ -1,4 +1,4 @@
-Package: plotly.R.core
+Package: plotly.core
 Type: Package
 Title: Create Interactive Web Graphics via 'plotly.js'
 Version: 0.0.0.9000
@@ -6,12 +6,26 @@ Authors@R: c(
     person("Matthew", "Summersgill", email = "matthew.summersgill@gmail.com",
            role = c("aut", "cre"), comment = c(ORCID = "0009-0007-2955-5543")),
     person("Carson", "Sievert", role = c("aut"),
-           comment = c(ORCID = "0000-0002-4958-2844")),
+           email = "cpsievert1@gmail.com", comment = c(ORCID = "0000-0002-4958-2844")),
     person("Chris", "Parmer", role = "aut"),
     person("Toby", "Hocking", role = "ctb"),
     person("Marianne", "Corvellec", role = "ctb",
            comment = c(ORCID = "0000-0002-1994-3581")),
     person("Pedro", "Despouy", role = "ctb"),
+    person("Matt", "Dowle", role = "ctb",
+           comment = "Design of 'data.table' fread.c and fwrite.c, adapted in src/typed_array.c"),
+    person("Pasha", "Stetsenko", role = "ctb",
+           comment = "'data.table' fread.c"),
+    person("Michael", "Chirico", role = "ctb",
+           comment = c(ORCID = "0000-0003-0787-087X", "'data.table' fread.c and fwrite.c")),
+    person("Arun", "Srinivasan", role = "ctb",
+           comment = "'data.table' fread.c and fwrite.c"),
+    person("Benjamin", "Schwendinger", role = "ctb",
+           comment = c(ORCID = "0000-0003-3315-8114", "'data.table' fread.c and fwrite.c")),
+    person("Ivan", "Krylov", role = "ctb",
+           comment = c(ORCID = "0000-0002-0172-3812", "'data.table' fread.c and fwrite.c")),
+    person(given = "@badasahog", role = "ctb",
+           comment = "GitHub user; 'data.table' fread.c and fwrite.c"),
     person("Plotly Technologies Inc.", role = "cph",
            comment = "Bundled 'plotly.js' library; templates and datasets from 'plotly.py'"),
     person("Dean", "Attali", role = "cph",
@@ -28,15 +42,12 @@ Depends: R (>= 4.1.0)
 Imports:
     base64enc,
     data.table,
-    graphics,
     grDevices,
     htmltools,
     htmlwidgets,
     jsonlite,
-    RColorBrewer,
     stats,
-    utils,
-    viridisLite
+    utils
 Suggests:
     crosstalk,
     knitr,
@@ -45,7 +56,6 @@ Suggests:
     promises,
     reticulate,
     rmarkdown,
-    sf,
     shiny
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
