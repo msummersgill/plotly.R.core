@@ -197,13 +197,42 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
     }
     return out;
   }
+  // Typed arrays repeated in the figure are sent once: the first spec has
+  // `bid`, later ones are {bref: <bid>} (see widget_to_JSON() in R), here
+  // made the same object again.
+  function collectSharedSpecs(obj, ids) {
+    if (Array.isArray(obj)) {
+      for (var i = 0; i < obj.length; i++) collectSharedSpecs(obj[i], ids);
+    } else if (isTypedArraySpec(obj)) {
+      if (obj.bid !== undefined) { ids[obj.bid] = obj; delete obj.bid; }
+    } else if (isPlainObject(obj)) {
+      Object.keys(obj).forEach(function(k) { collectSharedSpecs(obj[k], ids); });
+    }
+  }
+  function resolveSharedSpecs(obj, ids) {
+    if (Array.isArray(obj)) {
+      for (var i = 0; i < obj.length; i++) obj[i] = resolveSharedSpecs(obj[i], ids);
+    } else if (isPlainObject(obj) && !isTypedArraySpec(obj)) {
+      var keys = Object.keys(obj);
+      if (keys.length === 1 && keys[0] === "bref" && ids.hasOwnProperty(obj.bref)) return ids[obj.bref];
+      keys.forEach(function(k) { obj[k] = resolveSharedSpecs(obj[k], ids); });
+    }
+    return obj;
+  }
+  function restoreSharedSpecs(x) {
+    var ids = {};
+    collectSharedSpecs([x.data, x.frames || []], ids);
+    if (Object.keys(ids).length) resolveSharedSpecs([x.data, x.frames || []], ids);
+  }
+
   function restoreDates(obj) {
     if (Array.isArray(obj)) {
       if (obj.length && typeof obj[0] === "object") {
         for (var i = 0; i < obj.length; i++) obj[i] = restoreDates(obj[i]);
       }
     } else if (isTypedArraySpec(obj)) {
-      if (obj.rdate) return restoreDateSpec(obj);
+      // a shared spec is decoded once and its strings shared
+      if (obj.rdate) return obj._restored || (obj._restored = restoreDateSpec(obj));
     } else if (isPlainObject(obj)) {
       Object.keys(obj).forEach(function(k) { obj[k] = restoreDates(obj[k]); });
     }
@@ -614,6 +643,7 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
         renderValue: function(x) {
           registerProxyHandler();
           var config = Object.assign({}, CONFIG_DEFAULTS, x.config || {});
+          restoreSharedSpecs(x);
           restoreDates(x.data);
           (x.frames || []).forEach(function(f) { if (f) restoreDates(f.data); });
           // crosstalk subsets the input traces' arrays

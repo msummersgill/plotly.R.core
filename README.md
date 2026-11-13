@@ -3,40 +3,43 @@
 Interactive web graphics for R, built on [plotly.js](https://github.com/plotly/plotly.js)
 and following the design of the [plotly Python package](https://github.com/plotly/plotly.py).
 
-- **Graph objects generated from the plotly.js schema.** All 47 trace types and
-  every layout object have a `go_*()` constructor (`go_scatter()`,
+
+## Objectives
+
+- **Performance** Take advantage of ongoing development progress of plotly.js 
+  to improve browser rendering performance, and implement optimizations to on
+  the R backend to cut down plot generation time and size in memory
+- **Graph objects and documentation generated from the plotly.js schema.** All 47 trace types and
+  every layout object have a machine-generated `go_*()` constructor (`go_scatter()`,
   `go_bar_marker()`, `go_layout_xaxis()`, ... 979 in total) with documentation
   generated from the schema.
 - **Validation.** Every property is checked when objects are created or
   modified, with plotly.py-style error messages and "Did you mean" suggestions.
-- **Figures as values.** `go_figure()`, `add_<trace>()`, `update_layout()`,
-  `update_traces()`, `update_xaxes()`, `add_annotation()` and friends return
-  new figures, so they chain with the base R pipe `|>`.
-- **Subplots.** `make_subplots()` is a port of plotly.py's, tested against its
-  output; traces and layout objects are placed with `row`, `col` and
-  `secondary_y`.
-- **Plotly Express.** All 35 `px.*` functions plus `imshow` as `px_scatter()`,
+- **Compatible with existing plotly R code.** `plot_ly()`, `add_*()`,
+  `layout()`, `subplot()` and friends build the same figures as the plotly R
+  package (tested against it), on top of the validated graph objects.
+- **Minimal Dependencies**
+- **Plotly Express Support.** All 35 `px.*` functions plus `imshow` as `px_scatter()`,
   `px_line()`, `px_bar()`, `px_histogram()`, ... with faceting, marginals,
   trendlines, animation, the `px.data` datasets, `px.colors` palettes and
   templates. Output is tested against plotly.py on 72 cases.
-- **Minimal dependencies.** data.table, htmlwidgets and jsonlite.
-
 - **Shiny, R Markdown and Quarto.** `plotlyOutput()`/`renderPlotly()`,
   `event_data()` and `plotlyProxy()` work as in the plotly R package; figures
   render inline in documents, as static images in PDF/Word output.
 - **Static images.** `save_image()` exports PNG, JPEG, WebP, SVG and PDF with
   Kaleido.
-- **Compatible with existing plotly R code.** `plot_ly()`, `add_*()`,
-  `layout()`, `subplot()` and friends build the same figures as the plotly R
-  package (tested against it), on top of the validated graph objects.
+
 
 > **Status:** early development; the API may change.
 
 ## Installation
 
+Install the development version from GitHub with
+[remotes](https://remotes.r-lib.org):
+
 ```r
-# From a local clone
-install.packages("path/to/plotly.R.core", repos = NULL, type = "source")
+# install.packages("remotes")
+remotes::install_github("msummersgill/plotly.R.core")
 ```
 
 ## Example: Plotly Express

@@ -112,12 +112,20 @@ to_JSON <- function(x, ...) {
 # The base64 is kept out of R strings: jsonlite writes the figure with a
 # placeholder for each typed array's bdata and C copies the base64 in once
 # (C_json_splice() in src/typed_array.c).
+# An array repeated in the figure (e.g. the same x in many traces) is sent
+# once: its first spec gets `"bid": k` and later ones are {"bref": k}, which
+# the widget's JavaScript turns back into the same object.
 widget_to_JSON <- function(x, ...) {
   blobs <- new.env(parent = emptyenv())
   blobs$list <- list()
+  blobs$seen <- list()
   if (is.list(x[["x"]])) x[["x"]] <- b64_figure(x[["x"]], blobs) else x <- b64_figure(x, blobs)
   json <- to_JSON(x, ...)
   if (!length(blobs$list)) return(json)
+  for (k in unique(blobs$reused)) {
+    # after the bdata string of the first spec: ,"bid":k
+    blobs$list[[k]] <- c(blobs$list[[k]], charToRaw(paste0(',"bid":', k)))
+  }
   out <- .Call(C_json_splice, json, blobs$list)
   class(out) <- class(json)
   out
@@ -144,11 +152,23 @@ b64_traces <- function(traces, blobs = NULL) {
   lapply(traces, b64_encode, blobs = blobs)
 }
 
-# A placeholder (JSON written as is) for raw base64 `r`, added to `blobs`.
-blob_ref <- function(spec, blobs) {
-  if (is.null(blobs) || is.null(spec)) return(spec)
+# The typed array spec of `v` (`kind` "array" or "date") for
+# widget_to_JSON(): bdata is a placeholder (JSON written as is) for its raw
+# base64, added to `blobs`; or {bref: k} when the same values (identical(),
+# which is quick for the same vector) were encoded before as blob k.
+shared_spec <- function(v, kind, blobs) {
+  f32 <- kind == "array" && isTRUE(getOption("plotly.core.float32"))
+  for (s in blobs$seen) {
+    if (s$kind == kind && s$f32 == f32 && length(s$v) == length(v) && identical(s$v, v)) {
+      blobs$reused <- c(blobs$reused, s$k)
+      return(list(bref = s$k))
+    }
+  }
+  spec <- if (kind == "date") date_array_spec(v, raw = TRUE) else typed_array_spec(v, raw = TRUE)
+  if (is.null(spec)) return(NULL)
   k <- length(blobs$list) + 1L
   blobs$list[[k]] <- spec$bdata
+  blobs$seen[[length(blobs$seen) + 1L]] <- list(v = v, kind = kind, f32 = f32, k = k)
   spec$bdata <- structure(paste0("\001", k, "\001"), class = "json")
   spec
 }
@@ -163,9 +183,9 @@ b64_encode <- function(x, blobs = NULL) {
     if (key %in% B64_SKIP_KEYS) next
     v <- x[[i]]
     if (nzchar(key) && is_b64_array(v)) {
-      x[[i]] <- blob_ref(typed_array_spec(v, raw = !is.null(blobs)), blobs)
+      x[[i]] <- if (is.null(blobs)) typed_array_spec(v) else shared_spec(v, "array", blobs)
     } else if (nzchar(key) && is_b64_date(v)) {
-      x[[i]] <- blob_ref(date_array_spec(v, raw = !is.null(blobs)), blobs) %||% v
+      x[[i]] <- (if (is.null(blobs)) date_array_spec(v) else shared_spec(v, "date", blobs)) %||% v
     } else if (is.list(v) && !is.data.frame(v)) {
       x[[i]] <- b64_encode(v, blobs)
     }

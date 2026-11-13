@@ -186,3 +186,39 @@ for (n in 1:7) {
             identical(spec(as_float32(x))$bdata, base64enc::base64encode(writeBin(x, raw(), size = 4L, endian = "little"))),
             identical(spec(seq_len(n))$bdata, base64enc::base64encode(writeBin(seq_len(n), raw(), size = 1L))))
 }
+
+# Arrays repeated in the figure are sent once: the first spec gets "bid" and
+# later ones are {"bref": k}; resolving them gives the figure without sharing
+tt <- as.POSIXct("2024-01-01", tz = "America/Chicago") + 1:50
+yy <- as_float32(sin(1:50 / 7))
+fig <- go_figure() |>
+  add_scattergl(x = tt, y = yy) |>
+  add_scattergl(x = tt, y = cos(1:50 / 7)) |>
+  add_scattergl(x = tt + 0, y = yy, customdata = 1:50) |>   # equal copy of x, same y
+  add_scattergl(x = as.POSIXct(format(tt), tz = "UTC"), y = cos(1:50 / 7) + 0.5) # other time zone
+w <- as_widget(fig)
+w$x$frames <- list(list(name = "f", data = list(list(x = tt, y = cos(1:50 / 7)))))
+shared <- jsonlite::parse_json(plotly.core:::widget_to_JSON(list(x = w$x, evals = list())), simplifyVector = FALSE)$x
+plain <- jsonlite::parse_json(to_JSON(list(x = plotly.core:::b64_figure(w$x))), simplifyVector = FALSE)$x
+ids <- list()
+collect <- function(o) {
+  if (is.list(o)) {
+    if (!is.null(o$bid)) ids[[as.character(o$bid)]] <<- o[setdiff(names(o), "bid")]
+    for (e in o) collect(e)
+  }
+}
+resolve <- function(o) {
+  if (!is.list(o)) return(o)
+  if (identical(names(o), "bref")) return(ids[[as.character(o$bref)]])
+  o$bid <- NULL
+  o[] <- lapply(o, resolve)
+  o
+}
+collect(shared)
+stopifnot(
+  length(ids) == 3L,  # x (data and frame), y of traces 1 and 3, y of traces 2 and frame
+  identical(shared$data[[2]]$x, list(bref = 1L)), identical(shared$data[[3]]$x, list(bref = 1L)),
+  identical(shared$data[[3]]$y, list(bref = 2L)), identical(shared$frames[[1]]$data[[1]]$x, list(bref = 1L)),
+  identical(shared$data[[4]]$x$rdate, "datetime"),   # different time zone: not shared
+  identical(resolve(shared), plain)
+)
