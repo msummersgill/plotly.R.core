@@ -154,16 +154,35 @@ stopifnot(
             '{"x":["2024-03-10 01:59:59","2024-03-10 03:00:00.250",null],"y":["2024-03-10 01:59:59"],"z":"2024-03-10 01:59:59","e":[]}')
 )
 
-# UTC offsets looked up per 15-minute bin match as.POSIXlt() for every value,
-# including values next to DST transitions and with fractional seconds
+# UTC offsets looked up per 15-minute bin (with the transition instant found
+# in bins holding one) match as.POSIXlt() for every value, for sorted and
+# unsorted values, next to DST transitions and with fractional seconds
 for (tz in c("America/Chicago", "Europe/London", "Australia/Lord_Howe", "UTC", "")) {
   set.seed(1)
-  s <- c(as.numeric(as.POSIXct("2024-03-10 01:59:59", tz = "America/Chicago")) + c(-0.5, 0, 0.5, 1, 1.5),
-         runif(5000, 1.6e9, 1.8e9), NA)
-  t <- .POSIXct(s, tz = tz)
-  off <- as.POSIXlt(t)$gmtoff
-  off[is.na(s)] <- 0
-  stopifnot(identical(as.numeric(plotly.core:::utc_offsets(s, !is.na(s), tz)), as.numeric(off)))
-  sp <- ds(t)
-  stopifnot(identical(decode(sp)[!is.na(s)], round((s + off) * 1000)[!is.na(s)]))
+  dst <- as.numeric(as.POSIXct("2024-03-10 01:59:59", tz = "America/Chicago"))
+  for (s in list(c(dst + c(-0.5, 0, 0.5, 1, 1.5), runif(5000, 1.6e9, 1.8e9), NA),
+                 c(seq(1.7e9, 1.74e9, by = 997.3), NA))) {
+    t <- .POSIXct(s, tz = tz)
+    off <- as.POSIXlt(t)$gmtoff
+    sp <- ds(t)
+    stopifnot(identical(decode(sp)[!is.na(s)], round((s + off) * 1000)[!is.na(s)]), is.na(tail(decode(sp), 1)))
+  }
+}
+# The widget serialiser splices the base64 into the JSON jsonlite writes;
+# the result is the same as writing the base64 strings with jsonlite
+fig <- go_figure() |>
+  add_scatter(x = as.POSIXct("2024-01-01", tz = "UTC") + 1:5, y = c(1.5, 2, NA, 4, 5), text = letters[1:5]) |>
+  add_scatter(x = 1:3, y = as_float32(c(0.1, 0.2, 0.3)), customdata = c(1e6, 2, 3))
+w <- as_widget(fig)
+pl <- list(x = w$x, evals = list())
+direct <- to_JSON(list(x = plotly.core:::b64_figure(w$x), evals = list()))
+spliced <- plotly.core:::widget_to_JSON(pl)
+stopifnot(identical(as.character(spliced), as.character(direct)), inherits(spliced, "json"),
+          !grepl("\001", spliced, fixed = TRUE), grepl('"rdate":"datetime"', spliced, fixed = TRUE))
+# base64 of every length mod 3 matches base64enc
+for (n in 1:7) {
+  x <- as.double(seq_len(n)) + 0.5
+  stopifnot(identical(spec(x)$bdata, base64enc::base64encode(writeBin(x, raw(), size = 8L, endian = "little"))),
+            identical(spec(as_float32(x))$bdata, base64enc::base64encode(writeBin(x, raw(), size = 4L, endian = "little"))),
+            identical(spec(seq_len(n))$bdata, base64enc::base64encode(writeBin(seq_len(n), raw(), size = 1L))))
 }

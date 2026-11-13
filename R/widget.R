@@ -109,16 +109,27 @@ to_JSON <- function(x, ...) {
 # base64-encoded typed arrays, which plotly.js decodes much faster than JSON
 # number lists, like plotly.py's convert_to_base64().
 # htmlwidgets calls it with its payload, list(x = <widget data>, evals, ...).
+# The base64 is kept out of R strings: jsonlite writes the figure with a
+# placeholder for each typed array's bdata and C copies the base64 in once
+# (C_json_splice() in src/typed_array.c).
 widget_to_JSON <- function(x, ...) {
-  if (is.list(x[["x"]])) x[["x"]] <- b64_figure(x[["x"]]) else x <- b64_figure(x)
-  to_JSON(x, ...)
+  blobs <- new.env(parent = emptyenv())
+  blobs$list <- list()
+  if (is.list(x[["x"]])) x[["x"]] <- b64_figure(x[["x"]], blobs) else x <- b64_figure(x, blobs)
+  json <- to_JSON(x, ...)
+  if (!length(blobs$list)) return(json)
+  out <- .Call(C_json_splice, json, blobs$list)
+  class(out) <- class(json)
+  out
 }
 
-b64_figure <- function(x) {
-  x[["data"]] <- b64_traces(x[["data"]])
+# `blobs`: an environment collecting the base64 of typed arrays (raw vectors,
+# for widget_to_JSON()); NULL to write it in the specs as strings.
+b64_figure <- function(x, blobs = NULL) {
+  x[["data"]] <- b64_traces(x[["data"]], blobs)
   if (length(x[["frames"]])) {
     x[["frames"]] <- lapply(x[["frames"]], function(f) {
-      if (is.list(f) && length(f[["data"]])) f[["data"]] <- b64_traces(f[["data"]])
+      if (is.list(f) && length(f[["data"]])) f[["data"]] <- b64_traces(f[["data"]], blobs)
       f
     })
   }
@@ -128,14 +139,23 @@ b64_figure <- function(x) {
 # Keys plotly.py never encodes (plotly.js reads them without decoding).
 B64_SKIP_KEYS <- c("geojson", "layer", "layers", "range")
 
-b64_traces <- function(traces) {
+b64_traces <- function(traces, blobs = NULL) {
   if (!is.list(traces)) return(traces)
-  lapply(traces, b64_encode)
+  lapply(traces, b64_encode, blobs = blobs)
+}
+
+# A placeholder (JSON written as is) for raw base64 `r`, added to `blobs`.
+blob_ref <- function(spec, blobs) {
+  if (is.null(blobs) || is.null(spec)) return(spec)
+  k <- length(blobs$list) + 1L
+  blobs$list[[k]] <- spec$bdata
+  spec$bdata <- structure(paste0("\001", k, "\001"), class = "json")
+  spec
 }
 
 # Like convert_to_base64(): only named entries are encoded, unnamed lists
 # (e.g. a z given as a list of rows) are searched but left as JSON arrays.
-b64_encode <- function(x) {
+b64_encode <- function(x, blobs = NULL) {
   if (!is.list(x) || !length(x)) return(x)
   nms <- names(x)
   for (i in seq_along(x)) {
@@ -143,11 +163,11 @@ b64_encode <- function(x) {
     if (key %in% B64_SKIP_KEYS) next
     v <- x[[i]]
     if (nzchar(key) && is_b64_array(v)) {
-      x[[i]] <- typed_array_spec(v)
+      x[[i]] <- blob_ref(typed_array_spec(v, raw = !is.null(blobs)), blobs)
     } else if (nzchar(key) && is_b64_date(v)) {
-      x[[i]] <- date_array_spec(v) %||% v
+      x[[i]] <- blob_ref(date_array_spec(v, raw = !is.null(blobs)), blobs) %||% v
     } else if (is.list(v) && !is.data.frame(v)) {
-      x[[i]] <- b64_encode(v)
+      x[[i]] <- b64_encode(v, blobs)
     }
   }
   x
@@ -177,97 +197,69 @@ is_b64_date <- function(v) {
 # write ("YYYY-MM-DD", "YYYY-MM-DD HH:MM:SS[.mmm]") before plotting: much
 # faster than formatting and escaping strings in R. NULL (send strings) for
 # years outside 1000-9999 or an unknown time zone offset.
-date_array_spec <- function(v) {
+date_array_spec <- function(v, raw = FALSE) {
   if (inherits(v, "Date")) {
     days <- floor(as.numeric(v))
     rng <- suppressWarnings(range(days, na.rm = TRUE))
     if (all(is.finite(rng)) && (rng[1] < -354285 || rng[2] > 2932896)) return(NULL)
-    out <- typed_array_spec(days, float32 = FALSE)
+    out <- typed_array_spec(days, float32 = FALSE, raw = raw)
     out$rdate <- "date"
     return(out)
   }
   v <- as.POSIXct(v)
   secs <- as.numeric(v)
-  ok <- !is.na(secs)
-  if (!any(ok)) return(NULL)
-  off <- utc_offsets(secs, ok, attr(v, "tzone"))
-  if (is.null(off)) return(NULL)
-  ms <- round((secs + off) * 1000)
-  rng <- range(ms[ok])
-  if (!all(is.finite(rng)) || rng[1] < -30610224000000 || rng[2] > 253402300799999) return(NULL)
-  out <- if (rng[1] >= -INT32_MAX && rng[2] <= INT32_MAX) {
-    typed_array_spec(ms, float32 = FALSE)
-  } else {
-    # outside the 32-bit range (any date-time not within 24 days of 1970):
-    # float64, without typed_array_spec()'s whole-number checks
-    list(dtype = "f8", bdata = base64enc::base64encode(writeBin(ms, raw(), size = 8L, endian = "little")))
-  }
+  tz <- attr(v, "tzone")
+  # UTC offsets only change at time zone transitions, which are at whole
+  # seconds and at most one per 15 minutes: they are looked up (with
+  # as.POSIXlt(), which is slow) at the start and end of each 15-minute bin
+  # holding values, and the transition instant found in the few bins where
+  # they differ. The C code applies them to each value.
+  bins <- .Call(C_time_bins, secs)
+  if (!length(bins)) return(NULL)
+  gmtoff <- function(s) as.POSIXlt(.POSIXct(s, tz = tz))$gmtoff
+  off0 <- gmtoff(bins * 900)
+  off1 <- gmtoff(bins * 900 + 899)
+  if (is.null(off0) || is.null(off1) || anyNA(off0) || anyNA(off1)) return(NULL)
+  trans <- rep(Inf, length(bins))
+  mixed <- which(off0 != off1)
+  if (length(mixed)) trans[mixed] <- transition_instants(bins[mixed] * 900, off1[mixed], gmtoff)
+  out <- .Call(C_datetime_array, secs, bins, as.numeric(off0), trans, as.numeric(off1),
+               raw, typed_array_threads())
+  if (is.null(out)) return(NULL)
   out$rdate <- "datetime"
   out
 }
 
-# UTC offsets in seconds (0 for missing values) of date-times `secs` (seconds
-# since 1970) in time zone `tz`, or NULL if any is unknown. Offsets only change
-# at time zone transitions, which are at whole seconds and at most one per 15
-# minutes, so they are looked up once per 15-minute bin (with as.POSIXlt(),
-# which is slow) and per value only in bins holding a transition.
-utc_offsets <- function(secs, ok, tz) {
-  bin <- floor(secs[ok] / 900)
-  ub <- unique(bin)
-  gmtoff <- function(s) as.POSIXlt(.POSIXct(s, tz = tz))$gmtoff
-  start <- gmtoff(ub * 900)
-  end <- gmtoff(ub * 900 + 899)
-  if (is.null(start) || is.null(end) || anyNA(start) || anyNA(end)) return(NULL)
-  off <- numeric(length(secs))
-  mixed <- start != end
-  if (!any(mixed) && all(start == start[1L])) {
-    off[ok] <- start[1L] # one offset throughout (e.g. UTC, or no DST change)
-    return(off)
+# The first whole second in [lo, lo + 899] with UTC offset `off1` (each bin
+# holding one transition, from another offset before it), by bisection.
+transition_instants <- function(lo, off1, gmtoff) {
+  hi <- lo + 899
+  while (any(hi - lo > 1)) {
+    mid <- floor((lo + hi) / 2)
+    after <- gmtoff(mid) == off1
+    hi[after] <- mid[after]
+    lo[!after] <- mid[!after]
   }
-  off[ok] <- start[match(bin, ub)]
-  if (any(mixed)) {
-    i <- which(ok)[bin %in% ub[mixed]]
-    off[i] <- gmtoff(secs[i])
-    if (anyNA(off[i])) return(NULL)
-  }
-  off
+  hi
 }
 
-INT32_MAX <- .Machine$integer.max
+# Threads used to encode typed arrays (when built with OpenMP).
+typed_array_threads <- function() getOption("plotly.core.threads", 2L)
 
 # A plotly.js typed array spec: {dtype, bdata[, shape]}. Integers, and doubles
 # that are all whole numbers in the 32-bit range, are sent as the smallest
 # signed integer type that holds them (lossless). Other doubles are float64,
 # or float32 for as_float32() vectors or with options(plotly.core.float32 =
 # TRUE). Missing values become NaN (a gap in plotly.js), so integers with
-# missing values are sent as floats.
-typed_array_spec <- function(v, float32 = isTRUE(getOption("plotly.core.float32"))) {
+# missing values are sent as floats. The scan and encoding are in C
+# (src/typed_array.c). `raw`: bdata is a raw vector of the base64 in double
+# quotes, for widget_to_JSON().
+typed_array_spec <- function(v, float32 = isTRUE(getOption("plotly.core.float32")), raw = FALSE) {
   float32 <- float32 || inherits(v, "plotly_float32")
   d <- dim(v)
-  v <- unclass(v)
-  if (length(d) == 2L) v <- t(v)
-  v <- as.vector(v)
-  # whole numbers can be sent as integers; most doubles are not, which the
-  # first few values usually show without scanning them all with range()
-  h <- v[seq_len(min(length(v), 64L))]
-  if (is.double(v) && length(v) && !anyNA(h) && all(h == trunc(h))) {
-    r <- range(v)
-    if (all(is.finite(r)) && r[1] >= -INT32_MAX && r[2] <= INT32_MAX && all(v == trunc(v))) {
-      v <- as.integer(v)
-    }
-  }
-  if (is.integer(v) && anyNA(v)) v <- as.double(v)
-  if (is.integer(v) && length(v)) {
-    r <- range(v)
-    size <- if (r[1] >= -128L && r[2] <= 127L) 1L else if (r[1] >= -32768L && r[2] <= 32767L) 2L else 4L
-    dtype <- c("i1", "i2", NA, "i4")[size]
-  } else {
-    v <- as.double(v)
-    size <- if (float32) 4L else 8L
-    dtype <- if (float32) "f4" else "f8"
-  }
-  out <- list(dtype = dtype,
-              bdata = base64enc::base64encode(writeBin(v, raw(), size = size, endian = "little")))
+  if (length(d) == 2L) v <- t(unclass(v))
+  if (!is.null(attributes(v))) attributes(v) <- NULL
+  out <- .Call(C_typed_array, v, float32, raw, typed_array_threads())
   if (length(d) == 2L) out$shape <- paste(d, collapse = ", ")
   out
 }

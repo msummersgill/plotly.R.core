@@ -2,6 +2,7 @@
 "_PACKAGE"
 
 #' @importFrom data.table :=
+#' @useDynLib plotly.core, .registration = TRUE
 NULL
 
 # Let data.table syntax work inside this namespace.
