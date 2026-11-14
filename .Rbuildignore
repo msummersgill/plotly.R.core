@@ -5,3 +5,6 @@
 ^commands\.R$
 ^codegen$
 ^LICENSE\.md$
+^vignettes/bench-out$
+^vignettes/.*_files$
+^vignettes/.*\.html$

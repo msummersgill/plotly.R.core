@@ -6,3 +6,6 @@
 src/*.o
 src/*.so
 src/*.dll
+vignettes/bench-out/
+vignettes/*_files/
+vignettes/*.html
