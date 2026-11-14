@@ -46,7 +46,7 @@ which saves new results to `render-performance/`.
 |---|---|---|
 | `release` | `plot_ly()` with the CRAN plotly release | JSON numbers / date strings |
 | `core_backend` | the same `plot_ly()` code with the development plotly, which renders with plotly.core | base64 typed arrays (float64) |
-| `go_figure_f32` | `go_figure() \|> add_*()` with `as_float32()` | base64 typed arrays (float32) |
+| `go_figure_f32` | `go_figure() \|> add_*()` with `as_float32()`, saved with `write_html()` | base64 typed arrays (float32) |
 | `plotly_py` | plotly.py `go.Figure()` with numpy float64 | base64 typed arrays (float64), ISO date strings |
 | `plotly_py_f32` | plotly.py `go.Figure()` with numpy float32 | base64 typed arrays (float32), ISO date strings |
 
@@ -58,7 +58,7 @@ Three use cases, over a range of sizes:
 
 Metrics:
 
-* **Build + write (s)**: R or Python time from the figure-making call to the standalone HTML page written to disk (`htmlwidgets::saveWidget()`, `fig.write_html()`), after one untimed warm-up run, in a fresh process per variant.
+* **Build + write (s)**: R or Python time from the figure-making call to the standalone HTML page written to disk (`htmlwidgets::saveWidget()` for `plot_ly()`, `write_html()` for `go_figure()`, `fig.write_html()` in Python), after one untimed warm-up run, in a fresh process per variant.
 * **HTML (MB)**: the size of the page, which holds the figure data (plotly.js is a separate file).
 * **Load time (s)**: in headless Chrome, from navigation start to the first frame painted after plotly.js's `newPlot()` resolves. Pages are served over HTTP from localhost with the browser cache disabled, so the time covers fetching and parsing plotly.js and the page, decoding the data and plotting, but no network latency.
 * **newPlot (s)**: the time plotly.js itself spends in `newPlot()`, part of the load time.
@@ -142,20 +142,27 @@ figures <- list(
   ),
   go_figure_f32 = list(
     timeseries = function(t, y) {
-      go_figure() |> add_scattergl(x = t, y = as_float32(y), mode = "lines") |> plotly_widget()
+      go_figure() |> add_scattergl(x = t, y = as_float32(y), mode = "lines")
     },
     multiseries = function(d) {
       fig <- go_figure()
       for (col in names(d)[-1]) {
         fig <- add_scattergl(fig, x = d$t, y = as_float32(d[[col]]), name = col, mode = "lines")
       }
-      plotly_widget(fig)
+      fig
     },
-    heatmap = function(z) go_figure() |> add_heatmap(z = as_float32(z)) |> plotly_widget()
+    heatmap = function(z) go_figure() |> add_heatmap(z = as_float32(z))
   )
 )
 # the same plot_ly() code, run with the development plotly
 figures$core_backend <- figures$release
+
+# how each variant writes its page
+writers <- list(
+  release = function(p, file) htmlwidgets::saveWidget(p, file, selfcontained = FALSE, libdir = "lib"),
+  core_backend = function(p, file) htmlwidgets::saveWidget(p, file, selfcontained = FALSE, libdir = "lib"),
+  go_figure_f32 = function(fig, file) write_html(fig, file, selfcontained = FALSE, libdir = "lib")
+)
 ```
 
 The plotly.py equivalents (`plotly_py_f32` converts the arrays with `astype(np.float32)` before timing starts, as `as_float32()` only marks them):
@@ -213,7 +220,7 @@ Each variant runs in its own fresh process: R variants with callr and the librar
 
 ```{r build-r}
 #| eval: !expr run
-r_worker <- function(variant, fns, cases, reps, outdir) {
+r_worker <- function(variant, fns, write, cases, reps, outdir) {
   suppressPackageStartupMessages(
     if (variant == "go_figure_f32") library(plotly.core) else library(plotly)
   )
@@ -233,9 +240,7 @@ r_worker <- function(variant, fns, cases, reps, outdir) {
     }
     make <- fns[[cases$case[i]]]
     page <- file.path(outdir, sprintf("%s-%d.html", cases$case[i], n))
-    save <- function() {
-      htmlwidgets::saveWidget(do.call(make, args), page, selfcontained = FALSE, libdir = "lib")
-    }
+    save <- function() write(do.call(make, args), page)
     save() # warm-up; also the page the browser loads
     for (rep in seq_len(reps)) {
       gc()
@@ -249,7 +254,7 @@ r_worker <- function(variant, fns, cases, reps, outdir) {
 }
 
 build_r <- do.call(rbind, lapply(names(figures), function(v) {
-  callr::r(r_worker, list(v, figures[[v]], cases, reps, file.path(pages_dir, v)),
+  callr::r(r_worker, list(v, figures[[v]], writers[[v]], cases, reps, file.path(pages_dir, v)),
            libpath = c(libs[[v]], .libPaths()))
 }))
 ```
