@@ -21,6 +21,8 @@ params:
   # Python with plotly, numpy and pandas installed (pip install plotly numpy pandas)
   python: "python3"
   ts_sizes: [10000, 100000, 1000000]
+  # points per series in the 10-series case
+  ms_sizes: [10000, 50000, 100000]
   hm_sizes: [100, 500, 1000, 2000]
   reps: 3
   # Where data and generated pages go
@@ -48,9 +50,10 @@ which saves new results to `render-performance/`.
 | `plotly_py` | plotly.py `go.Figure()` with numpy float64 | base64 typed arrays (float64), ISO date strings |
 | `plotly_py_f32` | plotly.py `go.Figure()` with numpy float32 | base64 typed arrays (float32), ISO date strings |
 
-Two use cases, over a range of sizes:
+Three use cases, over a range of sizes:
 
 * **Large time series**: one `scattergl` line trace with date-time x (1 s steps) and a random walk y.
+* **10 time series**: ten `scattergl` line traces, one per column of a wide data frame, sharing the same date-time x. plotly.core sends an array repeated in a figure once (see `widget_to_JSON()`), so x is sent once rather than ten times.
 * **Large matrix heatmap**: one `heatmap` trace of an n × n matrix.
 
 Metrics:
@@ -97,6 +100,7 @@ The data is generated once in R and written as little-endian doubles, so that ev
 ```{r data}
 cases <- rbind(
   data.frame(case = "timeseries", size = params$ts_sizes, values = params$ts_sizes),
+  data.frame(case = "multiseries", size = params$ms_sizes, values = params$ms_sizes * 10),
   data.frame(case = "heatmap", size = params$hm_sizes, values = params$hm_sizes^2)
 )
 cases$file <- file.path(wd, "data", sprintf("%s-%d.bin", cases$case, cases$size))
@@ -109,6 +113,8 @@ for (i in seq_len(nrow(cases))) {
   n <- cases$size[i]
   v <- if (cases$case[i] == "timeseries") {
     cumsum(rnorm(n))
+  } else if (cases$case[i] == "multiseries") {
+    as.vector(apply(matrix(rnorm(n * 10), n), 2, cumsum))
   } else {
     s <- seq(0, 6 * pi, length.out = n)
     as.vector(outer(sin(s), cos(s)) + rnorm(n * n, sd = 0.1))
@@ -119,25 +125,37 @@ for (i in seq_len(nrow(cases))) {
 
 ## Figure code
 
-The R code for each variant. Every function gets the time series as `t` (POSIXct, UTC) and `y`, or the heatmap as the matrix `z`.
+The R code for each variant. Every function gets the time series as `t` (POSIXct, UTC) and `y`; the 10 series as a data frame `d` with columns `t` and `y01`, ..., `y10`; or the heatmap as the matrix `z`.
 
 ```{r figure-code}
 figures <- list(
   release = list(
     timeseries = function(t, y) plot_ly(x = t, y = y, type = "scattergl", mode = "lines"),
-    heatmap = function(z) plot_ly(z = z, type = "heatmap")
-  ),
-  core_backend = list(
-    timeseries = function(t, y) plot_ly(x = t, y = y, type = "scattergl", mode = "lines"),
+    multiseries = function(d) {
+      p <- plot_ly(d, x = ~t)
+      for (col in names(d)[-1]) {
+        p <- add_trace(p, y = d[[col]], name = col, type = "scattergl", mode = "lines")
+      }
+      p
+    },
     heatmap = function(z) plot_ly(z = z, type = "heatmap")
   ),
   go_figure_f32 = list(
     timeseries = function(t, y) {
       go_figure() |> add_scattergl(x = t, y = as_float32(y), mode = "lines") |> plotly_widget()
     },
+    multiseries = function(d) {
+      fig <- go_figure()
+      for (col in names(d)[-1]) {
+        fig <- add_scattergl(fig, x = d$t, y = as_float32(d[[col]]), name = col, mode = "lines")
+      }
+      plotly_widget(fig)
+    },
     heatmap = function(z) go_figure() |> add_heatmap(z = as_float32(z)) |> plotly_widget()
   )
 )
+# the same plot_ly() code, run with the development plotly
+figures$core_backend <- figures$release
 ```
 
 The plotly.py equivalents (`plotly_py_f32` converts the arrays with `astype(np.float32)` before timing starts, as `as_float32()` only marks them):
@@ -153,6 +171,12 @@ f32 = variant == "plotly_py_f32"
 def timeseries(t, y):
     return go.Figure(go.Scattergl(x=t, y=y, mode="lines"))
 
+def multiseries(t, Y):
+    fig = go.Figure()
+    for j in range(Y.shape[1]):
+        fig.add_trace(go.Scattergl(x=t, y=Y[:, j], name=f"y{j + 1:02d}", mode="lines"))
+    return fig
+
 def heatmap(z):
     return go.Figure(go.Heatmap(z=z))
 
@@ -165,6 +189,9 @@ for case in json.load(open(cases_file)):
     if kind == "timeseries":
         args = (pd.date_range("2024-01-01", periods=n, freq="s"), v)
         make = timeseries
+    elif kind == "multiseries":
+        args = (pd.date_range("2024-01-01", periods=n, freq="s"), v.reshape((n, 10), order="F"))
+        make = multiseries
     else:
         args = (v.reshape((n, n), order="F"),)
         make = heatmap
@@ -195,8 +222,12 @@ r_worker <- function(variant, fns, cases, reps, outdir) {
   for (i in seq_len(nrow(cases))) {
     n <- cases$size[i]
     v <- readBin(cases$file[i], "double", n = cases$values[i], endian = "little")
+    t <- as.POSIXct("2024-01-01", tz = "UTC") + seq_len(n) - 1
     if (cases$case[i] == "timeseries") {
-      args <- list(t = as.POSIXct("2024-01-01", tz = "UTC") + seq_len(n) - 1, y = v)
+      args <- list(t = t, y = v)
+    } else if (cases$case[i] == "multiseries") {
+      y <- matrix(v, n, 10, dimnames = list(NULL, sprintf("y%02d", 1:10)))
+      args <- list(d = data.frame(t = t, y))
     } else {
       args <- list(z = matrix(v, n, n))
     }
@@ -331,7 +362,7 @@ measure_page <- function(url, timeout = 300) {
   smp <- callr::r_bg(sampler, list(browser_pid, peak_file))
   on.exit(smp$kill(), add = TRUE)
   Sys.sleep(0.3) # let the sampler start
-  s$Page$navigate(url)
+  s$Page$navigate(url, wait_ = FALSE) # large pages can take a while to commit
   t0 <- Sys.time()
   repeat {
     done <- s$Runtime$evaluate("!!(window.__bench && window.__bench.done)", timeout_ = timeout)$result$value
@@ -357,12 +388,23 @@ measure_page <- function(url, timeout = 300) {
   )
 }
 
+# on a failure (e.g. Chrome not responding), restart Chrome and try the page once more
+measure_retry <- function(url) {
+  tryCatch(measure_page(url), error = function(e) {
+    message("retrying ", url, " after: ", conditionMessage(e))
+    try(chrome$close(), silent = TRUE)
+    chrome <<- chromote::Chromote$new()
+    browser_pid <<- chrome$get_browser()$get_process()$get_pid()
+    measure_page(url)
+  })
+}
+
 set.seed(1)
 browser <- do.call(rbind, lapply(seq_len(reps), function(rep) {
   # shuffle the page order each round, so drift doesn't favour a variant
   do.call(rbind, lapply(sample(nrow(pages)), function(i) {
     cbind(pages[i, c("variant", "case", "size")], rep = rep,
-          measure_page(sprintf("http://127.0.0.1:%d/%s", port, pages$path[i])))
+          measure_retry(sprintf("http://127.0.0.1:%d/%s", port, pages$path[i])))
   }))
 }))
 server$kill()
@@ -442,9 +484,10 @@ med <- function(d, cols) aggregate(d[cols], d[c("variant", "case", "size")], med
 res <- merge(merge(med(build, "build_sec"), pages),
              med(browser, c("load_sec", "newplot_sec", "js_mb", "peak_renderer_mb", "js_heap_mb")))
 res$variant <- factor(res$variant, variants)
-res$case <- factor(res$case, c("timeseries", "heatmap"))
+res$case <- factor(res$case, c("timeseries", "multiseries", "heatmap"))
 res <- res[order(res$case, res$size, res$variant), ]
 res$label <- ifelse(res$case == "heatmap", paste0(res$size, "²"), format(res$size, big.mark = ",", trim = TRUE))
+res$label[res$case == "multiseries"] <- paste("10 ×", res$label[res$case == "multiseries"])
 
 show_table <- function(case) {
   d <- res[res$case == case, ]
@@ -461,6 +504,12 @@ show_table <- function(case) {
 
 ```{r ts-table}
 show_table("timeseries")
+```
+
+### 10 time series sharing x (`scattergl` lines)
+
+```{r ms-table}
+show_table("multiseries")
 ```
 
 ### Large matrix heatmap
