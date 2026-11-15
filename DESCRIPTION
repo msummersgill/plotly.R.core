@@ -52,7 +52,6 @@ Suggests:
     callr,
     chromote,
     crosstalk,
-    ggplot2,
     httpuv,
     knitr,
     listviewer,
@@ -63,7 +62,6 @@ Suggests:
     quarto,
     reticulate,
     rmarkdown,
-    scales,
     shiny
 VignetteBuilder: quarto
 Encoding: UTF-8

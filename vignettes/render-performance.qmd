@@ -66,7 +66,7 @@ Metrics:
 * **JS heap after load (MB)**: JavaScript heap in use after load and a forced garbage collection, plus array buffers (where Chrome reports them).
 
 ```{r setup}
-library(ggplot2)
+library(plotly.core)
 
 run <- isTRUE(as.logical(Sys.getenv("PLOTLY_CORE_RUN_BENCHMARKS", "false")))
 wd <- normalizePath(params$workdir, mustWork = FALSE)
@@ -526,21 +526,37 @@ show_table("heatmap")
 ### Charts
 
 ```{r charts}
-#| fig-height: 9
 chart_metrics <- c(`build + write (s)` = "build_sec", `HTML (MB)` = "html_mb", `load (s)` = "load_sec",
                    `newPlot (s)` = "newplot_sec", `peak renderer (MB)` = "peak_renderer_mb",
                    `JS heap after (MB)` = "js_heap_mb")
 long <- do.call(rbind, Map(function(col, name) {
   data.frame(res[c("variant", "case", "values")], metric = name, value = res[[col]])
 }, chart_metrics, names(chart_metrics)))
-long$metric <- factor(long$metric, names(chart_metrics))
-ggplot(long, aes(values, value, colour = variant)) +
-  geom_line() + geom_point() +
-  facet_grid(metric ~ case, scales = "free") +
-  scale_x_log10(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
-  scale_y_log10() +
-  labs(x = "values plotted", y = NULL, colour = NULL) +
-  theme_bw() + theme(legend.position = "top")
+long <- long[order(long$variant, long$case, long$values), ]
+
+fig <- px_line(
+  long, x = "values", y = "value", color = "variant",
+  facet_row = "metric", facet_col = "case", markers = TRUE, log_x = TRUE, log_y = TRUE,
+  category_orders = list(variant = variants, metric = names(chart_metrics), case = levels(res$case)),
+  # R in blues, Python in oranges; the darkest of each is the float32 variant
+  color_discrete_map = list(release = "#6baed6", core_backend = "#2171b5", go_figure_f32 = "#08306b",
+                            plotly_py = "#fd8d3c", plotly_py_f32 = "#a63603"),
+  labels = list(values = "values plotted", value = "", variant = ""),
+  facet_row_spacing = 0.03, template = "plotly_white", height = 1400
+)
+# each panel gets its own axis range: the metrics differ by orders of magnitude
+for (ax in grep("^[xy]axis", names(fig$layout), value = TRUE)) {
+  fig$layout[[ax]]$matches <- NULL
+  fig$layout[[ax]]$showticklabels <- TRUE
+  if (startsWith(ax, "x")) fig$layout[[ax]]$dtick <- 1 # a tick per power of 10
+}
+fig |>
+  for_each_annotation(function(a) {
+    a$text <- sub("^[^=]*=", "", a$text) # "case=heatmap" -> "heatmap"
+    a
+  }) |>
+  update_layout(legend = list(orientation = "h", y = 1.03, yanchor = "bottom", x = 0)) |>
+  partial_bundle("auto")
 ```
 
 ### Relative to the CRAN release
