@@ -6,7 +6,11 @@
 # package's plot_ly() objects) store them in p$x.
 
 get_widget_setting <- function(p, name) {
-  if (inherits(p, "htmlwidget")) p$x[[name]] else attr(p, paste0("plotly_", name), exact = TRUE)
+  if (inherits(p, "htmlwidget")) {
+    p$x[[name]]
+  } else {
+    attr(p, paste0("plotly_", name), exact = TRUE)
+  }
 }
 
 set_widget_setting <- function(p, name, value) {
@@ -47,36 +51,77 @@ config <- function(p, ...) UseMethod("config")
 
 #' @rdname config
 #' @export
-config.default <- function(p, ..., locale = NULL, mathjax = NULL, cloud = FALSE, showSendToCloud = cloud) {
+config.default <- function(
+  p,
+  ...,
+  locale = NULL,
+  mathjax = NULL,
+  cloud = FALSE,
+  showSendToCloud = cloud
+) {
   opts <- list(...)
   if (length(opts) && (is.null(names(opts)) || any(!nzchar(names(opts))))) {
     stop("All config options must be named", call. = FALSE)
   }
   bad <- setdiff(names(opts), .config_options)
   if (length(bad)) {
-    stop(sprintf("Invalid config option(s): %s\n    Valid options: %s", paste(bad, collapse = ", "),
-                 paste(.config_options, collapse = ", ")), call. = FALSE)
+    stop(
+      sprintf(
+        "Invalid config option(s): %s\n    Valid options: %s",
+        paste(bad, collapse = ", "),
+        paste(.config_options, collapse = ", ")
+      ),
+      call. = FALSE
+    )
   }
   if (!is.null(locale)) {
     # plotly.js locale names are lower case ("zh-cn"); "zh-CN" also works
-    if (!locale %in% available_locales() && tolower(locale) %in% available_locales()) locale <- tolower(locale)
+    if (
+      !locale %in% available_locales() &&
+        tolower(locale) %in% available_locales()
+    ) {
+      locale <- tolower(locale)
+    }
     if (!locale %in% available_locales()) {
-      stop(sprintf("Unknown locale '%s'. Available locales: %s", locale,
-                   paste(available_locales(), collapse = ", ")), call. = FALSE)
+      stop(
+        sprintf(
+          "Unknown locale '%s'. Available locales: %s",
+          locale,
+          paste(available_locales(), collapse = ", ")
+        ),
+        call. = FALSE
+      )
     }
     opts$locale <- locale
   }
   if (!is.null(mathjax)) {
-    if (!identical(mathjax, "cdn")) stop("Only `mathjax = \"cdn\"` is supported", call. = FALSE)
+    if (!identical(mathjax, "cdn")) {
+      stop("Only `mathjax = \"cdn\"` is supported", call. = FALSE)
+    }
     p <- set_widget_setting(p, "mathjax", mathjax)
   }
-  if (!missing(cloud) || !missing(showSendToCloud)) opts$showSendToCloud <- isTRUE(showSendToCloud)
+  if (!missing(cloud) || !missing(showSendToCloud)) {
+    opts$showSendToCloud <- isTRUE(showSendToCloud)
+  }
   current <- get_widget_setting(p, "config") %||% list()
   set_widget_setting(p, "config", utils::modifyList(current, opts))
 }
 
 available_locales <- function() {
-  sub("[.]js$", "", list.files(system.file("htmlwidgets", "lib", "plotlyjs", "locales", package = "plotly.core"), "[.]js$"))
+  sub(
+    "[.]js$",
+    "",
+    list.files(
+      system.file(
+        "htmlwidgets",
+        "lib",
+        "plotlyjs",
+        "locales",
+        package = "plotly.core"
+      ),
+      "[.]js$"
+    )
+  )
 }
 
 #' Wrap text for LaTeX rendering
@@ -96,17 +141,36 @@ TeX <- function(x) paste0("$", x, "$")
 # Shiny events -----------------------------------------------------------------------
 
 EVENT_NAMES <- c(
-  "plotly_hover", "plotly_unhover", "plotly_click", "plotly_doubleclick",
-  "plotly_selected", "plotly_selecting", "plotly_brushed", "plotly_brushing",
-  "plotly_deselect", "plotly_relayout", "plotly_restyle", "plotly_legendclick",
-  "plotly_legenddoubleclick", "plotly_clickannotation", "plotly_afterplot",
+  "plotly_hover",
+  "plotly_unhover",
+  "plotly_click",
+  "plotly_doubleclick",
+  "plotly_selected",
+  "plotly_selecting",
+  "plotly_brushed",
+  "plotly_brushing",
+  "plotly_deselect",
+  "plotly_relayout",
+  "plotly_restyle",
+  "plotly_legendclick",
+  "plotly_legenddoubleclick",
+  "plotly_clickannotation",
+  "plotly_afterplot",
   "plotly_sunburstclick"
 )
 
 DEFAULT_EVENTS <- c(
-  "plotly_hover", "plotly_click", "plotly_selected", "plotly_relayout", "plotly_brushed",
-  "plotly_brushing", "plotly_clickannotation", "plotly_doubleclick", "plotly_deselect",
-  "plotly_afterplot", "plotly_sunburstclick"
+  "plotly_hover",
+  "plotly_click",
+  "plotly_selected",
+  "plotly_relayout",
+  "plotly_brushed",
+  "plotly_brushing",
+  "plotly_clickannotation",
+  "plotly_doubleclick",
+  "plotly_deselect",
+  "plotly_afterplot",
+  "plotly_sunburstclick"
 )
 
 #' Register plotly events for Shiny
@@ -130,20 +194,30 @@ DEFAULT_EVENTS <- c(
 #'   event_register("plotly_legendclick")
 event_register <- function(p, event = NULL) {
   event <- match.arg(event, EVENT_NAMES)
-  set_widget_setting(p, "shinyEvents", unique(c(get_widget_setting(p, "shinyEvents") %||% DEFAULT_EVENTS, event)))
+  set_widget_setting(
+    p,
+    "shinyEvents",
+    unique(c(get_widget_setting(p, "shinyEvents") %||% DEFAULT_EVENTS, event))
+  )
 }
 
 #' @rdname event_register
 #' @export
 event_unregister <- function(p, event = NULL) {
   event <- match.arg(event, EVENT_NAMES)
-  set_widget_setting(p, "shinyEvents", setdiff(get_widget_setting(p, "shinyEvents") %||% DEFAULT_EVENTS, event))
+  set_widget_setting(
+    p,
+    "shinyEvents",
+    setdiff(get_widget_setting(p, "shinyEvents") %||% DEFAULT_EVENTS, event)
+  )
 }
 
 #' @rdname event_register
 #' @export
 event_source <- function(p, source) {
-  if (!is.character(source) || length(source) != 1L) stop("`source` must be a single string", call. = FALSE)
+  if (!is.character(source) || length(source) != 1L) {
+    stop("`source` must be a single string", call. = FALSE)
+  }
   set_widget_setting(p, "source", source)
 }
 
@@ -174,25 +248,50 @@ event_source <- function(p, source) {
 #'   }
 #'   shiny::shinyApp(ui, server)
 #' }
-event_data <- function(event = c(
-                         "plotly_hover", "plotly_unhover", "plotly_click", "plotly_doubleclick",
-                         "plotly_selected", "plotly_selecting", "plotly_brushed", "plotly_brushing",
-                         "plotly_deselect", "plotly_relayout", "plotly_restyle", "plotly_legendclick",
-                         "plotly_legenddoubleclick", "plotly_clickannotation", "plotly_afterplot",
-                         "plotly_sunburstclick"
-                       ),
-                       source = "A", session = shiny::getDefaultReactiveDomain(),
-                       priority = c("input", "event")) {
+event_data <- function(
+  event = c(
+    "plotly_hover",
+    "plotly_unhover",
+    "plotly_click",
+    "plotly_doubleclick",
+    "plotly_selected",
+    "plotly_selecting",
+    "plotly_brushed",
+    "plotly_brushing",
+    "plotly_deselect",
+    "plotly_relayout",
+    "plotly_restyle",
+    "plotly_legendclick",
+    "plotly_legenddoubleclick",
+    "plotly_clickannotation",
+    "plotly_afterplot",
+    "plotly_sunburstclick"
+  ),
+  source = "A",
+  session = shiny::getDefaultReactiveDomain(),
+  priority = c("input", "event")
+) {
   if (is.null(session)) {
-    stop("No reactive domain detected. This function can only be called \nfrom within a reactive shiny context.", call. = FALSE)
+    stop(
+      "No reactive domain detected. This function can only be called \nfrom within a reactive shiny context.",
+      call. = FALSE
+    )
   }
   event <- match.arg(event)
   event_id <- paste(event, source, sep = "-")
   session$onFlushed(function() {
     if (!event_id %in% session$userData$plotlyShinyEventIDs) {
-      warning("The '", event, "' event tied a source ID of '", source, "' is not registered. ",
-              "In order to obtain this event data, please add `event_register(p, '", event,
-              "')` to the plot (`p`) that you wish to obtain event data from.", call. = FALSE)
+      warning(
+        "The '",
+        event,
+        "' event tied a source ID of '",
+        source,
+        "' is not registered. ",
+        "In order to obtain this event data, please add `event_register(p, '",
+        event,
+        "')` to the plot (`p`) that you wish to obtain event data from.",
+        call. = FALSE
+      )
     }
   })
   parse <- if (event %in% c("plotly_legendclick", "plotly_legenddoubleclick")) {
@@ -204,15 +303,29 @@ event_data <- function(event = c(
     v <- session$rootScope()$input[[event_id]]
     if (is.null(v)) v else parse(v)
   }
-  priority <- if (event %in% c("plotly_doubleclick", "plotly_deselect", "plotly_afterplot")) "event" else match.arg(priority)
-  if (priority == "event") return(parsed_input())
+  priority <- if (
+    event %in% c("plotly_doubleclick", "plotly_deselect", "plotly_afterplot")
+  ) {
+    "event"
+  } else {
+    match.arg(priority)
+  }
+  if (priority == "event") {
+    return(parsed_input())
+  }
   store <- session$userData$plotlyInputStore
   if (!event_id %in% shiny::isolate(names(store))) {
     session$userData$plotlyInputStore <- store %||% shiny::reactiveValues()
-    session$userData$plotlyInputStore[[event_id]] <- shiny::isolate(parsed_input())
-    shiny::observe({
-      session$userData$plotlyInputStore[[event_id]] <- parsed_input()
-    }, priority = 10000, domain = session)
+    session$userData$plotlyInputStore[[
+      event_id
+    ]] <- shiny::isolate(parsed_input())
+    shiny::observe(
+      {
+        session$userData$plotlyInputStore[[event_id]] <- parsed_input()
+      },
+      priority = 10000,
+      domain = session
+    )
   }
   session$userData$plotlyInputStore[[event_id]]
 }
@@ -237,11 +350,25 @@ event_data <- function(event = c(
 #'   Shiny render function.
 #' @seealso [event_data()], [plotlyProxy()]
 #' @export
-plotlyOutput <- function(outputId, width = "100%", height = "400px", inline = FALSE,
-                         reportTheme = TRUE, fill = !inline) {
-  htmlwidgets::shinyWidgetOutput(outputId, name = "plotly_core", width = width, height = height,
-                                 package = "plotly.core", inline = inline, reportSize = TRUE,
-                                 reportTheme = reportTheme, fill = fill)
+plotlyOutput <- function(
+  outputId,
+  width = "100%",
+  height = "400px",
+  inline = FALSE,
+  reportTheme = TRUE,
+  fill = !inline
+) {
+  htmlwidgets::shinyWidgetOutput(
+    outputId,
+    name = "plotly_core",
+    width = width,
+    height = height,
+    package = "plotly.core",
+    inline = inline,
+    reportSize = TRUE,
+    reportTheme = reportTheme,
+    fill = fill
+  )
 }
 
 #' @rdname plotlyOutput
@@ -252,9 +379,17 @@ renderPlotly <- function(expr, env = parent.frame(), quoted = FALSE) {
     expr <- substitute(expr)
   }
   shiny::installExprFunction(expr, "func", env, quoted)
-  expr2 <- quote(getFromNamespace("prepare_shiny_widget", "plotly.core")(func()))
-  htmlwidgets::shinyRenderWidget(expr2, plotlyOutput, environment(), quoted,
-                                 cacheHint = list(label = "renderPlotly", userExpr = expr))
+  expr2 <- quote(getFromNamespace(
+    "prepare_shiny_widget",
+    "plotly.core"
+  )(func()))
+  htmlwidgets::shinyRenderWidget(
+    expr2,
+    plotlyOutput,
+    environment(),
+    quoted,
+    cacheHint = list(label = "renderPlotly", userExpr = expr)
+  )
 }
 
 # Turn a figure (or a promise of one) into a widget and record its events so
@@ -266,7 +401,10 @@ prepare_shiny_widget <- function(x) {
     session <- shiny::getDefaultReactiveDomain()
     if (!is.null(session)) {
       ids <- paste(w$x$shinyEvents, w$x$source, sep = "-")
-      session$userData$plotlyShinyEventIDs <- unique(c(session$userData$plotlyShinyEventIDs, ids))
+      session$userData$plotlyShinyEventIDs <- unique(c(
+        session$userData$plotlyShinyEventIDs,
+        ids
+      ))
     }
     w
   }
@@ -307,32 +445,82 @@ prepare_shiny_widget <- function(x) {
 #'   }
 #'   shiny::shinyApp(ui, server)
 #' }
-plotlyProxy <- function(outputId, session = shiny::getDefaultReactiveDomain(), deferUntilFlush = TRUE) {
-  if (is.null(session)) stop("plotlyProxy must be called from the server function of a Shiny app", call. = FALSE)
-  if (!is.null(session$ns) && nzchar(session$ns(NULL)) && !startsWith(outputId, session$ns(""))) {
+plotlyProxy <- function(
+  outputId,
+  session = shiny::getDefaultReactiveDomain(),
+  deferUntilFlush = TRUE
+) {
+  if (is.null(session)) {
+    stop(
+      "plotlyProxy must be called from the server function of a Shiny app",
+      call. = FALSE
+    )
+  }
+  if (
+    !is.null(session$ns) &&
+      nzchar(session$ns(NULL)) &&
+      !startsWith(outputId, session$ns(""))
+  ) {
     outputId <- session$ns(outputId)
   }
-  structure(list(session = session, id = outputId, deferUntilFlush = deferUntilFlush), class = "plotly_proxy")
+  structure(
+    list(session = session, id = outputId, deferUntilFlush = deferUntilFlush),
+    class = "plotly_proxy"
+  )
 }
 
 PLOTLYJS_METHODS <- c(
-  "restyle", "relayout", "update", "addTraces", "deleteTraces", "moveTraces", "extendTraces",
-  "prependTraces", "purge", "toImage", "downloadImage", "animate", "newPlot", "react", "validate",
-  "makeTemplate", "validateTemplate", "addFrames", "reconfig"
+  "restyle",
+  "relayout",
+  "update",
+  "addTraces",
+  "deleteTraces",
+  "moveTraces",
+  "extendTraces",
+  "prependTraces",
+  "purge",
+  "toImage",
+  "downloadImage",
+  "animate",
+  "newPlot",
+  "react",
+  "validate",
+  "makeTemplate",
+  "validateTemplate",
+  "addFrames",
+  "reconfig"
 )
 
 #' @rdname plotlyProxy
 #' @export
 plotlyProxyInvoke <- function(p, method, ...) {
-  if (!inherits(p, "plotly_proxy")) stop("p must be a proxy object. See `help(plotlyProxy)`", call. = FALSE)
+  if (!inherits(p, "plotly_proxy")) {
+    stop("p must be a proxy object. See `help(plotlyProxy)`", call. = FALSE)
+  }
   if (missing(method)) {
-    stop("Must provide a plotly.js method (as a character string of length 1).\n",
-         sprintf("Valid options include: '%s'", paste(PLOTLYJS_METHODS, collapse = "', '")), call. = FALSE)
+    stop(
+      "Must provide a plotly.js method (as a character string of length 1).\n",
+      sprintf(
+        "Valid options include: '%s'",
+        paste(PLOTLYJS_METHODS, collapse = "', '")
+      ),
+      call. = FALSE
+    )
   }
   method <- match.arg(method, PLOTLYJS_METHODS)
-  args <- lapply(list(...), function(a) if (inherits(a, "plotly_obj")) unclass(a) else a)
-  msg <- list(id = p$id, method = method, args = as.character(to_JSON(unname(args))))
+  args <- lapply(list(...), function(a) {
+    if (inherits(a, "plotly_obj")) unclass(a) else a
+  })
+  msg <- list(
+    id = p$id,
+    method = method,
+    args = as.character(to_JSON(unname(args)))
+  )
   send <- function() p$session$sendCustomMessage("plotly-calls", msg)
-  if (isTRUE(p$deferUntilFlush)) p$session$onFlushed(send, once = TRUE) else send()
+  if (isTRUE(p$deferUntilFlush)) {
+    p$session$onFlushed(send, once = TRUE)
+  } else {
+    send()
+  }
   invisible(p)
 }

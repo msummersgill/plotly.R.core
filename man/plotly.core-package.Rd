@@ -8,6 +8,14 @@
 \description{
 Create interactive web graphics with the 'plotly.js' JavaScript library. Graph objects, their validation and their documentation are generated from the 'plotly.js' plot schema, following the design of the 'plotly' Python package. Includes an 'express' interface for quick figures, 'htmlwidgets' rendering, 'shiny' and 'quarto' integration, and static image export with 'Kaleido'.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/msummersgill/plotly.R.core}
+  \item Report bugs at \url{https://github.com/msummersgill/plotly.R.core/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Matthew Summersgill \email{matthew.summersgill@gmail.com} (\href{https://orcid.org/0009-0007-2955-5543}{ORCID})
 

@@ -3,7 +3,13 @@ library(plotly.core)
 # the figure data (JSON) in a page written by write_html() or saveWidget()
 page_data <- function(f) {
   html <- readChar(f, file.size(f), useBytes = TRUE)
-  m <- regmatches(html, regexpr('<script type="application/json" data-for="[^"]+">.*?</script>', html))
+  m <- regmatches(
+    html,
+    regexpr(
+      '<script type="application/json" data-for="[^"]+">.*?</script>',
+      html
+    )
+  )
   sub("^<script[^>]*>", "", sub("</script>$", "", m))
 }
 dir <- tempfile("write-html-")
@@ -18,7 +24,13 @@ f1 <- file.path(dir, "a.html")
 f2 <- file.path(dir, "b.html")
 stopifnot(identical(write_html(fig, f1, selfcontained = FALSE), f1))
 htmlwidgets::saveWidget(plotly_widget(fig), f2, selfcontained = FALSE)
-strip <- function(f) gsub("htmlwidget-[0-9a-f]+", "ID", gsub("(a|b)_files", "lib", readLines(f, warn = FALSE)))
+strip <- function(f) {
+  gsub(
+    "htmlwidget-[0-9a-f]+",
+    "ID",
+    gsub("(a|b)_files", "lib", readLines(f, warn = FALSE))
+  )
+}
 stopifnot(
   identical(page_data(f1), page_data(f2)),
   !grepl("</script> &", page_data(f1), fixed = TRUE),
@@ -49,7 +61,11 @@ write_html(w, f4, selfcontained = FALSE)
 stopifnot(grepl('"hooked"', page_data(f4), fixed = TRUE))
 
 # Other widgets are saved with saveWidget()
-w <- htmlwidgets::createWidget("plotly_core", list(data = list(), layout = list()), package = "plotly.core")
+w <- htmlwidgets::createWidget(
+  "plotly_core",
+  list(data = list(), layout = list()),
+  package = "plotly.core"
+)
 f5 <- file.path(dir, "e.html")
 write_html(w, f5, selfcontained = FALSE)
 stopifnot(file.exists(f5))

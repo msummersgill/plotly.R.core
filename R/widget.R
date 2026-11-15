@@ -34,14 +34,25 @@
 #' @export
 #' @examples
 #' plotly_widget(list(data = list(list(type = "bar", x = 1:3, y = c(2, 5, 3)))))
-plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL, config = NULL, bundle = NULL) {
+plotly_widget <- function(
+  fig,
+  width = NULL,
+  height = NULL,
+  elementId = NULL,
+  config = NULL,
+  bundle = NULL
+) {
   layout <- unclass(fig$layout %||% list())
   if (is.null(layout$template)) {
     tpl <- default_template()
     if (!identical(tpl, "none")) layout$template <- get_template(tpl)
   }
-  if (!length(layout)) layout <- structure(list(), names = character())
-  setting <- function(name) attr(fig, paste0("plotly_", name), exact = TRUE) %||% fig[[name]]
+  if (!length(layout)) {
+    layout <- structure(list(), names = character())
+  }
+  setting <- function(name) {
+    attr(fig, paste0("plotly_", name), exact = TRUE) %||% fig[[name]]
+  }
   cfg <- utils::modifyList(setting("config") %||% list(), config %||% list())
   x <- list(
     data = unname(fig$data %||% list()),
@@ -54,13 +65,26 @@ plotly_widget <- function(fig, width = NULL, height = NULL, elementId = NULL, co
   for (k in c("keys", "sets", "frameKeys", "highlight", "fitBounds")) {
     if (!is.null(setting(k))) x[[k]] <- setting(k)
   }
-  if (!is.null(setting("selectize"))) x$selectize <- selectize_json(setting("selectize"))
+  if (!is.null(setting("selectize"))) {
+    x$selectize <- selectize_json(setting("selectize"))
+  }
   attr(x, "TOJSON_FUNC") <- widget_to_JSON
-  bundle <- bundle %||% setting("bundle") %||% getOption("plotly.core.bundle", "full")
-  deps <- list(plotlyjs_dependency(choose_bundle(bundle, figure_trace_types(x))))
-  if (!is.null(cfg$locale) && cfg$locale != "en") deps <- c(deps, list(locale_dependency(cfg$locale)))
-  if (identical(setting("mathjax"), "cdn")) deps <- c(deps, list(mathjax_dependency()))
-  if (!is.null(x$sets)) deps <- c(deps, crosstalk_deps(x$highlight))
+  bundle <- bundle %||%
+    setting("bundle") %||%
+    getOption("plotly.core.bundle", "full")
+  deps <- list(plotlyjs_dependency(choose_bundle(
+    bundle,
+    figure_trace_types(x)
+  )))
+  if (!is.null(cfg$locale) && cfg$locale != "en") {
+    deps <- c(deps, list(locale_dependency(cfg$locale)))
+  }
+  if (identical(setting("mathjax"), "cdn")) {
+    deps <- c(deps, list(mathjax_dependency()))
+  }
+  if (!is.null(x$sets)) {
+    deps <- c(deps, crosstalk_deps(x$highlight))
+  }
   htmlwidgets::createWidget(
     name = "plotly_core",
     x = x,
@@ -98,7 +122,9 @@ selectize_json <- function(s) {
   lapply(s, function(o) {
     if (is.data.frame(o$items)) {
       it <- o$items
-      o$items <- lapply(seq_len(nrow(it)), function(i) lapply(as.list(it[i, , drop = FALSE]), as.character))
+      o$items <- lapply(seq_len(nrow(it)), function(i) {
+        lapply(as.list(it[i, , drop = FALSE]), as.character)
+      })
     }
     o
   })
@@ -110,20 +136,37 @@ selectize_json <- function(s) {
 #' @export
 crosstalk_deps <- function(highlight = list()) {
   if (!requireNamespace("crosstalk", quietly = TRUE)) {
-    stop("Linked highlighting needs the crosstalk package: install.packages(\"crosstalk\")", call. = FALSE)
+    stop(
+      "Linked highlighting needs the crosstalk package: install.packages(\"crosstalk\")",
+      call. = FALSE
+    )
   }
   deps <- crosstalk::crosstalkLibs()
   if (!identical(highlight$selectize %||% FALSE, FALSE)) {
-    deps <- c(deps, list(htmltools::htmlDependency(
-      name = "selectize", version = "0.12.4", package = "crosstalk", src = "lib/selectize",
-      script = "js/selectize.min.js", stylesheet = "css/selectize.bootstrap3.css"
-    )))
+    deps <- c(
+      deps,
+      list(htmltools::htmlDependency(
+        name = "selectize",
+        version = "0.12.4",
+        package = "crosstalk",
+        src = "lib/selectize",
+        script = "js/selectize.min.js",
+        stylesheet = "css/selectize.bootstrap3.css"
+      ))
+    )
   }
   if (isTRUE(highlight$dynamic)) {
-    deps <- c(deps, list(htmltools::htmlDependency(
-      name = "colourpicker", version = "1.1", package = "plotly.core", src = "htmlwidgets/lib/colourpicker",
-      script = "colourpicker.min.js", stylesheet = "colourpicker.min.css"
-    )))
+    deps <- c(
+      deps,
+      list(htmltools::htmlDependency(
+        name = "colourpicker",
+        version = "1.1",
+        package = "plotly.core",
+        src = "htmlwidgets/lib/colourpicker",
+        script = "colourpicker.min.js",
+        stylesheet = "colourpicker.min.css"
+      ))
+    )
   }
   deps
 }
@@ -142,10 +185,19 @@ crosstalk_deps <- function(highlight = list()) {
 #' @export
 #' @examples
 #' cat(plotly_json(go_figure(go_bar(y = 1:3)), jsonedit = FALSE))
-plotly_json <- function(p = last_plot(), jsonedit = interactive(), pretty = TRUE, ...) {
+plotly_json <- function(
+  p = last_plot(),
+  jsonedit = interactive(),
+  pretty = TRUE,
+  ...
+) {
   x <- as_widget(p)$x
   json <- to_JSON(x[c("data", "layout", "frames", "config")], pretty = pretty)
-  if (jsonedit && requireNamespace("listviewer", quietly = TRUE)) listviewer::jsonedit(json, mode = "form", ...) else json
+  if (jsonedit && requireNamespace("listviewer", quietly = TRUE)) {
+    listviewer::jsonedit(json, mode = "form", ...)
+  } else {
+    json
+  }
 }
 
 #' The last plot
@@ -159,7 +211,9 @@ plotly_json <- function(p = last_plot(), jsonedit = interactive(), pretty = TRUE
 #' @export
 last_plot <- function() {
   p <- the$last_plot
-  if (is.null(p)) stop("The last plot doesn't exist", call. = FALSE)
+  if (is.null(p)) {
+    stop("The last plot doesn't exist", call. = FALSE)
+  }
   p
 }
 
@@ -211,14 +265,26 @@ set_last_plot <- function(p) {
 #' @export
 #' @examples
 #' fig <- go_figure(go_bar(x = c("a", "b"), y = 1:2)) |> partial_bundle()
-partial_bundle <- function(p, type = "auto", local = TRUE, minified = TRUE) UseMethod("partial_bundle")
+partial_bundle <- function(p, type = "auto", local = TRUE, minified = TRUE) {
+  UseMethod("partial_bundle")
+}
 
 #' @export
-partial_bundle.default <- function(p, type = "auto", local = TRUE, minified = TRUE) {
+partial_bundle.default <- function(
+  p,
+  type = "auto",
+  local = TRUE,
+  minified = TRUE
+) {
   type <- match.arg(type, c("auto", "full", names(PLOTLYJS_BUNDLE_TRACES)))
   p <- set_widget_setting(p, "bundle", type)
   # a widget: its plotly.js dependency is replaced now
-  if (inherits(p, "htmlwidget")) p <- set_plotlyjs_dependency(p, choose_bundle(type, figure_trace_types(p$x)))
+  if (inherits(p, "htmlwidget")) {
+    p <- set_plotlyjs_dependency(
+      p,
+      choose_bundle(type, figure_trace_types(p$x))
+    )
+  }
   p
 }
 
@@ -241,7 +307,11 @@ partial_bundle.default <- function(p, type = "auto", local = TRUE, minified = TR
 #' @keywords internal
 #' @export
 set_plotlyjs_dependency <- function(w, bundle = "full") {
-  keep <- !vapply(w$dependencies, function(d) identical(d$name, "plotly-main"), logical(1))
+  keep <- !vapply(
+    w$dependencies,
+    function(d) identical(d$name, "plotly-main"),
+    logical(1)
+  )
   w$dependencies <- c(list(plotlyjs_dependency(bundle)), w$dependencies[keep])
   w
 }
@@ -249,31 +319,60 @@ set_plotlyjs_dependency <- function(w, bundle = "full") {
 # trace types of a widget payload (traces and frames' traces)
 figure_trace_types <- function(x) {
   traces <- c(x$data, unlist(lapply(x$frames, `[[`, "data"), recursive = FALSE))
-  unique(vapply(traces, function(tr) as.character(tr[["type"]] %||% "scatter"), ""))
+  unique(vapply(
+    traces,
+    function(tr) as.character(tr[["type"]] %||% "scatter"),
+    ""
+  ))
 }
 
 # The bundle to load: "full", or a partial bundle with all `types`
 choose_bundle <- function(bundle, types) {
   bundle <- match.arg(bundle, c("auto", "full", names(PLOTLYJS_BUNDLE_TRACES)))
-  if (identical(bundle, "full")) return("full")
-  covers <- vapply(PLOTLYJS_BUNDLE_TRACES, function(t) all(types %in% t), logical(1))
+  if (identical(bundle, "full")) {
+    return("full")
+  }
+  covers <- vapply(
+    PLOTLYJS_BUNDLE_TRACES,
+    function(t) all(types %in% t),
+    logical(1)
+  )
   if (identical(bundle, "auto")) {
-    if (!any(covers)) return("full")
+    if (!any(covers)) {
+      return("full")
+    }
     candidates <- names(PLOTLYJS_BUNDLE_TRACES)[covers]
     sizes <- file.size(vapply(candidates, plotlyjs_bundle_file, ""))
     return(candidates[[which.min(sizes)]])
   }
   if (!covers[[bundle]]) {
-    warning(sprintf("The '%s' plotly.js bundle doesn't have trace type(s) %s; using the full bundle", bundle,
-                    paste0("'", setdiff(types, PLOTLYJS_BUNDLE_TRACES[[bundle]]), "'", collapse = ", ")), call. = FALSE)
+    warning(
+      sprintf(
+        "The '%s' plotly.js bundle doesn't have trace type(s) %s; using the full bundle",
+        bundle,
+        paste0(
+          "'",
+          setdiff(types, PLOTLYJS_BUNDLE_TRACES[[bundle]]),
+          "'",
+          collapse = ", "
+        )
+      ),
+      call. = FALSE
+    )
     return("full")
   }
   bundle
 }
 
 plotlyjs_bundle_file <- function(bundle) {
-  file.path(system.file("htmlwidgets", "lib", "plotlyjs", package = "plotly.core"),
-            if (identical(bundle, "full")) "plotly.min.js" else paste0("plotly-", bundle, ".min.js"))
+  file.path(
+    system.file("htmlwidgets", "lib", "plotlyjs", package = "plotly.core"),
+    if (identical(bundle, "full")) {
+      "plotly.min.js"
+    } else {
+      paste0("plotly-", bundle, ".min.js")
+    }
+  )
 }
 
 # All bundles share a dependency name, so a page loads one plotly.js. Of the
@@ -285,7 +384,10 @@ plotlyjs_bundle_file <- function(bundle) {
 plotlyjs_dependency <- function(bundle = "full") {
   htmltools::htmlDependency(
     name = "plotly-main",
-    version = paste0(plotlyjs_version(), if (identical(bundle, "full")) ".2" else ".1"),
+    version = paste0(
+      plotlyjs_version(),
+      if (identical(bundle, "full")) ".2" else ".1"
+    ),
     src = "htmlwidgets/lib/plotlyjs",
     script = basename(plotlyjs_bundle_file(bundle)),
     package = "plotly.core",
@@ -298,9 +400,12 @@ plotlyjs_dependency <- function(bundle = "full") {
 #' @export
 locale_dependency <- function(locale) {
   htmltools::htmlDependency(
-    name = paste0("plotly-locale-", locale), version = plotlyjs_version(),
-    src = "htmlwidgets/lib/plotlyjs/locales", script = paste0(locale, ".js"),
-    package = "plotly.core", all_files = FALSE
+    name = paste0("plotly-locale-", locale),
+    version = plotlyjs_version(),
+    src = "htmlwidgets/lib/plotlyjs/locales",
+    script = paste0(locale, ".js"),
+    package = "plotly.core",
+    all_files = FALSE
   )
 }
 
@@ -308,7 +413,8 @@ locale_dependency <- function(locale) {
 #' @export
 mathjax_dependency <- function() {
   htmltools::htmlDependency(
-    name = "mathjax", version = "2.7.5",
+    name = "mathjax",
+    version = "2.7.5",
     src = c(href = "https://cdn.jsdelivr.net/npm/mathjax@2.7.5"),
     script = "MathJax.js?config=TeX-AMS-MML_SVG"
   )
@@ -318,8 +424,15 @@ mathjax_dependency <- function() {
 # missing values become null, matching what plotly.js expects.
 to_JSON <- function(x, ...) {
   jsonlite::toJSON(
-    prepare_json(x), digits = NA, auto_unbox = TRUE, force = TRUE,
-    null = "null", na = "null", dataframe = "values", json_verbatim = TRUE, ...
+    prepare_json(x),
+    digits = NA,
+    auto_unbox = TRUE,
+    force = TRUE,
+    null = "null",
+    na = "null",
+    dataframe = "values",
+    json_verbatim = TRUE,
+    ...
   )
 }
 
@@ -337,9 +450,15 @@ widget_to_JSON <- function(x, ...) {
   blobs <- new.env(parent = emptyenv())
   blobs$list <- list()
   blobs$seen <- list()
-  if (is.list(x[["x"]])) x[["x"]] <- b64_figure(x[["x"]], blobs) else x <- b64_figure(x, blobs)
+  if (is.list(x[["x"]])) {
+    x[["x"]] <- b64_figure(x[["x"]], blobs)
+  } else {
+    x <- b64_figure(x, blobs)
+  }
   json <- to_JSON(x, ...)
-  if (!length(blobs$list)) return(json)
+  if (!length(blobs$list)) {
+    return(json)
+  }
   for (k in unique(blobs$reused)) {
     # after the bdata string of the first spec: ,"bid":k
     blobs$list[[k]] <- c(blobs$list[[k]], charToRaw(paste0(',"bid":', k)))
@@ -355,7 +474,9 @@ b64_figure <- function(x, blobs = NULL) {
   x[["data"]] <- b64_traces(x[["data"]], blobs)
   if (length(x[["frames"]])) {
     x[["frames"]] <- lapply(x[["frames"]], function(f) {
-      if (is.list(f) && length(f[["data"]])) f[["data"]] <- b64_traces(f[["data"]], blobs)
+      if (is.list(f) && length(f[["data"]])) {
+        f[["data"]] <- b64_traces(f[["data"]], blobs)
+      }
       f
     })
   }
@@ -366,7 +487,9 @@ b64_figure <- function(x, blobs = NULL) {
 B64_SKIP_KEYS <- c("geojson", "layer", "layers", "range")
 
 b64_traces <- function(traces, blobs = NULL) {
-  if (!is.list(traces)) return(traces)
+  if (!is.list(traces)) {
+    return(traces)
+  }
   lapply(traces, b64_encode, blobs = blobs)
 }
 
@@ -377,16 +500,32 @@ b64_traces <- function(traces, blobs = NULL) {
 shared_spec <- function(v, kind, blobs) {
   f32 <- kind == "array" && isTRUE(getOption("plotly.core.float32"))
   for (s in blobs$seen) {
-    if (s$kind == kind && s$f32 == f32 && length(s$v) == length(v) && identical(s$v, v)) {
+    if (
+      s$kind == kind &&
+        s$f32 == f32 &&
+        length(s$v) == length(v) &&
+        identical(s$v, v)
+    ) {
       blobs$reused <- c(blobs$reused, s$k)
       return(list(bref = s$k))
     }
   }
-  spec <- if (kind == "date") date_array_spec(v, raw = TRUE) else typed_array_spec(v, raw = TRUE)
-  if (is.null(spec)) return(NULL)
+  spec <- if (kind == "date") {
+    date_array_spec(v, raw = TRUE)
+  } else {
+    typed_array_spec(v, raw = TRUE)
+  }
+  if (is.null(spec)) {
+    return(NULL)
+  }
   k <- length(blobs$list) + 1L
   blobs$list[[k]] <- spec$bdata
-  blobs$seen[[length(blobs$seen) + 1L]] <- list(v = v, kind = kind, f32 = f32, k = k)
+  blobs$seen[[length(blobs$seen) + 1L]] <- list(
+    v = v,
+    kind = kind,
+    f32 = f32,
+    k = k
+  )
   spec$bdata <- structure(paste0("\001", k, "\001"), class = "json")
   spec
 }
@@ -394,16 +533,29 @@ shared_spec <- function(v, kind, blobs) {
 # Like convert_to_base64(): only named entries are encoded, unnamed lists
 # (e.g. a z given as a list of rows) are searched but left as JSON arrays.
 b64_encode <- function(x, blobs = NULL) {
-  if (!is.list(x) || !length(x)) return(x)
+  if (!is.list(x) || !length(x)) {
+    return(x)
+  }
   nms <- names(x)
   for (i in seq_along(x)) {
     key <- if (is.null(nms)) "" else nms[[i]]
-    if (key %in% B64_SKIP_KEYS) next
+    if (key %in% B64_SKIP_KEYS) {
+      next
+    }
     v <- x[[i]]
     if (nzchar(key) && is_b64_array(v)) {
-      x[[i]] <- if (is.null(blobs)) typed_array_spec(v) else shared_spec(v, "array", blobs)
+      x[[i]] <- if (is.null(blobs)) {
+        typed_array_spec(v)
+      } else {
+        shared_spec(v, "array", blobs)
+      }
     } else if (nzchar(key) && is_b64_date(v)) {
-      x[[i]] <- (if (is.null(blobs)) date_array_spec(v) else shared_spec(v, "date", blobs)) %||% v
+      x[[i]] <- (if (is.null(blobs)) {
+        date_array_spec(v)
+      } else {
+        shared_spec(v, "date", blobs)
+      }) %||%
+        v
     } else if (is.list(v) && !is.data.frame(v)) {
       x[[i]] <- b64_encode(v, blobs)
     }
@@ -414,18 +566,30 @@ b64_encode <- function(x, blobs = NULL) {
 # Plain numeric vectors that serialise as JSON arrays (length 0 or 1 stays
 # as is, unless wrapped in I()), and numeric matrices; as_float32() vectors too.
 is_b64_array <- function(v) {
-  if (!(is.double(v) || is.integer(v))) return(FALSE)
+  if (!(is.double(v) || is.integer(v))) {
+    return(FALSE)
+  }
   cls <- oldClass(v)
-  if (!all(cls %in% c("AsIs", "plotly_float32"))) return(FALSE)
+  if (!all(cls %in% c("AsIs", "plotly_float32"))) {
+    return(FALSE)
+  }
   d <- dim(v)
-  if (!is.null(d)) return(length(d) == 2L && length(v) > 0L)
+  if (!is.null(d)) {
+    return(length(d) == 2L && length(v) > 0L)
+  }
   length(v) > 1L || (length(v) == 1L && "AsIs" %in% cls)
 }
 
 # Date and date-time vectors (not matrices) that serialise as JSON arrays.
 is_b64_date <- function(v) {
-  if (!inherits(v, c("POSIXt", "Date")) || !is.null(dim(v))) return(FALSE)
-  if (!all(oldClass(v) %in% c("AsIs", "POSIXct", "POSIXlt", "POSIXt", "Date"))) return(FALSE)
+  if (!inherits(v, c("POSIXt", "Date")) || !is.null(dim(v))) {
+    return(FALSE)
+  }
+  if (
+    !all(oldClass(v) %in% c("AsIs", "POSIXct", "POSIXlt", "POSIXt", "Date"))
+  ) {
+    return(FALSE)
+  }
   length(v) > 1L || (length(v) == 1L && inherits(v, "AsIs"))
 }
 
@@ -439,7 +603,9 @@ date_array_spec <- function(v, raw = FALSE) {
   if (inherits(v, "Date")) {
     days <- floor(as.numeric(v))
     rng <- suppressWarnings(range(days, na.rm = TRUE))
-    if (all(is.finite(rng)) && (rng[1] < -354285 || rng[2] > 2932896)) return(NULL)
+    if (all(is.finite(rng)) && (rng[1] < -354285 || rng[2] > 2932896)) {
+      return(NULL)
+    }
     out <- typed_array_spec(days, float32 = FALSE, raw = raw)
     out$rdate <- "date"
     return(out)
@@ -453,17 +619,33 @@ date_array_spec <- function(v, raw = FALSE) {
   # holding values, and the transition instant found in the few bins where
   # they differ. The C code applies them to each value.
   bins <- .Call(C_time_bins, secs)
-  if (!length(bins)) return(NULL)
+  if (!length(bins)) {
+    return(NULL)
+  }
   gmtoff <- function(s) as.POSIXlt(.POSIXct(s, tz = tz))$gmtoff
   off0 <- gmtoff(bins * 900)
   off1 <- gmtoff(bins * 900 + 899)
-  if (is.null(off0) || is.null(off1) || anyNA(off0) || anyNA(off1)) return(NULL)
+  if (is.null(off0) || is.null(off1) || anyNA(off0) || anyNA(off1)) {
+    return(NULL)
+  }
   trans <- rep(Inf, length(bins))
   mixed <- which(off0 != off1)
-  if (length(mixed)) trans[mixed] <- transition_instants(bins[mixed] * 900, off1[mixed], gmtoff)
-  out <- .Call(C_datetime_array, secs, bins, as.numeric(off0), trans, as.numeric(off1),
-               raw, typed_array_threads())
-  if (is.null(out)) return(NULL)
+  if (length(mixed)) {
+    trans[mixed] <- transition_instants(bins[mixed] * 900, off1[mixed], gmtoff)
+  }
+  out <- .Call(
+    C_datetime_array,
+    secs,
+    bins,
+    as.numeric(off0),
+    trans,
+    as.numeric(off1),
+    raw,
+    typed_array_threads()
+  )
+  if (is.null(out)) {
+    return(NULL)
+  }
   out$rdate <- "datetime"
   out
 }
@@ -492,13 +674,23 @@ typed_array_threads <- function() getOption("plotly.core.threads", 2L)
 # missing values are sent as floats. The scan and encoding are in C
 # (src/typed_array.c). `raw`: bdata is a raw vector of the base64 in double
 # quotes, for widget_to_JSON().
-typed_array_spec <- function(v, float32 = isTRUE(getOption("plotly.core.float32")), raw = FALSE) {
+typed_array_spec <- function(
+  v,
+  float32 = isTRUE(getOption("plotly.core.float32")),
+  raw = FALSE
+) {
   float32 <- float32 || inherits(v, "plotly_float32")
   d <- dim(v)
-  if (length(d) == 2L) v <- t(unclass(v))
-  if (!is.null(attributes(v))) attributes(v) <- NULL
+  if (length(d) == 2L) {
+    v <- t(unclass(v))
+  }
+  if (!is.null(attributes(v))) {
+    attributes(v) <- NULL
+  }
   out <- .Call(C_typed_array, v, float32, raw, typed_array_threads())
-  if (length(d) == 2L) out$shape <- paste(d, collapse = ", ")
+  if (length(d) == 2L) {
+    out$shape <- paste(d, collapse = ", ")
+  }
   out
 }
 
@@ -528,9 +720,15 @@ typed_array_spec <- function(v, float32 = isTRUE(getOption("plotly.core.float32"
 #'   go_figure() |>
 #'   add_scattergl(x = ~as_float32(x), y = ~as_float32(y), mode = "markers")
 as_float32 <- function(x) {
-  if (!is.numeric(x) || is.object(x) && !all(oldClass(x) %in% c("AsIs", "plotly_float32"))) {
-    stop("as_float32() needs a numeric vector or matrix, not an object of class: ",
-         class(x)[1], call. = FALSE)
+  if (
+    !is.numeric(x) ||
+      is.object(x) && !all(oldClass(x) %in% c("AsIs", "plotly_float32"))
+  ) {
+    stop(
+      "as_float32() needs a numeric vector or matrix, not an object of class: ",
+      class(x)[1],
+      call. = FALSE
+    )
   }
   class(x) <- union("plotly_float32", oldClass(x))
   x
@@ -548,22 +746,32 @@ print.plotly_float32 <- function(x, ...) {
 
 unclass_float32 <- function(v) {
   class(v) <- setdiff(oldClass(v), "plotly_float32")
-  if (!length(oldClass(v))) v <- unclass(v)
+  if (!length(oldClass(v))) {
+    v <- unclass(v)
+  }
   v
 }
 
 # Convert values jsonlite would serialise lossily. Date-times become strings
 # with millisecond precision; other values are left as they are.
 prepare_json <- function(x) {
-  if (inherits(x, "plotly_float32")) return(unclass_float32(x))
+  if (inherits(x, "plotly_float32")) {
+    return(unclass_float32(x))
+  }
   if (inherits(x, "POSIXt")) {
     out <- format_datetime(x)
-    if (is.null(dim(x)) && (length(out) != 1L || inherits(x, "AsIs"))) return(json_strings(out))
-    if (inherits(x, "AsIs")) out <- I(out)
+    if (is.null(dim(x)) && (length(out) != 1L || inherits(x, "AsIs"))) {
+      return(json_strings(out))
+    }
+    if (inherits(x, "AsIs")) {
+      out <- I(out)
+    }
     dim(out) <- dim(x)
     return(out)
   }
-  if (is.list(x) && length(x)) x[] <- lapply(x, prepare_json)
+  if (is.list(x) && length(x)) {
+    x[] <- lapply(x, prepare_json)
+  }
   x
 }
 
@@ -578,7 +786,13 @@ format_datetime <- function(x) {
   out <- format(.POSIXct(whole, tz = tz), "%Y-%m-%d %H:%M:%S")
   ms <- round((secs - whole) * 1000)
   i <- which(ms > 0)
-  if (length(i)) out[i] <- paste0(out[i], ".", formatC(as.integer(ms[i]), width = 3, flag = "0"))
+  if (length(i)) {
+    out[i] <- paste0(
+      out[i],
+      ".",
+      formatC(as.integer(ms[i]), width = 3, flag = "0")
+    )
+  }
   out[is.na(x)] <- NA_character_
   out
 }
@@ -586,7 +800,9 @@ format_datetime <- function(x) {
 # A JSON array of strings that need no escaping (e.g. formatted dates), kept
 # as is by jsonlite (json_verbatim): faster than its per-string escaping.
 json_strings <- function(x) {
-  if (!length(x)) return(structure("[]", class = "json"))
+  if (!length(x)) {
+    return(structure("[]", class = "json"))
+  }
   s <- paste0('"', x, '"')
   s[is.na(x)] <- "null"
   structure(paste0("[", paste(s, collapse = ","), "]"), class = "json")

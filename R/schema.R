@@ -15,13 +15,25 @@
 schema <- function(jsonedit = interactive(), ...) {
   s <- PLOT_SCHEMA$value
   if (is.null(s)) {
-    con <- gzfile(system.file("schema", "plot-schema.json.gz", package = "plotly.core"))
+    con <- gzfile(system.file(
+      "schema",
+      "plot-schema.json.gz",
+      package = "plotly.core"
+    ))
     on.exit(close(con))
-    s <- jsonlite::parse_json(paste(readLines(con, warn = FALSE), collapse = "\n"), simplifyVector = TRUE)
+    s <- jsonlite::parse_json(
+      paste(readLines(con, warn = FALSE), collapse = "\n"),
+      simplifyVector = TRUE
+    )
     PLOT_SCHEMA$value <- s
   }
   if (jsonedit) {
-    if (!requireNamespace("listviewer", quietly = TRUE)) stop("schema(jsonedit = TRUE) needs the listviewer package", call. = FALSE)
+    if (!requireNamespace("listviewer", quietly = TRUE)) {
+      stop(
+        "schema(jsonedit = TRUE) needs the listviewer package",
+        call. = FALSE
+      )
+    }
     print(listviewer::jsonedit(s, mode = "form"))
   }
   invisible(s)

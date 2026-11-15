@@ -3,9 +3,24 @@
 library(plotly.core)
 
 expect_error <- function(expr, pattern) {
-  msg <- tryCatch({ expr; NULL }, error = function(e) conditionMessage(e))
-  if (is.null(msg)) stop("Expected an error matching '", pattern, "' but none was raised", call. = FALSE)
-  if (!grepl(pattern, msg)) stop("Error message did not match '", pattern, "':\n", msg, call. = FALSE)
+  msg <- tryCatch(
+    {
+      expr
+      NULL
+    },
+    error = function(e) conditionMessage(e)
+  )
+  if (is.null(msg)) {
+    stop(
+      "Expected an error matching '",
+      pattern,
+      "' but none was raised",
+      call. = FALSE
+    )
+  }
+  if (!grepl(pattern, msg)) {
+    stop("Error message did not match '", pattern, "':\n", msg, call. = FALSE)
+  }
   invisible(TRUE)
 }
 
@@ -19,7 +34,8 @@ stopifnot(
   identical(w$x$source, "src"),
   "plotly_legendclick" %in% w$x$shinyEvents,
   !"plotly_hover" %in% w$x$shinyEvents,
-  isTRUE(w$x$config$scrollZoom), identical(w$x$config$locale, "de"),
+  isTRUE(w$x$config$scrollZoom),
+  identical(w$x$config$locale, "de"),
   any(vapply(w$dependencies, `[[`, "", "name") == "plotly-locale-de")
 )
 # settings survive figure operations
@@ -34,8 +50,10 @@ stopifnot(any(vapply(w$dependencies, `[[`, "", "name") == "mathjax"))
 
 if (requireNamespace("shiny", quietly = TRUE)) {
   out <- plotlyOutput("plot", height = "300px")
-  stopifnot(inherits(out, "shiny.tag.list") || inherits(out, "shiny.tag"),
-            grepl("plotly_core", as.character(out)))
+  stopifnot(
+    inherits(out, "shiny.tag.list") || inherits(out, "shiny.tag"),
+    grepl("plotly_core", as.character(out))
+  )
   stopifnot(is.function(renderPlotly(go_figure())))
   expect_error(event_data("plotly_click", session = NULL), "No reactive domain")
   expect_error(plotlyProxy("plot", session = NULL), "server function")
@@ -43,16 +61,42 @@ if (requireNamespace("shiny", quietly = TRUE)) {
 }
 
 # htmlwidgets keep their settings in x
-lw <- event_register(plotly_widget(go_figure(go_scatter(y = 1:3))), "plotly_hover")
-stopifnot(inherits(lw, "htmlwidget"), "plotly_hover" %in% lw$x$shinyEvents, identical(as_widget(lw), lw))
+lw <- event_register(
+  plotly_widget(go_figure(go_scatter(y = 1:3))),
+  "plotly_hover"
+)
+stopifnot(
+  inherits(lw, "htmlwidget"),
+  "plotly_hover" %in% lw$x$shinyEvents,
+  identical(as_widget(lw), lw)
+)
 
 # the Plotly Cloud share button is off by default (JS CONFIG_DEFAULTS); config() opts in
 local({
   f <- go_figure(go_scatter(y = 1:3))
   stopifnot(
-    is.null(config(f, scrollZoom = TRUE) |> plotly.core:::get_widget_setting("config") |> (\(x) x$showSendToCloud)()),
-    isTRUE(plotly.core:::get_widget_setting(config(f, showSendToCloud = TRUE), "config")$showSendToCloud),
-    isTRUE(plotly.core:::get_widget_setting(config(f, cloud = TRUE), "config")$showSendToCloud),
-    isFALSE(plotly.core:::get_widget_setting(config(f, cloud = FALSE), "config")$showSendToCloud)
+    is.null(
+      config(f, scrollZoom = TRUE) |>
+        plotly.core:::get_widget_setting("config") |>
+        (\(x) x$showSendToCloud)()
+    ),
+    isTRUE(
+      plotly.core:::get_widget_setting(
+        config(f, showSendToCloud = TRUE),
+        "config"
+      )$showSendToCloud
+    ),
+    isTRUE(
+      plotly.core:::get_widget_setting(
+        config(f, cloud = TRUE),
+        "config"
+      )$showSendToCloud
+    ),
+    isFALSE(
+      plotly.core:::get_widget_setting(
+        config(f, cloud = FALSE),
+        "config"
+      )$showSendToCloud
+    )
   )
 })

@@ -48,67 +48,117 @@
 #'   go_figure() |>
 #'   add_scatter(x = ~sepal_length, y = ~sepal_width, mode = "markers", name = "sepal") |>
 #'   add_scatter(x = ~petal_length, y = ~petal_width, mode = "markers", name = "petal")
-go_figure <- function(data = NULL, layout = NULL, frames = NULL, skip_invalid = FALSE) {
+go_figure <- function(
+  data = NULL,
+  layout = NULL,
+  frames = NULL,
+  skip_invalid = FALSE
+) {
   if (is.data.frame(data)) {
     fig <- go_figure(NULL, layout, frames, skip_invalid)
     attr(fig, "plotly_data") <- data
     return(fig)
   }
-  if (inherits(data, "go_figure") || (is.list(data) && !is.data.frame(data) && !inherits(data, "plotly_obj") &&
-                                      !is.null(names(data)) && all(names(data) %in% c("data", "layout", "frames")))) {
+  if (
+    inherits(data, "go_figure") ||
+      (is.list(data) &&
+        !is.data.frame(data) &&
+        !inherits(data, "plotly_obj") &&
+        !is.null(names(data)) &&
+        all(names(data) %in% c("data", "layout", "frames")))
+  ) {
     src <- unclass(data)
     data <- src$data
     layout <- layout %||% src$layout
     frames <- frames %||% src$frames
   }
-  new_figure(validate_data(data, skip_invalid), validate_layout(layout, skip_invalid),
-             validate_frames(frames, skip_invalid))
+  new_figure(
+    validate_data(data, skip_invalid),
+    validate_layout(layout, skip_invalid),
+    validate_frames(frames, skip_invalid)
+  )
 }
 
 # Data for add_<trace>()'s formula properties: its `data` argument or the
 # figure's (go_figure(<data frame>)).
 trace_data <- function(fig, data = NULL) {
   data <- data %||% attr(fig, "plotly_data", exact = TRUE)
-  if (!is.null(data) && !is.data.frame(data) && !(is.list(data) && !is.null(names(data)))) {
+  if (
+    !is.null(data) &&
+      !is.data.frame(data) &&
+      !(is.list(data) && !is.null(names(data)))
+  ) {
     stop("`data` must be a data frame (or a named list)", call. = FALSE)
   }
   data
 }
 
 new_figure <- function(data, layout, frames = list()) {
-  structure(list(data = data, layout = layout, frames = frames), class = "go_figure")
+  structure(
+    list(data = data, layout = layout, frames = frames),
+    class = "go_figure"
+  )
 }
 
 # Rebuild `fig` with new parts, keeping its other attributes (subplot grid,
 # config, event settings, trendline results, ...).
-modify_figure <- function(fig, data = fig$data, layout = fig$layout, frames = fig$frames) {
+modify_figure <- function(
+  fig,
+  data = fig$data,
+  layout = fig$layout,
+  frames = fig$frames
+) {
   out <- new_figure(data, layout, frames %||% list())
   keep <- setdiff(names(attributes(fig)), c("names", "class"))
-  for (a in keep) attr(out, a) <- attr(fig, a)
+  for (a in keep) {
+    attr(out, a) <- attr(fig, a)
+  }
   out
 }
 
 FRAME_PROPS <- c("name", "data", "layout", "group", "traces", "baseframe")
 
 validate_frames <- function(frames, skip_invalid = FALSE) {
-  if (is.null(frames)) return(list())
+  if (is.null(frames)) {
+    return(list())
+  }
   if (!is.list(frames) || is.data.frame(frames) || !is.null(names(frames))) {
     stop("`frames` must be an unnamed list of frames", call. = FALSE)
   }
   lapply(frames, function(f) {
     f <- unclass(f)
-    if (!is.list(f) || (length(f) && is.null(names(f)))) stop("Each frame must be a named list", call. = FALSE)
+    if (!is.list(f) || (length(f) && is.null(names(f)))) {
+      stop("Each frame must be a named list", call. = FALSE)
+    }
     bad <- setdiff(names(f), FRAME_PROPS)
     if (length(bad)) {
-      stop(sprintf("Invalid frame properties: %s\n    Valid properties: %s",
-                   paste(bad, collapse = ", "), paste(FRAME_PROPS, collapse = ", ")), call. = FALSE)
+      stop(
+        sprintf(
+          "Invalid frame properties: %s\n    Valid properties: %s",
+          paste(bad, collapse = ", "),
+          paste(FRAME_PROPS, collapse = ", ")
+        ),
+        call. = FALSE
+      )
     }
-    if (!is.null(f$name)) f$name <- as.character(f$name)
-    if (!is.null(f$group)) f$group <- as.character(f$group)
-    if (!is.null(f$baseframe)) f$baseframe <- as.character(f$baseframe)
-    if (!is.null(f$traces)) f$traces <- I(as.integer(f$traces))
-    if (!is.null(f$data)) f$data <- validate_data(f$data, skip_invalid)
-    if (!is.null(f$layout)) f$layout <- validate_layout(f$layout, skip_invalid)
+    if (!is.null(f$name)) {
+      f$name <- as.character(f$name)
+    }
+    if (!is.null(f$group)) {
+      f$group <- as.character(f$group)
+    }
+    if (!is.null(f$baseframe)) {
+      f$baseframe <- as.character(f$baseframe)
+    }
+    if (!is.null(f$traces)) {
+      f$traces <- I(as.integer(f$traces))
+    }
+    if (!is.null(f$data)) {
+      f$data <- validate_data(f$data, skip_invalid)
+    }
+    if (!is.null(f$layout)) {
+      f$layout <- validate_layout(f$layout, skip_invalid)
+    }
     f
   })
 }
@@ -134,7 +184,10 @@ set_figure_part <- function(fig, name, value) {
   } else if (identical(name, "frames")) {
     modify_figure(fig, frames = validate_frames(value))
   } else {
-    stop("A figure has only `data`, `layout` and `frames` elements", call. = FALSE)
+    stop(
+      "A figure has only `data`, `layout` and `frames` elements",
+      call. = FALSE
+    )
   }
 }
 
@@ -176,10 +229,15 @@ knit_print.go_figure <- function(x, ..., options = NULL) {
 # to knitr's widget screenshot handling) if Kaleido isn't available.
 knit_static_image <- function(x, options) {
   ok <- requireNamespace("reticulate", quietly = TRUE) &&
-    isTRUE(tryCatch(reticulate::py_module_available("kaleido"), error = function(e) FALSE))
+    isTRUE(tryCatch(
+      reticulate::py_module_available("kaleido"),
+      error = function(e) FALSE
+    ))
   if (!ok) {
-    message("Kaleido is not available, so the figure is included as an htmlwidget ",
-            "(see ?save_image for installing it)")
+    message(
+      "Kaleido is not available, so the figure is included as an htmlwidget ",
+      "(see ?save_image for installing it)"
+    )
     return(NULL)
   }
   dpi <- options$dpi %||% 96
@@ -188,15 +246,31 @@ knit_static_image <- function(x, options) {
   ext <- if (knitr::is_latex_output()) "pdf" else "png"
   path <- knitr::fig_path(paste0(".", ext), options)
   dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
-  save_image(x, path, width = width, height = height, scale = if (ext == "png") 2 else NULL)
+  save_image(
+    x,
+    path,
+    width = width,
+    height = height,
+    scale = if (ext == "png") 2 else NULL
+  )
   knitr::knit_print(knitr::include_graphics(path), options = options)
 }
 
 # Adding traces -----------------------------------------------------------------
 
 check_row_col_pair <- function(row, col, what = "row and col") {
-  if (!is.null(row) && is.null(col)) stop("Received row parameter but not col.\nrow and col must be specified together", call. = FALSE)
-  if (is.null(row) && !is.null(col)) stop("Received col parameter but not row.\nrow and col must be specified together", call. = FALSE)
+  if (!is.null(row) && is.null(col)) {
+    stop(
+      "Received row parameter but not col.\nrow and col must be specified together",
+      call. = FALSE
+    )
+  }
+  if (is.null(row) && !is.null(col)) {
+    stop(
+      "Received col parameter but not row.\nrow and col must be specified together",
+      call. = FALSE
+    )
+  }
 }
 
 #' Add traces to a figure
@@ -237,52 +311,101 @@ add_trace <- function(fig, ...) UseMethod("add_trace")
 
 #' @export
 add_trace.default <- function(fig, ...) {
-  stop("Don't know how to add a trace to an object of class ", class(fig)[[1L]], call. = FALSE)
+  stop(
+    "Don't know how to add a trace to an object of class ",
+    class(fig)[[1L]],
+    call. = FALSE
+  )
 }
 
 #' @rdname add_traces
 #' @export
-add_trace.go_figure <- function(fig, trace, row = NULL, col = NULL, secondary_y = NULL,
-                                exclude_empty_subplots = FALSE, ...) {
+add_trace.go_figure <- function(
+  fig,
+  trace,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL,
+  exclude_empty_subplots = FALSE,
+  ...
+) {
   check_figure(fig)
   check_row_col_pair(row, col)
   if (!is.null(row) && is_multi_cell(row, col)) {
     for (rc in select_subplot_coordinates(fig, row, col)) {
-      fig <- add_trace(fig, trace, rc[[1L]], rc[[2L]], secondary_y, exclude_empty_subplots)
+      fig <- add_trace(
+        fig,
+        trace,
+        rc[[1L]],
+        rc[[2L]],
+        secondary_y,
+        exclude_empty_subplots
+      )
     }
     return(fig)
   }
-  add_traces(fig, list(trace), rows = row, cols = col, secondary_ys = secondary_y,
-             exclude_empty_subplots = exclude_empty_subplots)
+  add_traces(
+    fig,
+    list(trace),
+    rows = row,
+    cols = col,
+    secondary_ys = secondary_y,
+    exclude_empty_subplots = exclude_empty_subplots
+  )
 }
 
 #' @rdname add_traces
 #' @export
-add_traces <- function(fig, data, rows = NULL, cols = NULL, secondary_ys = NULL,
-                       exclude_empty_subplots = FALSE) {
+add_traces <- function(
+  fig,
+  data,
+  rows = NULL,
+  cols = NULL,
+  secondary_ys = NULL,
+  exclude_empty_subplots = FALSE
+) {
   check_figure(fig)
   data <- validate_data(data)
   n <- length(data)
   expand <- function(x, name) {
-    if (is.null(x)) return(NULL)
-    if (length(x) == 1L) x <- rep(x, n)
-    if (length(x) != n) stop(sprintf("`%s` must have one value per trace (%d)", name, n), call. = FALSE)
+    if (is.null(x)) {
+      return(NULL)
+    }
+    if (length(x) == 1L) {
+      x <- rep(x, n)
+    }
+    if (length(x) != n) {
+      stop(
+        sprintf("`%s` must have one value per trace (%d)", name, n),
+        call. = FALSE
+      )
+    }
     x
   }
   rows <- expand(rows, "rows")
   cols <- expand(cols, "cols")
   secondary_ys <- expand(secondary_ys, "secondary_ys")
   check_row_col_pair(rows, cols)
-  if (!is.null(secondary_ys) && is.null(rows)) rows <- cols <- rep(1L, n)
+  if (!is.null(secondary_ys) && is.null(rows)) {
+    rows <- cols <- rep(1L, n)
+  }
   if (!is.null(rows)) {
     grid_ref <- validate_grid_ref(fig)
     for (i in seq_len(n)) {
-      data[[i]] <- set_trace_grid_reference(data[[i]], grid_ref, rows[[i]], cols[[i]],
-                                            isTRUE(secondary_ys[i]))
+      data[[i]] <- set_trace_grid_reference(
+        data[[i]],
+        grid_ref,
+        rows[[i]],
+        cols[[i]],
+        isTRUE(secondary_ys[i])
+      )
     }
   }
   if (isTRUE(exclude_empty_subplots)) {
-    data <- Filter(function(tr) subplot_not_empty(fig, tr$xaxis %||% "x", tr$yaxis %||% "y"), data)
+    data <- Filter(
+      function(tr) subplot_not_empty(fig, tr$xaxis %||% "x", tr$yaxis %||% "y"),
+      data
+    )
   }
   modify_figure(fig, data = c(fig$data, data))
 }
@@ -292,7 +415,10 @@ add_traces <- function(fig, data, rows = NULL, cols = NULL, secondary_ys = NULL,
 subplot_not_empty <- function(fig, xref, yref) {
   refs <- lapply(fig$data, function(d) c(d$xaxis %||% "x", d$yaxis %||% "y"))
   for (p in c("shapes", "annotations", "images")) {
-    refs <- c(refs, lapply(fig$layout[[p]], function(d) c(d$xref %||% "x", d$yref %||% "y")))
+    refs <- c(
+      refs,
+      lapply(fig$layout[[p]], function(d) c(d$xref %||% "x", d$yref %||% "y"))
+    )
   }
   any(vapply(refs, function(r) identical(r, c(xref, yref)), logical(1)))
 }
@@ -311,26 +437,41 @@ update_object <- function(obj, key, patch, overwrite = FALSE) {
     val <- patch[[name]]
     ck <- child_key(key, name)
     if (is.na(ck)) {
-      if (!is.null(entry$trace_type) && name == "type") next
+      if (!is.null(entry$trace_type) && name == "type") {
+        next
+      }
       obj <- set_magic_property(obj, key, entry, name, val)
       next
     }
     child <- get_validator(ck)
-    is_compound <- child$superclass %in% c("CompoundValidator", "TitleValidator")
+    is_compound <- child$superclass %in%
+      c("CompoundValidator", "TitleValidator")
     # An empty unnamed list is a no-op (as an empty dict is in plotly.py); an
     # empty named list (e.g. empty_object()) sets an empty object.
-    if (is_compound && is.list(val) && !length(val) && is.null(names(val))) next
-    mergeable <- !overwrite && is_compound && is.list(val) && (is.list(obj[[name]]) || is.null(obj[[name]]))
-    obj[name] <- list(if (mergeable) update_object(obj[[name]], ck, val, overwrite) else val)
+    if (is_compound && is.list(val) && !length(val) && is.null(names(val))) {
+      next
+    }
+    mergeable <- !overwrite &&
+      is_compound &&
+      is.list(val) &&
+      (is.list(obj[[name]]) || is.null(obj[[name]]))
+    obj[name] <- list(
+      if (mergeable) update_object(obj[[name]], ck, val, overwrite) else val
+    )
   }
   obj <- obj[!vapply(obj, is.null, logical(1))]
   out <- vc_compound(obj, key, entry)
-  if (!is.null(entry$trace_type)) out <- add_trace_type(out, entry$trace_type)
+  if (!is.null(entry$trace_type)) {
+    out <- add_trace_type(out, entry$trace_type)
+  }
   out
 }
 
 combine_patch <- function(patch, dots) {
-  if (!is.null(patch) && (!is.list(patch) || (length(patch) && is.null(names(patch))))) {
+  if (
+    !is.null(patch) &&
+      (!is.list(patch) || (length(patch) && is.null(names(patch))))
+  ) {
     stop("`patch` must be a named list or graph object", call. = FALSE)
   }
   if (length(dots) && (is.null(names(dots)) || any(!nzchar(names(dots))))) {
@@ -359,7 +500,12 @@ combine_patch <- function(patch, dots) {
 #'   update_layout(xaxis_title = "x", yaxis = list(type = "log"))
 update_layout <- function(fig, patch = NULL, ..., overwrite = FALSE) {
   check_figure(fig)
-  layout <- update_object(fig$layout, "layout", combine_patch(patch, list(...)), overwrite)
+  layout <- update_object(
+    fig$layout,
+    "layout",
+    combine_patch(patch, list(...)),
+    overwrite
+  )
   modify_figure(fig, layout = layout)
 }
 
@@ -368,7 +514,9 @@ update_layout <- function(fig, patch = NULL, ..., overwrite = FALSE) {
 # Look up a property by plain or magic-underscore name; NULL if absent.
 get_prop <- function(obj, name) {
   obj <- unclass(obj)
-  if (name %in% names(obj)) return(obj[[name]])
+  if (name %in% names(obj)) {
+    return(obj[[name]])
+  }
   pos <- gregexpr("_", name, fixed = TRUE)[[1L]]
   for (p in pos[pos > 0L]) {
     head <- substr(name, 1L, p - 1L)
@@ -391,24 +539,36 @@ plain_value <- function(x) {
   x
 }
 
-values_match <- function(a, b) isTRUE(all.equal(plain_value(a), plain_value(b), check.attributes = FALSE))
+values_match <- function(a, b) {
+  isTRUE(all.equal(plain_value(a), plain_value(b), check.attributes = FALSE))
+}
 
 # plotly.py's _selector_matches: NULL matches everything, a string matches
 # the trace type, a named list matches when every element equals the
 # object's property, and a function is called with the object.
 selector_matches <- function(obj, selector) {
-  if (is.null(selector)) return(TRUE)
-  if (is.function(selector)) return(isTRUE(selector(obj)))
-  if (is.character(selector) && length(selector) == 1L) selector <- list(type = selector)
-  if (is.list(selector) && (length(selector) == 0L || !is.null(names(selector)))) {
+  if (is.null(selector)) {
+    return(TRUE)
+  }
+  if (is.function(selector)) {
+    return(isTRUE(selector(obj)))
+  }
+  if (is.character(selector) && length(selector) == 1L) {
+    selector <- list(type = selector)
+  }
+  if (
+    is.list(selector) && (length(selector) == 0L || !is.null(names(selector)))
+  ) {
     for (name in names(selector)) {
       val <- get_prop(obj, name)
       if (is.null(val) || !values_match(val, selector[[name]])) return(FALSE)
     }
     return(TRUE)
   }
-  stop("`selector` must be NULL, a named list, a string, a function or (for traces) trace indices",
-       call. = FALSE)
+  stop(
+    "`selector` must be NULL, a named list, a string, a function or (for traces) trace indices",
+    call. = FALSE
+  )
 }
 
 # Apply plotly.py's _filter_by_selector: `keep` is a logical pre-filter (e.g.
@@ -417,7 +577,12 @@ filter_by_selector <- function(objs, keep, selector) {
   idx <- which(keep)
   if (is.numeric(selector)) {
     if (any(selector < 1 | selector > length(idx))) {
-      stop("Selector index out of range: ", length(idx), " object(s) match", call. = FALSE)
+      stop(
+        "Selector index out of range: ",
+        length(idx),
+        " object(s) match",
+        call. = FALSE
+      )
     }
     return(idx[as.integer(selector)])
   }
@@ -438,21 +603,35 @@ grid_subplot_refs <- function(fig, row, col, secondary_y) {
   }
   refs <- list()
   for (cell in cells) {
-    if (is.null(cell)) next
-    if (!isTRUE(secondary_y)) refs <- c(refs, cell[1L])
+    if (is.null(cell)) {
+      next
+    }
+    if (!isTRUE(secondary_y)) {
+      refs <- c(refs, cell[1L])
+    }
     if (!isFALSE(secondary_y) && length(cell) > 1L) refs <- c(refs, cell[2L])
   }
   refs
 }
 
-trace_indices <- function(fig, selector, row = NULL, col = NULL, secondary_y = NULL) {
+trace_indices <- function(
+  fig,
+  selector,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL
+) {
   keep <- rep(TRUE, length(fig$data))
   if (!is.null(row) || !is.null(col) || !is.null(secondary_y)) {
     refs <- grid_subplot_refs(fig, row, col, secondary_y)
-    keep <- vapply(fig$data, function(tr) {
-      ref <- subplot_ref_for_trace(tr)
-      !is.null(ref) && any(vapply(refs, values_match, logical(1), b = ref))
-    }, logical(1))
+    keep <- vapply(
+      fig$data,
+      function(tr) {
+        ref <- subplot_ref_for_trace(tr)
+        !is.null(ref) && any(vapply(refs, values_match, logical(1), b = ref))
+      },
+      logical(1)
+    )
   }
   filter_by_selector(fig$data, keep, selector)
 }
@@ -492,15 +671,29 @@ trace_indices <- function(fig, selector, row = NULL, col = NULL, secondary_y = N
 #'   tr$name <- toupper(tr$name)
 #'   tr
 #' })
-select_traces <- function(fig, selector = NULL, row = NULL, col = NULL, secondary_y = NULL) {
+select_traces <- function(
+  fig,
+  selector = NULL,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL
+) {
   check_figure(fig)
   fig$data[trace_indices(fig, selector, row, col, secondary_y)]
 }
 
 #' @rdname select_traces
 #' @export
-update_traces <- function(fig, patch = NULL, ..., selector = NULL, row = NULL, col = NULL,
-                          secondary_y = NULL, overwrite = FALSE) {
+update_traces <- function(
+  fig,
+  patch = NULL,
+  ...,
+  selector = NULL,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL,
+  overwrite = FALSE
+) {
   check_figure(fig)
   patch <- combine_patch(patch, list(...))
   data <- fig$data
@@ -512,7 +705,14 @@ update_traces <- function(fig, patch = NULL, ..., selector = NULL, row = NULL, c
 
 #' @rdname select_traces
 #' @export
-for_each_trace <- function(fig, fn, selector = NULL, row = NULL, col = NULL, secondary_y = NULL) {
+for_each_trace <- function(
+  fig,
+  fn,
+  selector = NULL,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL
+) {
   check_figure(fig)
   data <- fig$data
   for (i in trace_indices(fig, selector, row, col, secondary_y)) {
@@ -528,7 +728,11 @@ for_each_trace <- function(fig, fn, selector = NULL, row = NULL, col = NULL, sec
 # base object (e.g. "xaxis") is always included, as in plotly.py where it
 # always exists.
 subplot_names <- function(layout, prefix) {
-  nms <- grep(paste0("^", prefix, "([1-9][0-9]*)?$"), names(layout), value = TRUE)
+  nms <- grep(
+    paste0("^", prefix, "([1-9][0-9]*)?$"),
+    names(layout),
+    value = TRUE
+  )
   nms <- union(prefix, nms)
   num <- suppressWarnings(as.integer(sub(prefix, "", nms, fixed = TRUE)))
   nms[order(ifelse(is.na(num), 1L, num))]
@@ -543,7 +747,9 @@ container_cells <- function(fig, prefix) {
       refs <- grid_ref[[r]][[c]]
       for (i in seq_along(refs)) {
         for (k in refs[[i]]$layout_keys) {
-          if (startsWith(k, prefix)) out[[k]] <- list(row = r, col = c, secondary_y = i == 2L)
+          if (startsWith(k, prefix)) {
+            out[[k]] <- list(row = r, col = c, secondary_y = i == 2L)
+          }
         }
       }
     }
@@ -551,30 +757,63 @@ container_cells <- function(fig, prefix) {
   out
 }
 
-layout_subplot_keys <- function(fig, prefix, selector = NULL, row = NULL, col = NULL, secondary_y = NULL) {
+layout_subplot_keys <- function(
+  fig,
+  prefix,
+  selector = NULL,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL
+) {
   check_figure(fig)
   nms <- subplot_names(fig$layout, prefix)
   if (!is.null(row) || !is.null(col) || !is.null(secondary_y)) {
     cells <- container_cells(fig, prefix)
-    nms <- Filter(function(k) {
-      cell <- cells[[k]]
-      !is.null(cell) && (is.null(row) || cell$row == row) && (is.null(col) || cell$col == col) &&
-        (is.null(secondary_y) || cell$secondary_y == secondary_y)
-    }, nms)
+    nms <- Filter(
+      function(k) {
+        cell <- cells[[k]]
+        !is.null(cell) &&
+          (is.null(row) || cell$row == row) &&
+          (is.null(col) || cell$col == col) &&
+          (is.null(secondary_y) || cell$secondary_y == secondary_y)
+      },
+      nms
+    )
   }
   key <- paste0("layout.", prefix)
-  objs <- lapply(nms, function(n) fig$layout[[n]] %||% validate_coerce(list(), key))
+  objs <- lapply(nms, function(n) {
+    fig$layout[[n]] %||% validate_coerce(list(), key)
+  })
   nms[filter_by_selector(objs, rep(TRUE, length(objs)), selector)]
 }
 
-select_layout_subplots <- function(fig, prefix, selector = NULL, row = NULL, col = NULL, secondary_y = NULL) {
+select_layout_subplots <- function(
+  fig,
+  prefix,
+  selector = NULL,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL
+) {
   key <- paste0("layout.", prefix)
   nms <- layout_subplot_keys(fig, prefix, selector, row, col, secondary_y)
-  structure(lapply(nms, function(n) fig$layout[[n]] %||% validate_coerce(list(), key)), names = nms)
+  structure(
+    lapply(nms, function(n) fig$layout[[n]] %||% validate_coerce(list(), key)),
+    names = nms
+  )
 }
 
-update_layout_subplots <- function(fig, prefix, patch, selector, dots, overwrite,
-                                   row = NULL, col = NULL, secondary_y = NULL) {
+update_layout_subplots <- function(
+  fig,
+  prefix,
+  patch,
+  selector,
+  dots,
+  overwrite,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL
+) {
   patch <- combine_patch(patch, dots)
   key <- paste0("layout.", prefix)
   layout <- unclass(fig$layout)
@@ -584,7 +823,15 @@ update_layout_subplots <- function(fig, prefix, patch, selector, dots, overwrite
   modify_figure(fig, layout = as_graph_object(layout, get_validator("layout")))
 }
 
-for_each_layout_subplot <- function(fig, prefix, fn, selector, row = NULL, col = NULL, secondary_y = NULL) {
+for_each_layout_subplot <- function(
+  fig,
+  prefix,
+  fn,
+  selector,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL
+) {
   key <- paste0("layout.", prefix)
   layout <- unclass(fig$layout)
   objs <- select_layout_subplots(fig, prefix, selector, row, col, secondary_y)
@@ -599,7 +846,14 @@ for_each_layout_subplot <- function(fig, prefix, fn, selector, row = NULL, col =
 
 # Indices of layout[[prop]] elements matching selector and grid cell
 # (plotly.py _select_annotations_like).
-layout_array_indices <- function(fig, prop, selector = NULL, row = NULL, col = NULL, secondary_y = NULL) {
+layout_array_indices <- function(
+  fig,
+  prop,
+  selector = NULL,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL
+) {
   check_figure(fig)
   objs <- fig$layout[[prop]] %||% list()
   keep <- rep(TRUE, length(objs))
@@ -612,7 +866,9 @@ layout_array_indices <- function(fig, prop, selector = NULL, row = NULL, col = N
       for (c in seq_along(grid_ref[[r]])) {
         refs <- grid_ref[[r]][[c]]
         for (i in seq_along(refs)) {
-          if (refs[[i]]$subplot_type != "xy") next
+          if (refs[[i]]$subplot_type != "xy") {
+            next
+          }
           keys <- sub("axis", "", refs[[i]]$layout_keys, fixed = TRUE)
           xref_col[[keys[[1L]]]] <- c
           yref_row[[keys[[2L]]]] <- r
@@ -620,23 +876,50 @@ layout_array_indices <- function(fig, prop, selector = NULL, row = NULL, col = N
         }
       }
     }
-    keep <- vapply(objs, function(o) {
-      xr <- o$xref %||% ""
-      yr <- o$yref %||% ""
-      (is.null(col) || isTRUE(xref_col[[xr]] == col)) &&
-        (is.null(row) || isTRUE(yref_row[[yr]] == row)) &&
-        (is.null(secondary_y) || isTRUE(yref_sec[[yr]] == secondary_y))
-    }, logical(1))
+    keep <- vapply(
+      objs,
+      function(o) {
+        xr <- o$xref %||% ""
+        yr <- o$yref %||% ""
+        (is.null(col) || isTRUE(xref_col[[xr]] == col)) &&
+          (is.null(row) || isTRUE(yref_row[[yr]] == row)) &&
+          (is.null(secondary_y) || isTRUE(yref_sec[[yr]] == secondary_y))
+      },
+      logical(1)
+    )
   }
   filter_by_selector(objs, keep, selector)
 }
 
-select_layout_array <- function(fig, prop, selector = NULL, row = NULL, col = NULL, secondary_y = NULL) {
-  (fig$layout[[prop]] %||% list())[layout_array_indices(fig, prop, selector, row, col, secondary_y)]
+select_layout_array <- function(
+  fig,
+  prop,
+  selector = NULL,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL
+) {
+  (fig$layout[[prop]] %||% list())[layout_array_indices(
+    fig,
+    prop,
+    selector,
+    row,
+    col,
+    secondary_y
+  )]
 }
 
-update_layout_array <- function(fig, prop, patch, selector, dots, overwrite,
-                                row = NULL, col = NULL, secondary_y = NULL) {
+update_layout_array <- function(
+  fig,
+  prop,
+  patch,
+  selector,
+  dots,
+  overwrite,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL
+) {
   patch <- combine_patch(patch, dots)
   element_key <- get_validator(paste0("layout.", prop))$element_key
   arr <- fig$layout[[prop]] %||% list()
@@ -646,7 +929,15 @@ update_layout_array <- function(fig, prop, patch, selector, dots, overwrite,
   set_layout_array(fig, prop, arr)
 }
 
-for_each_layout_array <- function(fig, prop, fn, selector, row = NULL, col = NULL, secondary_y = NULL) {
+for_each_layout_array <- function(
+  fig,
+  prop,
+  fn,
+  selector,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL
+) {
   element_key <- get_validator(paste0("layout.", prop))$element_key
   arr <- fig$layout[[prop]] %||% list()
   for (i in layout_array_indices(fig, prop, selector, row, col, secondary_y)) {
@@ -664,32 +955,90 @@ set_layout_array <- function(fig, prop, arr) {
 
 # Add an annotation, shape, image or selection, placing it in a grid cell if
 # row/col are given (plotly.py _add_annotation_like).
-add_layout_array_item <- function(fig, prop, obj, row = NULL, col = NULL, secondary_y = NULL,
-                                  exclude_empty_subplots = FALSE) {
+add_layout_array_item <- function(
+  fig,
+  prop,
+  obj,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL,
+  exclude_empty_subplots = FALSE
+) {
   check_figure(fig)
   check_row_col_pair(row, col)
   if (!is.null(row) && is_multi_cell(row, col)) {
     for (rc in select_subplot_coordinates(fig, row, col)) {
-      fig <- add_layout_array_item(fig, prop, obj, rc[[1L]], rc[[2L]], secondary_y, exclude_empty_subplots)
+      fig <- add_layout_array_item(
+        fig,
+        prop,
+        obj,
+        rc[[1L]],
+        rc[[2L]],
+        secondary_y,
+        exclude_empty_subplots
+      )
     }
     return(fig)
   }
   singular <- sub("s$", "", prop)
   if (!is.null(row)) {
     grid_ref <- validate_grid_ref(fig)
-    if (row > length(grid_ref)) stop(sprintf("row index %d out-of-bounds, row index must be between 1 and %d, inclusive.", row, length(grid_ref)), call. = FALSE)
-    if (col > length(grid_ref[[row]])) stop(sprintf("column index %d out-of-bounds, column index must be between 1 and %d, inclusive.", col, length(grid_ref[[row]])), call. = FALSE)
+    if (row > length(grid_ref)) {
+      stop(
+        sprintf(
+          "row index %d out-of-bounds, row index must be between 1 and %d, inclusive.",
+          row,
+          length(grid_ref)
+        ),
+        call. = FALSE
+      )
+    }
+    if (col > length(grid_ref[[row]])) {
+      stop(
+        sprintf(
+          "column index %d out-of-bounds, column index must be between 1 and %d, inclusive.",
+          col,
+          length(grid_ref[[row]])
+        ),
+        call. = FALSE
+      )
+    }
     refs <- grid_ref[[row]][[col]]
-    if (is.null(refs)) stop(sprintf("No subplot found at position (%d, %d)", row, col), call. = FALSE)
+    if (is.null(refs)) {
+      stop(
+        sprintf("No subplot found at position (%d, %d)", row, col),
+        call. = FALSE
+      )
+    }
     if (refs[[1L]]$subplot_type != "xy") {
-      stop(sprintf("Cannot add %s to subplot at position (%d, %d) because subplot is of type %s.",
-                   singular, row, col, refs[[1L]]$subplot_type), call. = FALSE)
+      stop(
+        sprintf(
+          "Cannot add %s to subplot at position (%d, %d) because subplot is of type %s.",
+          singular,
+          row,
+          col,
+          refs[[1L]]$subplot_type
+        ),
+        call. = FALSE
+      )
     }
     yref0 <- obj$yref
-    if (is.null(yref0) || yref0 == "y" || grepl("paper", yref0) || grepl("domain", yref0)) {
+    if (
+      is.null(yref0) ||
+        yref0 == "y" ||
+        grepl("paper", yref0) ||
+        grepl("domain", yref0)
+    ) {
       if (length(refs) == 1L && isTRUE(secondary_y)) {
-        stop(sprintf("Cannot add %s to secondary y-axis of subplot at position (%d, %d) because subplot does not have a secondary y-axis",
-                     singular, row, col), call. = FALSE)
+        stop(
+          sprintf(
+            "Cannot add %s to secondary y-axis of subplot at position (%d, %d) because subplot does not have a secondary y-axis",
+            singular,
+            row,
+            col
+          ),
+          call. = FALSE
+        )
       }
       keys <- refs[[if (isTRUE(secondary_y)) 2L else 1L]]$layout_keys
       xref <- sub("axis", "", keys[[1L]], fixed = TRUE)
@@ -698,9 +1047,15 @@ add_layout_array_item <- function(fig, prop, obj, row = NULL, col = NULL, second
       yref <- yref0
       xref <- sub("axis", "", refs[[1L]]$layout_keys[[1L]], fixed = TRUE)
     }
-    if (isTRUE(exclude_empty_subplots) && !subplot_not_empty(fig, xref, yref)) return(fig)
-    if (grepl("domain", obj$xref %||% "")) xref <- paste(xref, "domain")
-    if (grepl("domain", obj$yref %||% "")) yref <- paste(yref, "domain")
+    if (isTRUE(exclude_empty_subplots) && !subplot_not_empty(fig, xref, yref)) {
+      return(fig)
+    }
+    if (grepl("domain", obj$xref %||% "")) {
+      xref <- paste(xref, "domain")
+    }
+    if (grepl("domain", obj$yref %||% "")) {
+      yref <- paste(yref, "domain")
+    }
     obj$xref <- xref
     obj$yref <- yref
   }

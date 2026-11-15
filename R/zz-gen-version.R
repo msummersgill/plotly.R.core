@@ -11,10 +11,43 @@ plotlyjs_version <- function() "4.3.0"
 # Trace types in each partial bundle shipped in inst/htmlwidgets/lib/plotlyjs
 PLOTLYJS_BUNDLE_TRACES <- list(
   basic = c("bar", "pie", "scatter"),
-  cartesian = c("bar", "box", "contour", "heatmap", "histogram", "histogram2d", "histogram2dcontour", "image", "pie", "scatter", "scatterternary", "violin"),
-  finance = c("bar", "candlestick", "funnel", "funnelarea", "histogram", "indicator", "ohlc", "pie", "scatter", "waterfall"),
+  cartesian = c(
+    "bar",
+    "box",
+    "contour",
+    "heatmap",
+    "histogram",
+    "histogram2d",
+    "histogram2dcontour",
+    "image",
+    "pie",
+    "scatter",
+    "scatterternary",
+    "violin"
+  ),
+  finance = c(
+    "bar",
+    "candlestick",
+    "funnel",
+    "funnelarea",
+    "histogram",
+    "indicator",
+    "ohlc",
+    "pie",
+    "scatter",
+    "waterfall"
+  ),
   geo = c("choropleth", "scatter", "scattergeo"),
   gl2d = c("parcoords", "scatter", "scattergl", "splom"),
-  gl3d = c("cone", "isosurface", "mesh3d", "scatter", "scatter3d", "streamtube", "surface", "volume"),
+  gl3d = c(
+    "cone",
+    "isosurface",
+    "mesh3d",
+    "scatter",
+    "scatter3d",
+    "streamtube",
+    "surface",
+    "volume"
+  ),
   map = c("choroplethmap", "densitymap", "scatter", "scattermap")
 )

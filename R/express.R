@@ -17,21 +17,55 @@
 #'              size = ~petal_length, hover_data = ~petal_width)
 #' px_data_tips() |> px_scatter(x = ~total_bill, y = ~tip, facet_col = ~time, trendline = "ols")
 px_scatter <- function(
-    data_frame = NULL, x = NULL, y = NULL, color = NULL, symbol = NULL,
-    size = NULL, hover_name = NULL, hover_data = NULL, custom_data = NULL,
-    text = NULL, facet_row = NULL, facet_col = NULL, facet_col_wrap = 0,
-    facet_row_spacing = NULL, facet_col_spacing = NULL, error_x = NULL,
-    error_x_minus = NULL, error_y = NULL, error_y_minus = NULL,
-    animation_frame = NULL, animation_group = NULL, category_orders = NULL,
-    labels = NULL, orientation = NULL, color_discrete_sequence = NULL,
-    color_discrete_map = NULL, color_continuous_scale = NULL,
-    range_color = NULL, color_continuous_midpoint = NULL,
-    symbol_sequence = NULL, symbol_map = NULL, opacity = NULL,
-    size_max = NULL, marginal_x = NULL, marginal_y = NULL, trendline = NULL,
-    trendline_options = NULL, trendline_color_override = NULL,
-    trendline_scope = "trace", log_x = FALSE, log_y = FALSE, range_x = NULL,
-    range_y = NULL, render_mode = "auto", title = NULL, subtitle = NULL,
-    template = NULL, width = NULL, height = NULL
+  data_frame = NULL,
+  x = NULL,
+  y = NULL,
+  color = NULL,
+  symbol = NULL,
+  size = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  text = NULL,
+  facet_row = NULL,
+  facet_col = NULL,
+  facet_col_wrap = 0,
+  facet_row_spacing = NULL,
+  facet_col_spacing = NULL,
+  error_x = NULL,
+  error_x_minus = NULL,
+  error_y = NULL,
+  error_y_minus = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  orientation = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  color_continuous_scale = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  symbol_sequence = NULL,
+  symbol_map = NULL,
+  opacity = NULL,
+  size_max = NULL,
+  marginal_x = NULL,
+  marginal_y = NULL,
+  trendline = NULL,
+  trendline_options = NULL,
+  trendline_color_override = NULL,
+  trendline_scope = "trace",
+  log_x = FALSE,
+  log_y = FALSE,
+  range_x = NULL,
+  range_y = NULL,
+  render_mode = "auto",
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
   make_figure(args, "scatter")
@@ -50,21 +84,60 @@ px_scatter <- function(
 #' @examples
 #' px_data_tips() |> px_density_contour(x = ~total_bill, y = ~tip)
 px_density_contour <- function(
-    data_frame = NULL, x = NULL, y = NULL, z = NULL, color = NULL,
-    facet_row = NULL, facet_col = NULL, facet_col_wrap = 0,
-    facet_row_spacing = NULL, facet_col_spacing = NULL, hover_name = NULL,
-    hover_data = NULL, animation_frame = NULL, animation_group = NULL,
-    category_orders = NULL, labels = NULL, orientation = NULL,
-    color_discrete_sequence = NULL, color_discrete_map = NULL,
-    marginal_x = NULL, marginal_y = NULL, trendline = NULL,
-    trendline_options = NULL, trendline_color_override = NULL,
-    trendline_scope = "trace", log_x = FALSE, log_y = FALSE, range_x = NULL,
-    range_y = NULL, histfunc = NULL, histnorm = NULL, nbinsx = NULL,
-    nbinsy = NULL, text_auto = FALSE, title = NULL, subtitle = NULL,
-    template = NULL, width = NULL, height = NULL
+  data_frame = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  color = NULL,
+  facet_row = NULL,
+  facet_col = NULL,
+  facet_col_wrap = 0,
+  facet_row_spacing = NULL,
+  facet_col_spacing = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  orientation = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  marginal_x = NULL,
+  marginal_y = NULL,
+  trendline = NULL,
+  trendline_options = NULL,
+  trendline_color_override = NULL,
+  trendline_scope = "trace",
+  log_x = FALSE,
+  log_y = FALSE,
+  range_x = NULL,
+  range_y = NULL,
+  histfunc = NULL,
+  histnorm = NULL,
+  nbinsx = NULL,
+  nbinsy = NULL,
+  text_auto = FALSE,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
-  make_figure(args, "histogram2dcontour", trace_patch = list(contours = list(coloring = "none"), histfunc = histfunc, histnorm = histnorm, nbinsx = nbinsx, nbinsy = nbinsy, xbingroup = "x", ybingroup = "y"))
+  make_figure(
+    args,
+    "histogram2dcontour",
+    trace_patch = list(
+      contours = list(coloring = "none"),
+      histfunc = histfunc,
+      histnorm = histnorm,
+      nbinsx = nbinsx,
+      nbinsy = nbinsy,
+      xbingroup = "x",
+      ybingroup = "y"
+    )
+  )
 }
 
 #' Density heatmap
@@ -80,19 +153,56 @@ px_density_contour <- function(
 #' @examples
 #' px_data_tips() |> px_density_heatmap(x = ~total_bill, y = ~tip, marginal_x = "histogram")
 px_density_heatmap <- function(
-    data_frame = NULL, x = NULL, y = NULL, z = NULL, facet_row = NULL,
-    facet_col = NULL, facet_col_wrap = 0, facet_row_spacing = NULL,
-    facet_col_spacing = NULL, hover_name = NULL, hover_data = NULL,
-    animation_frame = NULL, animation_group = NULL, category_orders = NULL,
-    labels = NULL, orientation = NULL, color_continuous_scale = NULL,
-    range_color = NULL, color_continuous_midpoint = NULL, marginal_x = NULL,
-    marginal_y = NULL, opacity = NULL, log_x = FALSE, log_y = FALSE,
-    range_x = NULL, range_y = NULL, histfunc = NULL, histnorm = NULL,
-    nbinsx = NULL, nbinsy = NULL, text_auto = FALSE, title = NULL,
-    subtitle = NULL, template = NULL, width = NULL, height = NULL
+  data_frame = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  facet_row = NULL,
+  facet_col = NULL,
+  facet_col_wrap = 0,
+  facet_row_spacing = NULL,
+  facet_col_spacing = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  orientation = NULL,
+  color_continuous_scale = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  marginal_x = NULL,
+  marginal_y = NULL,
+  opacity = NULL,
+  log_x = FALSE,
+  log_y = FALSE,
+  range_x = NULL,
+  range_y = NULL,
+  histfunc = NULL,
+  histnorm = NULL,
+  nbinsx = NULL,
+  nbinsy = NULL,
+  text_auto = FALSE,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
-  make_figure(args, "histogram2d", trace_patch = list(histfunc = histfunc, histnorm = histnorm, nbinsx = nbinsx, nbinsy = nbinsy, xbingroup = "x", ybingroup = "y"))
+  make_figure(
+    args,
+    "histogram2d",
+    trace_patch = list(
+      histfunc = histfunc,
+      histnorm = histnorm,
+      nbinsx = nbinsx,
+      nbinsy = nbinsy,
+      xbingroup = "x",
+      ybingroup = "y"
+    )
+  )
 }
 
 #' Line plot
@@ -108,19 +218,49 @@ px_density_heatmap <- function(
 #' px_data_gapminder()[continent == "Oceania"] |>
 #'   px_line(x = ~year, y = ~lifeExp, color = ~country, markers = TRUE)
 px_line <- function(
-    data_frame = NULL, x = NULL, y = NULL, line_group = NULL, color = NULL,
-    line_dash = NULL, symbol = NULL, hover_name = NULL, hover_data = NULL,
-    custom_data = NULL, text = NULL, facet_row = NULL, facet_col = NULL,
-    facet_col_wrap = 0, facet_row_spacing = NULL, facet_col_spacing = NULL,
-    error_x = NULL, error_x_minus = NULL, error_y = NULL,
-    error_y_minus = NULL, animation_frame = NULL, animation_group = NULL,
-    category_orders = NULL, labels = NULL, orientation = NULL,
-    color_discrete_sequence = NULL, color_discrete_map = NULL,
-    line_dash_sequence = NULL, line_dash_map = NULL, symbol_sequence = NULL,
-    symbol_map = NULL, markers = FALSE, log_x = FALSE, log_y = FALSE,
-    range_x = NULL, range_y = NULL, line_shape = NULL, render_mode = "auto",
-    title = NULL, subtitle = NULL, template = NULL, width = NULL,
-    height = NULL
+  data_frame = NULL,
+  x = NULL,
+  y = NULL,
+  line_group = NULL,
+  color = NULL,
+  line_dash = NULL,
+  symbol = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  text = NULL,
+  facet_row = NULL,
+  facet_col = NULL,
+  facet_col_wrap = 0,
+  facet_row_spacing = NULL,
+  facet_col_spacing = NULL,
+  error_x = NULL,
+  error_x_minus = NULL,
+  error_y = NULL,
+  error_y_minus = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  orientation = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  line_dash_sequence = NULL,
+  line_dash_map = NULL,
+  symbol_sequence = NULL,
+  symbol_map = NULL,
+  markers = FALSE,
+  log_x = FALSE,
+  log_y = FALSE,
+  range_x = NULL,
+  range_y = NULL,
+  line_shape = NULL,
+  render_mode = "auto",
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
   make_figure(args, "scatter")
@@ -140,21 +280,52 @@ px_line <- function(
 #' px_data_gapminder() |>
 #'   px_area(x = ~year, y = ~pop, color = ~continent, line_group = ~country)
 px_area <- function(
-    data_frame = NULL, x = NULL, y = NULL, line_group = NULL, color = NULL,
-    pattern_shape = NULL, symbol = NULL, hover_name = NULL,
-    hover_data = NULL, custom_data = NULL, text = NULL, facet_row = NULL,
-    facet_col = NULL, facet_col_wrap = 0, facet_row_spacing = NULL,
-    facet_col_spacing = NULL, animation_frame = NULL, animation_group = NULL,
-    category_orders = NULL, labels = NULL, color_discrete_sequence = NULL,
-    color_discrete_map = NULL, pattern_shape_sequence = NULL,
-    pattern_shape_map = NULL, symbol_sequence = NULL, symbol_map = NULL,
-    markers = FALSE, orientation = NULL, groupnorm = NULL, log_x = FALSE,
-    log_y = FALSE, range_x = NULL, range_y = NULL, line_shape = NULL,
-    title = NULL, subtitle = NULL, template = NULL, width = NULL,
-    height = NULL
+  data_frame = NULL,
+  x = NULL,
+  y = NULL,
+  line_group = NULL,
+  color = NULL,
+  pattern_shape = NULL,
+  symbol = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  text = NULL,
+  facet_row = NULL,
+  facet_col = NULL,
+  facet_col_wrap = 0,
+  facet_row_spacing = NULL,
+  facet_col_spacing = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  pattern_shape_sequence = NULL,
+  pattern_shape_map = NULL,
+  symbol_sequence = NULL,
+  symbol_map = NULL,
+  markers = FALSE,
+  orientation = NULL,
+  groupnorm = NULL,
+  log_x = FALSE,
+  log_y = FALSE,
+  range_x = NULL,
+  range_y = NULL,
+  line_shape = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
-  make_figure(args, "scatter", trace_patch = list(stackgroup = "1", mode = "lines", groupnorm = groupnorm))
+  make_figure(
+    args,
+    "scatter",
+    trace_patch = list(stackgroup = "1", mode = "lines", groupnorm = groupnorm)
+  )
 }
 
 #' Bar chart
@@ -169,22 +340,57 @@ px_area <- function(
 #' @examples
 #' px_data_tips() |> px_bar(x = ~day, y = ~total_bill, color = ~sex, barmode = "group")
 px_bar <- function(
-    data_frame = NULL, x = NULL, y = NULL, color = NULL,
-    pattern_shape = NULL, facet_row = NULL, facet_col = NULL,
-    facet_col_wrap = 0, facet_row_spacing = NULL, facet_col_spacing = NULL,
-    hover_name = NULL, hover_data = NULL, custom_data = NULL, text = NULL,
-    base = NULL, error_x = NULL, error_x_minus = NULL, error_y = NULL,
-    error_y_minus = NULL, animation_frame = NULL, animation_group = NULL,
-    category_orders = NULL, labels = NULL, color_discrete_sequence = NULL,
-    color_discrete_map = NULL, color_continuous_scale = NULL,
-    pattern_shape_sequence = NULL, pattern_shape_map = NULL,
-    range_color = NULL, color_continuous_midpoint = NULL, opacity = NULL,
-    orientation = NULL, barmode = "relative", log_x = FALSE, log_y = FALSE,
-    range_x = NULL, range_y = NULL, text_auto = FALSE, title = NULL,
-    subtitle = NULL, template = NULL, width = NULL, height = NULL
+  data_frame = NULL,
+  x = NULL,
+  y = NULL,
+  color = NULL,
+  pattern_shape = NULL,
+  facet_row = NULL,
+  facet_col = NULL,
+  facet_col_wrap = 0,
+  facet_row_spacing = NULL,
+  facet_col_spacing = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  text = NULL,
+  base = NULL,
+  error_x = NULL,
+  error_x_minus = NULL,
+  error_y = NULL,
+  error_y_minus = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  color_continuous_scale = NULL,
+  pattern_shape_sequence = NULL,
+  pattern_shape_map = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  opacity = NULL,
+  orientation = NULL,
+  barmode = "relative",
+  log_x = FALSE,
+  log_y = FALSE,
+  range_x = NULL,
+  range_y = NULL,
+  text_auto = FALSE,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
-  make_figure(args, "bar", trace_patch = list(textposition = "auto"), layout_patch = list(barmode = barmode))
+  make_figure(
+    args,
+    "bar",
+    trace_patch = list(textposition = "auto"),
+    layout_patch = list(barmode = barmode)
+  )
 }
 
 #' Timeline (Gantt chart)
@@ -203,20 +409,48 @@ px_bar <- function(
 #'            finish = c("2009-02-28", "2009-04-15", "2009-05-30")) |>
 #'   px_timeline(x_start = ~start, x_end = ~finish, y = ~task)
 px_timeline <- function(
-    data_frame = NULL, x_start = NULL, x_end = NULL, y = NULL, color = NULL,
-    pattern_shape = NULL, facet_row = NULL, facet_col = NULL,
-    facet_col_wrap = 0, facet_row_spacing = NULL, facet_col_spacing = NULL,
-    hover_name = NULL, hover_data = NULL, custom_data = NULL, text = NULL,
-    animation_frame = NULL, animation_group = NULL, category_orders = NULL,
-    labels = NULL, color_discrete_sequence = NULL, color_discrete_map = NULL,
-    pattern_shape_sequence = NULL, pattern_shape_map = NULL,
-    color_continuous_scale = NULL, range_color = NULL,
-    color_continuous_midpoint = NULL, opacity = NULL, range_x = NULL,
-    range_y = NULL, title = NULL, subtitle = NULL, template = NULL,
-    width = NULL, height = NULL
+  data_frame = NULL,
+  x_start = NULL,
+  x_end = NULL,
+  y = NULL,
+  color = NULL,
+  pattern_shape = NULL,
+  facet_row = NULL,
+  facet_col = NULL,
+  facet_col_wrap = 0,
+  facet_row_spacing = NULL,
+  facet_col_spacing = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  text = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  pattern_shape_sequence = NULL,
+  pattern_shape_map = NULL,
+  color_continuous_scale = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  opacity = NULL,
+  range_x = NULL,
+  range_y = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
-  make_figure(args, "timeline", trace_patch = list(textposition = "auto", orientation = "h"), layout_patch = list(barmode = "overlay"))
+  make_figure(
+    args,
+    "timeline",
+    trace_patch = list(textposition = "auto", orientation = "h"),
+    layout_patch = list(barmode = "overlay")
+  )
 }
 
 #' Histogram
@@ -233,21 +467,57 @@ px_timeline <- function(
 #' @examples
 #' px_data_tips() |> px_histogram(x = ~total_bill, color = ~sex, marginal = "rug", nbins = 20)
 px_histogram <- function(
-    data_frame = NULL, x = NULL, y = NULL, color = NULL,
-    pattern_shape = NULL, facet_row = NULL, facet_col = NULL,
-    facet_col_wrap = 0, facet_row_spacing = NULL, facet_col_spacing = NULL,
-    hover_name = NULL, hover_data = NULL, animation_frame = NULL,
-    animation_group = NULL, category_orders = NULL, labels = NULL,
-    color_discrete_sequence = NULL, color_discrete_map = NULL,
-    pattern_shape_sequence = NULL, pattern_shape_map = NULL, marginal = NULL,
-    opacity = NULL, orientation = NULL, barmode = "relative", barnorm = NULL,
-    histnorm = NULL, log_x = FALSE, log_y = FALSE, range_x = NULL,
-    range_y = NULL, histfunc = NULL, cumulative = NULL, nbins = NULL,
-    text_auto = FALSE, title = NULL, subtitle = NULL, template = NULL,
-    width = NULL, height = NULL
+  data_frame = NULL,
+  x = NULL,
+  y = NULL,
+  color = NULL,
+  pattern_shape = NULL,
+  facet_row = NULL,
+  facet_col = NULL,
+  facet_col_wrap = 0,
+  facet_row_spacing = NULL,
+  facet_col_spacing = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  pattern_shape_sequence = NULL,
+  pattern_shape_map = NULL,
+  marginal = NULL,
+  opacity = NULL,
+  orientation = NULL,
+  barmode = "relative",
+  barnorm = NULL,
+  histnorm = NULL,
+  log_x = FALSE,
+  log_y = FALSE,
+  range_x = NULL,
+  range_y = NULL,
+  histfunc = NULL,
+  cumulative = NULL,
+  nbins = NULL,
+  text_auto = FALSE,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
-  make_figure(args, "histogram", trace_patch = list(histnorm = histnorm, histfunc = histfunc, cumulative = list(enabled = cumulative)), layout_patch = list(barmode = barmode, barnorm = barnorm))
+  make_figure(
+    args,
+    "histogram",
+    trace_patch = list(
+      histnorm = histnorm,
+      histfunc = histfunc,
+      cumulative = list(enabled = cumulative)
+    ),
+    layout_patch = list(barmode = barmode, barnorm = barnorm)
+  )
 }
 
 #' Empirical cumulative distribution
@@ -264,19 +534,47 @@ px_histogram <- function(
 #' @examples
 #' px_data_tips() |> px_ecdf(x = ~total_bill, color = ~sex)
 px_ecdf <- function(
-    data_frame = NULL, x = NULL, y = NULL, color = NULL, text = NULL,
-    line_dash = NULL, symbol = NULL, facet_row = NULL, facet_col = NULL,
-    facet_col_wrap = 0, facet_row_spacing = NULL, facet_col_spacing = NULL,
-    hover_name = NULL, hover_data = NULL, animation_frame = NULL,
-    animation_group = NULL, markers = FALSE, lines = TRUE,
-    category_orders = NULL, labels = NULL, color_discrete_sequence = NULL,
-    color_discrete_map = NULL, line_dash_sequence = NULL,
-    line_dash_map = NULL, symbol_sequence = NULL, symbol_map = NULL,
-    marginal = NULL, opacity = NULL, orientation = NULL,
-    ecdfnorm = "probability", ecdfmode = "standard", render_mode = "auto",
-    log_x = FALSE, log_y = FALSE, range_x = NULL, range_y = NULL,
-    title = NULL, subtitle = NULL, template = NULL, width = NULL,
-    height = NULL
+  data_frame = NULL,
+  x = NULL,
+  y = NULL,
+  color = NULL,
+  text = NULL,
+  line_dash = NULL,
+  symbol = NULL,
+  facet_row = NULL,
+  facet_col = NULL,
+  facet_col_wrap = 0,
+  facet_row_spacing = NULL,
+  facet_col_spacing = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  markers = FALSE,
+  lines = TRUE,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  line_dash_sequence = NULL,
+  line_dash_map = NULL,
+  symbol_sequence = NULL,
+  symbol_map = NULL,
+  marginal = NULL,
+  opacity = NULL,
+  orientation = NULL,
+  ecdfnorm = "probability",
+  ecdfmode = "standard",
+  render_mode = "auto",
+  log_x = FALSE,
+  log_y = FALSE,
+  range_x = NULL,
+  range_y = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
   make_figure(args, "scatter")
@@ -294,18 +592,51 @@ px_ecdf <- function(
 #' @examples
 #' px_data_tips() |> px_violin(y = ~total_bill, x = ~day, color = ~smoker, box = TRUE)
 px_violin <- function(
-    data_frame = NULL, x = NULL, y = NULL, color = NULL, facet_row = NULL,
-    facet_col = NULL, facet_col_wrap = 0, facet_row_spacing = NULL,
-    facet_col_spacing = NULL, hover_name = NULL, hover_data = NULL,
-    custom_data = NULL, animation_frame = NULL, animation_group = NULL,
-    category_orders = NULL, labels = NULL, color_discrete_sequence = NULL,
-    color_discrete_map = NULL, orientation = NULL, violinmode = NULL,
-    log_x = FALSE, log_y = FALSE, range_x = NULL, range_y = NULL,
-    points = NULL, box = FALSE, title = NULL, subtitle = NULL,
-    template = NULL, width = NULL, height = NULL
+  data_frame = NULL,
+  x = NULL,
+  y = NULL,
+  color = NULL,
+  facet_row = NULL,
+  facet_col = NULL,
+  facet_col_wrap = 0,
+  facet_row_spacing = NULL,
+  facet_col_spacing = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  orientation = NULL,
+  violinmode = NULL,
+  log_x = FALSE,
+  log_y = FALSE,
+  range_x = NULL,
+  range_y = NULL,
+  points = NULL,
+  box = FALSE,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
-  make_figure(args, "violin", trace_patch = list(points = points, box = list(visible = box), scalegroup = "True", x0 = " ", y0 = " "), layout_patch = list(violinmode = violinmode))
+  make_figure(
+    args,
+    "violin",
+    trace_patch = list(
+      points = points,
+      box = list(visible = box),
+      scalegroup = "True",
+      x0 = " ",
+      y0 = " "
+    ),
+    layout_patch = list(violinmode = violinmode)
+  )
 }
 
 #' Box plot
@@ -324,18 +655,50 @@ px_violin <- function(
 #' @examples
 #' px_data_tips() |> px_box(x = ~time, y = ~total_bill, points = "all")
 px_box <- function(
-    data_frame = NULL, x = NULL, y = NULL, color = NULL, facet_row = NULL,
-    facet_col = NULL, facet_col_wrap = 0, facet_row_spacing = NULL,
-    facet_col_spacing = NULL, hover_name = NULL, hover_data = NULL,
-    custom_data = NULL, animation_frame = NULL, animation_group = NULL,
-    category_orders = NULL, labels = NULL, color_discrete_sequence = NULL,
-    color_discrete_map = NULL, orientation = NULL, boxmode = NULL,
-    log_x = FALSE, log_y = FALSE, range_x = NULL, range_y = NULL,
-    points = NULL, notched = FALSE, title = NULL, subtitle = NULL,
-    template = NULL, width = NULL, height = NULL
+  data_frame = NULL,
+  x = NULL,
+  y = NULL,
+  color = NULL,
+  facet_row = NULL,
+  facet_col = NULL,
+  facet_col_wrap = 0,
+  facet_row_spacing = NULL,
+  facet_col_spacing = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  orientation = NULL,
+  boxmode = NULL,
+  log_x = FALSE,
+  log_y = FALSE,
+  range_x = NULL,
+  range_y = NULL,
+  points = NULL,
+  notched = FALSE,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
-  make_figure(args, "box", trace_patch = list(boxpoints = points, notched = notched, x0 = " ", y0 = " "), layout_patch = list(boxmode = boxmode))
+  make_figure(
+    args,
+    "box",
+    trace_patch = list(
+      boxpoints = points,
+      notched = notched,
+      x0 = " ",
+      y0 = " "
+    ),
+    layout_patch = list(boxmode = boxmode)
+  )
 }
 
 #' Strip plot
@@ -350,18 +713,51 @@ px_box <- function(
 #' @examples
 #' px_data_tips() |> px_strip(x = ~total_bill, y = ~day, color = ~sex)
 px_strip <- function(
-    data_frame = NULL, x = NULL, y = NULL, color = NULL, facet_row = NULL,
-    facet_col = NULL, facet_col_wrap = 0, facet_row_spacing = NULL,
-    facet_col_spacing = NULL, hover_name = NULL, hover_data = NULL,
-    custom_data = NULL, animation_frame = NULL, animation_group = NULL,
-    category_orders = NULL, labels = NULL, color_discrete_sequence = NULL,
-    color_discrete_map = NULL, orientation = NULL, stripmode = NULL,
-    log_x = FALSE, log_y = FALSE, range_x = NULL, range_y = NULL,
-    title = NULL, subtitle = NULL, template = NULL, width = NULL,
-    height = NULL
+  data_frame = NULL,
+  x = NULL,
+  y = NULL,
+  color = NULL,
+  facet_row = NULL,
+  facet_col = NULL,
+  facet_col_wrap = 0,
+  facet_row_spacing = NULL,
+  facet_col_spacing = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  orientation = NULL,
+  stripmode = NULL,
+  log_x = FALSE,
+  log_y = FALSE,
+  range_x = NULL,
+  range_y = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
-  make_figure(args, "box", trace_patch = list(boxpoints = "all", pointpos = 0, hoveron = "points", fillcolor = "rgba(255,255,255,0)", line = list(color = "rgba(255,255,255,0)"), x0 = " ", y0 = " "), layout_patch = list(boxmode = stripmode))
+  make_figure(
+    args,
+    "box",
+    trace_patch = list(
+      boxpoints = "all",
+      pointpos = 0,
+      hoveron = "points",
+      fillcolor = "rgba(255,255,255,0)",
+      line = list(color = "rgba(255,255,255,0)"),
+      x0 = " ",
+      y0 = " "
+    ),
+    layout_patch = list(boxmode = stripmode)
+  )
 }
 
 #' 3D scatter plot
@@ -377,19 +773,47 @@ px_strip <- function(
 #' px_data_iris() |>
 #'   px_scatter_3d(x = ~sepal_length, y = ~sepal_width, z = ~petal_width, color = ~species)
 px_scatter_3d <- function(
-    data_frame = NULL, x = NULL, y = NULL, z = NULL, color = NULL,
-    symbol = NULL, size = NULL, text = NULL, hover_name = NULL,
-    hover_data = NULL, custom_data = NULL, error_x = NULL,
-    error_x_minus = NULL, error_y = NULL, error_y_minus = NULL,
-    error_z = NULL, error_z_minus = NULL, animation_frame = NULL,
-    animation_group = NULL, category_orders = NULL, labels = NULL,
-    size_max = NULL, color_discrete_sequence = NULL,
-    color_discrete_map = NULL, color_continuous_scale = NULL,
-    range_color = NULL, color_continuous_midpoint = NULL,
-    symbol_sequence = NULL, symbol_map = NULL, opacity = NULL, log_x = FALSE,
-    log_y = FALSE, log_z = FALSE, range_x = NULL, range_y = NULL,
-    range_z = NULL, title = NULL, subtitle = NULL, template = NULL,
-    width = NULL, height = NULL
+  data_frame = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  color = NULL,
+  symbol = NULL,
+  size = NULL,
+  text = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  error_x = NULL,
+  error_x_minus = NULL,
+  error_y = NULL,
+  error_y_minus = NULL,
+  error_z = NULL,
+  error_z_minus = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  size_max = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  color_continuous_scale = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  symbol_sequence = NULL,
+  symbol_map = NULL,
+  opacity = NULL,
+  log_x = FALSE,
+  log_y = FALSE,
+  log_z = FALSE,
+  range_x = NULL,
+  range_y = NULL,
+  range_z = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
   make_figure(args, "scatter3d")
@@ -408,18 +832,46 @@ px_scatter_3d <- function(
 #' px_data_gapminder()[continent == "Europe"] |>
 #'   px_line_3d(x = ~gdpPercap, y = ~pop, z = ~year, color = ~country)
 px_line_3d <- function(
-    data_frame = NULL, x = NULL, y = NULL, z = NULL, color = NULL,
-    line_dash = NULL, text = NULL, line_group = NULL, symbol = NULL,
-    hover_name = NULL, hover_data = NULL, custom_data = NULL, error_x = NULL,
-    error_x_minus = NULL, error_y = NULL, error_y_minus = NULL,
-    error_z = NULL, error_z_minus = NULL, animation_frame = NULL,
-    animation_group = NULL, category_orders = NULL, labels = NULL,
-    color_discrete_sequence = NULL, color_discrete_map = NULL,
-    line_dash_sequence = NULL, line_dash_map = NULL, symbol_sequence = NULL,
-    symbol_map = NULL, markers = FALSE, log_x = FALSE, log_y = FALSE,
-    log_z = FALSE, range_x = NULL, range_y = NULL, range_z = NULL,
-    title = NULL, subtitle = NULL, template = NULL, width = NULL,
-    height = NULL
+  data_frame = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  color = NULL,
+  line_dash = NULL,
+  text = NULL,
+  line_group = NULL,
+  symbol = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  error_x = NULL,
+  error_x_minus = NULL,
+  error_y = NULL,
+  error_y_minus = NULL,
+  error_z = NULL,
+  error_z_minus = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  line_dash_sequence = NULL,
+  line_dash_map = NULL,
+  symbol_sequence = NULL,
+  symbol_map = NULL,
+  markers = FALSE,
+  log_x = FALSE,
+  log_y = FALSE,
+  log_z = FALSE,
+  range_x = NULL,
+  range_y = NULL,
+  range_z = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
   make_figure(args, "scatter3d")
@@ -438,15 +890,35 @@ px_line_3d <- function(
 #' px_data_election() |>
 #'   px_scatter_ternary(a = ~Joly, b = ~Coderre, c = ~Bergeron, color = ~winner)
 px_scatter_ternary <- function(
-    data_frame = NULL, a = NULL, b = NULL, c = NULL, color = NULL,
-    symbol = NULL, size = NULL, text = NULL, hover_name = NULL,
-    hover_data = NULL, custom_data = NULL, animation_frame = NULL,
-    animation_group = NULL, category_orders = NULL, labels = NULL,
-    color_discrete_sequence = NULL, color_discrete_map = NULL,
-    color_continuous_scale = NULL, range_color = NULL,
-    color_continuous_midpoint = NULL, symbol_sequence = NULL,
-    symbol_map = NULL, opacity = NULL, size_max = NULL, title = NULL,
-    subtitle = NULL, template = NULL, width = NULL, height = NULL
+  data_frame = NULL,
+  a = NULL,
+  b = NULL,
+  c = NULL,
+  color = NULL,
+  symbol = NULL,
+  size = NULL,
+  text = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  color_continuous_scale = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  symbol_sequence = NULL,
+  symbol_map = NULL,
+  opacity = NULL,
+  size_max = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
   make_figure(args, "scatterternary")
@@ -464,14 +936,35 @@ px_scatter_ternary <- function(
 #' @examples
 #' px_data_election()[1:5] |> px_line_ternary(a = ~Joly, b = ~Coderre, c = ~Bergeron)
 px_line_ternary <- function(
-    data_frame = NULL, a = NULL, b = NULL, c = NULL, color = NULL,
-    line_dash = NULL, line_group = NULL, symbol = NULL, hover_name = NULL,
-    hover_data = NULL, custom_data = NULL, text = NULL,
-    animation_frame = NULL, animation_group = NULL, category_orders = NULL,
-    labels = NULL, color_discrete_sequence = NULL, color_discrete_map = NULL,
-    line_dash_sequence = NULL, line_dash_map = NULL, symbol_sequence = NULL,
-    symbol_map = NULL, markers = FALSE, line_shape = NULL, title = NULL,
-    subtitle = NULL, template = NULL, width = NULL, height = NULL
+  data_frame = NULL,
+  a = NULL,
+  b = NULL,
+  c = NULL,
+  color = NULL,
+  line_dash = NULL,
+  line_group = NULL,
+  symbol = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  text = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  line_dash_sequence = NULL,
+  line_dash_map = NULL,
+  symbol_sequence = NULL,
+  symbol_map = NULL,
+  markers = FALSE,
+  line_shape = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
   make_figure(args, "scatterternary")
@@ -489,17 +982,40 @@ px_line_ternary <- function(
 #' @examples
 #' px_data_wind() |> px_scatter_polar(r = ~frequency, theta = ~direction, color = ~strength)
 px_scatter_polar <- function(
-    data_frame = NULL, r = NULL, theta = NULL, color = NULL, symbol = NULL,
-    size = NULL, hover_name = NULL, hover_data = NULL, custom_data = NULL,
-    text = NULL, animation_frame = NULL, animation_group = NULL,
-    category_orders = NULL, labels = NULL, color_discrete_sequence = NULL,
-    color_discrete_map = NULL, color_continuous_scale = NULL,
-    range_color = NULL, color_continuous_midpoint = NULL,
-    symbol_sequence = NULL, symbol_map = NULL, opacity = NULL,
-    direction = "clockwise", start_angle = 90, size_max = NULL,
-    range_r = NULL, range_theta = NULL, log_r = FALSE, render_mode = "auto",
-    title = NULL, subtitle = NULL, template = NULL, width = NULL,
-    height = NULL
+  data_frame = NULL,
+  r = NULL,
+  theta = NULL,
+  color = NULL,
+  symbol = NULL,
+  size = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  text = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  color_continuous_scale = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  symbol_sequence = NULL,
+  symbol_map = NULL,
+  opacity = NULL,
+  direction = "clockwise",
+  start_angle = 90,
+  size_max = NULL,
+  range_r = NULL,
+  range_theta = NULL,
+  log_r = FALSE,
+  render_mode = "auto",
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
   make_figure(args, "scatterpolar")
@@ -518,17 +1034,41 @@ px_scatter_polar <- function(
 #' px_data_wind() |>
 #'   px_line_polar(r = ~frequency, theta = ~direction, color = ~strength, line_close = TRUE)
 px_line_polar <- function(
-    data_frame = NULL, r = NULL, theta = NULL, color = NULL,
-    line_dash = NULL, hover_name = NULL, hover_data = NULL,
-    custom_data = NULL, line_group = NULL, text = NULL, symbol = NULL,
-    animation_frame = NULL, animation_group = NULL, category_orders = NULL,
-    labels = NULL, color_discrete_sequence = NULL, color_discrete_map = NULL,
-    line_dash_sequence = NULL, line_dash_map = NULL, symbol_sequence = NULL,
-    symbol_map = NULL, markers = FALSE, direction = "clockwise",
-    start_angle = 90, line_close = FALSE, line_shape = NULL,
-    render_mode = "auto", range_r = NULL, range_theta = NULL, log_r = FALSE,
-    title = NULL, subtitle = NULL, template = NULL, width = NULL,
-    height = NULL
+  data_frame = NULL,
+  r = NULL,
+  theta = NULL,
+  color = NULL,
+  line_dash = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  line_group = NULL,
+  text = NULL,
+  symbol = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  line_dash_sequence = NULL,
+  line_dash_map = NULL,
+  symbol_sequence = NULL,
+  symbol_map = NULL,
+  markers = FALSE,
+  direction = "clockwise",
+  start_angle = 90,
+  line_close = FALSE,
+  line_shape = NULL,
+  render_mode = "auto",
+  range_r = NULL,
+  range_theta = NULL,
+  log_r = FALSE,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
   make_figure(args, "scatterpolar")
@@ -546,20 +1086,45 @@ px_line_polar <- function(
 #' @examples
 #' px_data_wind() |> px_bar_polar(r = ~frequency, theta = ~direction, color = ~strength)
 px_bar_polar <- function(
-    data_frame = NULL, r = NULL, theta = NULL, color = NULL,
-    pattern_shape = NULL, hover_name = NULL, hover_data = NULL,
-    custom_data = NULL, base = NULL, animation_frame = NULL,
-    animation_group = NULL, category_orders = NULL, labels = NULL,
-    color_discrete_sequence = NULL, color_discrete_map = NULL,
-    color_continuous_scale = NULL, pattern_shape_sequence = NULL,
-    pattern_shape_map = NULL, range_color = NULL,
-    color_continuous_midpoint = NULL, barnorm = NULL, barmode = "relative",
-    direction = "clockwise", start_angle = 90, range_r = NULL,
-    range_theta = NULL, log_r = FALSE, title = NULL, subtitle = NULL,
-    template = NULL, width = NULL, height = NULL
+  data_frame = NULL,
+  r = NULL,
+  theta = NULL,
+  color = NULL,
+  pattern_shape = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  base = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  color_continuous_scale = NULL,
+  pattern_shape_sequence = NULL,
+  pattern_shape_map = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  barnorm = NULL,
+  barmode = "relative",
+  direction = "clockwise",
+  start_angle = 90,
+  range_r = NULL,
+  range_theta = NULL,
+  log_r = FALSE,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
-  make_figure(args, "barpolar", layout_patch = list(barnorm = barnorm, barmode = barmode))
+  make_figure(
+    args,
+    "barpolar",
+    layout_patch = list(barnorm = barnorm, barmode = barmode)
+  )
 }
 
 #' Choropleth map
@@ -575,20 +1140,48 @@ px_bar_polar <- function(
 #' px_data_gapminder(year = 2007) |>
 #'   px_choropleth(locations = ~iso_alpha, color = ~lifeExp, hover_name = ~country)
 px_choropleth <- function(
-    data_frame = NULL, lat = NULL, lon = NULL, locations = NULL,
-    locationmode = NULL, geojson = NULL, featureidkey = NULL, color = NULL,
-    facet_row = NULL, facet_col = NULL, facet_col_wrap = 0,
-    facet_row_spacing = NULL, facet_col_spacing = NULL, hover_name = NULL,
-    hover_data = NULL, custom_data = NULL, animation_frame = NULL,
-    animation_group = NULL, category_orders = NULL, labels = NULL,
-    color_discrete_sequence = NULL, color_discrete_map = NULL,
-    color_continuous_scale = NULL, range_color = NULL,
-    color_continuous_midpoint = NULL, projection = NULL, scope = NULL,
-    center = NULL, fitbounds = NULL, basemap_visible = NULL, title = NULL,
-    subtitle = NULL, template = NULL, width = NULL, height = NULL
+  data_frame = NULL,
+  lat = NULL,
+  lon = NULL,
+  locations = NULL,
+  locationmode = NULL,
+  geojson = NULL,
+  featureidkey = NULL,
+  color = NULL,
+  facet_row = NULL,
+  facet_col = NULL,
+  facet_col_wrap = 0,
+  facet_row_spacing = NULL,
+  facet_col_spacing = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  color_continuous_scale = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  projection = NULL,
+  scope = NULL,
+  center = NULL,
+  fitbounds = NULL,
+  basemap_visible = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
-  make_figure(args, "choropleth", trace_patch = list(locationmode = locationmode))
+  make_figure(
+    args,
+    "choropleth",
+    trace_patch = list(locationmode = locationmode)
+  )
 }
 
 #' Scatter plot on a geographic map
@@ -604,22 +1197,55 @@ px_choropleth <- function(
 #' px_data_gapminder(year = 2007) |>
 #'   px_scatter_geo(locations = ~iso_alpha, size = ~pop, color = ~continent)
 px_scatter_geo <- function(
-    data_frame = NULL, lat = NULL, lon = NULL, locations = NULL,
-    locationmode = NULL, geojson = NULL, featureidkey = NULL, color = NULL,
-    text = NULL, symbol = NULL, facet_row = NULL, facet_col = NULL,
-    facet_col_wrap = 0, facet_row_spacing = NULL, facet_col_spacing = NULL,
-    hover_name = NULL, hover_data = NULL, custom_data = NULL, size = NULL,
-    animation_frame = NULL, animation_group = NULL, category_orders = NULL,
-    labels = NULL, color_discrete_sequence = NULL, color_discrete_map = NULL,
-    color_continuous_scale = NULL, range_color = NULL,
-    color_continuous_midpoint = NULL, symbol_sequence = NULL,
-    symbol_map = NULL, opacity = NULL, size_max = NULL, projection = NULL,
-    scope = NULL, center = NULL, fitbounds = NULL, basemap_visible = NULL,
-    title = NULL, subtitle = NULL, template = NULL, width = NULL,
-    height = NULL
+  data_frame = NULL,
+  lat = NULL,
+  lon = NULL,
+  locations = NULL,
+  locationmode = NULL,
+  geojson = NULL,
+  featureidkey = NULL,
+  color = NULL,
+  text = NULL,
+  symbol = NULL,
+  facet_row = NULL,
+  facet_col = NULL,
+  facet_col_wrap = 0,
+  facet_row_spacing = NULL,
+  facet_col_spacing = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  size = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  color_continuous_scale = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  symbol_sequence = NULL,
+  symbol_map = NULL,
+  opacity = NULL,
+  size_max = NULL,
+  projection = NULL,
+  scope = NULL,
+  center = NULL,
+  fitbounds = NULL,
+  basemap_visible = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
-  make_figure(args, "scattergeo", trace_patch = list(locationmode = locationmode))
+  make_figure(
+    args,
+    "scattergeo",
+    trace_patch = list(locationmode = locationmode)
+  )
 }
 
 #' Line plot on a geographic map
@@ -635,21 +1261,54 @@ px_scatter_geo <- function(
 #' px_data_gapminder(year = 2007)[continent == "Oceania"] |>
 #'   px_line_geo(locations = ~iso_alpha)
 px_line_geo <- function(
-    data_frame = NULL, lat = NULL, lon = NULL, locations = NULL,
-    locationmode = NULL, geojson = NULL, featureidkey = NULL, color = NULL,
-    line_dash = NULL, text = NULL, facet_row = NULL, facet_col = NULL,
-    facet_col_wrap = 0, facet_row_spacing = NULL, facet_col_spacing = NULL,
-    hover_name = NULL, hover_data = NULL, custom_data = NULL,
-    line_group = NULL, symbol = NULL, animation_frame = NULL,
-    animation_group = NULL, category_orders = NULL, labels = NULL,
-    color_discrete_sequence = NULL, color_discrete_map = NULL,
-    line_dash_sequence = NULL, line_dash_map = NULL, symbol_sequence = NULL,
-    symbol_map = NULL, markers = FALSE, projection = NULL, scope = NULL,
-    center = NULL, fitbounds = NULL, basemap_visible = NULL, title = NULL,
-    subtitle = NULL, template = NULL, width = NULL, height = NULL
+  data_frame = NULL,
+  lat = NULL,
+  lon = NULL,
+  locations = NULL,
+  locationmode = NULL,
+  geojson = NULL,
+  featureidkey = NULL,
+  color = NULL,
+  line_dash = NULL,
+  text = NULL,
+  facet_row = NULL,
+  facet_col = NULL,
+  facet_col_wrap = 0,
+  facet_row_spacing = NULL,
+  facet_col_spacing = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  line_group = NULL,
+  symbol = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  line_dash_sequence = NULL,
+  line_dash_map = NULL,
+  symbol_sequence = NULL,
+  symbol_map = NULL,
+  markers = FALSE,
+  projection = NULL,
+  scope = NULL,
+  center = NULL,
+  fitbounds = NULL,
+  basemap_visible = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
-  make_figure(args, "scattergeo", trace_patch = list(locationmode = locationmode))
+  make_figure(
+    args,
+    "scattergeo",
+    trace_patch = list(locationmode = locationmode)
+  )
 }
 
 #' Scatter plot on a tile map
@@ -666,14 +1325,34 @@ px_line_geo <- function(
 #'   px_scatter_map(lat = ~centroid_lat, lon = ~centroid_lon, color = ~peak_hour,
 #'                  size = ~car_hours, zoom = 10)
 px_scatter_map <- function(
-    data_frame = NULL, lat = NULL, lon = NULL, color = NULL, text = NULL,
-    hover_name = NULL, hover_data = NULL, custom_data = NULL, size = NULL,
-    animation_frame = NULL, animation_group = NULL, category_orders = NULL,
-    labels = NULL, color_discrete_sequence = NULL, color_discrete_map = NULL,
-    color_continuous_scale = NULL, range_color = NULL,
-    color_continuous_midpoint = NULL, opacity = NULL, size_max = NULL,
-    zoom = NULL, center = NULL, map_style = NULL, title = NULL,
-    subtitle = NULL, template = NULL, width = NULL, height = NULL
+  data_frame = NULL,
+  lat = NULL,
+  lon = NULL,
+  color = NULL,
+  text = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  size = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  color_continuous_scale = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  opacity = NULL,
+  size_max = NULL,
+  zoom = NULL,
+  center = NULL,
+  map_style = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
   make_figure(args, "scattermap")
@@ -694,14 +1373,32 @@ px_scatter_map <- function(
 #'                     featureidkey = "properties.district", color = ~Bergeron,
 #'                     center = list(lat = 45.5517, lon = -73.7073), zoom = 9)
 px_choropleth_map <- function(
-    data_frame = NULL, geojson = NULL, featureidkey = NULL, locations = NULL,
-    color = NULL, hover_name = NULL, hover_data = NULL, custom_data = NULL,
-    animation_frame = NULL, animation_group = NULL, category_orders = NULL,
-    labels = NULL, color_discrete_sequence = NULL, color_discrete_map = NULL,
-    color_continuous_scale = NULL, range_color = NULL,
-    color_continuous_midpoint = NULL, opacity = NULL, zoom = NULL,
-    center = NULL, map_style = NULL, title = NULL, subtitle = NULL,
-    template = NULL, width = NULL, height = NULL
+  data_frame = NULL,
+  geojson = NULL,
+  featureidkey = NULL,
+  locations = NULL,
+  color = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  color_continuous_scale = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  opacity = NULL,
+  zoom = NULL,
+  center = NULL,
+  map_style = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
   make_figure(args, "choroplethmap")
@@ -720,13 +1417,30 @@ px_choropleth_map <- function(
 #' px_data_carshare() |>
 #'   px_density_map(lat = ~centroid_lat, lon = ~centroid_lon, z = ~car_hours, radius = 10)
 px_density_map <- function(
-    data_frame = NULL, lat = NULL, lon = NULL, z = NULL, hover_name = NULL,
-    hover_data = NULL, custom_data = NULL, animation_frame = NULL,
-    animation_group = NULL, category_orders = NULL, labels = NULL,
-    color_continuous_scale = NULL, range_color = NULL,
-    color_continuous_midpoint = NULL, opacity = NULL, zoom = NULL,
-    center = NULL, map_style = NULL, radius = NULL, title = NULL,
-    subtitle = NULL, template = NULL, width = NULL, height = NULL
+  data_frame = NULL,
+  lat = NULL,
+  lon = NULL,
+  z = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_continuous_scale = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  opacity = NULL,
+  zoom = NULL,
+  center = NULL,
+  map_style = NULL,
+  radius = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
   make_figure(args, "densitymap", trace_patch = list(radius = radius))
@@ -745,13 +1459,29 @@ px_density_map <- function(
 #' px_data_carshare()[1:20] |>
 #'   px_line_map(lat = ~centroid_lat, lon = ~centroid_lon, zoom = 10)
 px_line_map <- function(
-    data_frame = NULL, lat = NULL, lon = NULL, color = NULL, text = NULL,
-    hover_name = NULL, hover_data = NULL, custom_data = NULL,
-    line_group = NULL, animation_frame = NULL, animation_group = NULL,
-    category_orders = NULL, labels = NULL, color_discrete_sequence = NULL,
-    color_discrete_map = NULL, zoom = NULL, center = NULL, map_style = NULL,
-    title = NULL, subtitle = NULL, template = NULL, width = NULL,
-    height = NULL
+  data_frame = NULL,
+  lat = NULL,
+  lon = NULL,
+  color = NULL,
+  text = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  line_group = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  zoom = NULL,
+  center = NULL,
+  map_style = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
   make_figure(args, "scattermap")
@@ -771,14 +1501,30 @@ px_line_map <- function(
 #' px_data_iris() |>
 #'   px_scatter_matrix(dimensions = ~c(sepal_width, sepal_length, petal_width), color = ~species)
 px_scatter_matrix <- function(
-    data_frame = NULL, dimensions = NULL, color = NULL, symbol = NULL,
-    size = NULL, hover_name = NULL, hover_data = NULL, custom_data = NULL,
-    category_orders = NULL, labels = NULL, color_discrete_sequence = NULL,
-    color_discrete_map = NULL, color_continuous_scale = NULL,
-    range_color = NULL, color_continuous_midpoint = NULL,
-    symbol_sequence = NULL, symbol_map = NULL, opacity = NULL,
-    size_max = NULL, title = NULL, subtitle = NULL, template = NULL,
-    width = NULL, height = NULL
+  data_frame = NULL,
+  dimensions = NULL,
+  color = NULL,
+  symbol = NULL,
+  size = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  color_continuous_scale = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  symbol_sequence = NULL,
+  symbol_map = NULL,
+  opacity = NULL,
+  size_max = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
   make_figure(args, "splom", layout_patch = list(dragmode = "select"))
@@ -799,10 +1545,18 @@ px_scatter_matrix <- function(
 #'   px_parallel_coordinates(color = ~species_id,
 #'                           dimensions = ~c(sepal_width, sepal_length, petal_width, petal_length))
 px_parallel_coordinates <- function(
-    data_frame = NULL, dimensions = NULL, color = NULL, labels = NULL,
-    color_continuous_scale = NULL, range_color = NULL,
-    color_continuous_midpoint = NULL, title = NULL, subtitle = NULL,
-    template = NULL, width = NULL, height = NULL
+  data_frame = NULL,
+  dimensions = NULL,
+  color = NULL,
+  labels = NULL,
+  color_continuous_scale = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
   make_figure(args, "parcoords")
@@ -822,11 +1576,19 @@ px_parallel_coordinates <- function(
 #' @examples
 #' px_data_tips() |> px_parallel_categories(dimensions = ~c(sex, smoker, day), color = ~size)
 px_parallel_categories <- function(
-    data_frame = NULL, dimensions = NULL, color = NULL, labels = NULL,
-    color_continuous_scale = NULL, range_color = NULL,
-    color_continuous_midpoint = NULL, title = NULL, subtitle = NULL,
-    template = NULL, width = NULL, height = NULL,
-    dimensions_max_cardinality = 50
+  data_frame = NULL,
+  dimensions = NULL,
+  color = NULL,
+  labels = NULL,
+  color_continuous_scale = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL,
+  dimensions_max_cardinality = 50
 ) {
   args <- as.list(environment())
   make_figure(args, "parcats")
@@ -844,17 +1606,41 @@ px_parallel_categories <- function(
 #' @examples
 #' px_data_tips() |> px_pie(values = ~tip, names = ~day, hole = 0.3)
 px_pie <- function(
-    data_frame = NULL, names = NULL, values = NULL, color = NULL,
-    facet_row = NULL, facet_col = NULL, facet_col_wrap = 0,
-    facet_row_spacing = NULL, facet_col_spacing = NULL,
-    color_discrete_sequence = NULL, color_discrete_map = NULL,
-    hover_name = NULL, hover_data = NULL, custom_data = NULL,
-    category_orders = NULL, labels = NULL, title = NULL, subtitle = NULL,
-    template = NULL, width = NULL, height = NULL, opacity = NULL, hole = NULL
+  data_frame = NULL,
+  names = NULL,
+  values = NULL,
+  color = NULL,
+  facet_row = NULL,
+  facet_col = NULL,
+  facet_col_wrap = 0,
+  facet_row_spacing = NULL,
+  facet_col_spacing = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL,
+  opacity = NULL,
+  hole = NULL
 ) {
   args <- as.list(environment())
-  make_figure(args, "pie", trace_patch = list(showlegend = !is.null(names), hole = hole),
-    layout_patch = if (!is.null(color_discrete_sequence)) list(piecolorway = color_discrete_sequence) else list())
+  make_figure(
+    args,
+    "pie",
+    trace_patch = list(showlegend = !is.null(names), hole = hole),
+    layout_patch = if (!is.null(color_discrete_sequence)) {
+      list(piecolorway = color_discrete_sequence)
+    } else {
+      list()
+    }
+  )
 }
 
 #' Sunburst chart
@@ -869,16 +1655,41 @@ px_pie <- function(
 #' @examples
 #' px_data_tips() |> px_sunburst(path = ~c(day, time, sex), values = ~total_bill)
 px_sunburst <- function(
-    data_frame = NULL, names = NULL, values = NULL, parents = NULL,
-    path = NULL, ids = NULL, color = NULL, color_continuous_scale = NULL,
-    range_color = NULL, color_continuous_midpoint = NULL,
-    color_discrete_sequence = NULL, color_discrete_map = NULL,
-    hover_name = NULL, hover_data = NULL, custom_data = NULL, labels = NULL,
-    title = NULL, subtitle = NULL, template = NULL, width = NULL,
-    height = NULL, branchvalues = NULL, maxdepth = NULL
+  data_frame = NULL,
+  names = NULL,
+  values = NULL,
+  parents = NULL,
+  path = NULL,
+  ids = NULL,
+  color = NULL,
+  color_continuous_scale = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  labels = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL,
+  branchvalues = NULL,
+  maxdepth = NULL
 ) {
   args <- as.list(environment())
-  px_hierarchy(args, "sunburst", path, ids, parents, branchvalues, maxdepth, color_discrete_sequence)
+  px_hierarchy(
+    args,
+    "sunburst",
+    path,
+    ids,
+    parents,
+    branchvalues,
+    maxdepth,
+    color_discrete_sequence
+  )
 }
 
 #' Treemap
@@ -894,16 +1705,41 @@ px_sunburst <- function(
 #'   px_treemap(path = list(px_constant("world"), ~continent, ~country),
 #'              values = ~pop, color = ~lifeExp)
 px_treemap <- function(
-    data_frame = NULL, names = NULL, values = NULL, parents = NULL,
-    ids = NULL, path = NULL, color = NULL, color_continuous_scale = NULL,
-    range_color = NULL, color_continuous_midpoint = NULL,
-    color_discrete_sequence = NULL, color_discrete_map = NULL,
-    hover_name = NULL, hover_data = NULL, custom_data = NULL, labels = NULL,
-    title = NULL, subtitle = NULL, template = NULL, width = NULL,
-    height = NULL, branchvalues = NULL, maxdepth = NULL
+  data_frame = NULL,
+  names = NULL,
+  values = NULL,
+  parents = NULL,
+  ids = NULL,
+  path = NULL,
+  color = NULL,
+  color_continuous_scale = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  labels = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL,
+  branchvalues = NULL,
+  maxdepth = NULL
 ) {
   args <- as.list(environment())
-  px_hierarchy(args, "treemap", path, ids, parents, branchvalues, maxdepth, color_discrete_sequence)
+  px_hierarchy(
+    args,
+    "treemap",
+    path,
+    ids,
+    parents,
+    branchvalues,
+    maxdepth,
+    color_discrete_sequence
+  )
 }
 
 #' Icicle chart
@@ -918,16 +1754,41 @@ px_treemap <- function(
 #' @examples
 #' px_data_tips() |> px_icicle(path = ~c(day, time, sex), values = ~total_bill)
 px_icicle <- function(
-    data_frame = NULL, names = NULL, values = NULL, parents = NULL,
-    path = NULL, ids = NULL, color = NULL, color_continuous_scale = NULL,
-    range_color = NULL, color_continuous_midpoint = NULL,
-    color_discrete_sequence = NULL, color_discrete_map = NULL,
-    hover_name = NULL, hover_data = NULL, custom_data = NULL, labels = NULL,
-    title = NULL, subtitle = NULL, template = NULL, width = NULL,
-    height = NULL, branchvalues = NULL, maxdepth = NULL
+  data_frame = NULL,
+  names = NULL,
+  values = NULL,
+  parents = NULL,
+  path = NULL,
+  ids = NULL,
+  color = NULL,
+  color_continuous_scale = NULL,
+  range_color = NULL,
+  color_continuous_midpoint = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  labels = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL,
+  branchvalues = NULL,
+  maxdepth = NULL
 ) {
   args <- as.list(environment())
-  px_hierarchy(args, "icicle", path, ids, parents, branchvalues, maxdepth, color_discrete_sequence)
+  px_hierarchy(
+    args,
+    "icicle",
+    path,
+    ids,
+    parents,
+    branchvalues,
+    maxdepth,
+    color_discrete_sequence
+  )
 }
 
 #' Funnel chart
@@ -944,15 +1805,36 @@ px_icicle <- function(
 #'            number = c(39, 27.4, 20.6, 11)) |>
 #'   px_funnel(x = ~number, y = ~stage)
 px_funnel <- function(
-    data_frame = NULL, x = NULL, y = NULL, color = NULL, facet_row = NULL,
-    facet_col = NULL, facet_col_wrap = 0, facet_row_spacing = NULL,
-    facet_col_spacing = NULL, hover_name = NULL, hover_data = NULL,
-    custom_data = NULL, text = NULL, animation_frame = NULL,
-    animation_group = NULL, category_orders = NULL, labels = NULL,
-    color_discrete_sequence = NULL, color_discrete_map = NULL,
-    opacity = NULL, orientation = NULL, log_x = FALSE, log_y = FALSE,
-    range_x = NULL, range_y = NULL, title = NULL, subtitle = NULL,
-    template = NULL, width = NULL, height = NULL
+  data_frame = NULL,
+  x = NULL,
+  y = NULL,
+  color = NULL,
+  facet_row = NULL,
+  facet_col = NULL,
+  facet_col_wrap = 0,
+  facet_row_spacing = NULL,
+  facet_col_spacing = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  text = NULL,
+  animation_frame = NULL,
+  animation_group = NULL,
+  category_orders = NULL,
+  labels = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  opacity = NULL,
+  orientation = NULL,
+  log_x = FALSE,
+  log_y = FALSE,
+  range_x = NULL,
+  range_y = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL
 ) {
   args <- as.list(environment())
   make_figure(args, "funnel")
@@ -972,13 +1854,32 @@ px_funnel <- function(
 #'            number = c(39, 27.4, 20.6, 11)) |>
 #'   px_funnel_area(values = ~number, names = ~stage)
 px_funnel_area <- function(
-    data_frame = NULL, names = NULL, values = NULL, color = NULL,
-    color_discrete_sequence = NULL, color_discrete_map = NULL,
-    hover_name = NULL, hover_data = NULL, custom_data = NULL, labels = NULL,
-    title = NULL, subtitle = NULL, template = NULL, width = NULL,
-    height = NULL, opacity = NULL
+  data_frame = NULL,
+  names = NULL,
+  values = NULL,
+  color = NULL,
+  color_discrete_sequence = NULL,
+  color_discrete_map = NULL,
+  hover_name = NULL,
+  hover_data = NULL,
+  custom_data = NULL,
+  labels = NULL,
+  title = NULL,
+  subtitle = NULL,
+  template = NULL,
+  width = NULL,
+  height = NULL,
+  opacity = NULL
 ) {
   args <- as.list(environment())
-  make_figure(args, "funnelarea", trace_patch = list(showlegend = !is.null(names)),
-    layout_patch = if (!is.null(color_discrete_sequence)) list(funnelareacolorway = color_discrete_sequence) else list())
+  make_figure(
+    args,
+    "funnelarea",
+    trace_patch = list(showlegend = !is.null(names)),
+    layout_patch = if (!is.null(color_discrete_sequence)) {
+      list(funnelareacolorway = color_discrete_sequence)
+    } else {
+      list()
+    }
+  )
 }

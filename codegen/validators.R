@@ -7,9 +7,18 @@
 
 # Schema option name -> validator parameter name.
 SIMPLE_PARAMS <- c(
-  arrayOk = "array_ok", min = "min", max = "max", values = "values",
-  flags = "flags", extras = "extras", items = "items", freeLength = "free_length",
-  dimensions = "dimensions", regex = "regex", noBlank = "no_blank", strict = "strict",
+  arrayOk = "array_ok",
+  min = "min",
+  max = "max",
+  values = "values",
+  flags = "flags",
+  extras = "extras",
+  items = "items",
+  freeLength = "free_length",
+  dimensions = "dimensions",
+  regex = "regex",
+  noBlank = "no_blank",
+  strict = "strict",
   coerceNumber = "coerce_number"
 )
 
@@ -22,12 +31,20 @@ split_enum_values <- function(values) {
   values <- lapply(values, function(v) if (is.null(v)) NA else v)
   is_chr <- vapply(values, is.character, logical(1))
   chr <- unlist(values[is_chr])
-  is_rx <- if (length(chr)) startsWith(chr, "/") & endsWith(chr, "/") & nchar(chr) > 1 else logical()
+  is_rx <- if (length(chr)) {
+    startsWith(chr, "/") & endsWith(chr, "/") & nchar(chr) > 1
+  } else {
+    logical()
+  }
   list(
     chr = chr[!is_rx] %||% character(),
     num = as.numeric(unlist(values[vapply(values, is.numeric, logical(1))])),
     lgl = as.logical(unlist(values[vapply(values, is.logical, logical(1))])),
-    regex = if (any(is_rx)) substr(chr[is_rx], 2L, nchar(chr[is_rx]) - 1L) else character()
+    regex = if (any(is_rx)) {
+      substr(chr[is_rx], 2L, nchar(chr[is_rx]) - 1L)
+    } else {
+      character()
+    }
   )
 }
 
@@ -37,8 +54,12 @@ simple_params <- function(data, val_type, superclass, key, nodes) {
   for (opt in intersect(names(SIMPLE_PARAMS), names(data))) {
     p[[SIMPLE_PARAMS[[opt]]]] <- data[[opt]]
   }
-  if (superclass == "DashValidator") p$values <- c(p$values, DASH_LIST_REGEX)
-  if (!is.null(p$values)) p$values <- split_enum_values(p$values)
+  if (superclass == "DashValidator") {
+    p$values <- c(p$values, DASH_LIST_REGEX)
+  }
+  if (!is.null(p$values)) {
+    p$values <- split_enum_values(p$values)
+  }
   if (val_type == "subplotid") {
     p$base <- data$dflt %||% sub("^/\\^(\\w+).*$", "\\1", data$regex)
   }
@@ -46,7 +67,9 @@ simple_params <- function(data, val_type, superclass, key, nodes) {
     p$flags <- unlist(p$flags)
     p$extras <- p$extras %||% list() # may mix strings and booleans
   }
-  if (val_type == "info_array") p$items <- info_array_items(p$items)
+  if (val_type == "info_array") {
+    p$items <- info_array_items(p$items)
+  }
   if (val_type == "color" && !is.null(nodes)) {
     # Numbers are valid colors when a colorscale sibling exists (plotly.py
     # stores the sibling's path as colorscale_path).
@@ -63,8 +86,14 @@ info_array_items <- function(items) {
   single <- !is.null(names(items))
   specs <- if (single) list(items) else items
   entries <- lapply(specs, function(spec) {
-    superclass <- paste0(gsub("(^|_)([a-z])", "\\U\\2", spec$valType, perl = TRUE), "Validator")
-    c(list(superclass = superclass), simple_params(spec, spec$valType, superclass, "", NULL))
+    superclass <- paste0(
+      gsub("(^|_)([a-z])", "\\U\\2", spec$valType, perl = TRUE),
+      "Validator"
+    )
+    c(
+      list(superclass = superclass),
+      simple_params(spec, spec$valType, superclass, "", NULL)
+    )
   })
   list(single = single, validators = entries)
 }
@@ -91,7 +120,16 @@ build_validator_params <- function(nodes) {
       entry$children <- children[[key]] %||% character()
       if (kind == "trace") entry$trace_type <- key
     } else {
-      entry <- c(entry, simple_params(nodes$data[[i]], nodes$val_type[[i]], superclass, key, nodes))
+      entry <- c(
+        entry,
+        simple_params(
+          nodes$data[[i]],
+          nodes$val_type[[i]],
+          superclass,
+          key,
+          nodes
+        )
+      )
     }
     out[[i]] <- entry
   }

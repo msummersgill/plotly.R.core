@@ -34,7 +34,9 @@
 #' old <- default_template("plotly+big_font")
 #' default_template(old)
 get_template <- function(name) {
-  if (!is.character(name) || length(name) != 1L) stop("`name` must be a single string", call. = FALSE)
+  if (!is.character(name) || length(name) != 1L) {
+    stop("`name` must be a single string", call. = FALSE)
+  }
   parts <- strsplit(name, "+", fixed = TRUE)[[1L]]
   Reduce(merge_templates, lapply(parts, load_template))
 }
@@ -42,14 +44,23 @@ get_template <- function(name) {
 #' @rdname get_template
 #' @export
 template_names <- function() {
-  builtin <- c(sub("[.]json$", "", list.files(system.file("templates", package = "plotly.core"), "[.]json$")), "none")
+  builtin <- c(
+    sub(
+      "[.]json$",
+      "",
+      list.files(system.file("templates", package = "plotly.core"), "[.]json$")
+    ),
+    "none"
+  )
   unique(c(builtin, ls(template_registry())))
 }
 
 #' @rdname get_template
 #' @export
 register_template <- function(name, template) {
-  if (!is.character(name) || length(name) != 1L || grepl("+", name, fixed = TRUE)) {
+  if (
+    !is.character(name) || length(name) != 1L || grepl("+", name, fixed = TRUE)
+  ) {
     stop("`name` must be a single string without '+'", call. = FALSE)
   }
   assign(name, check_template(template), envir = template_registry())
@@ -60,25 +71,43 @@ register_template <- function(name, template) {
 #' @export
 default_template <- function(name) {
   current <- getOption("plotly.core.template", "plotly")
-  if (missing(name)) return(current)
+  if (missing(name)) {
+    return(current)
+  }
   get_template(name) # validate
   options(plotly.core.template = name)
   invisible(current)
 }
 
 template_registry <- function() {
-  if (is.null(the$templates)) the$templates <- new.env(parent = emptyenv())
+  if (is.null(the$templates)) {
+    the$templates <- new.env(parent = emptyenv())
+  }
   the$templates
 }
 
 load_template <- function(name) {
   reg <- template_registry()
-  if (exists(name, envir = reg, inherits = FALSE)) return(reg[[name]])
-  if (name == "none") return(list(data = list(scatter = list(list()))))
-  path <- system.file("templates", paste0(name, ".json"), package = "plotly.core")
+  if (exists(name, envir = reg, inherits = FALSE)) {
+    return(reg[[name]])
+  }
+  if (name == "none") {
+    return(list(data = list(scatter = list(list()))))
+  }
+  path <- system.file(
+    "templates",
+    paste0(name, ".json"),
+    package = "plotly.core"
+  )
   if (!nzchar(path)) {
-    stop(sprintf("Unknown template '%s'. Available templates: %s", name,
-                 paste(template_names(), collapse = ", ")), call. = FALSE)
+    stop(
+      sprintf(
+        "Unknown template '%s'. Available templates: %s",
+        name,
+        paste(template_names(), collapse = ", ")
+      ),
+      call. = FALSE
+    )
   }
   tpl <- jsonlite::read_json(path, simplifyVector = FALSE)
   assign(name, tpl, envir = reg)
@@ -86,13 +115,23 @@ load_template <- function(name) {
 }
 
 check_template <- function(template) {
-  if (is.character(template) && length(template) == 1L) return(get_template(template))
-  if (!is.list(template) || (length(template) && is.null(names(template))) ||
-      !all(names(template) %in% c("layout", "data"))) {
-    stop("A template must be a named list with `layout` and/or `data` elements", call. = FALSE)
+  if (is.character(template) && length(template) == 1L) {
+    return(get_template(template))
+  }
+  if (
+    !is.list(template) ||
+      (length(template) && is.null(names(template))) ||
+      !all(names(template) %in% c("layout", "data"))
+  ) {
+    stop(
+      "A template must be a named list with `layout` and/or `data` elements",
+      call. = FALSE
+    )
   }
   template <- lapply(template, unclass)
-  if (!is.null(template$layout)) template$layout <- plain_value(template$layout)
+  if (!is.null(template$layout)) {
+    template$layout <- plain_value(template$layout)
+  }
   template
 }
 
@@ -121,10 +160,18 @@ gcd <- function(a, b) if (b == 0) a else gcd(b, a %% b)
 
 # Recursive merge of named lists; values in `b` win.
 deep_merge <- function(a, b) {
-  if (is.null(a)) return(b)
-  if (is.null(b)) return(a)
-  if (!is.list(a) || !is.list(b) || is.null(names(b)) || is.null(names(a))) return(b)
-  for (n in names(b)) a[n] <- list(deep_merge(a[[n]], b[[n]]))
+  if (is.null(a)) {
+    return(b)
+  }
+  if (is.null(b)) {
+    return(a)
+  }
+  if (!is.list(a) || !is.list(b) || is.null(names(b)) || is.null(names(a))) {
+    return(b)
+  }
+  for (n in names(b)) {
+    a[n] <- list(deep_merge(a[[n]], b[[n]]))
+  }
   a
 }
 
@@ -132,7 +179,9 @@ deep_merge <- function(a, b) {
 template_layout_value <- function(template, path) {
   x <- template[["layout"]]
   for (p in path) {
-    if (!is.list(x)) return(NULL)
+    if (!is.list(x)) {
+      return(NULL)
+    }
     x <- x[[p]]
   }
   x
