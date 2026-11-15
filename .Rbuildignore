@@ -8,3 +8,4 @@
 ^vignettes/bench-out$
 ^vignettes/.*_files$
 ^vignettes/.*\.html$
+^cran-comments\.md$

@@ -1,7 +1,7 @@
 Package: plotly.core
 Type: Package
 Title: Create Interactive Web Graphics via 'plotly.js'
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: c(
     person("Matthew", "Summersgill", email = "matthew.summersgill@gmail.com",
            role = c("aut", "cre"), comment = c(ORCID = "0009-0007-2955-5543")),
@@ -64,6 +64,8 @@ Suggests:
     rmarkdown,
     shiny
 VignetteBuilder: quarto
+URL: https://github.com/msummersgill/plotly.R.core
+BugReports: https://github.com/msummersgill/plotly.R.core/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
