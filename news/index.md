@@ -49,8 +49,9 @@
   needs and can download missing ones into the user cache without
   administrator rights (Debian/Ubuntu and RHEL-family systems);
   [`install_chrome()`](https://msummersgill.github.io/plotly.R.core/reference/install_chrome.md)
-  does the same set-up non-interactively. Startup failures show Chrome’s
-  own output.
+  does the same set-up non-interactively, and
+  [`remove_chrome()`](https://msummersgill.github.io/plotly.R.core/reference/install_chrome.md)
+  removes the downloads. Startup failures show Chrome’s own output.
 - Renders the plotly R package’s
   [`plot_ly()`](https://rdrr.io/pkg/plotly/man/plot_ly.html) and
   [`ggplotly()`](https://rdrr.io/pkg/plotly/man/ggplotly.html) figures,

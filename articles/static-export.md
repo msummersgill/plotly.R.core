@@ -340,3 +340,7 @@ too.
 | EPS export needs the rsvg package | `install.packages("rsvg")` |
 | MathJax couldn’t be loaded …, so LaTeX is exported as plain text | Check that the machine can reach cdn.jsdelivr.net |
 | Unsupported image format | Use one of the extensions in the table above |
+
+To remove what plotly.core has downloaded (the libraries, and with
+`browser = TRUE` Chrome Headless Shell), run
+[`remove_chrome()`](https://msummersgill.github.io/plotly.R.core/reference/install_chrome.md).

@@ -68,18 +68,46 @@ interactive sessions are offered the same downloads when needed.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">install_chrome</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">install_chrome</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">remove_chrome</span><span class="op">(</span>browser <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
+    <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+
+
+<dl><dt id="arg-browser">browser<a class="anchor" aria-label="anchor" href="#arg-browser"></a></dt>
+<dd><p>For <code>remove_chrome()</code>, also remove the Chrome Headless Shell
+builds downloaded with chromote.</p></dd>
+
+</dl></div>
+    <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>The path to Chrome, invisibly.</p>
+    <p><code>install_chrome()</code>: the path to Chrome, invisibly.
+<code>remove_chrome()</code>: <code>NULL</code>, invisibly.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Downloaded libraries are kept in a folder for the OS release, and those
+for other releases (e.g. after an upgrade) are removed when libraries are
+next downloaded. <code>remove_chrome()</code> removes everything plotly.core has
+downloaded and, with <code>browser = TRUE</code>, the Chrome Headless Shell builds
+chromote downloaded.</p>
+<p>The downloaded software is not part of plotly.core and keeps its own
+licence: Chrome Headless Shell is built from Chromium by Google (see the
+licence files in its download), and the libraries are your distribution's
+packages (each package's copyright file is kept with it, under
+<code>usr/share/doc</code>).</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">install_chrome</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># remove the downloaded libraries (and Chrome Headless Shell)</span></span></span>
+<span class="r-in"><span><span class="fu">remove_chrome</span><span class="op">(</span>browser <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

@@ -1321,6 +1321,7 @@
   [`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
   : Save a figure as a static image
 - [`install_chrome()`](https://msummersgill.github.io/plotly.R.core/reference/install_chrome.md)
+  [`remove_chrome()`](https://msummersgill.github.io/plotly.R.core/reference/install_chrome.md)
   : Set up Chrome for static image export
 - [`plotly_json()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_json.md)
   : JSON of a plot

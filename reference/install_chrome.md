@@ -19,16 +19,43 @@ needed.
 
 ``` r
 install_chrome()
+
+remove_chrome(browser = FALSE)
 ```
+
+## Arguments
+
+- browser:
+
+  For `remove_chrome()`, also remove the Chrome Headless Shell builds
+  downloaded with chromote.
 
 ## Value
 
-The path to Chrome, invisibly.
+`install_chrome()`: the path to Chrome, invisibly. `remove_chrome()`:
+`NULL`, invisibly.
+
+## Details
+
+Downloaded libraries are kept in a folder for the OS release, and those
+for other releases (e.g. after an upgrade) are removed when libraries
+are next downloaded. `remove_chrome()` removes everything plotly.core
+has downloaded and, with `browser = TRUE`, the Chrome Headless Shell
+builds chromote downloaded.
+
+The downloaded software is not part of plotly.core and keeps its own
+licence: Chrome Headless Shell is built from Chromium by Google (see the
+licence files in its download), and the libraries are your
+distribution's packages (each package's copyright file is kept with it,
+under `usr/share/doc`).
 
 ## Examples
 
 ``` r
 if (FALSE) { # \dontrun{
 install_chrome()
+
+# remove the downloaded libraries (and Chrome Headless Shell)
+remove_chrome(browser = TRUE)
 } # }
 ```
