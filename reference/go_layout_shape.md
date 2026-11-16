@@ -1,0 +1,647 @@
+# Layout shape objects
+
+Properties of `layout.shape`.
+
+## Usage
+
+``` r
+add_shape(
+  fig,
+  arg = NULL,
+  ...,
+  editable = NULL,
+  fillcolor = NULL,
+  fillrule = NULL,
+  label = NULL,
+  layer = NULL,
+  legend = NULL,
+  legendgroup = NULL,
+  legendgrouptitle = NULL,
+  legendrank = NULL,
+  legendwidth = NULL,
+  line = NULL,
+  name = NULL,
+  opacity = NULL,
+  path = NULL,
+  showlegend = NULL,
+  templateitemname = NULL,
+  type = NULL,
+  visible = NULL,
+  x0 = NULL,
+  x0shift = NULL,
+  x1 = NULL,
+  x1shift = NULL,
+  xanchor = NULL,
+  xref = NULL,
+  xsizemode = NULL,
+  y0 = NULL,
+  y0shift = NULL,
+  y1 = NULL,
+  y1shift = NULL,
+  yanchor = NULL,
+  yref = NULL,
+  ysizemode = NULL,
+  row = NULL,
+  col = NULL,
+  secondary_y = NULL,
+  exclude_empty_subplots = FALSE,
+  skip_invalid = FALSE
+)
+
+go_layout_shape(
+  arg = NULL,
+  ...,
+  editable = NULL,
+  fillcolor = NULL,
+  fillrule = NULL,
+  label = NULL,
+  layer = NULL,
+  legend = NULL,
+  legendgroup = NULL,
+  legendgrouptitle = NULL,
+  legendrank = NULL,
+  legendwidth = NULL,
+  line = NULL,
+  name = NULL,
+  opacity = NULL,
+  path = NULL,
+  showlegend = NULL,
+  templateitemname = NULL,
+  type = NULL,
+  visible = NULL,
+  x0 = NULL,
+  x0shift = NULL,
+  x1 = NULL,
+  x1shift = NULL,
+  xanchor = NULL,
+  xref = NULL,
+  xsizemode = NULL,
+  y0 = NULL,
+  y0shift = NULL,
+  y1 = NULL,
+  y1shift = NULL,
+  yanchor = NULL,
+  yref = NULL,
+  ysizemode = NULL,
+  skip_invalid = FALSE
+)
+
+go_layout_shape_label(
+  arg = NULL,
+  ...,
+  font = NULL,
+  padding = NULL,
+  text = NULL,
+  textangle = NULL,
+  textposition = NULL,
+  texttemplate = NULL,
+  texttemplatefallback = NULL,
+  xanchor = NULL,
+  yanchor = NULL,
+  skip_invalid = FALSE
+)
+
+go_layout_shape_label_font(
+  arg = NULL,
+  ...,
+  color = NULL,
+  family = NULL,
+  lineposition = NULL,
+  shadow = NULL,
+  size = NULL,
+  style = NULL,
+  textcase = NULL,
+  variant = NULL,
+  weight = NULL,
+  skip_invalid = FALSE
+)
+
+go_layout_shape_legendgrouptitle(
+  arg = NULL,
+  ...,
+  font = NULL,
+  text = NULL,
+  skip_invalid = FALSE
+)
+
+go_layout_shape_legendgrouptitle_font(
+  arg = NULL,
+  ...,
+  color = NULL,
+  family = NULL,
+  lineposition = NULL,
+  shadow = NULL,
+  size = NULL,
+  style = NULL,
+  textcase = NULL,
+  variant = NULL,
+  weight = NULL,
+  skip_invalid = FALSE
+)
+
+go_layout_shape_line(
+  arg = NULL,
+  ...,
+  color = NULL,
+  dash = NULL,
+  width = NULL,
+  skip_invalid = FALSE
+)
+```
+
+## Arguments
+
+- fig:
+
+  A `go_figure` object.
+
+- arg:
+
+  Optional named list, or graph object of the same type, to initialise
+  properties from (constructors). Named arguments take precedence.
+
+- ...:
+
+  Further properties, including nested properties in "magic underscore"
+  form, e.g. `marker_size = 10` for `marker = list(size = 10)`. Property
+  values may be one-sided formulas, evaluated in `data` for `add_*()`
+  functions.
+
+- editable:
+
+  Determines whether the shape could be activated for edit or not. Has
+  no effect when the older editable shapes mode is enabled via
+  \`config.editable\` or \`config.edits.shapePosition\`. Logical.
+
+- fillcolor:
+
+  Sets the color filling the shape's interior. Only applies to closed
+  shapes. Color: a CSS color string or R color name.
+
+- fillrule:
+
+  Determines which regions of complex paths constitute the interior. For
+  more info please visit
+  https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule
+  One of `"evenodd"`, `"nonzero"`.
+
+- label:
+
+  Named list or `go_layout_shape_label()` object.
+
+- layer:
+
+  Specifies whether shapes are drawn below gridlines ("below"), between
+  gridlines and traces ("between") or above traces ("above"). One of
+  `"below"`, `"above"`, `"between"`.
+
+- legend:
+
+  Sets the reference to a legend to show this shape in. References to
+  these legends are "legend", "legend2", "legend3", etc. Settings for
+  these legends are set in the layout, under \`layout.legend\`,
+  \`layout.legend2\`, etc. Subplot id: `"legend"`, `"legend2"`,
+  `"legend3"`, ....
+
+- legendgroup:
+
+  Sets the legend group for this shape. Traces and shapes part of the
+  same legend group hide/show at the same time when toggling legend
+  items. String.
+
+- legendgrouptitle:
+
+  Named list or `go_layout_shape_legendgrouptitle()` object.
+
+- legendrank:
+
+  Sets the legend rank for this shape. Items and groups with smaller
+  ranks are presented on top/left side while with "reversed"
+  \`legend.traceorder\` they are on bottom/right side. The default
+  legendrank is 1000, so that you can use ranks less than 1000 to place
+  certain items before all unranked items, and ranks greater than 1000
+  to go after all unranked items. When having unranked or equal rank
+  items shapes would be displayed after traces i.e. according to their
+  order in data and layout. Number.
+
+- legendwidth:
+
+  Sets the width (in px or fraction) of the legend for this shape.
+  Number in the interval \[0, Inf\].
+
+- line:
+
+  Named list or `go_layout_shape_line()` object.
+
+- name:
+
+  When used in a template, named items are created in the output figure
+  in addition to any items the figure already has in this array. You can
+  modify these items in the output figure by making your own item with
+  \`templateitemname\` matching this \`name\` alongside your
+  modifications (including \`visible: false\` or \`enabled: false\` to
+  hide it). Has no effect outside of a template. String.
+
+- opacity:
+
+  Sets the opacity of the shape. Number in the interval \[0, 1\].
+
+- path:
+
+  For \`type\` "path" - a valid SVG path with the pixel values replaced
+  by data values in \`xsizemode\`/\`ysizemode\` being "scaled" and taken
+  unmodified as pixels relative to \`xanchor\` and \`yanchor\` in case
+  of "pixel" size mode. There are a few restrictions / quirks only
+  absolute instructions, not relative. So the allowed segments are: M,
+  L, H, V, Q, C, T, S, and Z arcs (A) are not allowed because radius rx
+  and ry are relative. In the future we could consider supporting
+  relative commands, but we would have to decide on how to handle date
+  and log axes. Note that even as is, Q and C Bezier paths that are
+  smooth on linear axes may not be smooth on log, and vice versa. no
+  chained "polybezier" commands - specify the segment type for each one.
+  On category axes, values are numbers scaled to the serial numbers of
+  categories because using the categories themselves there would be no
+  way to describe fractional positions On data axes: because space and T
+  are both normal components of path strings, we can't use either to
+  separate date from time parts. Therefore we'll use underscore for this
+  purpose: 2015-02-21_13:45:56.789 String.
+
+- showlegend:
+
+  Determines whether or not this shape is shown in the legend. Logical.
+
+- templateitemname:
+
+  Used to refer to a named item in this array in the template. Named
+  items from the template will be created even without a matching item
+  in the input figure, but you can modify one by making an item with
+  \`templateitemname\` matching its \`name\`, alongside your
+  modifications (including \`visible: false\` or \`enabled: false\` to
+  hide it). If there is no template or no matching item, this item will
+  be hidden unless you explicitly show it with \`visible: true\`.
+  String.
+
+- type:
+
+  Specifies the shape type to be drawn. If "line", a line is drawn from
+  (\`x0\`,\`y0\`) to (\`x1\`,\`y1\`) with respect to the axes' sizing
+  mode. If "circle", a circle is drawn from ((\`x0\`+\`x1\`)/2,
+  (\`y0\`+\`y1\`)/2)) with radius (\|(\`x0\`+\`x1\`)/2 - \`x0\`\|,
+  \|(\`y0\`+\`y1\`)/2 -\`y0\`)\|) with respect to the axes' sizing mode.
+  If "rect", a rectangle is drawn linking (\`x0\`,\`y0\`),
+  (\`x1\`,\`y0\`), (\`x1\`,\`y1\`), (\`x0\`,\`y1\`), (\`x0\`,\`y0\`)
+  with respect to the axes' sizing mode. If "path", draw a custom SVG
+  path using \`path\`. with respect to the axes' sizing mode. One of
+  `"circle"`, `"rect"`, `"path"`, `"line"`.
+
+- visible:
+
+  Determines whether or not this shape is visible. If "legendonly", the
+  shape is not drawn, but can appear as a legend item (provided that the
+  legend itself is visible). One of `"legendonly"`, `TRUE`, `FALSE`.
+
+- x0:
+
+  Sets the shape's starting x position. See \`type\` and \`xsizemode\`
+  for more info. Any value.
+
+- x0shift:
+
+  Shifts \`x0\` away from the center of the category when \`xref\` is a
+  "category" or "multicategory" axis. -0.5 corresponds to the start of
+  the category and 0.5 corresponds to the end of the category. Number in
+  the interval \[-1, 1\].
+
+- x1:
+
+  Sets the shape's end x position. See \`type\` and \`xsizemode\` for
+  more info. Any value.
+
+- x1shift:
+
+  Shifts \`x1\` away from the center of the category when \`xref\` is a
+  "category" or "multicategory" axis. -0.5 corresponds to the start of
+  the category and 0.5 corresponds to the end of the category. Number in
+  the interval \[-1, 1\].
+
+- xanchor:
+
+  **`go_layout_shape()`**: Only relevant in conjunction with
+  \`xsizemode\` set to "pixel". Specifies the anchor point on the x axis
+  to which \`x0\`, \`x1\` and x coordinates within \`path\` are relative
+  to. E.g. useful to attach a pixel sized shape to a certain data value.
+  No effect when \`xsizemode\` not set to "pixel". Any value.
+
+  **`go_layout_shape_label()`**: Sets the label's horizontal position
+  anchor This anchor binds the specified \`textposition\` to the "left",
+  "center" or "right" of the label text. For example, if
+  \`textposition\` is set to "top right" and \`xanchor\` to "right" then
+  the right-most portion of the label text lines up with the right-most
+  edge of the shape. One of `"auto"`, `"left"`, `"center"`, `"right"`.
+
+- xref:
+
+  Sets the shape's x coordinate axis. If set to a x axis id (e.g. "x" or
+  "x2"), the \`x\` position refers to a x coordinate. If set to "paper",
+  the \`x\` position refers to the distance from the left of the
+  plotting area in normalized coordinates where 0 (1) corresponds to the
+  left (right). If set to a x axis ID followed by "domain" (separated by
+  a space), the position behaves like for "paper", but refers to the
+  distance in fractions of the domain length from the left of the domain
+  of that axis: e.g., "x2 domain" refers to the domain of the second x
+  axis and a x position of 0.5 refers to the point between the left and
+  the right of the domain of the second x axis. If an array of axis IDs
+  is provided, each \`x\` value will refer to the corresponding axis,
+  e.g., \['x', 'x2'\] for a rectangle, line, or circle means \`x0\` uses
+  the \`x\` axis and \`x1\` uses the \`x2\` axis. Path shapes using an
+  array should have one entry for each x coordinate in the string. One
+  of `"paper"`, or a string matching
+  `"^x([2-9]|[1-9][0-9]+)?( domain)?$"`, or a vector of these.
+
+- xsizemode:
+
+  Sets the shapes's sizing mode along the x axis. If set to "scaled",
+  \`x0\`, \`x1\` and x coordinates within \`path\` refer to data values
+  on the x axis or a fraction of the plot area's width (\`xref\` set to
+  "paper"). If set to "pixel", \`xanchor\` specifies the x position in
+  terms of data or plot fraction but \`x0\`, \`x1\` and x coordinates
+  within \`path\` are pixels relative to \`xanchor\`. This way, the
+  shape can have a fixed width while maintaining a position relative to
+  data or plot fraction. Note: \`xsizemode\` "pixel" is not supported
+  when \`xref\` is an array. One of `"scaled"`, `"pixel"`.
+
+- y0:
+
+  Sets the shape's starting y position. See \`type\` and \`ysizemode\`
+  for more info. Any value.
+
+- y0shift:
+
+  Shifts \`y0\` away from the center of the category when \`yref\` is a
+  "category" or "multicategory" axis. -0.5 corresponds to the start of
+  the category and 0.5 corresponds to the end of the category. Number in
+  the interval \[-1, 1\].
+
+- y1:
+
+  Sets the shape's end y position. See \`type\` and \`ysizemode\` for
+  more info. Any value.
+
+- y1shift:
+
+  Shifts \`y1\` away from the center of the category when \`yref\` is a
+  "category" or "multicategory" axis. -0.5 corresponds to the start of
+  the category and 0.5 corresponds to the end of the category. Number in
+  the interval \[-1, 1\].
+
+- yanchor:
+
+  **`go_layout_shape()`**: Only relevant in conjunction with
+  \`ysizemode\` set to "pixel". Specifies the anchor point on the y axis
+  to which \`y0\`, \`y1\` and y coordinates within \`path\` are relative
+  to. E.g. useful to attach a pixel sized shape to a certain data value.
+  No effect when \`ysizemode\` not set to "pixel". Any value.
+
+  **`go_layout_shape_label()`**: Sets the label's vertical position
+  anchor This anchor binds the specified \`textposition\` to the "top",
+  "middle" or "bottom" of the label text. For example, if
+  \`textposition\` is set to "top right" and \`yanchor\` to "top" then
+  the top-most portion of the label text lines up with the top-most edge
+  of the shape. One of `"top"`, `"middle"`, `"bottom"`.
+
+- yref:
+
+  Sets the shape's y coordinate axis. If set to a y axis id (e.g. "y" or
+  "y2"), the \`y\` position refers to a y coordinate. If set to "paper",
+  the \`y\` position refers to the distance from the bottom of the
+  plotting area in normalized coordinates where 0 (1) corresponds to the
+  bottom (top). If set to a y axis ID followed by "domain" (separated by
+  a space), the position behaves like for "paper", but refers to the
+  distance in fractions of the domain length from the bottom of the
+  domain of that axis: e.g., "y2 domain" refers to the domain of the
+  second y axis and a y position of 0.5 refers to the point between the
+  bottom and the top of the domain of the second y axis. If an array of
+  axis IDs is provided, each \`y\` value will refer to the corresponding
+  axis, e.g., \['y', 'y2'\] for a rectangle, line, or circle means
+  \`y0\` uses the \`y\` axis and \`y1\` uses the \`y2\` axis. Path
+  shapes using an array should have one entry for each y coordinate in
+  the string. One of `"paper"`, or a string matching
+  `"^y([2-9]|[1-9][0-9]+)?( domain)?$"`, or a vector of these.
+
+- ysizemode:
+
+  Sets the shapes's sizing mode along the y axis. If set to "scaled",
+  \`y0\`, \`y1\` and y coordinates within \`path\` refer to data values
+  on the y axis or a fraction of the plot area's height (\`yref\` set to
+  "paper"). If set to "pixel", \`yanchor\` specifies the y position in
+  terms of data or plot fraction but \`y0\`, \`y1\` and y coordinates
+  within \`path\` are pixels relative to \`yanchor\`. This way, the
+  shape can have a fixed height while maintaining a position relative to
+  data or plot fraction. Note: \`ysizemode\` "pixel" is not supported
+  when \`yref\` is an array. One of `"scaled"`, `"pixel"`.
+
+- row:
+
+  Subplot grid row (figures created with
+  [`make_subplots()`](https://msummersgill.github.io/plotly.R.core/reference/make_subplots.md)
+  only). May be `"all"` or a vector to address several cells.
+
+- col:
+
+  Subplot grid column (figures created with
+  [`make_subplots()`](https://msummersgill.github.io/plotly.R.core/reference/make_subplots.md)
+  only). May be `"all"` or a vector to address several cells.
+
+- secondary_y:
+
+  If `TRUE`, use the secondary y axis of the subplot.
+
+- exclude_empty_subplots:
+
+  If `TRUE`, skip subplots that have no traces or layout objects.
+
+- skip_invalid:
+
+  If `TRUE`, silently drop invalid properties instead of raising an
+  error.
+
+- font:
+
+  **`go_layout_shape_label()`**: Sets the shape label text font. Named
+  list or `go_layout_shape_label_font()` object.
+
+  **`go_layout_shape_legendgrouptitle()`**: Sets this legend group's
+  title font. Named list or `go_layout_shape_legendgrouptitle_font()`
+  object.
+
+- padding:
+
+  Sets padding (in px) between edge of label and edge of shape. Number
+  in the interval \[0, Inf\].
+
+- text:
+
+  **`go_layout_shape_label()`**: Sets the text to display with shape. It
+  is also used for legend item if \`name\` is not provided. String.
+
+  **`go_layout_shape_legendgrouptitle()`**: Sets the title of the legend
+  group. String.
+
+- textangle:
+
+  Sets the angle at which the label text is drawn with respect to the
+  horizontal. For lines, angle "auto" is the same angle as the line. For
+  all other shapes, angle "auto" is horizontal. Angle in degrees.
+
+- textposition:
+
+  Sets the position of the label text relative to the shape. Supported
+  values for rectangles, circles and paths are "top left", "top center",
+  "top right", "middle left", "middle center", "middle right", "bottom
+  left", "bottom center", and "bottom right". Supported values for lines
+  are "start", "middle", and "end". Default: "middle center" for
+  rectangles, circles, and paths; "middle" for lines. One of
+  `"top left"`, `"top center"`, `"top right"`, `"middle left"`,
+  `"middle center"`, `"middle right"`, `"bottom left"`,
+  `"bottom center"`, `"bottom right"`, `"start"`, `"middle"`, `"end"`.
+
+- texttemplate:
+
+  Template string used for rendering the shape's label. Note that this
+  will override \`text\`. Variables are inserted using %{variable}, for
+  example "x0: %{x0}". Numbers are formatted using d3-format's syntax
+  %{variable:d3-format}, for example "Price: %{x0:\$.2f}". See
+  https://github.com/d3/d3-format/tree/v1.4.5#d3-format for details on
+  the formatting syntax. Dates are formatted using d3-time-format's
+  syntax %{variable\|d3-time-format}, for example "Day: %{x0\|%m %b
+  %Y}". See
+  https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format for
+  details on the date formatting syntax. A single multiplication or
+  division operation may be applied to numeric variables, and combined
+  with d3 number formatting, for example "Length in cm: %{x0"2.54}",
+  "%{slope"60:.1f} meters per second." For log axes, variable values are
+  given in log units. For date axes, x/y coordinate variables and center
+  variables use datetimes, while all other variable values use values in
+  ms. Finally, the template string has access to variables \`x0\`,
+  \`x1\`, \`y0\`, \`y1\`, \`slope\`, \`dx\`, \`dy\`, \`width\`,
+  \`height\`, \`length\`, \`xcenter\`, \`ycenter\`, \`simpleXVariables\`
+  and \`simpleYVariables\`. Variables that can't be found will be
+  replaced with the specifier. For example, a template of "data: %{x},
+  %{y}" will result in a value of "data: 1, %{y}" if x is 1 and y is
+  missing. Variables with an undefined value will be replaced with the
+  fallback value. String.
+
+- texttemplatefallback:
+
+  Fallback string that's displayed when a variable referenced in a
+  template is missing. If the boolean value 'false' is passed in, the
+  specifier with the missing variable will be displayed. Any value.
+
+- color:
+
+  **`go_layout_shape_label_font()`,
+  `go_layout_shape_legendgrouptitle_font()`**: Color: a CSS color string
+  or R color name.
+
+  **`go_layout_shape_line()`**: Sets the line color. Color: a CSS color
+  string or R color name.
+
+- family:
+
+  HTML font family - the typeface that will be applied by the web
+  browser. The web browser can only apply a font if it is available on
+  the system where it runs. Provide multiple font families, separated by
+  commas, to indicate the order in which to apply fonts if they aren't
+  available. String.
+
+- lineposition:
+
+  Sets the kind of decoration line(s) with text, such as an "under",
+  "over" or "through" as well as combinations e.g. "under+over", etc.
+  Any combination of `"under"`, `"over"`, `"through"` joined with `"+"`,
+  or one of `"none"`.
+
+- shadow:
+
+  Sets the shape and color of the shadow behind text. "auto" places
+  minimal shadow and applies contrast text font color. See
+  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
+  additional options. String.
+
+- size:
+
+  Number in the interval \[1, Inf\].
+
+- style:
+
+  Sets whether a font should be styled with a normal or italic face from
+  its family. One of `"normal"`, `"italic"`.
+
+- textcase:
+
+  Sets capitalization of text. It can be used to make text appear in
+  all-uppercase or all-lowercase, or with each word capitalized. One of
+  `"normal"`, `"word caps"`, `"upper"`, `"lower"`.
+
+- variant:
+
+  Sets the variant of the font. One of `"normal"`, `"small-caps"`,
+  `"all-small-caps"`, `"all-petite-caps"`, `"petite-caps"`, `"unicase"`.
+
+- weight:
+
+  Sets the weight (or boldness) of the font. Integer in the interval
+  \[1, 1000\].
+
+- dash:
+
+  Sets the dash style of lines. Set to a dash type string ("solid",
+  "dot", "dash", "longdash", "dashdot", or "longdashdot") or a dash
+  length list in px (eg "5px,10px,2px,2px"). One of `"solid"`, `"dot"`,
+  `"dash"`, `"longdash"`, `"dashdot"`, `"longdashdot"`, or a string
+  matching
+  `"^\\d+(\\.\\d+)?(px|%)?((,|\\s)\\s*\\d+(\\.\\d+)?(px|%)?)*$"`.
+
+- width:
+
+  Sets the line width (in px). Number in the interval \[0, Inf\].
+
+## Value
+
+Each `go_*()` function returns a graph object of the same class as its
+name; `add_*()` functions return the modified figure.
+
+## Details
+
+`go_layout_shape()` and the nested object constructors below create
+validated graph objects (named lists). Every property is checked against
+the plotly.js schema when an object is created or modified (see
+[`plotly_obj-modify()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
+`add_shape()` creates an object and adds it to a figure.
+
+Nested objects documented here:
+
+- `go_layout_shape_label()`:
+
+  `layout.shape.label`
+
+- `go_layout_shape_label_font()`:
+
+  `layout.shape.label.font`: Sets the shape label text font.
+
+- `go_layout_shape_legendgrouptitle()`:
+
+  `layout.shape.legendgrouptitle`
+
+- `go_layout_shape_legendgrouptitle_font()`:
+
+  `layout.shape.legendgrouptitle.font`: Sets this legend group's title
+  font.
+
+- `go_layout_shape_line()`:
+
+  `layout.shape.line`
+
+## See also
+
+[`go_layout()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout.md)

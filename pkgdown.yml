@@ -1,0 +1,9 @@
+pandoc: 3.8.3
+pkgdown: 2.2.1
+pkgdown_sha: ~
+articles:
+  render-performance: render-performance.html
+last_built: 2026-11-16T17:57Z
+urls:
+  reference: https://msummersgill.github.io/plotly.R.core/reference
+  article: https://msummersgill.github.io/plotly.R.core/articles

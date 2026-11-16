@@ -1,0 +1,1593 @@
+# Volume traces
+
+Draws volume trace between iso-min and iso-max values with coordinates
+given by four 1-dimensional arrays containing the \`value\`, \`x\`,
+\`y\` and \`z\` of every vertex of a uniform or non-uniform 3-D grid.
+Horizontal or vertical slices, caps as well as spaceframe between
+iso-min and iso-max values could also be drawn using this trace.
+
+## Usage
+
+``` r
+add_volume(fig, ...)
+
+# Default S3 method
+add_volume(
+  fig,
+  ...,
+  data = NULL,
+  autocolorscale = NULL,
+  caps = NULL,
+  cauto = NULL,
+  cmax = NULL,
+  cmid = NULL,
+  cmin = NULL,
+  coloraxis = NULL,
+  colorbar = NULL,
+  colorscale = NULL,
+  contour = NULL,
+  customdata = NULL,
+  flatshading = NULL,
+  hoverinfo = NULL,
+  hoverlabel = NULL,
+  hovertemplate = NULL,
+  hovertemplatefallback = NULL,
+  hovertext = NULL,
+  ids = NULL,
+  isomax = NULL,
+  isomin = NULL,
+  legend = NULL,
+  legendgroup = NULL,
+  legendgrouptitle = NULL,
+  legendrank = NULL,
+  legendwidth = NULL,
+  lighting = NULL,
+  lightposition = NULL,
+  meta = NULL,
+  name = NULL,
+  opacity = NULL,
+  opacityscale = NULL,
+  reversescale = NULL,
+  scene = NULL,
+  showlegend = NULL,
+  showscale = NULL,
+  slices = NULL,
+  spaceframe = NULL,
+  surface = NULL,
+  text = NULL,
+  uid = NULL,
+  uirevision = NULL,
+  value = NULL,
+  valuehoverformat = NULL,
+  visible = NULL,
+  x = NULL,
+  xhoverformat = NULL,
+  y = NULL,
+  yhoverformat = NULL,
+  z = NULL,
+  zhoverformat = NULL,
+  row = NULL,
+  col = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume(
+  arg = NULL,
+  ...,
+  autocolorscale = NULL,
+  caps = NULL,
+  cauto = NULL,
+  cmax = NULL,
+  cmid = NULL,
+  cmin = NULL,
+  coloraxis = NULL,
+  colorbar = NULL,
+  colorscale = NULL,
+  contour = NULL,
+  customdata = NULL,
+  flatshading = NULL,
+  hoverinfo = NULL,
+  hoverlabel = NULL,
+  hovertemplate = NULL,
+  hovertemplatefallback = NULL,
+  hovertext = NULL,
+  ids = NULL,
+  isomax = NULL,
+  isomin = NULL,
+  legend = NULL,
+  legendgroup = NULL,
+  legendgrouptitle = NULL,
+  legendrank = NULL,
+  legendwidth = NULL,
+  lighting = NULL,
+  lightposition = NULL,
+  meta = NULL,
+  name = NULL,
+  opacity = NULL,
+  opacityscale = NULL,
+  reversescale = NULL,
+  scene = NULL,
+  showlegend = NULL,
+  showscale = NULL,
+  slices = NULL,
+  spaceframe = NULL,
+  surface = NULL,
+  text = NULL,
+  uid = NULL,
+  uirevision = NULL,
+  value = NULL,
+  valuehoverformat = NULL,
+  visible = NULL,
+  x = NULL,
+  xhoverformat = NULL,
+  y = NULL,
+  yhoverformat = NULL,
+  z = NULL,
+  zhoverformat = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_caps(
+  arg = NULL,
+  ...,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_caps_x(
+  arg = NULL,
+  ...,
+  fill = NULL,
+  show = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_caps_y(
+  arg = NULL,
+  ...,
+  fill = NULL,
+  show = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_caps_z(
+  arg = NULL,
+  ...,
+  fill = NULL,
+  show = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_colorbar(
+  arg = NULL,
+  ...,
+  bgcolor = NULL,
+  bordercolor = NULL,
+  borderwidth = NULL,
+  dtick = NULL,
+  exponentformat = NULL,
+  labelalias = NULL,
+  len = NULL,
+  lenmode = NULL,
+  minexponent = NULL,
+  nticks = NULL,
+  orientation = NULL,
+  outlinecolor = NULL,
+  outlinewidth = NULL,
+  separatethousands = NULL,
+  showexponent = NULL,
+  showticklabels = NULL,
+  showtickprefix = NULL,
+  showticksuffix = NULL,
+  thickness = NULL,
+  thicknessmode = NULL,
+  tick0 = NULL,
+  tickangle = NULL,
+  tickcolor = NULL,
+  tickfont = NULL,
+  tickformat = NULL,
+  tickformatstops = NULL,
+  ticklabeloverflow = NULL,
+  ticklabelposition = NULL,
+  ticklabelstep = NULL,
+  ticklen = NULL,
+  tickmode = NULL,
+  tickprefix = NULL,
+  ticks = NULL,
+  ticksuffix = NULL,
+  ticktext = NULL,
+  tickvals = NULL,
+  tickwidth = NULL,
+  title = NULL,
+  x = NULL,
+  xanchor = NULL,
+  xpad = NULL,
+  xref = NULL,
+  y = NULL,
+  yanchor = NULL,
+  ypad = NULL,
+  yref = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_colorbar_tickfont(
+  arg = NULL,
+  ...,
+  color = NULL,
+  family = NULL,
+  lineposition = NULL,
+  shadow = NULL,
+  size = NULL,
+  style = NULL,
+  textcase = NULL,
+  variant = NULL,
+  weight = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_colorbar_tickformatstop(
+  arg = NULL,
+  ...,
+  dtickrange = NULL,
+  enabled = NULL,
+  name = NULL,
+  templateitemname = NULL,
+  value = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_colorbar_title(
+  arg = NULL,
+  ...,
+  font = NULL,
+  side = NULL,
+  text = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_colorbar_title_font(
+  arg = NULL,
+  ...,
+  color = NULL,
+  family = NULL,
+  lineposition = NULL,
+  shadow = NULL,
+  size = NULL,
+  style = NULL,
+  textcase = NULL,
+  variant = NULL,
+  weight = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_contour(
+  arg = NULL,
+  ...,
+  color = NULL,
+  show = NULL,
+  width = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_hoverlabel(
+  arg = NULL,
+  ...,
+  align = NULL,
+  bgcolor = NULL,
+  bordercolor = NULL,
+  font = NULL,
+  namelength = NULL,
+  showarrow = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_hoverlabel_font(
+  arg = NULL,
+  ...,
+  color = NULL,
+  family = NULL,
+  lineposition = NULL,
+  shadow = NULL,
+  size = NULL,
+  style = NULL,
+  textcase = NULL,
+  variant = NULL,
+  weight = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_legendgrouptitle(
+  arg = NULL,
+  ...,
+  font = NULL,
+  text = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_legendgrouptitle_font(
+  arg = NULL,
+  ...,
+  color = NULL,
+  family = NULL,
+  lineposition = NULL,
+  shadow = NULL,
+  size = NULL,
+  style = NULL,
+  textcase = NULL,
+  variant = NULL,
+  weight = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_lighting(
+  arg = NULL,
+  ...,
+  ambient = NULL,
+  diffuse = NULL,
+  facenormalsepsilon = NULL,
+  fresnel = NULL,
+  roughness = NULL,
+  specular = NULL,
+  vertexnormalsepsilon = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_lightposition(
+  arg = NULL,
+  ...,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_slices(
+  arg = NULL,
+  ...,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_slices_x(
+  arg = NULL,
+  ...,
+  fill = NULL,
+  locations = NULL,
+  show = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_slices_y(
+  arg = NULL,
+  ...,
+  fill = NULL,
+  locations = NULL,
+  show = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_slices_z(
+  arg = NULL,
+  ...,
+  fill = NULL,
+  locations = NULL,
+  show = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_spaceframe(
+  arg = NULL,
+  ...,
+  fill = NULL,
+  show = NULL,
+  skip_invalid = FALSE
+)
+
+go_volume_surface(
+  arg = NULL,
+  ...,
+  count = NULL,
+  fill = NULL,
+  pattern = NULL,
+  show = NULL,
+  skip_invalid = FALSE
+)
+```
+
+## Arguments
+
+- fig:
+
+  A `go_figure` object.
+
+- ...:
+
+  Further properties, including nested properties in "magic underscore"
+  form, e.g. `marker_size = 10` for `marker = list(size = 10)`. Property
+  values may be one-sided formulas, evaluated in `data` for `add_*()`
+  functions.
+
+- data:
+
+  A data frame in which formula properties (e.g. `x = ~col`,
+  `marker_size = ~col`) are evaluated. Default: the data given to
+  [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md).
+  Only the evaluated values are added to the trace.
+
+- autocolorscale:
+
+  Determines whether the colorscale is a default palette
+  (\`autocolorscale: true\`) or the palette determined by
+  \`colorscale\`. In case \`colorscale\` is unspecified or
+  \`autocolorscale\` is true, the default palette will be chosen
+  according to whether numbers in the \`color\` array are all positive,
+  all negative or mixed. Logical.
+
+- caps:
+
+  Named list or `go_volume_caps()` object.
+
+- cauto:
+
+  Determines whether or not the color domain is computed with respect to
+  the input data (here \`value\`) or the bounds set in \`cmin\` and
+  \`cmax\` Defaults to \`false\` when \`cmin\` and \`cmax\` are set by
+  the user. Logical.
+
+- cmax:
+
+  Sets the upper bound of the color domain. Value should have the same
+  units as \`value\` and if set, \`cmin\` must be set as well. Number.
+
+- cmid:
+
+  Sets the mid-point of the color domain by scaling \`cmin\` and/or
+  \`cmax\` to be equidistant to this point. Value should have the same
+  units as \`value\`. Has no effect when \`cauto\` is \`false\`. Number.
+
+- cmin:
+
+  Sets the lower bound of the color domain. Value should have the same
+  units as \`value\` and if set, \`cmax\` must be set as well. Number.
+
+- coloraxis:
+
+  Sets a reference to a shared color axis. References to these shared
+  color axes are "coloraxis", "coloraxis2", "coloraxis3", etc. Settings
+  for these shared color axes are set in the layout, under
+  \`layout.coloraxis\`, \`layout.coloraxis2\`, etc. Note that multiple
+  color scales can be linked to the same color axis. Subplot id:
+  `"coloraxis"`, `"coloraxis2"`, `"coloraxis3"`, ....
+
+- colorbar:
+
+  Named list or `go_volume_colorbar()` object.
+
+- colorscale:
+
+  Sets the colorscale. The colorscale must be an array containing arrays
+  mapping a normalized value to an rgb, rgba, hex, hsl, hsla, hwb, or
+  named color string. At minimum, a mapping for the lowest (0) and
+  highest (1) values are required. For example, \`\[\[0,
+  'rgb(0,0,255)'\], \[1, 'rgb(255,0,0)'\]\]\`. To control the bounds of
+  the colorscale in color space, use \`cmin\` and \`cmax\`.
+  Alternatively, \`colorscale\` may be a palette name string of the
+  following list:
+  Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
+  Colorscale: a vector of colors, a two-column data.frame of (value,
+  color), or the name of a sequential, diverging or cyclical scale in
+  [`px_colors()`](https://msummersgill.github.io/plotly.R.core/reference/px_colors.md)
+  (append `"_r"` to reverse).
+
+- contour:
+
+  Named list or `go_volume_contour()` object.
+
+- customdata:
+
+  Assigns extra data each datum. This may be useful when listening to
+  hover, click and selection events. Note that, "scatter" traces also
+  appends customdata items in the markers DOM elements Data array: a
+  vector, factor, Date/POSIXct vector, matrix or list.
+
+- flatshading:
+
+  Determines whether or not normal smoothing is applied to the meshes,
+  creating meshes with an angular, low-poly look via flat reflections.
+  Logical.
+
+- hoverinfo:
+
+  Determines what trace information appears on hover. If \`none\` or
+  \`skip\` are set, no information is displayed upon hovering. But, if
+  \`none\` is set, click and hover events are still fired. Any
+  combination of `"x"`, `"y"`, `"z"`, `"text"`, `"name"` joined with
+  `"+"`, or one of `"all"`, `"none"`, `"skip"`, or a vector of these.
+
+- hoverlabel:
+
+  Named list or `go_volume_hoverlabel()` object.
+
+- hovertemplate:
+
+  Template string used for rendering the information that appear on
+  hover box. Note that this will override \`hoverinfo\`. Variables are
+  inserted using %{variable}, for example "y: %{y}" as well as
+  %{xother}, {%\_xother}, {%\_xother\_}, {%xother\_}. When showing info
+  for several points, "xother" will be added to those with different x
+  positions from the first point. An underscore before or after
+  "(x\|y)other" will add a space on that side, only when this field is
+  shown. Numbers are formatted using d3-format's syntax
+  %{variable:d3-format}, for example "Price: %{y:\$.2f}".
+  https://github.com/d3/d3-format/tree/v1.4.5#d3-format for details on
+  the formatting syntax. Dates are formatted using d3-time-format's
+  syntax %{variable\|d3-time-format}, for example "Day:
+  %{2019-01-01\|%A}".
+  https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format for
+  details on the date formatting syntax. Variables that can't be found
+  will be replaced with the specifier. For example, a template of "data:
+  %{x}, %{y}" will result in a value of "data: 1, %{y}" if x is 1 and y
+  is missing. Variables with an undefined value will be replaced with
+  the fallback value. The variables available in \`hovertemplate\` are
+  the ones emitted as event data described at this link
+  https://plotly.com/javascript/plotlyjs-events/#event-data.
+  Additionally, all attributes that can be specified per-point (the ones
+  that are \`arrayOk: true\`) are available. Anything contained in tag
+  \`\<extra\>\` is displayed in the secondary box, for example
+  \`\<extra\>%{fullData.name}\</extra\>\`. To hide the secondary box
+  completely, use an empty tag \`\<extra\>\</extra\>\`. String, or a
+  vector of these.
+
+- hovertemplatefallback:
+
+  Fallback string that's displayed when a variable referenced in a
+  template is missing. If the boolean value 'false' is passed in, the
+  specifier with the missing variable will be displayed. Any value.
+
+- hovertext:
+
+  Same as \`text\`. String, or a vector of these.
+
+- ids:
+
+  Assigns id labels to each datum. These ids for object constancy of
+  data points during animation. Should be an array of strings, not
+  numbers or any other type. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
+- isomax:
+
+  Sets the maximum boundary for iso-surface plot. Number.
+
+- isomin:
+
+  Sets the minimum boundary for iso-surface plot. Number.
+
+- legend:
+
+  Sets the reference to a legend to show this trace in. References to
+  these legends are "legend", "legend2", "legend3", etc. Settings for
+  these legends are set in the layout, under \`layout.legend\`,
+  \`layout.legend2\`, etc. Subplot id: `"legend"`, `"legend2"`,
+  `"legend3"`, ....
+
+- legendgroup:
+
+  Sets the legend group for this trace. Traces and shapes part of the
+  same legend group hide/show at the same time when toggling legend
+  items. String.
+
+- legendgrouptitle:
+
+  Named list or `go_volume_legendgrouptitle()` object.
+
+- legendrank:
+
+  Sets the legend rank for this trace. Items and groups with smaller
+  ranks are presented on top/left side while with "reversed"
+  \`legend.traceorder\` they are on bottom/right side. The default
+  legendrank is 1000, so that you can use ranks less than 1000 to place
+  certain items before all unranked items, and ranks greater than 1000
+  to go after all unranked items. When having unranked or equal rank
+  items shapes would be displayed after traces i.e. according to their
+  order in data and layout. Number.
+
+- legendwidth:
+
+  Sets the width (in px or fraction) of the legend for this trace.
+  Number in the interval \[0, Inf\].
+
+- lighting:
+
+  Named list or `go_volume_lighting()` object.
+
+- lightposition:
+
+  Named list or `go_volume_lightposition()` object.
+
+- meta:
+
+  Assigns extra meta information associated with this trace that can be
+  used in various text attributes. Attributes such as trace \`name\`,
+  graph, axis and colorbar \`title.text\`, annotation \`text\`
+  \`rangeselector\`, \`updatemenues\` and \`sliders\` \`label\` text all
+  support \`meta\`. To access the trace \`meta\` values in an attribute
+  in the same trace, simply use \`%{meta\[i\]}\` where \`i\` is the
+  index or key of the \`meta\` item in question. To access trace
+  \`meta\` in layout attributes, use \`%{data\[n\[.meta\[i\]}\` where
+  \`i\` is the index or key of the \`meta\` and \`n\` is the trace
+  index. Any value.
+
+- name:
+
+  **`go_volume()`**: Sets the trace name. The trace name appears as the
+  legend item and on hover. String.
+
+  **`go_volume_colorbar_tickformatstop()`**: When used in a template,
+  named items are created in the output figure in addition to any items
+  the figure already has in this array. You can modify these items in
+  the output figure by making your own item with \`templateitemname\`
+  matching this \`name\` alongside your modifications (including
+  \`visible: false\` or \`enabled: false\` to hide it). Has no effect
+  outside of a template. String.
+
+- opacity:
+
+  Sets the opacity of the surface. Please note that in the case of using
+  high \`opacity\` values for example a value greater than or equal to
+  0.5 on two surfaces (and 0.25 with four surfaces), an overlay of
+  multiple transparent surfaces may not perfectly be sorted in depth by
+  the webgl API. This behavior may be improved in the near future and is
+  subject to change. Number in the interval \[0, 1\].
+
+- opacityscale:
+
+  Sets the opacityscale. The opacityscale must be an array containing
+  arrays mapping a normalized value to an opacity value. At minimum, a
+  mapping for the lowest (0) and highest (1) values are required. For
+  example, \`\[\[0, 1\], \[0.5, 0.2\], \[1, 1\]\]\` means that
+  higher/lower values would have higher opacity values and those in the
+  middle would be more transparent Alternatively, \`opacityscale\` may
+  be a palette name string of the following list: 'min', 'max',
+  'extremes' and 'uniform'. The default is 'uniform'. Any value.
+
+- reversescale:
+
+  Reverses the color mapping if true. If true, \`cmin\` will correspond
+  to the last color in the array and \`cmax\` will correspond to the
+  first color. Logical.
+
+- scene:
+
+  Sets a reference between this trace's 3D coordinate system and a 3D
+  scene. If "scene" (the default value), the (x,y,z) coordinates refer
+  to \`layout.scene\`. If "scene2", the (x,y,z) coordinates refer to
+  \`layout.scene2\`, and so on. Subplot id: `"scene"`, `"scene2"`,
+  `"scene3"`, ....
+
+- showlegend:
+
+  Determines whether or not an item corresponding to this trace is shown
+  in the legend. Logical.
+
+- showscale:
+
+  Determines whether or not a colorbar is displayed for this trace.
+  Logical.
+
+- slices:
+
+  Named list or `go_volume_slices()` object.
+
+- spaceframe:
+
+  Named list or `go_volume_spaceframe()` object.
+
+- surface:
+
+  Named list or `go_volume_surface()` object.
+
+- text:
+
+  **`go_volume()`**: Sets the text elements associated with the
+  vertices. If trace \`hoverinfo\` contains a "text" flag and
+  "hovertext" is not set, these elements will be seen in the hover
+  labels. String, or a vector of these.
+
+  **`go_volume_colorbar_title()`**: Sets the title of the color bar.
+  String.
+
+  **`go_volume_legendgrouptitle()`**: Sets the title of the legend
+  group. String.
+
+- uid:
+
+  Assign an id to this trace, Use this to provide object constancy
+  between traces during animations and transitions. String.
+
+- uirevision:
+
+  Controls persistence of some user-driven changes to the trace:
+  \`constraintrange\` in \`parcoords\` traces, as well as some
+  \`editable: true\` modifications such as \`name\` and
+  \`colorbar.title\`. Defaults to \`layout.uirevision\`. Note that other
+  user-driven trace attribute changes are controlled by \`layout\`
+  attributes: \`trace.visible\` is controlled by
+  \`layout.legend.uirevision\`, \`selectedpoints\` is controlled by
+  \`layout.selectionrevision\`, and \`colorbar.(x\|y)\` (accessible with
+  \`config: {editable: true}\`) is controlled by
+  \`layout.editrevision\`. Trace changes are tracked by \`uid\`, which
+  only falls back on trace index if no \`uid\` is provided. So if your
+  app can add/remove traces before the end of the \`data\` array, such
+  that the same trace has a different index, you can still preserve
+  user-driven changes if you give each trace a \`uid\` that stays with
+  it as it moves. Any value.
+
+- value:
+
+  **`go_volume()`**: Sets the 4th dimension (value) of the vertices.
+  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
+
+  **`go_volume_colorbar_tickformatstop()`**: string - dtickformat for
+  described zoom level, the same as "tickformat" String.
+
+- valuehoverformat:
+
+  Sets the hover text formatting rule for \`value\` using d3 formatting
+  mini-languages which are very similar to those in Python. For numbers,
+  see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format.By default
+  the values are formatted using generic number format. String.
+
+- visible:
+
+  Determines whether or not this trace is visible. If "legendonly", the
+  trace is not drawn, but can appear as a legend item (provided that the
+  legend itself is visible). One of `"legendonly"`, `TRUE`, `FALSE`.
+
+- x:
+
+  **`go_volume()`**: Sets the X coordinates of the vertices on X axis.
+  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
+
+  **`go_volume_caps()`**: Named list or `go_volume_caps_x()` object.
+
+  **`go_volume_colorbar()`**: Sets the x position with respect to
+  \`xref\` of the color bar (in plot fraction). When \`xref\` is
+  "paper", defaults to 1.02 when \`orientation\` is "v" and 0.5 when
+  \`orientation\` is "h". When \`xref\` is "container", defaults to 1
+  when \`orientation\` is "v" and 0.5 when \`orientation\` is "h". Must
+  be between 0 and 1 if \`xref\` is "container" and between "-2" and 3
+  if \`xref\` is "paper". Number.
+
+  **`go_volume_lightposition()`**: Numeric vector, representing the X
+  coordinate for each vertex. Number in the interval \[-100000,
+  100000\].
+
+  **`go_volume_slices()`**: Named list or `go_volume_slices_x()` object.
+
+- xhoverformat:
+
+  Sets the hover text formatting rule for \`x\` using d3 formatting
+  mini-languages which are very similar to those in Python. For numbers,
+  see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for
+  dates see:
+  https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+  two items to d3's date formatter: "%h" for half of the year as a
+  decimal number as well as "%{n}f" for fractional seconds with n
+  digits. For example, "2016-10-13 09:15:23.456" with tickformat
+  "%H~%M~%S.%2f" would display "09~15~23.46"By default the values are
+  formatted using \`xaxis.hoverformat\`. String.
+
+- y:
+
+  **`go_volume()`**: Sets the Y coordinates of the vertices on Y axis.
+  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
+
+  **`go_volume_caps()`**: Named list or `go_volume_caps_y()` object.
+
+  **`go_volume_colorbar()`**: Sets the y position with respect to
+  \`yref\` of the color bar (in plot fraction). When \`yref\` is
+  "paper", defaults to 0.5 when \`orientation\` is "v" and 1.02 when
+  \`orientation\` is "h". When \`yref\` is "container", defaults to 0.5
+  when \`orientation\` is "v" and 1 when \`orientation\` is "h". Must be
+  between 0 and 1 if \`yref\` is "container" and between "-2" and 3 if
+  \`yref\` is "paper". Number.
+
+  **`go_volume_lightposition()`**: Numeric vector, representing the Y
+  coordinate for each vertex. Number in the interval \[-100000,
+  100000\].
+
+  **`go_volume_slices()`**: Named list or `go_volume_slices_y()` object.
+
+- yhoverformat:
+
+  Sets the hover text formatting rule for \`y\` using d3 formatting
+  mini-languages which are very similar to those in Python. For numbers,
+  see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for
+  dates see:
+  https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+  two items to d3's date formatter: "%h" for half of the year as a
+  decimal number as well as "%{n}f" for fractional seconds with n
+  digits. For example, "2016-10-13 09:15:23.456" with tickformat
+  "%H~%M~%S.%2f" would display "09~15~23.46"By default the values are
+  formatted using \`yaxis.hoverformat\`. String.
+
+- z:
+
+  **`go_volume()`**: Sets the Z coordinates of the vertices on Z axis.
+  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
+
+  **`go_volume_caps()`**: Named list or `go_volume_caps_z()` object.
+
+  **`go_volume_lightposition()`**: Numeric vector, representing the Z
+  coordinate for each vertex. Number in the interval \[-100000,
+  100000\].
+
+  **`go_volume_slices()`**: Named list or `go_volume_slices_z()` object.
+
+- zhoverformat:
+
+  Sets the hover text formatting rule for \`z\` using d3 formatting
+  mini-languages which are very similar to those in Python. For numbers,
+  see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for
+  dates see:
+  https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+  two items to d3's date formatter: "%h" for half of the year as a
+  decimal number as well as "%{n}f" for fractional seconds with n
+  digits. For example, "2016-10-13 09:15:23.456" with tickformat
+  "%H~%M~%S.%2f" would display "09~15~23.46"By default the values are
+  formatted using \`zaxis.hoverformat\`. String.
+
+- row:
+
+  Subplot grid row (figures created with
+  [`make_subplots()`](https://msummersgill.github.io/plotly.R.core/reference/make_subplots.md)
+  only). May be `"all"` or a vector to address several cells.
+
+- col:
+
+  Subplot grid column (figures created with
+  [`make_subplots()`](https://msummersgill.github.io/plotly.R.core/reference/make_subplots.md)
+  only). May be `"all"` or a vector to address several cells.
+
+- skip_invalid:
+
+  If `TRUE`, silently drop invalid properties instead of raising an
+  error.
+
+- arg:
+
+  Optional named list, or graph object of the same type, to initialise
+  properties from (constructors). Named arguments take precedence.
+
+- fill:
+
+  **`go_volume_caps_x()`, `go_volume_caps_y()`, `go_volume_caps_z()`**:
+  Sets the fill ratio of the \`caps\`. The default fill value of the
+  \`caps\` is 1 meaning that they are entirely shaded. On the other hand
+  Applying a \`fill\` ratio less than one would allow the creation of
+  openings parallel to the edges. Number in the interval \[0, 1\].
+
+  **`go_volume_slices_x()`, `go_volume_slices_y()`,
+  `go_volume_slices_z()`**: Sets the fill ratio of the \`slices\`. The
+  default fill value of the \`slices\` is 1 meaning that they are
+  entirely shaded. On the other hand Applying a \`fill\` ratio less than
+  one would allow the creation of openings parallel to the edges. Number
+  in the interval \[0, 1\].
+
+  **`go_volume_spaceframe()`**: Sets the fill ratio of the
+  \`spaceframe\` elements. The default fill value is 1 meaning that they
+  are entirely shaded. Applying a \`fill\` ratio less than one would
+  allow the creation of openings parallel to the edges. Number in the
+  interval \[0, 1\].
+
+  **`go_volume_surface()`**: Sets the fill ratio of the iso-surface. The
+  default fill value of the surface is 1 meaning that they are entirely
+  shaded. On the other hand Applying a \`fill\` ratio less than one
+  would allow the creation of openings parallel to the edges. Number in
+  the interval \[0, 1\].
+
+- show:
+
+  **`go_volume_caps_x()`**: Sets the fill ratio of the \`slices\`. The
+  default fill value of the x \`slices\` is 1 meaning that they are
+  entirely shaded. On the other hand Applying a \`fill\` ratio less than
+  one would allow the creation of openings parallel to the edges.
+  Logical.
+
+  **`go_volume_caps_y()`**: Sets the fill ratio of the \`slices\`. The
+  default fill value of the y \`slices\` is 1 meaning that they are
+  entirely shaded. On the other hand Applying a \`fill\` ratio less than
+  one would allow the creation of openings parallel to the edges.
+  Logical.
+
+  **`go_volume_caps_z()`**: Sets the fill ratio of the \`slices\`. The
+  default fill value of the z \`slices\` is 1 meaning that they are
+  entirely shaded. On the other hand Applying a \`fill\` ratio less than
+  one would allow the creation of openings parallel to the edges.
+  Logical.
+
+  **`go_volume_contour()`**: Sets whether or not dynamic contours are
+  shown on hover Logical.
+
+  **`go_volume_slices_x()`**: Determines whether or not slice planes
+  about the x dimension are drawn. Logical.
+
+  **`go_volume_slices_y()`**: Determines whether or not slice planes
+  about the y dimension are drawn. Logical.
+
+  **`go_volume_slices_z()`**: Determines whether or not slice planes
+  about the z dimension are drawn. Logical.
+
+  **`go_volume_spaceframe()`**: Displays/hides tetrahedron shapes
+  between minimum and maximum iso-values. Often useful when either caps
+  or surfaces are disabled or filled with values less than 1. Logical.
+
+  **`go_volume_surface()`**: Hides/displays surfaces between minimum and
+  maximum iso-values. Logical.
+
+- bgcolor:
+
+  **`go_volume_colorbar()`**: Sets the color of padded area. Color: a
+  CSS color string or R color name.
+
+  **`go_volume_hoverlabel()`**: Sets the background color of the hover
+  labels for this trace Color: a CSS color string or R color name, or a
+  vector of these.
+
+- bordercolor:
+
+  **`go_volume_colorbar()`**: Sets the axis line color. Color: a CSS
+  color string or R color name.
+
+  **`go_volume_hoverlabel()`**: Sets the border color of the hover
+  labels for this trace. Color: a CSS color string or R color name, or a
+  vector of these.
+
+- borderwidth:
+
+  Sets the width (in px) or the border enclosing this color bar. Number
+  in the interval \[0, Inf\].
+
+- dtick:
+
+  Sets the step in-between ticks on this color bar. Use with \`tick0\`.
+  Must be a positive number. Note: unlike on x/y axes, the special "log"
+  and "date" string forms ("L\<f\>", "D1", "D2", "M\<n\>") are not
+  supported here: this axis is always linear, so such strings are
+  silently ignored and the step is set to 1. Any value.
+
+- exponentformat:
+
+  Determines a formatting rule for the tick exponents. For example,
+  consider the number 1,000,000,000. If "none", it appears as
+  1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power", 1x10^9 (with 9
+  in a super script). If "SI", 1G. If "B", 1B. "SI" uses prefixes from
+  "femto" f (10^-15) to "tera" T (10^12). "SI extended" covers instead
+  the full SI range from "quecto" q (10^-30) to "quetta" Q (10^30). If
+  "SI" or "SI extended" is used and the exponent is beyond the above
+  ranges, the formatting rule will automatically be switched to the
+  power notation. One of `"none"`, `"e"`, `"E"`, `"power"`, `"SI"`,
+  `"B"`, `"SI extended"`.
+
+- labelalias:
+
+  Replacement text for specific tick or hover labels. For example using
+  {US: 'USA', CA: 'Canada'} changes US to USA and CA to Canada. The
+  labels we would have shown must match the keys exactly, after adding
+  any tickprefix or ticksuffix. For negative numbers the minus sign
+  symbol used (U+2212) is wider than the regular ascii dash. That means
+  you need to use -1 instead of -1. labelalias can be used with any axis
+  type, and both keys (if needed) and values (if desired) can include
+  html-like tags or MathJax. Any value.
+
+- len:
+
+  Sets the length of the color bar This measure excludes the padding of
+  both ends. That is, the color bar length is this length minus the
+  padding on both ends. Number in the interval \[0, Inf\].
+
+- lenmode:
+
+  Determines whether this color bar's length (i.e. the measure in the
+  color variation direction) is set in units of plot "fraction" or in
+  \*pixels. Use \`len\` to set the value. One of `"fraction"`,
+  `"pixels"`.
+
+- minexponent:
+
+  Hide SI prefix for 10^n if \|n\| is below this number. This only has
+  an effect when \`tickformat\` is "SI" or "B". Number in the interval
+  \[0, Inf\].
+
+- nticks:
+
+  Specifies the maximum number of ticks for the particular axis. The
+  actual number of ticks will be chosen automatically to be less than or
+  equal to \`nticks\`. Has an effect only if \`tickmode\` is set to
+  "auto". Integer in the interval \[0, Inf\].
+
+- orientation:
+
+  Sets the orientation of the colorbar. One of `"h"`, `"v"`.
+
+- outlinecolor:
+
+  Sets the axis line color. Color: a CSS color string or R color name.
+
+- outlinewidth:
+
+  Sets the width (in px) of the axis line. Number in the interval \[0,
+  Inf\].
+
+- separatethousands:
+
+  If "true", even 4-digit integers are separated Logical.
+
+- showexponent:
+
+  If "all", all exponents are shown besides their significands. If
+  "first", only the exponent of the first tick is shown. If "last", only
+  the exponent of the last tick is shown. If "none", no exponents
+  appear. One of `"all"`, `"first"`, `"last"`, `"none"`.
+
+- showticklabels:
+
+  Determines whether or not the tick labels are drawn. Logical.
+
+- showtickprefix:
+
+  If "all", all tick labels are displayed with a prefix. If "first",
+  only the first tick is displayed with a prefix. If "last", only the
+  last tick is displayed with a suffix. If "none", tick prefixes are
+  hidden. One of `"all"`, `"first"`, `"last"`, `"none"`.
+
+- showticksuffix:
+
+  Same as \`showtickprefix\` but for tick suffixes. One of `"all"`,
+  `"first"`, `"last"`, `"none"`.
+
+- thickness:
+
+  Sets the thickness of the color bar This measure excludes the size of
+  the padding, ticks and labels. Number in the interval \[0, Inf\].
+
+- thicknessmode:
+
+  Determines whether this color bar's thickness (i.e. the measure in the
+  constant color direction) is set in units of plot "fraction" or in
+  "pixels". Use \`thickness\` to set the value. One of `"fraction"`,
+  `"pixels"`.
+
+- tick0:
+
+  Sets the placement of the first tick on this axis. Use with \`dtick\`.
+  If the axis \`type\` is "log", then you must take the log of your
+  starting tick (e.g. to set the starting tick to 100, set the \`tick0\`
+  to 2) except when \`dtick\`="L\<f\>" (see \`dtick\` for more info). If
+  the axis \`type\` is "date", it should be a date string, like date
+  data. If the axis \`type\` is "category", it should be a number, using
+  the scale where each category is assigned a serial number from zero in
+  the order it appears. Any value.
+
+- tickangle:
+
+  Sets the angle of the tick labels with respect to the horizontal. For
+  example, a \`tickangle\` of -90 draws the tick labels vertically.
+  Angle in degrees.
+
+- tickcolor:
+
+  Sets the tick color. Color: a CSS color string or R color name.
+
+- tickfont:
+
+  Sets the color bar's tick label font Named list or
+  `go_volume_colorbar_tickfont()` object.
+
+- tickformat:
+
+  Sets the tick label formatting rule using d3 formatting mini-languages
+  which are very similar to those in Python. For numbers, see:
+  https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
+  see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
+  We add two items to d3's date formatter: "%h" for half of the year as
+  a decimal number as well as "%{n}f" for fractional seconds with n
+  digits. For example, "2016-10-13 09:15:23.456" with tickformat
+  "%H~%M~%S.%2f" would display "09~15~23.46" String.
+
+- tickformatstops:
+
+  List of named lists or `go_volume_colorbar_tickformatstop()` objects.
+
+- ticklabeloverflow:
+
+  Determines how we handle tick labels that would overflow either the
+  graph div or the domain of the axis. The default value for inside tick
+  labels is "hide past domain". In other cases the default is "hide past
+  div". One of `"allow"`, `"hide past div"`, `"hide past domain"`.
+
+- ticklabelposition:
+
+  Determines where tick labels are drawn relative to the ticks. Left and
+  right options are used when \`orientation\` is "h", top and bottom
+  when \`orientation\` is "v". One of `"outside"`, `"inside"`,
+  `"outside top"`, `"inside top"`, `"outside left"`, `"inside left"`,
+  `"outside right"`, `"inside right"`, `"outside bottom"`,
+  `"inside bottom"`.
+
+- ticklabelstep:
+
+  Sets the spacing between tick labels as compared to the spacing
+  between ticks. A value of 1 (default) means each tick gets a label. A
+  value of 2 means shows every 2nd label. A larger value n means only
+  every nth tick is labeled. \`tick0\` determines which labels are
+  shown. Not implemented for axes with \`type\` "log" or
+  "multicategory", or when \`tickmode\` is "array". Integer in the
+  interval \[1, Inf\].
+
+- ticklen:
+
+  Sets the tick length (in px). Number in the interval \[0, Inf\].
+
+- tickmode:
+
+  Sets the tick mode for this axis. If "auto", the number of ticks is
+  set via \`nticks\`. If "linear", the placement of the ticks is
+  determined by a starting position \`tick0\` and a tick step \`dtick\`
+  ("linear" is the default value if \`tick0\` and \`dtick\` are
+  provided). If "array", the placement of the ticks is set via
+  \`tickvals\` and the tick text is \`ticktext\`. ("array" is the
+  default value if \`tickvals\` is provided). One of `"auto"`,
+  `"linear"`, `"array"`.
+
+- tickprefix:
+
+  Sets a tick label prefix. String.
+
+- ticks:
+
+  Determines whether ticks are drawn or not. If \*\*, this axis' ticks
+  are not drawn. If "outside" ("inside"), this axis' are drawn outside
+  (inside) the axis lines. One of `"outside"`, `"inside"`, `""`.
+
+- ticksuffix:
+
+  Sets a tick label suffix. String.
+
+- ticktext:
+
+  Sets the text displayed at the ticks position via \`tickvals\`. Only
+  has an effect if \`tickmode\` is set to "array". Used with
+  \`tickvals\`. Data array: a vector, factor, Date/POSIXct vector,
+  matrix or list.
+
+- tickvals:
+
+  Sets the values at which ticks on this axis appear. Only has an effect
+  if \`tickmode\` is set to "array". Used with \`ticktext\`. Data array:
+  a vector, factor, Date/POSIXct vector, matrix or list.
+
+- tickwidth:
+
+  Sets the tick width (in px). Number in the interval \[0, Inf\].
+
+- title:
+
+  String (the title text), named list or `go_volume_colorbar_title()`
+  object.
+
+- xanchor:
+
+  Sets this color bar's horizontal position anchor. This anchor binds
+  the \`x\` position to the "left", "center" or "right" of the color
+  bar. Defaults to "left" when \`orientation\` is "v" and "center" when
+  \`orientation\` is "h". One of `"left"`, `"center"`, `"right"`.
+
+- xpad:
+
+  Sets the amount of padding (in px) along the x direction. Number in
+  the interval \[0, Inf\].
+
+- xref:
+
+  Sets the container \`x\` refers to. "container" spans the entire
+  \`width\` of the plot. "paper" refers to the width of the plotting
+  area only. One of `"container"`, `"paper"`.
+
+- yanchor:
+
+  Sets this color bar's vertical position anchor This anchor binds the
+  \`y\` position to the "top", "middle" or "bottom" of the color bar.
+  Defaults to "middle" when \`orientation\` is "v" and "bottom" when
+  \`orientation\` is "h". One of `"top"`, `"middle"`, `"bottom"`.
+
+- ypad:
+
+  Sets the amount of padding (in px) along the y direction. Number in
+  the interval \[0, Inf\].
+
+- yref:
+
+  Sets the container \`y\` refers to. "container" spans the entire
+  \`height\` of the plot. "paper" refers to the height of the plotting
+  area only. One of `"container"`, `"paper"`.
+
+- color:
+
+  **`go_volume_colorbar_tickfont()`, `go_volume_colorbar_title_font()`,
+  `go_volume_legendgrouptitle_font()`**: Color: a CSS color string or R
+  color name.
+
+  **`go_volume_contour()`**: Sets the color of the contour lines. Color:
+  a CSS color string or R color name.
+
+  **`go_volume_hoverlabel_font()`**: Color: a CSS color string or R
+  color name, or a vector of these.
+
+- family:
+
+  **`go_volume_colorbar_tickfont()`, `go_volume_colorbar_title_font()`,
+  `go_volume_legendgrouptitle_font()`**: HTML font family - the typeface
+  that will be applied by the web browser. The web browser can only
+  apply a font if it is available on the system where it runs. Provide
+  multiple font families, separated by commas, to indicate the order in
+  which to apply fonts if they aren't available. String.
+
+  **`go_volume_hoverlabel_font()`**: HTML font family - the typeface
+  that will be applied by the web browser. The web browser can only
+  apply a font if it is available on the system where it runs. Provide
+  multiple font families, separated by commas, to indicate the order in
+  which to apply fonts if they aren't available. String, or a vector of
+  these.
+
+- lineposition:
+
+  **`go_volume_colorbar_tickfont()`, `go_volume_colorbar_title_font()`,
+  `go_volume_legendgrouptitle_font()`**: Sets the kind of decoration
+  line(s) with text, such as an "under", "over" or "through" as well as
+  combinations e.g. "under+over", etc. Any combination of `"under"`,
+  `"over"`, `"through"` joined with `"+"`, or one of `"none"`.
+
+  **`go_volume_hoverlabel_font()`**: Sets the kind of decoration line(s)
+  with text, such as an "under", "over" or "through" as well as
+  combinations e.g. "under+over", etc. Any combination of `"under"`,
+  `"over"`, `"through"` joined with `"+"`, or one of `"none"`, or a
+  vector of these.
+
+- shadow:
+
+  **`go_volume_colorbar_tickfont()`, `go_volume_colorbar_title_font()`,
+  `go_volume_legendgrouptitle_font()`**: Sets the shape and color of the
+  shadow behind text. "auto" places minimal shadow and applies contrast
+  text font color. See
+  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
+  additional options. String.
+
+  **`go_volume_hoverlabel_font()`**: Sets the shape and color of the
+  shadow behind text. "auto" places minimal shadow and applies contrast
+  text font color. See
+  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
+  additional options. String, or a vector of these.
+
+- size:
+
+  **`go_volume_colorbar_tickfont()`, `go_volume_colorbar_title_font()`,
+  `go_volume_legendgrouptitle_font()`**: Number in the interval \[1,
+  Inf\].
+
+  **`go_volume_hoverlabel_font()`**: Number in the interval \[1, Inf\],
+  or a vector of these.
+
+- style:
+
+  **`go_volume_colorbar_tickfont()`, `go_volume_colorbar_title_font()`,
+  `go_volume_legendgrouptitle_font()`**: Sets whether a font should be
+  styled with a normal or italic face from its family. One of
+  `"normal"`, `"italic"`.
+
+  **`go_volume_hoverlabel_font()`**: Sets whether a font should be
+  styled with a normal or italic face from its family. One of
+  `"normal"`, `"italic"`, or a vector of these.
+
+- textcase:
+
+  **`go_volume_colorbar_tickfont()`, `go_volume_colorbar_title_font()`,
+  `go_volume_legendgrouptitle_font()`**: Sets capitalization of text. It
+  can be used to make text appear in all-uppercase or all-lowercase, or
+  with each word capitalized. One of `"normal"`, `"word caps"`,
+  `"upper"`, `"lower"`.
+
+  **`go_volume_hoverlabel_font()`**: Sets capitalization of text. It can
+  be used to make text appear in all-uppercase or all-lowercase, or with
+  each word capitalized. One of `"normal"`, `"word caps"`, `"upper"`,
+  `"lower"`, or a vector of these.
+
+- variant:
+
+  **`go_volume_colorbar_tickfont()`, `go_volume_colorbar_title_font()`,
+  `go_volume_legendgrouptitle_font()`**: Sets the variant of the font.
+  One of `"normal"`, `"small-caps"`, `"all-small-caps"`,
+  `"all-petite-caps"`, `"petite-caps"`, `"unicase"`.
+
+  **`go_volume_hoverlabel_font()`**: Sets the variant of the font. One
+  of `"normal"`, `"small-caps"`, `"all-small-caps"`,
+  `"all-petite-caps"`, `"petite-caps"`, `"unicase"`, or a vector of
+  these.
+
+- weight:
+
+  **`go_volume_colorbar_tickfont()`, `go_volume_colorbar_title_font()`,
+  `go_volume_legendgrouptitle_font()`**: Sets the weight (or boldness)
+  of the font. Integer in the interval \[1, 1000\].
+
+  **`go_volume_hoverlabel_font()`**: Sets the weight (or boldness) of
+  the font. Integer in the interval \[1, 1000\], or a vector of these.
+
+- dtickrange:
+
+  range \["min", "max"\], where "min", "max" - dtick values which
+  describe some zoom level, it is possible to omit "min" or "max" value
+  by passing "null" Vector or list of 2 element(s).
+
+- enabled:
+
+  Determines whether or not this stop is used. If \`false\`, this stop
+  is ignored even within its \`dtickrange\`. Logical.
+
+- templateitemname:
+
+  Used to refer to a named item in this array in the template. Named
+  items from the template will be created even without a matching item
+  in the input figure, but you can modify one by making an item with
+  \`templateitemname\` matching its \`name\`, alongside your
+  modifications (including \`visible: false\` or \`enabled: false\` to
+  hide it). If there is no template or no matching item, this item will
+  be hidden unless you explicitly show it with \`visible: true\`.
+  String.
+
+- font:
+
+  **`go_volume_colorbar_title()`**: Sets this color bar's title font.
+  Named list or `go_volume_colorbar_title_font()` object.
+
+  **`go_volume_hoverlabel()`**: Sets the font used in hover labels.
+  Named list or `go_volume_hoverlabel_font()` object.
+
+  **`go_volume_legendgrouptitle()`**: Sets this legend group's title
+  font. Named list or `go_volume_legendgrouptitle_font()` object.
+
+- side:
+
+  Determines the location of color bar's title with respect to the color
+  bar. Defaults to "top" when \`orientation\` is "v" and defaults to
+  "right" when \`orientation\` is "h". One of `"right"`, `"top"`,
+  `"bottom"`.
+
+- width:
+
+  Sets the width of the contour lines. Number in the interval \[1, 16\].
+
+- align:
+
+  Sets the horizontal alignment of the text content within hover label
+  box. Has an effect only if the hover label text spans two or more
+  lines One of `"left"`, `"right"`, `"auto"`, or a vector of these.
+
+- namelength:
+
+  Sets the default length (in number of characters) of the trace name in
+  the hover labels for all traces. -1 shows the whole name regardless of
+  length. 0-3 shows the first 0-3 characters, and an integer \>3 will
+  show the whole name if it is less than that many characters, but if it
+  is longer, will truncate to \`namelength - 3\` characters and add an
+  ellipsis. Integer in the interval \[-1, Inf\], or a vector of these.
+
+- showarrow:
+
+  Sets whether or not to show the hover label arrow/triangle pointing to
+  the data point. Logical.
+
+- ambient:
+
+  Ambient light increases overall color visibility but can wash out the
+  image. Number in the interval \[0, 1\].
+
+- diffuse:
+
+  Represents the extent that incident rays are reflected in a range of
+  angles. Number in the interval \[0, 1\].
+
+- facenormalsepsilon:
+
+  Epsilon for face normals calculation avoids math issues arising from
+  degenerate geometry. Number in the interval \[0, 1\].
+
+- fresnel:
+
+  Represents the reflectance as a dependency of the viewing angle; e.g.
+  paper is reflective when viewing it from the edge of the paper (almost
+  90 degrees), causing shine. Number in the interval \[0, 5\].
+
+- roughness:
+
+  Alters specular reflection; the rougher the surface, the wider and
+  less contrasty the shine. Number in the interval \[0, 1\].
+
+- specular:
+
+  Represents the level that incident rays are reflected in a single
+  direction, causing shine. Number in the interval \[0, 2\].
+
+- vertexnormalsepsilon:
+
+  Epsilon for vertex normals calculation avoids math issues arising from
+  degenerate geometry. Number in the interval \[0, 1\].
+
+- locations:
+
+  **`go_volume_slices_x()`**: Specifies the location(s) of slices on the
+  axis. When not specified slices would be created for all points of the
+  axis x except start and end. Data array: a vector, factor,
+  Date/POSIXct vector, matrix or list.
+
+  **`go_volume_slices_y()`**: Specifies the location(s) of slices on the
+  axis. When not specified slices would be created for all points of the
+  axis y except start and end. Data array: a vector, factor,
+  Date/POSIXct vector, matrix or list.
+
+  **`go_volume_slices_z()`**: Specifies the location(s) of slices on the
+  axis. When not specified slices would be created for all points of the
+  axis z except start and end. Data array: a vector, factor,
+  Date/POSIXct vector, matrix or list.
+
+- count:
+
+  Sets the number of iso-surfaces between minimum and maximum
+  iso-values. By default this value is 2 meaning that only minimum and
+  maximum surfaces would be drawn. Integer in the interval \[1, Inf\].
+
+- pattern:
+
+  Sets the surface pattern of the iso-surface 3-D sections. The default
+  pattern of the surface is \`all\` meaning that the rest of surface
+  elements would be shaded. The check options (either 1 or 2) could be
+  used to draw half of the squares on the surface. Using various
+  combinations of capital \`A\`, \`B\`, \`C\`, \`D\` and \`E\` may also
+  be used to reduce the number of triangles on the iso-surfaces and
+  creating other patterns of interest. Any combination of `"A"`, `"B"`,
+  `"C"`, `"D"`, `"E"` joined with `"+"`, or one of `"all"`, `"odd"`,
+  `"even"`.
+
+## Value
+
+Each `go_*()` function returns a graph object of the same class as its
+name; `add_*()` functions return the modified figure.
+
+## Details
+
+`go_volume()` and the nested object constructors below create validated
+graph objects (named lists). Every property is checked against the
+plotly.js schema when an object is created or modified (see
+[`plotly_obj-modify()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
+`add_volume()` creates an object and adds it to a figure.
+
+Nested objects documented here:
+
+- `go_volume_caps()`:
+
+  `volume.caps`
+
+- `go_volume_caps_x()`:
+
+  `volume.caps.x`
+
+- `go_volume_caps_y()`:
+
+  `volume.caps.y`
+
+- `go_volume_caps_z()`:
+
+  `volume.caps.z`
+
+- `go_volume_colorbar()`:
+
+  `volume.colorbar`
+
+- `go_volume_colorbar_tickfont()`:
+
+  `volume.colorbar.tickfont`: Sets the color bar's tick label font
+
+- `go_volume_colorbar_tickformatstop()`:
+
+  `volume.colorbar.tickformatstop`
+
+- `go_volume_colorbar_title()`:
+
+  `volume.colorbar.title`
+
+- `go_volume_colorbar_title_font()`:
+
+  `volume.colorbar.title.font`: Sets this color bar's title font.
+
+- `go_volume_contour()`:
+
+  `volume.contour`
+
+- `go_volume_hoverlabel()`:
+
+  `volume.hoverlabel`
+
+- `go_volume_hoverlabel_font()`:
+
+  `volume.hoverlabel.font`: Sets the font used in hover labels.
+
+- `go_volume_legendgrouptitle()`:
+
+  `volume.legendgrouptitle`
+
+- `go_volume_legendgrouptitle_font()`:
+
+  `volume.legendgrouptitle.font`: Sets this legend group's title font.
+
+- `go_volume_lighting()`:
+
+  `volume.lighting`
+
+- `go_volume_lightposition()`:
+
+  `volume.lightposition`
+
+- `go_volume_slices()`:
+
+  `volume.slices`
+
+- `go_volume_slices_x()`:
+
+  `volume.slices.x`
+
+- `go_volume_slices_y()`:
+
+  `volume.slices.y`
+
+- `go_volume_slices_z()`:
+
+  `volume.slices.z`
+
+- `go_volume_spaceframe()`:
+
+  `volume.spaceframe`
+
+- `go_volume_surface()`:
+
+  `volume.surface`
+
+## See also
+
+[`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md),
+[`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md)
+
+## Examples
+
+``` r
+go_volume(x = 1:3, y = c(2, 1, 3))
+#> <go_volume>
+#> {
+#>   "type": "volume",
+#>   "x": [
+#>     1,
+#>     2,
+#>     3
+#>   ],
+#>   "y": [
+#>     2,
+#>     1,
+#>     3
+#>   ]
+#> }
+#> 
+```
