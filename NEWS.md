@@ -21,5 +21,10 @@
   knitr/Quarto output, and static image export (`save_image()`) to PNG, JPEG,
   WebP, SVG, PDF and EPS with headless Chrome via chromote, with LaTeX
   typeset by MathJax; no Python or Kaleido needed.
+* `save_image()` finds Chrome, or offers to download Chrome Headless Shell in
+  interactive sessions. On Linux it checks the shared libraries Chrome needs
+  and can download missing ones into the user cache without administrator
+  rights (Debian/Ubuntu and RHEL-family systems); `install_chrome()` does the
+  same set-up non-interactively. Startup failures show Chrome's own output.
 * Renders the plotly R package's `plot_ly()` and `ggplotly()` figures,
   including its crosstalk linking (`highlight()`).

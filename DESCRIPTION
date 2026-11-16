@@ -53,13 +53,14 @@ Imports:
     utils
 Suggests:
     callr,
-    chromote,
+    chromote (>= 0.5.0),
     crosstalk,
     httpuv,
     knitr,
     listviewer,
     plotly,
     png,
+    processx,
     promises,
     ps,
     quarto,

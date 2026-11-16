@@ -78,7 +78,8 @@ chrome_alive <- function(ex) {
 
 # Whether a browser is there for export, without offering a download.
 chrome_available <- function() {
-  requireNamespace("chromote", quietly = TRUE) && !is.null(chrome_found())
+  isTRUE(tryCatch(check_chromote(), error = function(e) FALSE)) &&
+    !is.null(chrome_found())
 }
 
 # Figure JSON as the widget would render it (data, layout with template, config).

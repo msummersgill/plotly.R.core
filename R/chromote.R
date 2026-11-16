@@ -9,13 +9,7 @@ MATHJAX_URL <- "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"
 #' @rdname save_image
 #' @export
 chrome_exporter <- function(...) {
-  if (!requireNamespace("chromote", quietly = TRUE)) {
-    stop(
-      "Static image export with Chrome needs the chromote package: ",
-      "install.packages(\"chromote\")",
-      call. = FALSE
-    )
-  }
+  check_chromote()
   chrome <- find_export_chrome()
 
   page <- tempfile("plotly-core-export-", fileext = ".html")
@@ -36,9 +30,13 @@ chrome_exporter <- function(...) {
   # Chrome uses the GPU for WebGL traces (scattergl, 3D, maps) where it can;
   # where it can't (no GPU, --disable-gpu on Linux), SwiftShader renders them
   # in software, which recent Chrome only allows with this flag.
-  browser <- chromote::Chrome$new(
-    path = chrome,
-    args = c(chromote::get_chrome_args(), "--enable-unsafe-swiftshader")
+  # a clear error for what stops Chrome starting (see chrome_check.R)
+  # set-up was offered by find_export_chrome(): only check here
+  lib_path <- ensure_chrome_libs(chrome, ask = FALSE)
+  browser <- chrome_launch(
+    chrome,
+    c(chromote::get_chrome_args(), "--enable-unsafe-swiftshader"),
+    lib_path
   )
   cm <- chromote::Chromote$new(browser = browser)
   session <- cm$new_session(wait_ = TRUE)
@@ -88,6 +86,31 @@ print.chromeExporter <- function(x, ...) {
 
 # Browser lookup ------------------------------------------------------------
 
+# chromote 0.5.0 added downloading Chrome Headless Shell (chrome_versions_*()).
+check_chromote <- function(
+  version = tryCatch(
+    utils::packageVersion("chromote"),
+    error = function(e) NULL
+  )
+) {
+  if (is.null(version)) {
+    stop(
+      "Static image export needs the chromote package: ",
+      "install.packages(\"chromote\")",
+      call. = FALSE
+    )
+  }
+  if (version < "0.5.0") {
+    stop(
+      "Static image export needs chromote 0.5.0 or later (installed: ",
+      version,
+      "): install.packages(\"chromote\")",
+      call. = FALSE
+    )
+  }
+  invisible(TRUE)
+}
+
 # A Chrome for export, without downloading: the one chromote finds (an
 # installed Chrome, or CHROMOTE_CHROME), else a Chrome Headless Shell that
 # chromote downloaded earlier. NULL if there is none.
@@ -110,46 +133,68 @@ chrome_found <- function() {
   NULL
 }
 
-# The Chrome to export with. If there is none, an interactive session is
-# asked whether to download Chrome Headless Shell (with chromote); otherwise
-# it's an error saying how to get one.
+# The Chrome to export with. When set-up is needed (no browser, or on Linux
+# shared libraries it lacks that can be downloaded), an interactive session
+# is asked once whether to run install_chrome(), which does it all;
+# otherwise it's an error saying how to set up. Libraries that can't be
+# downloaded are reported by ensure_chrome_libs().
 find_export_chrome <- function(
   find = chrome_found,
+  missing_libs = function(path) {
+    chrome_missing_libs(path, lib_path = chrome_lib_path())
+  },
+  can_fetch = function() can_fetch_libs(linux_family()),
   ask = interactive(),
   confirm = utils::askYesNo,
-  download = function() {
-    chromote::chrome_versions_add("latest-stable", "chrome-headless-shell")
-  }
+  install = install_chrome
 ) {
   path <- find()
-  if (!is.null(path)) {
+  libs <- if (is.null(path)) character() else missing_libs(path)
+  if (!is.null(path) && (!length(libs) || !can_fetch())) {
     return(path)
   }
   how <- paste0(
-    "Install Chrome, set the CHROMOTE_CHROME environment variable to a ",
-    "Chrome or Chromium binary, or download Chrome Headless Shell with ",
-    "chromote::chrome_versions_add(\"latest-stable\", \"chrome-headless-shell\")."
+    "Run plotly.core::install_chrome() once to download Chrome Headless ",
+    "Shell (no administrator rights needed), install Chrome, or set the ",
+    "CHROMOTE_CHROME environment variable to a Chrome or Chromium binary."
   )
   if (!ask) {
-    stop(
-      "Static image export needs Chrome, which wasn't found. ",
-      how,
-      call. = FALSE
-    )
+    if (is.null(path)) {
+      stop(
+        "Static image export needs Chrome, which wasn't found. ",
+        how,
+        call. = FALSE
+      )
+    }
+    # missing libraries: ensure_chrome_libs() says how to get them
+    return(path)
   }
   ok <- confirm(paste0(
-    "Static image export needs Chrome, which wasn't found. Download Chrome ",
-    "Headless Shell (about 100 MB, from Google's Chrome for Testing) to ",
-    "chromote's cache? It is reused by later sessions."
+    "Static image export needs ",
+    if (is.null(path)) {
+      paste0(
+        "Chrome, which wasn't found. Run plotly.core::install_chrome() to ",
+        "download Chrome Headless Shell (about 100 MB, from Google's Chrome ",
+        "for Testing) and, on Linux, any shared libraries it needs"
+      )
+    } else {
+      paste0(
+        "shared libraries Chrome lacks (",
+        paste(libs, collapse = ", "),
+        "). Run plotly.core::install_chrome() to download them from your ",
+        "system's package repositories"
+      )
+    },
+    "? Downloads are kept in your user cache for later sessions; no ",
+    "administrator rights are needed."
   ))
   if (!isTRUE(ok)) {
-    stop("No Chrome for static image export. ", how, call. = FALSE)
+    if (is.null(path)) {
+      stop("No Chrome for static image export. ", how, call. = FALSE)
+    }
+    return(path)
   }
-  path <- download()
-  if (is.null(path) || !file.exists(path)) {
-    stop("Downloading Chrome Headless Shell failed. ", how, call. = FALSE)
-  }
-  path
+  install()
 }
 
 # Export ----------------------------------------------------------------------

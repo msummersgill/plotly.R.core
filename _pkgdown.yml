@@ -49,6 +49,7 @@ reference:
       - config
       - write_html
       - save_image
+      - install_chrome
       - plotly_json
       - TeX
       - plotlyjs_version

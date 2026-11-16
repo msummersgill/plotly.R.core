@@ -242,13 +242,30 @@ knit_static_image <- function(x, options) {
   ext <- if (knitr::is_latex_output()) "pdf" else "png"
   path <- knitr::fig_path(paste0(".", ext), options)
   dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
-  save_image(
-    x,
-    path,
-    width = width,
-    height = height,
-    scale = if (ext == "png") 2 else NULL
+  ok <- tryCatch(
+    {
+      save_image(
+        x,
+        path,
+        width = width,
+        height = height,
+        scale = if (ext == "png") 2 else NULL
+      )
+      TRUE
+    },
+    error = function(e) {
+      # e.g. Chrome can't start: the document still renders, with a widget
+      message(
+        "Static image export failed, so the figure is included as an ",
+        "htmlwidget: ",
+        conditionMessage(e)
+      )
+      FALSE
+    }
   )
+  if (!ok) {
+    return(NULL)
+  }
   knitr::knit_print(knitr::include_graphics(path), options = options)
 }
 
