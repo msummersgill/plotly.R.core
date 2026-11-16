@@ -9,3 +9,4 @@ src/*.dll
 vignettes/bench-out/
 vignettes/*_files/
 vignettes/*.html
+docs/

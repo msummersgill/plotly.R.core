@@ -67,7 +67,7 @@ Suggests:
     rmarkdown,
     shiny
 VignetteBuilder: quarto
-URL: https://github.com/msummersgill/plotly.R.core
+URL: https://msummersgill.github.io/plotly.R.core/, https://github.com/msummersgill/plotly.R.core
 BugReports: https://github.com/msummersgill/plotly.R.core/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

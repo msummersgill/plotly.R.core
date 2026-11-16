@@ -10,3 +10,9 @@
 ^vignettes/.*\.html$
 ^cran-comments\.md$
 ^air\.toml$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
+^vignettes/\.quarto$
+^vignettes/\.gitignore$

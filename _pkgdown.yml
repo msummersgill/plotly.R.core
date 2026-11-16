@@ -1,0 +1,63 @@
+url: https://msummersgill.github.io/plotly.R.core/
+
+template:
+  bootstrap: 5
+
+navbar:
+  structure:
+    left: [reference, articles, news]
+    right: [search, github]
+
+articles:
+  - title: Articles
+    navbar: ~
+    contents:
+      - render-performance
+
+reference:
+  - title: Figures
+    contents:
+      - go_figure
+      - add_traces
+      - make_subplots
+      - print_grid
+      - select_traces
+      - plotly_obj-modify
+      - last_plot
+      - print.go_figure
+      - print.plotly_obj
+  - title: Updating figures
+    contents:
+      - starts_with("update_")
+  - title: Trace constructors
+    contents:
+      - starts_with("go_")
+      - -go_figure
+      - -starts_with("go_layout")
+  - title: Layout constructors
+    contents:
+      - starts_with("go_layout")
+  - title: Plotly Express
+    contents:
+      - starts_with("px_")
+  - title: Rendering and export
+    contents:
+      - plotly_widget
+      - as_float32
+      - partial_bundle
+      - config
+      - write_html
+      - save_image
+      - plotly_json
+      - TeX
+      - plotlyjs_version
+  - title: Shiny
+    contents:
+      - plotlyOutput
+      - plotlyProxy
+      - event_data
+      - event_register
+  - title: Templates, schema and validation
+    contents:
+      - get_template
+      - schema

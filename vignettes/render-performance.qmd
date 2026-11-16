@@ -71,6 +71,11 @@ library(plotly.core)
 run <- isTRUE(as.logical(Sys.getenv("PLOTLY_CORE_RUN_BENCHMARKS", "false")))
 wd <- normalizePath(params$workdir, mustWork = FALSE)
 results_dir <- params$results_dir
+# relative to this file, as pkgdown renders it from another directory
+doc_dir <- Sys.getenv("QUARTO_DOCUMENT_PATH")
+if (!dir.exists(results_dir) && nzchar(doc_dir)) {
+  results_dir <- file.path(doc_dir, results_dir)
+}
 pages_dir <- file.path(wd, "pages")
 reps <- params$reps
 variants <- c("release", "core_backend", "go_figure_f32", "plotly_py", "plotly_py_f32")
