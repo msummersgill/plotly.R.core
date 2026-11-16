@@ -1,6 +1,7 @@
 # plotly.core
 
-Interactive web graphics for R, built on [plotly.js](https://github.com/plotly/plotly.js).
+Interactive web graphics for R built on [plotly.js](https://github.com/plotly/plotly.js). 
+plotly.core is a rendering engine for the [plotly R package](https://github.com/plotly/plotly.R) and can also be used stand-alone. 
 
 - **Faster plots, less browser memory** plotly.core leverages advances in plotly.js 
   to improve browser rendering performance, and implements optimizations to on
@@ -19,7 +20,7 @@ Interactive web graphics for R, built on [plotly.js](https://github.com/plotly/p
   code gets the same performance work and plotly.js version.
   _([Working branch: msummersgill/plotly@plotly-core-render](https://github.com/msummersgill/plotly/tree/plotly-core-render))_
   Helper functions in the plotly package back-port functionality for features
-  and behavior deprecated between the last CRAN release plotly.js and latest
+  and behavior deprecated between the last CRAN release plotly.js/2.25.2 and plotly-js/latest
 - **Shiny, R Markdown, Quarto, and static image export** `plotlyOutput()`/`renderPlotly()`,
   `event_data()` and `plotlyProxy()` work as in the plotly R package; figures
   render inline in documents, as static images in PDF/Word output.`save_image()`
