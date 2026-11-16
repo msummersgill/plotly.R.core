@@ -6,11 +6,12 @@
 \alias{plotly.core-package}
 \title{plotly.core: Create Interactive Web Graphics via 'plotly.js'}
 \description{
-Create interactive web graphics with the 'plotly.js' JavaScript library. Graph objects, their validation and their documentation are generated from the 'plotly.js' plot schema, following the design of the 'plotly' Python package. Includes an 'express' interface for quick figures, 'htmlwidgets' rendering, 'shiny' and 'quarto' integration, and static image export with 'Kaleido'.
+Create interactive web graphics with the 'plotly.js' JavaScript library. Graph objects, their validation and their documentation are generated from the 'plotly.js' plot schema, following the design of the 'plotly' Python package. Includes an 'express' interface for quick figures, 'htmlwidgets' rendering, 'shiny' and 'quarto' integration, and static image export with headless 'Chrome'.
 }
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://msummersgill.github.io/plotly.R.core/}
   \item \url{https://github.com/msummersgill/plotly.R.core}
   \item Report bugs at \url{https://github.com/msummersgill/plotly.R.core/issues}
 }
@@ -27,6 +28,8 @@ Authors:
 
 Other contributors:
 \itemize{
+  \item Nicolas Kruchten (\href{https://orcid.org/0000-0002-8416-789X}{ORCID}) ('plotly.py') [contributor]
+  \item Andrew Seier ('plotly.py') [contributor]
   \item Toby Hocking [contributor]
   \item Marianne Corvellec (\href{https://orcid.org/0000-0002-1994-3581}{ORCID}) [contributor]
   \item Pedro Despouy [contributor]

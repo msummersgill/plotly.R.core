@@ -414,9 +414,10 @@ locale_dependency <- function(locale) {
 mathjax_dependency <- function() {
   htmltools::htmlDependency(
     name = "mathjax",
-    version = "2.7.5",
-    src = c(href = "https://cdn.jsdelivr.net/npm/mathjax@2.7.5"),
-    script = "MathJax.js?config=TeX-AMS-MML_SVG"
+    # plotly.js 4 typesets with MathJax 3 or 4 (not 2)
+    version = "3.2.2",
+    src = c(href = "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5"),
+    script = "tex-svg.js"
   )
 }
 

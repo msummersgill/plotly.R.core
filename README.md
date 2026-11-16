@@ -24,7 +24,7 @@ plotly.core is a rendering engine for the [plotly R package](https://github.com/
 - **Shiny, R Markdown, Quarto, and static image export** `plotlyOutput()`/`renderPlotly()`,
   `event_data()` and `plotlyProxy()` work as in the plotly R package; figures
   render inline in documents, as static images in PDF/Word output.`save_image()`
-  exports PNG, JPEG, WebP, SVG and PDF with Kaleido.
+  exports PNG, JPEG, WebP, SVG, PDF and EPS with headless Chrome (no Python needed).
 - **Plotly Express** Ports of functionality from the plotly.py package introduce
   high-level methods quickly create figures with minimal code.
 
@@ -139,13 +139,15 @@ shinyApp(ui, server)
 ## Static images
 
 ```r
-# needs Python with kaleido (and plotly): reticulate::py_install(c("kaleido", "plotly"))
+# uses headless Chrome via chromote; offers to download Chrome Headless Shell
+# if no browser is installed
 save_image(fig, "figure.png", width = 800, height = 500, scale = 2)
 save_image(fig, "figure.pdf")
+save_image(fig, "figure.eps") # needs the rsvg package
 ```
 
 In R Markdown and Quarto, figures in PDF or Word output are included as static
-images automatically when Kaleido is available.
+images automatically when Chrome is available.
 
 ## Existing plotly R code
 

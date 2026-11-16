@@ -198,7 +198,7 @@ set_figure_part <- function(fig, name, value) {
 #' inline: as interactive widgets in HTML output, sized by the chunk options
 #' `fig.width`/`fig.height` (`fig-width`/`fig-height` in Quarto) unless the
 #' layout sets a size; and, for other formats (PDF, Word, ...), as static
-#' images made with Kaleido (see [save_image()]) when it is available.
+#' images made with [save_image()] when a browser is available.
 #'
 #' Set the chunk option `plotly.static = TRUE` to use static images in HTML
 #' output too, or `plotly.static = FALSE` to always use a widget.
@@ -225,18 +225,14 @@ knit_print.go_figure <- function(x, ..., options = NULL) {
   knitr::knit_print(plotly_widget(x), ..., options = options)
 }
 
-# Render a figure to an image file for knitr with Kaleido; NULL (falling back
-# to knitr's widget screenshot handling) if Kaleido isn't available.
+# Render a figure to an image file for knitr with save_image(); NULL (falling
+# back to knitr's widget screenshot handling) if there is no browser (knitting
+# never offers to download one).
 knit_static_image <- function(x, options) {
-  ok <- requireNamespace("reticulate", quietly = TRUE) &&
-    isTRUE(tryCatch(
-      reticulate::py_module_available("kaleido"),
-      error = function(e) FALSE
-    ))
-  if (!ok) {
+  if (!chrome_available()) {
     message(
-      "Kaleido is not available, so the figure is included as an htmlwidget ",
-      "(see ?save_image for installing it)"
+      "Chrome is not available for static image export, so the figure is ",
+      "included as an htmlwidget (see ?save_image)"
     )
     return(NULL)
   }

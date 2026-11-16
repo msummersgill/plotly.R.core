@@ -15,6 +15,8 @@
 * `write_html()` saves figures as HTML pages faster than
   `htmlwidgets::saveWidget()`.
 * Shiny (`plotlyOutput()`, `renderPlotly()`, `event_data()`, `plotlyProxy()`),
-  knitr/Quarto output, and static image export with Kaleido (`save_image()`).
+  knitr/Quarto output, and static image export (`save_image()`) to PNG, JPEG,
+  WebP, SVG, PDF and EPS with headless Chrome via chromote, with LaTeX
+  typeset by MathJax; no Python or Kaleido needed.
 * Renders the plotly R package's `plot_ly()` and `ggplotly()` figures,
   including its crosstalk linking (`highlight()`).

@@ -30,7 +30,7 @@
   - https://plotly.com/python/plotly-express/
 - Shiny integration and plotly proxy objects with functionality matching existing R package
 - Quarto integration with functionality matching existing R package
-- Static image export with the Kaleido package
+- Static image export with headless Chrome (chromote); EPS via rsvg
  
 ## Out of scope
 
@@ -71,7 +71,7 @@
 - listviewer
 - png
 - knitr
-- reticulate (only for Kaleido static image export)
+- chromote (static image export), rsvg (EPS export)
 - crosstalk (only for linked highlighting; Suggests, not Imports, because it imports lazyeval)
 
 ## R libraries that are not acceptable dependencies in any form
@@ -104,12 +104,12 @@
 - Tabular data is handled with data.table (as.data.table(), setorderv(), set(), grouping with `by`), not data.frame/rbind/cbind/interaction()/per-group `%in%` scans. Split rows into groups once (row indices per group), not by scanning the data for each group. data.table functions that work by reference (setDT(), setorderv(), set()) must only touch tables the package created: setDT() on a list keeps the list's vectors, which may be the user's columns, so build tables from lists with as.data.table() (which copies).
 - Inside data.table's `[`, only a lone variable name is evaluated in the calling scope; any expression in `i` sees column names first. Compute indices first (`o <- order(...); dt[o]`).
 - A length-1 vector wrapped in `I()` is kept as a JSON array by the serialiser and the validators.
-- The legacy plotly R API (plot_ly(), ggplotly(), highlight(), add_sf(), ...) lives in the plotly package (~/Documents/plotly.R, branch plotly-core-render), which builds its figures and converts them with as_go_figure(); plotly.core keeps only what that package needs from the renderer (widget settings, crosstalk linking in the widget JS, Shiny, Kaleido, last_plot(), TeX()).
+- The legacy plotly R API (plot_ly(), ggplotly(), highlight(), add_sf(), ...) lives in the plotly package (~/Documents/plotly.R, branch plotly-core-render), which builds its figures and converts them with as_go_figure(); plotly.core keeps only what that package needs from the renderer (widget settings, crosstalk linking in the widget JS, Shiny, static image export, last_plot(), TeX()).
 - Crosstalk linking: plotly's highlight() sets the widget settings `keys`, `sets`, `frameKeys`, `highlight` and `selectize`; the crosstalk section of inst/htmlwidgets/plotly_core.js (a port of the legacy widget's TraceManager) does the linking, and crosstalk_deps() adds the libraries. selectize.js comes from the crosstalk package; colourpicker is bundled in inst/htmlwidgets/lib/colourpicker (MIT).
 - Map views from plotly's map subplots come in the widget setting `fitBounds`, applied in JS with MapLibre's cameraForBounds() and Plotly.relayout(). Map traces don't render in headless Chrome from file:// pages (the style never loads), so test map views manually in a browser.
 - Graph-object property values may be one-sided formulas, evaluated by plotly_object() in add_<trace>()'s `data` argument or the data frame given to go_figure() (stored as the figure attribute `plotly_data`, never serialised). One add_<trace>() call is always one trace: no color/split mapping in graph-object functions (that is px_*() and plot_ly()).
-- The widget serialiser (widget_to_JSON() in R/widget.R, the htmlwidget's TOJSON_FUNC) sends numeric vectors and matrices in traces and frame traces as base64 typed arrays (`{dtype, bdata, shape}`), like plotly.py's convert_to_base64(): integers, and doubles that are all whole numbers in the int32 range (lossless), narrowed to i1/i2/i4; integers with NA as f8; other doubles f8, or f4 for as_float32() vectors (class `plotly_float32`, kept by validate_coerce() and `[`) or with options(plotly.core.float32 = TRUE); keys geojson/layer/layers/range skipped, length-1 values only when wrapped in I(), unnamed lists not encoded. to_JSON() (plotly_json(), print, Kaleido, Shiny proxy) stays plain JSON. Date and date-time vectors in traces are sent as typed arrays of days / wall-clock ms in the object's time zone (spec key `rdate`, years 1000-9999 only), and restoreDates() in the JS turns them back into the exact strings format_datetime() writes before plotting (plotly.js reads numbers on date axes in the viewer's time zone, so they can't stay numbers). JS code that works on input traces (crosstalk, legend event data) decodes them with decodeTypedArrays(). In plain JSON, date-time arrays are written as pre-built `json` strings (json_verbatim) to skip jsonlite's string escaping.
+- The widget serialiser (widget_to_JSON() in R/widget.R, the htmlwidget's TOJSON_FUNC) sends numeric vectors and matrices in traces and frame traces as base64 typed arrays (`{dtype, bdata, shape}`), like plotly.py's convert_to_base64(): integers, and doubles that are all whole numbers in the int32 range (lossless), narrowed to i1/i2/i4; integers with NA as f8; other doubles f8, or f4 for as_float32() vectors (class `plotly_float32`, kept by validate_coerce() and `[`) or with options(plotly.core.float32 = TRUE); keys geojson/layer/layers/range skipped, length-1 values only when wrapped in I(), unnamed lists not encoded. to_JSON() (plotly_json(), print, save_image(), Shiny proxy) stays plain JSON. Date and date-time vectors in traces are sent as typed arrays of days / wall-clock ms in the object's time zone (spec key `rdate`, years 1000-9999 only), and restoreDates() in the JS turns them back into the exact strings format_datetime() writes before plotting (plotly.js reads numbers on date axes in the viewer's time zone, so they can't stay numbers). JS code that works on input traces (crosstalk, legend event data) decodes them with decodeTypedArrays(). In plain JSON, date-time arrays are written as pre-built `json` strings (json_verbatim) to skip jsonlite's string escaping.
 - Figure-level widget settings (config, event source, Shiny events, keys, mathjax) are stored as go_figure attributes `plotly_<name>` (p$x$<name> for plot_ly() objects); modify_figure() keeps all attributes.
-- Shiny events, proxy calls, crosstalk linking and Kaleido export can't run in R CMD check; when changing them, test manually (headless Chrome via chromote for Shiny; reticulate with kaleido 0.2 and >= 1.0).
+- Shiny events, proxy calls, crosstalk linking can't run in R CMD check; when changing them, test manually (headless Chrome via chromote). save_image() tests in tests/test-save-image.R run only with NOT_CRAN=true and a browser available.
 - Once `src/` exists, NAMESPACE must contain `useDynLib(plotly.core, .registration = TRUE)` before running roxygen. The C init function is `R_init_plotly_core`.
 
