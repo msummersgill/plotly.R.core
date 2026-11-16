@@ -241,7 +241,7 @@
 </h2>
 <p>Static export needs:</p>
 <ul>
-<li>the <strong>chromote</strong> package: <code>install.packages("chromote")</code>
+<li>the <strong>chromote</strong> package, version 0.5.0 or later: <code>install.packages("chromote")</code>
 </li>
 <li>a <strong>Chrome or Chromium</strong> browser (see below)</li>
 <li>the <strong>rsvg</strong> package, only for EPS: <code>install.packages("rsvg")</code>
@@ -257,18 +257,25 @@
 <p>Most desktop machines with Chrome installed need no setup at all.</p>
 <section class="level3"><h3 id="in-an-interactive-session">In an interactive session<a class="anchor" aria-label="anchor" href="#in-an-interactive-session"></a>
 </h3>
-<p>When no browser is found, an interactive R session asks before downloading one:</p>
-<pre><code>Static image export needs Chrome, which wasn't found. Download Chrome
-Headless Shell (about 100 MB, from Google's Chrome for Testing) to chromote's
-cache? It is reused by later sessions. (Yes/no/cancel)</code></pre>
-<p>Answer yes and the export continues once the download is done. The browser is kept in chromote’s cache, so later sessions and scripts on the same machine find it without asking. Answer no and <code><a href="../reference/save_image.html">save_image()</a></code> stops with an error explaining the other options.</p>
+<p>When set-up is needed, an interactive R session asks once whether to run <code><a href="../reference/install_chrome.html">install_chrome()</a></code>, which does all of it:</p>
+<pre><code>Static image export needs Chrome, which wasn't found. Run
+plotly.core::install_chrome() to download Chrome Headless Shell (about 100 MB,
+from Google's Chrome for Testing) and, on Linux, any shared libraries it
+needs? Downloads are kept in your user cache for later sessions; no
+administrator rights are needed. (Yes/no/cancel)</code></pre>
+<p>Answer yes and the export continues once the downloads are done. They are kept in your user cache, so later sessions and scripts on the same machine find them without asking. Answer no and <code><a href="../reference/save_image.html">save_image()</a></code> stops with an error explaining the other options.</p>
 </section><section class="level3"><h3 id="in-a-script-a-scheduled-job-or-ci">In a script, a scheduled job or CI<a class="anchor" aria-label="anchor" href="#in-a-script-a-scheduled-job-or-ci"></a>
 </h3>
 <p><code>Rscript</code>, scheduled jobs, CI runs and other non-interactive sessions never download anything on their own: without a browser, <code><a href="../reference/save_image.html">save_image()</a></code> stops with an error. Set up a browser once, before the script runs, in one of these ways:</p>
 <ul>
 <li>
-<p><strong>Download Chrome Headless Shell</strong> with chromote, for example in a setup script or a Dockerfile:</p>
+<p><strong>Run <code><a href="../reference/install_chrome.html">install_chrome()</a></code></strong> once, as the user the scripts run as. It does everything the interactive prompts would, without asking: it finds a browser or downloads Chrome Headless Shell, and on Linux downloads the shared libraries it lacks (see <a href="#linux-servers">Linux servers</a>). No administrator rights are needed.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">plotly.core</span><span class="fu">::</span><span class="fu"><a href="../reference/install_chrome.html">install_chrome</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</li>
+<li>
+<p><strong>Download Chrome Headless Shell</strong> with chromote, for example in a setup script or a Dockerfile:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">chromote</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/chromote/reference/chrome_versions.html" class="external-link">chrome_versions_add</a></span><span class="op">(</span><span class="st">"latest-stable"</span>, <span class="st">"chrome-headless-shell"</span><span class="op">)</span></span></code></pre></div>
 <p>This is the same download the interactive prompt offers, kept in chromote’s cache for every later session of the same user.</p>
 </li>
@@ -281,18 +288,61 @@ cache? It is reused by later sessions. (Yes/no/cancel)</code></pre>
 <p>To check what is available, <code><a href="https://rstudio.github.io/chromote/reference/find_chrome.html" class="external-link">chromote::find_chrome()</a></code> shows the installed browser it would use, and <code>chromote::chrome_versions_list("installed", "chrome-headless-shell")</code> lists the shells already downloaded.</p>
 <p>A script can check for a browser up front and fail early with a clear message:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="fu">chromote</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/chromote/reference/find_chrome.html" class="external-link">find_chrome</a></span><span class="op">(</span><span class="op">)</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span>
 <span>    <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu">chromote</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/chromote/reference/chrome_versions_list.html" class="external-link">chrome_versions_list</a></span><span class="op">(</span><span class="st">"installed"</span>, <span class="st">"chrome-headless-shell"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop</a></span><span class="op">(</span><span class="st">"No Chrome for static image export: run "</span>,</span>
 <span>       <span class="st">"chromote::chrome_versions_add('latest-stable', 'chrome-headless-shell') once"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </div>
-</section><section class="level3"><h3 id="containers-and-ci">Containers and CI<a class="anchor" aria-label="anchor" href="#containers-and-ci"></a>
+</section><section class="level3"><h3 id="linux-servers">Linux servers<a class="anchor" aria-label="anchor" href="#linux-servers"></a>
+</h3>
+<p>A server without a browser usually lacks the shared libraries a browser needs, too, even after Chrome Headless Shell is downloaded: a desktop install of Chrome brings them in as dependencies, the download doesn’t. Before starting Chrome, plotly.core checks for them with <code>ldd</code>.</p>
+<p><strong>No administrator rights needed.</strong> On Debian, Ubuntu and RHEL-family systems (RHEL, Rocky, AlmaLinux, Fedora, Amazon Linux), plotly.core can get the missing libraries itself: it downloads the packages that provide them from the system’s own package repositories (<code>apt-get download</code> or <code>dnf download</code>, which any user can run), unpacks them into its cache (<code>tools::R_user_dir("plotly.core", "cache")</code>), along with the libraries those need in turn, and starts Chrome with them on its library path. Nothing is installed system-wide.</p>
+<ul>
+<li>
+<p>In an <strong>interactive session</strong>, <code><a href="../reference/save_image.html">save_image()</a></code> asks first, as part of the same <code><a href="../reference/install_chrome.html">install_chrome()</a></code> question when there is no browser yet, or on its own:</p>
+<pre><code>Static image export needs shared libraries Chrome lacks (libgbm.so.1,
+libxkbcommon.so.0). Run plotly.core::install_chrome() to download them from
+your system's package repositories? Downloads are kept in your user cache
+for later sessions; no administrator rights are needed. (Yes/no/cancel)</code></pre>
+</li>
+<li><p>In a <strong>script</strong>, <code><a href="../reference/save_image.html">save_image()</a></code> stops with the list of missing libraries and how to get them; run <code><a href="../reference/install_chrome.html">plotly.core::install_chrome()</a></code> once to download them (and Chrome Headless Shell, if there is no browser).</p></li>
+</ul>
+<p>This needs the system’s package lists, which servers normally have; slim container images often ship without them (refreshing them, <code>apt-get update</code>, needs root), and so do other distributions (SUSE, Arch, Alpine), where plotly.core instead shows the command to install the libraries.</p>
+<p><strong>With administrator rights</strong>, the libraries can be installed system-wide instead. When some are missing, the error shows the command for the system:</p>
+<pre><code>Chrome at /home/me/.cache/R/chromote/.../chrome-headless-shell can't start: shared libraries it needs are missing:
+  libgbm.so.1, libxkbcommon.so.0
+Download them into your user cache, without administrator rights, by running once:
+  plotly.core::install_chrome()
+Or install them with your system's package manager (this needs administrator rights):
+  sudo apt-get install -y libgbm1 libxkbcommon0
+Or install Google Chrome or Chromium, which brings them in.</code></pre>
+<p>The libraries a fresh server most often lacks are installed with:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Debian, Ubuntu</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install <span class="at">-y</span> libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 <span class="dt">\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  libcups2 libdrm2 libgbm1 libxkbcommon0 libxcomposite1 libxdamage1 <span class="dt">\</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  libxfixes3 libxrandr2 libpango-1.0-0 libcairo2 libasound2</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># RHEL, Rocky, AlmaLinux, Fedora, Amazon Linux</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install <span class="at">-y</span> nss nspr atk at-spi2-atk cups-libs libdrm mesa-libgbm <span class="dt">\</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  libxkbcommon libXcomposite libXdamage libXfixes libXrandr pango cairo <span class="dt">\</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  alsa-lib</span></code></pre></div>
+<p>Alternatively, installing the distribution’s Chromium package, or Google Chrome, installs the browser and everything it needs in one step; chromote then finds it, and no download is needed. On Alpine Linux, Chrome Headless Shell doesn’t run at all (it needs glibc): install Chromium (<code>apk add chromium</code>) and set <code>CHROMOTE_CHROME=/usr/bin/chromium-browser</code>.</p>
+<p>When Chrome is found but still fails to start, the error shows what Chrome printed, with a hint for the common causes:</p>
+<ul>
+<li>
+<p><strong>Running as root</strong> (common on servers and in containers): Chrome refuses to run as root with its sandbox. Allow it to run without:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">chromote</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/chromote/reference/default_chrome_args.html" class="external-link">set_chrome_args</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">chromote</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/chromote/reference/default_chrome_args.html" class="external-link">get_chrome_args</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"--no-sandbox"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>chromote adds this flag itself inside Docker and on CI.</p>
+</li>
+<li><p><strong>Too little shared memory</strong> (<code>/dev/shm</code>, small in some containers): add <code>"--disable-dev-shm-usage"</code> the same way.</p></li>
+</ul></section><section class="level3"><h3 id="containers-and-ci">Containers and CI<a class="anchor" aria-label="anchor" href="#containers-and-ci"></a>
 </h3>
 <ul>
 <li>chromote adds the Chrome flags that containers and CI need (<code>--no-sandbox</code>, <code>--disable-dev-shm-usage</code>) when it detects them. Other flags can be added with <code><a href="https://rstudio.github.io/chromote/reference/default_chrome_args.html" class="external-link">chromote::set_chrome_args()</a></code>.</li>
-<li>On Linux, Chrome may need system libraries a minimal image doesn’t have. If it fails to start, install the libraries of a regular Chrome install, or install Chrome or Chromium from the distribution’s packages, which brings them in.</li>
+<li>A minimal image needs the shared libraries listed under <a href="#linux-servers">Linux servers</a>; install them, or Chromium, in the image, along with Chrome Headless Shell (<code>chromote::chrome_versions_add("latest-stable", "chrome-headless-shell")</code>) so that nothing is downloaded when the container runs.</li>
 <li>Text is drawn with the fonts Chrome can find. A minimal image may lack the figure’s fonts (plotly’s default is “Open Sans”, falling back to Verdana and Arial), which changes how text looks and is measured; install the fonts to match a desktop export.</li>
 <li>WebGL traces are drawn with the GPU when there is one and in software (SwiftShader) otherwise, which works but is slower.</li>
 </ul></section></section><section class="level2"><h2 id="in-r-markdown-and-quarto">In R Markdown and Quarto<a class="anchor" aria-label="anchor" href="#in-r-markdown-and-quarto"></a>
@@ -312,14 +362,27 @@ cache? It is reused by later sessions. (Yes/no/cancel)</code></pre>
 </td>
 </tr>
 <tr class="even">
+<td>Chrome … can’t start: shared libraries it needs are missing</td>
+<td>Run <code><a href="../reference/install_chrome.html">plotly.core::install_chrome()</a></code>, or install them with the command shown (see <a href="#linux-servers">Linux servers</a>)</td>
+</tr>
+<tr class="odd">
+<td>Chrome … failed to start</td>
+<td>Read Chrome’s output in the message; see <a href="#linux-servers">Linux servers</a> for running as root and shared memory</td>
+</tr>
+<tr class="even">
+<td>Static image export needs chromote 0.5.0 or later</td>
+<td>
+<code>install.packages("chromote")</code> (an older chromote can’t download Chrome Headless Shell)</td>
+</tr>
+<tr class="odd">
 <td>EPS export needs the rsvg package</td>
 <td><code>install.packages("rsvg")</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>MathJax couldn’t be loaded …, so LaTeX is exported as plain text</td>
 <td>Check that the machine can reach cdn.jsdelivr.net</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Unsupported image format</td>
 <td>Use one of the extensions in the table above</td>
 </tr>

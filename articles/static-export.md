@@ -120,7 +120,8 @@ ex$shutdown()
 
 Static export needs:
 
-- the **chromote** package: `install.packages("chromote")`
+- the **chromote** package, version 0.5.0 or later:
+  `install.packages("chromote")`
 - a **Chrome or Chromium** browser (see below)
 - the **rsvg** package, only for EPS: `install.packages("rsvg")`
 
@@ -136,16 +137,19 @@ Most desktop machines with Chrome installed need no setup at all.
 
 ### In an interactive session
 
-When no browser is found, an interactive R session asks before
-downloading one:
+When set-up is needed, an interactive R session asks once whether to run
+[`install_chrome()`](https://msummersgill.github.io/plotly.R.core/reference/install_chrome.md),
+which does all of it:
 
-    Static image export needs Chrome, which wasn't found. Download Chrome
-    Headless Shell (about 100 MB, from Google's Chrome for Testing) to chromote's
-    cache? It is reused by later sessions. (Yes/no/cancel)
+    Static image export needs Chrome, which wasn't found. Run
+    plotly.core::install_chrome() to download Chrome Headless Shell (about 100 MB,
+    from Google's Chrome for Testing) and, on Linux, any shared libraries it
+    needs? Downloads are kept in your user cache for later sessions; no
+    administrator rights are needed. (Yes/no/cancel)
 
-Answer yes and the export continues once the download is done. The
-browser is kept in chromote’s cache, so later sessions and scripts on
-the same machine find it without asking. Answer no and
+Answer yes and the export continues once the downloads are done. They
+are kept in your user cache, so later sessions and scripts on the same
+machine find them without asking. Answer no and
 [`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
 stops with an error explaining the other options.
 
@@ -156,6 +160,19 @@ never download anything on their own: without a browser,
 [`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
 stops with an error. Set up a browser once, before the script runs, in
 one of these ways:
+
+- **Run
+  [`install_chrome()`](https://msummersgill.github.io/plotly.R.core/reference/install_chrome.md)**
+  once, as the user the scripts run as. It does everything the
+  interactive prompts would, without asking: it finds a browser or
+  downloads Chrome Headless Shell, and on Linux downloads the shared
+  libraries it lacks (see [Linux servers](#linux-servers)). No
+  administrator rights are needed.
+
+  ``` r
+
+  plotly.core::install_chrome()
+  ```
 
 - **Download Chrome Headless Shell** with chromote, for example in a
   setup script or a Dockerfile:
@@ -194,16 +211,106 @@ if (is.null(tryCatch(chromote::find_chrome(), error = function(e) NULL)) &&
 }
 ```
 
+### Linux servers
+
+A server without a browser usually lacks the shared libraries a browser
+needs, too, even after Chrome Headless Shell is downloaded: a desktop
+install of Chrome brings them in as dependencies, the download doesn’t.
+Before starting Chrome, plotly.core checks for them with `ldd`.
+
+**No administrator rights needed.** On Debian, Ubuntu and RHEL-family
+systems (RHEL, Rocky, AlmaLinux, Fedora, Amazon Linux), plotly.core can
+get the missing libraries itself: it downloads the packages that provide
+them from the system’s own package repositories (`apt-get download` or
+`dnf download`, which any user can run), unpacks them into its cache
+(`tools::R_user_dir("plotly.core", "cache")`), along with the libraries
+those need in turn, and starts Chrome with them on its library path.
+Nothing is installed system-wide.
+
+- In an **interactive session**,
+  [`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
+  asks first, as part of the same
+  [`install_chrome()`](https://msummersgill.github.io/plotly.R.core/reference/install_chrome.md)
+  question when there is no browser yet, or on its own:
+
+      Static image export needs shared libraries Chrome lacks (libgbm.so.1,
+      libxkbcommon.so.0). Run plotly.core::install_chrome() to download them from
+      your system's package repositories? Downloads are kept in your user cache
+      for later sessions; no administrator rights are needed. (Yes/no/cancel)
+
+- In a **script**,
+  [`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
+  stops with the list of missing libraries and how to get them; run
+  [`plotly.core::install_chrome()`](https://msummersgill.github.io/plotly.R.core/reference/install_chrome.md)
+  once to download them (and Chrome Headless Shell, if there is no
+  browser).
+
+This needs the system’s package lists, which servers normally have; slim
+container images often ship without them (refreshing them,
+`apt-get update`, needs root), and so do other distributions (SUSE,
+Arch, Alpine), where plotly.core instead shows the command to install
+the libraries.
+
+**With administrator rights**, the libraries can be installed
+system-wide instead. When some are missing, the error shows the command
+for the system:
+
+    Chrome at /home/me/.cache/R/chromote/.../chrome-headless-shell can't start: shared libraries it needs are missing:
+      libgbm.so.1, libxkbcommon.so.0
+    Download them into your user cache, without administrator rights, by running once:
+      plotly.core::install_chrome()
+    Or install them with your system's package manager (this needs administrator rights):
+      sudo apt-get install -y libgbm1 libxkbcommon0
+    Or install Google Chrome or Chromium, which brings them in.
+
+The libraries a fresh server most often lacks are installed with:
+
+``` sh
+# Debian, Ubuntu
+sudo apt-get install -y libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 \
+  libcups2 libdrm2 libgbm1 libxkbcommon0 libxcomposite1 libxdamage1 \
+  libxfixes3 libxrandr2 libpango-1.0-0 libcairo2 libasound2
+
+# RHEL, Rocky, AlmaLinux, Fedora, Amazon Linux
+sudo dnf install -y nss nspr atk at-spi2-atk cups-libs libdrm mesa-libgbm \
+  libxkbcommon libXcomposite libXdamage libXfixes libXrandr pango cairo \
+  alsa-lib
+```
+
+Alternatively, installing the distribution’s Chromium package, or Google
+Chrome, installs the browser and everything it needs in one step;
+chromote then finds it, and no download is needed. On Alpine Linux,
+Chrome Headless Shell doesn’t run at all (it needs glibc): install
+Chromium (`apk add chromium`) and set
+`CHROMOTE_CHROME=/usr/bin/chromium-browser`.
+
+When Chrome is found but still fails to start, the error shows what
+Chrome printed, with a hint for the common causes:
+
+- **Running as root** (common on servers and in containers): Chrome
+  refuses to run as root with its sandbox. Allow it to run without:
+
+  ``` r
+
+  chromote::set_chrome_args(c(chromote::get_chrome_args(), "--no-sandbox"))
+  ```
+
+  chromote adds this flag itself inside Docker and on CI.
+
+- **Too little shared memory** (`/dev/shm`, small in some containers):
+  add `"--disable-dev-shm-usage"` the same way.
+
 ### Containers and CI
 
 - chromote adds the Chrome flags that containers and CI need
   (`--no-sandbox`, `--disable-dev-shm-usage`) when it detects them.
   Other flags can be added with
   [`chromote::set_chrome_args()`](https://rstudio.github.io/chromote/reference/default_chrome_args.html).
-- On Linux, Chrome may need system libraries a minimal image doesn’t
-  have. If it fails to start, install the libraries of a regular Chrome
-  install, or install Chrome or Chromium from the distribution’s
-  packages, which brings them in.
+- A minimal image needs the shared libraries listed under [Linux
+  servers](#linux-servers); install them, or Chromium, in the image,
+  along with Chrome Headless Shell
+  (`chromote::chrome_versions_add("latest-stable", "chrome-headless-shell")`)
+  so that nothing is downloaded when the container runs.
 - Text is drawn with the fonts Chrome can find. A minimal image may lack
   the figure’s fonts (plotly’s default is “Open Sans”, falling back to
   Verdana and Arial), which changes how text looks and is measured;
@@ -227,6 +334,9 @@ too.
 | Message | What to do |
 |----|----|
 | Static image export needs Chrome, which wasn’t found | Set up a browser as described in [First-time setup](#first-time-setup) |
+| Chrome … can’t start: shared libraries it needs are missing | Run [`plotly.core::install_chrome()`](https://msummersgill.github.io/plotly.R.core/reference/install_chrome.md), or install them with the command shown (see [Linux servers](#linux-servers)) |
+| Chrome … failed to start | Read Chrome’s output in the message; see [Linux servers](#linux-servers) for running as root and shared memory |
+| Static image export needs chromote 0.5.0 or later | `install.packages("chromote")` (an older chromote can’t download Chrome Headless Shell) |
 | EPS export needs the rsvg package | `install.packages("rsvg")` |
 | MathJax couldn’t be loaded …, so LaTeX is exported as plain text | Check that the machine can reach cdn.jsdelivr.net |
 | Unsupported image format | Use one of the extensions in the table above |
