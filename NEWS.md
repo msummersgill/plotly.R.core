@@ -12,6 +12,9 @@
 * htmlwidget rendering: numeric arrays are sent as base64 typed arrays, arrays
   repeated in a figure are sent once, `as_float32()` sends data in single
   precision, and `partial_bundle()` loads a smaller plotly.js bundle.
+* Numbers and date-times are sent without loss of precision: typed arrays
+  carry doubles exactly, numbers in JSON are written in the fewest digits that
+  read back as the same double, and date-times keep microseconds.
 * `write_html()` saves figures as HTML pages faster than
   `htmlwidgets::saveWidget()`.
 * Shiny (`plotlyOutput()`, `renderPlotly()`, `event_data()`, `plotlyProxy()`),

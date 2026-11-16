@@ -870,14 +870,19 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
     raise_invalid_val(v, key, entry)
   }
   if (anyDuplicated(nms)) {
-    stop(
-      sprintf(
-        "Duplicate properties for %s: %s",
-        entry$data_class,
-        paste(unique(nms[duplicated(nms)]), collapse = ", ")
-      ),
-      call. = FALSE
+    msg <- sprintf(
+      "Duplicate properties for %s: %s",
+      entry$data_class,
+      paste(unique(nms[duplicated(nms)]), collapse = ", ")
     )
+    if (!skip_invalid) {
+      stop(msg, call. = FALSE)
+    }
+    # keep the last value, as plotly.js's JSON.parse() of the figure would
+    warning(msg, "; using the last value", call. = FALSE)
+    keep <- !duplicated(nms, fromLast = TRUE)
+    v <- v[keep]
+    nms <- nms[keep]
   }
   out <- vector("list", length(v))
   names(out) <- nms

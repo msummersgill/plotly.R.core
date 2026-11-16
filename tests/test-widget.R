@@ -34,16 +34,18 @@ js <- system.file(
 )
 stopifnot(nzchar(js), file.size(js) > 1e6)
 
-# Date-times keep millisecond precision (format(x, "%OS3") would truncate .123 to .122)
+# Date-times keep microsecond precision, rounded (format(x, "%OS3") would
+# truncate .123 to .122); trailing zeros of the fraction are dropped
 to_JSON <- plotly.core:::to_JSON
 t <- as.POSIXct(
   c("2024-01-02 03:04:05.123", "2024-01-02 03:04:06", NA),
   tz = "UTC"
 )
-t[4] <- as.POSIXct("2024-01-02 23:59:59.9996", tz = "UTC") # rounds into the next day
+t[4] <- as.POSIXct("2024-01-02 23:59:59.9999996", tz = "UTC") # rounds into the next day
+t[5] <- as.POSIXct("2024-01-02 23:59:59", tz = "UTC") + 0.000123
 stopifnot(
   as.character(to_JSON(list(x = t))) ==
-    '{"x":["2024-01-02 03:04:05.123","2024-01-02 03:04:06",null,"2024-01-03 00:00:00"]}',
+    '{"x":["2024-01-02 03:04:05.123","2024-01-02 03:04:06",null,"2024-01-03 00:00:00","2024-01-02 23:59:59.000123"]}',
   as.character(to_JSON(list(x = I(t[1])))) ==
     '{"x":["2024-01-02 03:04:05.123"]}',
   as.character(to_JSON(list(x = as.POSIXlt(t[1])))) ==
@@ -51,8 +53,18 @@ stopifnot(
   as.character(to_JSON(list(
     x = as.POSIXct("2024-06-01 12:00:00.5", tz = "America/New_York")
   ))) ==
-    '{"x":"2024-06-01 12:00:00.500"}'
+    '{"x":"2024-06-01 12:00:00.5"}'
 )
+
+# Numbers in JSON round-trip exactly (17 significant digits)
+set.seed(1)
+num <- c(
+  runif(1000) * 10^sample(-10:10, 1000, TRUE),
+  0.1 + 0.2,
+  1 / 3,
+  2^53 + 2
+)
+stopifnot(identical(jsonlite::fromJSON(as.character(to_JSON(num))), num))
 
 # Numeric arrays in traces are sent as base64 typed arrays (like plotly.py)
 spec <- plotly.core:::typed_array_spec
@@ -218,10 +230,17 @@ stopifnot(
     )
   ),
   is.na(decode(s)[3]),
+  is.null(s$usec), # whole milliseconds: no microseconds sent
   identical(ds(as.Date(c("1970-01-02", "2024-01-01")))$rdate, "date"),
   identical(decode(ds(as.Date(c("1970-01-02", "2024-01-01")))), c(1L, 19723L)),
   is.null(ds(as.POSIXct(c("0900-01-01", "2000-01-01"), tz = "UTC"))), # outside 1000-9999: strings
   is.null(ds(as.POSIXct(c(NA, NA), tz = "UTC")))
+)
+# fractions of a millisecond: whole ms plus `usec` (0-999)
+su <- ds(as.POSIXct("2024-01-02", tz = "UTC") + c(0.000123, 1.5, 2.0015))
+stopifnot(
+  identical(decode(su) %% 1000, c(0, 500, 1)),
+  identical(as.numeric(decode(su$usec)), c(123, 0, 500))
 )
 old <- options(plotly.core.float32 = TRUE) # never single precision
 stopifnot(identical(ds(tt)$dtype, "f8"))
@@ -246,7 +265,7 @@ stopifnot(
 stopifnot(
   identical(
     as.character(to_JSON(list(x = tt, y = I(tt[1]), z = tt[1], e = tt[0]))),
-    '{"x":["2024-03-10 01:59:59","2024-03-10 03:00:00.250",null],"y":["2024-03-10 01:59:59"],"z":"2024-03-10 01:59:59","e":[]}'
+    '{"x":["2024-03-10 01:59:59","2024-03-10 03:00:00.25",null],"y":["2024-03-10 01:59:59"],"z":"2024-03-10 01:59:59","e":[]}'
   )
 )
 
@@ -269,8 +288,23 @@ for (tz in c(
     t <- .POSIXct(s, tz = tz)
     off <- as.POSIXlt(t)$gmtoff
     sp <- ds(t)
+    # whole milliseconds plus microseconds, from the rounded microseconds of
+    # the fraction of a second
+    whole <- floor(s)
+    us <- round((s - whole) * 1e6)
+    whole[us >= 1e6] <- whole[us >= 1e6] + 1
+    us[us >= 1e6] <- us[us >= 1e6] - 1e6
+    ok <- !is.na(s)
     stopifnot(
-      identical(decode(sp)[!is.na(s)], round((s + off) * 1000)[!is.na(s)]),
+      identical(
+        decode(sp)[ok],
+        ((whole + off) * 1000 + floor(us / 1000))[ok]
+      ),
+      if (any(us[ok] %% 1000 != 0)) {
+        identical(as.numeric(decode(sp$usec))[ok], (us %% 1000)[ok])
+      } else {
+        is.null(sp$usec)
+      },
       is.na(tail(decode(sp), 1))
     )
   }
@@ -432,3 +466,33 @@ local({
   on.exit(options(op))
   stopifnot(identical(js(plotly_widget(bar)), "plotly-basic.min.js"))
 })
+
+# The widget's JavaScript turns date-time typed arrays back into the strings
+# to_JSON() writes (needs a browser, so off CRAN only)
+if (
+  identical(Sys.getenv("NOT_CRAN"), "true") &&
+    requireNamespace("chromote", quietly = TRUE) &&
+    plotly.core:::chrome_available()
+) {
+  tt <- c(
+    as.POSIXct("2024-03-10 01:59:59", tz = "America/New_York") +
+      c(0, 0.000123, 0.25, 3601.9999996, 0.0015),
+    NA
+  )
+  fig <- go_figure() |> add_scatter(x = tt, y = seq_along(tt))
+  f <- tempfile(fileext = ".html")
+  write_html(fig, f)
+  b <- chromote::ChromoteSession$new()
+  loaded <- b$Page$loadEventFired(wait_ = FALSE)
+  b$Page$navigate(paste0("file://", normalizePath(f)), wait_ = FALSE)
+  b$wait_for(loaded)
+  got <- b$Runtime$evaluate(
+    "new Promise(function (r) { (function w() { var g = document.querySelector('.js-plotly-plot'); if (g && g.data) r(g.data[0].x.map(String)); else setTimeout(w, 50); })(); })",
+    awaitPromise = TRUE,
+    returnByValue = TRUE
+  )$result$value
+  b$close()
+  want <- plotly.core:::format_datetime(tt)
+  want[is.na(want)] <- "null"
+  stopifnot(identical(unlist(got), want))
+}

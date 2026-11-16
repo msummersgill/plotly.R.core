@@ -177,11 +177,10 @@ chrome_transform <- function(session, state, p, file, width, height, scale) {
     session,
     sprintf(
       "(async function () {
+        // the figure itself, not a drawn plot: toImage then lays it out at
+        // the export size (axis ranges constrained by scaleanchor depend on it)
         var fig = %s;
-        var gd = document.getElementById('plot');
-        await Plotly.newPlot(gd, fig.data, fig.layout, fig.config);
-        var url = await Plotly.toImage(gd, {format: '%s', width: %s, height: %s, scale: %s});
-        Plotly.purge(gd);
+        var url = await Plotly.toImage(fig, {format: '%s', width: %s, height: %s, scale: %s});
         var i = url.indexOf(',');
         return url.slice(0, i).indexOf(';base64') >= 0 ?
           {base64: true, data: url.slice(i + 1)} :

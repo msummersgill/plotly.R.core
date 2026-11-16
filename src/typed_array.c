@@ -227,11 +227,14 @@ SEXP C_time_bins(SEXP secs) {
   return out;
 }
 
-// Typed array spec of date-times `secs` as wall-clock milliseconds since 1970:
-// round((secs + offset) * 1000), the UTC offset of each value being `off0` of
-// its bin in `bins` (from C_time_bins()) before the bin's transition instant
-// `trans` and `off1` from then on. NULL when there are no non-missing values
-// or any is outside years 1000-9999 (sent as strings instead).
+// Date-times `secs` as wall-clock whole milliseconds since 1970 (a typed
+// array spec) and the microseconds within each millisecond: each value is
+// rounded to the microsecond (its fraction of a second, so as precisely as
+// format_datetime() in R), the UTC offset being `off0` of its bin in `bins`
+// (from C_time_bins()) before the bin's transition instant `trans` and `off1`
+// from then on. Returns list(spec, usec), usec a double vector of 0-999, or
+// NULL when every value is a whole millisecond. NULL when there are no
+// non-missing values or any is outside years 1000-9999 (sent as strings).
 SEXP C_datetime_array(SEXP secs, SEXP bins, SEXP off0, SEXP trans, SEXP off1,
                       SEXP raw, SEXP nth) {
   b64_init();
@@ -239,11 +242,13 @@ SEXP C_datetime_array(SEXP secs, SEXP bins, SEXP off0, SEXP trans, SEXP off1,
   const double *s = REAL_RO(secs), *b = REAL_RO(bins), *o0 = REAL_RO(off0),
                *tr = REAL_RO(trans), *o1 = REAL_RO(off1);
   double *ms = (double *)R_alloc(n ? n : 1, sizeof(double));
+  double *us = (double *)R_alloc(n ? n : 1, sizeof(double));
+  int anyus = 0;
   double mn = R_PosInf, mx = R_NegInf;
   R_xlen_t j = 0; // bin of the previous value: sorted data needs no search
   for (R_xlen_t i = 0; i < n; i++) {
     double x = s[i];
-    if (!R_FINITE(x)) { ms[i] = NA_REAL; continue; }
+    if (!R_FINITE(x)) { ms[i] = NA_REAL; us[i] = 0; continue; }
     double bin = floor(x / 900);
     if (j >= nb || b[j] != bin) {
       if (j + 1 < nb && b[j + 1] == bin) {
@@ -259,7 +264,13 @@ SEXP C_datetime_array(SEXP secs, SEXP bins, SEXP off0, SEXP trans, SEXP off1,
       }
     }
     double off = x < tr[j] ? o0[j] : o1[j];
-    double v = nearbyint((x + off) * 1000); // as R's round()
+    double whole = floor(x);
+    double f = nearbyint((x - whole) * 1e6); // microseconds, as R's round()
+    if (f >= 1e6) { whole += 1; f -= 1e6; }
+    double msub = floor(f / 1000);
+    double v = (whole + off) * 1000 + msub;
+    us[i] = f - msub * 1000;
+    if (us[i] != 0) anyus = 1;
     ms[i] = v;
     if (v < mn) mn = v;
     if (v > mx) mx = v;
@@ -270,7 +281,15 @@ SEXP C_datetime_array(SEXP secs, SEXP bins, SEXP off0, SEXP trans, SEXP off1,
   int anyna = 0;
   if (type != T_F8) for (R_xlen_t i = 0; i < n; i++) if (ISNAN(ms[i])) { anyna = 1; break; }
   if (anyna) type = T_F8;
-  return encode(ms, NULL, n, type, asLogical(raw) == TRUE, nthreads(nth));
+  SEXP out = PROTECT(allocVector(VECSXP, 2));
+  SET_VECTOR_ELT(out, 0, encode(ms, NULL, n, type, asLogical(raw) == TRUE, nthreads(nth)));
+  if (anyus) {
+    SEXP u = allocVector(REALSXP, n);
+    SET_VECTOR_ELT(out, 1, u);
+    memcpy(REAL(u), us, n * sizeof(double));
+  }
+  UNPROTECT(1);
+  return out;
 }
 
 // ---- JSON splicing --------------------------------------------------------

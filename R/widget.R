@@ -426,7 +426,9 @@ mathjax_dependency <- function() {
 to_JSON <- function(x, ...) {
   jsonlite::toJSON(
     prepare_json(x),
-    digits = NA,
+    # doubles are written by prepare_json(); 17 significant digits for any
+    # left (e.g. in data frames) so they round-trip exactly too
+    digits = I(17),
     auto_unbox = TRUE,
     force = TRUE,
     null = "null",
@@ -594,10 +596,11 @@ is_b64_date <- function(v) {
   length(v) > 1L || (length(v) == 1L && inherits(v, "AsIs"))
 }
 
-# Dates as days since 1970 and date-times as milliseconds since 1970 in the
-# object's time zone (wall-clock time), with `rdate` marking them for the
-# widget's JavaScript, which turns them back into the strings to_JSON() would
-# write ("YYYY-MM-DD", "YYYY-MM-DD HH:MM:SS[.mmm]") before plotting: much
+# Dates as days since 1970 and date-times as whole milliseconds since 1970 in
+# the object's time zone (wall-clock time), plus `usec` (0-999) when any has a
+# fraction of a millisecond, with `rdate` marking them for the widget's
+# JavaScript, which turns them back into the strings to_JSON() would write
+# ("YYYY-MM-DD", "YYYY-MM-DD HH:MM:SS[.ffffff]") before plotting: much
 # faster than formatting and escaping strings in R. NULL (send strings) for
 # years outside 1000-9999 or an unknown time zone offset.
 date_array_spec <- function(v, raw = FALSE) {
@@ -647,8 +650,13 @@ date_array_spec <- function(v, raw = FALSE) {
   if (is.null(out)) {
     return(NULL)
   }
-  out$rdate <- "datetime"
-  out
+  spec <- out[[1]]
+  spec$rdate <- "datetime"
+  # microseconds within each millisecond, only when there are any
+  if (!is.null(out[[2]])) {
+    spec$usec <- typed_array_spec(out[[2]])
+  }
+  spec
 }
 
 # The first whole second in [lo, lo + 899] with UTC offset `off1` (each bin
@@ -753,11 +761,23 @@ unclass_float32 <- function(v) {
   v
 }
 
-# Convert values jsonlite would serialise lossily. Date-times become strings
-# with millisecond precision; other values are left as they are.
+# Convert values jsonlite would serialise lossily or verbosely. Date-times
+# become strings with microsecond precision; doubles are written (as JSON
+# kept as is) in the fewest digits that read back exactly (see num_json());
+# other values are left as they are.
 prepare_json <- function(x) {
   if (inherits(x, "plotly_float32")) {
-    return(unclass_float32(x))
+    return(num_json(unclass_float32(x), f32 = TRUE))
+  }
+  if (is.double(x) && is_plain_num(x)) {
+    return(num_json(x))
+  }
+  if (is.data.frame(x)) {
+    # columns stay vectors for jsonlite (date-times as formatted strings)
+    for (j in which(vapply(x, inherits, NA, "POSIXt"))) {
+      x[[j]] <- format_datetime(x[[j]])
+    }
+    return(x)
   }
   if (inherits(x, "POSIXt")) {
     out <- format_datetime(x)
@@ -776,23 +796,57 @@ prepare_json <- function(x) {
   x
 }
 
-# Format date-times as "YYYY-MM-DD HH:MM:SS[.mmm]" in the object's time zone
-# (plotly.js has no time zones). Milliseconds are rounded, not truncated as
-# format(x, "%OS3") does, and omitted when zero.
+# Plain double vectors and matrices (no class but AsIs; names are dropped, as
+# jsonlite does), which num_json() writes as jsonlite would lay them out.
+is_plain_num <- function(x) {
+  cls <- oldClass(x)
+  if (length(cls) && !identical(cls, "AsIs")) {
+    return(FALSE)
+  }
+  d <- dim(x)
+  is.null(d) || length(d) == 2L
+}
+
+# JSON for a double vector or matrix with each number in the fewest
+# significant digits that read back as the same double (C_num_json(), as
+# JavaScript prints numbers; jsonlite's digits = NA keeps only 15, which loses
+# precision, and 17 writes 0.1 as 0.10000000000000001). Like jsonlite with
+# auto_unbox: a length-1 vector is a bare number unless wrapped in I(), and a
+# matrix is an array of rows.
+num_json <- function(x, f32 = FALSE) {
+  d <- dim(x)
+  scalar <- is.null(d) && length(x) == 1L && !inherits(x, "AsIs")
+  out <- .Call(
+    C_num_json,
+    as.double(x),
+    if (is.null(d)) 0L else d[[1]],
+    if (is.null(d)) -1L else d[[2]],
+    scalar,
+    f32
+  )
+  structure(out, class = "json")
+}
+
+# Format date-times as "YYYY-MM-DD HH:MM:SS[.ffffff]" in the object's time
+# zone (plotly.js has no time zones). Microseconds are rounded, not truncated
+# as format(x, "%OS6") does; trailing zeros of the fraction are dropped, and
+# the fraction is omitted when zero.
 format_datetime <- function(x) {
   x <- as.POSIXct(x)
   tz <- attr(x, "tzone")[1L] %||% ""
-  secs <- round(as.numeric(x) * 1000) / 1000
+  secs <- as.numeric(x)
+  # to the microsecond, rounding the fraction of a second (as C_datetime_array)
   whole <- floor(secs)
+  us <- round((secs - whole) * 1e6)
+  carry <- which(us >= 1e6)
+  whole[carry] <- whole[carry] + 1
+  us[carry] <- us[carry] - 1e6
   out <- format(.POSIXct(whole, tz = tz), "%Y-%m-%d %H:%M:%S")
-  ms <- round((secs - whole) * 1000)
-  i <- which(ms > 0)
+  i <- which(us > 0)
   if (length(i)) {
-    out[i] <- paste0(
-      out[i],
-      ".",
-      formatC(as.integer(ms[i]), width = 3, flag = "0")
-    )
+    # trailing zeros dropped: .5, .123, .000123
+    frac <- sub("0+$", "", formatC(as.integer(us[i]), width = 6, flag = "0"))
+    out[i] <- paste0(out[i], ".", frac)
   }
   out[is.na(x)] <- NA_character_
   out

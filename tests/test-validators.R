@@ -264,3 +264,27 @@ local({
   e <- tryCatch(go_scatter(foo = 1, bar = 2), error = identity)
   stopifnot(inherits(e, "plotly_invalid_property"), length(e$problems) == 2L)
 })
+
+# Duplicate properties: an error, or with skip_invalid (as the plotly package
+# converts plots) a warning, keeping the last value like JSON.parse() would
+local({
+  shape <- list(type = "line", type = "rect", x0 = 0, x1 = 1, y0 = 0, y1 = 1)
+  msg <- tryCatch(
+    go_figure(layout = list(shapes = list(shape))),
+    error = conditionMessage
+  )
+  stopifnot(grepl("Duplicate properties for go_layout_shape: type", msg))
+  w <- NULL
+  fig <- withCallingHandlers(
+    go_figure(layout = list(shapes = list(shape)), skip_invalid = TRUE),
+    warning = function(cond) {
+      w <<- conditionMessage(cond)
+      invokeRestart("muffleWarning")
+    }
+  )
+  stopifnot(
+    grepl("Duplicate properties", w),
+    identical(fig$layout$shapes[[1]]$type, "rect"),
+    sum(names(fig$layout$shapes[[1]]) == "type") == 1L
+  )
+})
