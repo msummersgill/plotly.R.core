@@ -61,9 +61,24 @@ kaleido <- function(...) {
     )
   }
   k <- tryCatch(reticulate::import("kaleido"), error = function(e) {
+    python <- reticulate::py_config()$python
+    forced <- Sys.getenv("RETICULATE_PYTHON")
     stop(
-      "The `kaleido` Python package is required for static image export. ",
-      "Install it with reticulate::py_install(c(\"kaleido\", \"plotly\")).",
+      "The `kaleido` Python package is required for static image export, but ",
+      "couldn't be imported from ",
+      python,
+      ":\n  ",
+      conditionMessage(e),
+      "\nInstall it into that Python with ",
+      "reticulate::py_install(c(\"kaleido\", \"plotly\")).",
+      if (nzchar(forced)) {
+        paste0(
+          "\nRETICULATE_PYTHON is set to ",
+          forced,
+          ", so reticulate always uses that Python; py_install() may ",
+          "install elsewhere. Change or unset it and restart R."
+        )
+      },
       call. = FALSE
     )
   })
@@ -134,7 +149,9 @@ kaleido_v1 <- function(k) {
       height = NULL,
       scale = NULL
     ) {
-      fig <- reticulate::import("json")$loads(figure_json(p))
+      # convert = FALSE keeps the parsed figure a Python dict: a round trip
+      # through an R list would turn length-1 arrays into scalars
+      fig <- reticulate::import("json", convert = FALSE)$loads(figure_json(p))
       opts <- compact(list(
         format = image_format(file),
         width = width,
@@ -159,7 +176,7 @@ kaleido_legacy <- function(k) {
     "kaleido.scopes.plotly",
     convert = FALSE
   )$PlotlyScope(plotlyjs = plotlyjs_bundle_path())
-  json <- reticulate::import("json")
+  json <- reticulate::import("json", convert = FALSE)
   res <- list2env(list(
     scope = scope,
     transform = function(
