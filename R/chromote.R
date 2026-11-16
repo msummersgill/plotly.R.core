@@ -38,7 +38,7 @@ chrome_exporter <- function(...) {
   # in software, which recent Chrome only allows with this flag.
   browser <- chromote::Chrome$new(
     path = chrome,
-    args = c(chromote::default_chrome_args(), "--enable-unsafe-swiftshader")
+    args = c(chromote::get_chrome_args(), "--enable-unsafe-swiftshader")
   )
   cm <- chromote::Chromote$new(browser = browser)
   session <- cm$new_session(wait_ = TRUE)

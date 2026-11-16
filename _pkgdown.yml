@@ -12,6 +12,7 @@ articles:
   - title: Articles
     navbar: ~
     contents:
+      - static-export
       - render-performance
 
 reference:

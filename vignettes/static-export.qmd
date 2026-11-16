@@ -1,0 +1,196 @@
+---
+title: "Static image export"
+vignette: >
+  %\VignetteIndexEntry{Static image export}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+format:
+  html:
+    toc: true
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+---
+
+```{r setup}
+#| include: false
+library(plotly.core)
+# The examples run only where a browser is available
+chrome <- if (requireNamespace("chromote", quietly = TRUE)) {
+  tryCatch(suppressMessages(chromote::find_chrome()), error = function(e) NULL)
+}
+has_chrome <- length(chrome) == 1L && nzchar(chrome)
+show_png <- function(file) {
+  knitr::asis_output(sprintf(
+    '<img src="data:image/png;base64,%s" style="max-width:100%%" alt="Exported figure">',
+    base64enc::base64encode(file)
+  ))
+}
+```
+
+`save_image()` writes a figure to PNG, JPEG, WebP, SVG, PDF or EPS. It draws the figure with plotly.js's own image export, using the plotly.js bundled with plotly.core, in a headless Chrome driven by the [chromote](https://rstudio.github.io/chromote/) package.
+
+## What's new: no Python, no orca, and much faster
+
+Static export in the plotly R package has needed software from outside R:
+
+- **orca** (`orca()`, now deprecated) needed the orca command-line utility, an Electron app installed separately with npm or a standalone installer.
+- **Kaleido** (`save_image()`, `kaleido()`) needed a Python installation set up for reticulate with the `kaleido` and `plotly` Python packages, and Kaleido 1.x also needs Chrome.
+
+Getting a Python environment that reticulate finds, with the right packages in it, was the most common stumbling block.
+
+plotly.core needs neither. Everything R needs is on CRAN: chromote (and rsvg, only for EPS). The one other thing, a browser, is found automatically, and if there is none chromote downloads one, after asking in an interactive session (see [First-time setup](#first-time-setup)).
+
+| | orca | Kaleido | plotly.core |
+|---|---|---|---|
+| Installed with | npm or a standalone installer | Python, `pip`/`reticulate::py_install()` | `install.packages("chromote")` |
+| Python needed | No | Yes | No |
+| Browser | Bundled (Electron) | Chrome (Kaleido 1.x) | Chrome, found or downloaded automatically |
+| plotly.js used | orca's own | Kaleido's or plotly.core's | plotly.core's, the same as the widget |
+
+It is also much faster. Kaleido 1.x, as the plotly R package calls it, starts a browser for every image; plotly.core starts Chrome once per R session and keeps it, so after the first image, exports take a fraction of a second:
+
+| Figure (700 × 500 PNG) | Kaleido 1.5 (s) | plotly.core (s) | Faster |
+|---|---|---|---|
+| Scatter, 150 points | 1.37 | 0.025 | 55× |
+| Line, 100,000 points (`scattergl`) | 2.81 | 0.27 | 10× |
+| Heatmap, 500 × 500 | 1.86 | 0.49 | 3.8× |
+| 3D surface | 2.35 | 0.59 | 4.0× |
+| 20 scatter figures, one after another | 27.1 | 0.58 | 47× |
+
+Median of 5 exports each, after the first export of the session (which starts the browser: 1.3 s for plotly.core, 1.5 s for Kaleido), with the same figures and the same plotly.js (4.3.0); Kaleido 1.5.1 called through reticulate as `kaleido.write_fig_sync()` for each figure, as the plotly R package's `save_image()` does. Measured on an Apple M3 Pro, macOS 26.5.1, Chrome 157, on 2026-11-16. The gain is largest for small figures, where starting the browser is most of Kaleido's time, and for exporting many figures.
+
+## Saving an image
+
+```{r save}
+#| eval: !expr has_chrome
+fig <- px_scatter(
+  px_data_iris(),
+  x = ~sepal_width,
+  y = ~sepal_length,
+  color = ~species
+)
+png_file <- tempfile(fileext = ".png")
+save_image(fig, png_file, width = 700, height = 450, scale = 2)
+```
+
+```{r show}
+#| eval: !expr has_chrome
+#| echo: false
+show_png(png_file)
+```
+
+The format is taken from the file extension:
+
+| Extension | Format | Notes |
+|---|---|---|
+| `.png`, `.jpeg`/`.jpg`, `.webp` | Raster | `scale` multiplies the resolution, e.g. `scale = 2` for high-DPI screens |
+| `.svg` | Vector | WebGL traces (`scattergl`, 3D, maps) are embedded as images |
+| `.pdf` | Vector | The SVG image printed to a page the size of the figure |
+| `.eps` | Vector | Converted from the SVG image; needs the rsvg package |
+
+`width` and `height` are in pixels. They default to the figure's layout width and height, or 700 × 500.
+
+LaTeX in titles and labels (see `TeX()`) is typeset with MathJax, which is loaded from a CDN the first time a figure needs it. Without internet access, the export still works but the LaTeX is left as plain text, with a warning.
+
+### Many figures
+
+The first export starts Chrome, which takes a second or two. Later exports in the same R session reuse it and take a fraction of a second, so exporting many figures in a loop needs nothing special:
+
+```{r many}
+#| eval: false
+for (i in seq_along(figures)) {
+  save_image(figures[[i]], sprintf("figure-%02d.png", i))
+}
+```
+
+`chrome_exporter()` starts a browser of your own, to control when it starts and stops:
+
+```{r exporter}
+#| eval: false
+ex <- chrome_exporter()
+ex$transform(fig, "figure.svg", width = 800, height = 500)
+ex$shutdown()
+```
+
+## First-time setup
+
+Static export needs:
+
+- the **chromote** package: `install.packages("chromote")`
+- a **Chrome or Chromium** browser (see below)
+- the **rsvg** package, only for EPS: `install.packages("rsvg")`
+
+`save_image()` looks for a browser in this order:
+
+1. the browser set by the `CHROMOTE_CHROME` environment variable
+2. an installed Google Chrome or Chromium, found by `chromote::find_chrome()`
+3. a Chrome Headless Shell downloaded earlier by chromote
+
+Most desktop machines with Chrome installed need no setup at all.
+
+### In an interactive session
+
+When no browser is found, an interactive R session asks before downloading one:
+
+```
+Static image export needs Chrome, which wasn't found. Download Chrome
+Headless Shell (about 100 MB, from Google's Chrome for Testing) to chromote's
+cache? It is reused by later sessions. (Yes/no/cancel)
+```
+
+Answer yes and the export continues once the download is done. The browser is kept in chromote's cache, so later sessions and scripts on the same machine find it without asking. Answer no and `save_image()` stops with an error explaining the other options.
+
+### In a script, a scheduled job or CI
+
+`Rscript`, scheduled jobs, CI runs and other non-interactive sessions never download anything on their own: without a browser, `save_image()` stops with an error. Set up a browser once, before the script runs, in one of these ways:
+
+- **Download Chrome Headless Shell** with chromote, for example in a setup script or a Dockerfile:
+
+  ```r
+  chromote::chrome_versions_add("latest-stable", "chrome-headless-shell")
+  ```
+
+  This is the same download the interactive prompt offers, kept in chromote's cache for every later session of the same user.
+
+- **Install Chrome or Chromium** with the system's package manager. chromote finds it in the usual locations.
+
+- **Point `CHROMOTE_CHROME` at a browser** that is installed somewhere else, for example in `.Renviron`:
+
+  ```
+  CHROMOTE_CHROME=/opt/chrome/chrome
+  ```
+
+To check what is available, `chromote::find_chrome()` shows the installed browser it would use, and `chromote::chrome_versions_list("installed", "chrome-headless-shell")` lists the shells already downloaded.
+
+A script can check for a browser up front and fail early with a clear message:
+
+```{r check}
+#| eval: false
+if (is.null(tryCatch(chromote::find_chrome(), error = function(e) NULL)) &&
+    !nrow(chromote::chrome_versions_list("installed", "chrome-headless-shell"))) {
+  stop("No Chrome for static image export: run ",
+       "chromote::chrome_versions_add('latest-stable', 'chrome-headless-shell') once")
+}
+```
+
+### Containers and CI
+
+- chromote adds the Chrome flags that containers and CI need (`--no-sandbox`, `--disable-dev-shm-usage`) when it detects them. Other flags can be added with `chromote::set_chrome_args()`.
+- On Linux, Chrome may need system libraries a minimal image doesn't have. If it fails to start, install the libraries of a regular Chrome install, or install Chrome or Chromium from the distribution's packages, which brings them in.
+- Text is drawn with the fonts Chrome can find. A minimal image may lack the figure's fonts (plotly's default is "Open Sans", falling back to Verdana and Arial), which changes how text looks and is measured; install the fonts to match a desktop export.
+- WebGL traces are drawn with the GPU when there is one and in software (SwiftShader) otherwise, which works but is slower.
+
+## In R Markdown and Quarto
+
+In documents rendered to formats other than HTML (PDF, Word, ...), figures are included as images made by `save_image()`, when a browser is available. Rendering a document never offers to download one: without a browser, the figure is included as an HTML widget, as for HTML output, and a message points to this setup. The chunk option `plotly.static = TRUE` uses static images in HTML output too.
+
+## Troubleshooting
+
+| Message | What to do |
+|---|---|
+| Static image export needs Chrome, which wasn't found | Set up a browser as described in [First-time setup](#first-time-setup) |
+| EPS export needs the rsvg package | `install.packages("rsvg")` |
+| MathJax couldn't be loaded ..., so LaTeX is exported as plain text | Check that the machine can reach cdn.jsdelivr.net |
+| Unsupported image format | Use one of the extensions in the table above |
