@@ -107,7 +107,7 @@ validate_coerce <- function(
     "ColorscaleValidator" = vc_colorscale(v, key, entry),
     "AngleValidator" = vc_angle(v, key, entry),
     "SubplotidValidator" = vc_subplotid(v, key, entry),
-    "FlaglistValidator" = vc_flaglist(v, key, entry),
+    "FlaglistValidator" = vc_flaglist(v, key, entry, skip_invalid),
     "AnyValidator" = vc_any(v, key, entry),
     "InfoArrayValidator" = vc_info_array(v, key, entry),
     "CompoundValidator" = vc_compound(v, key, entry, skip_invalid),
@@ -697,7 +697,9 @@ vc_subplotid <- function(v, key, entry) {
   v
 }
 
-vc_flaglist <- function(v, key, entry) {
+# With skip_invalid, unknown flags are dropped and the valid ones kept, as
+# plotly.js does (e.g. mode = "marker+text" is "text").
+vc_flaglist <- function(v, key, entry, skip_invalid = FALSE) {
   v <- as_char_if_factor(simplify_list(v))
   # non-string extras, e.g. automargin = TRUE
   if (
@@ -718,6 +720,9 @@ vc_flaglist <- function(v, key, entry) {
       return(s)
     }
     parts <- trimws(strsplit(s, "[,+]")[[1L]])
+    if (skip_invalid) {
+      parts <- parts[parts %in% entry$flags]
+    }
     if (length(parts) && all(parts %in% entry$flags)) {
       paste(parts, collapse = "+")
     } else {
@@ -878,9 +883,10 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
     if (!skip_invalid) {
       stop(msg, call. = FALSE)
     }
-    # keep the last value, as plotly.js's JSON.parse() of the figure would
-    warning(msg, "; using the last value", call. = FALSE)
-    keep <- !duplicated(nms, fromLast = TRUE)
+    # keep the first value, as `$` does and as the plotly package sent it
+    # (jsonlite renames later duplicates "type.1", ..., which plotly.js ignores)
+    warning(msg, "; using the first value", call. = FALSE)
+    keep <- !duplicated(nms)
     v <- v[keep]
     nms <- nms[keep]
   }
@@ -928,7 +934,17 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
       tryCatch(
         validate_coerce(v[[i]], ck, skip_invalid = TRUE),
         error = function(e) {
-          if (inherits(e, INVALID_CONDITIONS)) NULL else stop(e)
+          if (!inherits(e, INVALID_CONDITIONS)) {
+            stop(e)
+          }
+          # plotly.js doesn't check the elements of arrays given for arrayOk
+          # properties (it draws textposition "right" as "middle right"), so
+          # keep them as they are
+          if (is_passthrough_array(v[[i]], get_validator(ck))) {
+            as_char_if_factor(v[[i]])
+          } else {
+            NULL
+          }
         }
       )
     } else {
@@ -940,6 +956,15 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
     raise_collected(problems)
   }
   as_graph_object(out[!vapply(out, is.null, logical(1))], entry)
+}
+
+# An array (atomic, length > 1) for an arrayOk property, which plotly.js takes
+# without checking its elements.
+is_passthrough_array <- function(v, entry) {
+  isTRUE(entry$array_ok) &&
+    is.atomic(v) &&
+    is.null(dim(v)) &&
+    length(v) > 1L
 }
 
 # One error for all the invalid properties of an object: a single one as is,

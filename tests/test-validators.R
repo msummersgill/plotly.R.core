@@ -266,7 +266,7 @@ local({
 })
 
 # Duplicate properties: an error, or with skip_invalid (as the plotly package
-# converts plots) a warning, keeping the last value like JSON.parse() would
+# converts plots) a warning, keeping the first value as `$` does
 local({
   shape <- list(type = "line", type = "rect", x0 = 0, x1 = 1, y0 = 0, y1 = 1)
   msg <- tryCatch(
@@ -284,7 +284,39 @@ local({
   )
   stopifnot(
     grepl("Duplicate properties", w),
-    identical(fig$layout$shapes[[1]]$type, "rect"),
+    identical(fig$layout$shapes[[1]]$type, "line"),
     sum(names(fig$layout$shapes[[1]]) == "type") == 1L
   )
+})
+
+# Flag lists: unknown flags are an error, or with skip_invalid dropped while
+# the valid flags are kept (as plotly.js does)
+local({
+  msg <- tryCatch(go_scatter(mode = "marker+text"), error = conditionMessage)
+  stopifnot(grepl("Invalid value", msg))
+  tr <- go_figure(
+    list(list(type = "scatter", mode = "marker+text+markers")),
+    skip_invalid = TRUE
+  )$data[[1]]
+  stopifnot(identical(tr$mode, "text+markers"))
+  tr <- go_figure(
+    list(list(type = "scatter", mode = "marker")),
+    skip_invalid = TRUE
+  )$data[[1]]
+  stopifnot(is.null(tr$mode))
+})
+
+# With skip_invalid, arrays for arrayOk properties are kept even with elements
+# plotly.js would not accept as a single value (it doesn't check arrays)
+local({
+  tr <- go_figure(
+    list(list(type = "scatter", textposition = rep("right", 3), x = 1:3)),
+    skip_invalid = TRUE
+  )$data[[1]]
+  stopifnot(identical(tr$textposition, rep("right", 3)))
+  tr <- go_figure(
+    list(list(type = "scatter", textposition = "right")),
+    skip_invalid = TRUE
+  )$data[[1]]
+  stopifnot(is.null(tr$textposition))
 })
