@@ -27,6 +27,10 @@
   sends data in single precision, and
   [`partial_bundle()`](https://msummersgill.github.io/plotly.R.core/reference/partial_bundle.md)
   loads a smaller plotly.js bundle.
+- Numbers and date-times are sent without loss of precision: typed
+  arrays carry doubles exactly, numbers in JSON are written in the
+  fewest digits that read back as the same double, and date-times keep
+  microseconds.
 - [`write_html()`](https://msummersgill.github.io/plotly.R.core/reference/write_html.md)
   saves figures as HTML pages faster than
   [`htmlwidgets::saveWidget()`](https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html).

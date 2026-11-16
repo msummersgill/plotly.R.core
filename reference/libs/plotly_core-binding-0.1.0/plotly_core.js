@@ -222,6 +222,8 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
   function pad(n, w) { var s = String(n); while (s.length < w) s = "0" + s; return s; }
   function restoreDateSpec(spec) {
     var vals = decodeTypedArraySpec(spec), isDate = spec.rdate === "date";
+    // microseconds within each millisecond (see date_array_spec() in R)
+    var usec = spec.usec ? decodeTypedArraySpec(spec.usec) : null;
     var out = new Array(vals.length), lastDay = NaN, dayStr = "";
     for (var i = 0; i < vals.length; i++) {
       var v = vals[i];
@@ -235,8 +237,10 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
       }
       if (isDate) { out[i] = dayStr; continue; }
       var t = ms - day * DAY_MS, msec = t % 1000, secs = (t - msec) / 1000;
+      var us = msec * 1000 + (usec ? usec[i] : 0);
+      // as format_datetime() in R: microseconds, trailing zeros dropped
       out[i] = dayStr + " " + pad(Math.floor(secs / 3600), 2) + ":" + pad(Math.floor(secs / 60) % 60, 2) + ":" +
-        pad(secs % 60, 2) + (msec ? "." + pad(msec, 3) : "");
+        pad(secs % 60, 2) + (us ? "." + pad(us, 6).replace(/0+$/, "") : "");
     }
     return out;
   }
