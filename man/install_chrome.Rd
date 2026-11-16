@@ -2,12 +2,20 @@
 % Please edit documentation in R/chrome_check.R
 \name{install_chrome}
 \alias{install_chrome}
+\alias{remove_chrome}
 \title{Set up Chrome for static image export}
 \usage{
 install_chrome()
+
+remove_chrome(browser = FALSE)
+}
+\arguments{
+\item{browser}{For \code{remove_chrome()}, also remove the Chrome Headless Shell
+builds downloaded with chromote.}
 }
 \value{
-The path to Chrome, invisibly.
+\code{install_chrome()}: the path to Chrome, invisibly.
+\code{remove_chrome()}: \code{NULL}, invisibly.
 }
 \description{
 Makes sure \code{\link[=save_image]{save_image()}} can start Chrome, without asking: finds a
@@ -20,8 +28,24 @@ administrator rights) and are unpacked into plotly.core's user cache
 them. Run it once on a new machine, e.g. before scripts that export images;
 interactive sessions are offered the same downloads when needed.
 }
+\details{
+Downloaded libraries are kept in a folder for the OS release, and those
+for other releases (e.g. after an upgrade) are removed when libraries are
+next downloaded. \code{remove_chrome()} removes everything plotly.core has
+downloaded and, with \code{browser = TRUE}, the Chrome Headless Shell builds
+chromote downloaded.
+
+The downloaded software is not part of plotly.core and keeps its own
+licence: Chrome Headless Shell is built from Chromium by Google (see the
+licence files in its download), and the libraries are your distribution's
+packages (each package's copyright file is kept with it, under
+\code{usr/share/doc}).
+}
 \examples{
 \dontrun{
 install_chrome()
+
+# remove the downloaded libraries (and Chrome Headless Shell)
+remove_chrome(browser = TRUE)
 }
 }

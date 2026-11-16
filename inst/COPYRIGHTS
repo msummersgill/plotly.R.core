@@ -1,0 +1,47 @@
+plotly.core is released under the MIT licence (see LICENSE). This file lists
+components it includes, or downloads during use, whose copyright is held by
+others.
+
+INCLUDED IN THE PACKAGE
+
+inst/htmlwidgets/lib/plotlyjs/
+  plotly.js (full and partial bundles, locales)
+  Copyright (c) 2016-2024 Plotly Technologies Inc.
+  MIT licence: inst/htmlwidgets/lib/plotlyjs/LICENSE
+
+inst/htmlwidgets/lib/colourpicker/
+  jQuery Colour picker
+  Copyright 2016 Dean Attali (with Cory LaViska)
+  MIT licence: inst/htmlwidgets/lib/colourpicker/LICENSE
+
+inst/templates/, inst/extdata/, inst/schema/
+  Templates and datasets from the plotly Python package (plotly.express.data),
+  and the plotly.js plot schema
+  Copyright (c) Plotly Technologies Inc.
+  MIT licence. The datasets credit their original sources in plotly.py's
+  documentation.
+
+src/typed_array.c
+  Follows the design of data.table's fread.c and fwrite.c
+  Copyright (c) the data.table authors (credited as contributors in
+  DESCRIPTION)
+  Mozilla Public License 2.0
+
+DOWNLOADED DURING USE (not part of the package)
+
+These are downloaded only after the user confirms it in an interactive
+session, or calls install_chrome(), and keep their own licences.
+
+Chrome Headless Shell (Chrome for Testing), downloaded with chromote
+  Built from the Chromium project by Google LLC; licence files are included
+  in the download.
+
+Shared libraries Chrome needs (Linux), from the system's own package
+  repositories with apt-get download or dnf download
+  Copyright and licences as packaged by the distribution; each package's
+  copyright file is kept with it in the cache (usr/share/doc).
+
+MathJax 3.2.2, loaded from cdn.jsdelivr.net for LaTeX (TeX()) in widgets and
+static images
+  Copyright (c) The MathJax Consortium
+  Apache License 2.0

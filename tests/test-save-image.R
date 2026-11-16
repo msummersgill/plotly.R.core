@@ -227,6 +227,29 @@ msg <- err(ens(
   fetchable = FALSE
 ))
 stopifnot(!grepl("install_chrome", msg), grepl("Debian/Ubuntu", msg))
+# Downloaded libraries are kept per OS release; other releases' are pruned
+stopifnot(
+  identical(
+    plotly.core:::os_release_id(osr('ID=ubuntu', 'VERSION_ID="24.04"')),
+    "ubuntu-24.04"
+  ),
+  identical(
+    plotly.core:::os_release_id(osr('ID="rocky"', 'VERSION_ID="9.8"')),
+    "rocky-9.8"
+  ),
+  identical(plotly.core:::os_release_id(tempfile()), "unknown")
+)
+root <- tempfile("libs-")
+dir.create(file.path(root, "ubuntu-22.04"), recursive = TRUE)
+dir.create(file.path(root, "ubuntu-24.04"))
+stopifnot(
+  identical(
+    plotly.core:::prune_chrome_libs(root, "ubuntu-24.04"),
+    "ubuntu-22.04"
+  ),
+  identical(list.files(root), "ubuntu-24.04")
+)
+
 # Debian package names, from the table or by Debian's naming rules
 stopifnot(identical(
   plotly.core:::debian_packages(c(
@@ -268,7 +291,8 @@ stopifnot(grepl("Missing shared libraries: libnss3.so", msg, fixed = TRUE))
 # A Chrome that fails to start: the error shows what it printed (not
 # chromote's "Cannot find an available port")
 if (
-  .Platform$OS.type == "unix" &&
+  identical(Sys.getenv("NOT_CRAN"), "true") &&
+    .Platform$OS.type == "unix" &&
     requireNamespace("chromote", quietly = TRUE) &&
     requireNamespace("processx", quietly = TRUE)
 ) {

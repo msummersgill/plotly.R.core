@@ -227,9 +227,44 @@ lib_install_hint <- function(libs, family = linux_family()) {
 
 # Libraries downloaded for Chrome ----------------------------------------------
 
-# Where downloaded libraries are unpacked.
-chrome_lib_dir <- function() {
+# Where downloaded libraries are kept: a folder per OS release (they are
+# built for it), under chrome_libs_root(). Folders for other releases are
+# removed when libraries are next downloaded (prune_chrome_libs()), and
+# remove_chrome() removes them all.
+chrome_libs_root <- function() {
   file.path(tools::R_user_dir("plotly.core", "cache"), "chrome-libs")
+}
+
+chrome_lib_dir <- function() {
+  file.path(chrome_libs_root(), os_release_id())
+}
+
+# The OS release, e.g. "ubuntu-24.04", from /etc/os-release.
+os_release_id <- function(os_release = "/etc/os-release") {
+  if (!file.exists(os_release)) {
+    return("unknown")
+  }
+  lines <- readLines(os_release, warn = FALSE)
+  field <- function(k) {
+    v <- grep(paste0("^", k, "="), lines, value = TRUE)
+    if (length(v)) gsub("\"", "", sub(paste0("^", k, "="), "", v[[1]])) else ""
+  }
+  id <- paste(
+    Filter(nzchar, c(field("ID"), field("VERSION_ID"))),
+    collapse = "-"
+  )
+  id <- gsub("[^A-Za-z0-9._-]", "_", id)
+  if (nzchar(id)) id else "unknown"
+}
+
+# Remove downloaded libraries for other OS releases (e.g. after an upgrade).
+prune_chrome_libs <- function(
+  root = chrome_libs_root(),
+  keep = os_release_id()
+) {
+  old <- setdiff(list.files(root), keep)
+  unlink(file.path(root, old), recursive = TRUE)
+  invisible(old)
 }
 
 # The directories under `dir` holding shared libraries, for LD_LIBRARY_PATH.
@@ -290,6 +325,7 @@ download_libs <- function(
   family = linux_family(),
   dir = chrome_lib_dir()
 ) {
+  prune_chrome_libs()
   dir.create(dir, recursive = TRUE, showWarnings = FALSE)
   tmp <- tempfile("chrome-libs-")
   dir.create(tmp)
@@ -432,11 +468,29 @@ stop_missing_libs <- function(path, libs, family, fetchable) {
 #' them. Run it once on a new machine, e.g. before scripts that export images;
 #' interactive sessions are offered the same downloads when needed.
 #'
-#' @return The path to Chrome, invisibly.
+#' Downloaded libraries are kept in a folder for the OS release, and those
+#' for other releases (e.g. after an upgrade) are removed when libraries are
+#' next downloaded. `remove_chrome()` removes everything plotly.core has
+#' downloaded and, with `browser = TRUE`, the Chrome Headless Shell builds
+#' chromote downloaded.
+#'
+#' The downloaded software is not part of plotly.core and keeps its own
+#' licence: Chrome Headless Shell is built from Chromium by Google (see the
+#' licence files in its download), and the libraries are your distribution's
+#' packages (each package's copyright file is kept with it, under
+#' `usr/share/doc`).
+#'
+#' @param browser For `remove_chrome()`, also remove the Chrome Headless Shell
+#'   builds downloaded with chromote.
+#' @return `install_chrome()`: the path to Chrome, invisibly.
+#'   `remove_chrome()`: `NULL`, invisibly.
 #' @export
 #' @examples
 #' \dontrun{
 #' install_chrome()
+#'
+#' # remove the downloaded libraries (and Chrome Headless Shell)
+#' remove_chrome(browser = TRUE)
 #' }
 install_chrome <- function() {
   check_chromote()
@@ -450,6 +504,33 @@ install_chrome <- function() {
     message("Shared libraries from: ", chrome_lib_dir())
   }
   invisible(chrome)
+}
+
+#' @rdname install_chrome
+#' @export
+remove_chrome <- function(browser = FALSE) {
+  # stop the browser save_image() keeps, which may use these files
+  ex <- export_env$chrome
+  if (!is.null(ex)) {
+    try(ex$shutdown(), silent = TRUE)
+    export_env$chrome <- NULL
+  }
+  root <- chrome_libs_root()
+  if (dir.exists(root)) {
+    unlink(root, recursive = TRUE)
+    message("Removed ", root)
+  }
+  if (isTRUE(browser)) {
+    check_chromote()
+    shells <- chromote::chrome_versions_list(
+      "installed",
+      "chrome-headless-shell"
+    )
+    for (v in unique(shells$version)) {
+      chromote::chrome_versions_remove(v, "chrome-headless-shell", ask = FALSE)
+    }
+  }
+  invisible(NULL)
 }
 
 # Launching ---------------------------------------------------------------------

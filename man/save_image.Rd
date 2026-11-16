@@ -45,11 +45,24 @@ The browser is started on the first export and reused for later ones.
 LaTeX (see \code{\link[=TeX]{TeX()}}) is typeset with MathJax, loaded from a CDN. PDF is made
 by printing the SVG image to a page of the figure's size; EPS is converted
 from the SVG image with the rsvg package.
+}
+\section{Downloads}{
+
+\code{save_image()} downloads nothing on its own in scripts, tests or
+examples. In an interactive session that needs set-up, it asks first
+(see \code{\link[=install_chrome]{install_chrome()}}). What it may download keeps its own licence (see
+the package's \code{COPYRIGHTS} file): Chrome Headless Shell (from Google's
+Chrome for Testing, kept in chromote's cache), on Linux the shared
+libraries Chrome needs (your distribution's packages, kept in
+\code{tools::R_user_dir("plotly.core", "cache")}), and MathJax for LaTeX
+(loaded from a CDN when a figure uses it). \code{\link[=remove_chrome]{remove_chrome()}} removes the
+downloads.
 
 \code{chrome_exporter()} returns an exporter of its own, whose
 \code{transform(p, file, ...)} function writes images; call its \code{shutdown()}
 function when done.
 }
+
 \examples{
 \dontrun{
 fig <- px_data_iris() |> px_scatter(x = ~sepal_width, y = ~sepal_length, color = ~species)

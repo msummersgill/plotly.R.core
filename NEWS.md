@@ -25,6 +25,7 @@
   interactive sessions. On Linux it checks the shared libraries Chrome needs
   and can download missing ones into the user cache without administrator
   rights (Debian/Ubuntu and RHEL-family systems); `install_chrome()` does the
-  same set-up non-interactively. Startup failures show Chrome's own output.
+  same set-up non-interactively, and `remove_chrome()` removes the downloads.
+  Startup failures show Chrome's own output.
 * Renders the plotly R package's `plot_ly()` and `ggplotly()` figures,
   including its crosstalk linking (`highlight()`).

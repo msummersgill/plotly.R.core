@@ -19,6 +19,17 @@
 #' by printing the SVG image to a page of the figure's size; EPS is converted
 #' from the SVG image with the rsvg package.
 #'
+#' @section Downloads:
+#' `save_image()` downloads nothing on its own in scripts, tests or
+#' examples. In an interactive session that needs set-up, it asks first
+#' (see [install_chrome()]). What it may download keeps its own licence (see
+#' the package's `COPYRIGHTS` file): Chrome Headless Shell (from Google's
+#' Chrome for Testing, kept in chromote's cache), on Linux the shared
+#' libraries Chrome needs (your distribution's packages, kept in
+#' `tools::R_user_dir("plotly.core", "cache")`), and MathJax for LaTeX
+#' (loaded from a CDN when a figure uses it). [remove_chrome()] removes the
+#' downloads.
+#'
 #' `chrome_exporter()` returns an exporter of its own, whose
 #' `transform(p, file, ...)` function writes images; call its `shutdown()`
 #' function when done.

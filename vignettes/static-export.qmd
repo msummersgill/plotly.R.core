@@ -21,6 +21,11 @@ chrome <- if (requireNamespace("chromote", quietly = TRUE)) {
   tryCatch(suppressMessages(chromote::find_chrome()), error = function(e) NULL)
 }
 has_chrome <- length(chrome) == 1L && nzchar(chrome)
+# The examples start Chrome: run them for the website and in development,
+# not when the vignette is rebuilt during R CMD check on CRAN
+has_chrome <- has_chrome &&
+  (identical(Sys.getenv("NOT_CRAN"), "true") ||
+    identical(Sys.getenv("IN_PKGDOWN"), "true"))
 show_png <- function(file) {
   knitr::asis_output(sprintf(
     '<img src="data:image/png;base64,%s" style="max-width:100%%" alt="Exported figure">',
@@ -79,6 +84,13 @@ save_image(fig, png_file, width = 700, height = 450, scale = 2)
 #| eval: !expr has_chrome
 #| echo: false
 show_png(png_file)
+```
+
+```{r close}
+#| eval: !expr has_chrome
+#| include: false
+# stop the browser save_image() started
+plotly.core:::export_env$chrome$shutdown()
 ```
 
 The format is taken from the file extension:
@@ -264,3 +276,5 @@ In documents rendered to formats other than HTML (PDF, Word, ...), figures are i
 | EPS export needs the rsvg package | `install.packages("rsvg")` |
 | MathJax couldn't be loaded ..., so LaTeX is exported as plain text | Check that the machine can reach cdn.jsdelivr.net |
 | Unsupported image format | Use one of the extensions in the table above |
+
+To remove what plotly.core has downloaded (the libraries, and with `browser = TRUE` Chrome Headless Shell), run `remove_chrome()`.
