@@ -475,14 +475,14 @@ write.csv(versions, file.path(results_dir, "versions.csv"), row.names = FALSE)
 jsonlite::write_json(meta, file.path(results_dir, "meta.json"), auto_unbox = TRUE, pretty = TRUE)
 ```
 
-Results below are from a run on 2026-11-14 on macOS 26.5.1 (Apple M3
+Results below are from a run on 2026-11-16 on macOS 26.5.1 (Apple M3
 Pro), with R version 4.4.2 (2024-10-31) and Chrome/157.0.8103.78
 (headless), and these versions:
 
 | variant | plotly | plotly.core | plotly.js |
 |:---|:---|:---|:---|
 | release | 4.12.1 |  | 2.25.2 |
-| core_backend, go_figure_f32 | 4.12.1.9000 | 0.0.0.9000 | 4.3.0 |
+| core_backend, go_figure_f32 | 4.12.1.9000 | 0.1.0 | 4.3.0 |
 | plotly_py, plotly_py_f32 | 7.1.0 (Python; numpy 2.0.2, pandas 2.3.3) |  | 4.1.1 |
 
 ## Results
@@ -520,21 +520,21 @@ show_table("timeseries")
 
 | size | variant | build + write (s) | HTML (MB) | load (s) | newPlot (s) | JS transferred (MB) | peak renderer (MB) | JS heap after (MB) |
 |:---|:---|---:|---:|---:|---:|---:|---:|---:|
-| 10,000 | release | 0.066 | 0.97 | 0.241 | 0.076 | 1.20 | 220 | 15.5 |
-| 10,000 | core_backend | 0.021 | 0.22 | 0.374 | 0.085 | 1.54 | 243 | 17.3 |
-| 10,000 | go_figure_f32 | 0.018 | 0.17 | 0.375 | 0.082 | 1.50 | 241 | 16.5 |
-| 10,000 | plotly_py | 0.005 | 0.44 | 0.351 | 0.080 | 1.47 | 236 | 16.3 |
-| 10,000 | plotly_py_f32 | 0.005 | 0.38 | 0.349 | 0.074 | 1.47 | 235 | 16.2 |
-| 100,000 | release | 0.623 | 9.61 | 0.472 | 0.151 | 1.20 | 326 | 41.0 |
-| 100,000 | core_backend | 0.054 | 2.14 | 0.512 | 0.155 | 1.54 | 326 | 35.0 |
-| 100,000 | go_figure_f32 | 0.022 | 1.61 | 0.467 | 0.136 | 1.50 | 315 | 32.6 |
-| 100,000 | plotly_py | 0.050 | 4.34 | 0.492 | 0.134 | 1.47 | 301 | 32.4 |
-| 100,000 | plotly_py_f32 | 0.047 | 3.77 | 0.453 | 0.140 | 1.47 | 297 | 31.5 |
-| 1,000,000 | release | 7.444 | 95.92 | 3.017 | 0.742 | 1.20 | 1021 | 291.2 |
-| 1,000,000 | core_backend | 0.407 | 21.34 | 1.546 | 0.701 | 1.54 | 821 | 204.7 |
-| 1,000,000 | go_figure_f32 | 0.051 | 16.01 | 1.336 | 0.641 | 1.50 | 818 | 186.7 |
-| 1,000,000 | plotly_py | 0.488 | 43.28 | 1.708 | 0.637 | 1.47 | 782 | 187.7 |
-| 1,000,000 | plotly_py_f32 | 0.448 | 37.66 | 1.482 | 0.637 | 1.47 | 759 | 178.4 |
+| 10,000 | release | 0.068 | 0.97 | 0.242 | 0.075 | 1.20 | 220 | 15.5 |
+| 10,000 | core_backend | 0.025 | 0.22 | 0.374 | 0.083 | 1.54 | 243 | 17.4 |
+| 10,000 | go_figure_f32 | 0.016 | 0.17 | 0.362 | 0.080 | 1.50 | 240 | 16.5 |
+| 10,000 | plotly_py | 0.005 | 0.44 | 0.363 | 0.080 | 1.47 | 236 | 16.3 |
+| 10,000 | plotly_py_f32 | 0.005 | 0.38 | 0.352 | 0.077 | 1.47 | 235 | 16.2 |
+| 100,000 | release | 0.620 | 9.61 | 0.486 | 0.151 | 1.20 | 326 | 41.0 |
+| 100,000 | core_backend | 0.060 | 2.14 | 0.510 | 0.155 | 1.54 | 325 | 35.0 |
+| 100,000 | go_figure_f32 | 0.023 | 1.61 | 0.471 | 0.141 | 1.50 | 314 | 32.6 |
+| 100,000 | plotly_py | 0.050 | 4.34 | 0.479 | 0.136 | 1.47 | 301 | 32.4 |
+| 100,000 | plotly_py_f32 | 0.047 | 3.77 | 0.457 | 0.138 | 1.47 | 304 | 31.5 |
+| 1,000,000 | release | 7.633 | 95.92 | 2.975 | 0.725 | 1.20 | 1013 | 291.2 |
+| 1,000,000 | core_backend | 0.412 | 21.34 | 1.627 | 0.745 | 1.54 | 822 | 204.7 |
+| 1,000,000 | go_figure_f32 | 0.080 | 16.01 | 1.284 | 0.627 | 1.50 | 798 | 186.7 |
+| 1,000,000 | plotly_py | 0.506 | 43.28 | 1.725 | 0.667 | 1.47 | 785 | 187.7 |
+| 1,000,000 | plotly_py_f32 | 0.475 | 37.66 | 1.484 | 0.622 | 1.47 | 746 | 178.4 |
 
 ### 10 time series sharing x (`scattergl` lines)
 
@@ -545,21 +545,21 @@ show_table("multiseries")
 
 | size | variant | build + write (s) | HTML (MB) | load (s) | newPlot (s) | JS transferred (MB) | peak renderer (MB) | JS heap after (MB) |
 |:---|:---|---:|---:|---:|---:|---:|---:|---:|
-| 10 × 10,000 | release | 0.406 | 6.81 | 0.446 | 0.137 | 1.20 | 306 | 31.2 |
-| 10 × 10,000 | core_backend | 0.083 | 1.18 | 0.452 | 0.140 | 1.54 | 272 | 24.4 |
-| 10 × 10,000 | go_figure_f32 | 0.022 | 0.65 | 0.415 | 0.127 | 1.50 | 264 | 22.0 |
-| 10 × 10,000 | plotly_py | 0.050 | 4.35 | 0.453 | 0.127 | 1.47 | 286 | 22.9 |
-| 10 × 10,000 | plotly_py_f32 | 0.049 | 3.78 | 0.456 | 0.132 | 1.47 | 281 | 21.9 |
-| 10 × 50,000 | release | 2.228 | 33.99 | 1.388 | 0.340 | 1.20 | 520 | 100.0 |
-| 10 × 50,000 | core_backend | 0.203 | 5.87 | 0.699 | 0.310 | 1.54 | 418 | 54.6 |
-| 10 × 50,000 | go_figure_f32 | 0.029 | 3.21 | 0.664 | 0.292 | 1.50 | 380 | 45.6 |
-| 10 × 50,000 | plotly_py | 0.246 | 21.68 | 0.792 | 0.290 | 1.47 | 424 | 51.3 |
-| 10 × 50,000 | plotly_py_f32 | 0.218 | 18.86 | 0.753 | 0.285 | 1.47 | 448 | 46.6 |
-| 10 × 100,000 | release | 4.382 | 67.40 | 2.678 | 0.684 | 1.20 | 749 | 246.3 |
-| 10 × 100,000 | core_backend | 0.388 | 11.74 | 1.166 | 0.630 | 1.54 | 560 | 153.5 |
-| 10 × 100,000 | go_figure_f32 | 0.037 | 6.41 | 0.987 | 0.595 | 1.50 | 539 | 135.4 |
-| 10 × 100,000 | plotly_py | 0.471 | 43.30 | 1.415 | 0.606 | 1.47 | 621 | 147.2 |
-| 10 × 100,000 | plotly_py_f32 | 0.437 | 37.66 | 1.276 | 0.599 | 1.47 | 629 | 137.9 |
+| 10 × 10,000 | release | 0.405 | 6.81 | 0.444 | 0.138 | 1.20 | 306 | 31.2 |
+| 10 × 10,000 | core_backend | 0.084 | 1.18 | 0.463 | 0.142 | 1.54 | 271 | 24.4 |
+| 10 × 10,000 | go_figure_f32 | 0.024 | 0.65 | 0.424 | 0.129 | 1.50 | 264 | 22.0 |
+| 10 × 10,000 | plotly_py | 0.054 | 4.35 | 0.467 | 0.130 | 1.47 | 285 | 22.9 |
+| 10 × 10,000 | plotly_py_f32 | 0.081 | 3.78 | 0.447 | 0.129 | 1.47 | 281 | 21.9 |
+| 10 × 50,000 | release | 2.212 | 33.99 | 1.380 | 0.336 | 1.20 | 515 | 100.0 |
+| 10 × 50,000 | core_backend | 0.225 | 5.87 | 0.699 | 0.311 | 1.54 | 418 | 54.6 |
+| 10 × 50,000 | go_figure_f32 | 0.029 | 3.21 | 0.652 | 0.292 | 1.50 | 380 | 45.6 |
+| 10 × 50,000 | plotly_py | 0.247 | 21.68 | 0.769 | 0.289 | 1.47 | 423 | 51.3 |
+| 10 × 50,000 | plotly_py_f32 | 0.220 | 18.86 | 0.751 | 0.280 | 1.47 | 446 | 46.7 |
+| 10 × 100,000 | release | 4.754 | 67.40 | 2.641 | 0.676 | 1.20 | 750 | 246.3 |
+| 10 × 100,000 | core_backend | 0.411 | 11.74 | 1.174 | 0.643 | 1.54 | 549 | 153.5 |
+| 10 × 100,000 | go_figure_f32 | 0.040 | 6.41 | 1.000 | 0.608 | 1.50 | 539 | 135.4 |
+| 10 × 100,000 | plotly_py | 0.479 | 43.30 | 1.409 | 0.610 | 1.47 | 616 | 147.2 |
+| 10 × 100,000 | plotly_py_f32 | 0.467 | 37.66 | 1.276 | 0.606 | 1.47 | 617 | 137.9 |
 
 ### Large matrix heatmap
 
@@ -570,26 +570,26 @@ show_table("heatmap")
 
 | size | variant | build + write (s) | HTML (MB) | load (s) | newPlot (s) | JS transferred (MB) | peak renderer (MB) | JS heap after (MB) |
 |:---|:---|---:|---:|---:|---:|---:|---:|---:|
-| 100² | release | 0.032 | 0.42 | 0.189 | 0.032 | 1.20 | 194 | 11.9 |
-| 100² | core_backend | 0.022 | 0.11 | 0.336 | 0.050 | 1.54 | 227 | 14.7 |
-| 100² | go_figure_f32 | 0.018 | 0.06 | 0.331 | 0.049 | 1.50 | 224 | 14.1 |
-| 100² | plotly_py | 0.002 | 0.14 | 0.318 | 0.048 | 1.47 | 223 | 13.9 |
-| 100² | plotly_py_f32 | 0.002 | 0.07 | 0.309 | 0.047 | 1.47 | 222 | 13.8 |
-| 500² | release | 0.455 | 10.28 | 0.636 | 0.080 | 1.20 | 284 | 21.6 |
-| 500² | core_backend | 0.068 | 2.67 | 0.457 | 0.089 | 1.54 | 273 | 23.1 |
-| 500² | go_figure_f32 | 0.024 | 1.34 | 0.415 | 0.083 | 1.50 | 261 | 20.2 |
-| 500² | plotly_py | 0.019 | 3.39 | 0.450 | 0.086 | 1.47 | 274 | 22.2 |
-| 500² | plotly_py_f32 | 0.010 | 1.60 | 0.418 | 0.086 | 1.47 | 261 | 19.9 |
-| 1000² | release | 2.268 | 41.11 | 2.160 | 0.216 | 1.20 | 466 | 51.6 |
-| 1000² | core_backend | 0.197 | 10.67 | 0.692 | 0.204 | 1.54 | 390 | 49.1 |
-| 1000² | go_figure_f32 | 0.036 | 5.34 | 0.573 | 0.189 | 1.50 | 356 | 39.3 |
-| 1000² | plotly_py | 0.074 | 13.52 | 0.729 | 0.196 | 1.47 | 396 | 48.3 |
-| 1000² | plotly_py_f32 | 0.036 | 6.39 | 0.563 | 0.182 | 1.47 | 353 | 39.0 |
-| 2000² | release | 12.025 | 164.43 | 8.488 | 0.815 | 1.20 | 1059 | 171.8 |
-| 2000² | core_backend | 0.728 | 42.67 | 2.221 | 0.669 | 1.54 | 651 | 153.2 |
-| 2000² | go_figure_f32 | 0.080 | 21.34 | 1.481 | 0.592 | 1.50 | 583 | 115.4 |
-| 2000² | plotly_py | 0.304 | 54.03 | 2.535 | 0.630 | 1.47 | 667 | 152.4 |
-| 2000² | plotly_py_f32 | 0.133 | 25.55 | 1.593 | 0.595 | 1.47 | 583 | 115.1 |
+| 100² | release | 0.035 | 0.42 | 0.194 | 0.033 | 1.20 | 195 | 11.9 |
+| 100² | core_backend | 0.022 | 0.11 | 0.333 | 0.050 | 1.54 | 227 | 14.7 |
+| 100² | go_figure_f32 | 0.016 | 0.06 | 0.323 | 0.049 | 1.50 | 224 | 14.1 |
+| 100² | plotly_py | 0.002 | 0.14 | 0.326 | 0.049 | 1.47 | 223 | 13.9 |
+| 100² | plotly_py_f32 | 0.002 | 0.07 | 0.318 | 0.049 | 1.47 | 222 | 13.8 |
+| 500² | release | 0.443 | 10.28 | 0.657 | 0.084 | 1.20 | 283 | 21.6 |
+| 500² | core_backend | 0.066 | 2.67 | 0.462 | 0.090 | 1.54 | 273 | 23.1 |
+| 500² | go_figure_f32 | 0.022 | 1.34 | 0.428 | 0.086 | 1.50 | 261 | 20.2 |
+| 500² | plotly_py | 0.020 | 3.39 | 0.456 | 0.088 | 1.47 | 275 | 22.2 |
+| 500² | plotly_py_f32 | 0.010 | 1.60 | 0.411 | 0.085 | 1.47 | 261 | 19.9 |
+| 1000² | release | 2.345 | 41.11 | 2.184 | 0.214 | 1.20 | 463 | 51.6 |
+| 1000² | core_backend | 0.213 | 10.67 | 0.719 | 0.207 | 1.54 | 390 | 49.1 |
+| 1000² | go_figure_f32 | 0.035 | 5.34 | 0.559 | 0.185 | 1.50 | 357 | 39.3 |
+| 1000² | plotly_py | 0.080 | 13.52 | 0.772 | 0.199 | 1.47 | 399 | 48.3 |
+| 1000² | plotly_py_f32 | 0.037 | 6.39 | 0.575 | 0.186 | 1.47 | 357 | 39.0 |
+| 2000² | release | 12.692 | 164.43 | 8.386 | 0.766 | 1.20 | 1039 | 171.8 |
+| 2000² | core_backend | 0.790 | 42.67 | 2.198 | 0.665 | 1.54 | 650 | 153.2 |
+| 2000² | go_figure_f32 | 0.103 | 21.34 | 1.490 | 0.598 | 1.50 | 590 | 115.4 |
+| 2000² | plotly_py | 0.308 | 54.03 | 2.487 | 0.628 | 1.47 | 669 | 152.4 |
+| 2000² | plotly_py_f32 | 0.133 | 25.55 | 1.589 | 0.582 | 1.47 | 594 | 115.1 |
 
 ### Charts
 
@@ -648,46 +648,46 @@ knitr::kable(rel[c("case", "label", "variant", metrics)],
 
 | case | size | variant | build + write | HTML | load | peak renderer | JS heap |
 |:---|:---|:---|---:|---:|---:|---:|---:|
-| timeseries | 10,000 | core_backend | 3.1 | 4.5 | 0.6 | 0.9 | 0.9 |
-| timeseries | 10,000 | go_figure_f32 | 3.7 | 5.8 | 0.6 | 0.9 | 0.9 |
-| timeseries | 10,000 | plotly_py | 13.3 | 2.2 | 0.7 | 0.9 | 1.0 |
-| timeseries | 10,000 | plotly_py_f32 | 13.2 | 2.5 | 0.7 | 0.9 | 1.0 |
-| timeseries | 100,000 | core_backend | 11.5 | 4.5 | 0.9 | 1.0 | 1.2 |
-| timeseries | 100,000 | go_figure_f32 | 28.3 | 6.0 | 1.0 | 1.0 | 1.3 |
-| timeseries | 100,000 | plotly_py | 12.6 | 2.2 | 1.0 | 1.1 | 1.3 |
-| timeseries | 100,000 | plotly_py_f32 | 13.3 | 2.5 | 1.0 | 1.1 | 1.3 |
-| timeseries | 1,000,000 | core_backend | 18.3 | 4.5 | 2.0 | 1.2 | 1.4 |
-| timeseries | 1,000,000 | go_figure_f32 | 146.0 | 6.0 | 2.3 | 1.2 | 1.6 |
-| timeseries | 1,000,000 | plotly_py | 15.3 | 2.2 | 1.8 | 1.3 | 1.6 |
-| timeseries | 1,000,000 | plotly_py_f32 | 16.6 | 2.5 | 2.0 | 1.3 | 1.6 |
-| multiseries | 10 × 10,000 | core_backend | 4.9 | 5.8 | 1.0 | 1.1 | 1.3 |
-| multiseries | 10 × 10,000 | go_figure_f32 | 18.5 | 10.5 | 1.1 | 1.2 | 1.4 |
-| multiseries | 10 × 10,000 | plotly_py | 8.1 | 1.6 | 1.0 | 1.1 | 1.4 |
-| multiseries | 10 × 10,000 | plotly_py_f32 | 8.3 | 1.8 | 1.0 | 1.1 | 1.4 |
-| multiseries | 10 × 50,000 | core_backend | 11.0 | 5.8 | 2.0 | 1.2 | 1.8 |
-| multiseries | 10 × 50,000 | go_figure_f32 | 76.8 | 10.6 | 2.1 | 1.4 | 2.2 |
-| multiseries | 10 × 50,000 | plotly_py | 9.1 | 1.6 | 1.8 | 1.2 | 1.9 |
-| multiseries | 10 × 50,000 | plotly_py_f32 | 10.2 | 1.8 | 1.8 | 1.2 | 2.1 |
-| multiseries | 10 × 100,000 | core_backend | 11.3 | 5.7 | 2.3 | 1.3 | 1.6 |
-| multiseries | 10 × 100,000 | go_figure_f32 | 118.4 | 10.5 | 2.7 | 1.4 | 1.8 |
-| multiseries | 10 × 100,000 | plotly_py | 9.3 | 1.6 | 1.9 | 1.2 | 1.7 |
-| multiseries | 10 × 100,000 | plotly_py_f32 | 10.0 | 1.8 | 2.1 | 1.2 | 1.8 |
-| heatmap | 100² | core_backend | 1.5 | 3.8 | 0.6 | 0.9 | 0.8 |
-| heatmap | 100² | go_figure_f32 | 1.8 | 6.8 | 0.6 | 0.9 | 0.8 |
-| heatmap | 100² | plotly_py | 13.6 | 2.9 | 0.6 | 0.9 | 0.9 |
-| heatmap | 100² | plotly_py_f32 | 17.4 | 5.8 | 0.6 | 0.9 | 0.9 |
+| timeseries | 10,000 | core_backend | 2.7 | 4.5 | 0.6 | 0.9 | 0.9 |
+| timeseries | 10,000 | go_figure_f32 | 4.3 | 5.8 | 0.7 | 0.9 | 0.9 |
+| timeseries | 10,000 | plotly_py | 13.0 | 2.2 | 0.7 | 0.9 | 0.9 |
+| timeseries | 10,000 | plotly_py_f32 | 13.7 | 2.5 | 0.7 | 0.9 | 1.0 |
+| timeseries | 100,000 | core_backend | 10.3 | 4.5 | 1.0 | 1.0 | 1.2 |
+| timeseries | 100,000 | go_figure_f32 | 27.0 | 6.0 | 1.0 | 1.0 | 1.3 |
+| timeseries | 100,000 | plotly_py | 12.4 | 2.2 | 1.0 | 1.1 | 1.3 |
+| timeseries | 100,000 | plotly_py_f32 | 13.2 | 2.5 | 1.1 | 1.1 | 1.3 |
+| timeseries | 1,000,000 | core_backend | 18.5 | 4.5 | 1.8 | 1.2 | 1.4 |
+| timeseries | 1,000,000 | go_figure_f32 | 95.4 | 6.0 | 2.3 | 1.3 | 1.6 |
+| timeseries | 1,000,000 | plotly_py | 15.1 | 2.2 | 1.7 | 1.3 | 1.6 |
+| timeseries | 1,000,000 | plotly_py_f32 | 16.1 | 2.5 | 2.0 | 1.4 | 1.6 |
+| multiseries | 10 × 10,000 | core_backend | 4.8 | 5.8 | 1.0 | 1.1 | 1.3 |
+| multiseries | 10 × 10,000 | go_figure_f32 | 16.9 | 10.5 | 1.0 | 1.2 | 1.4 |
+| multiseries | 10 × 10,000 | plotly_py | 7.6 | 1.6 | 0.9 | 1.1 | 1.4 |
+| multiseries | 10 × 10,000 | plotly_py_f32 | 5.0 | 1.8 | 1.0 | 1.1 | 1.4 |
+| multiseries | 10 × 50,000 | core_backend | 9.8 | 5.8 | 2.0 | 1.2 | 1.8 |
+| multiseries | 10 × 50,000 | go_figure_f32 | 76.3 | 10.6 | 2.1 | 1.4 | 2.2 |
+| multiseries | 10 × 50,000 | plotly_py | 9.0 | 1.6 | 1.8 | 1.2 | 1.9 |
+| multiseries | 10 × 50,000 | plotly_py_f32 | 10.1 | 1.8 | 1.8 | 1.2 | 2.1 |
+| multiseries | 10 × 100,000 | core_backend | 11.6 | 5.7 | 2.3 | 1.4 | 1.6 |
+| multiseries | 10 × 100,000 | go_figure_f32 | 118.8 | 10.5 | 2.6 | 1.4 | 1.8 |
+| multiseries | 10 × 100,000 | plotly_py | 9.9 | 1.6 | 1.9 | 1.2 | 1.7 |
+| multiseries | 10 × 100,000 | plotly_py_f32 | 10.2 | 1.8 | 2.1 | 1.2 | 1.8 |
+| heatmap | 100² | core_backend | 1.6 | 3.8 | 0.6 | 0.9 | 0.8 |
+| heatmap | 100² | go_figure_f32 | 2.2 | 6.8 | 0.6 | 0.9 | 0.8 |
+| heatmap | 100² | plotly_py | 14.5 | 2.9 | 0.6 | 0.9 | 0.9 |
+| heatmap | 100² | plotly_py_f32 | 18.2 | 5.8 | 0.6 | 0.9 | 0.9 |
 | heatmap | 500² | core_backend | 6.7 | 3.9 | 1.4 | 1.0 | 0.9 |
-| heatmap | 500² | go_figure_f32 | 19.0 | 7.7 | 1.5 | 1.1 | 1.1 |
-| heatmap | 500² | plotly_py | 23.5 | 3.0 | 1.4 | 1.0 | 1.0 |
-| heatmap | 500² | plotly_py_f32 | 46.8 | 6.4 | 1.5 | 1.1 | 1.1 |
-| heatmap | 1000² | core_backend | 11.5 | 3.9 | 3.1 | 1.2 | 1.1 |
-| heatmap | 1000² | go_figure_f32 | 63.0 | 7.7 | 3.8 | 1.3 | 1.3 |
-| heatmap | 1000² | plotly_py | 30.5 | 3.0 | 3.0 | 1.2 | 1.1 |
-| heatmap | 1000² | plotly_py_f32 | 63.0 | 6.4 | 3.8 | 1.3 | 1.3 |
-| heatmap | 2000² | core_backend | 16.5 | 3.9 | 3.8 | 1.6 | 1.1 |
-| heatmap | 2000² | go_figure_f32 | 150.3 | 7.7 | 5.7 | 1.8 | 1.5 |
-| heatmap | 2000² | plotly_py | 39.5 | 3.0 | 3.3 | 1.6 | 1.1 |
-| heatmap | 2000² | plotly_py_f32 | 90.4 | 6.4 | 5.3 | 1.8 | 1.5 |
+| heatmap | 500² | go_figure_f32 | 20.1 | 7.7 | 1.5 | 1.1 | 1.1 |
+| heatmap | 500² | plotly_py | 22.6 | 3.0 | 1.4 | 1.0 | 1.0 |
+| heatmap | 500² | plotly_py_f32 | 45.1 | 6.4 | 1.6 | 1.1 | 1.1 |
+| heatmap | 1000² | core_backend | 11.0 | 3.9 | 3.0 | 1.2 | 1.1 |
+| heatmap | 1000² | go_figure_f32 | 67.0 | 7.7 | 3.9 | 1.3 | 1.3 |
+| heatmap | 1000² | plotly_py | 29.3 | 3.0 | 2.8 | 1.2 | 1.1 |
+| heatmap | 1000² | plotly_py_f32 | 63.8 | 6.4 | 3.8 | 1.3 | 1.3 |
+| heatmap | 2000² | core_backend | 16.1 | 3.9 | 3.8 | 1.6 | 1.1 |
+| heatmap | 2000² | go_figure_f32 | 123.2 | 7.7 | 5.6 | 1.8 | 1.5 |
+| heatmap | 2000² | plotly_py | 41.2 | 3.0 | 3.4 | 1.6 | 1.1 |
+| heatmap | 2000² | plotly_py_f32 | 95.5 | 6.4 | 5.3 | 1.8 | 1.5 |
 
 ## What makes it faster
 
@@ -705,8 +705,8 @@ type without loss. A double takes 10.7 bytes of base64 instead of about
 into a typed array instead of parsing text. For the heatmap this takes
 the page from 164.4 MB (CRAN plotly) to 42.7 MB
 ([`plot_ly()`](https://rdrr.io/pkg/plotly/man/plot_ly.html) with
-plotly.core), the load time from 8.49 s to 2.22 s, and the renderer’s
-peak memory from 1059 MB to 651 MB. plotly.js’s own `newPlot()` time is
+plotly.core), the load time from 8.39 s to 2.20 s, and the renderer’s
+peak memory from 1039 MB to 650 MB. plotly.js’s own `newPlot()` time is
 about the same for every variant, so the faster loads come from
 fetching, parsing and decoding less data, not from plotly.js itself.
 
@@ -714,7 +714,7 @@ fetching, parsing and decoding less data, not from plotly.js itself.
 of days or milliseconds; the widget’s JavaScript turns them back into
 the strings R would have written. UTC offsets are looked up once per
 15-minute bin rather than once per value. For the 1M-point time series,
-CRAN plotly writes a page of 95.9 MB in 7.44 s; with plotly.core the
+CRAN plotly writes a page of 95.9 MB in 7.63 s; with plotly.core the
 same [`plot_ly()`](https://rdrr.io/pkg/plotly/man/plot_ly.html) code
 writes 21.3 MB in 0.41 s. plotly.py writes date-times as text, so its
 time series pages are larger (43.3 MB).
@@ -736,7 +736,7 @@ plotly.core writes 11.7 MB and
 [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
 6.4 MB, against 67.4 MB for CRAN plotly and 43.3 MB for plotly.py, which
 repeat x in each trace. Those pages are smaller than the single 1M-point
-series and load faster (0.99 s against 1.34 s for
+series and load faster (1.00 s against 1.28 s for
 [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)).
 
 **[`as_float32()`](https://msummersgill.github.io/plotly.R.core/reference/as_float32.md).**
@@ -745,7 +745,7 @@ Doubles marked with
 are sent in single precision, 4 bytes instead of 8 (about 7 significant
 digits, which is what WebGL draws with). It halves the heatmap’s page
 (42.7 to 21.3 MB) and cuts the JavaScript memory left after loading (153
-to 115 MB) and the load time (2.22 to 1.48 s). For the time series only
+to 115 MB) and the load time (2.20 to 1.49 s). For the time series only
 y is halved; x stays in double precision.
 
 **[`write_html()`](https://msummersgill.github.io/plotly.R.core/reference/write_html.md).**
@@ -755,8 +755,8 @@ string, which is searched and copied several times. This is most of the
 difference between
 [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
 and [`plot_ly()`](https://rdrr.io/pkg/plotly/man/plot_ly.html) in
-build + write time: 0.080 s for the heatmap (0.133 s for plotly.py with
-float32), and 0.051 s for the 1M-point time series (0.448 s).
+build + write time: 0.103 s for the heatmap (0.133 s for plotly.py with
+float32), and 0.080 s for the 1M-point time series (0.475 s).
 [`write_html()`](https://msummersgill.github.io/plotly.R.core/reference/write_html.md)
 also takes [`plot_ly()`](https://rdrr.io/pkg/plotly/man/plot_ly.html)
 figures: saving the
@@ -782,7 +782,7 @@ now uses [`rowSums()`](https://rdrr.io/r/base/colSums.html).
 the 2000 × 2000 heatmap takes 0.04 s instead of 0.15 s (standalone
 timing). Most of the
 [`plot_ly()`](https://rdrr.io/pkg/plotly/man/plot_ly.html) heatmap’s
-remaining 0.73 s is
+remaining 0.79 s is
 [`htmlwidgets::saveWidget()`](https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html)
 handling the large page, which
 [`write_html()`](https://msummersgill.github.io/plotly.R.core/reference/write_html.md)

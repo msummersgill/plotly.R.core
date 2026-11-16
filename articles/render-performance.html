@@ -34,7 +34,8 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/render-performance.html">Rendering performance</a></li>
+<li><a class="dropdown-item" href="../articles/static-export.html">Static image export</a></li>
+    <li><a class="dropdown-item" href="../articles/render-performance.html">Rendering performance</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -527,7 +528,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">versions</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">results_dir</span>, <span class="st">"versions.csv"</span><span class="op">)</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/read_json.html" class="external-link">write_json</a></span><span class="op">(</span><span class="va">meta</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">results_dir</span>, <span class="st">"meta.json"</span><span class="op">)</span>, auto_unbox <span class="op">=</span> <span class="cn">TRUE</span>, pretty <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
-<p>Results below are from a run on 2026-11-14 on macOS 26.5.1 (Apple M3 Pro), with R version 4.4.2 (2024-10-31) and Chrome/157.0.8103.78 (headless), and these versions:</p>
+<p>Results below are from a run on 2026-11-16 on macOS 26.5.1 (Apple M3 Pro), with R version 4.4.2 (2024-10-31) and Chrome/157.0.8103.78 (headless), and these versions:</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table caption-top">
@@ -553,7 +554,7 @@
 <tr class="even">
 <td style="text-align: left;">core_backend, go_figure_f32</td>
 <td style="text-align: left;">4.12.1.9000</td>
-<td style="text-align: left;">0.0.0.9000</td>
+<td style="text-align: left;">0.1.0</td>
 <td style="text-align: left;">4.3.0</td>
 </tr>
 <tr class="odd">
@@ -623,10 +624,10 @@
 <tr class="odd">
 <td style="text-align: left;">10,000</td>
 <td style="text-align: left;">release</td>
-<td style="text-align: right;">0.066</td>
+<td style="text-align: right;">0.068</td>
 <td style="text-align: right;">0.97</td>
-<td style="text-align: right;">0.241</td>
-<td style="text-align: right;">0.076</td>
+<td style="text-align: right;">0.242</td>
+<td style="text-align: right;">0.075</td>
 <td style="text-align: right;">1.20</td>
 <td style="text-align: right;">220</td>
 <td style="text-align: right;">15.5</td>
@@ -634,23 +635,23 @@
 <tr class="even">
 <td style="text-align: left;">10,000</td>
 <td style="text-align: left;">core_backend</td>
-<td style="text-align: right;">0.021</td>
+<td style="text-align: right;">0.025</td>
 <td style="text-align: right;">0.22</td>
 <td style="text-align: right;">0.374</td>
-<td style="text-align: right;">0.085</td>
+<td style="text-align: right;">0.083</td>
 <td style="text-align: right;">1.54</td>
 <td style="text-align: right;">243</td>
-<td style="text-align: right;">17.3</td>
+<td style="text-align: right;">17.4</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">10,000</td>
 <td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">0.016</td>
 <td style="text-align: right;">0.17</td>
-<td style="text-align: right;">0.375</td>
-<td style="text-align: right;">0.082</td>
+<td style="text-align: right;">0.362</td>
+<td style="text-align: right;">0.080</td>
 <td style="text-align: right;">1.50</td>
-<td style="text-align: right;">241</td>
+<td style="text-align: right;">240</td>
 <td style="text-align: right;">16.5</td>
 </tr>
 <tr class="even">
@@ -658,7 +659,7 @@
 <td style="text-align: left;">plotly_py</td>
 <td style="text-align: right;">0.005</td>
 <td style="text-align: right;">0.44</td>
-<td style="text-align: right;">0.351</td>
+<td style="text-align: right;">0.363</td>
 <td style="text-align: right;">0.080</td>
 <td style="text-align: right;">1.47</td>
 <td style="text-align: right;">236</td>
@@ -669,8 +670,8 @@
 <td style="text-align: left;">plotly_py_f32</td>
 <td style="text-align: right;">0.005</td>
 <td style="text-align: right;">0.38</td>
-<td style="text-align: right;">0.349</td>
-<td style="text-align: right;">0.074</td>
+<td style="text-align: right;">0.352</td>
+<td style="text-align: right;">0.077</td>
 <td style="text-align: right;">1.47</td>
 <td style="text-align: right;">235</td>
 <td style="text-align: right;">16.2</td>
@@ -678,9 +679,9 @@
 <tr class="even">
 <td style="text-align: left;">100,000</td>
 <td style="text-align: left;">release</td>
-<td style="text-align: right;">0.623</td>
+<td style="text-align: right;">0.620</td>
 <td style="text-align: right;">9.61</td>
-<td style="text-align: right;">0.472</td>
+<td style="text-align: right;">0.486</td>
 <td style="text-align: right;">0.151</td>
 <td style="text-align: right;">1.20</td>
 <td style="text-align: right;">326</td>
@@ -689,23 +690,23 @@
 <tr class="odd">
 <td style="text-align: left;">100,000</td>
 <td style="text-align: left;">core_backend</td>
-<td style="text-align: right;">0.054</td>
+<td style="text-align: right;">0.060</td>
 <td style="text-align: right;">2.14</td>
-<td style="text-align: right;">0.512</td>
+<td style="text-align: right;">0.510</td>
 <td style="text-align: right;">0.155</td>
 <td style="text-align: right;">1.54</td>
-<td style="text-align: right;">326</td>
+<td style="text-align: right;">325</td>
 <td style="text-align: right;">35.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">100,000</td>
 <td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">0.023</td>
 <td style="text-align: right;">1.61</td>
-<td style="text-align: right;">0.467</td>
-<td style="text-align: right;">0.136</td>
+<td style="text-align: right;">0.471</td>
+<td style="text-align: right;">0.141</td>
 <td style="text-align: right;">1.50</td>
-<td style="text-align: right;">315</td>
+<td style="text-align: right;">314</td>
 <td style="text-align: right;">32.6</td>
 </tr>
 <tr class="odd">
@@ -713,8 +714,8 @@
 <td style="text-align: left;">plotly_py</td>
 <td style="text-align: right;">0.050</td>
 <td style="text-align: right;">4.34</td>
-<td style="text-align: right;">0.492</td>
-<td style="text-align: right;">0.134</td>
+<td style="text-align: right;">0.479</td>
+<td style="text-align: right;">0.136</td>
 <td style="text-align: right;">1.47</td>
 <td style="text-align: right;">301</td>
 <td style="text-align: right;">32.4</td>
@@ -724,65 +725,65 @@
 <td style="text-align: left;">plotly_py_f32</td>
 <td style="text-align: right;">0.047</td>
 <td style="text-align: right;">3.77</td>
-<td style="text-align: right;">0.453</td>
-<td style="text-align: right;">0.140</td>
+<td style="text-align: right;">0.457</td>
+<td style="text-align: right;">0.138</td>
 <td style="text-align: right;">1.47</td>
-<td style="text-align: right;">297</td>
+<td style="text-align: right;">304</td>
 <td style="text-align: right;">31.5</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">1,000,000</td>
 <td style="text-align: left;">release</td>
-<td style="text-align: right;">7.444</td>
+<td style="text-align: right;">7.633</td>
 <td style="text-align: right;">95.92</td>
-<td style="text-align: right;">3.017</td>
-<td style="text-align: right;">0.742</td>
+<td style="text-align: right;">2.975</td>
+<td style="text-align: right;">0.725</td>
 <td style="text-align: right;">1.20</td>
-<td style="text-align: right;">1021</td>
+<td style="text-align: right;">1013</td>
 <td style="text-align: right;">291.2</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">1,000,000</td>
 <td style="text-align: left;">core_backend</td>
-<td style="text-align: right;">0.407</td>
+<td style="text-align: right;">0.412</td>
 <td style="text-align: right;">21.34</td>
-<td style="text-align: right;">1.546</td>
-<td style="text-align: right;">0.701</td>
+<td style="text-align: right;">1.627</td>
+<td style="text-align: right;">0.745</td>
 <td style="text-align: right;">1.54</td>
-<td style="text-align: right;">821</td>
+<td style="text-align: right;">822</td>
 <td style="text-align: right;">204.7</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">1,000,000</td>
 <td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">0.051</td>
+<td style="text-align: right;">0.080</td>
 <td style="text-align: right;">16.01</td>
-<td style="text-align: right;">1.336</td>
-<td style="text-align: right;">0.641</td>
+<td style="text-align: right;">1.284</td>
+<td style="text-align: right;">0.627</td>
 <td style="text-align: right;">1.50</td>
-<td style="text-align: right;">818</td>
+<td style="text-align: right;">798</td>
 <td style="text-align: right;">186.7</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">1,000,000</td>
 <td style="text-align: left;">plotly_py</td>
-<td style="text-align: right;">0.488</td>
+<td style="text-align: right;">0.506</td>
 <td style="text-align: right;">43.28</td>
-<td style="text-align: right;">1.708</td>
-<td style="text-align: right;">0.637</td>
+<td style="text-align: right;">1.725</td>
+<td style="text-align: right;">0.667</td>
 <td style="text-align: right;">1.47</td>
-<td style="text-align: right;">782</td>
+<td style="text-align: right;">785</td>
 <td style="text-align: right;">187.7</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">1,000,000</td>
 <td style="text-align: left;">plotly_py_f32</td>
-<td style="text-align: right;">0.448</td>
+<td style="text-align: right;">0.475</td>
 <td style="text-align: right;">37.66</td>
-<td style="text-align: right;">1.482</td>
-<td style="text-align: right;">0.637</td>
+<td style="text-align: right;">1.484</td>
+<td style="text-align: right;">0.622</td>
 <td style="text-align: right;">1.47</td>
-<td style="text-align: right;">759</td>
+<td style="text-align: right;">746</td>
 <td style="text-align: right;">178.4</td>
 </tr>
 </tbody>
@@ -822,10 +823,10 @@
 <tr class="odd">
 <td style="text-align: left;">10 × 10,000</td>
 <td style="text-align: left;">release</td>
-<td style="text-align: right;">0.406</td>
+<td style="text-align: right;">0.405</td>
 <td style="text-align: right;">6.81</td>
-<td style="text-align: right;">0.446</td>
-<td style="text-align: right;">0.137</td>
+<td style="text-align: right;">0.444</td>
+<td style="text-align: right;">0.138</td>
 <td style="text-align: right;">1.20</td>
 <td style="text-align: right;">306</td>
 <td style="text-align: right;">31.2</td>
@@ -833,21 +834,21 @@
 <tr class="even">
 <td style="text-align: left;">10 × 10,000</td>
 <td style="text-align: left;">core_backend</td>
-<td style="text-align: right;">0.083</td>
+<td style="text-align: right;">0.084</td>
 <td style="text-align: right;">1.18</td>
-<td style="text-align: right;">0.452</td>
-<td style="text-align: right;">0.140</td>
+<td style="text-align: right;">0.463</td>
+<td style="text-align: right;">0.142</td>
 <td style="text-align: right;">1.54</td>
-<td style="text-align: right;">272</td>
+<td style="text-align: right;">271</td>
 <td style="text-align: right;">24.4</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">10 × 10,000</td>
 <td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">0.024</td>
 <td style="text-align: right;">0.65</td>
-<td style="text-align: right;">0.415</td>
-<td style="text-align: right;">0.127</td>
+<td style="text-align: right;">0.424</td>
+<td style="text-align: right;">0.129</td>
 <td style="text-align: right;">1.50</td>
 <td style="text-align: right;">264</td>
 <td style="text-align: right;">22.0</td>
@@ -855,21 +856,21 @@
 <tr class="even">
 <td style="text-align: left;">10 × 10,000</td>
 <td style="text-align: left;">plotly_py</td>
-<td style="text-align: right;">0.050</td>
+<td style="text-align: right;">0.054</td>
 <td style="text-align: right;">4.35</td>
-<td style="text-align: right;">0.453</td>
-<td style="text-align: right;">0.127</td>
+<td style="text-align: right;">0.467</td>
+<td style="text-align: right;">0.130</td>
 <td style="text-align: right;">1.47</td>
-<td style="text-align: right;">286</td>
+<td style="text-align: right;">285</td>
 <td style="text-align: right;">22.9</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">10 × 10,000</td>
 <td style="text-align: left;">plotly_py_f32</td>
-<td style="text-align: right;">0.049</td>
+<td style="text-align: right;">0.081</td>
 <td style="text-align: right;">3.78</td>
-<td style="text-align: right;">0.456</td>
-<td style="text-align: right;">0.132</td>
+<td style="text-align: right;">0.447</td>
+<td style="text-align: right;">0.129</td>
 <td style="text-align: right;">1.47</td>
 <td style="text-align: right;">281</td>
 <td style="text-align: right;">21.9</td>
@@ -877,21 +878,21 @@
 <tr class="even">
 <td style="text-align: left;">10 × 50,000</td>
 <td style="text-align: left;">release</td>
-<td style="text-align: right;">2.228</td>
+<td style="text-align: right;">2.212</td>
 <td style="text-align: right;">33.99</td>
-<td style="text-align: right;">1.388</td>
-<td style="text-align: right;">0.340</td>
+<td style="text-align: right;">1.380</td>
+<td style="text-align: right;">0.336</td>
 <td style="text-align: right;">1.20</td>
-<td style="text-align: right;">520</td>
+<td style="text-align: right;">515</td>
 <td style="text-align: right;">100.0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">10 × 50,000</td>
 <td style="text-align: left;">core_backend</td>
-<td style="text-align: right;">0.203</td>
+<td style="text-align: right;">0.225</td>
 <td style="text-align: right;">5.87</td>
 <td style="text-align: right;">0.699</td>
-<td style="text-align: right;">0.310</td>
+<td style="text-align: right;">0.311</td>
 <td style="text-align: right;">1.54</td>
 <td style="text-align: right;">418</td>
 <td style="text-align: right;">54.6</td>
@@ -901,7 +902,7 @@
 <td style="text-align: left;">go_figure_f32</td>
 <td style="text-align: right;">0.029</td>
 <td style="text-align: right;">3.21</td>
-<td style="text-align: right;">0.664</td>
+<td style="text-align: right;">0.652</td>
 <td style="text-align: right;">0.292</td>
 <td style="text-align: right;">1.50</td>
 <td style="text-align: right;">380</td>
@@ -910,54 +911,54 @@
 <tr class="odd">
 <td style="text-align: left;">10 × 50,000</td>
 <td style="text-align: left;">plotly_py</td>
-<td style="text-align: right;">0.246</td>
+<td style="text-align: right;">0.247</td>
 <td style="text-align: right;">21.68</td>
-<td style="text-align: right;">0.792</td>
-<td style="text-align: right;">0.290</td>
+<td style="text-align: right;">0.769</td>
+<td style="text-align: right;">0.289</td>
 <td style="text-align: right;">1.47</td>
-<td style="text-align: right;">424</td>
+<td style="text-align: right;">423</td>
 <td style="text-align: right;">51.3</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">10 × 50,000</td>
 <td style="text-align: left;">plotly_py_f32</td>
-<td style="text-align: right;">0.218</td>
+<td style="text-align: right;">0.220</td>
 <td style="text-align: right;">18.86</td>
-<td style="text-align: right;">0.753</td>
-<td style="text-align: right;">0.285</td>
+<td style="text-align: right;">0.751</td>
+<td style="text-align: right;">0.280</td>
 <td style="text-align: right;">1.47</td>
-<td style="text-align: right;">448</td>
-<td style="text-align: right;">46.6</td>
+<td style="text-align: right;">446</td>
+<td style="text-align: right;">46.7</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">10 × 100,000</td>
 <td style="text-align: left;">release</td>
-<td style="text-align: right;">4.382</td>
+<td style="text-align: right;">4.754</td>
 <td style="text-align: right;">67.40</td>
-<td style="text-align: right;">2.678</td>
-<td style="text-align: right;">0.684</td>
+<td style="text-align: right;">2.641</td>
+<td style="text-align: right;">0.676</td>
 <td style="text-align: right;">1.20</td>
-<td style="text-align: right;">749</td>
+<td style="text-align: right;">750</td>
 <td style="text-align: right;">246.3</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">10 × 100,000</td>
 <td style="text-align: left;">core_backend</td>
-<td style="text-align: right;">0.388</td>
+<td style="text-align: right;">0.411</td>
 <td style="text-align: right;">11.74</td>
-<td style="text-align: right;">1.166</td>
-<td style="text-align: right;">0.630</td>
+<td style="text-align: right;">1.174</td>
+<td style="text-align: right;">0.643</td>
 <td style="text-align: right;">1.54</td>
-<td style="text-align: right;">560</td>
+<td style="text-align: right;">549</td>
 <td style="text-align: right;">153.5</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">10 × 100,000</td>
 <td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">0.037</td>
+<td style="text-align: right;">0.040</td>
 <td style="text-align: right;">6.41</td>
-<td style="text-align: right;">0.987</td>
-<td style="text-align: right;">0.595</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.608</td>
 <td style="text-align: right;">1.50</td>
 <td style="text-align: right;">539</td>
 <td style="text-align: right;">135.4</td>
@@ -965,23 +966,23 @@
 <tr class="even">
 <td style="text-align: left;">10 × 100,000</td>
 <td style="text-align: left;">plotly_py</td>
-<td style="text-align: right;">0.471</td>
+<td style="text-align: right;">0.479</td>
 <td style="text-align: right;">43.30</td>
-<td style="text-align: right;">1.415</td>
-<td style="text-align: right;">0.606</td>
+<td style="text-align: right;">1.409</td>
+<td style="text-align: right;">0.610</td>
 <td style="text-align: right;">1.47</td>
-<td style="text-align: right;">621</td>
+<td style="text-align: right;">616</td>
 <td style="text-align: right;">147.2</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">10 × 100,000</td>
 <td style="text-align: left;">plotly_py_f32</td>
-<td style="text-align: right;">0.437</td>
+<td style="text-align: right;">0.467</td>
 <td style="text-align: right;">37.66</td>
 <td style="text-align: right;">1.276</td>
-<td style="text-align: right;">0.599</td>
+<td style="text-align: right;">0.606</td>
 <td style="text-align: right;">1.47</td>
-<td style="text-align: right;">629</td>
+<td style="text-align: right;">617</td>
 <td style="text-align: right;">137.9</td>
 </tr>
 </tbody>
@@ -1021,12 +1022,12 @@
 <tr class="odd">
 <td style="text-align: left;">100²</td>
 <td style="text-align: left;">release</td>
-<td style="text-align: right;">0.032</td>
+<td style="text-align: right;">0.035</td>
 <td style="text-align: right;">0.42</td>
-<td style="text-align: right;">0.189</td>
-<td style="text-align: right;">0.032</td>
+<td style="text-align: right;">0.194</td>
+<td style="text-align: right;">0.033</td>
 <td style="text-align: right;">1.20</td>
-<td style="text-align: right;">194</td>
+<td style="text-align: right;">195</td>
 <td style="text-align: right;">11.9</td>
 </tr>
 <tr class="even">
@@ -1034,7 +1035,7 @@
 <td style="text-align: left;">core_backend</td>
 <td style="text-align: right;">0.022</td>
 <td style="text-align: right;">0.11</td>
-<td style="text-align: right;">0.336</td>
+<td style="text-align: right;">0.333</td>
 <td style="text-align: right;">0.050</td>
 <td style="text-align: right;">1.54</td>
 <td style="text-align: right;">227</td>
@@ -1043,9 +1044,9 @@
 <tr class="odd">
 <td style="text-align: left;">100²</td>
 <td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">0.016</td>
 <td style="text-align: right;">0.06</td>
-<td style="text-align: right;">0.331</td>
+<td style="text-align: right;">0.323</td>
 <td style="text-align: right;">0.049</td>
 <td style="text-align: right;">1.50</td>
 <td style="text-align: right;">224</td>
@@ -1056,8 +1057,8 @@
 <td style="text-align: left;">plotly_py</td>
 <td style="text-align: right;">0.002</td>
 <td style="text-align: right;">0.14</td>
-<td style="text-align: right;">0.318</td>
-<td style="text-align: right;">0.048</td>
+<td style="text-align: right;">0.326</td>
+<td style="text-align: right;">0.049</td>
 <td style="text-align: right;">1.47</td>
 <td style="text-align: right;">223</td>
 <td style="text-align: right;">13.9</td>
@@ -1067,8 +1068,8 @@
 <td style="text-align: left;">plotly_py_f32</td>
 <td style="text-align: right;">0.002</td>
 <td style="text-align: right;">0.07</td>
-<td style="text-align: right;">0.309</td>
-<td style="text-align: right;">0.047</td>
+<td style="text-align: right;">0.318</td>
+<td style="text-align: right;">0.049</td>
 <td style="text-align: right;">1.47</td>
 <td style="text-align: right;">222</td>
 <td style="text-align: right;">13.8</td>
@@ -1076,21 +1077,21 @@
 <tr class="even">
 <td style="text-align: left;">500²</td>
 <td style="text-align: left;">release</td>
-<td style="text-align: right;">0.455</td>
+<td style="text-align: right;">0.443</td>
 <td style="text-align: right;">10.28</td>
-<td style="text-align: right;">0.636</td>
-<td style="text-align: right;">0.080</td>
+<td style="text-align: right;">0.657</td>
+<td style="text-align: right;">0.084</td>
 <td style="text-align: right;">1.20</td>
-<td style="text-align: right;">284</td>
+<td style="text-align: right;">283</td>
 <td style="text-align: right;">21.6</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">500²</td>
 <td style="text-align: left;">core_backend</td>
-<td style="text-align: right;">0.068</td>
+<td style="text-align: right;">0.066</td>
 <td style="text-align: right;">2.67</td>
-<td style="text-align: right;">0.457</td>
-<td style="text-align: right;">0.089</td>
+<td style="text-align: right;">0.462</td>
+<td style="text-align: right;">0.090</td>
 <td style="text-align: right;">1.54</td>
 <td style="text-align: right;">273</td>
 <td style="text-align: right;">23.1</td>
@@ -1098,10 +1099,10 @@
 <tr class="even">
 <td style="text-align: left;">500²</td>
 <td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">0.024</td>
+<td style="text-align: right;">0.022</td>
 <td style="text-align: right;">1.34</td>
-<td style="text-align: right;">0.415</td>
-<td style="text-align: right;">0.083</td>
+<td style="text-align: right;">0.428</td>
+<td style="text-align: right;">0.086</td>
 <td style="text-align: right;">1.50</td>
 <td style="text-align: right;">261</td>
 <td style="text-align: right;">20.2</td>
@@ -1109,12 +1110,12 @@
 <tr class="odd">
 <td style="text-align: left;">500²</td>
 <td style="text-align: left;">plotly_py</td>
-<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">0.020</td>
 <td style="text-align: right;">3.39</td>
-<td style="text-align: right;">0.450</td>
-<td style="text-align: right;">0.086</td>
+<td style="text-align: right;">0.456</td>
+<td style="text-align: right;">0.088</td>
 <td style="text-align: right;">1.47</td>
-<td style="text-align: right;">274</td>
+<td style="text-align: right;">275</td>
 <td style="text-align: right;">22.2</td>
 </tr>
 <tr class="even">
@@ -1122,8 +1123,8 @@
 <td style="text-align: left;">plotly_py_f32</td>
 <td style="text-align: right;">0.010</td>
 <td style="text-align: right;">1.60</td>
-<td style="text-align: right;">0.418</td>
-<td style="text-align: right;">0.086</td>
+<td style="text-align: right;">0.411</td>
+<td style="text-align: right;">0.085</td>
 <td style="text-align: right;">1.47</td>
 <td style="text-align: right;">261</td>
 <td style="text-align: right;">19.9</td>
@@ -1131,21 +1132,21 @@
 <tr class="odd">
 <td style="text-align: left;">1000²</td>
 <td style="text-align: left;">release</td>
-<td style="text-align: right;">2.268</td>
+<td style="text-align: right;">2.345</td>
 <td style="text-align: right;">41.11</td>
-<td style="text-align: right;">2.160</td>
-<td style="text-align: right;">0.216</td>
+<td style="text-align: right;">2.184</td>
+<td style="text-align: right;">0.214</td>
 <td style="text-align: right;">1.20</td>
-<td style="text-align: right;">466</td>
+<td style="text-align: right;">463</td>
 <td style="text-align: right;">51.6</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">1000²</td>
 <td style="text-align: left;">core_backend</td>
-<td style="text-align: right;">0.197</td>
+<td style="text-align: right;">0.213</td>
 <td style="text-align: right;">10.67</td>
-<td style="text-align: right;">0.692</td>
-<td style="text-align: right;">0.204</td>
+<td style="text-align: right;">0.719</td>
+<td style="text-align: right;">0.207</td>
 <td style="text-align: right;">1.54</td>
 <td style="text-align: right;">390</td>
 <td style="text-align: right;">49.1</td>
@@ -1153,78 +1154,78 @@
 <tr class="odd">
 <td style="text-align: left;">1000²</td>
 <td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">0.036</td>
+<td style="text-align: right;">0.035</td>
 <td style="text-align: right;">5.34</td>
-<td style="text-align: right;">0.573</td>
-<td style="text-align: right;">0.189</td>
+<td style="text-align: right;">0.559</td>
+<td style="text-align: right;">0.185</td>
 <td style="text-align: right;">1.50</td>
-<td style="text-align: right;">356</td>
+<td style="text-align: right;">357</td>
 <td style="text-align: right;">39.3</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">1000²</td>
 <td style="text-align: left;">plotly_py</td>
-<td style="text-align: right;">0.074</td>
+<td style="text-align: right;">0.080</td>
 <td style="text-align: right;">13.52</td>
-<td style="text-align: right;">0.729</td>
-<td style="text-align: right;">0.196</td>
+<td style="text-align: right;">0.772</td>
+<td style="text-align: right;">0.199</td>
 <td style="text-align: right;">1.47</td>
-<td style="text-align: right;">396</td>
+<td style="text-align: right;">399</td>
 <td style="text-align: right;">48.3</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">1000²</td>
 <td style="text-align: left;">plotly_py_f32</td>
-<td style="text-align: right;">0.036</td>
+<td style="text-align: right;">0.037</td>
 <td style="text-align: right;">6.39</td>
-<td style="text-align: right;">0.563</td>
-<td style="text-align: right;">0.182</td>
+<td style="text-align: right;">0.575</td>
+<td style="text-align: right;">0.186</td>
 <td style="text-align: right;">1.47</td>
-<td style="text-align: right;">353</td>
+<td style="text-align: right;">357</td>
 <td style="text-align: right;">39.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2000²</td>
 <td style="text-align: left;">release</td>
-<td style="text-align: right;">12.025</td>
+<td style="text-align: right;">12.692</td>
 <td style="text-align: right;">164.43</td>
-<td style="text-align: right;">8.488</td>
-<td style="text-align: right;">0.815</td>
+<td style="text-align: right;">8.386</td>
+<td style="text-align: right;">0.766</td>
 <td style="text-align: right;">1.20</td>
-<td style="text-align: right;">1059</td>
+<td style="text-align: right;">1039</td>
 <td style="text-align: right;">171.8</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">2000²</td>
 <td style="text-align: left;">core_backend</td>
-<td style="text-align: right;">0.728</td>
+<td style="text-align: right;">0.790</td>
 <td style="text-align: right;">42.67</td>
-<td style="text-align: right;">2.221</td>
-<td style="text-align: right;">0.669</td>
+<td style="text-align: right;">2.198</td>
+<td style="text-align: right;">0.665</td>
 <td style="text-align: right;">1.54</td>
-<td style="text-align: right;">651</td>
+<td style="text-align: right;">650</td>
 <td style="text-align: right;">153.2</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2000²</td>
 <td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">0.080</td>
+<td style="text-align: right;">0.103</td>
 <td style="text-align: right;">21.34</td>
-<td style="text-align: right;">1.481</td>
-<td style="text-align: right;">0.592</td>
+<td style="text-align: right;">1.490</td>
+<td style="text-align: right;">0.598</td>
 <td style="text-align: right;">1.50</td>
-<td style="text-align: right;">583</td>
+<td style="text-align: right;">590</td>
 <td style="text-align: right;">115.4</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">2000²</td>
 <td style="text-align: left;">plotly_py</td>
-<td style="text-align: right;">0.304</td>
+<td style="text-align: right;">0.308</td>
 <td style="text-align: right;">54.03</td>
-<td style="text-align: right;">2.535</td>
-<td style="text-align: right;">0.630</td>
+<td style="text-align: right;">2.487</td>
+<td style="text-align: right;">0.628</td>
 <td style="text-align: right;">1.47</td>
-<td style="text-align: right;">667</td>
+<td style="text-align: right;">669</td>
 <td style="text-align: right;">152.4</td>
 </tr>
 <tr class="even">
@@ -1232,10 +1233,10 @@
 <td style="text-align: left;">plotly_py_f32</td>
 <td style="text-align: right;">0.133</td>
 <td style="text-align: right;">25.55</td>
-<td style="text-align: right;">1.593</td>
-<td style="text-align: right;">0.595</td>
+<td style="text-align: right;">1.589</td>
+<td style="text-align: right;">0.582</td>
 <td style="text-align: right;">1.47</td>
-<td style="text-align: right;">583</td>
+<td style="text-align: right;">594</td>
 <td style="text-align: right;">115.1</td>
 </tr>
 </tbody>
@@ -1278,8 +1279,8 @@
 <span>  <span class="fu"><a href="../reference/update_layout.html">update_layout</a></span><span class="op">(</span>legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>orientation <span class="op">=</span> <span class="st">"h"</span>, y <span class="op">=</span> <span class="fl">1.03</span>, yanchor <span class="op">=</span> <span class="st">"bottom"</span>, x <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/partial_bundle.html">partial_bundle</a></span><span class="op">(</span><span class="st">"auto"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
-<div id="htmlwidget-48ddc83930b07ffabc71" style="width:864px;height:1400px;" class="plotly_core html-widget"></div>
-<script type="application/json" data-for="htmlwidget-48ddc83930b07ffabc71">{"x":{"data":[{"type":"scatter","name":"release","legendgroup":"release","showlegend":true,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"dtype":"i4","bdata":"ECcAAKCGAQBAQg8A","bid":1},"y":{"dtype":"f8","bdata":"UzeJQWDlsD9WDi2yne/jPy2yne+nxh1A"},"hovertemplate":"=release<br>metric=build + write (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x16","yaxis":"y16"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"dtype":"i4","bdata":"oIYBACChBwBAQg8A","bid":3},"y":{"dtype":"f8","bdata":"g0OLbOf72T9W5/up8dIBQLpJDAIrhxFA"},"hovertemplate":"=release<br>metric=build + write (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x17","yaxis":"y17"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"dtype":"i4","bdata":"ECcAAJDQAwBAQg8AAAk9AA==","bid":5},"y":{"dtype":"f8","bdata":"ArDx0k1ioD/7hOtRuB7dP6ifGi/dJAJAzczMzMwMKEA="},"hovertemplate":"=release<br>metric=build + write (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x18","yaxis":"y18"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"VYmyt5Tz7j8/pyA/GzkjQCQqVDcX+1dA"},"hovertemplate":"=release<br>metric=HTML (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x13","yaxis":"y13"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"a9PYXgs6G0DN5QZDHf5AQPq3y37d2VBA"},"hovertemplate":"=release<br>metric=HTML (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x14","yaxis":"y14"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"OC140VeQ2j85l+Kqso8kQN4crtUejkRA6Q/NPLmNZEA="},"hovertemplate":"=release<br>metric=HTML (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x15","yaxis":"y15"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"uEkM8kHPzj8TWDnEsS7eP56ZmXecIghA"},"hovertemplate":"=release<br>metric=load (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x10","yaxis":"y10"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"pcZLJ6CJ3D8Kg8AOnDP2PwaBlUOLbAVA"},"hovertemplate":"=release<br>metric=load (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x11","yaxis":"y11"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"qRxaVFInyD8nMQisHFrkP/R8P4LiRwFALIeWkA/6IEA="},"hovertemplate":"=release<br>metric=load (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x12","yaxis":"y12"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"OYlBQBNhsz+HFtnO91PDP5iZmRGlvec/"},"hovertemplate":"=release<br>metric=newPlot (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x7","yaxis":"y7"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"8KfGSzeJwT/D9Shcj8LVP8HKoYmw4eU/"},"hovertemplate":"=release<br>metric=newPlot (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x8","yaxis":"y8"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"c5MYRGlvoD97FK5H4Xq0Py6HFum3r8s/FK5H4XoU6j8="},"hovertemplate":"=release<br>metric=newPlot (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x9","yaxis":"y9"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"jNr9KsB3a0ASMSWS6GV0QLGIYYcx6Y9A"},"hovertemplate":"=release<br>metric=peak renderer (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x4","yaxis":"y4"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"bvqzHykic0CASSpTzEGAQM4Xey++aIdA"},"hovertemplate":"=release<br>metric=peak renderer (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x5","yaxis":"y5"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"J4V5jzNNaECquHGL+blxQN52oblOI31A26Z4XFSLkEA="},"hovertemplate":"=release<br>metric=peak renderer (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x6","yaxis":"y6"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"TRB1H4DsLkDM0HgiiIVEQFpkO9/PMnJA"},"hovertemplate":"=release<br>metric=JS heap after (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x","yaxis":"y"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"sVJBRdUnP0A1s5YC0v1YQIdvYd34yW5A"},"hovertemplate":"=release<br>metric=JS heap after (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x2","yaxis":"y2"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"3BDjNa/aJ0COBYVBmZI1QCScFrzo0UlAixcLQ2R4ZUA="},"hovertemplate":"=release<br>metric=JS heap after (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x3","yaxis":"y3"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":true,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"Ny/dJAaBlT/ZzvdT46WrPz81XrpJDNo/"},"hovertemplate":"=core_backend<br>metric=build + write (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x16","yaxis":"y16"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"gWiR7Xw/tT+WQ4ts5/vJP6JFtvP91Ng/"},"hovertemplate":"=core_backend<br>metric=build + write (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x17","yaxis":"y17"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"9EkMAiuHlj9/xCCwcmixP8Lvp8ZLN8k/sp3vp8ZL5z8="},"hovertemplate":"=core_backend<br>metric=build + write (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x18","yaxis":"y18"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"dCZtqu6Ryz/DYWngRxUBQGxfQC/cVTVA"},"hovertemplate":"=core_backend<br>metric=HTML (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x13","yaxis":"y13"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"106UhETa8j+lEMgljnwXQPoOfuIAeidA"},"hovertemplate":"=core_backend<br>metric=HTML (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x14","yaxis":"y14"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"1lOrr64KvD8abyu9NlsFQEm6ZvLNViVAkq6ZfLNVRUA="},"hovertemplate":"=core_backend<br>metric=HTML (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x15","yaxis":"y15"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"AdV4+Q/p1z9mZmZmZmbgP4HpJu0Nvvg/"},"hovertemplate":"=core_backend<br>metric=load (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x10","yaxis":"y10"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"9ihcj8L13D/8fmqIY13mP2GNl+Ydp/I/"},"hovertemplate":"=core_backend<br>metric=load (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x11","yaxis":"y11"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"xfUobHh61T8dL9007zjdPxSuR52AJuY/j5dugQTFAUA="},"hovertemplate":"=core_backend<br>metric=load (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x12","yaxis":"y12"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"3Pl+6nO1tT+CaryEfNDDP7sehfs6cOY/"},"hovertemplate":"=core_backend<br>metric=newPlot (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x7","yaxis":"y7"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"Qd9PrWnewT+tR+HyH9LTPz4K1+dqK+Q/"},"hovertemplate":"=core_backend<br>metric=newPlot (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x8","yaxis":"y8"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"VrgeRUdyqT8ehevxQc+2P5bvp5aQD8o/8afG0ytl5T8="},"hovertemplate":"=core_backend<br>metric=newPlot (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x9","yaxis":"y9"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"ogip29lXbkBpGhTNA1h0QFHB4QURqYlA"},"hovertemplate":"=core_backend<br>metric=peak renderer (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x4","yaxis":"y4"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"M/59xoUDcUClh6HVyRl6QDpbQGg9fIFA"},"hovertemplate":"=core_backend<br>metric=peak renderer (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x5","yaxis":"y5"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"qiheZW1TbEB9CRUcXhBxQAYq499nXHhAnfLoRlhUhEA="},"hovertemplate":"=core_backend<br>metric=peak renderer (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x6","yaxis":"y6"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"09ufi4ZYMUC9APvo1H1BQKQ0m8fhlmlA"},"hovertemplate":"=core_backend<br>metric=JS heap after (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x","yaxis":"y"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"hEVFnE5iOECZDMfzGU5LQKezk8HRLmNA"},"hovertemplate":"=core_backend<br>metric=JS heap after (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x2","yaxis":"y2"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"91j60AVlLUCZ2HxcGw43QPQz9bpFjkhARpc3h+smY0A="},"hovertemplate":"=core_backend<br>metric=JS heap after (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x3","yaxis":"y3"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":true,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"O99PjZdukj+6SQwCK4eWPwYnMQisHKo/"},"hovertemplate":"=go_figure_f32<br>metric=build + write (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x16","yaxis":"y16"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"ukkMAiuHlj81BFYOLbKdP31s5/up8aI/"},"hovertemplate":"=go_figure_f32<br>metric=build + write (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x17","yaxis":"y17"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"At9PjZdukj/6fmq8dJOYPzvfT42XbqI/ghSuR+F6tD8="},"hovertemplate":"=go_figure_f32<br>metric=build + write (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x18","yaxis":"y18"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"cm4T7pV5xT/YRGYucLn5P7TKTGn9ATBA"},"hovertemplate":"=go_figure_f32<br>metric=HTML (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x13","yaxis":"y13"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"H/ZCAdvB5D++9WG9UasJQM41zNB4ohlA"},"hovertemplate":"=go_figure_f32<br>metric=HTML (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x14","yaxis":"y14"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"eH5Rgv5Crz9voMA7+XT1PyHlJ9U+XRVASPlJtU9XNUA="},"hovertemplate":"=go_figure_f32<br>metric=HTML (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x15","yaxis":"y15"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"1SLbkVz+1z/B9SjUmubdP24Urq3YX/U/"},"hovertemplate":"=go_figure_f32<br>metric=load (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x10","yaxis":"y10"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"5fup4emV2j8yCKykTkDlPy/dJAaBle8/"},"hovertemplate":"=go_figure_f32<br>metric=load (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x11","yaxis":"y11"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"H9v55owo1T8Qg8C6uI3aP2eR7fRKWeI/QrTIMsSx9z8="},"hovertemplate":"=go_figure_f32<br>metric=load (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x12","yaxis":"y12"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"y6FFtvP9tD+exkv35GHBP6VwPZLLf+Q/"},"hovertemplate":"=go_figure_f32<br>metric=newPlot (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x7","yaxis":"y7"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"Uo2Xfvs6wD+OwvWgZ7PSPzWJQZT2BuM/"},"hovertemplate":"=go_figure_f32<br>metric=newPlot (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x8","yaxis":"y8"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"SgwCK4cWqT8u3SSmCka1P1EMAltCPsg/IbByaJHt4j8="},"hovertemplate":"=go_figure_f32<br>metric=newPlot (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x9","yaxis":"y9"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"VRSvsrYpbkBW16GakqxzQBrba0HvjYlA"},"hovertemplate":"=go_figure_f32<br>metric=peak renderer (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x4","yaxis":"y4"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"I6RuZ195cEBOucK7XMR3QFImNbQB2IBA"},"hovertemplate":"=go_figure_f32<br>metric=peak renderer (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x5","yaxis":"y5"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"ahK8IY0KbEBHOC140VdwQMKIfQIoRnZABqG8j6M5gkA="},"hovertemplate":"=go_figure_f32<br>metric=peak renderer (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x6","yaxis":"y6"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"gGCOHr9/MED0h2aeXE9AQMB3mzdOV2dA"},"hovertemplate":"=go_figure_f32<br>metric=JS heap after (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x","yaxis":"y"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"AihGlsz5NUD2tpkK8cpGQK4RwTi47WBA"},"hovertemplate":"=go_figure_f32<br>metric=JS heap after (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x2","yaxis":"y2"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"y/RLxFsvLECKPh9lxDU0QHqobcMookNAIc7DCUzYXEA="},"hovertemplate":"=go_figure_f32<br>metric=JS heap after (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x3","yaxis":"y3"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":true,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"AaDCEaRSdD/lCwkBwWipP5mfG5qyM98/"},"hovertemplate":"=plotly_py<br>metric=build + write (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x16","yaxis":"y16"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"PxwkRPmCqT/I51KyVW/PPwMVU76nH94/"},"hovertemplate":"=plotly_py<br>metric=build + write (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x17","yaxis":"y17"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"AQhI+R41Yz8D76XwoNmTPwMFdXakDbM/O9pU3SN70z8="},"hovertemplate":"=plotly_py<br>metric=build + write (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x18","yaxis":"y18"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"Ykz6eyk83D+HakqyDlcRQCVcyCO4o0VA"},"hovertemplate":"=plotly_py<br>metric=HTML (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x13","yaxis":"y13"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"hQX3Ax5oEUC3CffKvK01QJ9Yp8r3pkVA"},"hovertemplate":"=plotly_py<br>metric=HTML (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x14","yaxis":"y14"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"c2n8witJwj89KChFKxcLQP8+48KBCCtA3NeBc0YES0A="},"hovertemplate":"=plotly_py<br>metric=HTML (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x15","yaxis":"y15"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"D9ejkA961j9bj8JtNIDfPzW284XJVPs/"},"hovertemplate":"=plotly_py<br>metric=load (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x10","yaxis":"y10"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"oUW2awn53D/dJAY9m1XpP4GXbnh6pfY/"},"hovertemplate":"=plotly_py<br>metric=load (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x11","yaxis":"y11"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"fBSuz9VW1D/30k2C4sfcPzIIrGBUUuc/d2iRy39IBEA="},"hovertemplate":"=plotly_py<br>metric=load (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x12","yaxis":"y12"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"2aNwHThntD9JN4kxdy3BP/yp8dJNYuQ/"},"hovertemplate":"=plotly_py<br>metric=newPlot (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x7","yaxis":"y7"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"/H5qzF1LwD/lpZtMFYzSPzEIrBxaZOM/"},"hovertemplate":"=plotly_py<br>metric=newPlot (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x8","yaxis":"y8"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"DIPASlmGqD+4SQwi/fa1P57EIMBbIMk/1Hjpnjws5D8="},"hovertemplate":"=plotly_py<br>metric=newPlot (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x9","yaxis":"y9"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"8db5t8t+bUC+Ed2zrtFyQM09JHzvb4hA"},"hovertemplate":"=plotly_py<br>metric=peak renderer (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x4","yaxis":"y4"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"RfEqa5vicUDl0CLb+X56QLtGy4EeaoNA"},"hovertemplate":"=plotly_py<br>metric=peak renderer (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x5","yaxis":"y5"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"XwfOGVHaa0CV8loJ3SVxQDasqSwKu3hAJA7ZQLrYhEA="},"hovertemplate":"=plotly_py<br>metric=peak renderer (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x6","yaxis":"y6"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"lzszwXBGMECaJmw/GTdAQLhX5q26d2dA"},"hovertemplate":"=plotly_py<br>metric=JS heap after (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x","yaxis":"y"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"pOGUufneNkCQiCmRRKlJQIVcqWdBZ2JA"},"hovertemplate":"=plotly_py<br>metric=JS heap after (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x2","yaxis":"y2"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"ZJRnXg7DK0AKSPsfYD02QMmutIzUJUhAtI6qJggNY0A="},"hovertemplate":"=plotly_py<br>metric=JS heap after (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x3","yaxis":"y3"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":true,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"PfBCFy1wdD8UwePbuwaoPx04Z0Rpr9w/"},"hovertemplate":"=plotly_py_f32<br>metric=build + write (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x16","yaxis":"y16"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"xZPt1EAZqT+4c2GkF/XLP/MhqBq9+ts/"},"hovertemplate":"=plotly_py_f32<br>metric=build + write (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x17","yaxis":"y17"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"FNBPiZUYXj8DfI8FFe2DP/lmewsjcaI/XYP7Vw8FwT8="},"hovertemplate":"=plotly_py_f32<br>metric=build + write (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x18","yaxis":"y18"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"r5l8s82N2D8B++jUlS8OQAN9Ik+S1EJA"},"hovertemplate":"=plotly_py_f32<br>metric=HTML (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x13","yaxis":"y13"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"1lWBWgw+DkDDYtS19toyQBh3g2it1EJA"},"hovertemplate":"=plotly_py_f32<br>metric=HTML (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x14","yaxis":"y14"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"BHKJIw9Esj+78e7IWK35P7w9CAH5khlALzatFAKNOUA="},"hovertemplate":"=plotly_py_f32<br>metric=HTML (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x15","yaxis":"y15"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"khgEzhlR1j90PQpvgQTdP1Q5tOpztfc/"},"hovertemplate":"=plotly_py_f32<br>metric=load (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x10","yaxis":"y10"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"yXa+nxov3T8qhxZR2hvoP8tLN2dEafQ/"},"hovertemplate":"=plotly_py_f32<br>metric=load (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x11","yaxis":"y11"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"LbKd76fG0z/k+6lZ9bnaP6scWtxGA+I/D4GV/5B++T8="},"hovertemplate":"=plotly_py_f32<br>metric=load (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x12","yaxis":"y12"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"HoXr0QDesj+YRbazWfXBPzwK1xt8YeQ/"},"hovertemplate":"=plotly_py_f32<br>metric=newPlot (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x7","yaxis":"y7"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"TDeJQWDlwD+9SQwSFD/SP/QoXMPTK+M/"},"hovertemplate":"=plotly_py_f32<br>metric=newPlot (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x8","yaxis":"y8"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"Mwis3EYDqD90vp/aiv21PwlYOYQNT8c/dWiRuWsJ4z8="},"hovertemplate":"=plotly_py_f32<br>metric=newPlot (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x9","yaxis":"y9"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"5/7qcd9qbUC69ZoeFJRyQASuK2aEt4dA"},"hovertemplate":"=plotly_py_f32<br>metric=peak renderer (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x4","yaxis":"y4"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"iPccWI6QcUC2oPfGEAB8QAMn28AdqINA"},"hovertemplate":"=plotly_py_f32<br>metric=peak renderer (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x5","yaxis":"y5"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"jnObcK/Ma0A0u+6tSExwQLd9j/rrFXZA3EjZImk3gkA="},"hovertemplate":"=plotly_py_f32<br>metric=peak renderer (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x6","yaxis":"y6"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"thMlIZEuMEBihPBo44A/QPzkKEAUTWZA"},"hovertemplate":"=plotly_py_f32<br>metric=JS heap after (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x","yaxis":"y"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"m3XG98XtNUD7d33mrFFHQMXGvI44PWFA"},"hovertemplate":"=plotly_py_f32<br>metric=JS heap after (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x2","yaxis":"y2"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"dNAlHHqTK0CXAtL+B+gzQC5weawZe0NA9dcrLLjEXEA="},"hovertemplate":"=plotly_py_f32<br>metric=JS heap after (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x3","yaxis":"y3"}],"layout":{"xaxis":{"domain":[0,0.3133333333333333],"anchor":"y","title":{"text":"values plotted"},"type":"log","showticklabels":true,"dtick":1},"yaxis":{"domain":[0,0.14166666666666666],"anchor":"x","title":{"text":""},"type":"log","showticklabels":true},"xaxis2":{"domain":[0.3333333333333333,0.6466666666666666],"anchor":"y2","title":{"text":"values plotted"},"type":"log","showticklabels":true,"dtick":1},"yaxis2":{"domain":[0,0.14166666666666666],"anchor":"x2","showticklabels":true,"type":"log"},"xaxis3":{"domain":[0.6666666666666666,0.98],"anchor":"y3","title":{"text":"values plotted"},"type":"log","showticklabels":true,"dtick":1},"yaxis3":{"domain":[0,0.14166666666666666],"anchor":"x3","showticklabels":true,"type":"log"},"xaxis4":{"domain":[0,0.3133333333333333],"anchor":"y4","showticklabels":true,"type":"log","dtick":1},"yaxis4":{"domain":[0.17166666666666666,0.31333333333333335],"anchor":"x4","title":{"text":""},"type":"log","showticklabels":true},"xaxis5":{"domain":[0.3333333333333333,0.6466666666666666],"anchor":"y5","showticklabels":true,"type":"log","dtick":1},"yaxis5":{"domain":[0.17166666666666666,0.31333333333333335],"anchor":"x5","showticklabels":true,"type":"log"},"xaxis6":{"domain":[0.6666666666666666,0.98],"anchor":"y6","showticklabels":true,"type":"log","dtick":1},"yaxis6":{"domain":[0.17166666666666666,0.31333333333333335],"anchor":"x6","showticklabels":true,"type":"log"},"xaxis7":{"domain":[0,0.3133333333333333],"anchor":"y7","showticklabels":true,"type":"log","dtick":1},"yaxis7":{"domain":[0.3433333333333333,0.485],"anchor":"x7","title":{"text":""},"type":"log","showticklabels":true},"xaxis8":{"domain":[0.3333333333333333,0.6466666666666666],"anchor":"y8","showticklabels":true,"type":"log","dtick":1},"yaxis8":{"domain":[0.3433333333333333,0.485],"anchor":"x8","showticklabels":true,"type":"log"},"xaxis9":{"domain":[0.6666666666666666,0.98],"anchor":"y9","showticklabels":true,"type":"log","dtick":1},"yaxis9":{"domain":[0.3433333333333333,0.485],"anchor":"x9","showticklabels":true,"type":"log"},"xaxis10":{"domain":[0,0.3133333333333333],"anchor":"y10","showticklabels":true,"type":"log","dtick":1},"yaxis10":{"domain":[0.515,0.6566666666666667],"anchor":"x10","title":{"text":""},"type":"log","showticklabels":true},"xaxis11":{"domain":[0.3333333333333333,0.6466666666666666],"anchor":"y11","showticklabels":true,"type":"log","dtick":1},"yaxis11":{"domain":[0.515,0.6566666666666667],"anchor":"x11","showticklabels":true,"type":"log"},"xaxis12":{"domain":[0.6666666666666666,0.98],"anchor":"y12","showticklabels":true,"type":"log","dtick":1},"yaxis12":{"domain":[0.515,0.6566666666666667],"anchor":"x12","showticklabels":true,"type":"log"},"xaxis13":{"domain":[0,0.3133333333333333],"anchor":"y13","showticklabels":true,"type":"log","dtick":1},"yaxis13":{"domain":[0.6866666666666666,0.8283333333333334],"anchor":"x13","title":{"text":""},"type":"log","showticklabels":true},"xaxis14":{"domain":[0.3333333333333333,0.6466666666666666],"anchor":"y14","showticklabels":true,"type":"log","dtick":1},"yaxis14":{"domain":[0.6866666666666666,0.8283333333333334],"anchor":"x14","showticklabels":true,"type":"log"},"xaxis15":{"domain":[0.6666666666666666,0.98],"anchor":"y15","showticklabels":true,"type":"log","dtick":1},"yaxis15":{"domain":[0.6866666666666666,0.8283333333333334],"anchor":"x15","showticklabels":true,"type":"log"},"xaxis16":{"domain":[0,0.3133333333333333],"anchor":"y16","showticklabels":true,"type":"log","dtick":1},"yaxis16":{"domain":[0.8583333333333333,1],"anchor":"x16","title":{"text":""},"type":"log","showticklabels":true},"xaxis17":{"domain":[0.3333333333333333,0.6466666666666666],"anchor":"y17","showticklabels":true,"type":"log","dtick":1},"yaxis17":{"domain":[0.8583333333333333,1],"anchor":"x17","showticklabels":true,"type":"log"},"xaxis18":{"domain":[0.6666666666666666,0.98],"anchor":"y18","showticklabels":true,"type":"log","dtick":1},"yaxis18":{"domain":[0.8583333333333333,1],"anchor":"x18","showticklabels":true,"type":"log"},"annotations":[{"y":1,"xref":"paper","x":0.15666666666666665,"yref":"paper","text":"timeseries","showarrow":false,"font":{},"xanchor":"center","yanchor":"bottom"},{"y":1,"xref":"paper","x":0.49,"yref":"paper","text":"multiseries","showarrow":false,"font":{},"xanchor":"center","yanchor":"bottom"},{"y":1,"xref":"paper","x":0.8233333333333333,"yref":"paper","text":"heatmap","showarrow":false,"font":{},"xanchor":"center","yanchor":"bottom"},{"y":0.07083333333333333,"xref":"paper","x":0.98,"yref":"paper","text":"JS heap after (MB)","showarrow":false,"font":{},"xanchor":"left","yanchor":"middle","textangle":90},{"y":0.2425,"xref":"paper","x":0.98,"yref":"paper","text":"peak renderer (MB)","showarrow":false,"font":{},"xanchor":"left","yanchor":"middle","textangle":90},{"y":0.4141666666666667,"xref":"paper","x":0.98,"yref":"paper","text":"newPlot (s)","showarrow":false,"font":{},"xanchor":"left","yanchor":"middle","textangle":90},{"y":0.5858333333333334,"xref":"paper","x":0.98,"yref":"paper","text":"load (s)","showarrow":false,"font":{},"xanchor":"left","yanchor":"middle","textangle":90},{"y":0.7575000000000001,"xref":"paper","x":0.98,"yref":"paper","text":"HTML (MB)","showarrow":false,"font":{},"xanchor":"left","yanchor":"middle","textangle":90},{"y":0.9291666666666667,"xref":"paper","x":0.98,"yref":"paper","text":"build + write (s)","showarrow":false,"font":{},"xanchor":"left","yanchor":"middle","textangle":90}],"height":1400,"legend":{"tracegroupgap":0,"title":{"text":""},"orientation":"h","y":1.03,"yanchor":"bottom","x":0},"margin":{"t":60},"template":{"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"white","polar":{"bgcolor":"white","angularaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""},"radialaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""}},"ternary":{"bgcolor":"white","aaxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"baxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"caxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1,"#f0f921"]],"sequentialminus":[[0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8","gridwidth":2},"yaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8","gridwidth":2},"zaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"white","subunitcolor":"#C8D4E3","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05}},"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]}}},"frames":[],"config":{},"source":"A","shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6426118a3c4f65592e53" style="width:864px;height:1400px;" class="plotly_core html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6426118a3c4f65592e53">{"x":{"data":[{"type":"scatter","name":"release","legendgroup":"release","showlegend":true,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"dtype":"i4","bdata":"ECcAAKCGAQBAQg8A","bid":1},"y":{"dtype":"f8","bdata":"o8QgsHJosT/Xo3A9CtfjP9V46SYxiB5A"},"hovertemplate":"=release<br>metric=build + write (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x16","yaxis":"y16"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"dtype":"i4","bdata":"oIYBACChBwBAQg8A","bid":3},"y":{"dtype":"f8","bdata":"/lG4HoXr2T8ZBFYOLbIBQGq8dJMYBBNA"},"hovertemplate":"=release<br>metric=build + write (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x17","yaxis":"y17"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"dtype":"i4","bdata":"ECcAAJDQAwBAQg8AAAk9AA==","bid":5},"y":{"dtype":"f8","bdata":"AlC4HoXroT//MQisHFrcP8P1KFyPwgJA/Knx0k1iKUA="},"hovertemplate":"=release<br>metric=build + write (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x18","yaxis":"y18"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"EK0VbY7z7j972XbaGjkjQGvwvioX+1dA"},"hovertemplate":"=release<br>metric=HTML (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x13","yaxis":"y13"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"J/c7FAU6G0AJGF3eHP5AQBjRdkzd2VBA"},"hovertemplate":"=release<br>metric=HTML (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x14","yaxis":"y14"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"sHQ+PEuQ2j91yThGso8kQG2pg7wejkRADHOCNrmNZEA="},"hovertemplate":"=release<br>metric=HTML (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x15","yaxis":"y15"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"C6wcak3zzj+0yHa+nxrfP83MzMzMzAdA"},"hovertemplate":"=release<br>metric=load (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x10","yaxis":"y10"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"JgaBHThn3D/r/dS84xT2P4NqvFKWIQVA"},"hovertemplate":"=release<br>metric=load (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x11","yaxis":"y11"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"TbgeZRniyD9KN4m5awnlP935ftk9eQFALbLdk4fFIEA="},"hovertemplate":"=release<br>metric=load (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x12","yaxis":"y12"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"PDVeeqUssz/czvdjzF3DP0jhelioNec/"},"hovertemplate":"=release<br>metric=newPlot (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x7","yaxis":"y7"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"mRgEduCcwT8csHJIv33VP69yaAn5oOU/"},"hovertemplate":"=release<br>metric=newPlot (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x8","yaxis":"y8"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"fz81XinLoD94FK4HPZu1P4dBYNXnass/ez81kst/6D8="},"hovertemplate":"=release<br>metric=newPlot (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x9","yaxis":"y9"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"4UBIFjCBa0DZ7Ej1nV90QIFeuHNhpI9A"},"hovertemplate":"=release<br>metric=peak renderer (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x4","yaxis":"y4"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"DTm2niEcc0Cughjo2heAQIOJP4o6c4dA"},"hovertemplate":"=release<br>metric=peak renderer (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x5","yaxis":"y5"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"RKfn3VhQaEAqH4Kq0atxQEd3EDtT6HxA4jlbQGg9kEA="},"hovertemplate":"=release<br>metric=peak renderer (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x6","yaxis":"y6"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"vobguIzrLkBJvhJIiYVEQBwnhXnPMnJA"},"hovertemplate":"=release<br>metric=JS heap after (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x","yaxis":"y"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"v7Z++s8mP0BREhJpG/5YQIGyKVf4yW5A"},"hovertemplate":"=release<br>metric=JS heap after (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x2","yaxis":"y2"},{"type":"scatter","name":"release","legendgroup":"release","showlegend":false,"line":{"color":"#6baed6","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"kncOZajaJ0BDBBxClZI1QK1rtBzo0UlA8Nx7uGR4ZUA="},"hovertemplate":"=release<br>metric=JS heap after (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x3","yaxis":"y3"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":true,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"fZmZmZmZmT+4HoXrUbiuP5HtfD81Xto/"},"hovertemplate":"=core_backend<br>metric=build + write (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x16","yaxis":"y16"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"/i7dJAaBtT/NzMzMzMzMP+f7qfHSTdo/"},"hovertemplate":"=core_backend<br>metric=build + write (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x17","yaxis":"y17"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"9EkMAiuHlj9+N4lBYOWwPwElBoGVQ8s/P+F6FK5H6T8="},"hovertemplate":"=core_backend<br>metric=build + write (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x18","yaxis":"y18"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"rRQCucSRyz+nsFJBRRUBQEiJXdvbVTVA"},"hovertemplate":"=core_backend<br>metric=HTML (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x13","yaxis":"y13"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"nuxmRj/a8j8XuDzWjHwXQLJiuDoAeidA"},"hovertemplate":"=core_backend<br>metric=HTML (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x14","yaxis":"y14"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"STDVzFoKvD/9vRQeNFsFQAIOoUrNViVAgUOoUrNVRUA="},"hovertemplate":"=core_backend<br>metric=HTML (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x15","yaxis":"y15"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"AdV4+Q/p1z9nZmaqYFTgP9V46SYxCPo/"},"hovertemplate":"=core_backend<br>metric=load (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x10","yaxis":"y10"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"RQwCC7Wm3T88CtcbfGHmPzOJQYLix/I/"},"hovertemplate":"=core_backend<br>metric=load (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x11","yaxis":"y11"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"HVpkO99P1T/GoUWWIY7dPyCwciSX/+Y/AFYOT6+UAUA="},"hovertemplate":"=core_backend<br>metric=load (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x12","yaxis":"y12"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"aWZmpgpGtT+D61GoNc3DP4KVQ89m1ec/"},"hovertemplate":"=core_backend<br>metric=newPlot (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x7","yaxis":"y7"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"kRbZDpwzwj8B1Xj5D+nTPw8CK5f/kOQ/"},"hovertemplate":"=core_backend<br>metric=newPlot (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x8","yaxis":"y8"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"abx00ytlqT9YZDv/If22P+ZRuP6ye8o/SOF6FK5H5T8="},"hovertemplate":"=core_backend<br>metric=newPlot (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x9","yaxis":"y9"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"5fG0/MBVbkDGbworFVR0QBCzl22nrYlA"},"hovertemplate":"=core_backend<br>metric=peak renderer (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x4","yaxis":"y4"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"Oe0pOSf2cEAe/wWCABl6QAPqzaj5KoFA"},"hovertemplate":"=core_backend<br>metric=peak renderer (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x5","yaxis":"y5"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"JlZGI59XbEB9CRUcXhBxQGqhZHJqZ3hAqHLaU3JOhEA="},"hovertemplate":"=core_backend<br>metric=peak renderer (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x6","yaxis":"y6"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"L6hvmdNZMUAyHxDoTH5BQFZ9rrbilmlA"},"hovertemplate":"=core_backend<br>metric=JS heap after (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x","yaxis":"y"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"7/54r1phOECFQZlGk01LQLJHqBnSLmNA"},"hovertemplate":"=core_backend<br>metric=JS heap after (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x2","yaxis":"y2"},{"type":"scatter","name":"core_backend","legendgroup":"core_backend","showlegend":false,"line":{"color":"#2171b5","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"xAq3fCRlLUBLIvsgyw43QLqGGRpPjkhAY2Lzce0mY0A="},"hovertemplate":"=core_backend<br>metric=JS heap after (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x3","yaxis":"y3"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":true,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"/Knx0k1ikD89ZDvfT42XP4IUrkfherQ/"},"hovertemplate":"=go_figure_f32<br>metric=build + write (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x16","yaxis":"y16"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"+n5qvHSTmD/8A1YOLbKdP3sUrkfheqQ/"},"hovertemplate":"=go_figure_f32<br>metric=build + write (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x17","yaxis":"y17"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"/Knx0k1ikD+BSQwCK4eWP8BRuB6F66E/ke18PzVeuj8="},"hovertemplate":"=go_figure_f32<br>metric=build + write (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x18","yaxis":"y18"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"kfC9v0F7xT8clZuopbn5P7gf8MAAAjBA"},"hovertemplate":"=go_figure_f32<br>metric=HTML (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x13","yaxis":"y13"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"p5at9UXC5D/gnXx6bKsJQN+JWS+GohlA"},"hovertemplate":"=go_figure_f32<br>metric=HTML (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x14","yaxis":"y14"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"9Ib7yK1Jrz+z8PW1LnX1PzI5tTNMXRVATU7tDFNXNUA="},"hovertemplate":"=go_figure_f32<br>metric=HTML (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x15","yaxis":"y15"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"iBbZVuwv1z8U2c7naiveP06287naivQ/"},"hovertemplate":"=go_figure_f32<br>metric=load (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x10","yaxis":"y10"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"M90knl4p2z+3HoVjXdzkPwbXo5I6AfA/"},"hovertemplate":"=go_figure_f32<br>metric=load (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x11","yaxis":"y11"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"zszMVMGo1D8GgZVDi2zbPyyHFh3J5eE/0czMqs/V9z8="},"hovertemplate":"=go_figure_f32<br>metric=load (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x12","yaxis":"y12"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"HYXrcYqOtD9BtvPdAgnCP+pRuJaQD+Q/"},"hovertemplate":"=go_figure_f32<br>metric=newPlot (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x7","yaxis":"y7"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"pcZLJ6CJwD+5SQx6NqvSP7BH4UYDeOM/"},"hovertemplate":"=go_figure_f32<br>metric=newPlot (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x8","yaxis":"y8"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"GS/dZBniqD8mMQhMpgq2PwMAABDpt8c/H7BynKIj4z8="},"hovertemplate":"=go_figure_f32<br>metric=newPlot (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x9","yaxis":"y9"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"z9vY7Ej1bUBCWmPQCaFzQK7TSEvl7YhA"},"hovertemplate":"=go_figure_f32<br>metric=peak renderer (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x4","yaxis":"y4"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"9DehEAGHcEAGZK93f7x3QB1znrEv2YBA"},"hovertemplate":"=go_figure_f32<br>metric=peak renderer (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x5","yaxis":"y5"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"xLEubqMBbEBHOC140VdwQFyOVyB6UnZA0XgiiPNwgkA="},"hovertemplate":"=go_figure_f32<br>metric=peak renderer (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x6","yaxis":"y6"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"EVSNXg2AMECyZfm6DE9AQPvJGB9mV2dA"},"hovertemplate":"=go_figure_f32<br>metric=JS heap after (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x","yaxis":"y"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"UWfuIeH7NUAAj6hQ3cpGQLQ5zm3C7WBA"},"hovertemplate":"=go_figure_f32<br>metric=JS heap after (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x2","yaxis":"y2"},{"type":"scatter","name":"go_figure_f32","legendgroup":"go_figure_f32","showlegend":false,"line":{"color":"#08306b","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"CWtj7IQvLEBwl/260zU0QNnNjH40okNAg/dVuVDYXEA="},"hovertemplate":"=go_figure_f32<br>metric=JS heap after (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x3","yaxis":"y3"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":true,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"/d2mvnp8dT9JZ8EzvZ6pP0PmyqDaMOA/"},"hovertemplate":"=plotly_py<br>metric=build + write (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x16","yaxis":"y16"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"AbSh8/5lqz83VIzzN6HPP45K7AVfq94/"},"hovertemplate":"=plotly_py<br>metric=build + write (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x17","yaxis":"y17"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"9/8MbdW1Yz8CAW4WLxaUP/9BhZLlfrQ/k4KNFmCy0z8="},"hovertemplate":"=plotly_py<br>metric=build + write (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x18","yaxis":"y18"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"Ykz6eyk83D+HakqyDlcRQCVcyCO4o0VA"},"hovertemplate":"=plotly_py<br>metric=HTML (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x13","yaxis":"y13"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"hQX3Ax5oEUC3CffKvK01QJ9Yp8r3pkVA"},"hovertemplate":"=plotly_py<br>metric=HTML (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x14","yaxis":"y14"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"c2n8witJwj89KChFKxcLQP8+48KBCCtA3NeBc0YES0A="},"hovertemplate":"=plotly_py<br>metric=HTML (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x15","yaxis":"y15"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"iWzn68A51z8OLbKd76feP6BwPSzUmvs/"},"hovertemplate":"=plotly_py<br>metric=load (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x10","yaxis":"y10"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"7dJNQj7o3T8kBoFRSZ3oP3dmZt5xivY/"},"hovertemplate":"=plotly_py<br>metric=load (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x11","yaxis":"y11"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"9v3UiNLe1D/Jdr6fGi/dPw4CKw8Lteg/N99Pr5TlA0A="},"hovertemplate":"=plotly_py<br>metric=load (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x12","yaxis":"y12"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"2aNwHThntD+cxCCwcmjBP0e284XJVOU/"},"hovertemplate":"=plotly_py<br>metric=newPlot (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x7","yaxis":"y7"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"+iqH5h2nwD+Q7Xy3QILSPzDdJEp7g+M/"},"hovertemplate":"=plotly_py<br>metric=newPlot (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x8","yaxis":"y8"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"XBBYuWsJqT/ESzdJnYC2P5tDi4y5a8k//qnx4jYa5D8="},"hovertemplate":"=plotly_py<br>metric=newPlot (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x9","yaxis":"y9"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"dqkR+pl6bUCZSj/h7NZyQM2VQbXBiYhA"},"hovertemplate":"=plotly_py<br>metric=peak renderer (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x4","yaxis":"y4"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"jsni/iPTcUBUcHhBRGp6QG8tk+F4PoNA"},"hovertemplate":"=plotly_py<br>metric=peak renderer (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x5","yaxis":"y5"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"ijpzDwnfa0A5nWSryylxQAspP6n26XhAsd09QPflhEA="},"hovertemplate":"=plotly_py<br>metric=peak renderer (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x6","yaxis":"y6"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"JVryeFpGMECcTUcANzdAQHpsy4Czd2dA"},"hovertemplate":"=plotly_py<br>metric=JS heap after (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x","yaxis":"y"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"oz1eSIffNkCJ00m2uqZJQJvJN9vcZ2JA"},"hovertemplate":"=plotly_py<br>metric=JS heap after (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x2","yaxis":"y2"},{"type":"scatter","name":"plotly_py","legendgroup":"plotly_py","showlegend":false,"line":{"color":"#fd8d3c","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"Di+ISE3DK0DjHHV0XD02QGsr9pfdJUhAQxuADQgNY0A="},"hovertemplate":"=plotly_py<br>metric=JS heap after (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x3","yaxis":"y3"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":true,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"PWdg5GVNdD/SuZYhciCoP6FpTDK5a94/"},"hovertemplate":"=plotly_py_f32<br>metric=build + write (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x16","yaxis":"y16"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"hOHqAIi7tD98eBDnUxrMP0nJrXQ34t0/"},"hovertemplate":"=plotly_py_f32<br>metric=build + write (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x17","yaxis":"y17"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"BUD66+qVXz/+fVhBnB+EPwaJJ7uZ0aI/RPtYwW8DwT8="},"hovertemplate":"=plotly_py_f32<br>metric=build + write (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x18","yaxis":"y18"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"r5l8s82N2D8B++jUlS8OQAN9Ik+S1EJA"},"hovertemplate":"=plotly_py_f32<br>metric=HTML (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x13","yaxis":"y13"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"1lWBWgw+DkDDYtS19toyQBh3g2it1EJA"},"hovertemplate":"=plotly_py_f32<br>metric=HTML (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x14","yaxis":"y14"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"BHKJIw9Esj+78e7IWK35P7w9CAH5khlALzatFAKNOUA="},"hovertemplate":"=plotly_py_f32<br>metric=HTML (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x15","yaxis":"y15"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"ZRBYSZ2A1j8dL9007zjdP3sSg1rTvPc/"},"hovertemplate":"=plotly_py_f32<br>metric=load (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x10","yaxis":"y10"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"JNv5Bl+Y3D/AyqEBvAXoP/rSTR4WavQ/"},"hovertemplate":"=plotly_py_f32<br>metric=load (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x11","yaxis":"y11"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"0czMZKpg1D8SWDk8vVLaP/yp8dJNYuI/KVpk1edq+T8="},"hovertemplate":"=plotly_py_f32<br>metric=load (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x12","yaxis":"y12"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"4KWbhHzQsz+Yl25SJ6DBP9ajcPkP6eM/"},"hovertemplate":"=plotly_py_f32<br>metric=newPlot (s)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x7","yaxis":"y7"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"pcZLJ6CJwD+V7XzXEvLRP8dLN4lBYOM/"},"hovertemplate":"=plotly_py_f32<br>metric=newPlot (s)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x8","yaxis":"y8"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"BiuH1jTvqD+58/0UHcm1P62d74f028c/JAaBUUmd4j8="},"hovertemplate":"=plotly_py_f32<br>metric=newPlot (s)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x9","yaxis":"y9"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"/rRRnQ5kbUB0toDQevhyQFVtN8E3TYdA"},"hovertemplate":"=plotly_py_f32<br>metric=peak renderer (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x4","yaxis":"y4"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"UWnEzD6PcUCWlSaloNt7QFlS7j7HR4NA"},"hovertemplate":"=plotly_py_f32<br>metric=peak renderer (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x5","yaxis":"y5"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"jnObcK/Ma0AoYDsYsU9wQNi7P96rVnZAdHtJY7SOgkA="},"hovertemplate":"=plotly_py_f32<br>metric=peak renderer (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x6","yaxis":"y6"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":1},"y":{"dtype":"f8","bdata":"x2eyf54uMEAJ/OHnv38/QGjPZWoSTWZA"},"hovertemplate":"=plotly_py_f32<br>metric=JS heap after (MB)<br>case=timeseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x","yaxis":"y"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":3},"y":{"dtype":"f8","bdata":"9Pi9TX/uNUCl9iLajlNHQLYxdsJLPWFA"},"hovertemplate":"=plotly_py_f32<br>metric=JS heap after (MB)<br>case=multiseries<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x2","yaxis":"y2"},{"type":"scatter","name":"plotly_py_f32","legendgroup":"plotly_py_f32","showlegend":false,"line":{"color":"#a63603","dash":"solid"},"marker":{"symbol":"circle"},"orientation":"v","mode":"lines+markers","x":{"bref":5},"y":{"dtype":"f8","bdata":"E30+yoiTK0CXAtL+B+gzQBXmPc40e0NAnIwqw7jEXEA="},"hovertemplate":"=plotly_py_f32<br>metric=JS heap after (MB)<br>case=heatmap<br>values plotted=%{x}<br>=%{y}<extra><\/extra>","xaxis":"x3","yaxis":"y3"}],"layout":{"xaxis":{"domain":[0,0.3133333333333333],"anchor":"y","title":{"text":"values plotted"},"type":"log","showticklabels":true,"dtick":1},"yaxis":{"domain":[0,0.14166666666666666],"anchor":"x","title":{"text":""},"type":"log","showticklabels":true},"xaxis2":{"domain":[0.3333333333333333,0.6466666666666666],"anchor":"y2","title":{"text":"values plotted"},"type":"log","showticklabels":true,"dtick":1},"yaxis2":{"domain":[0,0.14166666666666666],"anchor":"x2","showticklabels":true,"type":"log"},"xaxis3":{"domain":[0.6666666666666666,0.98],"anchor":"y3","title":{"text":"values plotted"},"type":"log","showticklabels":true,"dtick":1},"yaxis3":{"domain":[0,0.14166666666666666],"anchor":"x3","showticklabels":true,"type":"log"},"xaxis4":{"domain":[0,0.3133333333333333],"anchor":"y4","showticklabels":true,"type":"log","dtick":1},"yaxis4":{"domain":[0.17166666666666666,0.31333333333333335],"anchor":"x4","title":{"text":""},"type":"log","showticklabels":true},"xaxis5":{"domain":[0.3333333333333333,0.6466666666666666],"anchor":"y5","showticklabels":true,"type":"log","dtick":1},"yaxis5":{"domain":[0.17166666666666666,0.31333333333333335],"anchor":"x5","showticklabels":true,"type":"log"},"xaxis6":{"domain":[0.6666666666666666,0.98],"anchor":"y6","showticklabels":true,"type":"log","dtick":1},"yaxis6":{"domain":[0.17166666666666666,0.31333333333333335],"anchor":"x6","showticklabels":true,"type":"log"},"xaxis7":{"domain":[0,0.3133333333333333],"anchor":"y7","showticklabels":true,"type":"log","dtick":1},"yaxis7":{"domain":[0.3433333333333333,0.485],"anchor":"x7","title":{"text":""},"type":"log","showticklabels":true},"xaxis8":{"domain":[0.3333333333333333,0.6466666666666666],"anchor":"y8","showticklabels":true,"type":"log","dtick":1},"yaxis8":{"domain":[0.3433333333333333,0.485],"anchor":"x8","showticklabels":true,"type":"log"},"xaxis9":{"domain":[0.6666666666666666,0.98],"anchor":"y9","showticklabels":true,"type":"log","dtick":1},"yaxis9":{"domain":[0.3433333333333333,0.485],"anchor":"x9","showticklabels":true,"type":"log"},"xaxis10":{"domain":[0,0.3133333333333333],"anchor":"y10","showticklabels":true,"type":"log","dtick":1},"yaxis10":{"domain":[0.515,0.6566666666666667],"anchor":"x10","title":{"text":""},"type":"log","showticklabels":true},"xaxis11":{"domain":[0.3333333333333333,0.6466666666666666],"anchor":"y11","showticklabels":true,"type":"log","dtick":1},"yaxis11":{"domain":[0.515,0.6566666666666667],"anchor":"x11","showticklabels":true,"type":"log"},"xaxis12":{"domain":[0.6666666666666666,0.98],"anchor":"y12","showticklabels":true,"type":"log","dtick":1},"yaxis12":{"domain":[0.515,0.6566666666666667],"anchor":"x12","showticklabels":true,"type":"log"},"xaxis13":{"domain":[0,0.3133333333333333],"anchor":"y13","showticklabels":true,"type":"log","dtick":1},"yaxis13":{"domain":[0.6866666666666666,0.8283333333333334],"anchor":"x13","title":{"text":""},"type":"log","showticklabels":true},"xaxis14":{"domain":[0.3333333333333333,0.6466666666666666],"anchor":"y14","showticklabels":true,"type":"log","dtick":1},"yaxis14":{"domain":[0.6866666666666666,0.8283333333333334],"anchor":"x14","showticklabels":true,"type":"log"},"xaxis15":{"domain":[0.6666666666666666,0.98],"anchor":"y15","showticklabels":true,"type":"log","dtick":1},"yaxis15":{"domain":[0.6866666666666666,0.8283333333333334],"anchor":"x15","showticklabels":true,"type":"log"},"xaxis16":{"domain":[0,0.3133333333333333],"anchor":"y16","showticklabels":true,"type":"log","dtick":1},"yaxis16":{"domain":[0.8583333333333333,1],"anchor":"x16","title":{"text":""},"type":"log","showticklabels":true},"xaxis17":{"domain":[0.3333333333333333,0.6466666666666666],"anchor":"y17","showticklabels":true,"type":"log","dtick":1},"yaxis17":{"domain":[0.8583333333333333,1],"anchor":"x17","showticklabels":true,"type":"log"},"xaxis18":{"domain":[0.6666666666666666,0.98],"anchor":"y18","showticklabels":true,"type":"log","dtick":1},"yaxis18":{"domain":[0.8583333333333333,1],"anchor":"x18","showticklabels":true,"type":"log"},"annotations":[{"y":1,"xref":"paper","x":0.15666666666666665,"yref":"paper","text":"timeseries","showarrow":false,"font":{},"xanchor":"center","yanchor":"bottom"},{"y":1,"xref":"paper","x":0.49,"yref":"paper","text":"multiseries","showarrow":false,"font":{},"xanchor":"center","yanchor":"bottom"},{"y":1,"xref":"paper","x":0.8233333333333333,"yref":"paper","text":"heatmap","showarrow":false,"font":{},"xanchor":"center","yanchor":"bottom"},{"y":0.07083333333333333,"xref":"paper","x":0.98,"yref":"paper","text":"JS heap after (MB)","showarrow":false,"font":{},"xanchor":"left","yanchor":"middle","textangle":90},{"y":0.2425,"xref":"paper","x":0.98,"yref":"paper","text":"peak renderer (MB)","showarrow":false,"font":{},"xanchor":"left","yanchor":"middle","textangle":90},{"y":0.4141666666666667,"xref":"paper","x":0.98,"yref":"paper","text":"newPlot (s)","showarrow":false,"font":{},"xanchor":"left","yanchor":"middle","textangle":90},{"y":0.5858333333333334,"xref":"paper","x":0.98,"yref":"paper","text":"load (s)","showarrow":false,"font":{},"xanchor":"left","yanchor":"middle","textangle":90},{"y":0.7575000000000001,"xref":"paper","x":0.98,"yref":"paper","text":"HTML (MB)","showarrow":false,"font":{},"xanchor":"left","yanchor":"middle","textangle":90},{"y":0.9291666666666667,"xref":"paper","x":0.98,"yref":"paper","text":"build + write (s)","showarrow":false,"font":{},"xanchor":"left","yanchor":"middle","textangle":90}],"height":1400,"legend":{"tracegroupgap":0,"title":{"text":""},"orientation":"h","y":1.03,"yanchor":"bottom","x":0},"margin":{"t":60},"template":{"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"white","polar":{"bgcolor":"white","angularaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""},"radialaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""}},"ternary":{"bgcolor":"white","aaxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"baxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"caxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1,"#f0f921"]],"sequentialminus":[[0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8","gridwidth":2},"yaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8","gridwidth":2},"zaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"white","subunitcolor":"#C8D4E3","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05}},"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]}}},"frames":[],"config":{},"source":"A","shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"]},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section><section class="level3"><h3 id="relative-to-the-cran-release">Relative to the CRAN release<a class="anchor" aria-label="anchor" href="#relative-to-the-cran-release"></a>
@@ -1323,7 +1324,7 @@
 <td style="text-align: left;">timeseries</td>
 <td style="text-align: left;">10,000</td>
 <td style="text-align: left;">core_backend</td>
-<td style="text-align: right;">3.1</td>
+<td style="text-align: right;">2.7</td>
 <td style="text-align: right;">4.5</td>
 <td style="text-align: right;">0.6</td>
 <td style="text-align: right;">0.9</td>
@@ -1333,9 +1334,9 @@
 <td style="text-align: left;">timeseries</td>
 <td style="text-align: left;">10,000</td>
 <td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">3.7</td>
+<td style="text-align: right;">4.3</td>
 <td style="text-align: right;">5.8</td>
-<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">0.7</td>
 <td style="text-align: right;">0.9</td>
 <td style="text-align: right;">0.9</td>
 </tr>
@@ -1343,59 +1344,59 @@
 <td style="text-align: left;">timeseries</td>
 <td style="text-align: left;">10,000</td>
 <td style="text-align: left;">plotly_py</td>
-<td style="text-align: right;">13.3</td>
+<td style="text-align: right;">13.0</td>
 <td style="text-align: right;">2.2</td>
 <td style="text-align: right;">0.7</td>
 <td style="text-align: right;">0.9</td>
-<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.9</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">timeseries</td>
 <td style="text-align: left;">10,000</td>
+<td style="text-align: left;">plotly_py_f32</td>
+<td style="text-align: right;">13.7</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">timeseries</td>
+<td style="text-align: left;">100,000</td>
+<td style="text-align: left;">core_backend</td>
+<td style="text-align: right;">10.3</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">timeseries</td>
+<td style="text-align: left;">100,000</td>
+<td style="text-align: left;">go_figure_f32</td>
+<td style="text-align: right;">27.0</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">timeseries</td>
+<td style="text-align: left;">100,000</td>
+<td style="text-align: left;">plotly_py</td>
+<td style="text-align: right;">12.4</td>
+<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.1</td>
+<td style="text-align: right;">1.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">timeseries</td>
+<td style="text-align: left;">100,000</td>
 <td style="text-align: left;">plotly_py_f32</td>
 <td style="text-align: right;">13.2</td>
 <td style="text-align: right;">2.5</td>
-<td style="text-align: right;">0.7</td>
-<td style="text-align: right;">0.9</td>
-<td style="text-align: right;">1.0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">timeseries</td>
-<td style="text-align: left;">100,000</td>
-<td style="text-align: left;">core_backend</td>
-<td style="text-align: right;">11.5</td>
-<td style="text-align: right;">4.5</td>
-<td style="text-align: right;">0.9</td>
-<td style="text-align: right;">1.0</td>
-<td style="text-align: right;">1.2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">timeseries</td>
-<td style="text-align: left;">100,000</td>
-<td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">28.3</td>
-<td style="text-align: right;">6.0</td>
-<td style="text-align: right;">1.0</td>
-<td style="text-align: right;">1.0</td>
-<td style="text-align: right;">1.3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">timeseries</td>
-<td style="text-align: left;">100,000</td>
-<td style="text-align: left;">plotly_py</td>
-<td style="text-align: right;">12.6</td>
-<td style="text-align: right;">2.2</td>
-<td style="text-align: right;">1.0</td>
 <td style="text-align: right;">1.1</td>
-<td style="text-align: right;">1.3</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">timeseries</td>
-<td style="text-align: left;">100,000</td>
-<td style="text-align: left;">plotly_py_f32</td>
-<td style="text-align: right;">13.3</td>
-<td style="text-align: right;">2.5</td>
-<td style="text-align: right;">1.0</td>
 <td style="text-align: right;">1.1</td>
 <td style="text-align: right;">1.3</td>
 </tr>
@@ -1403,9 +1404,9 @@
 <td style="text-align: left;">timeseries</td>
 <td style="text-align: left;">1,000,000</td>
 <td style="text-align: left;">core_backend</td>
-<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">18.5</td>
 <td style="text-align: right;">4.5</td>
-<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">1.8</td>
 <td style="text-align: right;">1.2</td>
 <td style="text-align: right;">1.4</td>
 </tr>
@@ -1413,19 +1414,19 @@
 <td style="text-align: left;">timeseries</td>
 <td style="text-align: left;">1,000,000</td>
 <td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">146.0</td>
+<td style="text-align: right;">95.4</td>
 <td style="text-align: right;">6.0</td>
 <td style="text-align: right;">2.3</td>
-<td style="text-align: right;">1.2</td>
+<td style="text-align: right;">1.3</td>
 <td style="text-align: right;">1.6</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">timeseries</td>
 <td style="text-align: left;">1,000,000</td>
 <td style="text-align: left;">plotly_py</td>
-<td style="text-align: right;">15.3</td>
+<td style="text-align: right;">15.1</td>
 <td style="text-align: right;">2.2</td>
-<td style="text-align: right;">1.8</td>
+<td style="text-align: right;">1.7</td>
 <td style="text-align: right;">1.3</td>
 <td style="text-align: right;">1.6</td>
 </tr>
@@ -1433,17 +1434,17 @@
 <td style="text-align: left;">timeseries</td>
 <td style="text-align: left;">1,000,000</td>
 <td style="text-align: left;">plotly_py_f32</td>
-<td style="text-align: right;">16.6</td>
+<td style="text-align: right;">16.1</td>
 <td style="text-align: right;">2.5</td>
 <td style="text-align: right;">2.0</td>
-<td style="text-align: right;">1.3</td>
+<td style="text-align: right;">1.4</td>
 <td style="text-align: right;">1.6</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">multiseries</td>
 <td style="text-align: left;">10 × 10,000</td>
 <td style="text-align: left;">core_backend</td>
-<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">4.8</td>
 <td style="text-align: right;">5.8</td>
 <td style="text-align: right;">1.0</td>
 <td style="text-align: right;">1.1</td>
@@ -1453,9 +1454,9 @@
 <td style="text-align: left;">multiseries</td>
 <td style="text-align: left;">10 × 10,000</td>
 <td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">16.9</td>
 <td style="text-align: right;">10.5</td>
-<td style="text-align: right;">1.1</td>
+<td style="text-align: right;">1.0</td>
 <td style="text-align: right;">1.2</td>
 <td style="text-align: right;">1.4</td>
 </tr>
@@ -1463,9 +1464,9 @@
 <td style="text-align: left;">multiseries</td>
 <td style="text-align: left;">10 × 10,000</td>
 <td style="text-align: left;">plotly_py</td>
-<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">7.6</td>
 <td style="text-align: right;">1.6</td>
-<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.9</td>
 <td style="text-align: right;">1.1</td>
 <td style="text-align: right;">1.4</td>
 </tr>
@@ -1473,7 +1474,7 @@
 <td style="text-align: left;">multiseries</td>
 <td style="text-align: left;">10 × 10,000</td>
 <td style="text-align: left;">plotly_py_f32</td>
-<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">5.0</td>
 <td style="text-align: right;">1.8</td>
 <td style="text-align: right;">1.0</td>
 <td style="text-align: right;">1.1</td>
@@ -1483,7 +1484,7 @@
 <td style="text-align: left;">multiseries</td>
 <td style="text-align: left;">10 × 50,000</td>
 <td style="text-align: left;">core_backend</td>
-<td style="text-align: right;">11.0</td>
+<td style="text-align: right;">9.8</td>
 <td style="text-align: right;">5.8</td>
 <td style="text-align: right;">2.0</td>
 <td style="text-align: right;">1.2</td>
@@ -1493,7 +1494,7 @@
 <td style="text-align: left;">multiseries</td>
 <td style="text-align: left;">10 × 50,000</td>
 <td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">76.8</td>
+<td style="text-align: right;">76.3</td>
 <td style="text-align: right;">10.6</td>
 <td style="text-align: right;">2.1</td>
 <td style="text-align: right;">1.4</td>
@@ -1503,7 +1504,7 @@
 <td style="text-align: left;">multiseries</td>
 <td style="text-align: left;">10 × 50,000</td>
 <td style="text-align: left;">plotly_py</td>
-<td style="text-align: right;">9.1</td>
+<td style="text-align: right;">9.0</td>
 <td style="text-align: right;">1.6</td>
 <td style="text-align: right;">1.8</td>
 <td style="text-align: right;">1.2</td>
@@ -1513,7 +1514,7 @@
 <td style="text-align: left;">multiseries</td>
 <td style="text-align: left;">10 × 50,000</td>
 <td style="text-align: left;">plotly_py_f32</td>
-<td style="text-align: right;">10.2</td>
+<td style="text-align: right;">10.1</td>
 <td style="text-align: right;">1.8</td>
 <td style="text-align: right;">1.8</td>
 <td style="text-align: right;">1.2</td>
@@ -1523,19 +1524,19 @@
 <td style="text-align: left;">multiseries</td>
 <td style="text-align: left;">10 × 100,000</td>
 <td style="text-align: left;">core_backend</td>
-<td style="text-align: right;">11.3</td>
+<td style="text-align: right;">11.6</td>
 <td style="text-align: right;">5.7</td>
 <td style="text-align: right;">2.3</td>
-<td style="text-align: right;">1.3</td>
+<td style="text-align: right;">1.4</td>
 <td style="text-align: right;">1.6</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">multiseries</td>
 <td style="text-align: left;">10 × 100,000</td>
 <td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">118.4</td>
+<td style="text-align: right;">118.8</td>
 <td style="text-align: right;">10.5</td>
-<td style="text-align: right;">2.7</td>
+<td style="text-align: right;">2.6</td>
 <td style="text-align: right;">1.4</td>
 <td style="text-align: right;">1.8</td>
 </tr>
@@ -1543,7 +1544,7 @@
 <td style="text-align: left;">multiseries</td>
 <td style="text-align: left;">10 × 100,000</td>
 <td style="text-align: left;">plotly_py</td>
-<td style="text-align: right;">9.3</td>
+<td style="text-align: right;">9.9</td>
 <td style="text-align: right;">1.6</td>
 <td style="text-align: right;">1.9</td>
 <td style="text-align: right;">1.2</td>
@@ -1553,7 +1554,7 @@
 <td style="text-align: left;">multiseries</td>
 <td style="text-align: left;">10 × 100,000</td>
 <td style="text-align: left;">plotly_py_f32</td>
-<td style="text-align: right;">10.0</td>
+<td style="text-align: right;">10.2</td>
 <td style="text-align: right;">1.8</td>
 <td style="text-align: right;">2.1</td>
 <td style="text-align: right;">1.2</td>
@@ -1563,7 +1564,7 @@
 <td style="text-align: left;">heatmap</td>
 <td style="text-align: left;">100²</td>
 <td style="text-align: left;">core_backend</td>
-<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">1.6</td>
 <td style="text-align: right;">3.8</td>
 <td style="text-align: right;">0.6</td>
 <td style="text-align: right;">0.9</td>
@@ -1573,7 +1574,7 @@
 <td style="text-align: left;">heatmap</td>
 <td style="text-align: left;">100²</td>
 <td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">1.8</td>
+<td style="text-align: right;">2.2</td>
 <td style="text-align: right;">6.8</td>
 <td style="text-align: right;">0.6</td>
 <td style="text-align: right;">0.9</td>
@@ -1583,7 +1584,7 @@
 <td style="text-align: left;">heatmap</td>
 <td style="text-align: left;">100²</td>
 <td style="text-align: left;">plotly_py</td>
-<td style="text-align: right;">13.6</td>
+<td style="text-align: right;">14.5</td>
 <td style="text-align: right;">2.9</td>
 <td style="text-align: right;">0.6</td>
 <td style="text-align: right;">0.9</td>
@@ -1593,7 +1594,7 @@
 <td style="text-align: left;">heatmap</td>
 <td style="text-align: left;">100²</td>
 <td style="text-align: left;">plotly_py_f32</td>
-<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">18.2</td>
 <td style="text-align: right;">5.8</td>
 <td style="text-align: right;">0.6</td>
 <td style="text-align: right;">0.9</td>
@@ -1613,7 +1614,7 @@
 <td style="text-align: left;">heatmap</td>
 <td style="text-align: left;">500²</td>
 <td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">19.0</td>
+<td style="text-align: right;">20.1</td>
 <td style="text-align: right;">7.7</td>
 <td style="text-align: right;">1.5</td>
 <td style="text-align: right;">1.1</td>
@@ -1623,7 +1624,7 @@
 <td style="text-align: left;">heatmap</td>
 <td style="text-align: left;">500²</td>
 <td style="text-align: left;">plotly_py</td>
-<td style="text-align: right;">23.5</td>
+<td style="text-align: right;">22.6</td>
 <td style="text-align: right;">3.0</td>
 <td style="text-align: right;">1.4</td>
 <td style="text-align: right;">1.0</td>
@@ -1633,9 +1634,9 @@
 <td style="text-align: left;">heatmap</td>
 <td style="text-align: left;">500²</td>
 <td style="text-align: left;">plotly_py_f32</td>
-<td style="text-align: right;">46.8</td>
+<td style="text-align: right;">45.1</td>
 <td style="text-align: right;">6.4</td>
-<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">1.6</td>
 <td style="text-align: right;">1.1</td>
 <td style="text-align: right;">1.1</td>
 </tr>
@@ -1643,9 +1644,9 @@
 <td style="text-align: left;">heatmap</td>
 <td style="text-align: left;">1000²</td>
 <td style="text-align: left;">core_backend</td>
-<td style="text-align: right;">11.5</td>
+<td style="text-align: right;">11.0</td>
 <td style="text-align: right;">3.9</td>
-<td style="text-align: right;">3.1</td>
+<td style="text-align: right;">3.0</td>
 <td style="text-align: right;">1.2</td>
 <td style="text-align: right;">1.1</td>
 </tr>
@@ -1653,9 +1654,9 @@
 <td style="text-align: left;">heatmap</td>
 <td style="text-align: left;">1000²</td>
 <td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">63.0</td>
+<td style="text-align: right;">67.0</td>
 <td style="text-align: right;">7.7</td>
-<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">3.9</td>
 <td style="text-align: right;">1.3</td>
 <td style="text-align: right;">1.3</td>
 </tr>
@@ -1663,9 +1664,9 @@
 <td style="text-align: left;">heatmap</td>
 <td style="text-align: left;">1000²</td>
 <td style="text-align: left;">plotly_py</td>
-<td style="text-align: right;">30.5</td>
+<td style="text-align: right;">29.3</td>
 <td style="text-align: right;">3.0</td>
-<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">2.8</td>
 <td style="text-align: right;">1.2</td>
 <td style="text-align: right;">1.1</td>
 </tr>
@@ -1673,7 +1674,7 @@
 <td style="text-align: left;">heatmap</td>
 <td style="text-align: left;">1000²</td>
 <td style="text-align: left;">plotly_py_f32</td>
-<td style="text-align: right;">63.0</td>
+<td style="text-align: right;">63.8</td>
 <td style="text-align: right;">6.4</td>
 <td style="text-align: right;">3.8</td>
 <td style="text-align: right;">1.3</td>
@@ -1683,7 +1684,7 @@
 <td style="text-align: left;">heatmap</td>
 <td style="text-align: left;">2000²</td>
 <td style="text-align: left;">core_backend</td>
-<td style="text-align: right;">16.5</td>
+<td style="text-align: right;">16.1</td>
 <td style="text-align: right;">3.9</td>
 <td style="text-align: right;">3.8</td>
 <td style="text-align: right;">1.6</td>
@@ -1693,9 +1694,9 @@
 <td style="text-align: left;">heatmap</td>
 <td style="text-align: left;">2000²</td>
 <td style="text-align: left;">go_figure_f32</td>
-<td style="text-align: right;">150.3</td>
+<td style="text-align: right;">123.2</td>
 <td style="text-align: right;">7.7</td>
-<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">5.6</td>
 <td style="text-align: right;">1.8</td>
 <td style="text-align: right;">1.5</td>
 </tr>
@@ -1703,9 +1704,9 @@
 <td style="text-align: left;">heatmap</td>
 <td style="text-align: left;">2000²</td>
 <td style="text-align: left;">plotly_py</td>
-<td style="text-align: right;">39.5</td>
+<td style="text-align: right;">41.2</td>
 <td style="text-align: right;">3.0</td>
-<td style="text-align: right;">3.3</td>
+<td style="text-align: right;">3.4</td>
 <td style="text-align: right;">1.6</td>
 <td style="text-align: right;">1.1</td>
 </tr>
@@ -1713,7 +1714,7 @@
 <td style="text-align: left;">heatmap</td>
 <td style="text-align: left;">2000²</td>
 <td style="text-align: left;">plotly_py_f32</td>
-<td style="text-align: right;">90.4</td>
+<td style="text-align: right;">95.5</td>
 <td style="text-align: right;">6.4</td>
 <td style="text-align: right;">5.3</td>
 <td style="text-align: right;">1.8</td>
@@ -1728,16 +1729,16 @@
 <p>Numbers in this section are medians from the results above, at the largest size of each case, unless marked as a standalone timing (measured separately, during development).</p>
 <section class="level3"><h3 id="how-plotly-core-sends-data-to-the-browser">How plotly.core sends data to the browser<a class="anchor" aria-label="anchor" href="#how-plotly-core-sends-data-to-the-browser"></a>
 </h3>
-<p><strong>Numeric arrays as base64 typed arrays.</strong> Numeric vectors and matrices in traces are sent as <code>{dtype, bdata, shape}</code>, as plotly.py does, rather than as JSON numbers; whole numbers are narrowed to the smallest integer type without loss. A double takes 10.7 bytes of base64 instead of about 18–20 characters of JSON, and the browser decodes the bytes straight into a typed array instead of parsing text. For the heatmap this takes the page from 164.4 MB (CRAN plotly) to 42.7 MB (<code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plot_ly()</a></code> with plotly.core), the load time from 8.49 s to 2.22 s, and the renderer’s peak memory from 1059 MB to 651 MB. plotly.js’s own <code>newPlot()</code> time is about the same for every variant, so the faster loads come from fetching, parsing and decoding less data, not from plotly.js itself.</p>
-<p><strong>Date-times as numbers.</strong> Dates and date-times are sent as typed arrays of days or milliseconds; the widget’s JavaScript turns them back into the strings R would have written. UTC offsets are looked up once per 15-minute bin rather than once per value. For the 1M-point time series, CRAN plotly writes a page of 95.9 MB in 7.44 s; with plotly.core the same <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plot_ly()</a></code> code writes 21.3 MB in 0.41 s. plotly.py writes date-times as text, so its time series pages are larger (43.3 MB).</p>
+<p><strong>Numeric arrays as base64 typed arrays.</strong> Numeric vectors and matrices in traces are sent as <code>{dtype, bdata, shape}</code>, as plotly.py does, rather than as JSON numbers; whole numbers are narrowed to the smallest integer type without loss. A double takes 10.7 bytes of base64 instead of about 18–20 characters of JSON, and the browser decodes the bytes straight into a typed array instead of parsing text. For the heatmap this takes the page from 164.4 MB (CRAN plotly) to 42.7 MB (<code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plot_ly()</a></code> with plotly.core), the load time from 8.39 s to 2.20 s, and the renderer’s peak memory from 1039 MB to 650 MB. plotly.js’s own <code>newPlot()</code> time is about the same for every variant, so the faster loads come from fetching, parsing and decoding less data, not from plotly.js itself.</p>
+<p><strong>Date-times as numbers.</strong> Dates and date-times are sent as typed arrays of days or milliseconds; the widget’s JavaScript turns them back into the strings R would have written. UTC offsets are looked up once per 15-minute bin rather than once per value. For the 1M-point time series, CRAN plotly writes a page of 95.9 MB in 7.63 s; with plotly.core the same <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plot_ly()</a></code> code writes 21.3 MB in 0.41 s. plotly.py writes date-times as text, so its time series pages are larger (43.3 MB).</p>
 <p><strong>Encoding in C.</strong> The typed arrays are encoded in C (<code>src/typed_array.c</code>): one pass to find the narrowest type, then base64 written straight into one buffer, as data.table’s <code>fwrite()</code> writes its output. jsonlite writes the rest of the figure with placeholders and C copies the encoded arrays in, so the large strings never pass through R. For the 2000 × 2000 float32 heatmap the whole JSON step takes about 0.06 s (standalone timing).</p>
-<p><strong>Arrays repeated in a figure are sent once.</strong> An array used by several traces, like the x of the 10 time series, is encoded once and referenced after that; in the browser every trace uses the same object, and date strings are restored once. With 10 series of 100,000 points, <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plot_ly()</a></code> with plotly.core writes 11.7 MB and <code><a href="../reference/go_figure.html">go_figure()</a></code> 6.4 MB, against 67.4 MB for CRAN plotly and 43.3 MB for plotly.py, which repeat x in each trace. Those pages are smaller than the single 1M-point series and load faster (0.99 s against 1.34 s for <code><a href="../reference/go_figure.html">go_figure()</a></code>).</p>
-<p><strong><code><a href="../reference/as_float32.html">as_float32()</a></code>.</strong> Doubles marked with <code><a href="../reference/as_float32.html">as_float32()</a></code> are sent in single precision, 4 bytes instead of 8 (about 7 significant digits, which is what WebGL draws with). It halves the heatmap’s page (42.7 to 21.3 MB) and cuts the JavaScript memory left after loading (153 to 115 MB) and the load time (2.22 to 1.48 s). For the time series only y is halved; x stays in double precision.</p>
-<p><strong><code><a href="../reference/write_html.html">write_html()</a></code>.</strong> htmlwidgets lays out the page and the figure’s data is then written to the file directly, rather than passed through htmltools as one long string, which is searched and copied several times. This is most of the difference between <code><a href="../reference/go_figure.html">go_figure()</a></code> and <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plot_ly()</a></code> in build + write time: 0.080 s for the heatmap (0.133 s for plotly.py with float32), and 0.051 s for the 1M-point time series (0.448 s). <code><a href="../reference/write_html.html">write_html()</a></code> also takes <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plot_ly()</a></code> figures: saving the <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plot_ly()</a></code> heatmap takes about 0.2 s with it instead of about 0.8 s with <code>saveWidget()</code> (standalone timing).</p>
+<p><strong>Arrays repeated in a figure are sent once.</strong> An array used by several traces, like the x of the 10 time series, is encoded once and referenced after that; in the browser every trace uses the same object, and date strings are restored once. With 10 series of 100,000 points, <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plot_ly()</a></code> with plotly.core writes 11.7 MB and <code><a href="../reference/go_figure.html">go_figure()</a></code> 6.4 MB, against 67.4 MB for CRAN plotly and 43.3 MB for plotly.py, which repeat x in each trace. Those pages are smaller than the single 1M-point series and load faster (1.00 s against 1.28 s for <code><a href="../reference/go_figure.html">go_figure()</a></code>).</p>
+<p><strong><code><a href="../reference/as_float32.html">as_float32()</a></code>.</strong> Doubles marked with <code><a href="../reference/as_float32.html">as_float32()</a></code> are sent in single precision, 4 bytes instead of 8 (about 7 significant digits, which is what WebGL draws with). It halves the heatmap’s page (42.7 to 21.3 MB) and cuts the JavaScript memory left after loading (153 to 115 MB) and the load time (2.20 to 1.49 s). For the time series only y is halved; x stays in double precision.</p>
+<p><strong><code><a href="../reference/write_html.html">write_html()</a></code>.</strong> htmlwidgets lays out the page and the figure’s data is then written to the file directly, rather than passed through htmltools as one long string, which is searched and copied several times. This is most of the difference between <code><a href="../reference/go_figure.html">go_figure()</a></code> and <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plot_ly()</a></code> in build + write time: 0.103 s for the heatmap (0.133 s for plotly.py with float32), and 0.080 s for the 1M-point time series (0.475 s). <code><a href="../reference/write_html.html">write_html()</a></code> also takes <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plot_ly()</a></code> figures: saving the <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plot_ly()</a></code> heatmap takes about 0.2 s with it instead of about 0.8 s with <code>saveWidget()</code> (standalone timing).</p>
 </section><section class="level3"><h3 id="building-plot_ly-figures-in-plotly">Building <code>plot_ly()</code> figures in plotly<a class="anchor" aria-label="anchor" href="#building-plot_ly-figures-in-plotly"></a>
 </h3>
 <p><strong>A faster <code><a href="https://rdrr.io/pkg/plotly/man/plotly_build.html" class="external-link">plotly_build()</a></code>.</strong> The development plotly computes each group’s rows once rather than once per column, sorts with radix <code><a href="https://rdrr.io/r/base/order.html" class="external-link">order()</a></code> only when rows are out of order, and replaces the dplyr, tibble, rlang, tidyr and purrr calls in the build with base R. That’s about twice as fast on large plots (three 1M-point WebGL traces: 0.70 s to 0.30 s, standalone timing).</p>
-<p><strong>Heatmaps.</strong> Checking whether a heatmap’s z holds a single colour value used <code><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique()</a></code> on its rows; it now uses <code><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums()</a></code>. <code><a href="https://rdrr.io/pkg/plotly/man/plotly_build.html" class="external-link">plotly_build()</a></code> of the 2000 × 2000 heatmap takes 0.04 s instead of 0.15 s (standalone timing). Most of the <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plot_ly()</a></code> heatmap’s remaining 0.73 s is <code><a href="https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html" class="external-link">htmlwidgets::saveWidget()</a></code> handling the large page, which <code><a href="../reference/write_html.html">write_html()</a></code> avoids.</p>
+<p><strong>Heatmaps.</strong> Checking whether a heatmap’s z holds a single colour value used <code><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique()</a></code> on its rows; it now uses <code><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums()</a></code>. <code><a href="https://rdrr.io/pkg/plotly/man/plotly_build.html" class="external-link">plotly_build()</a></code> of the 2000 × 2000 heatmap takes 0.04 s instead of 0.15 s (standalone timing). Most of the <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plot_ly()</a></code> heatmap’s remaining 0.79 s is <code><a href="https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html" class="external-link">htmlwidgets::saveWidget()</a></code> handling the large page, which <code><a href="../reference/write_html.html">write_html()</a></code> avoids.</p>
 </section><section class="level3"><h3 id="what-doesnt-help-yet">What doesn’t help (yet)<a class="anchor" aria-label="anchor" href="#what-doesnt-help-yet"></a>
 </h3>
 <ul>
