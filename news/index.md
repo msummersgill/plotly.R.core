@@ -35,8 +35,10 @@
   [`renderPlotly()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyOutput.md),
   [`event_data()`](https://msummersgill.github.io/plotly.R.core/reference/event_data.md),
   [`plotlyProxy()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyProxy.md)),
-  knitr/Quarto output, and static image export with Kaleido
-  ([`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)).
+  knitr/Quarto output, and static image export
+  ([`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md))
+  to PNG, JPEG, WebP, SVG, PDF and EPS with headless Chrome via
+  chromote, with LaTeX typeset by MathJax; no Python or Kaleido needed.
 - Renders the plotly R package’s
   [`plot_ly()`](https://rdrr.io/pkg/plotly/man/plot_ly.html) and
   [`ggplotly()`](https://rdrr.io/pkg/plotly/man/ggplotly.html) figures,

@@ -37,7 +37,8 @@ stand-alone.
   work as in the plotly R package; figures render inline in documents,
   as static images in PDF/Word
   output.[`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
-  exports PNG, JPEG, WebP, SVG and PDF with Kaleido.
+  exports PNG, JPEG, WebP, SVG, PDF and EPS with headless Chrome (no
+  Python needed).
 - **Plotly Express** Ports of functionality from the plotly.py package
   introduce high-level methods quickly create figures with minimal code.
 
@@ -167,13 +168,15 @@ redrawing it.
 
 ``` r
 
-# needs Python with kaleido (and plotly): reticulate::py_install(c("kaleido", "plotly"))
+# uses headless Chrome via chromote; offers to download Chrome Headless Shell
+# if no browser is installed
 save_image(fig, "figure.png", width = 800, height = 500, scale = 2)
 save_image(fig, "figure.pdf")
+save_image(fig, "figure.eps") # needs the rsvg package
 ```
 
 In R Markdown and Quarto, figures in PDF or Word output are included as
-static images automatically when Kaleido is available.
+static images automatically when Chrome is available.
 
 ## Existing plotly R code
 
@@ -1533,8 +1536,8 @@ not be edited by hand. Tests are plain R scripts in `tests/`.
   : Set plotly.js configuration options
 - [`write_html()`](https://msummersgill.github.io/plotly.R.core/reference/write_html.md)
   : Write a figure to an HTML file
-- [`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
-  [`kaleido()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
+- [`chrome_exporter()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
+  [`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
   : Save a figure as a static image
 - [`plotly_json()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_json.md)
   : JSON of a plot

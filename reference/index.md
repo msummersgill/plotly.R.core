@@ -1317,8 +1317,8 @@
   : Set plotly.js configuration options
 - [`write_html()`](https://msummersgill.github.io/plotly.R.core/reference/write_html.md)
   : Write a figure to an HTML file
-- [`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
-  [`kaleido()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
+- [`chrome_exporter()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
+  [`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
   : Save a figure as a static image
 - [`plotly_json()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_json.md)
   : JSON of a plot

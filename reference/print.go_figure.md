@@ -6,10 +6,9 @@ in the RStudio viewer or a browser. In R Markdown and Quarto documents,
 figures are rendered inline: as interactive widgets in HTML output,
 sized by the chunk options `fig.width`/`fig.height`
 (`fig-width`/`fig-height` in Quarto) unless the layout sets a size; and,
-for other formats (PDF, Word, ...), as static images made with Kaleido
-(see
-[`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md))
-when it is available.
+for other formats (PDF, Word, ...), as static images made with
+[`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
+when a browser is available.
 
 ## Usage
 

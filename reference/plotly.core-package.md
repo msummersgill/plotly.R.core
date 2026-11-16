@@ -5,11 +5,13 @@ Graph objects, their validation and their documentation are generated
 from the 'plotly.js' plot schema, following the design of the 'plotly'
 Python package. Includes an 'express' interface for quick figures,
 'htmlwidgets' rendering, 'shiny' and 'quarto' integration, and static
-image export with 'Kaleido'.
+image export with headless 'Chrome'.
 
 ## See also
 
 Useful links:
+
+- <https://msummersgill.github.io/plotly.R.core/>
 
 - <https://github.com/msummersgill/plotly.R.core>
 
@@ -28,6 +30,11 @@ Authors:
 - Chris Parmer
 
 Other contributors:
+
+- Nicolas Kruchten ([ORCID](https://orcid.org/0000-0002-8416-789X))
+  ('plotly.py') \[contributor\]
+
+- Andrew Seier ('plotly.py') \[contributor\]
 
 - Toby Hocking \[contributor\]
 
