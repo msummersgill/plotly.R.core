@@ -575,6 +575,46 @@ knitr::kable(rel[c("case", "label", "variant", metrics)],
              col.names = c("case", "size", "variant", names(metrics)), digits = 1, row.names = FALSE)
 ```
 
+## What makes it faster
+
+Numbers in this section are medians from the results above, at the largest size of each case, unless marked as a standalone timing (measured separately, during development).
+
+```{r summary-helpers}
+#| echo: false
+# a median from the results, at the largest size of a case
+v <- function(variant, case, col) {
+  d <- res[res$case == case, ]
+  d[d$variant == variant & d$size == max(d$size), col]
+}
+f <- function(x, digits = 2) formatC(x, format = "f", digits = digits)
+```
+
+### How plotly.core sends data to the browser
+
+**Numeric arrays as base64 typed arrays.** Numeric vectors and matrices in traces are sent as `{dtype, bdata, shape}`, as plotly.py does, rather than as JSON numbers; whole numbers are narrowed to the smallest integer type without loss. A double takes 10.7 bytes of base64 instead of about 18--20 characters of JSON, and the browser decodes the bytes straight into a typed array instead of parsing text. For the heatmap this takes the page from `r f(v("release", "heatmap", "html_mb"), 1)` MB (CRAN plotly) to `r f(v("core_backend", "heatmap", "html_mb"), 1)` MB (`plot_ly()` with plotly.core), the load time from `r f(v("release", "heatmap", "load_sec"))` s to `r f(v("core_backend", "heatmap", "load_sec"))` s, and the renderer's peak memory from `r f(v("release", "heatmap", "peak_renderer_mb"), 0)` MB to `r f(v("core_backend", "heatmap", "peak_renderer_mb"), 0)` MB. plotly.js's own `newPlot()` time is about the same for every variant, so the faster loads come from fetching, parsing and decoding less data, not from plotly.js itself.
+
+**Date-times as numbers.** Dates and date-times are sent as typed arrays of days or milliseconds; the widget's JavaScript turns them back into the strings R would have written. UTC offsets are looked up once per 15-minute bin rather than once per value. For the 1M-point time series, CRAN plotly writes a page of `r f(v("release", "timeseries", "html_mb"), 1)` MB in `r f(v("release", "timeseries", "build_sec"))` s; with plotly.core the same `plot_ly()` code writes `r f(v("core_backend", "timeseries", "html_mb"), 1)` MB in `r f(v("core_backend", "timeseries", "build_sec"))` s. plotly.py writes date-times as text, so its time series pages are larger (`r f(v("plotly_py", "timeseries", "html_mb"), 1)` MB).
+
+**Encoding in C.** The typed arrays are encoded in C (`src/typed_array.c`): one pass to find the narrowest type, then base64 written straight into one buffer, as data.table's `fwrite()` writes its output. jsonlite writes the rest of the figure with placeholders and C copies the encoded arrays in, so the large strings never pass through R. For the 2000 × 2000 float32 heatmap the whole JSON step takes about 0.06 s (standalone timing).
+
+**Arrays repeated in a figure are sent once.** An array used by several traces, like the x of the 10 time series, is encoded once and referenced after that; in the browser every trace uses the same object, and date strings are restored once. With 10 series of 100,000 points, `plot_ly()` with plotly.core writes `r f(v("core_backend", "multiseries", "html_mb"), 1)` MB and `go_figure()` `r f(v("go_figure_f32", "multiseries", "html_mb"), 1)` MB, against `r f(v("release", "multiseries", "html_mb"), 1)` MB for CRAN plotly and `r f(v("plotly_py", "multiseries", "html_mb"), 1)` MB for plotly.py, which repeat x in each trace. Those pages are smaller than the single 1M-point series and load faster (`r f(v("go_figure_f32", "multiseries", "load_sec"))` s against `r f(v("go_figure_f32", "timeseries", "load_sec"))` s for `go_figure()`).
+
+**`as_float32()`.** Doubles marked with `as_float32()` are sent in single precision, 4 bytes instead of 8 (about 7 significant digits, which is what WebGL draws with). It halves the heatmap's page (`r f(v("core_backend", "heatmap", "html_mb"), 1)` to `r f(v("go_figure_f32", "heatmap", "html_mb"), 1)` MB) and cuts the JavaScript memory left after loading (`r f(v("core_backend", "heatmap", "js_heap_mb"), 0)` to `r f(v("go_figure_f32", "heatmap", "js_heap_mb"), 0)` MB) and the load time (`r f(v("core_backend", "heatmap", "load_sec"))` to `r f(v("go_figure_f32", "heatmap", "load_sec"))` s). For the time series only y is halved; x stays in double precision.
+
+**`write_html()`.** htmlwidgets lays out the page and the figure's data is then written to the file directly, rather than passed through htmltools as one long string, which is searched and copied several times. This is most of the difference between `go_figure()` and `plot_ly()` in build + write time: `r f(v("go_figure_f32", "heatmap", "build_sec"), 3)` s for the heatmap (`r f(v("plotly_py_f32", "heatmap", "build_sec"), 3)` s for plotly.py with float32), and `r f(v("go_figure_f32", "timeseries", "build_sec"), 3)` s for the 1M-point time series (`r f(v("plotly_py_f32", "timeseries", "build_sec"), 3)` s). `write_html()` also takes `plot_ly()` figures: saving the `plot_ly()` heatmap takes about 0.2 s with it instead of about 0.8 s with `saveWidget()` (standalone timing).
+
+### Building `plot_ly()` figures in plotly
+
+**A faster `plotly_build()`.** The development plotly computes each group's rows once rather than once per column, sorts with radix `order()` only when rows are out of order, and replaces the dplyr, tibble, rlang, tidyr and purrr calls in the build with base R. That's about twice as fast on large plots (three 1M-point WebGL traces: 0.70 s to 0.30 s, standalone timing).
+
+**Heatmaps.** Checking whether a heatmap's z holds a single colour value used `unique()` on its rows; it now uses `rowSums()`. `plotly_build()` of the 2000 × 2000 heatmap takes 0.04 s instead of 0.15 s (standalone timing). Most of the `plot_ly()` heatmap's remaining `r f(v("core_backend", "heatmap", "build_sec"))` s is `htmlwidgets::saveWidget()` handling the large page, which `write_html()` avoids.
+
+### What doesn't help (yet)
+
+* **Partial bundles.** `partial_bundle()` loads a smaller plotly.js with only the trace types a figure uses, but every variant here loads the full bundle.
+* **A larger plotly.js.** plotly.js 4 is larger to load than the 2.x CRAN plotly bundles, so for small figures (under about 100,000 values) CRAN plotly loads faster; the data dominates above that.
+* **plotly.js 4 itself** draws in about the same time as plotly.js 2 (`newPlot` above).
+
 ## Notes
 
 * The variants use different plotly.js versions (see above), so `newPlot` times include plotly.js differences as well as the data format; plotly.js 4 is also larger to load (all variants load a full bundle). "JS transferred (MB)" is all JavaScript the page fetched (plotly.js, htmlwidgets, bindings) as sent by the server, which compresses it.

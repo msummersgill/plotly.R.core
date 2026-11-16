@@ -1,36 +1,31 @@
 # plotly.core
 
-Interactive web graphics for R, built on [plotly.js](https://github.com/plotly/plotly.js)
-and following the design of the [plotly Python package](https://github.com/plotly/plotly.py).
+Interactive web graphics for R, built on [plotly.js](https://github.com/plotly/plotly.js).
 
-
-## Objectives
-
-- **Performance** Take advantage of ongoing development progress of plotly.js 
-  to improve browser rendering performance, and implement optimizations to on
-  the R backend to cut down plot generation time and size in memory
-- **Graph objects and documentation generated from the plotly.js schema.** All 47 trace types and
-  every layout object have a machine-generated `go_*()` constructor (`go_scatter()`,
-  `go_bar_marker()`, `go_layout_xaxis()`, ... 979 in total) with documentation
-  generated from the schema.
-- **Validation.** Every property is checked when objects are created or
-  modified, with plotly.py-style error messages and "Did you mean" suggestions.
-- **The rendering backend for the plotly R package.** plotly's `plot_ly()`
+- **Faster plots, less browser memory** plotly.core leverages advances in plotly.js 
+  to improve browser rendering performance, and implements optimizations to on
+  the R backend to cut down plot generation time and size in memory. Rendering 
+  large time series plots and heatmaps is 10-100x faster. DateTime optimizations and support
+  for single precision floats allows up to 2x reduction of browser memory. _(See
+  the render-performance vignette for more details)_
+- **Machine-generated code and documentation from the plotly.js schema.** 
+  All 47 trace types and every layout object have a machine-generated `go_*()`
+  constructor _(`go_scatter()`,`go_layout_xaxis()`, ... 979 in total)_ and 
+  comprehensive R documentation of arguments and thorough validation generated 
+  from the schema. Future changes to the plotly.js schema can be ported to the R
+  implementation without hand-writing any R code or documentation.
+- **Full backwards compatibility with the plotly R package.** plotly's `plot_ly()`
   and `ggplotly()` plots are rendered by plotly.core, so existing plotly R
   code gets the same performance work and plotly.js version.
-- **Minimal Dependencies**
-- **Plotly Express Support.** All 35 `px.*` functions plus `imshow` as `px_scatter()`,
-  `px_line()`, `px_bar()`, `px_histogram()`, ... with faceting, marginals,
-  trendlines, animation, the `px.data` datasets, `px.colors` palettes and
-  templates. Output is tested against plotly.py on 72 cases.
-- **Shiny, R Markdown and Quarto.** `plotlyOutput()`/`renderPlotly()`,
+  _([Working branch: msummersgill/plotly@plotly-core-render](https://github.com/msummersgill/plotly/tree/plotly-core-render))_
+  Helper functions in the plotly package back-port functionality for features
+  and behavior deprecated between the last CRAN release plotly.js and latest
+- **Shiny, R Markdown, Quarto, and static image export** `plotlyOutput()`/`renderPlotly()`,
   `event_data()` and `plotlyProxy()` work as in the plotly R package; figures
-  render inline in documents, as static images in PDF/Word output.
-- **Static images.** `save_image()` exports PNG, JPEG, WebP, SVG and PDF with
-  Kaleido.
-
-
-> **Status:** early development; the API may change.
+  render inline in documents, as static images in PDF/Word output.`save_image()`
+  exports PNG, JPEG, WebP, SVG and PDF with Kaleido.
+- **Plotly Express** Ports of functionality from the plotly.py package introduce
+  high-level methods quickly create figures with minimal code.
 
 ## Installation
 
@@ -39,7 +34,10 @@ Install the development version from GitHub with
 
 ```r
 # install.packages("remotes")
+# plotly.core
 remotes::install_github("msummersgill/plotly.R.core")
+# plotly with plotly.core rendering
+remotes::install_github("msummersgill/plotly@plotly-core-render")
 ```
 
 ## Example: Plotly Express
@@ -54,11 +52,8 @@ px_data_gapminder(year = 2007) |>
   )
 ```
 
-![Bubble chart of GDP per capita against life expectancy in 2007, sized by population and coloured by continent](man/figures/README-px-gapminder.png)
+![](man/figures/README-px-gapminder.png)
 
-Column arguments take one-sided formulas evaluated in the data (`x = ~gdpPercap`,
-`x = ~log10(gdpPercap)`, `path = ~c(continent, country)` for several columns),
-column names as strings (as in plotly.py), or vectors.
 
 ## Example: a 2D scatter plot with graph objects
 
@@ -86,15 +81,7 @@ mtcars |>
   update_yaxes(title_text = "Miles per gallon")
 ```
 
-![Scatter plot of mtcars weight vs. miles per gallon, coloured by cylinders](man/figures/README-mtcars-scatter.png)
-
-A data frame piped into `go_figure()` (or given as `data` to an `add_*()`
-function) lets properties refer to its columns with formulas. Only the values
-used are added to the traces; each `add_*()` call adds exactly one trace (use
-`px_*()` to split data into one trace per group).
-
-Printing a figure renders it in the RStudio viewer or a browser, and inline in
-R Markdown and Quarto documents.
+![](man/figures/README-mtcars-scatter.png)
 
 ## Example: subplots
 
@@ -148,17 +135,6 @@ shinyApp(ui, server)
 
 `plotlyProxy()` and `plotlyProxyInvoke()` update a rendered plot (e.g.
 `"extendTraces"`, `"relayout"`) without redrawing it.
-
-## Smaller pages
-
-Figures load the full plotly.js bundle (about 4.8 MB) by default.
-`partial_bundle()` switches a figure to the smallest of plotly.js's partial
-bundles (shipped with the package, 1.2 to 3 MB) that has all its trace types;
-`options(plotly.core.bundle = "auto")` does this for every figure.
-
-```r
-go_figure(go_bar(x = c("a", "b"), y = c(1, 3))) |> partial_bundle()  # plotly-basic.min.js
-```
 
 ## Static images
 
