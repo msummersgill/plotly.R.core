@@ -3,8 +3,6 @@
 # printing the SVG image to a page of the figure's size (as plotly's Kaleido
 # does), EPS by converting the SVG image with rsvg.
 
-# the MathJax the widget loads with config(mathjax = "cdn")
-MATHJAX_URL <- "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"
 
 #' @rdname save_image
 #' @export
@@ -355,8 +353,8 @@ uses_mathjax <- function(json) {
   grepl("\"\\$[^\"]*\\$\"", json)
 }
 
-# Load MathJax 3 (as the widget's config(mathjax = "cdn") does) into the page,
-# once. Without network access, LaTeX is left as text, with a warning.
+# Load MathJax 3, the copy bundled with the package (as the widget's
+# config(mathjax = "local") does), into the page, once.
 chrome_load_mathjax <- function(session) {
   ok <- tryCatch(
     js_eval(
@@ -373,16 +371,14 @@ chrome_load_mathjax <- function(session) {
           document.head.appendChild(s);
           setTimeout(function () { reject(new Error('MathJax timed out')); }, 20000);
         })",
-        MATHJAX_URL
+        file_url(mathjax_path())
       )
     ),
     error = function(e) FALSE
   )
   if (!isTRUE(ok)) {
     warning(
-      "MathJax couldn't be loaded from ",
-      MATHJAX_URL,
-      ", so LaTeX is exported as plain text.",
+      "MathJax couldn't be loaded, so LaTeX is exported as plain text.",
       call. = FALSE
     )
   }

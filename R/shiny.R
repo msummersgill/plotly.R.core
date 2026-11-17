@@ -36,8 +36,10 @@ set_widget_setting <- function(p, name, value) {
 #'   <https://plotly.com/javascript/configuration-options/>.
 #' @param locale A locale such as `"de"` or `"fr-ch"`, for translated
 #'   modebar text and number/date formatting.
-#' @param mathjax `"cdn"` to load MathJax from a CDN so LaTeX in `$...$`
-#'   text (see [TeX()]) is rendered.
+#' @param mathjax Load MathJax so LaTeX in `$...$` text (see [TeX()]) is
+#'   rendered: `"local"` (or `TRUE`) for the MathJax 3 bundled with the
+#'   package, which works offline and is embedded in self-contained HTML
+#'   (about 2 MB), or `"cdn"` to load it from cdn.jsdelivr.net.
 #' @param cloud,showSendToCloud Show the modebar button that sends the chart
 #'   to Plotly Cloud (`plotlyServerURL`)? Off by default, because clicking it
 #'   uploads the chart data to an external server. `cloud` is the legacy
@@ -95,8 +97,11 @@ config.default <- function(
     opts$locale <- locale
   }
   if (!is.null(mathjax)) {
-    if (!identical(mathjax, "cdn")) {
-      stop("Only `mathjax = \"cdn\"` is supported", call. = FALSE)
+    if (isTRUE(mathjax)) {
+      mathjax <- "local"
+    }
+    if (!is.character(mathjax) || length(mathjax) != 1L || !mathjax %in% c("local", "cdn")) {
+      stop("`mathjax` must be \"local\" (or TRUE) or \"cdn\"", call. = FALSE)
     }
     p <- set_widget_setting(p, "mathjax", mathjax)
   }
@@ -127,7 +132,7 @@ available_locales <- function() {
 #' Wrap text for LaTeX rendering
 #'
 #' Wraps a string in `$...$` so plotly.js renders it with MathJax (requires
-#' `config(p, mathjax = "cdn")`).
+#' `config(p, mathjax = "local")`, or `"cdn"`; [save_image()] needs nothing).
 #'
 #' @param x A character string of LaTeX.
 #' @return The wrapped string.
@@ -135,7 +140,7 @@ available_locales <- function() {
 #' @examples
 #' go_figure() |>
 #'   update_layout(title = TeX("\\alpha + \\beta x")) |>
-#'   config(mathjax = "cdn")
+#'   config(mathjax = "local")
 TeX <- function(x) paste0("$", x, "$")
 
 # Shiny events -----------------------------------------------------------------------

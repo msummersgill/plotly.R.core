@@ -47,6 +47,19 @@ expect_error(event_register(fig, "plotly_bogus"), "should be one of")
 
 w <- as_widget(config(fig, mathjax = "cdn"))
 stopifnot(any(vapply(w$dependencies, `[[`, "", "name") == "mathjax"))
+# the bundled MathJax: a local dependency, also with mathjax = TRUE
+for (mj in list("local", TRUE)) {
+  dep <- Filter(
+    function(d) d$name == "mathjax",
+    as_widget(config(fig, mathjax = mj))$dependencies
+  )[[1]]
+  stopifnot(
+    identical(dep$script, "tex-svg.js"),
+    identical(dep$package, "plotly.core"),
+    file.exists(system.file(dep$src$file, "tex-svg.js", package = dep$package))
+  )
+}
+stopifnot(inherits(try(config(fig, mathjax = "web"), silent = TRUE), "try-error"))
 
 if (requireNamespace("shiny", quietly = TRUE)) {
   out <- plotlyOutput("plot", height = "300px")

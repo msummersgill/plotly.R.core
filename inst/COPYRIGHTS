@@ -9,6 +9,11 @@ inst/htmlwidgets/lib/plotlyjs/
   Copyright (c) 2016-2024 Plotly Technologies Inc.
   MIT licence: inst/htmlwidgets/lib/plotlyjs/LICENSE
 
+inst/htmlwidgets/lib/mathjax/
+  MathJax 3.2.2 (tex-svg.js), for LaTeX (TeX()) in widgets and static images
+  Copyright (c) 2009-2022 The MathJax Consortium
+  Apache License 2.0: inst/htmlwidgets/lib/mathjax/LICENSE
+
 inst/htmlwidgets/lib/colourpicker/
   jQuery Colour picker
   Copyright 2016 Dean Attali (with Cory LaViska)
@@ -40,8 +45,3 @@ Shared libraries Chrome needs (Linux), from the system's own package
   repositories with apt-get download or dnf download
   Copyright and licences as packaged by the distribution; each package's
   copyright file is kept with it in the cache (usr/share/doc).
-
-MathJax 3.2.2, loaded from cdn.jsdelivr.net for LaTeX (TeX()) in widgets and
-static images
-  Copyright (c) The MathJax Consortium
-  Apache License 2.0

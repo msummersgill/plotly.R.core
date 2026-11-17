@@ -14,10 +14,10 @@ The wrapped string.
 }
 \description{
 Wraps a string in \verb{$...$} so plotly.js renders it with MathJax (requires
-\code{config(p, mathjax = "cdn")}).
+\code{config(p, mathjax = "local")}, or \code{"cdn"}; \code{\link[=save_image]{save_image()}} needs nothing).
 }
 \examples{
 go_figure() |>
   update_layout(title = TeX("\\\\alpha + \\\\beta x")) |>
-  config(mathjax = "cdn")
+  config(mathjax = "local")
 }

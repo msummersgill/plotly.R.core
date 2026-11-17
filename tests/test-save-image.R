@@ -435,22 +435,13 @@ if (
   save_image(gl, path("gl.png"))
   stopifnot(file.size(path("gl.png")) > 10000)
 
-  # LaTeX is typeset by MathJax (when the CDN can be reached)
+  # LaTeX is typeset by the bundled MathJax
   tex <- go_figure() |>
     add_scatter(x = 1:3, y = 1:3) |>
     update_layout(title = list(text = TeX("\\alpha^2 + \\beta")))
-  warned <- FALSE
-  withCallingHandlers(
-    save_image(tex, path("tex.svg")),
-    warning = function(w) {
-      warned <<- TRUE
-      invokeRestart("muffleWarning")
-    }
-  )
-  if (!warned) {
-    svg <- paste(readLines(path("tex.svg"), warn = FALSE), collapse = "\n")
-    stopifnot(grepl("-math-group", svg), !grepl(">$\\alpha", svg, fixed = TRUE))
-  }
+  save_image(tex, path("tex.svg"))
+  svg <- paste(readLines(path("tex.svg"), warn = FALSE), collapse = "\n")
+  stopifnot(grepl("-math-group", svg), !grepl(">$\\alpha", svg, fixed = TRUE))
 
   plotly.core:::export_env$chrome$shutdown()
 }

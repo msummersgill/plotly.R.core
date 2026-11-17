@@ -16,7 +16,7 @@ plotlyjs_dependency(bundle = "full")
 
 locale_dependency(locale)
 
-mathjax_dependency()
+mathjax_dependency(source = c("local", "cdn"))
 }
 \arguments{
 \item{highlight}{Linked-highlighting options (as set by the plotly
@@ -28,6 +28,10 @@ package's \code{highlight()}): \code{selectize} and \code{dynamic} add their lib
 \code{\link[=partial_bundle]{partial_bundle()}}).}
 
 \item{locale}{A plotly.js locale, e.g. \code{"de"}.}
+
+\item{source}{For \code{mathjax_dependency()}: \code{"local"} for the MathJax
+bundled with the package (works offline, and is embedded in
+self-contained HTML), or \code{"cdn"} to load it from cdn.jsdelivr.net.}
 }
 \value{
 An \code{html_dependency} (a list of them for \code{crosstalk_deps()}), or

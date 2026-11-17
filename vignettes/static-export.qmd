@@ -67,7 +67,7 @@ plotly.core:::export_env$chrome$shutdown()
 | `.eps` | converted from the SVG; needs the rsvg package |
 
 - `width`, `height`: pixels; default to the figure's layout size, else 700 × 500.
-- LaTeX (`TeX()`) is typeset with MathJax from a CDN; offline it stays plain text, with a warning.
+- LaTeX (`TeX()`) is typeset with the MathJax bundled with plotly.core, so it works offline.
 - The browser starts on the first export (about a second) and is reused for the rest of the session. `chrome_exporter()` gives a browser of your own, with `$transform(p, file, ...)` and `$shutdown()`.
 
 ## Setup
@@ -152,4 +152,3 @@ Set-up compared:
 | shared libraries it needs are missing | `plotly.core::install_chrome()`, or the `sudo` command shown |
 | Chrome ... failed to start | Read Chrome's output in the message; see [Linux servers](#linux-servers) |
 | EPS export needs the rsvg package | `install.packages("rsvg")` |
-| MathJax couldn't be loaded | Allow access to cdn.jsdelivr.net |

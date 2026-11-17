@@ -79,8 +79,8 @@ plotly_widget <- function(
   if (!is.null(cfg$locale) && cfg$locale != "en") {
     deps <- c(deps, list(locale_dependency(cfg$locale)))
   }
-  if (identical(setting("mathjax"), "cdn")) {
-    deps <- c(deps, list(mathjax_dependency()))
+  if (!is.null(setting("mathjax"))) {
+    deps <- c(deps, list(mathjax_dependency(setting("mathjax"))))
   }
   if (!is.null(x$sets)) {
     deps <- c(deps, crosstalk_deps(x$highlight))
@@ -418,15 +418,36 @@ locale_dependency <- function(locale) {
 }
 
 #' @rdname set_plotlyjs_dependency
+#' @param source For `mathjax_dependency()`: `"local"` for the MathJax
+#'   bundled with the package (works offline, and is embedded in
+#'   self-contained HTML), or `"cdn"` to load it from cdn.jsdelivr.net.
 #' @export
-mathjax_dependency <- function() {
+mathjax_dependency <- function(source = c("local", "cdn")) {
+  source <- match.arg(source)
+  # plotly.js 4 typesets with MathJax 3 or 4 (not 2); tex-svg.js is MathJax
+  # 3.2.2's single-file TeX-to-SVG build
+  if (source == "cdn") {
+    return(htmltools::htmlDependency(
+      name = "mathjax",
+      version = MATHJAX_VERSION,
+      src = c(href = "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5"),
+      script = "tex-svg.js"
+    ))
+  }
   htmltools::htmlDependency(
     name = "mathjax",
-    # plotly.js 4 typesets with MathJax 3 or 4 (not 2)
-    version = "3.2.2",
-    src = c(href = "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5"),
-    script = "tex-svg.js"
+    version = MATHJAX_VERSION,
+    src = "htmlwidgets/lib/mathjax",
+    package = "plotly.core",
+    script = "tex-svg.js",
+    all_files = FALSE
   )
+}
+
+MATHJAX_VERSION <- "3.2.2"
+
+mathjax_path <- function() {
+  system.file("htmlwidgets", "lib", "mathjax", "tex-svg.js", package = "plotly.core")
 }
 
 # JSON serialiser used by the widget: length-1 vectors become scalars and

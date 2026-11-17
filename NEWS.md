@@ -21,6 +21,10 @@
   knitr/Quarto output, and static image export (`save_image()`) to PNG, JPEG,
   WebP, SVG, PDF and EPS with headless Chrome via chromote, with LaTeX
   typeset by MathJax; no Python or Kaleido needed.
+* MathJax 3.2.2 (`tex-svg.js`) is bundled: `config(mathjax = "local")` (or
+  `TRUE`) renders LaTeX (`TeX()`) offline and in self-contained HTML, and
+  `save_image()` typesets it without network access. `config(mathjax =
+  "cdn")` still loads it from cdn.jsdelivr.net.
 * `save_image()` sends figures to Chrome as the widget does: numeric arrays
   and date-times as base64 typed arrays, and arrays shared by traces once
   (decoded by the widget's own code, `lib/plotlycore/codec.js`), so exports
