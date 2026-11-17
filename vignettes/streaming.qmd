@@ -333,6 +333,98 @@ function(el) {
 }")
 ```
 
+## A heatmap
+
+A heatmap can stream too. Here the x axis is time (the last 60 seconds), the y axis runs from 0 to 2π, and the colour is sin(y) · cos(t mod 2π), so each column is a sine wave scaled by where the time is in its 2π-second cycle. Ten times a second the app adds a column.
+
+`extendTraces` appends to arrays, and a heatmap's `z` is an array of rows. With `transpose = TRUE` each row of `z` is a column of the heatmap (one time), so a new time is one new row: `z = list(list(column))` adds `column` to trace 0, and `maxPoints` keeps the last 600 times.
+
+```{r}
+#| eval: false
+library(shiny)
+library(plotly.core)
+
+window <- 60 # seconds shown
+rate <- 10 # columns per second
+n <- window * rate # columns kept
+y <- seq(0, 2 * pi, length.out = 61)
+
+stamp <- function(t) format(t, "%Y-%m-%d %H:%M:%OS3")
+# The column at time t: sin(y) * cos(t mod 2 pi)
+column <- function(t) sin(y) * cos(as.numeric(t) %% (2 * pi))
+
+ui <- fluidPage(plotlyOutput("heat"))
+
+server <- function(input, output, session) {
+  output$heat <- renderPlotly({
+    times <- Sys.time() - seq(window, 0, length.out = n)
+    go_figure() |>
+      add_heatmap(
+        x = stamp(times),
+        y = y,
+        z = t(vapply(times, column, numeric(length(y)))), # a row per time
+        transpose = TRUE, # rows of z are columns of the heatmap
+        zmin = -1,
+        zmax = 1,
+        colorscale = "RdBu"
+      ) |>
+      update_layout(yaxis_title = "y (radians)")
+  })
+
+  proxy <- plotlyProxy("heat", session)
+
+  observe({
+    invalidateLater(1000 / rate)
+    t <- Sys.time()
+    plotlyProxyInvoke(
+      proxy,
+      "extendTraces",
+      list(x = list(I(stamp(t))), z = list(list(column(t)))),
+      I(0L),
+      n
+    )
+  })
+}
+
+shinyApp(ui, server)
+```
+
+`zmin` and `zmax` fix the colour scale, so colours don't shift as the range of the data in the window changes.
+
+In the browser:
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code: the same update in JavaScript"
+heat <- go_figure() |>
+  add_heatmap(x = character(), y = seq(0, 2 * pi, length.out = 61), z = list(),
+              transpose = TRUE, zmin = -1, zmax = 1, colorscale = "RdBu") |>
+  update_layout(height = 400, yaxis_title = "y (radians)", xaxis_type = "date")
+htmlwidgets::onRender(as_widget(heat), "
+function(el) {
+  var n = 600, step = 100, tau = 2 * Math.PI, y = [];
+  for (var j = 0; j <= 60; j++) y.push(j / 60 * tau);
+  var pad = function(v, w) { return String(v).padStart(w || 2, '0'); };
+  var stamp = function(d) {
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' ' +
+      pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()) + '.' +
+      pad(d.getMilliseconds(), 3);
+  };
+  // the column at time t (ms): sin(y) * cos(t mod 2 pi)
+  var column = function(t) {
+    var c = Math.cos(((t / 1000) % tau + tau) % tau);
+    return y.map(function(v) { return Math.sin(v) * c; });
+  };
+  var now = Date.now(), x = [], z = [];
+  for (var i = n - 1; i >= 0; i--) { var t = now - i * step; x.push(stamp(new Date(t))); z.push(column(t)); }
+  Plotly.extendTraces(el, {x: [x], z: [z]}, [0], n);
+  setInterval(function() {
+    var t = Date.now();
+    Plotly.extendTraces(el, {x: [[stamp(new Date(t))]], z: [[column(t)]]}, [0], n);
+  }, step);
+}")
+```
+
 ## Notes
 
 - **One plot per session.** `renderPlotly()` and the observer run for each browser session, so every viewer gets their own stream; they stop when the session ends.
