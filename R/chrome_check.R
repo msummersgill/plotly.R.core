@@ -262,7 +262,8 @@ prune_chrome_libs <- function(
   root = chrome_libs_root(),
   keep = os_release_id()
 ) {
-  old <- setdiff(list.files(root), keep)
+  # (also the folder a refresh downloads into: refresh_chrome_libs())
+  old <- setdiff(list.files(root), c(keep, paste0(keep, ".new")))
   unlink(file.path(root, old), recursive = TRUE)
   invisible(old)
 }
@@ -377,27 +378,96 @@ download_libs <- function(
   length(files) > 0
 }
 
-# Download what Chrome at `path` is missing, repeating for the libraries the
-# downloaded ones need in turn. The library directories, for LD_LIBRARY_PATH.
-fetch_chrome_libs <- function(path, family = linux_family()) {
+# Download what Chrome at `path` is missing into `dir`, repeating for the
+# libraries the downloaded ones need in turn, and record when and for which
+# Chrome (chrome_libs_stale()). The library directories, for LD_LIBRARY_PATH.
+fetch_chrome_libs <- function(
+  path,
+  family = linux_family(),
+  dir = chrome_lib_dir()
+) {
   last <- NULL
   for (round in 1:8) {
-    lib_path <- chrome_lib_path()
+    lib_path <- chrome_lib_path(dir)
     libs <- chrome_missing_libs(path, lib_path = lib_path)
     if (!length(libs) || identical(libs, last)) {
       break
     }
     message("Downloading ", paste(libs, collapse = ", "))
-    if (!download_libs(libs, family)) {
+    if (!download_libs(libs, family, dir = dir)) {
       break
     }
     last <- libs
   }
-  chrome_lib_path()
+  if (length(chrome_lib_path(dir))) {
+    write_chrome_libs_stamp(path, dir)
+  }
+  chrome_lib_path(dir)
 }
 
-# The library directories Chrome at `path` needs on LD_LIBRARY_PATH. When it
-# is missing shared libraries, an interactive session is offered a download
+# Downloaded libraries aren't updated with the system (security fixes, e.g.
+# in NSS, never reach them), so they are downloaded again when they are older
+# than getOption("plotly.core.chrome_libs_max_age", 90) days, or were
+# downloaded for another Chrome (a new version, or another browser).
+CHROME_LIBS_STAMP <- ".plotly-core-libs"
+
+chrome_id <- function(path) {
+  info <- file.info(path)
+  paste(normalizePath(path, mustWork = FALSE), info$size, as.numeric(info$mtime))
+}
+
+write_chrome_libs_stamp <- function(path, dir = chrome_lib_dir()) {
+  writeLines(
+    c(paste0("date: ", format(Sys.Date())), paste0("chrome: ", chrome_id(path))),
+    file.path(dir, CHROME_LIBS_STAMP)
+  )
+}
+
+chrome_libs_stale <- function(
+  path,
+  dir = chrome_lib_dir(),
+  max_age = getOption("plotly.core.chrome_libs_max_age", 90),
+  today = Sys.Date()
+) {
+  f <- file.path(dir, CHROME_LIBS_STAMP)
+  if (!file.exists(f)) {
+    # downloaded before stamps were kept
+    return(TRUE)
+  }
+  stamp <- readLines(f, warn = FALSE)
+  field <- function(name) {
+    sub(paste0("^", name, ": "), "", grep(paste0("^", name, ": "), stamp, value = TRUE))
+  }
+  date <- as.Date(field("date")[1])
+  is.na(date) ||
+    as.numeric(today - date) > max_age ||
+    !identical(field("chrome")[1], chrome_id(path))
+}
+
+# Download the libraries again, into a separate folder that replaces the old
+# one only when it has everything Chrome needs (so a failed download, e.g.
+# offline, keeps the old libraries). The library directories.
+refresh_chrome_libs <- function(
+  path,
+  family = linux_family(),
+  dir = chrome_lib_dir()
+) {
+  new <- paste0(dir, ".new")
+  unlink(new, recursive = TRUE)
+  on.exit(unlink(new, recursive = TRUE), add = TRUE)
+  lib_path <- fetch_chrome_libs(path, family, dir = new)
+  if (!length(lib_path) || length(chrome_missing_libs(path, lib_path = lib_path))) {
+    message("Couldn't download the libraries again; using the ones downloaded before.")
+    return(chrome_lib_path(dir))
+  }
+  unlink(dir, recursive = TRUE)
+  file.rename(new, dir)
+  chrome_lib_path(dir)
+}
+
+# The library directories Chrome at `path` needs on LD_LIBRARY_PATH (none
+# when the system has all it needs). When it is missing shared libraries, an
+# interactive session is offered a download
 # into the user cache (no administrator rights needed, see download_libs());
 # otherwise it's an error saying how to get them.
 ensure_chrome_libs <- function(
@@ -407,15 +477,26 @@ ensure_chrome_libs <- function(
   missing = function(lib_path) chrome_missing_libs(path, lib_path = lib_path),
   fetch = function() fetch_chrome_libs(path, family),
   family = NULL,
-  fetchable = NULL
+  fetchable = NULL,
+  cached = chrome_lib_path,
+  stale = function() chrome_libs_stale(path),
+  refresh = function() refresh_chrome_libs(path, family)
 ) {
-  lib_path <- chrome_lib_path()
-  libs <- missing(lib_path)
-  if (!length(libs)) {
-    return(lib_path)
+  # the system's libraries first: downloaded ones only for what it lacks, so
+  # libraries installed (and updated) on the system later are the ones used
+  if (!length(missing(character()))) {
+    return(character())
   }
+  lib_path <- cached()
+  libs <- missing(lib_path)
   family <- family %||% linux_family()
   fetchable <- fetchable %||% can_fetch_libs(family)
+  if (!length(libs)) {
+    if (fetchable && stale()) {
+      lib_path <- refresh_stale_libs(lib_path, ask, confirm, refresh)
+    }
+    return(lib_path)
+  }
   if (fetchable && ask) {
     ok <- confirm(paste0(
       "Chrome needs shared libraries that are missing: ",
@@ -432,6 +513,27 @@ ensure_chrome_libs <- function(
     }
   }
   stop_missing_libs(path, libs, family, fetchable)
+}
+
+# Downloaded libraries that are old (or for another Chrome): downloaded again
+# when the session may ask (install_chrome() doesn't ask), otherwise used as
+# they are, with a message once per session.
+refresh_stale_libs <- function(lib_path, ask, confirm, refresh) {
+  why <- paste0(
+    "The shared libraries plotly.core downloaded for Chrome are more than ",
+    getOption("plotly.core.chrome_libs_max_age", 90),
+    " days old (or were downloaded for another Chrome), so they may lack ",
+    "security fixes."
+  )
+  if (ask) {
+    if (isTRUE(confirm(paste(why, "Download them again?")))) {
+      return(refresh())
+    }
+  } else if (!isTRUE(export_env$stale_libs_noted)) {
+    export_env$stale_libs_noted <- TRUE
+    message(why, " Run plotly.core::install_chrome() to download them again.")
+  }
+  lib_path
 }
 
 stop_missing_libs <- function(path, libs, family, fetchable) {
@@ -468,9 +570,14 @@ stop_missing_libs <- function(path, libs, family, fetchable) {
 #' them. Run it once on a new machine, e.g. before scripts that export images;
 #' interactive sessions are offered the same downloads when needed.
 #'
-#' Downloaded libraries are kept in a folder for the OS release, and those
-#' for other releases (e.g. after an upgrade) are removed when libraries are
-#' next downloaded. `remove_chrome()` removes everything plotly.core has
+#' Downloaded libraries are only used for what the system lacks: libraries
+#' installed on the system later (and its updates) take over. They are kept in
+#' a folder for the OS release, and those for other releases (e.g. after an
+#' upgrade) are removed when libraries are next downloaded. They don't get the
+#' system's updates, so once they are more than
+#' `getOption("plotly.core.chrome_libs_max_age", 90)` days old, or Chrome has
+#' changed, `install_chrome()` downloads them again (interactive sessions are
+#' asked; scripts get a message saying to run `install_chrome()`). `remove_chrome()` removes everything plotly.core has
 #' downloaded and, with `browser = TRUE`, the Chrome Headless Shell builds
 #' chromote downloaded.
 #'

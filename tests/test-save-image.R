@@ -218,11 +218,68 @@ stopifnot(
 )
 ens <- plotly.core:::ensure_chrome_libs
 need <- c("libxkbcommon.so.0", "libgbm.so.1")
-# nothing missing: the downloaded library directories (none here)
+# nothing missing on the system: no downloaded libraries are used, even if
+# some were downloaded before
 stopifnot(identical(
-  ens("/x/chrome", missing = function(lp) character()),
-  plotly.core:::chrome_lib_path()
+  ens("/x/chrome", missing = function(lp) character(), cached = function() stop("cache used")),
+  character()
 ))
+# the system lacks some, the earlier download has them: its directories; when
+# they are stale, interactive sessions are asked whether to download again,
+# and other sessions get a message (once)
+sys_lacks <- function(lp) if (length(lp)) character() else need
+stopifnot(identical(
+  ens("/x/chrome", missing = sys_lacks, cached = function() "/cache",
+      fetchable = TRUE, family = "debian", stale = function() FALSE),
+  "/cache"
+))
+asked <- NULL
+stopifnot(identical(
+  ens("/x/chrome", ask = TRUE, missing = sys_lacks, cached = function() "/cache",
+      fetchable = TRUE, family = "debian", stale = function() TRUE,
+      confirm = function(msg) { asked <<- msg; TRUE },
+      refresh = function() "/fresh"),
+  "/fresh"
+))
+stopifnot(grepl("days old", asked), grepl("again", asked))
+stopifnot(identical(
+  ens("/x/chrome", ask = TRUE, missing = sys_lacks, cached = function() "/cache",
+      fetchable = TRUE, family = "debian", stale = function() TRUE,
+      confirm = function(msg) FALSE, refresh = function() stop("refreshed")),
+  "/cache"
+))
+assign("stale_libs_noted", FALSE, envir = plotly.core:::export_env)
+msgs <- character()
+for (i in 1:2) withCallingHandlers(
+  ens("/x/chrome", ask = FALSE, missing = sys_lacks, cached = function() "/cache",
+      fetchable = TRUE, family = "debian", stale = function() TRUE,
+      refresh = function() stop("refreshed")),
+  message = function(m) { msgs <<- c(msgs, conditionMessage(m)); invokeRestart("muffleMessage") }
+)
+stopifnot(length(msgs) == 1L, grepl("install_chrome()", msgs, fixed = TRUE))
+
+# Staleness: age, and the Chrome they were downloaded for
+libdir <- tempfile("libs-")
+dir.create(libdir)
+chrome <- tempfile("chrome")
+writeLines("x", chrome)
+stale <- plotly.core:::chrome_libs_stale
+stopifnot(stale(chrome, libdir)) # no stamp (downloaded before stamps)
+plotly.core:::write_chrome_libs_stamp(chrome, libdir)
+stopifnot(
+  !stale(chrome, libdir),
+  stale(chrome, libdir, today = Sys.Date() + 91),
+  !stale(chrome, libdir, max_age = 365, today = Sys.Date() + 91)
+)
+Sys.sleep(1.1)
+writeLines("a new version", chrome)
+stopifnot(stale(chrome, libdir)) # Chrome changed
+# a refresh's folder isn't pruned while it downloads
+root <- tempfile("libs-")
+dir.create(file.path(root, "ubuntu-24.04.new"), recursive = TRUE)
+dir.create(file.path(root, "ubuntu-22.04"))
+plotly.core:::prune_chrome_libs(root, "ubuntu-24.04")
+stopifnot(identical(list.files(root), "ubuntu-24.04.new"))
 # missing, and the libraries can be downloaded: offered in interactive
 # sessions, then Chrome gets the download directories
 asked <- NULL
