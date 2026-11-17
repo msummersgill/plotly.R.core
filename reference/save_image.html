@@ -99,6 +99,8 @@ whether to download Chrome Headless Shell (about 100 MB, kept for later
 sessions); elsewhere, download it once with
 <code>chromote::chrome_versions_add("latest-stable", "chrome-headless-shell")</code>.</p>
 <p>The browser is started on the first export and reused for later ones.
+Large figures can take a while to draw: an export waits up to
+<code>getOption("plotly.core.export_timeout", 300)</code> seconds.
 LaTeX (see <code><a href="TeX.html">TeX()</a></code>) is typeset with MathJax, loaded from a CDN. PDF is made
 by printing the SVG image to a page of the figure's size; EPS is converted
 from the SVG image with the rsvg package.</p>

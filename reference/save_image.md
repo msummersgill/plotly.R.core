@@ -59,7 +59,8 @@ with
 `chromote::chrome_versions_add("latest-stable", "chrome-headless-shell")`.
 
 The browser is started on the first export and reused for later ones.
-LaTeX (see
+Large figures can take a while to draw: an export waits up to
+`getOption("plotly.core.export_timeout", 300)` seconds. LaTeX (see
 [`TeX()`](https://msummersgill.github.io/plotly.R.core/reference/TeX.md))
 is typeset with MathJax, loaded from a CDN. PDF is made by printing the
 SVG image to a page of the figure's size; EPS is converted from the SVG
