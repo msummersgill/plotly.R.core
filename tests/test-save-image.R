@@ -151,7 +151,9 @@ stopifnot(identical(
 ))
 # lookup order: chromote's, then other browsers, then a downloaded shell
 cf <- plotly.core:::chrome_found
-exe <- file.path(R.home("bin"), "R") # an existing file standing in for one
+# an existing file standing in for a browser (any OS: on Windows R's own is R.exe)
+exe <- tempfile("browser")
+file.create(exe)
 stopifnot(
   identical(cf(function() exe, "/nope", function() "/nope"), exe),
   identical(cf(function() NULL, c("/nope", exe), function() "/nope"), exe),
