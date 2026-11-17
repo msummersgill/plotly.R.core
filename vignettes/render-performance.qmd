@@ -31,7 +31,7 @@ params:
   results_dir: "render-performance"
 ---
 
-plotly.core makes large figures much quicker to build, save, load and draw than the CRAN plotly release, and lighter on browser memory, for `plot_ly()` code unchanged and even more so for `go_figure()` with `as_float32()`. This vignette shows the results first, then how the gains were made; how the benchmarks are run is in the [appendix](#appendix-running-the-benchmarks).
+plotly.core makes large figures much quicker to build, save, load and draw than the CRAN plotly release, and lighter on browser memory, for `plot_ly()` code unchanged and even more so for `go_figure()` with `as_float32()`. This vignette shows the results first, then how the gains were made; the numbers and how the benchmarks are run are in the [appendix](#appendix).
 
 | Variant | Code | Data sent to the browser as |
 |---|---|---|
@@ -124,56 +124,108 @@ v <- function(variant, case, col) {
 f <- function(x, digits = 2) formatC(x, format = "f", digits = digits)
 ```
 
-## Results at a glance
+## Results
 
-Medians over `r meta$reps` runs at the largest size of each case: a 1M-point time series, 10 time series of 100,000 points sharing x, and a 2000 × 2000 heatmap (run on `r meta$date`, `r meta$cpu`, `r meta$browser`; details in the [appendix](#environment)).
+Each chart shows one measurement for the three cases, against the number of values plotted (both axes on log scales), medians over `r meta$reps` runs (`r meta$date`, `r meta$cpu`, `r meta$browser`). Lower is better throughout. The numbers are in the [results tables](#results-tables).
 
-```{r glance}
-#| echo: false
-top <- res[res$size == ave(res$size, res$case, FUN = max), ]
-knitr::kable(
-  top[c("case", "variant", "build_sec", "html_mb", "load_sec", "peak_renderer_mb")],
-  col.names = c("case", "variant", "build + write (s)", "HTML (MB)", "load (s)", "peak renderer (MB)"),
-  digits = c(0, 0, 3, 1, 2, 0), row.names = FALSE
-)
-```
-
-```{r charts}
+```{r chart-helper}
 #| code-fold: true
 #| code-summary: "Show the chart code"
-chart_metrics <- c(`build + write (s)` = "build_sec", `HTML (MB)` = "html_mb", `load (s)` = "load_sec",
-                   `newPlot (s)` = "newplot_sec", `peak renderer (MB)` = "peak_renderer_mb",
-                   `JS heap after (MB)` = "js_heap_mb")
-long <- do.call(rbind, Map(function(col, name) {
-  data.frame(res[c("variant", "case", "values")], metric = name, value = res[[col]])
-}, chart_metrics, names(chart_metrics)))
-long <- long[order(long$variant, long$case, long$values), ]
-
-fig <- px_line(
-  long, x = "values", y = "value", color = "variant",
-  facet_row = "metric", facet_col = "case", markers = TRUE, log_x = TRUE, log_y = TRUE,
-  category_orders = list(variant = variants, metric = names(chart_metrics), case = levels(res$case)),
-  # R in blues, Python in oranges; the darkest of each is the float32 variant
-  color_discrete_map = list(release = "#6baed6", core_backend = "#2171b5", go_figure_f32 = "#08306b",
-                            plotly_py = "#fd8d3c", plotly_py_f32 = "#a63603"),
-  labels = list(values = "values plotted", value = "", variant = ""),
-  facet_row_spacing = 0.03, template = "plotly_white", height = 1400
-)
-# each panel gets its own axis range: the metrics differ by orders of magnitude
-for (ax in grep("^[xy]axis", names(fig$layout), value = TRUE)) {
-  fig$layout[[ax]]$matches <- NULL
-  fig$layout[[ax]]$showticklabels <- TRUE
-  if (startsWith(ax, "x")) fig$layout[[ax]]$dtick <- 1 # a tick per power of 10
+# one panel per case; x: values plotted, y: the measurement
+metric_chart <- function(col, label) {
+  d <- res[order(res$variant, res$case, res$values), c("variant", "case", "values", col)]
+  names(d)[4] <- "value"
+  fig <- px_line(
+    d, x = "values", y = "value", color = "variant", facet_col = "case",
+    markers = TRUE, log_x = TRUE, log_y = TRUE,
+    category_orders = list(variant = variants, case = levels(res$case)),
+    # R in blues, Python in oranges; the darkest of each is the float32 variant
+    color_discrete_map = list(release = "#6baed6", core_backend = "#2171b5", go_figure_f32 = "#08306b",
+                              plotly_py = "#fd8d3c", plotly_py_f32 = "#a63603"),
+    labels = list(values = "values plotted", value = label, variant = ""),
+    template = "plotly_white"
+  )
+  # each panel its own y range: the cases differ in scale
+  for (ax in grep("^yaxis", names(fig$layout), value = TRUE)) {
+    fig$layout[[ax]]$matches <- NULL
+    fig$layout[[ax]]$showticklabels <- TRUE
+  }
+  for (ax in grep("^xaxis", names(fig$layout), value = TRUE)) fig$layout[[ax]]$dtick <- 1
+  fig |>
+    for_each_annotation(function(a) {
+      a$text <- sub("^[^=]*=", "", a$text) # "case=heatmap" -> "heatmap"
+      a
+    }) |>
+    update_layout(legend = list(orientation = "h", y = 1.12, yanchor = "bottom", x = 0)) |>
+    partial_bundle("auto")
 }
-fig |>
-  for_each_annotation(function(a) {
-    a$text <- sub("^[^=]*=", "", a$text) # "case=heatmap" -> "heatmap"
-    a
-  }) |>
-  update_layout(legend = list(orientation = "h", y = 1.03, yanchor = "bottom", x = 0)) |>
-  partial_bundle("auto")
 ```
 
+### Build + write time
+
+```{r chart-build}
+#| fig-height: 4.5
+#| code-fold: true
+#| code-summary: "Show the chart code"
+metric_chart("build_sec", "build + write (s)")
+```
+
+This is the wait in R before anything can be shown: in the console or RStudio, while knitting a report, or on every re-render in a Shiny app. For the 2000 × 2000 heatmap, CRAN plotly keeps R busy for `r f(v("release", "heatmap", "build_sec"), 1)` s; the same `plot_ly()` code with plotly.core takes `r f(v("core_backend", "heatmap", "build_sec"), 1)` s, and `go_figure()` with `as_float32()` `r f(v("go_figure_f32", "heatmap", "build_sec"))` s, faster than plotly.py.
+
+### Page size
+
+```{r chart-html}
+#| fig-height: 4.5
+#| code-fold: true
+#| code-summary: "Show the chart code"
+metric_chart("html_mb", "HTML (MB)")
+```
+
+The size of the saved page or the data a Shiny app sends: it's what a viewer on a remote server or slow connection waits to download, and what makes self-contained reports too big to email or attach. The 1M-point time series goes from `r f(v("release", "timeseries", "html_mb"), 0)` MB with CRAN plotly to `r f(v("core_backend", "timeseries", "html_mb"), 0)` MB, and 10 series sharing x from `r f(v("release", "multiseries", "html_mb"), 0)` MB to `r f(v("go_figure_f32", "multiseries", "html_mb"), 1)` MB, since x is sent once.
+
+### Load time
+
+```{r chart-load}
+#| fig-height: 4.5
+#| code-fold: true
+#| code-summary: "Show the chart code"
+metric_chart("load_sec", "load (s)")
+```
+
+The time from opening the page to the plot appearing, here with no network in between. A heatmap that CRAN plotly takes `r f(v("release", "heatmap", "load_sec"), 1)` s to show appears in `r f(v("core_backend", "heatmap", "load_sec"), 1)` s with plotly.core (`r f(v("go_figure_f32", "heatmap", "load_sec"), 1)` s with float32). For small figures (under about 100,000 values) CRAN plotly loads slightly faster, because plotly.js 4 is a larger script; see `partial_bundle()`.
+
+### Drawing time (`newPlot`)
+
+```{r chart-newplot}
+#| fig-height: 4.5
+#| code-fold: true
+#| code-summary: "Show the chart code"
+metric_chart("newplot_sec", "newPlot (s)")
+```
+
+The part of the load plotly.js spends drawing, about the same for every variant (`r f(v("release", "heatmap", "newplot_sec"))` s and `r f(v("core_backend", "heatmap", "newplot_sec"))` s for the heatmap). The gains come from getting data to plotly.js faster, not from plotly.js drawing faster, so zooming and other redraws after load feel the same.
+
+### Peak browser memory
+
+```{r chart-peak}
+#| fig-height: 4.5
+#| code-fold: true
+#| code-summary: "Show the chart code"
+metric_chart("peak_renderer_mb", "peak renderer (MB)")
+```
+
+The most memory the page's browser process uses while loading; when a tab exceeds what the browser or machine allows, it crashes ("Aw, Snap!" in Chrome), which is most likely on laptops with little memory, on phones, or with several large plots on one page. The heatmap peaks at `r f(v("release", "heatmap", "peak_renderer_mb"), 0)` MB with CRAN plotly and `r f(v("go_figure_f32", "heatmap", "peak_renderer_mb"), 0)` MB with `go_figure()` and float32.
+
+### Memory held after load
+
+```{r chart-heap}
+#| fig-height: 4.5
+#| code-fold: true
+#| code-summary: "Show the chart code"
+metric_chart("js_heap_mb", "JS heap after load (MB)")
+```
+
+The JavaScript memory the plot keeps while it stays open, which adds up on dashboards and reports with many plots. For the 1M-point time series it falls from `r f(v("release", "timeseries", "js_heap_mb"), 0)` MB with CRAN plotly to `r f(v("core_backend", "timeseries", "js_heap_mb"), 0)` MB with plotly.core and `r f(v("go_figure_f32", "timeseries", "js_heap_mb"), 0)` MB with float32.
 
 ## How the gains were made
 
@@ -205,32 +257,46 @@ Numbers here are medians from the results, at the largest size of each case, unl
 * **A larger plotly.js.** plotly.js 4 is larger to load than the 2.x CRAN plotly bundles, so for small figures (under about 100,000 values) CRAN plotly loads faster; the data dominates above that.
 * **plotly.js 4 itself** draws in about the same time as plotly.js 2 (`newPlot` above).
 
-## Detailed results
+## Appendix
 
-All sizes, medians over `r meta$reps` runs.
+### Results tables
 
-### Large time series (`scattergl` lines)
+Medians over `r meta$reps` runs.
+
+#### Largest sizes
+
+```{r glance}
+#| echo: false
+top <- res[res$size == ave(res$size, res$case, FUN = max), ]
+knitr::kable(
+  top[c("case", "variant", "build_sec", "html_mb", "load_sec", "peak_renderer_mb")],
+  col.names = c("case", "variant", "build + write (s)", "HTML (MB)", "load (s)", "peak renderer (MB)"),
+  digits = c(0, 0, 3, 1, 2, 0), row.names = FALSE
+)
+```
+
+#### Large time series (`scattergl` lines)
 
 ```{r ts-table}
 #| echo: false
 show_table("timeseries")
 ```
 
-### 10 time series sharing x (`scattergl` lines)
+#### 10 time series sharing x (`scattergl` lines)
 
 ```{r ms-table}
 #| echo: false
 show_table("multiseries")
 ```
 
-### Large matrix heatmap
+#### Large matrix heatmap
 
 ```{r hm-table}
 #| echo: false
 show_table("heatmap")
 ```
 
-### Relative to the CRAN release
+#### Relative to the CRAN release
 
 Release median ÷ variant median at each size (above 1 means faster or smaller than the release).
 
@@ -247,7 +313,7 @@ knitr::kable(rel[c("case", "label", "variant", metrics)],
              col.names = c("case", "size", "variant", names(metrics)), digits = 1, row.names = FALSE)
 ```
 
-### Notes
+#### Notes
 
 * The variants use different plotly.js versions (see above), so `newPlot` times include plotly.js differences as well as the data format; plotly.js 4 is also larger to load (all variants load a full bundle). "JS transferred (MB)" is all JavaScript the page fetched (plotly.js, htmlwidgets, bindings) as sent by the server, which compresses it.
 * Load times are from localhost: on a real network, the HTML size adds transfer time.
@@ -255,7 +321,7 @@ knitr::kable(rel[c("case", "label", "variant", metrics)],
 * float32 keeps about 7 significant digits (see `?as_float32`). Date-times are unaffected: plotly.core sends them as float64 milliseconds; plotly.py and the release send ISO strings.
 * Renderer memory is resident set size as the OS reports it, sampled every 20 ms, so short spikes can be missed; the GPU process's memory (WebGL buffers) is not included.
 
-## Appendix: running the benchmarks
+### Running the benchmarks
 
 The benchmarks take several minutes and need software outside R (headless Chrome via chromote, and Python with plotly, numpy and pandas), so building this vignette shows results saved from an earlier run, read from the `render-performance/` folder next to it. To rerun them, render this file with the environment variable `PLOTLY_CORE_RUN_BENCHMARKS=true`; the code below then runs before the results are shown, and new results are saved to `render-performance/`:
 
