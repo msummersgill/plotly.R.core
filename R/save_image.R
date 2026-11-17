@@ -17,6 +17,8 @@
 #' `chromote::chrome_versions_add("latest-stable", "chrome-headless-shell")`.
 #'
 #' The browser is started on the first export and reused for later ones.
+#' Large figures can take a while to draw: an export waits up to
+#' `getOption("plotly.core.export_timeout", 300)` seconds.
 #' LaTeX (see [TeX()]) is typeset with MathJax, loaded from a CDN. PDF is made
 #' by printing the SVG image to a page of the figure's size; EPS is converted
 #' from the SVG image with the rsvg package.
@@ -101,14 +103,26 @@ figure_json <- function(p) {
   as.character(to_JSON(x[c("data", "layout", "config")]))
 }
 
-# The figure for export: JSON with numeric arrays as base64 typed arrays
-# (which plotly.js decodes itself, and which are much quicker to write and
-# send than JSON numbers; date-times stay strings), and its layout.
+# The figure for export, as the widget sends it (widget_to_JSON(), as
+# {"x": figure}): numeric arrays and dates as base64 typed arrays, arrays
+# shared by traces sent once; the export page decodes them with the widget's
+# codec.js. Much quicker to write and send than JSON numbers and date strings.
+# Also its layout.
 export_figure <- function(p) {
   x <- as_widget(p)$x[c("data", "layout", "config")]
   list(
-    json = as.character(to_JSON(b64_figure(x, dates = FALSE))),
+    json = as.character(widget_to_JSON(list(x = x))),
     layout = x$layout
+  )
+}
+
+codec_js_path <- function() {
+  system.file(
+    "htmlwidgets",
+    "lib",
+    "plotlycore",
+    "codec.js",
+    package = "plotly.core"
   )
 }
 

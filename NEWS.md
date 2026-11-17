@@ -21,8 +21,11 @@
   knitr/Quarto output, and static image export (`save_image()`) to PNG, JPEG,
   WebP, SVG, PDF and EPS with headless Chrome via chromote, with LaTeX
   typeset by MathJax; no Python or Kaleido needed.
-* `save_image()` sends numeric arrays to Chrome as base64 typed arrays, so
-  exports of large figures are several times faster than with Kaleido.
+* `save_image()` sends figures to Chrome as the widget does: numeric arrays
+  and date-times as base64 typed arrays, and arrays shared by traces once
+  (decoded by the widget's own code, `lib/plotlycore/codec.js`), so exports
+  of large figures are several times faster than with Kaleido. Exports wait
+  up to `getOption("plotly.core.export_timeout", 300)` seconds.
 * `save_image()` finds Chrome or another Chromium-based browser (Microsoft
   Edge, Chromium, Brave, including per-user installs), or offers to download Chrome Headless Shell in
   interactive sessions. On Linux it checks the shared libraries Chrome needs

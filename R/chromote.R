@@ -20,7 +20,7 @@ chrome_exporter <- function(...) {
       "<style>html,body{margin:0;padding:0;background:transparent}</style>",
       sprintf(
         "<script src=\"%s\"></script>",
-        file_url(plotlyjs_bundle_path())
+        file_url(c(plotlyjs_bundle_path(), codec_js_path()))
       ),
       "</head><body><div id=\"plot\"></div></body></html>"
     ),
@@ -315,7 +315,8 @@ chrome_transform <- function(session, state, p, file, width, height, scale) {
       "(async function () {
         // the figure itself, not a drawn plot: toImage then lays it out at
         // the export size (axis ranges constrained by scaleanchor depend on it)
-        var fig = %s;
+        // typed arrays, shared arrays and dates decoded as the widget does
+        var fig = PlotlyCoreCodec.prepareFigure((%s).x);
         var url = await Plotly.toImage(fig, {format: '%s', width: %s, height: %s, scale: %s});
         var i = url.indexOf(',');
         return url.slice(0, i).indexOf(';base64') >= 0 ?
@@ -421,16 +422,24 @@ chrome_svg_to_pdf <- function(session, svg, width, height) {
     marginBottom = 0,
     marginLeft = 0,
     marginRight = 0,
-    pageRanges = "1"
+    pageRanges = "1",
+    timeout_ = export_timeout()
   )
   base64enc::base64decode(pdf$data)
+}
+
+# Seconds to wait for Chrome to draw and encode an image (chromote's own
+# default, 10 s, is too short for large figures).
+export_timeout <- function() {
+  getOption("plotly.core.export_timeout", 300)
 }
 
 js_eval <- function(session, expr) {
   res <- session$Runtime$evaluate(
     expr,
     awaitPromise = TRUE,
-    returnByValue = TRUE
+    returnByValue = TRUE,
+    timeout_ = export_timeout()
   )
   if (!is.null(res$exceptionDetails)) {
     msg <- res$exceptionDetails$exception$description %||%
@@ -443,7 +452,7 @@ js_eval <- function(session, expr) {
 file_url <- function(path) {
   path <- normalizePath(path, winslash = "/", mustWork = FALSE)
   paste0(
-    if (startsWith(path, "/")) "file://" else "file:///",
-    utils::URLencode(path)
+    ifelse(startsWith(path, "/"), "file://", "file:///"),
+    vapply(path, utils::URLencode, "", USE.NAMES = FALSE)
   )
 }

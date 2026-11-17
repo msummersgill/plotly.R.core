@@ -6,3 +6,8 @@ dependencies:
     version: 4.3.0
     src: htmlwidgets/lib/plotlyjs
     script: plotly.min.js
+  # decoding of the serialiser's typed arrays, shared arrays and dates
+  - name: plotly-core-codec
+    version: 0.1.0
+    src: htmlwidgets/lib/plotlycore
+    script: codec.js

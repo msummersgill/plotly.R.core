@@ -409,6 +409,17 @@ if (
   }
   stopifnot(grepl("Unsupported", err(save_image(fig, path("f.tiff")))))
 
+  # date-times and an x shared by traces are sent as typed arrays and decoded
+  # in the export page (codec.js), as in the widget: the axis shows the dates
+  tt <- as.POSIXct("2024-03-01", tz = "UTC") + (0:47) * 3600
+  shared <- go_figure() |>
+    add_scatter(x = tt, y = cumsum(rnorm(48))) |>
+    add_scatter(x = tt, y = cumsum(rnorm(48)))
+  stopifnot(grepl('"bref"', plotly.core:::export_figure(shared)$json, fixed = TRUE))
+  save_image(shared, path("dates.svg"))
+  svg <- paste(readLines(path("dates.svg"), warn = FALSE), collapse = "\n")
+  stopifnot(grepl("Mar 2", svg, fixed = TRUE), grepl("2024", svg, fixed = TRUE))
+
   # WebGL and date-time axes
   gl <- go_figure() |>
     add_scattergl(
