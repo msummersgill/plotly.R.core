@@ -110,6 +110,57 @@ stopifnot(identical(
   "/chrome"
 ))
 
+# Browsers other than Google Chrome: Edge (every Windows 10/11 machine),
+# Chromium, Brave, and per-user installs
+bc <- plotly.core:::browser_candidates
+win <- bc(
+  os = "Windows",
+  env = c(
+    LOCALAPPDATA = "C:\\Users\\me\\AppData\\Local",
+    `PROGRAMFILES(X86)` = "C:\\Program Files (x86)",
+    PROGRAMFILES = "C:\\Program Files"
+  ),
+  registry = function(exe, hive) {
+    if (exe == "msedge.exe" && hive == "HLM") "C:\\Edge\\msedge.exe"
+  }
+)
+stopifnot(
+  identical(
+    win[1],
+    "C:/Users/me/AppData/Local/Google/Chrome/Application/chrome.exe"
+  ),
+  identical(win[2], "C:\\Edge\\msedge.exe"), # the registry entry, before guesses
+  "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" %in% win,
+  "C:/Users/me/AppData/Local/Chromium/Application/chrome.exe" %in% win,
+  "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe" %in% win
+)
+mac <- bc(os = "Darwin", env = c(HOME = "/Users/me"))
+stopifnot(
+  "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge" %in% mac,
+  "/Applications/Chromium.app/Contents/MacOS/Chromium" %in% mac,
+  "/Users/me/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" %in%
+    mac,
+  # /Applications/Google Chrome.app is chromote's own default
+  !"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" %in% mac
+)
+stopifnot(identical(
+  bc(os = "Linux", which = function(x) {
+    setNames(ifelse(x == "microsoft-edge", "/usr/bin/microsoft-edge", ""), x)
+  }),
+  "/usr/bin/microsoft-edge"
+))
+# lookup order: chromote's, then other browsers, then a downloaded shell
+cf <- plotly.core:::chrome_found
+exe <- file.path(R.home("bin"), "R") # an existing file standing in for one
+stopifnot(
+  identical(cf(function() exe, "/nope", function() "/nope"), exe),
+  identical(cf(function() NULL, c("/nope", exe), function() "/nope"), exe),
+  identical(cf(function() stop("x"), character(), function() exe), exe),
+  is.null(cf(function() NULL, "/nope", function() character())),
+  # a folder (e.g. an .app bundle's directory) isn't a browser
+  is.null(cf(function() R.home(), R.home(), function() NULL))
+)
+
 # chromote 0.5.0 or later (Chrome Headless Shell downloads)
 chk <- plotly.core:::check_chromote
 stopifnot(

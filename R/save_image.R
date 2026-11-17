@@ -7,8 +7,10 @@
 #' image export, using the plotly.js bundled with this package in headless
 #' Chrome (driven by the chromote package). No Python is needed.
 #'
-#' It uses an installed Chrome or Chromium, the one set by the
-#' `CHROMOTE_CHROME` environment variable, or a Chrome Headless Shell
+#' It uses the browser set by the `CHROMOTE_CHROME` environment variable, an
+#' installed Google Chrome, another installed Chromium-based browser
+#' (Microsoft Edge, which every Windows 10/11 machine has, Chromium or Brave,
+#' also when installed for the current user only), or a Chrome Headless Shell
 #' downloaded by chromote. Without any of these, an interactive session asks
 #' whether to download Chrome Headless Shell (about 100 MB, kept for later
 #' sessions); elsewhere, download it once with

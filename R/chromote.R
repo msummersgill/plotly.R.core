@@ -111,26 +111,116 @@ check_chromote <- function(
   invisible(TRUE)
 }
 
-# A Chrome for export, without downloading: the one chromote finds (an
-# installed Chrome, or CHROMOTE_CHROME), else a Chrome Headless Shell that
-# chromote downloaded earlier. NULL if there is none.
-chrome_found <- function() {
-  path <- tryCatch(
-    suppressMessages(chromote::find_chrome()),
-    error = function(e) NULL
-  )
-  if (length(path) && nzchar(path) && file.exists(path)) {
-    return(path)
+# A Chrome for export, without downloading, in this order: the one chromote
+# finds (CHROMOTE_CHROME, else an installed Google Chrome), another installed
+# Chromium-based browser (Microsoft Edge, which every Windows 10/11 machine
+# has, Chromium, Brave; see browser_candidates()), else a Chrome Headless
+# Shell that chromote downloaded earlier. NULL if there is none.
+chrome_found <- function(
+  find_system = function() suppressMessages(chromote::find_chrome()),
+  candidates = browser_candidates(),
+  downloaded = function() {
+    chromote::chrome_versions_list("installed", "chrome-headless-shell")$path
   }
-  cached <- tryCatch(
-    chromote::chrome_versions_list("installed", "chrome-headless-shell"),
-    error = function(e) NULL
-  )
-  if (NROW(cached)) {
-    paths <- cached$path[file.exists(cached$path)]
-    if (length(paths)) return(paths[[length(paths)]])
+) {
+  usable <- function(p) {
+    if (!is.character(p) || !length(p)) {
+      return(character())
+    }
+    p <- p[!is.na(p) & nzchar(p)]
+    p[file.exists(p) & !dir.exists(p)]
+  }
+  path <- usable(tryCatch(find_system(), error = function(e) NULL))
+  if (length(path)) {
+    return(path[[1]])
+  }
+  path <- usable(candidates)
+  if (length(path)) {
+    return(path[[1]])
+  }
+  path <- usable(tryCatch(downloaded(), error = function(e) NULL))
+  if (length(path)) {
+    return(path[[length(path)]])
   }
   NULL
+}
+
+# Installed Chromium-based browsers chromote doesn't look for itself (it
+# finds Google Chrome in the standard places), most preferred first.
+browser_candidates <- function(
+  os = Sys.info()[["sysname"]],
+  env = Sys.getenv(),
+  registry = windows_app_path,
+  which = Sys.which
+) {
+  if (identical(os, "Windows")) {
+    dirs <- function(...) {
+      vars <- c(...)
+      vals <- unname(env[vars[vars %in% names(env)]])
+      vals[nzchar(vals)]
+    }
+    under <- function(roots, rel) {
+      if (length(roots)) {
+        file.path(gsub("\\\\", "/", roots), rel)
+      } else {
+        character()
+      }
+    }
+    c(
+      # Chrome installed for the current user only isn't registered where
+      # chromote looks (HKEY_LOCAL_MACHINE)
+      registry("chrome.exe", "HCU"),
+      under(dirs("LOCALAPPDATA"), "Google/Chrome/Application/chrome.exe"),
+      registry("msedge.exe", "HLM"),
+      registry("msedge.exe", "HCU"),
+      under(
+        dirs("PROGRAMFILES(X86)", "PROGRAMFILES", "LOCALAPPDATA"),
+        "Microsoft/Edge/Application/msedge.exe"
+      ),
+      under(dirs("LOCALAPPDATA"), "Chromium/Application/chrome.exe"),
+      under(
+        dirs("PROGRAMFILES", "LOCALAPPDATA"),
+        "BraveSoftware/Brave-Browser/Application/brave.exe"
+      )
+    )
+  } else if (identical(os, "Darwin")) {
+    apps <- c(
+      "Google Chrome.app/Contents/MacOS/Google Chrome",
+      "Chromium.app/Contents/MacOS/Chromium",
+      "Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
+      "Brave Browser.app/Contents/MacOS/Brave Browser"
+    )
+    home <- if ("HOME" %in% names(env)) env[["HOME"]] else path.expand("~")
+    # /Applications/Google Chrome.app is chromote's; the rest, and apps
+    # installed for the current user in ~/Applications
+    c(
+      file.path("/Applications", apps[-1]),
+      file.path(home, "Applications", apps)
+    )
+  } else {
+    found <- which(c(
+      "chromium",
+      "microsoft-edge",
+      "microsoft-edge-stable",
+      "brave-browser"
+    ))
+    unname(found[nzchar(found)])
+  }
+}
+
+# A Windows "App Paths" registry entry (where installers register browsers).
+windows_app_path <- function(exe, hive) {
+  tryCatch(
+    utils::readRegistry(
+      paste0(
+        "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\",
+        exe,
+        "\\"
+      ),
+      hive = hive
+    )[["(Default)"]],
+    error = function(e) NULL
+  )
 }
 
 # The Chrome to export with. When set-up is needed (no browser, or on Linux

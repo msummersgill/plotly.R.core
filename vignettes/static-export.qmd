@@ -137,10 +137,11 @@ Static export needs:
 `save_image()` looks for a browser in this order:
 
 1. the browser set by the `CHROMOTE_CHROME` environment variable
-2. an installed Google Chrome or Chromium, found by `chromote::find_chrome()`
-3. a Chrome Headless Shell downloaded earlier by chromote
+2. an installed Google Chrome, found by `chromote::find_chrome()`
+3. another installed Chromium-based browser: **Microsoft Edge**, Chromium or Brave, including browsers installed for the current user only (`~/Applications` on macOS, `AppData\Local` on Windows)
+4. a Chrome Headless Shell downloaded earlier by chromote
 
-Most desktop machines with Chrome installed need no setup at all.
+Most desktop machines need no setup at all: every Windows 10 and 11 machine has Microsoft Edge, which also covers Windows on ARM, for which no Chrome Headless Shell is available.
 
 ### In an interactive session
 
