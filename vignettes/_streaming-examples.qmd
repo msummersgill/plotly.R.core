@@ -1,5 +1,6 @@
-<!-- Part of vignettes/streaming.qmd (kept in parts so that a website
-version can add a live Shinylive app between them): edit here. -->
+<!-- Shared by vignettes/streaming.qmd (the package vignette) and
+vignettes/articles/streaming-live.qmd (the website article, with Shinylive):
+edit here, not in those files. -->
 
 ## What it looks like
 

@@ -20,4 +20,6 @@ knitr:
 
 {{< include _streaming-intro.qmd >}}
 
+A version of this page with the app running live in the browser (with Shinylive and webR) is on the package website: <https://msummersgill.github.io/plotly.R.core/articles/streaming-live.html>.
+
 {{< include _streaming-examples.qmd >}}

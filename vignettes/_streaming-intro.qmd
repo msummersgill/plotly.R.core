@@ -1,5 +1,6 @@
-<!-- Part of vignettes/streaming.qmd (kept in parts so that a website
-version can add a live Shinylive app between them): edit here. -->
+<!-- Shared by vignettes/streaming.qmd (the package vignette) and
+vignettes/articles/streaming-live.qmd (the website article, with Shinylive):
+edit here, not in those files. -->
 
 A Shiny app can add data to a plot already in the browser, instead of rendering it again: `plotlyProxy()` refers to the plot, and `plotlyProxyInvoke()` calls a plotly.js function on it. For streaming data, that function is [`extendTraces`](https://plotly.com/javascript/plotlyjs-function-reference/#plotlyextendtraces), which appends points to traces and can drop the oldest, so the plot shows a moving window. Only the new points are sent, and the rest of the plot is untouched: zoom, hidden traces and hover stay as they are.
 

@@ -1,0 +1,81 @@
+---
+title: "Streaming data with plotlyProxy(), live"
+# A website article, not a package vignette: the Shinylive filter downloads
+# its assets while rendering. Render with SHINYLIVE_WASM_PACKAGES=0 (the app
+# installs its packages in the browser, plotly.core from r-universe) and
+# SHINYLIVE_ASSETS_VERSION=0.10.16 (webR with R 4.6), as the pkgdown workflow does.
+# The rest of the page is shared with the streaming vignette.
+filters:
+  - shinylive
+format:
+  html:
+    toc: true
+    fontsize: 0.95em
+    code-tools:
+      source: true
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+    # fill the text column, whatever its width (narrower on the pkgdown site)
+    out-width: "100%"
+---
+
+{{< include ../_streaming-intro.qmd >}}
+
+## Run it live
+
+The app below is the one above, running in your browser: [Shinylive](https://shiny.posit.co/py/docs/shinylive.html) runs R and Shiny with [webR](https://docs.r-wasm.org/webr/latest/), so no server is involved. The first start downloads webR and the packages, which takes a little while; plotly.core comes from [its r-universe](https://msummersgill.r-universe.dev), which builds it for webR, hence the `webr::install()` line, which runs only in webR (`R.version$os == "emscripten"`), so the same code also runs as a normal Shiny app.
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 520
+# In the browser (webR), install plotly.core from its r-universe; elsewhere
+# it's installed as usual, and this line is skipped
+if (R.version$os == "emscripten") {
+  webr::install("plotly.core", repos = c("https://msummersgill.r-universe.dev", "https://repo.r-wasm.org"))
+}
+
+library(shiny)
+library(plotly.core)
+
+window <- 60 # seconds shown
+rate <- 10 # points per second
+n <- window * rate # points kept per trace
+
+# Times as plotly.js date strings (local time, with milliseconds)
+stamp <- function(t) format(t, "%Y-%m-%d %H:%M:%OS3")
+
+ui <- fluidPage(plotlyOutput("stream"))
+
+server <- function(input, output, session) {
+  output$stream <- renderPlotly({
+    t <- Sys.time() - seq(window, 0, length.out = n)
+    go_figure() |>
+      add_scatter(x = stamp(t), y = sin(as.numeric(t)), mode = "lines", name = "sin(t)") |>
+      add_scatter(x = stamp(t), y = cos(as.numeric(t)), mode = "lines", name = "cos(t)") |>
+      update_layout(yaxis_range = c(-1.1, 1.1))
+  })
+
+  proxy <- plotlyProxy("stream", session)
+
+  observe({
+    invalidateLater(1000 / rate)
+    t <- Sys.time()
+    s <- as.numeric(t)
+    plotlyProxyInvoke(
+      proxy,
+      "extendTraces",
+      list(x = list(I(stamp(t)), I(stamp(t))), y = list(I(sin(s)), I(cos(s)))),
+      I(c(0L, 1L)),
+      n
+    )
+  })
+}
+
+shinyApp(ui, server)
+```
+
+webR runs R in the browser tab, a few times slower than R on your computer, so a live app suits demonstrations rather than heavy computation. `save_image()` doesn't work there: webR can't start a browser.
+
+{{< include ../_streaming-examples.qmd >}}

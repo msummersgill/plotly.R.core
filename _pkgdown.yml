@@ -13,9 +13,14 @@ articles:
     navbar: ~
     contents:
       - crosstalk
-      - streaming
+      - articles/streaming-live
       - static-export
       - render-performance
+  # the package vignette's content is in the live article above
+  - title: internal
+    contents:
+      - streaming
+
 reference:
   - title: Figures
     contents:

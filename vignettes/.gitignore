@@ -1,2 +1,6 @@
 /.quarto/
 **/*.quarto_ipynb
+articles/*_files/
+articles/*.html
+articles/.quarto/
+articles/shinylive-sw.js

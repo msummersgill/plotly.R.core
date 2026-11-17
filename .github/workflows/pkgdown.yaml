@@ -19,6 +19,14 @@ jobs:
       group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      # Shinylive apps (articles/streaming) install their packages in the
+      # browser when they start, rather than bundling WebAssembly builds
+      # into the site
+      SHINYLIVE_WASM_PACKAGES: 0
+      # The shinylive R package's default assets (0.9.1) run webR with R 4.4,
+      # whose WebAssembly package repository is out of date (e.g. data.table
+      # can't be downloaded); 0.10.16 runs R 4.6
+      SHINYLIVE_ASSETS_VERSION: 0.10.16
     permissions:
       contents: write
     steps:
