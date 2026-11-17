@@ -31,24 +31,242 @@ params:
   results_dir: "render-performance"
 ---
 
-This vignette compares how long it takes to make, load and draw large figures, and how much browser memory they use, for five ways of making the same figure. The benchmarks take several minutes and need software outside R (headless Chrome, Python), so building the vignette shows results saved from an earlier run, read from the `render-performance/` folder next to it. To rerun them on your machine, set the environment variable `PLOTLY_CORE_RUN_BENCHMARKS=true` and render this file with Quarto, for example:
+plotly.core makes large figures much quicker to build, save, load and draw than the CRAN plotly release, and lighter on browser memory, for `plot_ly()` code unchanged and even more so for `go_figure()` with `as_float32()`. This vignette shows the results first, then how the gains were made; how the benchmarks are run is in the [appendix](#appendix-running-the-benchmarks).
+
+| Variant | Code | Data sent to the browser as |
+|---|---|---|
+| `release` | `plot_ly()` with the CRAN plotly release | JSON numbers / date strings |
+| `core_backend` | the same `plot_ly()` code with the development plotly, which renders with plotly.core | base64 typed arrays (float64) |
+| `go_figure_f32` | `go_figure()` and `add_*()` with `as_float32()`, saved with `write_html()` | base64 typed arrays (float32) |
+| `plotly_py` | plotly.py `go.Figure()` with numpy float64 | base64 typed arrays (float64), ISO date strings |
+| `plotly_py_f32` | plotly.py `go.Figure()` with numpy float32 | base64 typed arrays (float32), ISO date strings |
+
+```{r setup}
+#| include: false
+library(plotly.core)
+
+run <- isTRUE(as.logical(Sys.getenv("PLOTLY_CORE_RUN_BENCHMARKS", "false")))
+wd <- normalizePath(params$workdir, mustWork = FALSE)
+results_dir <- params$results_dir
+# relative to this file, as pkgdown renders it from another directory
+doc_dir <- Sys.getenv("QUARTO_DOCUMENT_PATH")
+if (
+  !dir.exists(results_dir) && nzchar(doc_dir) &&
+    !grepl("^(/|~|[A-Za-z]:)", results_dir)
+) {
+  results_dir <- file.path(doc_dir, results_dir)
+}
+pages_dir <- file.path(wd, "pages")
+reps <- params$reps
+variants <- c("release", "core_backend", "go_figure_f32", "plotly_py", "plotly_py_f32")
+```
+
+
+```{r run-setup, ref.label = c("libraries", "data", "data-write", "figure-code")}
+#| eval: !expr run
+#| include: false
+```
+
+```{cat, ref.label = "bench-py", engine.opts = list(file = file.path(wd, "bench.py"), lang = "python")}
+#| eval: !expr run
+#| include: false
+```
+
+```{r run-build, ref.label = c("build-r", "build-py")}
+#| eval: !expr run
+#| include: false
+```
+
+```{cat, ref.label = "hook-js", engine.opts = list(file = file.path(wd, "hook.js"), lang = "js")}
+#| eval: !expr run
+#| include: false
+```
+
+```{r run-browser, ref.label = c("browser", "environment")}
+#| eval: !expr run
+#| include: false
+```
+
+```{r load-results}
+#| echo: false
+build <- read.csv(file.path(results_dir, "build.csv"))
+browser <- read.csv(file.path(results_dir, "browser.csv"))
+pages <- read.csv(file.path(results_dir, "pages.csv"))
+versions <- read.csv(file.path(results_dir, "versions.csv"), check.names = FALSE)
+meta <- jsonlite::read_json(file.path(results_dir, "meta.json"))
+med <- function(d, cols) aggregate(d[cols], d[c("variant", "case", "size")], median)
+res <- merge(merge(med(build, "build_sec"), pages),
+             med(browser, c("load_sec", "newplot_sec", "js_mb", "peak_renderer_mb", "js_heap_mb")))
+res$variant <- factor(res$variant, variants)
+res$case <- factor(res$case, c("timeseries", "multiseries", "heatmap"))
+res <- res[order(res$case, res$size, res$variant), ]
+res$label <- ifelse(res$case == "heatmap", paste0(res$size, "²"), format(res$size, big.mark = ",", trim = TRUE))
+res$label[res$case == "multiseries"] <- paste("10 ×", res$label[res$case == "multiseries"])
+
+show_table <- function(case) {
+  d <- res[res$case == case, ]
+  knitr::kable(
+    d[c("label", "variant", "build_sec", "html_mb", "load_sec", "newplot_sec", "js_mb", "peak_renderer_mb", "js_heap_mb")],
+    col.names = c("size", "variant", "build + write (s)", "HTML (MB)", "load (s)", "newPlot (s)",
+                  "JS transferred (MB)", "peak renderer (MB)", "JS heap after (MB)"),
+    digits = c(0, 0, 3, 2, 3, 3, 2, 0, 1), row.names = FALSE
+  )
+}
+```
+
+```{r summary-helpers}
+#| echo: false
+# a median from the results, at the largest size of a case
+v <- function(variant, case, col) {
+  d <- res[res$case == case, ]
+  d[d$variant == variant & d$size == max(d$size), col]
+}
+f <- function(x, digits = 2) formatC(x, format = "f", digits = digits)
+```
+
+## Results at a glance
+
+Medians over `r meta$reps` runs at the largest size of each case: a 1M-point time series, 10 time series of 100,000 points sharing x, and a 2000 × 2000 heatmap (run on `r meta$date`, `r meta$cpu`, `r meta$browser`; details in the [appendix](#environment)).
+
+```{r glance}
+#| echo: false
+top <- res[res$size == ave(res$size, res$case, FUN = max), ]
+knitr::kable(
+  top[c("case", "variant", "build_sec", "html_mb", "load_sec", "peak_renderer_mb")],
+  col.names = c("case", "variant", "build + write (s)", "HTML (MB)", "load (s)", "peak renderer (MB)"),
+  digits = c(0, 0, 3, 1, 2, 0), row.names = FALSE
+)
+```
+
+```{r charts}
+#| code-fold: true
+#| code-summary: "Show the chart code"
+chart_metrics <- c(`build + write (s)` = "build_sec", `HTML (MB)` = "html_mb", `load (s)` = "load_sec",
+                   `newPlot (s)` = "newplot_sec", `peak renderer (MB)` = "peak_renderer_mb",
+                   `JS heap after (MB)` = "js_heap_mb")
+long <- do.call(rbind, Map(function(col, name) {
+  data.frame(res[c("variant", "case", "values")], metric = name, value = res[[col]])
+}, chart_metrics, names(chart_metrics)))
+long <- long[order(long$variant, long$case, long$values), ]
+
+fig <- px_line(
+  long, x = "values", y = "value", color = "variant",
+  facet_row = "metric", facet_col = "case", markers = TRUE, log_x = TRUE, log_y = TRUE,
+  category_orders = list(variant = variants, metric = names(chart_metrics), case = levels(res$case)),
+  # R in blues, Python in oranges; the darkest of each is the float32 variant
+  color_discrete_map = list(release = "#6baed6", core_backend = "#2171b5", go_figure_f32 = "#08306b",
+                            plotly_py = "#fd8d3c", plotly_py_f32 = "#a63603"),
+  labels = list(values = "values plotted", value = "", variant = ""),
+  facet_row_spacing = 0.03, template = "plotly_white", height = 1400
+)
+# each panel gets its own axis range: the metrics differ by orders of magnitude
+for (ax in grep("^[xy]axis", names(fig$layout), value = TRUE)) {
+  fig$layout[[ax]]$matches <- NULL
+  fig$layout[[ax]]$showticklabels <- TRUE
+  if (startsWith(ax, "x")) fig$layout[[ax]]$dtick <- 1 # a tick per power of 10
+}
+fig |>
+  for_each_annotation(function(a) {
+    a$text <- sub("^[^=]*=", "", a$text) # "case=heatmap" -> "heatmap"
+    a
+  }) |>
+  update_layout(legend = list(orientation = "h", y = 1.03, yanchor = "bottom", x = 0)) |>
+  partial_bundle("auto")
+```
+
+
+## How the gains were made
+
+Numbers here are medians from the results, at the largest size of each case, unless marked as a standalone timing (measured separately, during development).
+
+### How plotly.core sends data to the browser
+
+**Numeric arrays as base64 typed arrays.** Numeric vectors and matrices in traces are sent as `{dtype, bdata, shape}`, as plotly.py does, rather than as JSON numbers; whole numbers are narrowed to the smallest integer type without loss. A double takes 10.7 bytes of base64 instead of about 18--20 characters of JSON, and the browser decodes the bytes straight into a typed array instead of parsing text. For the heatmap this takes the page from `r f(v("release", "heatmap", "html_mb"), 1)` MB (CRAN plotly) to `r f(v("core_backend", "heatmap", "html_mb"), 1)` MB (`plot_ly()` with plotly.core), the load time from `r f(v("release", "heatmap", "load_sec"))` s to `r f(v("core_backend", "heatmap", "load_sec"))` s, and the renderer's peak memory from `r f(v("release", "heatmap", "peak_renderer_mb"), 0)` MB to `r f(v("core_backend", "heatmap", "peak_renderer_mb"), 0)` MB. plotly.js's own `newPlot()` time is about the same for every variant, so the faster loads come from fetching, parsing and decoding less data, not from plotly.js itself.
+
+**Date-times as numbers.** Dates and date-times are sent as typed arrays of days or milliseconds; the widget's JavaScript turns them back into the strings R would have written. UTC offsets are looked up once per 15-minute bin rather than once per value. For the 1M-point time series, CRAN plotly writes a page of `r f(v("release", "timeseries", "html_mb"), 1)` MB in `r f(v("release", "timeseries", "build_sec"))` s; with plotly.core the same `plot_ly()` code writes `r f(v("core_backend", "timeseries", "html_mb"), 1)` MB in `r f(v("core_backend", "timeseries", "build_sec"))` s. plotly.py writes date-times as text, so its time series pages are larger (`r f(v("plotly_py", "timeseries", "html_mb"), 1)` MB).
+
+**Encoding in C.** The typed arrays are encoded in C (`src/typed_array.c`): one pass to find the narrowest type, then base64 written straight into one buffer, as data.table's `fwrite()` writes its output. jsonlite writes the rest of the figure with placeholders and C copies the encoded arrays in, so the large strings never pass through R. For the 2000 × 2000 float32 heatmap the whole JSON step takes about 0.06 s (standalone timing).
+
+**Arrays repeated in a figure are sent once.** An array used by several traces, like the x of the 10 time series, is encoded once and referenced after that; in the browser every trace uses the same object, and date strings are restored once. With 10 series of 100,000 points, `plot_ly()` with plotly.core writes `r f(v("core_backend", "multiseries", "html_mb"), 1)` MB and `go_figure()` `r f(v("go_figure_f32", "multiseries", "html_mb"), 1)` MB, against `r f(v("release", "multiseries", "html_mb"), 1)` MB for CRAN plotly and `r f(v("plotly_py", "multiseries", "html_mb"), 1)` MB for plotly.py, which repeat x in each trace. Those pages are smaller than the single 1M-point series and load faster (`r f(v("go_figure_f32", "multiseries", "load_sec"))` s against `r f(v("go_figure_f32", "timeseries", "load_sec"))` s for `go_figure()`).
+
+**`as_float32()`.** Doubles marked with `as_float32()` are sent in single precision, 4 bytes instead of 8 (about 7 significant digits, which is what WebGL draws with). It halves the heatmap's page (`r f(v("core_backend", "heatmap", "html_mb"), 1)` to `r f(v("go_figure_f32", "heatmap", "html_mb"), 1)` MB) and cuts the JavaScript memory left after loading (`r f(v("core_backend", "heatmap", "js_heap_mb"), 0)` to `r f(v("go_figure_f32", "heatmap", "js_heap_mb"), 0)` MB) and the load time (`r f(v("core_backend", "heatmap", "load_sec"))` to `r f(v("go_figure_f32", "heatmap", "load_sec"))` s). For the time series only y is halved; x stays in double precision.
+
+**`write_html()`.** htmlwidgets lays out the page and the figure's data is then written to the file directly, rather than passed through htmltools as one long string, which is searched and copied several times. This is most of the difference between `go_figure()` and `plot_ly()` in build + write time: `r f(v("go_figure_f32", "heatmap", "build_sec"), 3)` s for the heatmap (`r f(v("plotly_py_f32", "heatmap", "build_sec"), 3)` s for plotly.py with float32), and `r f(v("go_figure_f32", "timeseries", "build_sec"), 3)` s for the 1M-point time series (`r f(v("plotly_py_f32", "timeseries", "build_sec"), 3)` s). `write_html()` also takes `plot_ly()` figures: saving the `plot_ly()` heatmap takes about 0.2 s with it instead of about 0.8 s with `saveWidget()` (standalone timing).
+
+### Building `plot_ly()` figures in plotly
+
+**A faster `plotly_build()`.** The development plotly computes each group's rows once rather than once per column, sorts with radix `order()` only when rows are out of order, and replaces the dplyr, tibble, rlang, tidyr and purrr calls in the build with base R. That's about twice as fast on large plots (three 1M-point WebGL traces: 0.70 s to 0.30 s, standalone timing).
+
+**Heatmaps.** Checking whether a heatmap's z holds a single colour value used `unique()` on its rows; it now uses `rowSums()`. `plotly_build()` of the 2000 × 2000 heatmap takes 0.04 s instead of 0.15 s (standalone timing). Most of the `plot_ly()` heatmap's remaining `r f(v("core_backend", "heatmap", "build_sec"))` s is `htmlwidgets::saveWidget()` handling the large page, which `write_html()` avoids.
+
+### What doesn't help (yet)
+
+* **Partial bundles.** `partial_bundle()` loads a smaller plotly.js with only the trace types a figure uses, but every variant here loads the full bundle.
+* **A larger plotly.js.** plotly.js 4 is larger to load than the 2.x CRAN plotly bundles, so for small figures (under about 100,000 values) CRAN plotly loads faster; the data dominates above that.
+* **plotly.js 4 itself** draws in about the same time as plotly.js 2 (`newPlot` above).
+
+## Detailed results
+
+All sizes, medians over `r meta$reps` runs.
+
+### Large time series (`scattergl` lines)
+
+```{r ts-table}
+#| echo: false
+show_table("timeseries")
+```
+
+### 10 time series sharing x (`scattergl` lines)
+
+```{r ms-table}
+#| echo: false
+show_table("multiseries")
+```
+
+### Large matrix heatmap
+
+```{r hm-table}
+#| echo: false
+show_table("heatmap")
+```
+
+### Relative to the CRAN release
+
+Release median ÷ variant median at each size (above 1 means faster or smaller than the release).
+
+```{r relative}
+#| echo: false
+metrics <- c(`build + write` = "build_sec", HTML = "html_mb", load = "load_sec",
+             `peak renderer` = "peak_renderer_mb", `JS heap` = "js_heap_mb")
+base <- res[res$variant == "release", c("case", "size", metrics)]
+rel <- merge(res[res$variant != "release", c("variant", "case", "size", "label", metrics)], base,
+             by = c("case", "size"), suffixes = c("", ".release"))
+for (m in metrics) rel[[m]] <- rel[[paste0(m, ".release")]] / rel[[m]]
+rel <- rel[order(rel$case, rel$size, rel$variant), ]
+knitr::kable(rel[c("case", "label", "variant", metrics)],
+             col.names = c("case", "size", "variant", names(metrics)), digits = 1, row.names = FALSE)
+```
+
+### Notes
+
+* The variants use different plotly.js versions (see above), so `newPlot` times include plotly.js differences as well as the data format; plotly.js 4 is also larger to load (all variants load a full bundle). "JS transferred (MB)" is all JavaScript the page fetched (plotly.js, htmlwidgets, bindings) as sent by the server, which compresses it.
+* Load times are from localhost: on a real network, the HTML size adds transfer time.
+* Chrome runs headless on the machine's GPU where it has one (WebGL via ANGLE), so WebGL drawing reflects the hardware.
+* float32 keeps about 7 significant digits (see `?as_float32`). Date-times are unaffected: plotly.core sends them as float64 milliseconds; plotly.py and the release send ISO strings.
+* Renderer memory is resident set size as the OS reports it, sampled every 20 ms, so short spikes can be missed; the GPU process's memory (WebGL buffers) is not included.
+
+## Appendix: running the benchmarks
+
+The benchmarks take several minutes and need software outside R (headless Chrome via chromote, and Python with plotly, numpy and pandas), so building this vignette shows results saved from an earlier run, read from the `render-performance/` folder next to it. To rerun them, render this file with the environment variable `PLOTLY_CORE_RUN_BENCHMARKS=true`; the code below then runs before the results are shown, and new results are saved to `render-performance/`:
 
 ``` sh
 PLOTLY_CORE_RUN_BENCHMARKS=true quarto render vignettes/render-performance.qmd \
   -P python:/path/to/python -P release_lib:/path/to/lib-with-cran-plotly
 ```
 
-which saves new results to `render-performance/`.
+Parameters (`-P name:value`): `python`, a Python with plotly, numpy and pandas; `release_lib`, a library with the CRAN plotly (installed there if missing); `core_lib`, a library with the development plotly and plotly.core (default: the first of `.libPaths()`); `ts_sizes`, `ms_sizes`, `hm_sizes` and `reps`.
 
-## What is measured
-
-| Variant | Code | Data sent to the browser as |
-|---|---|---|
-| `release` | `plot_ly()` with the CRAN plotly release | JSON numbers / date strings |
-| `core_backend` | the same `plot_ly()` code with the development plotly, which renders with plotly.core | base64 typed arrays (float64) |
-| `go_figure_f32` | `go_figure() \|> add_*()` with `as_float32()`, saved with `write_html()` | base64 typed arrays (float32) |
-| `plotly_py` | plotly.py `go.Figure()` with numpy float64 | base64 typed arrays (float64), ISO date strings |
-| `plotly_py_f32` | plotly.py `go.Figure()` with numpy float32 | base64 typed arrays (float32), ISO date strings |
+### What is measured
 
 Three use cases, over a range of sizes:
 
@@ -65,27 +283,13 @@ Metrics:
 * **Peak renderer memory (MB)**: the largest resident memory of the page's renderer process while loading, sampled every 20 ms.
 * **JS heap after load (MB)**: JavaScript heap in use after load and a forced garbage collection, plus array buffers (where Chrome reports them).
 
-```{r setup}
-library(plotly.core)
-
-run <- isTRUE(as.logical(Sys.getenv("PLOTLY_CORE_RUN_BENCHMARKS", "false")))
-wd <- normalizePath(params$workdir, mustWork = FALSE)
-results_dir <- params$results_dir
-# relative to this file, as pkgdown renders it from another directory
-doc_dir <- Sys.getenv("QUARTO_DOCUMENT_PATH")
-if (!dir.exists(results_dir) && nzchar(doc_dir)) {
-  results_dir <- file.path(doc_dir, results_dir)
-}
-pages_dir <- file.path(wd, "pages")
-reps <- params$reps
-variants <- c("release", "core_backend", "go_figure_f32", "plotly_py", "plotly_py_f32")
-```
+### Libraries
 
 ```{r libraries}
-#| eval: !expr run
+#| eval: false
 dir.create(file.path(wd, "data"), recursive = TRUE, showWarnings = FALSE)
 dir.create(pages_dir, showWarnings = FALSE)
-dir.create(results_dir, showWarnings = FALSE)
+dir.create(results_dir, recursive = TRUE, showWarnings = FALSE)
 
 release_lib <- if (nzchar(params$release_lib)) params$release_lib else file.path(wd, "lib-release")
 core_lib <- if (nzchar(params$core_lib)) params$core_lib else .libPaths()[1]
@@ -98,11 +302,12 @@ libs <- list(release = release_lib, core_backend = core_lib, go_figure_f32 = cor
 python <- params$python
 ```
 
-## Data
+### Data
 
 The data is generated once in R and written as little-endian doubles, so that every variant (R and Python) plots the same values.
 
 ```{r data}
+#| eval: false
 cases <- rbind(
   data.frame(case = "timeseries", size = params$ts_sizes, values = params$ts_sizes),
   data.frame(case = "multiseries", size = params$ms_sizes, values = params$ms_sizes * 10),
@@ -112,7 +317,7 @@ cases$file <- file.path(wd, "data", sprintf("%s-%d.bin", cases$case, cases$size)
 ```
 
 ```{r data-write}
-#| eval: !expr run
+#| eval: false
 set.seed(2024)
 for (i in seq_len(nrow(cases))) {
   n <- cases$size[i]
@@ -128,11 +333,12 @@ for (i in seq_len(nrow(cases))) {
 }
 ```
 
-## Figure code
+### Figure code
 
 The R code for each variant. Every function gets the time series as `t` (POSIXct, UTC) and `y`; the 10 series as a data frame `d` with columns `t` and `y01`, ..., `y10`; or the heatmap as the matrix `z`.
 
 ```{r figure-code}
+#| eval: false
 figures <- list(
   release = list(
     timeseries = function(t, y) plot_ly(x = t, y = y, type = "scattergl", mode = "lines"),
@@ -172,8 +378,8 @@ writers <- list(
 
 The plotly.py equivalents (`plotly_py_f32` converts the arrays with `astype(np.float32)` before timing starts, as `as_float32()` only marks them):
 
-```{cat, engine.opts = list(file = file.path(wd, "bench.py"), lang = "python")}
-#| eval: !expr run
+```{python bench-py}
+#| eval: false
 import gc, json, sys, time
 import numpy as np, pandas as pd, plotly.graph_objects as go
 
@@ -219,12 +425,12 @@ for case in json.load(open(cases_file)):
 json.dump(out, sys.stdout)
 ```
 
-## Build + write timings
+### Build + write timings
 
 Each variant runs in its own fresh process: R variants with callr and the library holding the right plotly version first on the library path.
 
 ```{r build-r}
-#| eval: !expr run
+#| eval: false
 r_worker <- function(variant, fns, write, cases, reps, outdir) {
   suppressPackageStartupMessages(
     if (variant == "go_figure_f32") library(plotly.core) else library(plotly)
@@ -265,7 +471,7 @@ build_r <- do.call(rbind, lapply(names(figures), function(v) {
 ```
 
 ```{r build-py}
-#| eval: !expr run
+#| eval: false
 cases_json <- file.path(wd, "cases.json")
 jsonlite::write_json(cases[c("case", "size", "file")], cases_json)
 build_py <- do.call(rbind, lapply(c("plotly_py", "plotly_py_f32"), function(v) {
@@ -282,12 +488,12 @@ pages$path <- sprintf("%s/%s-%d.html", pages$variant, pages$case, pages$size)
 pages$html_mb <- file.size(file.path(pages_dir, pages$path)) / 1e6
 ```
 
-## Browser measurements
+### Browser measurements
 
 A script injected before any page script runs wraps plotly.js's `newPlot()`/`react()`/`plot()` to time the first plot, and marks the first frame painted after it:
 
-```{cat, engine.opts = list(file = file.path(wd, "hook.js"), lang = "js")}
-#| eval: !expr run
+```{js hook-js}
+#| eval: false
 (function () {
   var B = window.__bench = { done: false };
   function finish() {
@@ -326,7 +532,7 @@ A script injected before any page script runs wraps plotly.js's `newPlot()`/`rea
 ```
 
 ```{r browser}
-#| eval: !expr run
+#| eval: false
 hook_js <- paste(readLines(file.path(wd, "hook.js")), collapse = "\n")
 chrome <- chromote::Chromote$new()
 
@@ -343,6 +549,7 @@ for (i in 1:50) {
 # samples the largest renderer process's memory (RSS) every 20 ms until killed
 sampler <- function(browser_pid, out) {
   peak <- 0
+  writeLines("0", out) # started
   repeat {
     procs <- try(ps::ps_children(ps::ps_handle(browser_pid), recursive = TRUE), silent = TRUE)
     if (!inherits(procs, "try-error")) {
@@ -371,7 +578,9 @@ measure_page <- function(url, timeout = 300) {
   peak_file <- tempfile()
   smp <- callr::r_bg(sampler, list(browser_pid, peak_file))
   on.exit(smp$kill(), add = TRUE)
-  Sys.sleep(0.3) # let the sampler start
+  # wait for the sampler to start
+  for (i in 1:100) if (file.exists(peak_file)) break else Sys.sleep(0.05)
+  Sys.sleep(0.1)
   s$Page$navigate(url, wait_ = FALSE) # large pages can take a while to commit
   t0 <- Sys.time()
   repeat {
@@ -422,8 +631,16 @@ server$kill()
 
 ### Environment
 
+Results above are from a run on `r meta$date` on `r meta$os` (`r meta$cpu`), with `r meta$R` and `r meta$browser` (headless), and these versions:
+
+```{r versions}
+#| echo: false
+versions[is.na(versions)] <- ""
+knitr::kable(versions, row.names = FALSE)
+```
+
 ```{r environment}
-#| eval: !expr run
+#| eval: false
 r_versions <- function(lib) {
   callr::r(function() {
     js_version <- function(pkg, file) {
@@ -467,163 +684,3 @@ write.csv(pages[c("variant", "case", "size", "values", "html_mb")], file.path(re
 write.csv(versions, file.path(results_dir, "versions.csv"), row.names = FALSE)
 jsonlite::write_json(meta, file.path(results_dir, "meta.json"), auto_unbox = TRUE, pretty = TRUE)
 ```
-
-```{r load-results}
-#| echo: false
-build <- read.csv(file.path(results_dir, "build.csv"))
-browser <- read.csv(file.path(results_dir, "browser.csv"))
-pages <- read.csv(file.path(results_dir, "pages.csv"))
-versions <- read.csv(file.path(results_dir, "versions.csv"), check.names = FALSE)
-meta <- jsonlite::read_json(file.path(results_dir, "meta.json"))
-```
-
-Results below are from a run on `r meta$date` on `r meta$os` (`r meta$cpu`), with `r meta$R` and `r meta$browser` (headless), and these versions:
-
-```{r versions}
-#| echo: false
-versions[is.na(versions)] <- ""
-knitr::kable(versions, row.names = FALSE)
-```
-
-## Results
-
-Medians over `r meta$reps` runs.
-
-```{r results}
-med <- function(d, cols) aggregate(d[cols], d[c("variant", "case", "size")], median)
-res <- merge(merge(med(build, "build_sec"), pages),
-             med(browser, c("load_sec", "newplot_sec", "js_mb", "peak_renderer_mb", "js_heap_mb")))
-res$variant <- factor(res$variant, variants)
-res$case <- factor(res$case, c("timeseries", "multiseries", "heatmap"))
-res <- res[order(res$case, res$size, res$variant), ]
-res$label <- ifelse(res$case == "heatmap", paste0(res$size, "²"), format(res$size, big.mark = ",", trim = TRUE))
-res$label[res$case == "multiseries"] <- paste("10 ×", res$label[res$case == "multiseries"])
-
-show_table <- function(case) {
-  d <- res[res$case == case, ]
-  knitr::kable(
-    d[c("label", "variant", "build_sec", "html_mb", "load_sec", "newplot_sec", "js_mb", "peak_renderer_mb", "js_heap_mb")],
-    col.names = c("size", "variant", "build + write (s)", "HTML (MB)", "load (s)", "newPlot (s)",
-                  "JS transferred (MB)", "peak renderer (MB)", "JS heap after (MB)"),
-    digits = c(0, 0, 3, 2, 3, 3, 2, 0, 1), row.names = FALSE
-  )
-}
-```
-
-### Large time series (`scattergl` lines)
-
-```{r ts-table}
-show_table("timeseries")
-```
-
-### 10 time series sharing x (`scattergl` lines)
-
-```{r ms-table}
-show_table("multiseries")
-```
-
-### Large matrix heatmap
-
-```{r hm-table}
-show_table("heatmap")
-```
-
-### Charts
-
-```{r charts}
-chart_metrics <- c(`build + write (s)` = "build_sec", `HTML (MB)` = "html_mb", `load (s)` = "load_sec",
-                   `newPlot (s)` = "newplot_sec", `peak renderer (MB)` = "peak_renderer_mb",
-                   `JS heap after (MB)` = "js_heap_mb")
-long <- do.call(rbind, Map(function(col, name) {
-  data.frame(res[c("variant", "case", "values")], metric = name, value = res[[col]])
-}, chart_metrics, names(chart_metrics)))
-long <- long[order(long$variant, long$case, long$values), ]
-
-fig <- px_line(
-  long, x = "values", y = "value", color = "variant",
-  facet_row = "metric", facet_col = "case", markers = TRUE, log_x = TRUE, log_y = TRUE,
-  category_orders = list(variant = variants, metric = names(chart_metrics), case = levels(res$case)),
-  # R in blues, Python in oranges; the darkest of each is the float32 variant
-  color_discrete_map = list(release = "#6baed6", core_backend = "#2171b5", go_figure_f32 = "#08306b",
-                            plotly_py = "#fd8d3c", plotly_py_f32 = "#a63603"),
-  labels = list(values = "values plotted", value = "", variant = ""),
-  facet_row_spacing = 0.03, template = "plotly_white", height = 1400
-)
-# each panel gets its own axis range: the metrics differ by orders of magnitude
-for (ax in grep("^[xy]axis", names(fig$layout), value = TRUE)) {
-  fig$layout[[ax]]$matches <- NULL
-  fig$layout[[ax]]$showticklabels <- TRUE
-  if (startsWith(ax, "x")) fig$layout[[ax]]$dtick <- 1 # a tick per power of 10
-}
-fig |>
-  for_each_annotation(function(a) {
-    a$text <- sub("^[^=]*=", "", a$text) # "case=heatmap" -> "heatmap"
-    a
-  }) |>
-  update_layout(legend = list(orientation = "h", y = 1.03, yanchor = "bottom", x = 0)) |>
-  partial_bundle("auto")
-```
-
-### Relative to the CRAN release
-
-Release median ÷ variant median at each size (above 1 means faster or smaller than the release).
-
-```{r relative}
-metrics <- c(`build + write` = "build_sec", HTML = "html_mb", load = "load_sec",
-             `peak renderer` = "peak_renderer_mb", `JS heap` = "js_heap_mb")
-base <- res[res$variant == "release", c("case", "size", metrics)]
-rel <- merge(res[res$variant != "release", c("variant", "case", "size", "label", metrics)], base,
-             by = c("case", "size"), suffixes = c("", ".release"))
-for (m in metrics) rel[[m]] <- rel[[paste0(m, ".release")]] / rel[[m]]
-rel <- rel[order(rel$case, rel$size, rel$variant), ]
-knitr::kable(rel[c("case", "label", "variant", metrics)],
-             col.names = c("case", "size", "variant", names(metrics)), digits = 1, row.names = FALSE)
-```
-
-## What makes it faster
-
-Numbers in this section are medians from the results above, at the largest size of each case, unless marked as a standalone timing (measured separately, during development).
-
-```{r summary-helpers}
-#| echo: false
-# a median from the results, at the largest size of a case
-v <- function(variant, case, col) {
-  d <- res[res$case == case, ]
-  d[d$variant == variant & d$size == max(d$size), col]
-}
-f <- function(x, digits = 2) formatC(x, format = "f", digits = digits)
-```
-
-### How plotly.core sends data to the browser
-
-**Numeric arrays as base64 typed arrays.** Numeric vectors and matrices in traces are sent as `{dtype, bdata, shape}`, as plotly.py does, rather than as JSON numbers; whole numbers are narrowed to the smallest integer type without loss. A double takes 10.7 bytes of base64 instead of about 18--20 characters of JSON, and the browser decodes the bytes straight into a typed array instead of parsing text. For the heatmap this takes the page from `r f(v("release", "heatmap", "html_mb"), 1)` MB (CRAN plotly) to `r f(v("core_backend", "heatmap", "html_mb"), 1)` MB (`plot_ly()` with plotly.core), the load time from `r f(v("release", "heatmap", "load_sec"))` s to `r f(v("core_backend", "heatmap", "load_sec"))` s, and the renderer's peak memory from `r f(v("release", "heatmap", "peak_renderer_mb"), 0)` MB to `r f(v("core_backend", "heatmap", "peak_renderer_mb"), 0)` MB. plotly.js's own `newPlot()` time is about the same for every variant, so the faster loads come from fetching, parsing and decoding less data, not from plotly.js itself.
-
-**Date-times as numbers.** Dates and date-times are sent as typed arrays of days or milliseconds; the widget's JavaScript turns them back into the strings R would have written. UTC offsets are looked up once per 15-minute bin rather than once per value. For the 1M-point time series, CRAN plotly writes a page of `r f(v("release", "timeseries", "html_mb"), 1)` MB in `r f(v("release", "timeseries", "build_sec"))` s; with plotly.core the same `plot_ly()` code writes `r f(v("core_backend", "timeseries", "html_mb"), 1)` MB in `r f(v("core_backend", "timeseries", "build_sec"))` s. plotly.py writes date-times as text, so its time series pages are larger (`r f(v("plotly_py", "timeseries", "html_mb"), 1)` MB).
-
-**Encoding in C.** The typed arrays are encoded in C (`src/typed_array.c`): one pass to find the narrowest type, then base64 written straight into one buffer, as data.table's `fwrite()` writes its output. jsonlite writes the rest of the figure with placeholders and C copies the encoded arrays in, so the large strings never pass through R. For the 2000 × 2000 float32 heatmap the whole JSON step takes about 0.06 s (standalone timing).
-
-**Arrays repeated in a figure are sent once.** An array used by several traces, like the x of the 10 time series, is encoded once and referenced after that; in the browser every trace uses the same object, and date strings are restored once. With 10 series of 100,000 points, `plot_ly()` with plotly.core writes `r f(v("core_backend", "multiseries", "html_mb"), 1)` MB and `go_figure()` `r f(v("go_figure_f32", "multiseries", "html_mb"), 1)` MB, against `r f(v("release", "multiseries", "html_mb"), 1)` MB for CRAN plotly and `r f(v("plotly_py", "multiseries", "html_mb"), 1)` MB for plotly.py, which repeat x in each trace. Those pages are smaller than the single 1M-point series and load faster (`r f(v("go_figure_f32", "multiseries", "load_sec"))` s against `r f(v("go_figure_f32", "timeseries", "load_sec"))` s for `go_figure()`).
-
-**`as_float32()`.** Doubles marked with `as_float32()` are sent in single precision, 4 bytes instead of 8 (about 7 significant digits, which is what WebGL draws with). It halves the heatmap's page (`r f(v("core_backend", "heatmap", "html_mb"), 1)` to `r f(v("go_figure_f32", "heatmap", "html_mb"), 1)` MB) and cuts the JavaScript memory left after loading (`r f(v("core_backend", "heatmap", "js_heap_mb"), 0)` to `r f(v("go_figure_f32", "heatmap", "js_heap_mb"), 0)` MB) and the load time (`r f(v("core_backend", "heatmap", "load_sec"))` to `r f(v("go_figure_f32", "heatmap", "load_sec"))` s). For the time series only y is halved; x stays in double precision.
-
-**`write_html()`.** htmlwidgets lays out the page and the figure's data is then written to the file directly, rather than passed through htmltools as one long string, which is searched and copied several times. This is most of the difference between `go_figure()` and `plot_ly()` in build + write time: `r f(v("go_figure_f32", "heatmap", "build_sec"), 3)` s for the heatmap (`r f(v("plotly_py_f32", "heatmap", "build_sec"), 3)` s for plotly.py with float32), and `r f(v("go_figure_f32", "timeseries", "build_sec"), 3)` s for the 1M-point time series (`r f(v("plotly_py_f32", "timeseries", "build_sec"), 3)` s). `write_html()` also takes `plot_ly()` figures: saving the `plot_ly()` heatmap takes about 0.2 s with it instead of about 0.8 s with `saveWidget()` (standalone timing).
-
-### Building `plot_ly()` figures in plotly
-
-**A faster `plotly_build()`.** The development plotly computes each group's rows once rather than once per column, sorts with radix `order()` only when rows are out of order, and replaces the dplyr, tibble, rlang, tidyr and purrr calls in the build with base R. That's about twice as fast on large plots (three 1M-point WebGL traces: 0.70 s to 0.30 s, standalone timing).
-
-**Heatmaps.** Checking whether a heatmap's z holds a single colour value used `unique()` on its rows; it now uses `rowSums()`. `plotly_build()` of the 2000 × 2000 heatmap takes 0.04 s instead of 0.15 s (standalone timing). Most of the `plot_ly()` heatmap's remaining `r f(v("core_backend", "heatmap", "build_sec"))` s is `htmlwidgets::saveWidget()` handling the large page, which `write_html()` avoids.
-
-### What doesn't help (yet)
-
-* **Partial bundles.** `partial_bundle()` loads a smaller plotly.js with only the trace types a figure uses, but every variant here loads the full bundle.
-* **A larger plotly.js.** plotly.js 4 is larger to load than the 2.x CRAN plotly bundles, so for small figures (under about 100,000 values) CRAN plotly loads faster; the data dominates above that.
-* **plotly.js 4 itself** draws in about the same time as plotly.js 2 (`newPlot` above).
-
-## Notes
-
-* The variants use different plotly.js versions (see above), so `newPlot` times include plotly.js differences as well as the data format; plotly.js 4 is also larger to load (all variants load a full bundle). "JS transferred (MB)" is all JavaScript the page fetched (plotly.js, htmlwidgets, bindings) as sent by the server, which compresses it.
-* Load times are from localhost: on a real network, the HTML size adds transfer time.
-* Chrome runs headless on the machine's GPU where it has one (WebGL via ANGLE), so WebGL drawing reflects the hardware.
-* float32 keeps about 7 significant digits (see `?as_float32`). Date-times are unaffected: plotly.core sends them as float64 milliseconds; plotly.py and the release send ISO strings.
-* Renderer memory is resident set size as the OS reports it, sampled every 20 ms, so short spikes can be missed; the GPU process's memory (WebGL buffers) is not included.
