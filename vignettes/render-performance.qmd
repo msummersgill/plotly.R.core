@@ -446,6 +446,7 @@ The plotly.py equivalents (`plotly_py_f32` converts the arrays with `astype(np.f
 
 ```{python bench-py}
 #| eval: false
+#| python.reticulate: false
 import gc, json, sys, time
 import numpy as np, pandas as pd, plotly.graph_objects as go
 
