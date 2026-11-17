@@ -3,8 +3,10 @@
 Sets how a figure responds to, and shows, selections of points linked
 with crosstalk. A figure is linked when its data come from a
 [crosstalk::SharedData](https://rdrr.io/pkg/crosstalk/man/SharedData.html)
-(give one as the `data_frame` of a `px_*()` function, or link traces
-with
+(give one as the `data_frame` of a `px_*()` function, pipe one into
+[`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
+and add traces with formulas such as `add_scatter(x = ~col)`, or link
+traces with
 [`set_crosstalk_keys()`](https://msummersgill.github.io/plotly.R.core/reference/set_crosstalk_keys.md)):
 selecting points then selects the rows with the same keys in every view
 of the same crosstalk group, such as other plots,

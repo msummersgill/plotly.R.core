@@ -209,7 +209,8 @@ time series pages are larger (43.3 MB).
 
 **Encoding in C.** The typed arrays are encoded in C
 (`src/typed_array.c`): one pass to find the narrowest type, then base64
-written straight into one buffer, as data.table’s `fwrite()` writes its
+written straight into one buffer, as data.table’s
+[`fwrite()`](https://rdrr.io/pkg/data.table/man/fwrite.html) writes its
 output. jsonlite writes the rest of the figure with placeholders and C
 copies the encoded arrays in, so the large strings never pass through R.
 For the 2000 × 2000 float32 heatmap the whole JSON step takes about 0.06

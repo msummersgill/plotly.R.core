@@ -69,6 +69,9 @@
 - Linked views with crosstalk: `px_*()` functions accept a
   [`crosstalk::SharedData`](https://rdrr.io/pkg/crosstalk/man/SharedData.html)
   as `data_frame`,
+  [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
+  and `add_<trace>()` accept one as the data for formulas
+  (`add_scatter(x = ~col)`) and link the traces of its rows,
   [`set_crosstalk_keys()`](https://msummersgill.github.io/plotly.R.core/reference/set_crosstalk_keys.md)
   links the traces of any figure, and
   [`highlight()`](https://msummersgill.github.io/plotly.R.core/reference/highlight.md)

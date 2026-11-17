@@ -18,7 +18,8 @@
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/static-export.html">Static image export</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/crosstalk.html">Linked views with crosstalk</a></li>
+    <li><a class="dropdown-item" href="../articles/static-export.html">Static image export</a></li>
     <li><a class="dropdown-item" href="../articles/render-performance.html">Rendering performance</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -54,7 +55,7 @@
 <li>
 <code><a href="../reference/save_image.html">save_image()</a></code> finds Chrome or another Chromium-based browser (Microsoft Edge, Chromium, Brave, including per-user installs), or offers to download Chrome Headless Shell in interactive sessions. On Linux it checks the shared libraries Chrome needs and can download missing ones into the user cache without administrator rights (Debian/Ubuntu and RHEL-family systems); <code><a href="../reference/install_chrome.html">install_chrome()</a></code> does the same set-up non-interactively, and <code><a href="../reference/install_chrome.html">remove_chrome()</a></code> removes the downloads. Startup failures show Chrome’s own output.</li>
 <li>Renders the plotly R package’s <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plot_ly()</a></code> and <code><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html" class="external-link">ggplotly()</a></code> figures, including its crosstalk linking (<code><a href="../reference/highlight.html">highlight()</a></code>).</li>
-<li>Linked views with crosstalk: <code>px_*()</code> functions accept a <code><a href="https://rdrr.io/pkg/crosstalk/man/SharedData.html" class="external-link">crosstalk::SharedData</a></code> as <code>data_frame</code>, <code><a href="../reference/set_crosstalk_keys.html">set_crosstalk_keys()</a></code> links the traces of any figure, and <code><a href="../reference/highlight.html">highlight()</a></code> sets how selections are made and shown (the same options as the plotly package’s <code><a href="../reference/highlight.html">highlight()</a></code>).</li>
+<li>Linked views with crosstalk: <code>px_*()</code> functions accept a <code><a href="https://rdrr.io/pkg/crosstalk/man/SharedData.html" class="external-link">crosstalk::SharedData</a></code> as <code>data_frame</code>, <code><a href="../reference/go_figure.html">go_figure()</a></code> and <code>add_&lt;trace&gt;()</code> accept one as the data for formulas (<code>add_scatter(x = ~col)</code>) and link the traces of its rows, <code><a href="../reference/set_crosstalk_keys.html">set_crosstalk_keys()</a></code> links the traces of any figure, and <code><a href="../reference/highlight.html">highlight()</a></code> sets how selections are made and shown (the same options as the plotly package’s <code><a href="../reference/highlight.html">highlight()</a></code>).</li>
 </ul></div>
   </main></div>
 

@@ -22,7 +22,8 @@ htmlwidget."></head><body>
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/static-export.html">Static image export</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/crosstalk.html">Linked views with crosstalk</a></li>
+    <li><a class="dropdown-item" href="../articles/static-export.html">Static image export</a></li>
     <li><a class="dropdown-item" href="../articles/render-performance.html">Rendering performance</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -65,7 +66,10 @@ the figure starts without traces, and formula properties of later
 <code>add_&lt;trace&gt;()</code> calls (e.g. <code>add_scatter(x = ~col)</code>) are evaluated in
 it. The data frame is kept with the figure in R (attribute
 <code>"plotly_data"</code>) but is not sent to the browser; only the values traces
-use are.</p></dd>
+use are.
+A <a href="https://rdrr.io/pkg/crosstalk/man/SharedData.html" class="external-link">crosstalk::SharedData</a> works the same way, and the traces whose
+points are its rows are linked to its crosstalk group (see
+<code><a href="highlight.html">highlight()</a></code>).</p></dd>
 
 
 <dt id="arg-layout">layout<a class="anchor" aria-label="anchor" href="#arg-layout"></a></dt>

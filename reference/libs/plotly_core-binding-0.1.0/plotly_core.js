@@ -239,7 +239,8 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
       } else if (isPlainObject(val)) {
         newObj[k] = subsetArrayAttrs(val, indices);
       } else if (Array.isArray(val)) {
-        newObj[k] = indices.map(function(i) { return val[i]; });
+        // a negative index is a gap (null)
+        newObj[k] = indices.map(function(i) { return i < 0 ? null : val[i]; });
       } else {
         newObj[k] = val;
       }
@@ -247,9 +248,29 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
     return newObj;
   }
 
-  function removeBrush(el) {
-    var outlines = el.querySelectorAll(".select-outline");
-    for (var i = 0; i < outlines.length; i++) outlines[i].remove();
+  // Clear a box/lasso selection, through plotly.js (which keeps it in
+  // layout.selections; removing its outline elements breaks later drags)
+  // Gaps between the points of different keys, so a selection drawn as
+  // lines doesn't join one key's points (e.g. one country's years) to the
+  // next key's
+  function breakAtKeys(trace) {
+    var key = trace.key, indices = [];
+    for (var j = 0; j < key.length; j++) {
+      if (j > 0 && key[j] !== key[j - 1]) indices.push(-1);
+      indices.push(j);
+    }
+    return indices.length > key.length ? subsetArrayAttrs(trace, indices) : trace;
+  }
+
+  // A selection trace's name: its keys, or how many there are
+  function selectionName(keys) {
+    return keys.length <= 5 ? keys.join(", ") : keys.length + " selected";
+  }
+
+  function removeBrush(gd, traceManager) {
+    var sel = gd.layout && gd.layout.selections;
+    if (!sel || !sel.length) return;
+    traceManager.run(function() { return [Plotly.relayout(gd, {selections: []})]; });
   }
 
   function debounce(func, wait) {
@@ -261,6 +282,9 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
     };
   }
 
+  // trace types placed side by side in barmode/boxmode "group"
+  var OFFSET_TYPES = ["bar", "histogram", "box", "violin", "funnel", "waterfall"];
+
   function TraceManager(gd, highlight) {
     this.gd = gd;
     this.origData = clone(gd.data);
@@ -268,31 +292,58 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
     // group name -> null or the keys most recently selected in that group
     this.groupSelections = {};
     this.highlight = highlight;
+    // > 0 while the plot is being updated: plotly.js re-sends selection
+    // events when traces change, which must not select again (that loops)
+    this.busy = 0;
   }
 
-  TraceManager.prototype.updateFilter = function(group, keys) {
-    var traces;
-    if (keys === undefined || keys === null) {
-      traces = clone(this.origData);
-    } else {
-      traces = [];
-      this.origData.forEach(function(trace) {
-        if (!trace.key || trace.set !== group) return;
-        var matches = getMatchFunc(trace)(trace.key, keys);
-        if (matches.length > 0) traces.push(trace._isSimpleKey ? trace : subsetArrayAttrs(trace, matches));
-      });
+  // Run fn(), which returns plotly.js promises, as one update
+  TraceManager.prototype.run = function(fn) {
+    var self = this;
+    self.busy++;
+    var done = function() { setTimeout(function() { self.busy--; }, 0); };
+    var promises;
+    try {
+      promises = fn() || [];
+    } catch (e) {
+      done();
+      throw e;
     }
-    Plotly.react(this.gd, traces, this.gd.layout);
+    Promise.all(promises).then(done, done);
+  };
+
+  // Show the rows of the group's traces that pass the filter. Traces keep
+  // their places (empty when no rows pass), so they still match origData;
+  // traces of other groups are unchanged.
+  TraceManager.prototype.updateFilter = function(group, keys) {
+    var self = this;
+    var traces = this.origData.map(function(trace) {
+      if (keys === undefined || keys === null || !trace.key || trace.set !== group) return clone(trace);
+      var matches = getMatchFunc(trace)(trace.key, keys);
+      if (trace._isSimpleKey) {
+        var t = clone(trace);
+        if (!matches.length) t.visible = false;
+        return t;
+      }
+      return subsetArrayAttrs(trace, matches);
+    });
+    this.run(function() { return [Plotly.react(self.gd, traces, self.gd.layout)]; });
   };
 
   TraceManager.prototype.updateSelection = function(group, keys) {
+    var self = this;
+    this.run(function() { return self._updateSelection(group, keys); });
+  };
+
+  TraceManager.prototype._updateSelection = function(group, keys) {
     if (keys !== null && !Array.isArray(keys)) throw new Error("Invalid keys argument; null or array expected");
     var gd = this.gd, hl = this.highlight, self = this;
+    var promises = [];
     var nNewTraces = gd.data.length - this.origData.length;
     if (keys === null || !hl.persistent && nNewTraces > 0) {
       var toRemove = [];
       gd.data.forEach(function(tr, i) { if (tr._isCrosstalkTrace) toRemove.push(i); });
-      if (toRemove.length) Plotly.deleteTraces(gd, toRemove);
+      if (toRemove.length) promises.push(Plotly.deleteTraces(gd, toRemove));
       this.groupSelections[group] = keys;
     } else {
       var sel = this.groupSelections[group] = this.groupSelections[group] || [];
@@ -300,16 +351,17 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
     }
 
     if (keys === null) {
-      Plotly.restyle(gd, {opacity: this.origOpacity}, this.origOpacity.map(function(_, i) { return i; }));
-      return;
+      promises.push(Plotly.restyle(gd, {opacity: this.origOpacity}, this.origOpacity.map(function(_, i) { return i; })));
+      return promises;
     }
-    if (keys.length < 1) return;
+    if (keys.length < 1) return promises;
 
     var traces = [];
     var colour = crosstalk.group(group).var("plotlySelectionColour").get() || (hl.color || [])[0];
     for (var i = 0; i < this.origData.length; i++) {
       var trace = clone(gd.data[i]);
       if (!trace.key || trace.set !== group) continue;
+      delete trace.selectedpoints;
       var matches = getMatchFunc(trace)(trace.key, keys);
       if (matches.length === 0) continue;
       if (!trace._isSimpleKey) trace = subsetArrayAttrs(trace, matches);
@@ -319,17 +371,36 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
       if (d.line) { trace.line = trace.line || {}; trace.line.color = colour || trace.line.color || d.line.color; }
       if (d.textfont) { trace.textfont = trace.textfont || {}; trace.textfont.color = colour || trace.textfont.color || d.textfont.color; }
       if (d.fillcolor) trace.fillcolor = colour || trace.fillcolor || d.fillcolor;
-      trace.name = trace.name || keys.join("<br />");
-      trace.legendgroup = trace.legendgroup || keys.join("<br />");
+      var mode = trace.mode || d.mode || "";
+      if (mode.indexOf("lines") >= 0 && Array.isArray(trace.key) && !trace._isSimpleKey && !trace._isNestedKey) {
+        trace = breakAtKeys(trace);
+      }
+      var name = selectionName(trace._isSimpleKey ? asArray(trace.key) : keys.filter(function(k) {
+        return asArray(trace.key).indexOf(k) >= 0;
+      }));
+      // a simple-key trace (e.g. a group's line) keeps its own name
+      trace.name = trace._isSimpleKey && trace.name ? trace.name : name;
+      trace.legendgroup = trace.legendgroup || name;
+      // in the legend only with its trace (a lone trace has no legend)
+      if (!(d.showlegend && gd._fullLayout.showlegend)) trace.showlegend = false;
+      // bars, boxes, ... are drawn over their trace's, not beside them:
+      // both in one offset group
+      if (OFFSET_TYPES.indexOf(d.type) >= 0 && !gd.data[i].offsetgroup) {
+        var og = "crosstalk-" + i;
+        promises.push(Plotly.restyle(gd, {offsetgroup: og}, [i]));
+        trace.offsetgroup = og;
+      }
       // mapping between this trace and the one it targets (for frames)
       trace._originalIndex = i;
       trace._newIndex = gd._fullData.length + traces.length;
       trace._isCrosstalkTrace = true;
       traces.push(trace);
     }
-    if (traces.length === 0) return;
+    if (traces.length === 0) return promises;
 
-    Plotly.addTraces(gd, traces).then(function(gd) {
+    // no legend appears because traces were added
+    if (gd.layout.showlegend === undefined && !gd._fullLayout.showlegend) gd.layout.showlegend = false;
+    promises.push(Plotly.addTraces(gd, traces).then(function(gd) {
       // add selection traces to the animation frames that use their originals
       var hash = gd._transitionData._frameHash;
       (gd._transitionData._frames || []).forEach(function(frame) {
@@ -359,7 +430,7 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
         }
         hash[frame.name] = frame;
       });
-    });
+    }));
 
     // dim the traces of the selected groups
     var toDim = [], opacities = [], sets = Object.keys(this.groupSelections);
@@ -372,10 +443,11 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
       }
     }
     if (toDim.length > 0) {
-      Plotly.restyle(gd, {opacity: opacities}, toDim);
+      promises.push(Plotly.restyle(gd, {opacity: opacities}, toDim));
       // turn off the selected/unselected API
-      Plotly.restyle(gd, {selectedpoints: null});
+      promises.push(Plotly.restyle(gd, {selectedpoints: null}));
     }
+    return promises;
   };
 
   // selectize dropdowns and the colour picker, above the plot
@@ -464,13 +536,15 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
       var keysBySet = {};
       points.forEach(function(pt) {
         var trace = gd.data[pt.curveNumber];
-        if (!trace || !trace.key || !trace.set) return;
+        if (!trace || !trace.key || !trace.set || trace._isCrosstalkTrace) return;
         keysBySet[trace.set] = keysBySet[trace.set] || [];
         var ptNum = typeof pt.pointNumber === "number" ? pt.pointNumber : pt.pointNumbers;
         var key = trace._isSimpleKey ? trace.key :
           Array.isArray(ptNum) ? ptNum.map(function(i) { return trace.key[i]; }) : trace.key[ptNum];
         var flat = trace._isNestedKey ? [].concat.apply([], key) : key;
-        keysBySet[trace.set] = keysBySet[trace.set].concat(flat);
+        asArray(flat).forEach(function(k) {
+          if (keysBySet[trace.set].indexOf(k) < 0) keysBySet[trace.set].push(k);
+        });
       });
       return keysBySet;
     }
@@ -481,14 +555,17 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
       var filter = new crosstalk.FilterHandle(set);
       handles.push(selection, filter);
       var selectize = null;
+      var fromSelectize = false;
 
       filter.on("change", function(e) {
-        removeBrush(el);
+        removeBrush(gd, traceManager);
         traceManager.updateFilter(set, e.value);
       });
 
       selection.on("change", function(e) {
         var value = e.value;
+        // a selection made elsewhere replaces this plot's box/lasso
+        if (e.sender !== el) removeBrush(gd, traceManager);
         // plotly_selected fires previously selected points too when the
         // shift key is held: keep just the new ones
         if (hl.on === "plotly_selected" && hl.persistentShift && value && e.oldValue) {
@@ -505,6 +582,12 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
         if (!hl.persistent) history = [event]; else history.push(event);
         crosstalk.var("plotlySelectionHistory").set(history);
 
+        if (fromSelectize) {
+          // the dropdown holds the whole selection
+          traceManager.updateSelection(set, null);
+          if (value) traceManager.updateSelection(set, value);
+          return;
+        }
         traceManager.updateSelection(set, value);
         if (selectize) {
           if (!hl.persistent || value === null) selectize.clear(true);
@@ -514,6 +597,8 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
       });
 
       var turnOn = function(e) {
+        // events plotly.js re-sends while the selection is drawn
+        if (traceManager.busy) return;
         if (!e || !e.points) return;
         var selected = pointsToKeys(e.points);
         Object.keys(selected).forEach(function(s) {
@@ -524,7 +609,8 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
       if (hl.on) gd.on(hl.on, turnOn);
       if (hl.off) {
         gd.on(hl.off, function() {
-          removeBrush(el);
+          if (traceManager.busy) return;
+          removeBrush(gd, traceManager);
           crosstalk.var("plotlySelectionHistory").set(null);
           selection.set(null, {sender: el});
         });
@@ -540,18 +626,16 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
         delete opts.items;
         delete opts.group;
         selectize = window.jQuery(panel.selects[set]).selectize(opts)[0].selectize;
+        // choosing keys in the dropdown selects them in every view
         selectize.on("change", function() {
-          var current = traceManager.groupSelections[set] || [];
-          if (!hl.persistent) {
-            removeBrush(el);
-            current.forEach(function(k) { selectize.removeItem(k, true); });
-          }
-          var newItems = selectize.items.filter(function(k) { return current.indexOf(k) < 0; });
-          if (newItems.length > 0) {
-            traceManager.updateSelection(set, newItems);
-          } else {
-            traceManager.updateSelection(set, null);
-            traceManager.updateSelection(set, selectize.items);
+          removeBrush(gd, traceManager);
+          var items = selectize.items.filter(function(k) { return k !== ""; });
+          crosstalk.var("plotlySelectionHistory").set(null);
+          fromSelectize = true;
+          try {
+            selection.set(items.length ? items : null, {sender: el});
+          } finally {
+            fromSelectize = false;
           }
         });
       }

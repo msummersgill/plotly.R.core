@@ -3,11 +3,12 @@
 Gives traces of a figure the keys of a
 [crosstalk::SharedData](https://rdrr.io/pkg/crosstalk/man/SharedData.html),
 so that selecting their points selects the same rows in other views of
-the crosstalk group (and the reverse). `px_*()` functions do this
-themselves when `data_frame` is a SharedData; use this for traces made
-otherwise, such as with
-[`add_scatter()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md).
-See
+the crosstalk group (and the reverse). This happens by itself for
+`px_*()` functions given a SharedData as `data_frame`, and for
+`add_<trace>()` traces whose formula properties are evaluated in a
+SharedData (piped into
+[`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
+or given as `data`); use this for other traces. See
 [`highlight()`](https://msummersgill.github.io/plotly.R.core/reference/highlight.md)
 for how selections are made and shown.
 

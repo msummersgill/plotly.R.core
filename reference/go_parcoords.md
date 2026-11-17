@@ -308,7 +308,10 @@ go_parcoords_unselected_line(
   A data frame in which formula properties (e.g. `x = ~col`,
   `marker_size = ~col`) are evaluated. Default: the data given to
   [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md).
-  Only the evaluated values are added to the trace.
+  Only the evaluated values are added to the trace. A
+  [`crosstalk::SharedData`](https://rdrr.io/pkg/crosstalk/man/SharedData.html)
+  works the same way, and links the trace to its crosstalk group (see
+  [`highlight()`](https://msummersgill.github.io/plotly.R.core/reference/highlight.md)).
 
 - customdata:
 

@@ -22,7 +22,11 @@ go_figure(data = NULL, layout = NULL, frames = NULL, skip_invalid = FALSE)
   formula properties of later `add_<trace>()` calls (e.g.
   `add_scatter(x = ~col)`) are evaluated in it. The data frame is kept
   with the figure in R (attribute `"plotly_data"`) but is not sent to
-  the browser; only the values traces use are.
+  the browser; only the values traces use are. A
+  [crosstalk::SharedData](https://rdrr.io/pkg/crosstalk/man/SharedData.html)
+  works the same way, and the traces whose points are its rows are
+  linked to its crosstalk group (see
+  [`highlight()`](https://msummersgill.github.io/plotly.R.core/reference/highlight.md)).
 
 - layout:
 
