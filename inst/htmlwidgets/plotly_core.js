@@ -58,6 +58,18 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
 
 (function() {
 
+  // Store each 3D scene's current camera in the layout
+  function keep3dCameras(gd) {
+    var fl = gd._fullLayout;
+    if (!fl || !fl._subplots || !fl._subplots.gl3d) return;
+    fl._subplots.gl3d.forEach(function(id) {
+      var scene = fl[id] && fl[id]._scene;
+      if (!scene || !scene.getCamera) return;
+      gd.layout[id] = gd.layout[id] || {};
+      gd.layout[id].camera = scene.getCamera();
+    });
+  }
+
   // Messages from plotlyProxyInvoke(): {id, method, args (JSON string)}
   var proxyHandlerRegistered = false;
   function registerProxyHandler() {
@@ -73,8 +85,58 @@ var CONFIG_DEFAULTS = {responsive: true, showSendToCloud: false};
         return;
       }
       if (!Plotly[msg.method]) throw new Error("Unknown plotly.js method " + msg.method);
-      Plotly[msg.method].apply(null, [gd].concat(args));
+      var call = function() {
+        // plotly.js decodes typed-array specs ({dtype, bdata}) for drawing
+        // but keeps them in gd.data, where extendTraces/prependTraces can't
+        // add to them: decode them first (in place, once)
+        if ((msg.method === "extendTraces" || msg.method === "prependTraces") && gd.data) {
+          window.PlotlyCoreCodec.decodeTypedArrays(gd.data);
+        }
+        // a redraw resets 3D views to the layout's camera, which plotly.js
+        // updates only when a rotation or zoom ends: keep the current view
+        if (["newPlot", "react", "purge", "relayout", "update"].indexOf(msg.method) < 0) keep3dCameras(gd);
+        Plotly[msg.method].apply(null, [gd].concat(args));
+      };
+      // a redraw during a 3D rotation or zoom undoes most of it: hold the
+      // calls until it ends
+      var q = proxyQueue(gd);
+      if (q.held()) q.calls.push(call); else call();
     });
+  }
+
+  // Proxy calls held while a 3D plot is being rotated or zoomed: while a
+  // mouse button is down on it, and for a moment after a wheel zoom (which
+  // plotly.js animates)
+  var WHEEL_HOLD = 400;
+  function proxyQueue(gd) {
+    if (gd.__proxyQueue) return gd.__proxyQueue;
+    var q = gd.__proxyQueue = {dragging: false, wheelUntil: 0, calls: [], timer: null};
+    var has3d = function() {
+      var fl = gd._fullLayout;
+      return !!(fl && fl._subplots && fl._subplots.gl3d && fl._subplots.gl3d.length);
+    };
+    q.held = function() { return q.dragging || Date.now() < q.wheelUntil; };
+    var flush = function() {
+      if (q.held()) return;
+      var calls = q.calls;
+      q.calls = [];
+      calls.forEach(function(c) { c(); });
+    };
+    gd.addEventListener("pointerdown", function() { if (has3d()) q.dragging = true; }, true);
+    gd.addEventListener("wheel", function() {
+      if (!has3d()) return;
+      q.wheelUntil = Date.now() + WHEEL_HOLD;
+      clearTimeout(q.timer);
+      q.timer = setTimeout(flush, WHEEL_HOLD + 20);
+    }, true);
+    var release = function() {
+      if (!q.dragging) return;
+      q.dragging = false;
+      flush();
+    };
+    window.addEventListener("pointerup", release);
+    window.addEventListener("pointercancel", release);
+    return q;
   }
 
   // Point-level event data: curveNumber, pointNumber, x, y and, when

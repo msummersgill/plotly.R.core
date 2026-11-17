@@ -1,0 +1,62 @@
+<!-- Part of vignettes/streaming.qmd (kept in parts so that a website
+version can add a live Shinylive app between them): edit here. -->
+
+A Shiny app can add data to a plot already in the browser, instead of rendering it again: `plotlyProxy()` refers to the plot, and `plotlyProxyInvoke()` calls a plotly.js function on it. For streaming data, that function is [`extendTraces`](https://plotly.com/javascript/plotlyjs-function-reference/#plotlyextendtraces), which appends points to traces and can drop the oldest, so the plot shows a moving window. Only the new points are sent, and the rest of the plot is untouched: zoom, hidden traces and hover stay as they are.
+
+## The app
+
+This app plots the sine and cosine of the time (seconds since 1970) for the last 60 seconds, adding a point to each trace ten times a second.
+
+```{r}
+#| eval: false
+library(shiny)
+library(plotly.core)
+
+window <- 60 # seconds shown
+rate <- 10 # points per second
+n <- window * rate # points kept per trace
+
+# Times as plotly.js date strings (local time, with milliseconds)
+stamp <- function(t) format(t, "%Y-%m-%d %H:%M:%OS3")
+
+ui <- fluidPage(plotlyOutput("stream"))
+
+server <- function(input, output, session) {
+  # Rendered once: the last 60 seconds, so the window starts full
+  output$stream <- renderPlotly({
+    t <- Sys.time() - seq(window, 0, length.out = n)
+    go_figure() |>
+      add_scatter(x = stamp(t), y = sin(as.numeric(t)), mode = "lines", name = "sin(t)") |>
+      add_scatter(x = stamp(t), y = cos(as.numeric(t)), mode = "lines", name = "cos(t)") |>
+      update_layout(yaxis_range = c(-1.1, 1.1))
+  })
+
+  proxy <- plotlyProxy("stream", session)
+
+  # Ten times a second: one new point for each trace, keeping the last n
+  observe({
+    invalidateLater(1000 / rate)
+    t <- Sys.time()
+    s <- as.numeric(t)
+    plotlyProxyInvoke(
+      proxy,
+      "extendTraces",
+      list(x = list(I(stamp(t)), I(stamp(t))), y = list(I(sin(s)), I(cos(s)))),
+      I(c(0L, 1L)),
+      n
+    )
+  })
+}
+
+shinyApp(ui, server)
+```
+
+The arguments after `"extendTraces"` are those of `Plotly.extendTraces(gd, update, indices, maxPoints)`:
+
+| Argument | Here | Meaning |
+|---|---|---|
+| `update` | `list(x = list(...), y = list(...))` | For each attribute, a list with the new values of each trace |
+| `indices` | `I(c(0L, 1L))` | The traces to extend, counting from 0 |
+| `maxPoints` | `n` (600) | Points kept per trace: the oldest are dropped |
+
+`I()` keeps one-value vectors as arrays (`["2026-11-17 12:00:00.100"]`), which `extendTraces` needs: plain length-one vectors are sent as single values.

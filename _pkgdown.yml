@@ -13,9 +13,9 @@ articles:
     navbar: ~
     contents:
       - crosstalk
+      - streaming
       - static-export
       - render-performance
-
 reference:
   - title: Figures
     contents:

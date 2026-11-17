@@ -1,0 +1,23 @@
+---
+title: "Streaming data with plotlyProxy()"
+vignette: >
+  %\VignetteIndexEntry{Streaming data with plotlyProxy()}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+format:
+  html:
+    toc: true
+    fontsize: 0.95em
+    code-tools:
+      source: true
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+    # fill the text column, whatever its width (narrower on the pkgdown site)
+    out-width: "100%"
+---
+
+{{< include _streaming-intro.qmd >}}
+
+{{< include _streaming-examples.qmd >}}

@@ -8,6 +8,8 @@ format:
   html:
     toc: true
     fontsize: 0.95em
+    code-tools:
+      source: true
 knitr:
   opts_chunk:
     collapse: true
