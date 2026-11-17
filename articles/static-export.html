@@ -121,7 +121,7 @@
 <ul>
 <li>
 <code>width</code>, <code>height</code>: pixels; default to the figure’s layout size, else 700 × 500.</li>
-<li>LaTeX (<code><a href="../reference/TeX.html">TeX()</a></code>) is typeset with MathJax from a CDN; offline it stays plain text, with a warning.</li>
+<li>LaTeX (<code><a href="../reference/TeX.html">TeX()</a></code>) is typeset with the MathJax bundled with plotly.core, so it works offline.</li>
 <li>The browser starts on the first export (about a second) and is reused for the rest of the session. <code><a href="../reference/save_image.html">chrome_exporter()</a></code> gives a browser of your own, with <code>$transform(p, file, ...)</code> and <code>$shutdown()</code>.</li>
 </ul></section><section class="level2"><h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
 </h2>
@@ -326,10 +326,6 @@
 <tr class="odd">
 <td>EPS export needs the rsvg package</td>
 <td><code>install.packages("rsvg")</code></td>
-</tr>
-<tr class="even">
-<td>MathJax couldn’t be loaded</td>
-<td>Allow access to cdn.jsdelivr.net</td>
 </tr>
 </tbody>
 </table></section><script id="quarto-html-after-body" type="application/javascript">

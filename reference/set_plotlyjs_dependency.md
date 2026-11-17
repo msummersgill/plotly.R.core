@@ -22,7 +22,7 @@ plotlyjs_dependency(bundle = "full")
 
 locale_dependency(locale)
 
-mathjax_dependency()
+mathjax_dependency(source = c("local", "cdn"))
 ```
 
 ## Arguments
@@ -45,6 +45,12 @@ mathjax_dependency()
 - locale:
 
   A plotly.js locale, e.g. `"de"`.
+
+- source:
+
+  For `mathjax_dependency()`: `"local"` for the MathJax bundled with the
+  package (works offline, and is embedded in self-contained HTML), or
+  `"cdn"` to load it from cdn.jsdelivr.net.
 
 ## Value
 

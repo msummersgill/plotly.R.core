@@ -32,8 +32,8 @@ figure](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABXgAAAOECAYAAAAbi1lvAAAQAE
   700 × 500.
 - LaTeX
   ([`TeX()`](https://msummersgill.github.io/plotly.R.core/reference/TeX.md))
-  is typeset with MathJax from a CDN; offline it stays plain text, with
-  a warning.
+  is typeset with the MathJax bundled with plotly.core, so it works
+  offline.
 - The browser starts on the first export (about a second) and is reused
   for the rest of the session.
   [`chrome_exporter()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
@@ -150,4 +150,3 @@ Set-up compared:
 | shared libraries it needs are missing | [`plotly.core::install_chrome()`](https://msummersgill.github.io/plotly.R.core/reference/install_chrome.md), or the `sudo` command shown |
 | Chrome … failed to start | Read Chrome’s output in the message; see [Linux servers](#linux-servers) |
 | EPS export needs the rsvg package | `install.packages("rsvg")` |
-| MathJax couldn’t be loaded | Allow access to cdn.jsdelivr.net |

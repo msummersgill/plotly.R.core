@@ -62,9 +62,9 @@ The browser is started on the first export and reused for later ones.
 Large figures can take a while to draw: an export waits up to
 `getOption("plotly.core.export_timeout", 300)` seconds. LaTeX (see
 [`TeX()`](https://msummersgill.github.io/plotly.R.core/reference/TeX.md))
-is typeset with MathJax, loaded from a CDN. PDF is made by printing the
-SVG image to a page of the figure's size; EPS is converted from the SVG
-image with the rsvg package.
+is typeset with the MathJax bundled with the package, so it works
+offline. PDF is made by printing the SVG image to a page of the figure's
+size; EPS is converted from the SVG image with the rsvg package.
 
 ## Downloads
 
@@ -76,8 +76,7 @@ What it may download keeps its own licence (see the package's
 `COPYRIGHTS` file): Chrome Headless Shell (from Google's Chrome for
 Testing, kept in chromote's cache), on Linux the shared libraries Chrome
 needs (your distribution's packages, kept in
-`tools::R_user_dir("plotly.core", "cache")`), and MathJax for LaTeX
-(loaded from a CDN when a figure uses it).
+`tools::R_user_dir("plotly.core", "cache")`).
 [`remove_chrome()`](https://msummersgill.github.io/plotly.R.core/reference/install_chrome.md)
 removes the downloads.
 

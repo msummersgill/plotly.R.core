@@ -43,6 +43,13 @@
   ([`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md))
   to PNG, JPEG, WebP, SVG, PDF and EPS with headless Chrome via
   chromote, with LaTeX typeset by MathJax; no Python or Kaleido needed.
+- MathJax 3.2.2 (`tex-svg.js`) is bundled: `config(mathjax = "local")`
+  (or `TRUE`) renders LaTeX
+  ([`TeX()`](https://msummersgill.github.io/plotly.R.core/reference/TeX.md))
+  offline and in self-contained HTML, and
+  [`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
+  typesets it without network access. `config(mathjax = "cdn")` still
+  loads it from cdn.jsdelivr.net.
 - [`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
   sends figures to Chrome as the widget does: numeric arrays and
   date-times as base64 typed arrays, and arrays shared by traces once

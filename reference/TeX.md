@@ -1,7 +1,9 @@
 # Wrap text for LaTeX rendering
 
 Wraps a string in `$...$` so plotly.js renders it with MathJax (requires
-`config(p, mathjax = "cdn")`).
+`config(p, mathjax = "local")`, or `"cdn"`;
+[`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
+needs nothing).
 
 ## Usage
 
@@ -24,5 +26,5 @@ The wrapped string.
 ``` r
 go_figure() |>
   update_layout(title = TeX("\\alpha + \\beta x")) |>
-  config(mathjax = "cdn")
+  config(mathjax = "local")
 ```

@@ -75,7 +75,7 @@ collects dependencies before a widget's <code>preRenderHook</code> runs.</p>
 <span></span>
 <span><span class="fu">locale_dependency</span><span class="op">(</span><span class="va">locale</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">mathjax_dependency</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">mathjax_dependency</span><span class="op">(</span>source <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"local"</span>, <span class="st">"cdn"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -98,6 +98,12 @@ package's <code><a href="highlight.html">highlight()</a></code>): <code>selectiz
 
 <dt id="arg-locale">locale<a class="anchor" aria-label="anchor" href="#arg-locale"></a></dt>
 <dd><p>A plotly.js locale, e.g. <code>"de"</code>.</p></dd>
+
+
+<dt id="arg-source">source<a class="anchor" aria-label="anchor" href="#arg-source"></a></dt>
+<dd><p>For <code>mathjax_dependency()</code>: <code>"local"</code> for the MathJax
+bundled with the package (works offline, and is embedded in
+self-contained HTML), or <code>"cdn"</code> to load it from cdn.jsdelivr.net.</p></dd>
 
 </dl></div>
     <div class="section level2">

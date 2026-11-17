@@ -42,9 +42,11 @@ config(
 
 - mathjax:
 
-  `"cdn"` to load MathJax from a CDN so LaTeX in `$...$` text (see
+  Load MathJax so LaTeX in `$...$` text (see
   [`TeX()`](https://msummersgill.github.io/plotly.R.core/reference/TeX.md))
-  is rendered.
+  is rendered: `"local"` (or `TRUE`) for the MathJax 3 bundled with the
+  package, which works offline and is embedded in self-contained HTML
+  (about 2 MB), or `"cdn"` to load it from cdn.jsdelivr.net.
 
 - cloud, showSendToCloud:
 
