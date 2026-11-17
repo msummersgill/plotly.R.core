@@ -65,4 +65,13 @@
   [`plot_ly()`](https://rdrr.io/pkg/plotly/man/plot_ly.html) and
   [`ggplotly()`](https://rdrr.io/pkg/plotly/man/ggplotly.html) figures,
   including its crosstalk linking
-  ([`highlight()`](https://rdrr.io/pkg/plotly/man/highlight.html)).
+  ([`highlight()`](https://msummersgill.github.io/plotly.R.core/reference/highlight.md)).
+- Linked views with crosstalk: `px_*()` functions accept a
+  [`crosstalk::SharedData`](https://rdrr.io/pkg/crosstalk/man/SharedData.html)
+  as `data_frame`,
+  [`set_crosstalk_keys()`](https://msummersgill.github.io/plotly.R.core/reference/set_crosstalk_keys.md)
+  links the traces of any figure, and
+  [`highlight()`](https://msummersgill.github.io/plotly.R.core/reference/highlight.md)
+  sets how selections are made and shown (the same options as the plotly
+  package’s
+  [`highlight()`](https://msummersgill.github.io/plotly.R.core/reference/highlight.md)).

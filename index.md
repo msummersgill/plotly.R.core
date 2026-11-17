@@ -182,9 +182,11 @@ static images automatically when Chrome is available.
 
 The [plotly](https://github.com/plotly/plotly.R) package’s `plot_ly()`,
 `add_*()`, [`layout()`](https://rdrr.io/r/graphics/layout.html),
-`subplot()`, `highlight()` and `ggplotly()` are built on plotly.core:
-plotly converts its plots to plotly.core figures and renders them with
-plotly.core’s widget. The extension points it uses are S3 generics here
+`subplot()`,
+[`highlight()`](https://msummersgill.github.io/plotly.R.core/reference/highlight.md)
+and `ggplotly()` are built on plotly.core: plotly converts its plots to
+plotly.core figures and renders them with plotly.core’s widget. The
+extension points it uses are S3 generics here
 ([`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md),
 the `add_<trace type>()` functions,
 [`as_widget()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_widget.md)

@@ -93,6 +93,7 @@
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/go_violin.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/go_volume.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.html</loc></url>
+<url><loc>https://msummersgill.github.io/plotly.R.core/reference/highlight.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/index.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/install_chrome.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/last_plot.html</loc></url>
@@ -153,6 +154,7 @@
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/save_image.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/schema.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/select_traces.html</loc></url>
+<url><loc>https://msummersgill.github.io/plotly.R.core/reference/set_crosstalk_keys.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/set_plotlyjs_dependency.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/update_annotations.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/update_coloraxes.html</loc></url>

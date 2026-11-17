@@ -1345,6 +1345,14 @@
   [`event_source()`](https://msummersgill.github.io/plotly.R.core/reference/event_register.md)
   : Register plotly events for Shiny
 
+## Linked views (crosstalk)
+
+- [`highlight()`](https://msummersgill.github.io/plotly.R.core/reference/highlight.md)
+  [`attrs_selected()`](https://msummersgill.github.io/plotly.R.core/reference/highlight.md)
+  : Highlight linked selections
+- [`set_crosstalk_keys()`](https://msummersgill.github.io/plotly.R.core/reference/set_crosstalk_keys.md)
+  : Link traces to a crosstalk group
+
 ## Templates, schema and validation
 
 - [`get_template()`](https://msummersgill.github.io/plotly.R.core/reference/get_template.md)

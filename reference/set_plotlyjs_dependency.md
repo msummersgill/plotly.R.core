@@ -30,7 +30,8 @@ mathjax_dependency()
 - highlight:
 
   Linked-highlighting options (as set by the plotly package's
-  `highlight()`): `selectize` and `dynamic` add their libraries.
+  [`highlight()`](https://msummersgill.github.io/plotly.R.core/reference/highlight.md)):
+  `selectize` and `dynamic` add their libraries.
 
 - w:
 
