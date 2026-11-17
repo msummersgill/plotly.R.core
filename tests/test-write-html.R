@@ -71,3 +71,40 @@ write_html(w, f5, selfcontained = FALSE)
 stopifnot(file.exists(f5))
 
 unlink(dir, recursive = TRUE)
+
+# Pages saved with a shared library folder each get their own partial bundle
+# (each bundle has a dependency folder of its own)
+local({
+  dir <- tempfile("shared-lib-")
+  dir.create(dir)
+  heat <- partial_bundle(go_figure() |> add_heatmap(z = volcano))
+  gl <- partial_bundle(go_figure() |> add_scattergl(x = 1:3, y = 1:3))
+  write_html(
+    heat,
+    file.path(dir, "heat.html"),
+    selfcontained = FALSE,
+    libdir = "lib"
+  )
+  write_html(
+    gl,
+    file.path(dir, "gl.html"),
+    selfcontained = FALSE,
+    libdir = "lib"
+  )
+  for (page in c("heat.html", "gl.html")) {
+    html <- readLines(file.path(dir, page), warn = FALSE)
+    src <- sub(
+      '.*src="([^"]*plotly[^"]*\\.min\\.js)".*',
+      "\\1",
+      grep('plotly[^"]*\\.min\\.js"', html, value = TRUE)
+    )
+    stopifnot(length(src) == 1L, file.exists(file.path(dir, src)))
+  }
+  # the full bundle still has the highest version, so it wins on a page
+  v <- function(b) package_version(plotlyjs_dependency(b)$version)
+  stopifnot(
+    v("full") > v("gl2d"),
+    v("full") > v("cartesian"),
+    v("gl2d") != v("cartesian")
+  )
+})

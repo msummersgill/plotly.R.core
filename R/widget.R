@@ -379,6 +379,10 @@ plotlyjs_bundle_file <- function(bundle) {
 # versions, the widget YAML's full bundle has the lowest (it is replaced by
 # the bundle a widget attaches) and an attached full bundle the highest (so
 # htmltools picks it when a page also has figures with a partial bundle).
+# Each partial bundle has a version of its own (4.3.0.1.<k>), so pages saved
+# with a shared library folder (saveWidget()/write_html() with `libdir`) get
+# each bundle in a folder of its own: htmltools copies a dependency's folder
+# (name-version) only once.
 #' @rdname set_plotlyjs_dependency
 #' @export
 plotlyjs_dependency <- function(bundle = "full") {
@@ -386,7 +390,11 @@ plotlyjs_dependency <- function(bundle = "full") {
     name = "plotly-main",
     version = paste0(
       plotlyjs_version(),
-      if (identical(bundle, "full")) ".2" else ".1"
+      if (identical(bundle, "full")) {
+        ".2"
+      } else {
+        paste0(".1.", match(bundle, names(PLOTLYJS_BUNDLE_TRACES)))
+      }
     ),
     src = "htmlwidgets/lib/plotlyjs",
     script = basename(plotlyjs_bundle_file(bundle)),
