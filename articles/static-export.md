@@ -23,16 +23,25 @@ R:
 Getting a Python environment that reticulate finds, with the right
 packages in it, was the most common stumbling block.
 
-plotly.core needs neither. Everything R needs is on CRAN: chromote (and
-rsvg, only for EPS). The one other thing, a browser, is found
-automatically, and if there is none chromote downloads one, after asking
-in an interactive session (see [First-time setup](#first-time-setup)).
+plotly.core needs neither. Its R packages are on CRAN: chromote (and
+rsvg, only for EPS). It also needs a Chromium-based browser, which is
+not an R package and doesn’t come from CRAN. On most machines, though,
+that needs no separate installation step: plotly.core uses a Chrome,
+Edge, Chromium or Brave that is already installed, and otherwise sets
+one up from within the same R session that installed plotly.core, by
+downloading Chrome Headless Shell (and, on Linux, any shared libraries
+it lacks) into your user cache, without administrator rights. In an
+interactive session it asks first; in a script, run
+[`install_chrome()`](https://msummersgill.github.io/plotly.R.core/reference/install_chrome.md)
+once (see [First-time setup](#first-time-setup)). Some environments need
+more; see [Where set-up from R isn’t
+enough](#where-set-up-from-r-isnt-enough).
 
 |  | orca | Kaleido | plotly.core |
 |----|----|----|----|
-| Installed with | npm or a standalone installer | Python, `pip`/[`reticulate::py_install()`](https://rstudio.github.io/reticulate/reference/py_install.html) | `install.packages("chromote")` |
+| Installed with | npm or a standalone installer | Python, `pip`/[`reticulate::py_install()`](https://rstudio.github.io/reticulate/reference/py_install.html) | `install.packages("chromote")`; the browser from within R if needed |
 | Python needed | No | Yes | No |
-| Browser | Bundled (Electron) | Chrome (Kaleido 1.x) | Chrome, found or downloaded automatically |
+| Browser | Bundled (Electron) | Chrome (Kaleido 1.x) | An installed Chrome, Edge, Chromium or Brave, or Chrome Headless Shell downloaded from R |
 | plotly.js used | orca’s own | Kaleido’s or plotly.core’s | plotly.core’s, the same as the widget |
 
 It is also much faster. Kaleido 1.x, as the plotly R package calls it,
@@ -129,11 +138,16 @@ Static export needs:
 looks for a browser in this order:
 
 1.  the browser set by the `CHROMOTE_CHROME` environment variable
-2.  an installed Google Chrome or Chromium, found by
+2.  an installed Google Chrome, found by
     [`chromote::find_chrome()`](https://rstudio.github.io/chromote/reference/find_chrome.html)
-3.  a Chrome Headless Shell downloaded earlier by chromote
+3.  another installed Chromium-based browser: **Microsoft Edge**,
+    Chromium or Brave, including browsers installed for the current user
+    only (`~/Applications` on macOS, `AppData\Local` on Windows)
+4.  a Chrome Headless Shell downloaded earlier by chromote
 
-Most desktop machines with Chrome installed need no setup at all.
+Most desktop machines need no setup at all: every Windows 10 and 11
+machine has Microsoft Edge, which also covers Windows on ARM, for which
+no Chrome Headless Shell is available.
 
 ### In an interactive session
 
@@ -317,6 +331,50 @@ Chrome printed, with a hint for the common causes:
   install the fonts to match a desktop export.
 - WebGL traces are drawn with the GPU when there is one and in software
   (SwiftShader) otherwise, which works but is slower.
+
+### Where set-up from R isn’t enough
+
+Setting up from within R needs the machine to be able to download and
+run a browser. Where it can’t, install a Chromium-based browser with the
+system’s usual tools (or ask an administrator to), then point
+`CHROMOTE_CHROME` at it if it isn’t in a standard location:
+
+- **No internet access, or downloads blocked.** Chrome Headless Shell
+  comes from Google’s Chrome for Testing (storage.googleapis.com).
+  Behind a proxy, R’s downloads need the proxy settings (e.g. the
+  `https_proxy` environment variable); on an air-gapped machine, copy a
+  browser in and set `CHROMOTE_CHROME`. LaTeX also needs the MathJax CDN
+  (cdn.jsdelivr.net), without which it is exported as plain text.
+- **Platforms without a Chrome Headless Shell build.** Builds exist for
+  Windows (x64, x86), macOS (Apple Silicon, Intel) and Linux x86_64
+  only. Windows on ARM uses the Microsoft Edge it comes with; **Linux on
+  ARM64** (e.g. AWS Graviton, Raspberry Pi) needs the distribution’s
+  Chromium package.
+- **Operating systems older than Chrome supports.** Current Chrome
+  needs, for example, Windows 10 or later, a recent macOS, and a recent
+  glibc on Linux: an older Linux such as CentOS/RHEL 7 can’t run it, and
+  downloading libraries can’t replace the system’s C library.
+- **Linux without usable package downloads.** The library download needs
+  Debian/Ubuntu or a RHEL-family system with its package lists; slim
+  container images often have none, and other distributions (SUSE, Arch)
+  aren’t covered. Alpine can’t run Chrome Headless Shell at all (install
+  its `chromium` package).
+- **Locked-down machines.** Policies that only allow approved software
+  to run (AppLocker or Windows Defender Application Control, macOS
+  device management, some antivirus software), or a home or cache
+  directory mounted `noexec` on Linux, can stop a browser downloaded
+  into the user cache from running.
+- **Little disk space or a read-only home.** The download is about 125
+  MB, and more once unpacked into the user cache
+  ([`tools::R_user_dir()`](https://rdrr.io/r/tools/userdir.html)), which
+  some shared servers or HPC accounts don’t have.
+- **Environments that can’t start other programs.** R running in the
+  browser (webR, Shinylive) can’t start Chrome at all. On hosted R
+  services (e.g. Posit Connect, shinyapps.io), what can be installed or
+  run depends on the service; prefer a browser installed in the server
+  image, and run
+  [`install_chrome()`](https://msummersgill.github.io/plotly.R.core/reference/install_chrome.md)
+  during deployment rather than when a user first exports.
 
 ## In R Markdown and Quarto
 

@@ -44,10 +44,12 @@
   to PNG, JPEG, WebP, SVG, PDF and EPS with headless Chrome via
   chromote, with LaTeX typeset by MathJax; no Python or Kaleido needed.
 - [`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
-  finds Chrome, or offers to download Chrome Headless Shell in
-  interactive sessions. On Linux it checks the shared libraries Chrome
-  needs and can download missing ones into the user cache without
-  administrator rights (Debian/Ubuntu and RHEL-family systems);
+  finds Chrome or another Chromium-based browser (Microsoft Edge,
+  Chromium, Brave, including per-user installs), or offers to download
+  Chrome Headless Shell in interactive sessions. On Linux it checks the
+  shared libraries Chrome needs and can download missing ones into the
+  user cache without administrator rights (Debian/Ubuntu and RHEL-family
+  systems);
   [`install_chrome()`](https://msummersgill.github.io/plotly.R.core/reference/install_chrome.md)
   does the same set-up non-interactively, and
   [`remove_chrome()`](https://msummersgill.github.io/plotly.R.core/reference/install_chrome.md)
