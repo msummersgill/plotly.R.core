@@ -37,9 +37,15 @@ remove_chrome(browser = FALSE)
 
 ## Details
 
-Downloaded libraries are kept in a folder for the OS release, and those
-for other releases (e.g. after an upgrade) are removed when libraries
-are next downloaded. `remove_chrome()` removes everything plotly.core
+Downloaded libraries are only used for what the system lacks: libraries
+installed on the system later (and its updates) take over. They are kept
+in a folder for the OS release, and those for other releases (e.g. after
+an upgrade) are removed when libraries are next downloaded. They don't
+get the system's updates, so once they are more than
+`getOption("plotly.core.chrome_libs_max_age", 90)` days old, or Chrome
+has changed, `install_chrome()` downloads them again (interactive
+sessions are asked; scripts get a message saying to run
+`install_chrome()`). `remove_chrome()` removes everything plotly.core
 has downloaded and, with `browser = TRUE`, the Chrome Headless Shell
 builds chromote downloaded.
 

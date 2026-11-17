@@ -91,9 +91,14 @@ builds downloaded with chromote.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Downloaded libraries are kept in a folder for the OS release, and those
-for other releases (e.g. after an upgrade) are removed when libraries are
-next downloaded. <code>remove_chrome()</code> removes everything plotly.core has
+    <p>Downloaded libraries are only used for what the system lacks: libraries
+installed on the system later (and its updates) take over. They are kept in
+a folder for the OS release, and those for other releases (e.g. after an
+upgrade) are removed when libraries are next downloaded. They don't get the
+system's updates, so once they are more than
+<code>getOption("plotly.core.chrome_libs_max_age", 90)</code> days old, or Chrome has
+changed, <code>install_chrome()</code> downloads them again (interactive sessions are
+asked; scripts get a message saying to run <code>install_chrome()</code>). <code>remove_chrome()</code> removes everything plotly.core has
 downloaded and, with <code>browser = TRUE</code>, the Chrome Headless Shell builds
 chromote downloaded.</p>
 <p>The downloaded software is not part of plotly.core and keeps its own
