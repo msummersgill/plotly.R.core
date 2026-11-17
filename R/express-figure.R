@@ -889,6 +889,7 @@ make_figure <- function(
   # An environment, so `args$z` can't partially match e.g. `zoom` (as `$`
   # does on lists), and so NULL values are kept like Python's None.
   args <- list2env(args, envir = new.env(parent = emptyenv()))
+  args <- px_shared_data(args)
   user_provided_colorscale <- !is.null(args$color_continuous_scale)
   args <- apply_default_cascade(args, constructor)
   args <- build_dataframe(args, constructor)
@@ -1110,6 +1111,7 @@ make_figure <- function(
         )
       }
       attr(trace, "px_cell") <- c(row, col)
+      attr(trace, "px_key") <- px_trace_key(args, ctor, spec, tdata)
       frames[[fkey]]$name <- frame_name
       frames[[fkey]]$data <- c(frames[[fkey]]$data, list(trace))
     }
@@ -1179,10 +1181,14 @@ make_figure <- function(
 
   fig <- init_figure(args, subplot_type, nrows, ncols, col_labels, row_labels)
   grid_ref <- attr(fig, "grid_ref")
+  frame_keys <- lapply(unname(frames), function(f) {
+    lapply(f$data, attr, "px_key", exact = TRUE)
+  })
   frame_list <- lapply(unname(frames), function(f) {
     f$data <- lapply(f$data, function(tr) {
       cell <- attr(tr, "px_cell")
       attr(tr, "px_cell") <- NULL
+      attr(tr, "px_key") <- NULL
       tr <- validate_trace(tr)
       if (tr$type == "splom") {
         return(tr)
@@ -1207,6 +1213,7 @@ make_figure <- function(
       list(data = f$data, name = f$name)
     })
   }
+  fig <- px_set_keys(fig, args, frame_keys)
 
   if (!is.null(args$trendline) && identical(args$trendline_scope, "overall")) {
     spec <- make_trendline_spec(args, constructor)

@@ -65,8 +65,8 @@ plotly_widget <- function(
   for (k in c("keys", "sets", "frameKeys", "highlight", "fitBounds")) {
     if (!is.null(setting(k))) x[[k]] <- setting(k)
   }
-  if (!is.null(setting("selectize"))) {
-    x$selectize <- selectize_json(setting("selectize"))
+  if (!is.null(x$sets)) {
+    x <- crosstalk_payload(x, setting("selectize"))
   }
   attr(x, "TOJSON_FUNC") <- widget_to_JSON
   bundle <- bundle %||%
@@ -114,8 +114,8 @@ as_widget.htmlwidget <- function(x, ...) x
 
 # Linked highlighting (crosstalk) --------------------------------------------
 # Figures carry crosstalk settings as "plotly_keys", "plotly_sets",
-# "plotly_highlight" and "plotly_selectize" attributes (set by the plotly
-# package's highlight()); the widget's JavaScript does the linking.
+# "plotly_highlight" and "plotly_selectize" attributes (see crosstalk.R; the
+# plotly package sets them too); the widget's JavaScript does the linking.
 
 # selectize options with their items as a list of rows
 selectize_json <- function(s) {

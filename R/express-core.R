@@ -798,6 +798,12 @@ build_dataframe <- function(args, constructor) {
   args <- res$args
   df <- res$df
   wide_id_vars <- res$wide_id_vars
+  # a SharedData's keys, carried with the rows (and repeated for each
+  # variable of wide-form data)
+  if (!is.null(args$crosstalk_key) && nrow(df) == length(args$crosstalk_key)) {
+    df[[PX_KEY_COL]] <- args$crosstalk_key
+    wide_id_vars <- c(wide_id_vars, PX_KEY_COL)
+  }
   count_name <- escape_col_name(names(df), "count", c(var_name, value_name))
 
   if (!wide_mode && !is.null(missing_bar_dim) && constructor == "bar") {
