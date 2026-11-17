@@ -5,7 +5,8 @@ articles:
   crosstalk: crosstalk.html
   render-performance: render-performance.html
   static-export: static-export.html
-last_built: 2026-11-17T18:33Z
+  streaming: streaming.html
+last_built: 2026-11-17T20:09Z
 urls:
   reference: https://msummersgill.github.io/plotly.R.core/reference
   article: https://msummersgill.github.io/plotly.R.core/articles
