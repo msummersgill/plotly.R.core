@@ -8,6 +8,8 @@ vignette: >
 format:
   html:
     toc: true
+    code-tools:
+      source: true
 knitr:
   opts_chunk:
     warning: false
@@ -22,7 +24,7 @@ params:
   python: "python3"
   ts_sizes: [10000, 100000, 1000000]
   # points per series in the 10-series case
-  ms_sizes: [10000, 50000, 100000]
+  ms_sizes: [10000, 100000, 500000]
   hm_sizes: [100, 500, 1000, 2000]
   reps: 3
   # Where data and generated pages go
@@ -36,14 +38,15 @@ plotly.core makes large figures much quicker to build, save, load and draw than 
 | Variant | Code | Data sent to the browser as |
 |---|---|---|
 | `release` | `plot_ly()` with the CRAN plotly release | JSON numbers / date strings |
-| `core_backend` | the same `plot_ly()` code with the development plotly, which renders with plotly.core | base64 typed arrays (float64) |
-| `go_figure_f32` | `go_figure()` and `add_*()` with `as_float32()`, saved with `write_html()` | base64 typed arrays (float32) |
+| `core_backend` | the same `plot_ly()` code with the development plotly, which renders with plotly.core, saved with `write_html()` | base64 typed arrays (float64) |
+| `go_figure_f32` | `go_figure()` and `add_*()` with `as_float32()` and `partial_bundle()`, saved with `write_html()` | base64 typed arrays (float32) |
 | `plotly_py` | plotly.py `go.Figure()` with numpy float64 | base64 typed arrays (float64), ISO date strings |
 | `plotly_py_f32` | plotly.py `go.Figure()` with numpy float32 | base64 typed arrays (float32), ISO date strings |
 
 ```{r setup}
 #| include: false
 library(plotly.core)
+library(data.table)
 
 run <- isTRUE(as.logical(Sys.getenv("PLOTLY_CORE_RUN_BENCHMARKS", "false")))
 wd <- normalizePath(params$workdir, mustWork = FALSE)
@@ -89,24 +92,28 @@ variants <- c("release", "core_backend", "go_figure_f32", "plotly_py", "plotly_p
 
 ```{r load-results}
 #| echo: false
-build <- read.csv(file.path(results_dir, "build.csv"))
-browser <- read.csv(file.path(results_dir, "browser.csv"))
-pages <- read.csv(file.path(results_dir, "pages.csv"))
-versions <- read.csv(file.path(results_dir, "versions.csv"), check.names = FALSE)
+build <- fread(file.path(results_dir, "build.csv"))
+browser <- fread(file.path(results_dir, "browser.csv"))
+pages <- fread(file.path(results_dir, "pages.csv"))
+versions <- fread(file.path(results_dir, "versions.csv"))
 meta <- jsonlite::read_json(file.path(results_dir, "meta.json"))
-med <- function(d, cols) aggregate(d[cols], d[c("variant", "case", "size")], median)
-res <- merge(merge(med(build, "build_sec"), pages),
-             med(browser, c("load_sec", "newplot_sec", "js_mb", "peak_renderer_mb", "js_heap_mb")))
-res$variant <- factor(res$variant, variants)
-res$case <- factor(res$case, c("timeseries", "multiseries", "heatmap"))
-res <- res[order(res$case, res$size, res$variant), ]
-res$label <- ifelse(res$case == "heatmap", paste0(res$size, "²"), format(res$size, big.mark = ",", trim = TRUE))
-res$label[res$case == "multiseries"] <- paste("10 ×", res$label[res$case == "multiseries"])
+# medians over the runs, one row per variant, case and size
+keys <- c("variant", "case", "size")
+browser_cols <- c("load_sec", "newplot_sec", "js_mb", "peak_renderer_mb", "js_heap_mb")
+res <- build[, .(build_sec = median(build_sec)), by = keys][
+  pages, on = keys, nomatch = NULL][
+  browser[, lapply(.SD, median), by = keys, .SDcols = browser_cols], on = keys, nomatch = NULL]
+res[, `:=`(
+  variant = factor(variant, variants),
+  case = factor(case, c("timeseries", "multiseries", "heatmap"))
+)]
+setorder(res, case, size, variant)
+res[, label := fifelse(case == "heatmap", paste0(size, "²"), format(size, big.mark = ",", trim = TRUE))]
+res[case == "multiseries", label := paste("10 ×", label)]
 
-show_table <- function(case) {
-  d <- res[res$case == case, ]
+show_table <- function(which) {
   knitr::kable(
-    d[c("label", "variant", "build_sec", "html_mb", "load_sec", "newplot_sec", "js_mb", "peak_renderer_mb", "js_heap_mb")],
+    res[case == which, .(label, variant, build_sec, html_mb, load_sec, newplot_sec, js_mb, peak_renderer_mb, js_heap_mb)],
     col.names = c("size", "variant", "build + write (s)", "HTML (MB)", "load (s)", "newPlot (s)",
                   "JS transferred (MB)", "peak renderer (MB)", "JS heap after (MB)"),
     digits = c(0, 0, 3, 2, 3, 3, 2, 0, 1), row.names = FALSE
@@ -117,46 +124,52 @@ show_table <- function(case) {
 ```{r summary-helpers}
 #| echo: false
 # a median from the results, at the largest size of a case
-v <- function(variant, case, col) {
-  d <- res[res$case == case, ]
-  d[d$variant == variant & d$size == max(d$size), col]
+# (at the largest size of the case, unless `at` gives the size)
+v <- function(which_variant, which_case, col, at = NULL) {
+  d <- res[case == which_case]
+  d[size == (if (is.null(at)) max(size) else at) & variant == which_variant][[col]]
 }
 f <- function(x, digits = 2) formatC(x, format = "f", digits = digits)
 ```
 
 ## Results
 
-Each chart shows one measurement for the three cases, against the number of values plotted (both axes on log scales), medians over `r meta$reps` runs (`r meta$date`, `r meta$cpu`, `r meta$browser`). Lower is better throughout. The numbers are in the [results tables](#results-tables).
+Each chart shows one measurement for the three cases, by figure size, medians over `r meta$reps` runs (`r meta$date`, `r meta$cpu`, `r meta$browser`). Lower is better throughout. The numbers are in the [results tables](#results-tables).
 
 ```{r chart-helper}
 #| code-fold: true
 #| code-summary: "Show the chart code"
 # one panel per case; x: values plotted, y: the measurement
 metric_chart <- function(col, label) {
-  d <- res[order(res$variant, res$case, res$values), c("variant", "case", "values", col)]
-  names(d)[4] <- "value"
-  fig <- px_line(
-    d, x = "values", y = "value", color = "variant", facet_col = "case",
-    markers = TRUE, log_x = TRUE, log_y = TRUE,
+  # res is sorted by case, size and variant, so each panel's sizes appear in order
+  d <- res[, .(variant, case, label, value = get(col))]
+  # "10 × 100,000" on two lines, so the labels stay horizontal
+  d[, label := sub("10 × ", "10 ×<br>", label, fixed = TRUE)]
+  fig <- px_bar(
+    d, x = "label", y = "value", color = "variant", facet_col = "case", barmode = "group",
     category_orders = list(variant = variants, case = levels(res$case)),
     # R in blues, Python in oranges; the darkest of each is the float32 variant
     color_discrete_map = list(release = "#6baed6", core_backend = "#2171b5", go_figure_f32 = "#08306b",
                               plotly_py = "#fd8d3c", plotly_py_f32 = "#a63603"),
-    labels = list(values = "values plotted", value = label, variant = ""),
+    labels = list(label = "", value = label, variant = ""),
+    facet_col_spacing = 0.02,
     template = "plotly_white"
   )
-  # each panel its own y range: the cases differ in scale
-  for (ax in grep("^yaxis", names(fig$layout), value = TRUE)) {
-    fig$layout[[ax]]$matches <- NULL
-    fig$layout[[ax]]$showticklabels <- TRUE
-  }
-  for (ax in grep("^xaxis", names(fig$layout), value = TRUE)) fig$layout[[ax]]$dtick <- 1
   fig |>
     for_each_annotation(function(a) {
       a$text <- sub("^[^=]*=", "", a$text) # "case=heatmap" -> "heatmap"
       a
     }) |>
-    update_layout(legend = list(orientation = "h", y = 1.12, yanchor = "bottom", x = 0)) |>
+    # little margin around the panels (room below for the labels' descenders),
+    # legend above them
+    update_layout(
+      margin = list(l = 65, r = 5, t = 25, b = 20),
+      legend = list(orientation = "h", y = 1.08, yanchor = "bottom", x = 0)
+    ) |>
+    # each panel its own sizes, as categories: every bar the same width
+    update_xaxes(matches = NULL, type = "category") |>
+    # one y axis shared by the panels, from 0
+    update_yaxes(matches = "y", rangemode = "tozero") |>
     partial_bundle("auto")
 }
 ```
@@ -172,6 +185,17 @@ metric_chart("build_sec", "build + write (s)")
 
 This is the wait in R before anything can be shown: in the console or RStudio, while knitting a report, or on every re-render in a Shiny app. For the 2000 × 2000 heatmap, CRAN plotly keeps R busy for `r f(v("release", "heatmap", "build_sec"), 1)` s; the same `plot_ly()` code with plotly.core takes `r f(v("core_backend", "heatmap", "build_sec"), 1)` s, and `go_figure()` with `as_float32()` `r f(v("go_figure_f32", "heatmap", "build_sec"))` s, faster than plotly.py.
 
+### Load time
+
+```{r chart-load}
+#| fig-height: 4.5
+#| code-fold: true
+#| code-summary: "Show the chart code"
+metric_chart("load_sec", "load (s)")
+```
+
+The time from opening the page to the plot appearing, here with no network in between. A heatmap that CRAN plotly takes `r f(v("release", "heatmap", "load_sec"), 1)` s to show appears in `r f(v("core_backend", "heatmap", "load_sec"), 1)` s with plotly.core (`r f(v("go_figure_f32", "heatmap", "load_sec"), 1)` s with float32). For small figures (under about 100,000 values) CRAN plotly loads slightly faster, because plotly.js 4 is a larger script; see `partial_bundle()`. The largest 10-series case is 10 × 500,000 because CRAN plotly couldn't show 10 × 1,000,000 at all: in an earlier run, Chrome never finished drawing its 678 MB page in two tries of 5 minutes each, while plotly.core showed the same figure in about 9 s. At 10 × 500,000, CRAN plotly takes `r f(v("release", "multiseries", "load_sec"), 1)` s and plotly.core `r f(v("core_backend", "multiseries", "load_sec"), 1)` s.
+
 ### Page size
 
 ```{r chart-html}
@@ -182,28 +206,6 @@ metric_chart("html_mb", "HTML (MB)")
 ```
 
 The size of the saved page or the data a Shiny app sends: it's what a viewer on a remote server or slow connection waits to download, and what makes self-contained reports too big to email or attach. The 1M-point time series goes from `r f(v("release", "timeseries", "html_mb"), 0)` MB with CRAN plotly to `r f(v("core_backend", "timeseries", "html_mb"), 0)` MB, and 10 series sharing x from `r f(v("release", "multiseries", "html_mb"), 0)` MB to `r f(v("go_figure_f32", "multiseries", "html_mb"), 1)` MB, since x is sent once.
-
-### Load time
-
-```{r chart-load}
-#| fig-height: 4.5
-#| code-fold: true
-#| code-summary: "Show the chart code"
-metric_chart("load_sec", "load (s)")
-```
-
-The time from opening the page to the plot appearing, here with no network in between. A heatmap that CRAN plotly takes `r f(v("release", "heatmap", "load_sec"), 1)` s to show appears in `r f(v("core_backend", "heatmap", "load_sec"), 1)` s with plotly.core (`r f(v("go_figure_f32", "heatmap", "load_sec"), 1)` s with float32). For small figures (under about 100,000 values) CRAN plotly loads slightly faster, because plotly.js 4 is a larger script; see `partial_bundle()`.
-
-### Drawing time (`newPlot`)
-
-```{r chart-newplot}
-#| fig-height: 4.5
-#| code-fold: true
-#| code-summary: "Show the chart code"
-metric_chart("newplot_sec", "newPlot (s)")
-```
-
-The part of the load plotly.js spends drawing, about the same for every variant (`r f(v("release", "heatmap", "newplot_sec"))` s and `r f(v("core_backend", "heatmap", "newplot_sec"))` s for the heatmap). The gains come from getting data to plotly.js faster, not from plotly.js drawing faster, so zooming and other redraws after load feel the same.
 
 ### Peak browser memory
 
@@ -239,21 +241,21 @@ Numbers here are medians from the results, at the largest size of each case, unl
 
 **Encoding in C.** The typed arrays are encoded in C (`src/typed_array.c`): one pass to find the narrowest type, then base64 written straight into one buffer, as data.table's `fwrite()` writes its output. jsonlite writes the rest of the figure with placeholders and C copies the encoded arrays in, so the large strings never pass through R. For the 2000 × 2000 float32 heatmap the whole JSON step takes about 0.06 s (standalone timing).
 
-**Arrays repeated in a figure are sent once.** An array used by several traces, like the x of the 10 time series, is encoded once and referenced after that; in the browser every trace uses the same object, and date strings are restored once. With 10 series of 100,000 points, `plot_ly()` with plotly.core writes `r f(v("core_backend", "multiseries", "html_mb"), 1)` MB and `go_figure()` `r f(v("go_figure_f32", "multiseries", "html_mb"), 1)` MB, against `r f(v("release", "multiseries", "html_mb"), 1)` MB for CRAN plotly and `r f(v("plotly_py", "multiseries", "html_mb"), 1)` MB for plotly.py, which repeat x in each trace. Those pages are smaller than the single 1M-point series and load faster (`r f(v("go_figure_f32", "multiseries", "load_sec"))` s against `r f(v("go_figure_f32", "timeseries", "load_sec"))` s for `go_figure()`).
+**Arrays repeated in a figure are sent once.** An array used by several traces, like the x of the 10 time series, is encoded once and referenced after that; in the browser every trace uses the same object, and date strings are restored once. With 10 series of 100,000 points, `plot_ly()` with plotly.core writes `r f(v("core_backend", "multiseries", "html_mb", 1e5), 1)` MB and `go_figure()` `r f(v("go_figure_f32", "multiseries", "html_mb", 1e5), 1)` MB, against `r f(v("release", "multiseries", "html_mb", 1e5), 1)` MB for CRAN plotly and `r f(v("plotly_py", "multiseries", "html_mb", 1e5), 1)` MB for plotly.py, which repeat x in each trace. Those pages are smaller than the single 1M-point series and load faster (`r f(v("go_figure_f32", "multiseries", "load_sec", 1e5))` s against `r f(v("go_figure_f32", "timeseries", "load_sec"))` s for `go_figure()`).
 
 **`as_float32()`.** Doubles marked with `as_float32()` are sent in single precision, 4 bytes instead of 8 (about 7 significant digits, which is what WebGL draws with). It halves the heatmap's page (`r f(v("core_backend", "heatmap", "html_mb"), 1)` to `r f(v("go_figure_f32", "heatmap", "html_mb"), 1)` MB) and cuts the JavaScript memory left after loading (`r f(v("core_backend", "heatmap", "js_heap_mb"), 0)` to `r f(v("go_figure_f32", "heatmap", "js_heap_mb"), 0)` MB) and the load time (`r f(v("core_backend", "heatmap", "load_sec"))` to `r f(v("go_figure_f32", "heatmap", "load_sec"))` s). For the time series only y is halved; x stays in double precision.
 
-**`write_html()`.** htmlwidgets lays out the page and the figure's data is then written to the file directly, rather than passed through htmltools as one long string, which is searched and copied several times. This is most of the difference between `go_figure()` and `plot_ly()` in build + write time: `r f(v("go_figure_f32", "heatmap", "build_sec"), 3)` s for the heatmap (`r f(v("plotly_py_f32", "heatmap", "build_sec"), 3)` s for plotly.py with float32), and `r f(v("go_figure_f32", "timeseries", "build_sec"), 3)` s for the 1M-point time series (`r f(v("plotly_py_f32", "timeseries", "build_sec"), 3)` s). `write_html()` also takes `plot_ly()` figures: saving the `plot_ly()` heatmap takes about 0.2 s with it instead of about 0.8 s with `saveWidget()` (standalone timing).
+**`write_html()`.** htmlwidgets lays out the page and the figure's data is then written to the file directly, rather than passed through htmltools as one long string, which is searched and copied several times. It saves `plot_ly()` figures as well as `go_figure()` ones, and both plotly.core variants here use it: the `plot_ly()` heatmap takes `r f(v("core_backend", "heatmap", "build_sec"))` s to build and save, against about 0.8 s with `htmlwidgets::saveWidget()` (an earlier run of these benchmarks). With `go_figure()` and float32 it is `r f(v("go_figure_f32", "heatmap", "build_sec"), 3)` s for the heatmap (`r f(v("plotly_py_f32", "heatmap", "build_sec"), 3)` s for plotly.py with float32), and `r f(v("go_figure_f32", "timeseries", "build_sec"), 3)` s for the 1M-point time series (`r f(v("plotly_py_f32", "timeseries", "build_sec"), 3)` s).
 
 ### Building `plot_ly()` figures in plotly
 
 **A faster `plotly_build()`.** The development plotly computes each group's rows once rather than once per column, sorts with radix `order()` only when rows are out of order, and replaces the dplyr, tibble, rlang, tidyr and purrr calls in the build with base R. That's about twice as fast on large plots (three 1M-point WebGL traces: 0.70 s to 0.30 s, standalone timing).
 
-**Heatmaps.** Checking whether a heatmap's z holds a single colour value used `unique()` on its rows; it now uses `rowSums()`. `plotly_build()` of the 2000 × 2000 heatmap takes 0.04 s instead of 0.15 s (standalone timing). Most of the `plot_ly()` heatmap's remaining `r f(v("core_backend", "heatmap", "build_sec"))` s is `htmlwidgets::saveWidget()` handling the large page, which `write_html()` avoids.
+**Heatmaps.** Checking whether a heatmap's z holds a single colour value used `unique()` on its rows; it now uses `rowSums()`. `plotly_build()` of the 2000 × 2000 heatmap takes 0.04 s instead of 0.15 s (standalone timing). With `write_html()`, the whole build and save of the `plot_ly()` heatmap now takes `r f(v("core_backend", "heatmap", "build_sec"))` s.
 
 ### What doesn't help (yet)
 
-* **Partial bundles.** `partial_bundle()` loads a smaller plotly.js with only the trace types a figure uses, but every variant here loads the full bundle.
+* **Partial bundles.** `partial_bundle()` loads a smaller plotly.js with only the trace types a figure uses. The `go_figure_f32` variant uses it (the "JS transferred" column in the [results tables](#results-tables)); the `plot_ly()` variants load the full bundle.
 * **A larger plotly.js.** plotly.js 4 is larger to load than the 2.x CRAN plotly bundles, so for small figures (under about 100,000 values) CRAN plotly loads faster; the data dominates above that.
 * **plotly.js 4 itself** draws in about the same time as plotly.js 2 (`newPlot` above).
 
@@ -267,9 +269,9 @@ Medians over `r meta$reps` runs.
 
 ```{r glance}
 #| echo: false
-top <- res[res$size == ave(res$size, res$case, FUN = max), ]
+top <- res[, .SD[size == max(size)], by = case]
 knitr::kable(
-  top[c("case", "variant", "build_sec", "html_mb", "load_sec", "peak_renderer_mb")],
+  top[, .(case, variant, build_sec, html_mb, load_sec, peak_renderer_mb)],
   col.names = c("case", "variant", "build + write (s)", "HTML (MB)", "load (s)", "peak renderer (MB)"),
   digits = c(0, 0, 3, 1, 2, 0), row.names = FALSE
 )
@@ -304,18 +306,18 @@ Release median ÷ variant median at each size (above 1 means faster or smaller t
 #| echo: false
 metrics <- c(`build + write` = "build_sec", HTML = "html_mb", load = "load_sec",
              `peak renderer` = "peak_renderer_mb", `JS heap` = "js_heap_mb")
-base <- res[res$variant == "release", c("case", "size", metrics)]
-rel <- merge(res[res$variant != "release", c("variant", "case", "size", "label", metrics)], base,
-             by = c("case", "size"), suffixes = c("", ".release"))
-for (m in metrics) rel[[m]] <- rel[[paste0(m, ".release")]] / rel[[m]]
-rel <- rel[order(rel$case, rel$size, rel$variant), ]
-knitr::kable(rel[c("case", "label", "variant", metrics)],
+# each variant joined to the release's row for the same case and size (i.*)
+rel <- res[variant != "release", c("variant", "case", "size", "label", metrics), with = FALSE][
+  res[variant == "release", c("case", "size", metrics), with = FALSE], on = c("case", "size")]
+for (m in metrics) set(rel, j = m, value = rel[[paste0("i.", m)]] / rel[[m]])
+setorder(rel, case, size, variant)
+knitr::kable(rel[, c("case", "label", "variant", metrics), with = FALSE],
              col.names = c("case", "size", "variant", names(metrics)), digits = 1, row.names = FALSE)
 ```
 
 #### Notes
 
-* The variants use different plotly.js versions (see above), so `newPlot` times include plotly.js differences as well as the data format; plotly.js 4 is also larger to load (all variants load a full bundle). "JS transferred (MB)" is all JavaScript the page fetched (plotly.js, htmlwidgets, bindings) as sent by the server, which compresses it.
+* The variants use different plotly.js versions (see above), so `newPlot` times include plotly.js differences as well as the data format; plotly.js 4 is also larger to load (all variants but `go_figure_f32` load a full bundle). "JS transferred (MB)" is all JavaScript the page fetched (plotly.js, htmlwidgets, bindings) as sent by the server, which compresses it.
 * Load times are from localhost: on a real network, the HTML size adds transfer time.
 * Chrome runs headless on the machine's GPU where it has one (WebGL via ANGLE), so WebGL drawing reflects the hardware.
 * float32 keeps about 7 significant digits (see `?as_float32`). Date-times are unaffected: plotly.core sends them as float64 milliseconds; plotly.py and the release send ISO strings.
@@ -337,12 +339,12 @@ Parameters (`-P name:value`): `python`, a Python with plotly, numpy and pandas; 
 Three use cases, over a range of sizes:
 
 * **Large time series**: one `scattergl` line trace with date-time x (1 s steps) and a random walk y.
-* **10 time series**: ten `scattergl` line traces, one per column of a wide data frame, sharing the same date-time x. plotly.core sends an array repeated in a figure once (see `widget_to_JSON()`), so x is sent once rather than ten times.
+* **10 time series**: ten `scattergl` line traces, one per column of a wide data.table, sharing the same date-time x. plotly.core sends an array repeated in a figure once (see `widget_to_JSON()`), so x is sent once rather than ten times.
 * **Large matrix heatmap**: one `heatmap` trace of an n × n matrix.
 
 Metrics:
 
-* **Build + write (s)**: R or Python time from the figure-making call to the standalone HTML page written to disk (`htmlwidgets::saveWidget()` for `plot_ly()`, `write_html()` for `go_figure()`, `fig.write_html()` in Python), after one untimed warm-up run, in a fresh process per variant.
+* **Build + write (s)**: R or Python time from the figure-making call to the standalone HTML page written to disk (`htmlwidgets::saveWidget()` for the CRAN release, plotly.core's `write_html()` for `plot_ly()` with the development plotly and for `go_figure()`, `fig.write_html()` in Python), after one untimed warm-up run, in a fresh process per variant.
 * **HTML (MB)**: the size of the page, which holds the figure data (plotly.js is a separate file).
 * **Load time (s)**: in headless Chrome, from navigation start to the first frame painted after plotly.js's `newPlot()` resolves. Pages are served over HTTP from localhost with the browser cache disabled, so the time covers fetching and parsing plotly.js and the page, decoding the data and plotting, but no network latency.
 * **newPlot (s)**: the time plotly.js itself spends in `newPlot()`, part of the load time.
@@ -374,12 +376,12 @@ The data is generated once in R and written as little-endian doubles, so that ev
 
 ```{r data}
 #| eval: false
-cases <- rbind(
-  data.frame(case = "timeseries", size = params$ts_sizes, values = params$ts_sizes),
-  data.frame(case = "multiseries", size = params$ms_sizes, values = params$ms_sizes * 10),
-  data.frame(case = "heatmap", size = params$hm_sizes, values = params$hm_sizes^2)
-)
-cases$file <- file.path(wd, "data", sprintf("%s-%d.bin", cases$case, cases$size))
+cases <- rbindlist(list(
+  data.table(case = "timeseries", size = unlist(params$ts_sizes), values = as.integer(unlist(params$ts_sizes))),
+  data.table(case = "multiseries", size = unlist(params$ms_sizes), values = as.integer(unlist(params$ms_sizes) * 10)),
+  data.table(case = "heatmap", size = unlist(params$hm_sizes), values = as.integer(unlist(params$hm_sizes)^2))
+))
+cases[, file := file.path(wd, "data", sprintf("%s-%d.bin", case, size))]
 ```
 
 ```{r data-write}
@@ -401,7 +403,7 @@ for (i in seq_len(nrow(cases))) {
 
 ### Figure code
 
-The R code for each variant. Every function gets the time series as `t` (POSIXct, UTC) and `y`; the 10 series as a data frame `d` with columns `t` and `y01`, ..., `y10`; or the heatmap as the matrix `z`.
+The R code for each variant. Every function gets the time series as `t` (POSIXct, UTC) and `y`; the 10 series as a data.table `d` with columns `t` and `y01`, ..., `y10`; or the heatmap as the matrix `z`.
 
 ```{r figure-code}
 #| eval: false
@@ -431,13 +433,17 @@ figures <- list(
     heatmap = function(z) go_figure() |> add_heatmap(z = as_float32(z))
   )
 )
+# go_figure() figures load the smallest plotly.js bundle with their trace types
+figures$go_figure_f32 <- lapply(figures$go_figure_f32, function(make) {
+  function(...) partial_bundle(make(...))
+})
 # the same plot_ly() code, run with the development plotly
 figures$core_backend <- figures$release
 
 # how each variant writes its page
 writers <- list(
   release = function(p, file) htmlwidgets::saveWidget(p, file, selfcontained = FALSE, libdir = "lib"),
-  core_backend = function(p, file) htmlwidgets::saveWidget(p, file, selfcontained = FALSE, libdir = "lib"),
+  core_backend = function(p, file) plotly.core::write_html(p, file, selfcontained = FALSE, libdir = "lib"),
   go_figure_f32 = function(fig, file) write_html(fig, file, selfcontained = FALSE, libdir = "lib")
 )
 ```
@@ -511,7 +517,7 @@ r_worker <- function(variant, fns, write, cases, reps, outdir) {
       args <- list(t = t, y = v)
     } else if (cases$case[i] == "multiseries") {
       y <- matrix(v, n, 10, dimnames = list(NULL, sprintf("y%02d", 1:10)))
-      args <- list(d = data.frame(t = t, y))
+      args <- list(d = data.table::data.table(t = t, y))
     } else {
       args <- list(z = matrix(v, n, n))
     }
@@ -521,16 +527,16 @@ r_worker <- function(variant, fns, write, cases, reps, outdir) {
     save() # warm-up; also the page the browser loads
     for (rep in seq_len(reps)) {
       gc()
-      out[[length(out) + 1]] <- data.frame(
+      out[[length(out) + 1]] <- list(
         variant = variant, case = cases$case[i], size = n, rep = rep,
         build_sec = system.time(save())[["elapsed"]]
       )
     }
   }
-  do.call(rbind, out)
+  data.table::rbindlist(out)
 }
 
-build_r <- do.call(rbind, lapply(names(figures), function(v) {
+build_r <- rbindlist(lapply(names(figures), function(v) {
   callr::r(r_worker, list(v, figures[[v]], writers[[v]], cases, reps, file.path(pages_dir, v)),
            libpath = c(libs[[v]], .libPaths()))
 }))
@@ -539,19 +545,20 @@ build_r <- do.call(rbind, lapply(names(figures), function(v) {
 ```{r build-py}
 #| eval: false
 cases_json <- file.path(wd, "cases.json")
-jsonlite::write_json(cases[c("case", "size", "file")], cases_json)
-build_py <- do.call(rbind, lapply(c("plotly_py", "plotly_py_f32"), function(v) {
+jsonlite::write_json(cases[, .(case, size, file)], cases_json)
+build_py <- rbindlist(lapply(c("plotly_py", "plotly_py_f32"), function(v) {
   outdir <- file.path(pages_dir, v)
   dir.create(outdir, showWarnings = FALSE)
   res <- system2(python, c(shQuote(file.path(wd, "bench.py")), v, shQuote(cases_json), reps,
                            shQuote(outdir)), stdout = TRUE)
-  jsonlite::fromJSON(paste(res, collapse = ""))
+  as.data.table(jsonlite::fromJSON(paste(res, collapse = "")))
 }))
-build <- rbind(build_r, build_py)
-pages <- expand.grid(variant = variants, i = seq_len(nrow(cases)), stringsAsFactors = FALSE)
-pages <- cbind(pages["variant"], cases[pages$i, c("case", "size", "values")])
-pages$path <- sprintf("%s/%s-%d.html", pages$variant, pages$case, pages$size)
-pages$html_mb <- file.size(file.path(pages_dir, pages$path)) / 1e6
+build <- rbindlist(list(build_r, build_py))
+# one page per variant and case size
+pages <- CJ(variant = variants, i = seq_len(nrow(cases)), sorted = FALSE)[
+  , c(.(variant = variant), cases[i, .(case, size, values)])]
+pages[, path := sprintf("%s/%s-%d.html", variant, case, size)]
+pages[, html_mb := file.size(file.path(pages_dir, path)) / 1e6]
 ```
 
 ### Browser measurements
@@ -664,7 +671,7 @@ measure_page <- function(url, timeout = 300) {
   if (!is.null(b$error)) stop(url, ": ", b$error)
   s$HeapProfiler$collectGarbage()
   heap <- s$Runtime$getHeapUsage()
-  data.frame(
+  data.table(
     load_sec = b$painted / 1000,
     newplot_sec = (b$end - b$start) / 1000,
     js_mb = b$js_bytes / 1e6,
@@ -673,22 +680,34 @@ measure_page <- function(url, timeout = 300) {
   )
 }
 
-# on a failure (e.g. Chrome not responding), restart Chrome and try the page once more
+restart_chrome <- function() {
+  try(chrome$close(), silent = TRUE)
+  chrome <<- chromote::Chromote$new()
+  browser_pid <<- chrome$get_browser()$get_process()$get_pid()
+}
+# on a failure (e.g. Chrome not responding), restart Chrome and try the page
+# once more; a page that fails twice (e.g. too large to load) is recorded as
+# missing values, and not tried again in later rounds
+failed <- character()
 measure_retry <- function(url) {
-  tryCatch(measure_page(url), error = function(e) {
-    message("retrying ", url, " after: ", conditionMessage(e))
-    try(chrome$close(), silent = TRUE)
-    chrome <<- chromote::Chromote$new()
-    browser_pid <<- chrome$get_browser()$get_process()$get_pid()
-    measure_page(url)
-  })
+  missing <- data.table(load_sec = NA_real_, newplot_sec = NA_real_, js_mb = NA_real_,
+                        peak_renderer_mb = NA_real_, js_heap_mb = NA_real_)
+  if (url %in% failed) return(missing)
+  for (attempt in 1:2) {
+    r <- tryCatch(measure_page(url), error = identity)
+    if (!inherits(r, "error")) return(r)
+    message("attempt ", attempt, " at ", url, " failed: ", conditionMessage(r))
+    restart_chrome()
+  }
+  failed <<- c(failed, url)
+  missing
 }
 
 set.seed(1)
-browser <- do.call(rbind, lapply(seq_len(reps), function(rep) {
+browser <- rbindlist(lapply(seq_len(reps), function(rep) {
   # shuffle the page order each round, so drift doesn't favour a variant
-  do.call(rbind, lapply(sample(nrow(pages)), function(i) {
-    cbind(pages[i, c("variant", "case", "size")], rep = rep,
+  rbindlist(lapply(sample(nrow(pages)), function(i) {
+    cbind(pages[i, .(variant, case, size)], rep = rep,
           measure_retry(sprintf("http://127.0.0.1:%d/%s", port, pages$path[i])))
   }))
 }))
@@ -701,7 +720,6 @@ Results above are from a run on `r meta$date` on `r meta$os` (`r meta$cpu`), wit
 
 ```{r versions}
 #| echo: false
-versions[is.na(versions)] <- ""
 knitr::kable(versions, row.names = FALSE)
 ```
 
@@ -717,7 +735,7 @@ r_versions <- function(lib) {
     }
     # the development plotly draws with plotly.core's plotly.js
     uses_core <- grepl("plotly.core", utils::packageDescription("plotly")$Imports, fixed = TRUE)
-    data.frame(
+    list(
       plotly = as.character(utils::packageVersion("plotly")),
       plotly.core = if (uses_core) as.character(utils::packageVersion("plotly.core")) else NA,
       plotly.js = if (uses_core) js_version("plotly.core", "plotly.min.js") else js_version("plotly", "plotly-latest.min.js")
@@ -728,13 +746,13 @@ py <- jsonlite::fromJSON(system2(python, c("-c", shQuote(paste(
   "import json, plotly, numpy, pandas, plotly.offline as o;",
   "print(json.dumps(dict(plotly=plotly.__version__, numpy=numpy.__version__,",
   "pandas=pandas.__version__, plotlyjs=o.get_plotlyjs_version())))"))), stdout = TRUE))
-versions <- rbind(
-  cbind(variant = "release", r_versions(release_lib)),
-  cbind(variant = "core_backend, go_figure_f32", r_versions(core_lib)),
-  data.frame(variant = "plotly_py, plotly_py_f32",
-             plotly = paste0(py$plotly, " (Python; numpy ", py$numpy, ", pandas ", py$pandas, ")"),
-             plotly.core = NA, plotly.js = py$plotlyjs)
-)
+versions <- rbindlist(list(
+  c(variant = "release", r_versions(release_lib)),
+  c(variant = "core_backend, go_figure_f32", r_versions(core_lib)),
+  list(variant = "plotly_py, plotly_py_f32",
+       plotly = paste0(py$plotly, " (Python; numpy ", py$numpy, ", pandas ", py$pandas, ")"),
+       plotly.core = NA_character_, plotly.js = py$plotlyjs)
+))
 cpu <- if (Sys.info()[["sysname"]] == "Darwin") {
   system("sysctl -n machdep.cpu.brand_string", intern = TRUE)
 } else {
@@ -744,9 +762,9 @@ meta <- list(date = format(Sys.Date()), R = R.version.string, os = utils::sessio
              cpu = cpu, browser = chrome$Browser$getVersion()$product, reps = reps)
 chrome$close()
 
-write.csv(build, file.path(results_dir, "build.csv"), row.names = FALSE)
-write.csv(browser, file.path(results_dir, "browser.csv"), row.names = FALSE)
-write.csv(pages[c("variant", "case", "size", "values", "html_mb")], file.path(results_dir, "pages.csv"), row.names = FALSE)
-write.csv(versions, file.path(results_dir, "versions.csv"), row.names = FALSE)
+fwrite(build, file.path(results_dir, "build.csv"))
+fwrite(browser, file.path(results_dir, "browser.csv"))
+fwrite(pages[, .(variant, case, size, values, html_mb)], file.path(results_dir, "pages.csv"))
+fwrite(versions, file.path(results_dir, "versions.csv"))
 jsonlite::write_json(meta, file.path(results_dir, "meta.json"), auto_unbox = TRUE, pretty = TRUE)
 ```
