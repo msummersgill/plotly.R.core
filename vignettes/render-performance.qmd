@@ -8,6 +8,7 @@ vignette: >
 format:
   html:
     toc: true
+    fontsize: 0.95em
     code-tools:
       source: true
 knitr:
@@ -15,6 +16,8 @@ knitr:
     warning: false
     message: false
     fig-width: 9
+    # fill the text column, whatever its width (narrower on the pkgdown site)
+    out-width: "100%"
 params:
   # Library holding the CRAN plotly release ("" = <workdir>/lib-release, installed there from CRAN if missing)
   release_lib: ""
@@ -35,10 +38,12 @@ params:
 
 plotly.core makes large figures much quicker to build, save, load and draw than the CRAN plotly release, and lighter on browser memory, for `plot_ly()` code unchanged and even more so for `go_figure()` with `as_float32()`. This vignette shows the results first, then how the gains were made; the numbers and how the benchmarks are run are in the [appendix](#appendix).
 
+The `plot_ly()` results on plotly.core use a development version of the plotly package that renders with plotly.core, on the [`plotly-core-render` branch](https://github.com/msummersgill/plotly/tree/plotly-core-render) of a fork of plotly; it isn't on CRAN yet. To try it: `remotes::install_github("msummersgill/plotly@plotly-core-render")`.
+
 | Variant | Code | Data sent to the browser as |
 |---|---|---|
 | `release` | `plot_ly()` with the CRAN plotly release | JSON numbers / date strings |
-| `core_backend` | the same `plot_ly()` code with the development plotly, which renders with plotly.core, saved with `write_html()` | base64 typed arrays (float64) |
+| `core_backend` | the same `plot_ly()` code with the development plotly ([`plotly-core-render` branch](https://github.com/msummersgill/plotly/tree/plotly-core-render)), which renders with plotly.core, saved with `write_html()` | base64 typed arrays (float64) |
 | `go_figure_f32` | `go_figure()` and `add_*()` with `as_float32()` and `partial_bundle()`, saved with `write_html()` | base64 typed arrays (float32) |
 | `plotly_py` | plotly.py `go.Figure()` with numpy float64 | base64 typed arrays (float64), ISO date strings |
 | `plotly_py_f32` | plotly.py `go.Figure()` with numpy float32 | base64 typed arrays (float32), ISO date strings |
@@ -100,7 +105,7 @@ meta <- jsonlite::read_json(file.path(results_dir, "meta.json"))
 # medians over the runs, one row per variant, case and size
 keys <- c("variant", "case", "size")
 browser_cols <- c("load_sec", "newplot_sec", "js_mb", "peak_renderer_mb", "js_heap_mb")
-res <- build[, .(build_sec = median(build_sec)), by = keys][
+res <- build[, .(build_sec = median(build_sec), export_sec = median(export_sec)), by = keys][
   pages, on = keys, nomatch = NULL][
   browser[, lapply(.SD, median), by = keys, .SDcols = browser_cols], on = keys, nomatch = NULL]
 res[, `:=`(
@@ -113,10 +118,10 @@ res[case == "multiseries", label := paste("10 ×", label)]
 
 show_table <- function(which) {
   knitr::kable(
-    res[case == which, .(label, variant, build_sec, html_mb, load_sec, newplot_sec, js_mb, peak_renderer_mb, js_heap_mb)],
-    col.names = c("size", "variant", "build + write (s)", "HTML (MB)", "load (s)", "newPlot (s)",
-                  "JS transferred (MB)", "peak renderer (MB)", "JS heap after (MB)"),
-    digits = c(0, 0, 3, 2, 3, 3, 2, 0, 1), row.names = FALSE
+    res[case == which, .(label, variant, build_sec, export_sec, html_mb, load_sec, newplot_sec, js_mb, peak_renderer_mb, js_heap_mb)],
+    col.names = c("size", "variant", "build + write (s)", "image export (s)", "HTML (MB)", "load (s)",
+                  "newPlot (s)", "JS transferred (MB)", "peak renderer (MB)", "JS heap after (MB)"),
+    digits = c(0, 0, 3, 3, 2, 3, 3, 2, 0, 1), row.names = FALSE
   )
 }
 ```
@@ -185,7 +190,7 @@ metric_chart("build_sec", "build + write (s)")
 
 This is the wait in R before anything can be shown: in the console or RStudio, while knitting a report, or on every re-render in a Shiny app. For the 2000 × 2000 heatmap, CRAN plotly keeps R busy for `r f(v("release", "heatmap", "build_sec"), 1)` s; the same `plot_ly()` code with plotly.core takes `r f(v("core_backend", "heatmap", "build_sec"), 1)` s, and `go_figure()` with `as_float32()` `r f(v("go_figure_f32", "heatmap", "build_sec"))` s, faster than plotly.py.
 
-### Load time
+### Web Browser Load time
 
 ```{r chart-load}
 #| fig-height: 4.5
@@ -196,7 +201,7 @@ metric_chart("load_sec", "load (s)")
 
 The time from opening the page to the plot appearing, here with no network in between. A heatmap that CRAN plotly takes `r f(v("release", "heatmap", "load_sec"), 1)` s to show appears in `r f(v("core_backend", "heatmap", "load_sec"), 1)` s with plotly.core (`r f(v("go_figure_f32", "heatmap", "load_sec"), 1)` s with float32). For small figures (under about 100,000 values) CRAN plotly loads slightly faster, because plotly.js 4 is a larger script; see `partial_bundle()`. The largest 10-series case is 10 × 500,000 because CRAN plotly couldn't show 10 × 1,000,000 at all: in an earlier run, Chrome never finished drawing its 678 MB page in two tries of 5 minutes each, while plotly.core showed the same figure in about 9 s. At 10 × 500,000, CRAN plotly takes `r f(v("release", "multiseries", "load_sec"), 1)` s and plotly.core `r f(v("core_backend", "multiseries", "load_sec"), 1)` s.
 
-### Page size
+### HTML Page size
 
 ```{r chart-html}
 #| fig-height: 4.5
@@ -207,7 +212,7 @@ metric_chart("html_mb", "HTML (MB)")
 
 The size of the saved page or the data a Shiny app sends: it's what a viewer on a remote server or slow connection waits to download, and what makes self-contained reports too big to email or attach. The 1M-point time series goes from `r f(v("release", "timeseries", "html_mb"), 0)` MB with CRAN plotly to `r f(v("core_backend", "timeseries", "html_mb"), 0)` MB, and 10 series sharing x from `r f(v("release", "multiseries", "html_mb"), 0)` MB to `r f(v("go_figure_f32", "multiseries", "html_mb"), 1)` MB, since x is sent once.
 
-### Peak browser memory
+### Peak Web Browser memory
 
 ```{r chart-peak}
 #| fig-height: 4.5
@@ -218,7 +223,7 @@ metric_chart("peak_renderer_mb", "peak renderer (MB)")
 
 The most memory the page's browser process uses while loading; when a tab exceeds what the browser or machine allows, it crashes ("Aw, Snap!" in Chrome), which is most likely on laptops with little memory, on phones, or with several large plots on one page. The heatmap peaks at `r f(v("release", "heatmap", "peak_renderer_mb"), 0)` MB with CRAN plotly and `r f(v("go_figure_f32", "heatmap", "peak_renderer_mb"), 0)` MB with `go_figure()` and float32.
 
-### Memory held after load
+### Web Browser Memory held after load
 
 ```{r chart-heap}
 #| fig-height: 4.5
@@ -228,6 +233,17 @@ metric_chart("js_heap_mb", "JS heap after load (MB)")
 ```
 
 The JavaScript memory the plot keeps while it stays open, which adds up on dashboards and reports with many plots. For the 1M-point time series it falls from `r f(v("release", "timeseries", "js_heap_mb"), 0)` MB with CRAN plotly to `r f(v("core_backend", "timeseries", "js_heap_mb"), 0)` MB with plotly.core and `r f(v("go_figure_f32", "timeseries", "js_heap_mb"), 0)` MB with float32.
+
+### Static image export
+
+```{r chart-export}
+#| fig-height: 4.5
+#| code-fold: true
+#| code-summary: "Show the chart code"
+metric_chart("export_sec", "PNG export (s)")
+```
+
+The wall-clock time to save a figure as a PNG. It adds up wherever figures are saved as images: a script that writes a batch of plots, or an R Markdown or Quarto document rendered to PDF or Word, where every figure is exported. For 10 series of 500,000 points, each image takes `r f(v("release", "multiseries", "export_sec"), 0)` s with CRAN plotly, `r f(v("plotly_py", "multiseries", "export_sec"), 0)` s with plotly.py and `r f(v("core_backend", "multiseries", "export_sec"), 1)` s with plotly.core: for 100 such images, about `r f(100 * v("release", "multiseries", "export_sec") / 3600, 1)` hours with CRAN plotly against `r f(100 * v("core_backend", "multiseries", "export_sec") / 60, 0)` minutes with plotly.core. The 2000 × 2000 heatmap is closer: `r f(v("release", "heatmap", "export_sec"), 1)` s with CRAN plotly, `r f(v("plotly_py", "heatmap", "export_sec"), 1)` s with plotly.py and `r f(v("core_backend", "heatmap", "export_sec"), 1)` s with plotly.core. Setting up image export, and how it compares with Kaleido, is in `vignette("static-export")`.
 
 ## How the gains were made
 
@@ -253,12 +269,6 @@ Numbers here are medians from the results, at the largest size of each case, unl
 
 **Heatmaps.** Checking whether a heatmap's z holds a single colour value used `unique()` on its rows; it now uses `rowSums()`. `plotly_build()` of the 2000 × 2000 heatmap takes 0.04 s instead of 0.15 s (standalone timing). With `write_html()`, the whole build and save of the `plot_ly()` heatmap now takes `r f(v("core_backend", "heatmap", "build_sec"))` s.
 
-### What doesn't help (yet)
-
-* **Partial bundles.** `partial_bundle()` loads a smaller plotly.js with only the trace types a figure uses. The `go_figure_f32` variant uses it (the "JS transferred" column in the [results tables](#results-tables)); the `plot_ly()` variants load the full bundle.
-* **A larger plotly.js.** plotly.js 4 is larger to load than the 2.x CRAN plotly bundles, so for small figures (under about 100,000 values) CRAN plotly loads faster; the data dominates above that.
-* **plotly.js 4 itself** draws in about the same time as plotly.js 2 (`newPlot` above).
-
 ## Appendix
 
 ### Results tables
@@ -271,9 +281,9 @@ Medians over `r meta$reps` runs.
 #| echo: false
 top <- res[, .SD[size == max(size)], by = case]
 knitr::kable(
-  top[, .(case, variant, build_sec, html_mb, load_sec, peak_renderer_mb)],
-  col.names = c("case", "variant", "build + write (s)", "HTML (MB)", "load (s)", "peak renderer (MB)"),
-  digits = c(0, 0, 3, 1, 2, 0), row.names = FALSE
+  top[, .(case, variant, build_sec, export_sec, html_mb, load_sec, peak_renderer_mb)],
+  col.names = c("case", "variant", "build + write (s)", "image export (s)", "HTML (MB)", "load (s)", "peak renderer (MB)"),
+  digits = c(0, 0, 3, 2, 1, 2, 0), row.names = FALSE
 )
 ```
 
@@ -304,7 +314,7 @@ Release median ÷ variant median at each size (above 1 means faster or smaller t
 
 ```{r relative}
 #| echo: false
-metrics <- c(`build + write` = "build_sec", HTML = "html_mb", load = "load_sec",
+metrics <- c(`build + write` = "build_sec", `image export` = "export_sec", HTML = "html_mb", load = "load_sec",
              `peak renderer` = "peak_renderer_mb", `JS heap` = "js_heap_mb")
 # each variant joined to the release's row for the same case and size (i.*)
 rel <- res[variant != "release", c("variant", "case", "size", "label", metrics), with = FALSE][
@@ -345,6 +355,7 @@ Three use cases, over a range of sizes:
 Metrics:
 
 * **Build + write (s)**: R or Python time from the figure-making call to the standalone HTML page written to disk (`htmlwidgets::saveWidget()` for the CRAN release, plotly.core's `write_html()` for `plot_ly()` with the development plotly and for `go_figure()`, `fig.write_html()` in Python), after one untimed warm-up run, in a fresh process per variant.
+* **Image export (s)**: time to save the figure, made beforehand, as a 700 × 500 PNG with the package's own export (`save_image()` in R; `fig.write_image()` in plotly.py), after one untimed warm-up export, in the same process as the build timings. It covers converting the figure to JSON (including `plotly_build()` for `plot_ly()` figures, which are built when exported), drawing it in the headless browser and writing the PNG; not starting the browser (done in the warm-up, about 1--1.5 s for a session's first image) or, for `go_figure()` and plotly.py, creating the figure object. Kaleido (CRAN plotly, plotly.py) runs as a persistent server with the package's own plotly.js, as plotly.core keeps its Chrome running.
 * **HTML (MB)**: the size of the page, which holds the figure data (plotly.js is a separate file).
 * **Load time (s)**: in headless Chrome, from navigation start to the first frame painted after plotly.js's `newPlot()` resolves. Pages are served over HTTP from localhost with the browser cache disabled, so the time covers fetching and parsing plotly.js and the page, decoding the data and plotting, but no network latency.
 * **newPlot (s)**: the time plotly.js itself spends in `newPlot()`, part of the load time.
@@ -446,6 +457,30 @@ writers <- list(
   core_backend = function(p, file) plotly.core::write_html(p, file, selfcontained = FALSE, libdir = "lib"),
   go_figure_f32 = function(fig, file) write_html(fig, file, selfcontained = FALSE, libdir = "lib")
 )
+# how each variant exports a static image, with its package's save_image():
+# Kaleido (via reticulate) for the CRAN release, Chrome via chromote for
+# plotly.core (plot_ly() in the development plotly uses plotly.core's). Each
+# keeps its browser running between images: plotly.core does by itself;
+# Kaleido is started as a persistent server (by default it starts a browser
+# for every image, which is slower and failed for some images here), with the
+# CRAN release's own plotly.js
+exporters <- list(
+  release = local({
+    started <- FALSE
+    function(p, file) {
+      if (!started) {
+        reticulate::import("kaleido")$start_sync_server(
+          plotlyjs = system.file("htmlwidgets", "lib", "plotlyjs", "plotly-latest.min.js", package = "plotly"),
+          silence_warnings = TRUE
+        )
+        started <<- TRUE
+      }
+      plotly::save_image(p, file)
+    }
+  }),
+  core_backend = function(p, file) plotly::save_image(p, file),
+  go_figure_f32 = function(fig, file) plotly.core::save_image(fig, file)
+)
 ```
 
 The plotly.py equivalents (`plotly_py_f32` converts the arrays with `astype(np.float32)` before timing starts, as `as_float32()` only marks them):
@@ -453,7 +488,13 @@ The plotly.py equivalents (`plotly_py_f32` converts the arrays with `astype(np.f
 ```{cat bench-py, engine.opts = list(lang = "python")}
 #| eval: false
 import gc, json, sys, time
-import numpy as np, pandas as pd, plotly.graph_objects as go
+import os
+import numpy as np, pandas as pd, plotly, plotly.io as pio, plotly.graph_objects as go
+import kaleido
+# Kaleido with plotly.py's own plotly.js (offline), kept running between images
+plotlyjs = os.path.join(os.path.dirname(plotly.__file__), "package_data", "plotly.min.js")
+pio.defaults.plotlyjs = plotlyjs
+kaleido.start_sync_server(plotlyjs=plotlyjs, silence_warnings=True)
 
 variant, cases_file, reps, outdir = sys.argv[1], sys.argv[2], int(sys.argv[3]), sys.argv[4]
 f32 = variant == "plotly_py_f32"
@@ -488,12 +529,17 @@ for case in json.load(open(cases_file)):
     page = f"{outdir}/{kind}-{n}.html"
     save = lambda: make(*args).write_html(page, include_plotlyjs="directory", full_html=True)
     save()  # warm-up; also the page the browser loads
+    fig, png = make(*args), f"{outdir}/{kind}-{n}.png"
+    fig.write_image(png)  # warm-up
     for rep in range(reps):
         gc.collect()
         t0 = time.perf_counter()
         save()
+        t1 = time.perf_counter()
+        fig.write_image(png)
         out.append(dict(variant=variant, case=kind, size=n, rep=rep + 1,
-                        build_sec=time.perf_counter() - t0))
+                        build_sec=t1 - t0, export_sec=time.perf_counter() - t1))
+kaleido.stop_sync_server(silence_warnings=True)
 json.dump(out, sys.stdout)
 ```
 
@@ -503,7 +549,7 @@ Each variant runs in its own fresh process: R variants with callr and the librar
 
 ```{r build-r}
 #| eval: false
-r_worker <- function(variant, fns, write, cases, reps, outdir) {
+r_worker <- function(variant, fns, write, export, cases, reps, outdir) {
   suppressPackageStartupMessages(
     if (variant == "go_figure_f32") library(plotly.core) else library(plotly)
   )
@@ -525,20 +571,28 @@ r_worker <- function(variant, fns, write, cases, reps, outdir) {
     page <- file.path(outdir, sprintf("%s-%d.html", cases$case[i], n))
     save <- function() write(do.call(make, args), page)
     save() # warm-up; also the page the browser loads
+    # static image export of a figure made beforehand, so only the export is timed
+    fig <- do.call(make, args)
+    png <- file.path(outdir, sprintf("%s-%d.png", cases$case[i], n))
+    export(fig, png) # warm-up
     for (rep in seq_len(reps)) {
       gc()
       out[[length(out) + 1]] <- list(
         variant = variant, case = cases$case[i], size = n, rep = rep,
-        build_sec = system.time(save())[["elapsed"]]
+        build_sec = system.time(save())[["elapsed"]],
+        export_sec = system.time(export(fig, png))[["elapsed"]]
       )
     }
   }
   data.table::rbindlist(out)
 }
 
+# Kaleido (for the CRAN release) runs in the benchmark's Python, which also
+# has plotly; ~/.Renviron is skipped, as it may point reticulate elsewhere
+worker_env <- c(callr::rcmd_safe_env(), RETICULATE_PYTHON = python, R_ENVIRON_USER = tempfile())
 build_r <- rbindlist(lapply(names(figures), function(v) {
-  callr::r(r_worker, list(v, figures[[v]], writers[[v]], cases, reps, file.path(pages_dir, v)),
-           libpath = c(libs[[v]], .libPaths()))
+  callr::r(r_worker, list(v, figures[[v]], writers[[v]], exporters[[v]], cases, reps, file.path(pages_dir, v)),
+           libpath = c(libs[[v]], .libPaths()), env = worker_env)
 }))
 ```
 

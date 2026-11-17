@@ -7,6 +7,7 @@ vignette: >
 format:
   html:
     toc: true
+    fontsize: 0.95em
 knitr:
   opts_chunk:
     collapse: true
