@@ -24,6 +24,9 @@
 #'   it. The data frame is kept with the figure in R (attribute
 #'   `"plotly_data"`) but is not sent to the browser; only the values traces
 #'   use are.
+#'   A [crosstalk::SharedData] works the same way, and the traces whose
+#'   points are its rows are linked to its crosstalk group (see
+#'   [highlight()]).
 #' @param layout A [go_layout()] object or a named list of layout properties.
 #' @param frames Animation frames: a list of named lists with `name`, `data`
 #'   (a list of traces), and optionally `layout`, `group`, `traces` and
@@ -54,7 +57,7 @@ go_figure <- function(
   frames = NULL,
   skip_invalid = FALSE
 ) {
-  if (is.data.frame(data)) {
+  if (is.data.frame(data) || inherits(data, "SharedData")) {
     fig <- go_figure(NULL, layout, frames, skip_invalid)
     attr(fig, "plotly_data") <- data
     return(fig)
@@ -83,6 +86,15 @@ go_figure <- function(
 # figure's (go_figure(<data frame>)).
 trace_data <- function(fig, data = NULL) {
   data <- data %||% attr(fig, "plotly_data", exact = TRUE)
+  if (inherits(data, "SharedData")) {
+    # its data, with its keys and group for link_shared_traces()
+    sd <- data
+    data <- sd$origData()
+    attr(data, "crosstalk") <- list(
+      key = as.character(sd$key()),
+      group = sd$groupName()
+    )
+  }
   if (
     !is.null(data) &&
       !is.data.frame(data) &&

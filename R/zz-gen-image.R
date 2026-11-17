@@ -55,7 +55,9 @@
 #' @param data A data frame in which formula properties (e.g. \code{x =
 #'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
 #'   given to \code{\link{go_figure}()}. Only the evaluated values are
-#'   added to the trace.
+#'   added to the trace. A \code{crosstalk::SharedData} works the same way,
+#'   and links the trace to its crosstalk group (see
+#'   \code{\link{highlight}()}).
 #' @param dx Set the pixel's horizontal size. Number.
 #' @param dy Set the pixel's vertical size Number.
 #' @param family \strong{\code{go_image_hoverlabel_font()}}: HTML font

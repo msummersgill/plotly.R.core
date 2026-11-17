@@ -115,7 +115,9 @@
 #' @param data A data frame in which formula properties (e.g. \code{x =
 #'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
 #'   given to \code{\link{go_figure}()}. Only the evaluated values are
-#'   added to the trace.
+#'   added to the trace. A \code{crosstalk::SharedData} works the same way,
+#'   and links the trace to its crosstalk group (see
+#'   \code{\link{highlight}()}).
 #' @param dx Sets the x coordinate step for multi-box traces set using
 #'   q1/median/q3. Number.
 #' @param dy Sets the y coordinate step for multi-box traces set using

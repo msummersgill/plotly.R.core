@@ -198,7 +198,9 @@
 #' @param data A data frame in which formula properties (e.g. \code{x =
 #'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
 #'   given to \code{\link{go_figure}()}. Only the evaluated values are
-#'   added to the trace.
+#'   added to the trace. A \code{crosstalk::SharedData} works the same way,
+#'   and links the trace to its crosstalk group (see
+#'   \code{\link{highlight}()}).
 #' @param diagonal Named list or \code{\link{go_splom_diagonal}()} object.
 #' @param dimensions List of named lists or
 #'   \code{\link{go_splom_dimension}()} objects.

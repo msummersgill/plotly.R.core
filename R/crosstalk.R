@@ -8,16 +8,18 @@
 # linking: selecting points in one view selects the same keys in every view
 # of the group (other plots, crosstalk filters, DT tables, leaflet maps).
 #
-# px_*() functions accept a SharedData as `data_frame` and set the keys
-# themselves; set_crosstalk_keys() links traces of any figure.
+# px_*() functions accept a SharedData as `data_frame`, and go_figure() and
+# add_<trace>() as their data, and set the keys themselves;
+# set_crosstalk_keys() links traces of any figure.
 
 #' Highlight linked selections
 #'
 #' Sets how a figure responds to, and shows, selections of points linked with
 #' crosstalk. A figure is linked when its data come from a
 #' [crosstalk::SharedData] (give one as the `data_frame` of a `px_*()`
-#' function, or link traces with [set_crosstalk_keys()]): selecting points
-#' then selects the rows with the same keys in every view of the same
+#' function, pipe one into [go_figure()] and add traces with formulas such as
+#' `add_scatter(x = ~col)`, or link traces with [set_crosstalk_keys()]):
+#' selecting points then selects the rows with the same keys in every view of the same
 #' crosstalk group, such as other plots, [crosstalk::filter_select()] inputs,
 #' DT tables or leaflet maps. Linked figures highlight on click by default;
 #' `highlight()` changes that.
@@ -229,9 +231,10 @@ r_hex_colour <- function(x) {
 #'
 #' Gives traces of a figure the keys of a [crosstalk::SharedData], so that
 #' selecting their points selects the same rows in other views of the
-#' crosstalk group (and the reverse). `px_*()` functions do this themselves
-#' when `data_frame` is a SharedData; use this for traces made otherwise,
-#' such as with `add_scatter()`. See [highlight()] for how selections are
+#' crosstalk group (and the reverse). This happens by itself for `px_*()`
+#' functions given a SharedData as `data_frame`, and for `add_<trace>()`
+#' traces whose formula properties are evaluated in a SharedData (piped into
+#' [go_figure()] or given as `data`); use this for other traces. See [highlight()] for how selections are
 #' made and shown.
 #'
 #' @param fig A [go_figure()].
@@ -290,6 +293,40 @@ set_crosstalk_keys <- function(
   }
   fig <- set_widget_setting(fig, "keys", keys)
   set_widget_setting(fig, "sets", sets)
+}
+
+# After add_<trace>(): link the traces it added to the crosstalk group of a
+# SharedData given as its data (see trace_data()), when their points are
+# the SharedData's rows (a data array with one value per row)
+link_shared_traces <- function(fig, data, n_before) {
+  ct <- attr(data, "crosstalk", exact = TRUE)
+  n <- length(fig$data)
+  if (is.null(ct) || n <= n_before) {
+    return(fig)
+  }
+  rows <- length(ct$key)
+  linked <- Filter(
+    function(i) trace_has_rows(fig$data[[i]], rows),
+    seq.int(n_before + 1L, n)
+  )
+  if (!length(linked)) {
+    return(fig)
+  }
+  set_crosstalk_keys(fig, ct$key, ct$group, traces = linked)
+}
+
+TRACE_ROW_ARRAYS <- c(
+  "x", "y", "z", "lat", "lon", "locations", "values", "labels", "r",
+  "theta", "a", "b", "c", "real", "imag", "ids", "customdata"
+)
+
+trace_has_rows <- function(trace, n) {
+  tr <- unclass(trace)
+  any(vapply(
+    intersect(names(tr), TRACE_ROW_ARRAYS),
+    function(nm) !is.list(tr[[nm]]) && NROW(tr[[nm]]) == n,
+    logical(1)
+  ))
 }
 
 pad_list <- function(x, n) {

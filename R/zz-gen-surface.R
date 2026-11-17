@@ -129,7 +129,9 @@
 #' @param data A data frame in which formula properties (e.g. \code{x =
 #'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
 #'   given to \code{\link{go_figure}()}. Only the evaluated values are
-#'   added to the trace.
+#'   added to the trace. A \code{crosstalk::SharedData} works the same way,
+#'   and links the trace to its crosstalk group (see
+#'   \code{\link{highlight}()}).
 #' @param diffuse Represents the extent that incident rays are reflected in
 #'   a range of angles. Number in the interval [0, 1].
 #' @param dtick Sets the step in-between ticks on this color bar. Use with

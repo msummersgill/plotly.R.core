@@ -305,7 +305,9 @@ FIGURE_ARG_DOCS <- list(
   data = paste(
     "A data frame in which formula properties (e.g. \\code{x = ~col},",
     "\\code{marker_size = ~col}) are evaluated. Default: the data given to",
-    "\\code{\\link{go_figure}()}. Only the evaluated values are added to the trace."
+    "\\code{\\link{go_figure}()}. Only the evaluated values are added to the trace.",
+    "A \\code{crosstalk::SharedData} works the same way, and links the trace",
+    "to its crosstalk group (see \\code{\\link{highlight}()})."
   ),
   row = paste(
     "Subplot grid row (figures created with \\code{\\link{make_subplots}()} only).",

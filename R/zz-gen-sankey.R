@@ -129,7 +129,9 @@
 #' @param data A data frame in which formula properties (e.g. \code{x =
 #'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
 #'   given to \code{\link{go_figure}()}. Only the evaluated values are
-#'   added to the trace.
+#'   added to the trace. A \code{crosstalk::SharedData} works the same way,
+#'   and links the trace to its crosstalk group (see
+#'   \code{\link{highlight}()}).
 #' @param direction Sets the direction of the flow along the `orientation`
 #'   axis. With `forward` (the default), sources are on the left
 #'   (horizontal) or top (vertical). With `reversed`, sources are on the

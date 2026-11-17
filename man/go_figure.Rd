@@ -14,7 +14,10 @@ the figure starts without traces, and formula properties of later
 \verb{add_<trace>()} calls (e.g. \code{add_scatter(x = ~col)}) are evaluated in
 it. The data frame is kept with the figure in R (attribute
 \code{"plotly_data"}) but is not sent to the browser; only the values traces
-use are.}
+use are.
+A \link[crosstalk:SharedData]{crosstalk::SharedData} works the same way, and the traces whose
+points are its rows are linked to its crosstalk group (see
+\code{\link[=highlight]{highlight()}}).}
 
 \item{layout}{A \code{\link[=go_layout]{go_layout()}} object or a named list of layout properties.}
 

@@ -88,12 +88,14 @@ add_trace_source <- function(trace, validators) {
     wrap_args(args),
     ") {",
     "  # formula properties (x = ~col) are evaluated in `data` or the figure's data",
+    "  data <- trace_data(fig, data)",
     sprintf(
-      '  trace <- plotly_object("%s", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))',
+      '  trace <- plotly_object("%s", NULL, environment(), list(...), skip_invalid, data = data)',
       trace
     ),
+    "  # traces of a crosstalk SharedData's rows are linked to its group",
     sprintf(
-      "  add_trace(fig, trace, row = row, col = col%s)",
+      "  link_shared_traces(add_trace(fig, trace, row = row, col = col%s), data, length(fig$data))",
       if (has_xy) ", secondary_y = secondary_y" else ""
     ),
     "}",

@@ -415,7 +415,9 @@ formulas, evaluated in \code{data} for \code{add_*()} functions.}
 \item{data}{A data frame in which formula properties (e.g. \code{x =
 ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
 given to \code{\link{go_figure}()}. Only the evaluated values are
-added to the trace.}
+added to the trace. A \code{crosstalk::SharedData} works the same way,
+and links the trace to its crosstalk group (see
+\code{\link{highlight}()}).}
 
 \item{a}{Sets the quantity of component `a` in each data point. If `a`,
 `b`, and `c` are all provided, they need not be normalized, only the

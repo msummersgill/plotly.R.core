@@ -150,3 +150,27 @@ if (requireNamespace("crosstalk", quietly = TRUE)) {
   w0 <- as_widget(px_scatter(iris, x = ~sepal_width, y = ~sepal_length))
   stopifnot(is.null(w0$x$highlight), is.null(w0$x$sets))
 }
+
+# go_figure() / add_<trace>() with a SharedData: traces whose points are its
+# rows are linked; others (and traces of plain data) aren't
+if (requireNamespace("crosstalk", quietly = TRUE)) {
+  sd <- crosstalk::SharedData$new(mtcars, group = "cars")
+  f <- sd |>
+    go_figure() |>
+    add_scatter(x = ~mpg, y = ~hp, mode = "markers") |>
+    add_scatter(x = c(10, 30), y = c(50, 300), mode = "lines") |>
+    add_bar(x = ~cyl, y = ~mpg, data = mtcars) |>
+    add_histogram(x = ~wt, data = crosstalk::SharedData$new(mtcars, group = "other")) |>
+    highlight(on = "plotly_selected", color = "red")
+  keys <- attr(f, "plotly_keys")
+  stopifnot(
+    identical(attr(f, "plotly_sets"), list("cars", NULL, NULL, "other")),
+    identical(keys[[1]], rownames(mtcars)),
+    is.null(keys[[2]]),
+    identical(as_widget(f)$x$layout$dragmode, "select")
+  )
+  # with subplot cells: each added trace is linked
+  g <- make_subplots(rows = 1, cols = 2) |>
+    add_scatter(x = ~mpg, y = ~hp, data = sd, mode = "markers", row = 1, col = "all")
+  stopifnot(identical(attr(g, "plotly_sets"), list("cars", "cars")))
+}

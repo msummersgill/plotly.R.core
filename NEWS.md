@@ -36,6 +36,8 @@
 * Renders the plotly R package's `plot_ly()` and `ggplotly()` figures,
   including its crosstalk linking (`highlight()`).
 * Linked views with crosstalk: `px_*()` functions accept a
-  `crosstalk::SharedData` as `data_frame`, `set_crosstalk_keys()` links the
-  traces of any figure, and `highlight()` sets how selections are made and
+  `crosstalk::SharedData` as `data_frame`, `go_figure()` and `add_<trace>()`
+  accept one as the data for formulas (`add_scatter(x = ~col)`) and link
+  the traces of its rows, `set_crosstalk_keys()` links the traces of any
+  figure, and `highlight()` sets how selections are made and
   shown (the same options as the plotly package's `highlight()`).

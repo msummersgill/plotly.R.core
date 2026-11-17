@@ -12,6 +12,7 @@ articles:
   - title: Articles
     navbar: ~
     contents:
+      - crosstalk
       - static-export
       - render-performance
 

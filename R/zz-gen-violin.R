@@ -98,7 +98,9 @@
 #' @param data A data frame in which formula properties (e.g. \code{x =
 #'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
 #'   given to \code{\link{go_figure}()}. Only the evaluated values are
-#'   added to the trace.
+#'   added to the trace. A \code{crosstalk::SharedData} works the same way,
+#'   and links the trace to its crosstalk group (see
+#'   \code{\link{highlight}()}).
 #' @param family \strong{\code{go_violin_hoverlabel_font()}}: HTML font
 #'   family - the typeface that will be applied by the web browser. The web
 #'   browser can only apply a font if it is available on the system where

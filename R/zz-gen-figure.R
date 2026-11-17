@@ -28,8 +28,10 @@ add_bar.default <- function(
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("bar", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("bar", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' @rdname go_barpolar
@@ -52,8 +54,10 @@ add_barpolar.default <- function(
     skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("barpolar", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("barpolar", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_box
@@ -85,8 +89,10 @@ add_box.default <- function(
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("box", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("box", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' @rdname go_candlestick
@@ -110,8 +116,10 @@ add_candlestick.default <- function(
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("candlestick", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("candlestick", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' @rdname go_carpet
@@ -131,8 +139,10 @@ add_carpet.default <- function(
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("carpet", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("carpet", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' @rdname go_choropleth
@@ -156,8 +166,10 @@ add_choropleth.default <- function(
     row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("choropleth", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("choropleth", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_choroplethmap
@@ -181,8 +193,10 @@ add_choroplethmap.default <- function(
     row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("choroplethmap", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("choroplethmap", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_cone
@@ -207,8 +221,10 @@ add_cone.default <- function(
     zhoverformat = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("cone", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("cone", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_contour
@@ -239,8 +255,10 @@ add_contour.default <- function(
     skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("contour", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("contour", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' @rdname go_contourcarpet
@@ -265,8 +283,10 @@ add_contourcarpet.default <- function(
     skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("contourcarpet", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("contourcarpet", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' @rdname go_densitymap
@@ -289,8 +309,10 @@ add_densitymap.default <- function(
     skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("densitymap", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("densitymap", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_funnel
@@ -319,8 +341,10 @@ add_funnel.default <- function(
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("funnel", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("funnel", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' @rdname go_funnelarea
@@ -344,8 +368,10 @@ add_funnelarea.default <- function(
     col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("funnelarea", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("funnelarea", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_heatmap
@@ -376,8 +402,10 @@ add_heatmap.default <- function(
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("heatmap", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("heatmap", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' @rdname go_histogram
@@ -407,8 +435,10 @@ add_histogram.default <- function(
     row = NULL, col = NULL, secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("histogram", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("histogram", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' @rdname go_histogram2d
@@ -437,8 +467,10 @@ add_histogram2d.default <- function(
     skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("histogram2d", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("histogram2d", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' @rdname go_histogram2dcontour
@@ -467,8 +499,10 @@ add_histogram2dcontour.default <- function(
     col = NULL, secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("histogram2dcontour", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("histogram2dcontour", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' @rdname go_icicle
@@ -492,8 +526,10 @@ add_icicle.default <- function(
     row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("icicle", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("icicle", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_image
@@ -514,8 +550,10 @@ add_image.default <- function(
     row = NULL, col = NULL, secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("image", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("image", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' @rdname go_indicator
@@ -533,8 +571,10 @@ add_indicator.default <- function(
     col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("indicator", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("indicator", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_isosurface
@@ -560,8 +600,10 @@ add_isosurface.default <- function(
     zhoverformat = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("isosurface", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("isosurface", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_mesh3d
@@ -589,8 +631,10 @@ add_mesh3d.default <- function(
     skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("mesh3d", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("mesh3d", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_ohlc
@@ -614,8 +658,10 @@ add_ohlc.default <- function(
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("ohlc", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("ohlc", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' @rdname go_parcats
@@ -634,8 +680,10 @@ add_parcats.default <- function(
     row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("parcats", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("parcats", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_parcoords
@@ -654,8 +702,10 @@ add_parcoords.default <- function(
     col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("parcoords", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("parcoords", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_pie
@@ -681,8 +731,10 @@ add_pie.default <- function(
     col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("pie", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("pie", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_quiver
@@ -707,8 +759,10 @@ add_quiver.default <- function(
     skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("quiver", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("quiver", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' @rdname go_sankey
@@ -727,8 +781,10 @@ add_sankey.default <- function(
     visible = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("sankey", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("sankey", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_scatter
@@ -759,8 +815,10 @@ add_scatter.default <- function(
     row = NULL, col = NULL, secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("scatter", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("scatter", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' @rdname go_scatter3d
@@ -785,8 +843,10 @@ add_scatter3d.default <- function(
     row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("scatter3d", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("scatter3d", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_scattercarpet
@@ -810,8 +870,10 @@ add_scattercarpet.default <- function(
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("scattercarpet", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("scattercarpet", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' @rdname go_scattergeo
@@ -836,8 +898,10 @@ add_scattergeo.default <- function(
     skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("scattergeo", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("scattergeo", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_scattergl
@@ -865,8 +929,10 @@ add_scattergl.default <- function(
     skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("scattergl", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("scattergl", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' @rdname go_scattermap
@@ -890,8 +956,10 @@ add_scattermap.default <- function(
     skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("scattermap", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("scattermap", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_scatterpolar
@@ -916,8 +984,10 @@ add_scatterpolar.default <- function(
     skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("scatterpolar", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("scatterpolar", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_scatterpolargl
@@ -941,8 +1011,10 @@ add_scatterpolargl.default <- function(
     visible = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("scatterpolargl", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("scatterpolargl", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_scattersmith
@@ -966,8 +1038,10 @@ add_scattersmith.default <- function(
     col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("scattersmith", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("scattersmith", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_scatterternary
@@ -991,8 +1065,10 @@ add_scatterternary.default <- function(
     skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("scatterternary", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("scatterternary", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_splom
@@ -1014,8 +1090,10 @@ add_splom.default <- function(
     yhoverformat = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("splom", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("splom", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_streamtube
@@ -1041,8 +1119,10 @@ add_streamtube.default <- function(
     col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("streamtube", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("streamtube", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_sunburst
@@ -1066,8 +1146,10 @@ add_sunburst.default <- function(
     col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("sunburst", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("sunburst", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_surface
@@ -1093,8 +1175,10 @@ add_surface.default <- function(
     row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("surface", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("surface", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_table
@@ -1112,8 +1196,10 @@ add_table.default <- function(
     row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("table", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("table", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_treemap
@@ -1136,8 +1222,10 @@ add_treemap.default <- function(
     visible = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("treemap", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("treemap", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_violin
@@ -1165,8 +1253,10 @@ add_violin.default <- function(
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("violin", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("violin", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' @rdname go_volume
@@ -1193,8 +1283,10 @@ add_volume.default <- function(
     col = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("volume", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("volume", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col), data, length(fig$data))
 }
 
 #' @rdname go_waterfall
@@ -1225,8 +1317,10 @@ add_waterfall.default <- function(
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formula properties (x = ~col) are evaluated in `data` or the figure's data
-  trace <- plotly_object("waterfall", NULL, environment(), list(...), skip_invalid, data = trace_data(fig, data))
-  add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y)
+  data <- trace_data(fig, data)
+  trace <- plotly_object("waterfall", NULL, environment(), list(...), skip_invalid, data = data)
+  # traces of a crosstalk SharedData's rows are linked to its group
+  link_shared_traces(add_trace(fig, trace, row = row, col = col, secondary_y = secondary_y), data, length(fig$data))
 }
 
 #' Select, update or modify coloraxis objects

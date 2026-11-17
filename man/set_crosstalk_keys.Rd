@@ -27,9 +27,10 @@ trace selects them all, and it is highlighted when all are selected.}
 \description{
 Gives traces of a figure the keys of a \link[crosstalk:SharedData]{crosstalk::SharedData}, so that
 selecting their points selects the same rows in other views of the
-crosstalk group (and the reverse). \verb{px_*()} functions do this themselves
-when \code{data_frame} is a SharedData; use this for traces made otherwise,
-such as with \code{add_scatter()}. See \code{\link[=highlight]{highlight()}} for how selections are
+crosstalk group (and the reverse). This happens by itself for \verb{px_*()}
+functions given a SharedData as \code{data_frame}, and for \verb{add_<trace>()}
+traces whose formula properties are evaluated in a SharedData (piped into
+\code{\link[=go_figure]{go_figure()}} or given as \code{data}); use this for other traces. See \code{\link[=highlight]{highlight()}} for how selections are
 made and shown.
 }
 \examples{

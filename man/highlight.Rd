@@ -70,8 +70,9 @@ list of trace attributes.
 Sets how a figure responds to, and shows, selections of points linked with
 crosstalk. A figure is linked when its data come from a
 \link[crosstalk:SharedData]{crosstalk::SharedData} (give one as the \code{data_frame} of a \verb{px_*()}
-function, or link traces with \code{\link[=set_crosstalk_keys]{set_crosstalk_keys()}}): selecting points
-then selects the rows with the same keys in every view of the same
+function, pipe one into \code{\link[=go_figure]{go_figure()}} and add traces with formulas such as
+\code{add_scatter(x = ~col)}, or link traces with \code{\link[=set_crosstalk_keys]{set_crosstalk_keys()}}):
+selecting points then selects the rows with the same keys in every view of the same
 crosstalk group, such as other plots, \code{\link[crosstalk:filter_select]{crosstalk::filter_select()}} inputs,
 DT tables or leaflet maps. Linked figures highlight on click by default;
 \code{highlight()} changes that.
