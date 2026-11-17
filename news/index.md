@@ -44,6 +44,9 @@
   to PNG, JPEG, WebP, SVG, PDF and EPS with headless Chrome via
   chromote, with LaTeX typeset by MathJax; no Python or Kaleido needed.
 - [`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
+  sends numeric arrays to Chrome as base64 typed arrays, so exports of
+  large figures are several times faster than with Kaleido.
+- [`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
   finds Chrome or another Chromium-based browser (Microsoft Edge,
   Chromium, Brave, including per-user installs), or offers to download
   Chrome Headless Shell in interactive sessions. On Linux it checks the
