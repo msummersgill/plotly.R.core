@@ -10,6 +10,11 @@
 //    tables (as fwrite's digit lookups) and no intermediate raw vector, split
 //    into independent chunks over OpenMP threads where available.
 
+// omp.h first: R's headers define macros (e.g. match, as Rf_match) that
+// break LLVM's omp.h (clang on Windows arm64)
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 #include <R.h>
 #include <Rinternals.h>
 #include <math.h>
@@ -17,9 +22,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#ifdef _OPENMP
-#include <omp.h>
-#endif
 
 #define INT32_LIM 2147483647.0
 
