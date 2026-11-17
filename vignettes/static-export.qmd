@@ -16,14 +16,12 @@ knitr:
 ```{r setup}
 #| include: false
 library(plotly.core)
-# The examples run only where a browser is available
+# The examples start Chrome: run them for the website and in development,
+# not when the vignette is rebuilt during R CMD check on CRAN
 chrome <- if (requireNamespace("chromote", quietly = TRUE)) {
   tryCatch(suppressMessages(chromote::find_chrome()), error = function(e) NULL)
 }
-has_chrome <- length(chrome) == 1L && nzchar(chrome)
-# The examples start Chrome: run them for the website and in development,
-# not when the vignette is rebuilt during R CMD check on CRAN
-has_chrome <- has_chrome &&
+has_chrome <- length(chrome) == 1L && nzchar(chrome) &&
   (identical(Sys.getenv("NOT_CRAN"), "true") ||
     identical(Sys.getenv("IN_PKGDOWN"), "true"))
 show_png <- function(file) {
@@ -34,47 +32,13 @@ show_png <- function(file) {
 }
 ```
 
-`save_image()` writes a figure to PNG, JPEG, WebP, SVG, PDF or EPS. It draws the figure with plotly.js's own image export, using the plotly.js bundled with plotly.core, in a headless Chrome driven by the [chromote](https://rstudio.github.io/chromote/) package.
-
-## What's new: no Python, no orca, and much faster
-
-Static export in the plotly R package has needed software from outside R:
-
-- **orca** (`orca()`, now deprecated) needed the orca command-line utility, an Electron app installed separately with npm or a standalone installer.
-- **Kaleido** (`save_image()`, `kaleido()`) needed a Python installation set up for reticulate with the `kaleido` and `plotly` Python packages, and Kaleido 1.x also needs Chrome.
-
-Getting a Python environment that reticulate finds, with the right packages in it, was the most common stumbling block.
-
-plotly.core needs neither. Its R packages are on CRAN: chromote (and rsvg, only for EPS). It also needs a Chromium-based browser, which is not an R package and doesn't come from CRAN. On most machines, though, that needs no separate installation step: plotly.core uses a Chrome, Edge, Chromium or Brave that is already installed, and otherwise sets one up from within the same R session that installed plotly.core, by downloading Chrome Headless Shell (and, on Linux, any shared libraries it lacks) into your user cache, without administrator rights. In an interactive session it asks first; in a script, run `install_chrome()` once (see [First-time setup](#first-time-setup)). Some environments need more; see [Where set-up from R isn't enough](#where-set-up-from-r-isnt-enough).
-
-| | orca | Kaleido | plotly.core |
-|---|---|---|---|
-| Installed with | npm or a standalone installer | Python, `pip`/`reticulate::py_install()` | `install.packages("chromote")`; the browser from within R if needed |
-| Python needed | No | Yes | No |
-| Browser | Bundled (Electron) | Chrome (Kaleido 1.x) | An installed Chrome, Edge, Chromium or Brave, or Chrome Headless Shell downloaded from R |
-| plotly.js used | orca's own | Kaleido's or plotly.core's | plotly.core's, the same as the widget |
-
-It is also much faster. Kaleido 1.x, as the plotly R package calls it, starts a browser for every image; plotly.core starts Chrome once per R session and keeps it, so after the first image, exports take a fraction of a second:
-
-| Figure (700 × 500 PNG) | Kaleido 1.5 (s) | plotly.core (s) | Faster |
-|---|---|---|---|
-| Scatter, 150 points | 1.37 | 0.025 | 55× |
-| Line, 100,000 points (`scattergl`) | 2.81 | 0.27 | 10× |
-| Heatmap, 500 × 500 | 1.86 | 0.49 | 3.8× |
-| 3D surface | 2.35 | 0.59 | 4.0× |
-| 20 scatter figures, one after another | 27.1 | 0.58 | 47× |
-
-Median of 5 exports each, after the first export of the session (which starts the browser: 1.3 s for plotly.core, 1.5 s for Kaleido), with the same figures and the same plotly.js (4.3.0); Kaleido 1.5.1 called through reticulate as `kaleido.write_fig_sync()` for each figure, as the plotly R package's `save_image()` does. Measured on an Apple M3 Pro, macOS 26.5.1, Chrome 157, on 2026-11-16. The gain is largest for small figures, where starting the browser is most of Kaleido's time, and for exporting many figures.
-
-## Saving an image
+`save_image()` exports a figure with plotly.js's own image export, running in a headless Chromium-based browser driven by [chromote](https://rstudio.github.io/chromote/). No Python, Kaleido or orca is involved.
 
 ```{r save}
 #| eval: !expr has_chrome
 fig <- px_scatter(
   px_data_iris(),
-  x = ~sepal_width,
-  y = ~sepal_length,
-  color = ~species
+  x = ~sepal_width, y = ~sepal_length, color = ~species
 )
 png_file <- tempfile(fileext = ".png")
 save_image(fig, png_file, width = 700, height = 450, scale = 2)
@@ -89,205 +53,102 @@ show_png(png_file)
 ```{r close}
 #| eval: !expr has_chrome
 #| include: false
-# stop the browser save_image() started
 plotly.core:::export_env$chrome$shutdown()
 ```
 
-The format is taken from the file extension:
+## Formats and options
 
-| Extension | Format | Notes |
-|---|---|---|
-| `.png`, `.jpeg`/`.jpg`, `.webp` | Raster | `scale` multiplies the resolution, e.g. `scale = 2` for high-DPI screens |
-| `.svg` | Vector | WebGL traces (`scattergl`, 3D, maps) are embedded as images |
-| `.pdf` | Vector | The SVG image printed to a page the size of the figure |
-| `.eps` | Vector | Converted from the SVG image; needs the rsvg package |
+| Extension | Notes |
+|---|---|
+| `.png`, `.jpeg`/`.jpg`, `.webp` | `scale` multiplies the resolution (`scale = 2` for high-DPI) |
+| `.svg` | WebGL traces (`scattergl`, 3D, maps) are embedded as images |
+| `.pdf` | the SVG printed to a page the figure's size |
+| `.eps` | converted from the SVG; needs the rsvg package |
 
-`width` and `height` are in pixels. They default to the figure's layout width and height, or 700 × 500.
+- `width`, `height`: pixels; default to the figure's layout size, else 700 × 500.
+- LaTeX (`TeX()`) is typeset with MathJax from a CDN; offline it stays plain text, with a warning.
+- The browser starts on the first export (about a second) and is reused for the rest of the session. `chrome_exporter()` gives a browser of your own, with `$transform(p, file, ...)` and `$shutdown()`.
 
-LaTeX in titles and labels (see `TeX()`) is typeset with MathJax, which is loaded from a CDN the first time a figure needs it. Without internet access, the export still works but the LaTeX is left as plain text, with a warning.
+## Setup
 
-### Many figures
+Requirements: chromote ≥ 0.5.0 (`install.packages("chromote")`), rsvg for EPS only, and a Chromium-based browser. The browser is not an R package, but on most machines it needs no separate install: `save_image()` uses the first of
 
-The first export starts Chrome, which takes a second or two. Later exports in the same R session reuse it and take a fraction of a second, so exporting many figures in a loop needs nothing special:
+1. the browser in the `CHROMOTE_CHROME` environment variable;
+2. an installed Google Chrome;
+3. an installed Microsoft Edge (on every Windows 10/11 machine), Chromium or Brave, including per-user installs;
+4. a Chrome Headless Shell downloaded earlier.
 
-```{r many}
-#| eval: false
-for (i in seq_along(figures)) {
-  save_image(figures[[i]], sprintf("figure-%02d.png", i))
-}
-```
+If there is none, it can download Chrome Headless Shell (about 125 MB) from within R, into the user cache, without administrator rights. On Linux it also downloads any shared libraries the browser lacks: the packages providing them come from the system's own repositories (`apt-get download`, `dnf download`; Debian/Ubuntu and RHEL-family systems) and are unpacked into `tools::R_user_dir("plotly.core", "cache")`, not installed system-wide.
 
-`chrome_exporter()` starts a browser of your own, to control when it starts and stops:
+| Session | What happens |
+|---|---|
+| Interactive | One yes/no question, then `install_chrome()` runs and the export continues |
+| Script, scheduled job, CI | No download; an error says to run `plotly.core::install_chrome()` once (e.g. in a setup script or Dockerfile) |
+| R Markdown / Quarto | Never downloads; without a browser, figures are included as widgets |
 
-```{r exporter}
-#| eval: false
-ex <- chrome_exporter()
-ex$transform(fig, "figure.svg", width = 800, height = 500)
-ex$shutdown()
-```
-
-## First-time setup
-
-Static export needs:
-
-- the **chromote** package, version 0.5.0 or later: `install.packages("chromote")`
-- a **Chrome or Chromium** browser (see below)
-- the **rsvg** package, only for EPS: `install.packages("rsvg")`
-
-`save_image()` looks for a browser in this order:
-
-1. the browser set by the `CHROMOTE_CHROME` environment variable
-2. an installed Google Chrome, found by `chromote::find_chrome()`
-3. another installed Chromium-based browser: **Microsoft Edge**, Chromium or Brave, including browsers installed for the current user only (`~/Applications` on macOS, `AppData\Local` on Windows)
-4. a Chrome Headless Shell downloaded earlier by chromote
-
-Most desktop machines need no setup at all: every Windows 10 and 11 machine has Microsoft Edge, which also covers Windows on ARM, for which no Chrome Headless Shell is available.
-
-### In an interactive session
-
-When set-up is needed, an interactive R session asks once whether to run `install_chrome()`, which does all of it:
-
-```
-Static image export needs Chrome, which wasn't found. Run
-plotly.core::install_chrome() to download Chrome Headless Shell (about 100 MB,
-from Google's Chrome for Testing) and, on Linux, any shared libraries it
-needs? Downloads are kept in your user cache for later sessions; no
-administrator rights are needed. (Yes/no/cancel)
-```
-
-Answer yes and the export continues once the downloads are done. They are kept in your user cache, so later sessions and scripts on the same machine find them without asking. Answer no and `save_image()` stops with an error explaining the other options.
-
-### In a script, a scheduled job or CI
-
-`Rscript`, scheduled jobs, CI runs and other non-interactive sessions never download anything on their own: without a browser, `save_image()` stops with an error. Set up a browser once, before the script runs, in one of these ways:
-
-- **Run `install_chrome()`** once, as the user the scripts run as. It does everything the interactive prompts would, without asking: it finds a browser or downloads Chrome Headless Shell, and on Linux downloads the shared libraries it lacks (see [Linux servers](#linux-servers)). No administrator rights are needed.
-
-  ```r
-  plotly.core::install_chrome()
-  ```
-
-- **Download Chrome Headless Shell** with chromote, for example in a setup script or a Dockerfile:
-
-  ```r
-  chromote::chrome_versions_add("latest-stable", "chrome-headless-shell")
-  ```
-
-  This is the same download the interactive prompt offers, kept in chromote's cache for every later session of the same user.
-
-- **Install Chrome or Chromium** with the system's package manager. chromote finds it in the usual locations.
-
-- **Point `CHROMOTE_CHROME` at a browser** that is installed somewhere else, for example in `.Renviron`:
-
-  ```
-  CHROMOTE_CHROME=/opt/chrome/chrome
-  ```
-
-To check what is available, `chromote::find_chrome()` shows the installed browser it would use, and `chromote::chrome_versions_list("installed", "chrome-headless-shell")` lists the shells already downloaded.
-
-A script can check for a browser up front and fail early with a clear message:
-
-```{r check}
-#| eval: false
-if (is.null(tryCatch(chromote::find_chrome(), error = function(e) NULL)) &&
-    !nrow(chromote::chrome_versions_list("installed", "chrome-headless-shell"))) {
-  stop("No Chrome for static image export: run ",
-       "chromote::chrome_versions_add('latest-stable', 'chrome-headless-shell') once")
-}
-```
+`remove_chrome()` deletes plotly.core's downloads; `remove_chrome(browser = TRUE)` also removes chromote's Chrome Headless Shell.
 
 ### Linux servers
 
-A server without a browser usually lacks the shared libraries a browser needs, too, even after Chrome Headless Shell is downloaded: a desktop install of Chrome brings them in as dependencies, the download doesn't. Before starting Chrome, plotly.core checks for them with `ldd`.
-
-**No administrator rights needed.** On Debian, Ubuntu and RHEL-family systems (RHEL, Rocky, AlmaLinux, Fedora, Amazon Linux), plotly.core can get the missing libraries itself: it downloads the packages that provide them from the system's own package repositories (`apt-get download` or `dnf download`, which any user can run), unpacks them into its cache (`tools::R_user_dir("plotly.core", "cache")`), along with the libraries those need in turn, and starts Chrome with them on its library path. Nothing is installed system-wide.
-
-- In an **interactive session**, `save_image()` asks first, as part of the same `install_chrome()` question when there is no browser yet, or on its own:
-
-  ```
-  Static image export needs shared libraries Chrome lacks (libgbm.so.1,
-  libxkbcommon.so.0). Run plotly.core::install_chrome() to download them from
-  your system's package repositories? Downloads are kept in your user cache
-  for later sessions; no administrator rights are needed. (Yes/no/cancel)
-  ```
-
-- In a **script**, `save_image()` stops with the list of missing libraries and how to get them; run `plotly.core::install_chrome()` once to download them (and Chrome Headless Shell, if there is no browser).
-
-This needs the system's package lists, which servers normally have; slim container images often ship without them (refreshing them, `apt-get update`, needs root), and so do other distributions (SUSE, Arch, Alpine), where plotly.core instead shows the command to install the libraries.
-
-**With administrator rights**, the libraries can be installed system-wide instead. When some are missing, the error shows the command for the system:
-
-```
-Chrome at /home/me/.cache/R/chromote/.../chrome-headless-shell can't start: shared libraries it needs are missing:
-  libgbm.so.1, libxkbcommon.so.0
-Download them into your user cache, without administrator rights, by running once:
-  plotly.core::install_chrome()
-Or install them with your system's package manager (this needs administrator rights):
-  sudo apt-get install -y libgbm1 libxkbcommon0
-Or install Google Chrome or Chromium, which brings them in.
-```
-
-The libraries a fresh server most often lacks are installed with:
+With administrator rights, the libraries can instead be installed system-wide (the error message shows the command for the system):
 
 ```sh
 # Debian, Ubuntu
-sudo apt-get install -y libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 \
-  libcups2 libdrm2 libgbm1 libxkbcommon0 libxcomposite1 libxdamage1 \
-  libxfixes3 libxrandr2 libpango-1.0-0 libcairo2 libasound2
-
+sudo apt-get install -y libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 \
+  libgbm1 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libpango-1.0-0 \
+  libcairo2 libasound2
 # RHEL, Rocky, AlmaLinux, Fedora, Amazon Linux
-sudo dnf install -y nss nspr atk at-spi2-atk cups-libs libdrm mesa-libgbm \
-  libxkbcommon libXcomposite libXdamage libXfixes libXrandr pango cairo \
-  alsa-lib
+sudo dnf install -y nss nspr atk at-spi2-atk cups-libs libdrm mesa-libgbm libxkbcommon \
+  libXcomposite libXdamage libXfixes libXrandr pango cairo alsa-lib
 ```
 
-Alternatively, installing the distribution's Chromium package, or Google Chrome, installs the browser and everything it needs in one step; chromote then finds it, and no download is needed. On Alpine Linux, Chrome Headless Shell doesn't run at all (it needs glibc): install Chromium (`apk add chromium`) and set `CHROMOTE_CHROME=/usr/bin/chromium-browser`.
-
-When Chrome is found but still fails to start, the error shows what Chrome printed, with a hint for the common causes:
-
-- **Running as root** (common on servers and in containers): Chrome refuses to run as root with its sandbox. Allow it to run without:
-
-  ```r
-  chromote::set_chrome_args(c(chromote::get_chrome_args(), "--no-sandbox"))
-  ```
-
-  chromote adds this flag itself inside Docker and on CI.
-
-- **Too little shared memory** (`/dev/shm`, small in some containers): add `"--disable-dev-shm-usage"` the same way.
-
-### Containers and CI
-
-- chromote adds the Chrome flags that containers and CI need (`--no-sandbox`, `--disable-dev-shm-usage`) when it detects them. Other flags can be added with `chromote::set_chrome_args()`.
-- A minimal image needs the shared libraries listed under [Linux servers](#linux-servers); install them, or Chromium, in the image, along with Chrome Headless Shell (`chromote::chrome_versions_add("latest-stable", "chrome-headless-shell")`) so that nothing is downloaded when the container runs.
-- Text is drawn with the fonts Chrome can find. A minimal image may lack the figure's fonts (plotly's default is "Open Sans", falling back to Verdana and Arial), which changes how text looks and is measured; install the fonts to match a desktop export.
-- WebGL traces are drawn with the GPU when there is one and in software (SwiftShader) otherwise, which works but is slower.
+- Running as root (common in containers): Chrome needs `--no-sandbox`, which chromote adds itself in Docker and CI; elsewhere use `chromote::set_chrome_args(c(chromote::get_chrome_args(), "--no-sandbox"))`. Small `/dev/shm`: add `"--disable-dev-shm-usage"` the same way.
+- Text is drawn with the fonts Chrome finds; minimal images may need fonts installed to match desktop output.
 
 ### Where set-up from R isn't enough
 
-Setting up from within R needs the machine to be able to download and run a browser. Where it can't, install a Chromium-based browser with the system's usual tools (or ask an administrator to), then point `CHROMOTE_CHROME` at it if it isn't in a standard location:
+| Situation | What to do |
+|---|---|
+| No internet, proxy, or blocked downloads (storage.googleapis.com) | Set R's proxy (`https_proxy`), or copy a browser in and set `CHROMOTE_CHROME` |
+| Linux on ARM64 (no Chrome Headless Shell build) | Install the distribution's Chromium package |
+| Old OS (e.g. CentOS/RHEL 7, Windows before 10) | Current Chrome can't run there; use a newer system |
+| Linux without package lists (slim images), SUSE, Arch | Install the libraries, or Chromium, with the package manager |
+| Alpine | `apk add chromium`, `CHROMOTE_CHROME=/usr/bin/chromium-browser` |
+| Locked-down machines (AppLocker/WDAC, MDM, antivirus), `noexec` home | Use an approved installed Chrome or Edge |
+| webR / Shinylive | Not possible: R can't start other programs there |
+| Hosted R (Posit Connect, shinyapps.io) | Install a browser in the image, or run `install_chrome()` at deployment |
 
-- **No internet access, or downloads blocked.** Chrome Headless Shell comes from Google's Chrome for Testing (storage.googleapis.com). Behind a proxy, R's downloads need the proxy settings (e.g. the `https_proxy` environment variable); on an air-gapped machine, copy a browser in and set `CHROMOTE_CHROME`. LaTeX also needs the MathJax CDN (cdn.jsdelivr.net), without which it is exported as plain text.
-- **Platforms without a Chrome Headless Shell build.** Builds exist for Windows (x64, x86), macOS (Apple Silicon, Intel) and Linux x86_64 only. Windows on ARM uses the Microsoft Edge it comes with; **Linux on ARM64** (e.g. AWS Graviton, Raspberry Pi) needs the distribution's Chromium package.
-- **Operating systems older than Chrome supports.** Current Chrome needs, for example, Windows 10 or later, a recent macOS, and a recent glibc on Linux: an older Linux such as CentOS/RHEL 7 can't run it, and downloading libraries can't replace the system's C library.
-- **Linux without usable package downloads.** The library download needs Debian/Ubuntu or a RHEL-family system with its package lists; slim container images often have none, and other distributions (SUSE, Arch) aren't covered. Alpine can't run Chrome Headless Shell at all (install its `chromium` package).
-- **Locked-down machines.** Policies that only allow approved software to run (AppLocker or Windows Defender Application Control, macOS device management, some antivirus software), or a home or cache directory mounted `noexec` on Linux, can stop a browser downloaded into the user cache from running.
-- **Little disk space or a read-only home.** The download is about 125 MB, and more once unpacked into the user cache (`tools::R_user_dir()`), which some shared servers or HPC accounts don't have.
-- **Environments that can't start other programs.** R running in the browser (webR, Shinylive) can't start Chrome at all. On hosted R services (e.g. Posit Connect, shinyapps.io), what can be installed or run depends on the service; prefer a browser installed in the server image, and run `install_chrome()` during deployment rather than when a user first exports.
+## Performance compared with Kaleido
 
-## In R Markdown and Quarto
+Kaleido (the plotly R package's `save_image()`) also drives Chrome, and can keep it running between exports. The difference is the data path: the figure goes from R to JSON text, is parsed into Python objects by reticulate, then serialized again by Kaleido and sent to Chrome as JSON numbers. plotly.core sends it straight from R to Chrome, with numeric arrays as base64 typed arrays, which are smaller and much quicker to write and to read.
 
-In documents rendered to formats other than HTML (PDF, Word, ...), figures are included as images made by `save_image()`, when a browser is available. Rendering a document never offers to download one: without a browser, the figure is included as an HTML widget, as for HTML output, and a message points to this setup. The chunk option `plotly.static = TRUE` uses static images in HTML output too.
+```{r perf}
+#| echo: false
+perf <- data.frame(
+  Figure = c("Scatter, 150 points", "Line, 100,000 points", "Line, 1,000,000 points", "Heatmap, 500 × 500", "Heatmap, 1000 × 1000"),
+  Kaleido = c(0.065, 1.508, 13.033, 0.565, 2.002),
+  plotly.core = c(0.024, 0.138, 0.767, 0.168, 0.557)
+)
+perf$Faster <- sprintf("%.1f×", perf$Kaleido / perf$plotly.core)
+knitr::kable(perf, col.names = c("Figure (700 × 500 PNG)", "Kaleido 1.5 (s)", "plotly.core (s)", "Faster"))
+```
+
+Seconds per export, median of 5, with both browsers already running (`kaleido.start_sync_server()` for Kaleido), the same plotly.js 4.3.0 and Chrome 157, and matching images. Kaleido's time includes writing the figure's JSON in R (0.86 s at 1M points; plotly.core's typed-array JSON takes 0.13 s) and parsing it in Python (0.16 s). Apple M3 Pro, macOS 26.5.1, 2026-11-16. Starting either browser adds about 1.3 s to the first export.
+
+Set-up compared:
+
+| | orca | Kaleido | plotly.core |
+|---|---|---|---|
+| Install | separate command-line app (npm/installer) | Python + `kaleido`, `plotly` via reticulate | `install.packages("chromote")` |
+| Browser | bundled (Electron) | Chrome, installed separately (Kaleido 1.x) | installed Chrome/Edge/Chromium/Brave, or downloaded from R |
 
 ## Troubleshooting
 
-| Message | What to do |
+| Message | Fix |
 |---|---|
-| Static image export needs Chrome, which wasn't found | Set up a browser as described in [First-time setup](#first-time-setup) |
-| Chrome ... can't start: shared libraries it needs are missing | Run `plotly.core::install_chrome()`, or install them with the command shown (see [Linux servers](#linux-servers)) |
-| Chrome ... failed to start | Read Chrome's output in the message; see [Linux servers](#linux-servers) for running as root and shared memory |
-| Static image export needs chromote 0.5.0 or later | `install.packages("chromote")` (an older chromote can't download Chrome Headless Shell) |
+| needs chromote 0.5.0 or later | `install.packages("chromote")` |
+| needs Chrome, which wasn't found | `plotly.core::install_chrome()`, or set `CHROMOTE_CHROME` |
+| shared libraries it needs are missing | `plotly.core::install_chrome()`, or the `sudo` command shown |
+| Chrome ... failed to start | Read Chrome's output in the message; see [Linux servers](#linux-servers) |
 | EPS export needs the rsvg package | `install.packages("rsvg")` |
-| MathJax couldn't be loaded ..., so LaTeX is exported as plain text | Check that the machine can reach cdn.jsdelivr.net |
-| Unsupported image format | Use one of the extensions in the table above |
-
-To remove what plotly.core has downloaded (the libraries, and with `browser = TRUE` Chrome Headless Shell), run `remove_chrome()`.
+| MathJax couldn't be loaded | Allow access to cdn.jsdelivr.net |

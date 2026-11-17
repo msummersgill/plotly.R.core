@@ -101,6 +101,17 @@ figure_json <- function(p) {
   as.character(to_JSON(x[c("data", "layout", "config")]))
 }
 
+# The figure for export: JSON with numeric arrays as base64 typed arrays
+# (which plotly.js decodes itself, and which are much quicker to write and
+# send than JSON numbers; date-times stay strings), and its layout.
+export_figure <- function(p) {
+  x <- as_widget(p)$x[c("data", "layout", "config")]
+  list(
+    json = as.character(to_JSON(b64_figure(x, dates = FALSE))),
+    layout = x$layout
+  )
+}
+
 image_format <- function(file) {
   fmt <- tolower(tools::file_ext(file))
   if (fmt == "jpg") {

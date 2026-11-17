@@ -297,11 +297,12 @@ chrome_transform <- function(session, state, p, file, width, height, scale) {
       call. = FALSE
     )
   }
-  json <- figure_json(p)
+  fig <- export_figure(p)
+  json <- fig$json
   if (!state$mathjax && uses_mathjax(json)) {
     state$mathjax <- chrome_load_mathjax(session)
   }
-  layout <- jsonlite::fromJSON(json, simplifyVector = FALSE)$layout
+  layout <- fig$layout
   width <- width %||% layout$width %||% 700
   height <- height %||% layout$height %||% 500
   scale <- scale %||% 1

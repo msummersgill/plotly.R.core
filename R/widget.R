@@ -473,12 +473,14 @@ widget_to_JSON <- function(x, ...) {
 
 # `blobs`: an environment collecting the base64 of typed arrays (raw vectors,
 # for widget_to_JSON()); NULL to write it in the specs as strings.
-b64_figure <- function(x, blobs = NULL) {
-  x[["data"]] <- b64_traces(x[["data"]], blobs)
+# `dates = FALSE` leaves date-times as strings (for pages without the
+# widget's JavaScript, which turns date typed arrays back into strings).
+b64_figure <- function(x, blobs = NULL, dates = TRUE) {
+  x[["data"]] <- b64_traces(x[["data"]], blobs, dates)
   if (length(x[["frames"]])) {
     x[["frames"]] <- lapply(x[["frames"]], function(f) {
       if (is.list(f) && length(f[["data"]])) {
-        f[["data"]] <- b64_traces(f[["data"]], blobs)
+        f[["data"]] <- b64_traces(f[["data"]], blobs, dates)
       }
       f
     })
@@ -489,11 +491,11 @@ b64_figure <- function(x, blobs = NULL) {
 # Keys plotly.py never encodes (plotly.js reads them without decoding).
 B64_SKIP_KEYS <- c("geojson", "layer", "layers", "range")
 
-b64_traces <- function(traces, blobs = NULL) {
+b64_traces <- function(traces, blobs = NULL, dates = TRUE) {
   if (!is.list(traces)) {
     return(traces)
   }
-  lapply(traces, b64_encode, blobs = blobs)
+  lapply(traces, b64_encode, blobs = blobs, dates = dates)
 }
 
 # The typed array spec of `v` (`kind` "array" or "date") for
@@ -535,7 +537,7 @@ shared_spec <- function(v, kind, blobs) {
 
 # Like convert_to_base64(): only named entries are encoded, unnamed lists
 # (e.g. a z given as a list of rows) are searched but left as JSON arrays.
-b64_encode <- function(x, blobs = NULL) {
+b64_encode <- function(x, blobs = NULL, dates = TRUE) {
   if (!is.list(x) || !length(x)) {
     return(x)
   }
@@ -552,7 +554,7 @@ b64_encode <- function(x, blobs = NULL) {
       } else {
         shared_spec(v, "array", blobs)
       }
-    } else if (nzchar(key) && is_b64_date(v)) {
+    } else if (dates && nzchar(key) && is_b64_date(v)) {
       x[[i]] <- (if (is.null(blobs)) {
         date_array_spec(v)
       } else {
@@ -560,7 +562,7 @@ b64_encode <- function(x, blobs = NULL) {
       }) %||%
         v
     } else if (is.list(v) && !is.data.frame(v)) {
-      x[[i]] <- b64_encode(v, blobs)
+      x[[i]] <- b64_encode(v, blobs, dates)
     }
   }
   x
