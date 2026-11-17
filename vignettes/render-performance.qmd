@@ -444,9 +444,8 @@ writers <- list(
 
 The plotly.py equivalents (`plotly_py_f32` converts the arrays with `astype(np.float32)` before timing starts, as `as_float32()` only marks them):
 
-```{python bench-py}
+```{cat bench-py, engine.opts = list(lang = "python")}
 #| eval: false
-#| python.reticulate: false
 import gc, json, sys, time
 import numpy as np, pandas as pd, plotly.graph_objects as go
 
@@ -559,7 +558,7 @@ pages$html_mb <- file.size(file.path(pages_dir, pages$path)) / 1e6
 
 A script injected before any page script runs wraps plotly.js's `newPlot()`/`react()`/`plot()` to time the first plot, and marks the first frame painted after it:
 
-```{js hook-js}
+```{cat hook-js, engine.opts = list(lang = "js")}
 #| eval: false
 (function () {
   var B = window.__bench = { done: false };
