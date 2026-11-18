@@ -47,13 +47,12 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    polar = go_polar(
-      radialaxis = go_polar_radialaxis(
-        title = go_polar_radialaxis_title(text = "title")
-      )
+go_layout(
+  polar = go_polar(
+    radialaxis = go_polar_radialaxis(
+      title = go_polar_radialaxis_title(text = "title")
     )
   )
+)
 }
 \concept{layout objects}

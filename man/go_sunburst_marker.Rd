@@ -129,9 +129,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_sunburst(
-    marker = go_sunburst_marker(colors = c("red", "blue"))
-  )
+go_sunburst(
+  marker = go_sunburst_marker(colors = c("red", "blue"))
+)
 }
 \concept{trace objects}

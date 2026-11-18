@@ -58,9 +58,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    margin = go_margin()
-  )
+go_layout(
+  margin = go_margin()
+)
 }
 \concept{layout objects}

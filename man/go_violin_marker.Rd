@@ -198,9 +198,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_violin(
-    marker = go_violin_marker(color = "red")
-  )
+go_violin(
+  marker = go_violin_marker(color = "red")
+)
 }
 \concept{trace objects}

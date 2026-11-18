@@ -112,11 +112,10 @@ These objects appear in 2 places in the plotly.js schema (properties
 named \code{label}), all with the same properties and rules.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    newshape = go_newshape(
-      label = go_label(text = "title")
-    )
+go_layout(
+  newshape = go_newshape(
+    label = go_label(text = "title")
   )
+)
 }
 \concept{shared object types}

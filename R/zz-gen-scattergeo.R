@@ -315,10 +315,9 @@ go_scattergeo <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scattergeo(
-#'     line = go_scattergeo_line(color = "red")
-#'   )
+#' go_scattergeo(
+#'   line = go_scattergeo_line(color = "red")
+#' )
 go_scattergeo_line <- function(
     arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
     skip_invalid = FALSE
@@ -580,10 +579,9 @@ go_scattergeo_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scattergeo(
-#'     marker = go_scattergeo_marker(color = "red")
-#'   )
+#' go_scattergeo(
+#'   marker = go_scattergeo_marker(color = "red")
+#' )
 go_scattergeo_marker <- function(
     arg = NULL, ..., angle = NULL, angleref = NULL, autocolorscale = NULL,
     cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL, color = NULL,
@@ -686,12 +684,11 @@ go_scattergeo_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scattergeo(
-#'     marker = go_scattergeo_marker(
-#'       line = go_scattergeo_marker_line(color = "red")
-#'     )
+#' go_scattergeo(
+#'   marker = go_scattergeo_marker(
+#'     line = go_scattergeo_marker_line(color = "red")
 #'   )
+#' )
 go_scattergeo_marker_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

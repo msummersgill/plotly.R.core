@@ -39,9 +39,8 @@ These objects appear in 2 places in the plotly.js schema (properties
 named \code{caps}), all with the same properties and rules.
 }
 \examples{
-go_figure() |>
-  add_isosurface(
-    caps = go_caps()
-  )
+go_isosurface(
+  caps = go_caps()
+)
 }
 \concept{shared object types}

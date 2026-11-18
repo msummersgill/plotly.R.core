@@ -113,9 +113,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    scene = go_scene()
-  )
+go_layout(
+  scene = go_scene()
+)
 }
 \concept{layout objects}

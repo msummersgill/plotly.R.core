@@ -368,10 +368,9 @@ go_quiver <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_quiver(
-#'     marker = go_quiver_marker(color = "red")
-#'   )
+#' go_quiver(
+#'   marker = go_quiver_marker(color = "red")
+#' )
 go_quiver_marker <- function(
     arg = NULL, ..., arrowsize = NULL, autocolorscale = NULL, cauto = NULL,
     cmax = NULL, cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
@@ -415,12 +414,11 @@ go_quiver_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_quiver(
-#'     marker = go_quiver_marker(
-#'       line = go_quiver_marker_line(width = 2)
-#'     )
+#' go_quiver(
+#'   marker = go_quiver_marker(
+#'     line = go_quiver_marker_line(width = 2)
 #'   )
+#' )
 go_quiver_marker_line <- function(
     arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE
 ) {

@@ -38,11 +38,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    map = go_map(
-      center = go_map_center()
-    )
+go_layout(
+  map = go_map(
+    center = go_map_center()
   )
+)
 }
 \concept{layout objects}

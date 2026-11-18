@@ -63,9 +63,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_volume(
-    surface = go_volume_surface(show = TRUE)
-  )
+go_volume(
+  surface = go_volume_surface(show = TRUE)
+)
 }
 \concept{trace objects}

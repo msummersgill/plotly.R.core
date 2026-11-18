@@ -219,11 +219,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_indicator(
-    gauge = go_indicator_gauge(
-      axis = go_indicator_gauge_axis(visible = TRUE)
-    )
+go_indicator(
+  gauge = go_indicator_gauge(
+    axis = go_indicator_gauge_axis(visible = TRUE)
   )
+)
 }
 \concept{trace objects}

@@ -44,9 +44,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_violin(
-    line = go_violin_line(color = "red")
-  )
+go_violin(
+  line = go_violin_line(color = "red")
+)
 }
 \concept{trace objects}

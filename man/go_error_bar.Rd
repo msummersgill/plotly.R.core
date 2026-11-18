@@ -102,9 +102,8 @@ contexts it can be used in; when the object is placed in a figure it is
 checked again against that context's rules.
 }
 \examples{
-go_figure() |>
-  add_bar(
-    error_y = go_error_bar(color = "red")
-  )
+go_bar(
+  error_y = go_error_bar(color = "red")
+)
 }
 \concept{shared object types}

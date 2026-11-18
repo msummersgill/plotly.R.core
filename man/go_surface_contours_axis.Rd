@@ -78,11 +78,10 @@ named \code{x}, \code{y}, \code{z}), all with the same properties and
 rules.
 }
 \examples{
-go_figure() |>
-  add_surface(
-    contours = go_surface_contours(
-      x = go_surface_contours_axis(color = "red")
-    )
+go_surface(
+  contours = go_surface_contours(
+    x = go_surface_contours_axis(color = "red")
   )
+)
 }
 \concept{shared object types}

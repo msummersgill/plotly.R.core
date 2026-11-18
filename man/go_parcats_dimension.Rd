@@ -82,9 +82,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_parcats(
-    dimensions = list(go_parcats_dimension(visible = TRUE))
-  )
+go_parcats(
+  dimensions = list(go_parcats_dimension(visible = TRUE))
+)
 }
 \concept{trace objects}

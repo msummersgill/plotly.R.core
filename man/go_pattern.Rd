@@ -79,11 +79,10 @@ named \code{pattern}, \code{fillpattern}), all with the same properties
 and rules.
 }
 \examples{
-go_figure() |>
-  add_bar(
-    marker = go_bar_marker(
-      pattern = go_pattern(size = 10)
-    )
+go_bar(
+  marker = go_bar_marker(
+    pattern = go_pattern(size = 10)
   )
+)
 }
 \concept{shared object types}

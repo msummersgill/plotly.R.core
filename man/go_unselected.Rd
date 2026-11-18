@@ -59,9 +59,8 @@ used in; when the object is placed in a figure it is checked again
 against that context's rules.
 }
 \examples{
-go_figure() |>
-  add_scatter(
-    unselected = go_unselected()
-  )
+go_scatter(
+  unselected = go_unselected()
+)
 }
 \concept{shared object types}

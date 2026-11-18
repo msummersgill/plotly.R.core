@@ -1117,9 +1117,9 @@ object_example_arg <- function(key, validators) {
   ""
 }
 
-# Generated example: a figure with the object, placed in its trace (added
-# with add_<trace>()) or the layout (update_layout()) through the constructors
-# of the objects around it.
+# Generated example: the constructor's call, placed in its trace or the
+# layout through the constructors of the objects around it. It builds the
+# object rather than a figure: without data, a figure would draw nothing.
 object_example <- function(key, ctx) {
   nodes <- ctx$nodes
   lines <- sprintf(
@@ -1131,6 +1131,9 @@ object_example <- function(key, ctx) {
   repeat {
     i <- match(cur, nodes$key)
     parent <- nodes$parent[[i]]
+    if (!nzchar(parent)) {
+      return(lines)
+    }
     if (nodes$kind[[i]] == "compound_element") {
       prop <- nodes$name[which(nodes$element_key == cur)[[1L]]]
       lines[[1L]] <- paste0("list(", lines[[1L]])
@@ -1138,22 +1141,11 @@ object_example <- function(key, ctx) {
     } else {
       prop <- nodes$name[[i]]
     }
-    kind <- nodes$kind[[match(parent, nodes$key)]]
-    fn <- if (kind == "trace") {
-      paste0("add_", parent)
-    } else if (kind == "layout") {
-      "update_layout"
-    } else {
-      ctor_of(parent, ctx)
-    }
     lines <- c(
-      paste0(fn, "("),
+      paste0(ctor_of(parent, ctx), "("),
       paste0("  ", c(paste0(prop, " = ", lines[[1L]]), lines[-1L])),
       ")"
     )
-    if (kind %in% c("trace", "layout")) {
-      return(c("go_figure() |>", paste0("  ", lines)))
-    }
     cur <- parent
   }
 }

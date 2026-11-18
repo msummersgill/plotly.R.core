@@ -317,10 +317,9 @@ go_scatterpolargl <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scatterpolargl(
-#'     line = go_scatterpolargl_line(color = "red")
-#'   )
+#' go_scatterpolargl(
+#'   line = go_scatterpolargl_line(color = "red")
+#' )
 go_scatterpolargl_line <- function(
     arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
     skip_invalid = FALSE
@@ -569,10 +568,9 @@ go_scatterpolargl_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scatterpolargl(
-#'     marker = go_scatterpolargl_marker(color = "red")
-#'   )
+#' go_scatterpolargl(
+#'   marker = go_scatterpolargl_marker(color = "red")
+#' )
 go_scatterpolargl_marker <- function(
     arg = NULL, ..., angle = NULL, autocolorscale = NULL, cauto = NULL,
     cmax = NULL, cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
@@ -667,12 +665,11 @@ go_scatterpolargl_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scatterpolargl(
-#'     marker = go_scatterpolargl_marker(
-#'       line = go_scatterpolargl_marker_line(color = "red")
-#'     )
+#' go_scatterpolargl(
+#'   marker = go_scatterpolargl_marker(
+#'     line = go_scatterpolargl_marker_line(color = "red")
 #'   )
+#' )
 go_scatterpolargl_marker_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

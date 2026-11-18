@@ -315,11 +315,10 @@ named \code{aaxis}, \code{baxis}, \code{caxis}), all with the same
 properties and rules.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    ternary = go_ternary(
-      aaxis = go_ternary_axis(color = "red")
-    )
+go_layout(
+  ternary = go_ternary(
+    aaxis = go_ternary_axis(color = "red")
   )
+)
 }
 \concept{shared object types}

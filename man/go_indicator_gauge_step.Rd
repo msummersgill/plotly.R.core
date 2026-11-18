@@ -71,11 +71,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_indicator(
-    gauge = go_indicator_gauge(
-      steps = list(go_indicator_gauge_step(color = "red"))
-    )
+go_indicator(
+  gauge = go_indicator_gauge(
+    steps = list(go_indicator_gauge_step(color = "red"))
   )
+)
 }
 \concept{trace objects}

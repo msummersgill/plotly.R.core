@@ -53,11 +53,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    selections = list(go_selection(
-      line = go_selection_line(color = "red")
-    ))
-  )
+go_layout(
+  selections = list(go_selection(
+    line = go_selection_line(color = "red")
+  ))
+)
 }
 \concept{layout objects}

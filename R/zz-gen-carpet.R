@@ -379,10 +379,9 @@ go_carpet <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_carpet(
-#'     aaxis = go_carpet_aaxis(color = "red")
-#'   )
+#' go_carpet(
+#'   aaxis = go_carpet_aaxis(color = "red")
+#' )
 go_carpet_aaxis <- function(
     arg = NULL, ..., arraydtick = NULL, arraytick0 = NULL, autorange = NULL,
     autotypenumbers = NULL, categoryarray = NULL, categoryorder = NULL,
@@ -439,12 +438,11 @@ go_carpet_aaxis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_carpet(
-#'     aaxis = go_carpet_aaxis(
-#'       title = go_carpet_aaxis_title(text = "title")
-#'     )
+#' go_carpet(
+#'   aaxis = go_carpet_aaxis(
+#'     title = go_carpet_aaxis_title(text = "title")
 #'   )
+#' )
 go_carpet_aaxis_title <- function(
     arg = NULL, ..., font = NULL, offset = NULL, text = NULL,
     skip_invalid = FALSE
@@ -653,10 +651,9 @@ go_carpet_aaxis_title <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_carpet(
-#'     baxis = go_carpet_baxis(color = "red")
-#'   )
+#' go_carpet(
+#'   baxis = go_carpet_baxis(color = "red")
+#' )
 go_carpet_baxis <- function(
     arg = NULL, ..., arraydtick = NULL, arraytick0 = NULL, autorange = NULL,
     autotypenumbers = NULL, categoryarray = NULL, categoryorder = NULL,
@@ -713,12 +710,11 @@ go_carpet_baxis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_carpet(
-#'     baxis = go_carpet_baxis(
-#'       title = go_carpet_baxis_title(text = "title")
-#'     )
+#' go_carpet(
+#'   baxis = go_carpet_baxis(
+#'     title = go_carpet_baxis_title(text = "title")
 #'   )
+#' )
 go_carpet_baxis_title <- function(
     arg = NULL, ..., font = NULL, offset = NULL, text = NULL,
     skip_invalid = FALSE

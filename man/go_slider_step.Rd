@@ -88,11 +88,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    sliders = list(go_slider(
-      steps = list(go_slider_step(visible = TRUE))
-    ))
-  )
+go_layout(
+  sliders = list(go_slider(
+    steps = list(go_slider_step(visible = TRUE))
+  ))
+)
 }
 \concept{layout objects}

@@ -48,11 +48,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_choropleth(
-    marker = go_choropleth_marker(
-      line = go_choropleth_marker_line(color = "red")
-    )
+go_choropleth(
+  marker = go_choropleth_marker(
+    line = go_choropleth_marker_line(color = "red")
   )
+)
 }
 \concept{trace objects}

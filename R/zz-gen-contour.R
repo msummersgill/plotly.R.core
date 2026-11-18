@@ -457,10 +457,9 @@ go_contour <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_contour(
-#'     contours = go_contour_contours(size = 10)
-#'   )
+#' go_contour(
+#'   contours = go_contour_contours(size = 10)
+#' )
 go_contour_contours <- function(
     arg = NULL, ..., coloring = NULL, end = NULL, labelfont = NULL,
     labelformat = NULL, operation = NULL, showlabels = NULL,
@@ -509,10 +508,9 @@ go_contour_contours <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_contour(
-#'     line = go_contour_line(color = "red")
-#'   )
+#' go_contour(
+#'   line = go_contour_line(color = "red")
+#' )
 go_contour_line <- function(
     arg = NULL, ..., color = NULL, dash = NULL, smoothing = NULL,
     width = NULL, skip_invalid = FALSE

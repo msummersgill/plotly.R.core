@@ -309,9 +309,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_scattergeo(
-    marker = go_scattergeo_marker(color = "red")
-  )
+go_scattergeo(
+  marker = go_scattergeo_marker(color = "red")
+)
 }
 \concept{trace objects}

@@ -228,10 +228,9 @@ go_parcoords <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_parcoords(
-#'     dimensions = list(go_parcoords_dimension(visible = TRUE))
-#'   )
+#' go_parcoords(
+#'   dimensions = list(go_parcoords_dimension(visible = TRUE))
+#' )
 go_parcoords_dimension <- function(
     arg = NULL, ..., constraintrange = NULL, label = NULL,
     multiselect = NULL, name = NULL, range = NULL, templateitemname = NULL,
@@ -329,10 +328,9 @@ go_parcoords_dimension <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_parcoords(
-#'     line = go_parcoords_line(color = "red")
-#'   )
+#' go_parcoords(
+#'   line = go_parcoords_line(color = "red")
+#' )
 go_parcoords_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

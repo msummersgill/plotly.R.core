@@ -45,11 +45,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_pie(
-    marker = go_pie_marker(
-      line = go_pie_marker_line(color = "red")
-    )
+go_pie(
+  marker = go_pie_marker(
+    line = go_pie_marker_line(color = "red")
   )
+)
 }
 \concept{trace objects}

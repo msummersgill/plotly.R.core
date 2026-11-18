@@ -39,9 +39,8 @@ These objects appear in 2 places in the plotly.js schema (properties
 named \code{spaceframe}), all with the same properties and rules.
 }
 \examples{
-go_figure() |>
-  add_isosurface(
-    spaceframe = go_spaceframe(show = TRUE)
-  )
+go_isosurface(
+  spaceframe = go_spaceframe(show = TRUE)
+)
 }
 \concept{shared object types}

@@ -186,9 +186,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    geo = go_geo(visible = TRUE)
-  )
+go_layout(
+  geo = go_geo(visible = TRUE)
+)
 }
 \concept{layout objects}

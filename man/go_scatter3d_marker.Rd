@@ -160,9 +160,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_scatter3d(
-    marker = go_scatter3d_marker(color = "red")
-  )
+go_scatter3d(
+  marker = go_scatter3d_marker(color = "red")
+)
 }
 \concept{trace objects}

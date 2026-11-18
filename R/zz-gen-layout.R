@@ -534,10 +534,9 @@ go_layout <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     activeselection = go_activeselection(opacity = 0.5)
-#'   )
+#' go_layout(
+#'   activeselection = go_activeselection(opacity = 0.5)
+#' )
 go_activeselection <- function(
     arg = NULL, ..., fillcolor = NULL, opacity = NULL, skip_invalid = FALSE
 ) {
@@ -573,10 +572,9 @@ go_activeselection <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     activeshape = go_activeshape(opacity = 0.5)
-#'   )
+#' go_layout(
+#'   activeshape = go_activeshape(opacity = 0.5)
+#' )
 go_activeshape <- function(
     arg = NULL, ..., fillcolor = NULL, opacity = NULL, skip_invalid = FALSE
 ) {
@@ -834,10 +832,9 @@ go_activeshape <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     annotations = list(go_annotation(text = "title"))
-#'   )
+#' go_layout(
+#'   annotations = list(go_annotation(text = "title"))
+#' )
 go_annotation <- function(
     arg = NULL, ..., align = NULL, arrowcolor = NULL, arrowhead = NULL,
     arrowside = NULL, arrowsize = NULL, arrowwidth = NULL, ax = NULL,
@@ -923,10 +920,9 @@ go_annotation <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     coloraxis = go_coloraxis()
-#'   )
+#' go_layout(
+#'   coloraxis = go_coloraxis()
+#' )
 go_coloraxis <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, colorbar = NULL, colorscale = NULL,
@@ -976,10 +972,9 @@ go_coloraxis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     colorscale = go_layout_colorscale()
-#'   )
+#' go_layout(
+#'   colorscale = go_layout_colorscale()
+#' )
 go_layout_colorscale <- function(
     arg = NULL, ..., diverging = NULL, sequential = NULL,
     sequentialminus = NULL, skip_invalid = FALSE
@@ -1098,10 +1093,9 @@ go_layout_colorscale <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     geo = go_geo(visible = TRUE)
-#'   )
+#' go_layout(
+#'   geo = go_geo(visible = TRUE)
+#' )
 go_geo <- function(
     arg = NULL, ..., bgcolor = NULL, center = NULL, coastlinecolor = NULL,
     coastlinewidth = NULL, countrycolor = NULL, countrywidth = NULL,
@@ -1148,12 +1142,11 @@ go_geo <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     geo = go_geo(
-#'       center = go_geo_center()
-#'     )
+#' go_layout(
+#'   geo = go_geo(
+#'     center = go_geo_center()
 #'   )
+#' )
 go_geo_center <- function(
     arg = NULL, ..., lat = NULL, lon = NULL, skip_invalid = FALSE
 ) {
@@ -1202,12 +1195,11 @@ go_geo_center <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     geo = go_geo(
-#'       lataxis = go_geo_lataxis()
-#'     )
+#' go_layout(
+#'   geo = go_geo(
+#'     lataxis = go_geo_lataxis()
 #'   )
+#' )
 go_geo_lataxis <- function(
     arg = NULL, ..., dtick = NULL, gridcolor = NULL, griddash = NULL,
     gridwidth = NULL, range = NULL, showgrid = NULL, tick0 = NULL,
@@ -1258,12 +1250,11 @@ go_geo_lataxis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     geo = go_geo(
-#'       lonaxis = go_geo_lonaxis()
-#'     )
+#' go_layout(
+#'   geo = go_geo(
+#'     lonaxis = go_geo_lonaxis()
 #'   )
+#' )
 go_geo_lonaxis <- function(
     arg = NULL, ..., dtick = NULL, gridcolor = NULL, griddash = NULL,
     gridwidth = NULL, range = NULL, showgrid = NULL, tick0 = NULL,
@@ -1351,12 +1342,11 @@ go_geo_lonaxis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     geo = go_geo(
-#'       projection = go_geo_projection()
-#'     )
+#' go_layout(
+#'   geo = go_geo(
+#'     projection = go_geo_projection()
 #'   )
+#' )
 go_geo_projection <- function(
     arg = NULL, ..., distance = NULL, maxscale = NULL, minscale = NULL,
     parallels = NULL, rotation = NULL, scale = NULL, tilt = NULL,
@@ -1396,14 +1386,13 @@ go_geo_projection <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     geo = go_geo(
-#'       projection = go_geo_projection(
-#'         rotation = go_geo_projection_rotation()
-#'       )
+#' go_layout(
+#'   geo = go_geo(
+#'     projection = go_geo_projection(
+#'       rotation = go_geo_projection_rotation()
 #'     )
 #'   )
+#' )
 go_geo_projection_rotation <- function(
     arg = NULL, ..., lat = NULL, lon = NULL, roll = NULL,
     skip_invalid = FALSE
@@ -1495,10 +1484,9 @@ go_geo_projection_rotation <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     grid = go_grid()
-#'   )
+#' go_layout(
+#'   grid = go_grid()
+#' )
 go_grid <- function(
     arg = NULL, ..., columns = NULL, domain = NULL, pattern = NULL,
     roworder = NULL, rows = NULL, subplots = NULL, xaxes = NULL,
@@ -1600,10 +1588,9 @@ go_grid <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     images = list(go_layout_image(opacity = 0.5))
-#'   )
+#' go_layout(
+#'   images = list(go_layout_image(opacity = 0.5))
+#' )
 go_layout_image <- function(
     arg = NULL, ..., layer = NULL, name = NULL, opacity = NULL,
     sizex = NULL, sizey = NULL, sizing = NULL, source = NULL,
@@ -1774,10 +1761,9 @@ go_layout_image <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     legend = go_legend(visible = TRUE)
-#'   )
+#' go_layout(
+#'   legend = go_legend(visible = TRUE)
+#' )
 go_legend <- function(
     arg = NULL, ..., bgcolor = NULL, bordercolor = NULL, borderwidth = NULL,
     entrywidth = NULL, entrywidthmode = NULL, font = NULL,
@@ -1832,12 +1818,11 @@ go_legend <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     legend = go_legend(
-#'       title = go_legend_title(text = "title")
-#'     )
+#' go_layout(
+#'   legend = go_legend(
+#'     title = go_legend_title(text = "title")
 #'   )
+#' )
 go_legend_title <- function(
     arg = NULL, ..., font = NULL, side = NULL, text = NULL,
     skip_invalid = FALSE
@@ -1915,10 +1900,9 @@ go_legend_title <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     map = go_map()
-#'   )
+#' go_layout(
+#'   map = go_map()
+#' )
 go_map <- function(
     arg = NULL, ..., bearing = NULL, bounds = NULL, center = NULL,
     domain = NULL, fitbounds = NULL, layers = NULL, pitch = NULL,
@@ -1960,12 +1944,11 @@ go_map <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     map = go_map(
-#'       bounds = go_map_bounds()
-#'     )
+#' go_layout(
+#'   map = go_map(
+#'     bounds = go_map_bounds()
 #'   )
+#' )
 go_map_bounds <- function(
     arg = NULL, ..., east = NULL, north = NULL, south = NULL, west = NULL,
     skip_invalid = FALSE
@@ -2002,12 +1985,11 @@ go_map_bounds <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     map = go_map(
-#'       center = go_map_center()
-#'     )
+#' go_layout(
+#'   map = go_map(
+#'     center = go_map_center()
 #'   )
+#' )
 go_map_center <- function(
     arg = NULL, ..., lat = NULL, lon = NULL, skip_invalid = FALSE
 ) {
@@ -2117,12 +2099,11 @@ go_map_center <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     map = go_map(
-#'       layers = list(go_map_layer(color = "red"))
-#'     )
+#' go_layout(
+#'   map = go_map(
+#'     layers = list(go_map_layer(color = "red"))
 #'   )
+#' )
 go_map_layer <- function(
     arg = NULL, ..., below = NULL, circle = NULL, color = NULL,
     coordinates = NULL, fill = NULL, line = NULL, maxzoom = NULL,
@@ -2162,14 +2143,13 @@ go_map_layer <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     map = go_map(
-#'       layers = list(go_map_layer(
-#'         circle = go_map_layer_circle()
-#'       ))
-#'     )
+#' go_layout(
+#'   map = go_map(
+#'     layers = list(go_map_layer(
+#'       circle = go_map_layer_circle()
+#'     ))
 #'   )
+#' )
 go_map_layer_circle <- function(
     arg = NULL, ..., radius = NULL, skip_invalid = FALSE
 ) {
@@ -2205,14 +2185,13 @@ go_map_layer_circle <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     map = go_map(
-#'       layers = list(go_map_layer(
-#'         fill = go_map_layer_fill()
-#'       ))
-#'     )
+#' go_layout(
+#'   map = go_map(
+#'     layers = list(go_map_layer(
+#'       fill = go_map_layer_fill()
+#'     ))
 #'   )
+#' )
 go_map_layer_fill <- function(
     arg = NULL, ..., outlinecolor = NULL, skip_invalid = FALSE
 ) {
@@ -2251,14 +2230,13 @@ go_map_layer_fill <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     map = go_map(
-#'       layers = list(go_map_layer(
-#'         line = go_map_layer_line(width = 2)
-#'       ))
-#'     )
+#' go_layout(
+#'   map = go_map(
+#'     layers = list(go_map_layer(
+#'       line = go_map_layer_line(width = 2)
+#'     ))
 #'   )
+#' )
 go_map_layer_line <- function(
     arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -2313,14 +2291,13 @@ go_map_layer_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     map = go_map(
-#'       layers = list(go_map_layer(
-#'         symbol = go_map_layer_symbol(text = "title")
-#'       ))
-#'     )
+#' go_layout(
+#'   map = go_map(
+#'     layers = list(go_map_layer(
+#'       symbol = go_map_layer_symbol(text = "title")
+#'     ))
 #'   )
+#' )
 go_map_layer_symbol <- function(
     arg = NULL, ..., icon = NULL, iconsize = NULL, placement = NULL,
     text = NULL, textfont = NULL, textposition = NULL, skip_invalid = FALSE
@@ -2363,10 +2340,9 @@ go_map_layer_symbol <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     margin = go_margin()
-#'   )
+#' go_layout(
+#'   margin = go_margin()
+#' )
 go_margin <- function(
     arg = NULL, ..., autoexpand = NULL, b = NULL, l = NULL, pad = NULL,
     r = NULL, t = NULL, skip_invalid = FALSE
@@ -2433,10 +2409,9 @@ go_margin <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     modebar = go_modebar(color = "red")
-#'   )
+#' go_layout(
+#'   modebar = go_modebar(color = "red")
+#' )
 go_modebar <- function(
     arg = NULL, ..., activecolor = NULL, add = NULL, bgcolor = NULL,
     color = NULL, orientation = NULL, remove = NULL, uirevision = NULL,
@@ -2479,10 +2454,9 @@ go_modebar <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     newselection = go_newselection()
-#'   )
+#' go_layout(
+#'   newselection = go_newselection()
+#' )
 go_newselection <- function(
     arg = NULL, ..., line = NULL, mode = NULL, skip_invalid = FALSE
 ) {
@@ -2526,12 +2500,11 @@ go_newselection <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     newselection = go_newselection(
-#'       line = go_newselection_line(color = "red")
-#'     )
+#' go_layout(
+#'   newselection = go_newselection(
+#'     line = go_newselection_line(color = "red")
 #'   )
+#' )
 go_newselection_line <- function(
     arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
     skip_invalid = FALSE
@@ -2619,10 +2592,9 @@ go_newselection_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     newshape = go_newshape(opacity = 0.5)
-#'   )
+#' go_layout(
+#'   newshape = go_newshape(opacity = 0.5)
+#' )
 go_newshape <- function(
     arg = NULL, ..., drawdirection = NULL, fillcolor = NULL,
     fillrule = NULL, label = NULL, layer = NULL, legend = NULL,
@@ -2670,12 +2642,11 @@ go_newshape <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     newshape = go_newshape(
-#'       line = go_newshape_line(color = "red")
-#'     )
+#' go_layout(
+#'   newshape = go_newshape(
+#'     line = go_newshape_line(color = "red")
 #'   )
+#' )
 go_newshape_line <- function(
     arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
     skip_invalid = FALSE
@@ -2753,10 +2724,9 @@ go_newshape_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     polar = go_polar()
-#'   )
+#' go_layout(
+#'   polar = go_polar()
+#' )
 go_polar <- function(
     arg = NULL, ..., angularaxis = NULL, bargap = NULL, barmode = NULL,
     bgcolor = NULL, domain = NULL, gridshape = NULL, hole = NULL,
@@ -3009,12 +2979,11 @@ go_polar <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     polar = go_polar(
-#'       angularaxis = go_polar_angularaxis(color = "red")
-#'     )
+#' go_layout(
+#'   polar = go_polar(
+#'     angularaxis = go_polar_angularaxis(color = "red")
 #'   )
+#' )
 go_polar_angularaxis <- function(
     arg = NULL, ..., autotypenumbers = NULL, categoryarray = NULL,
     categoryorder = NULL, color = NULL, direction = NULL, dtick = NULL,
@@ -3318,12 +3287,11 @@ go_polar_angularaxis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     polar = go_polar(
-#'       radialaxis = go_polar_radialaxis(color = "red")
-#'     )
+#' go_layout(
+#'   polar = go_polar(
+#'     radialaxis = go_polar_radialaxis(color = "red")
 #'   )
+#' )
 go_polar_radialaxis <- function(
     arg = NULL, ..., angle = NULL, autorange = NULL,
     autorangeoptions = NULL, autotickangles = NULL, autotypenumbers = NULL,
@@ -3377,14 +3345,13 @@ go_polar_radialaxis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     polar = go_polar(
-#'       radialaxis = go_polar_radialaxis(
-#'         title = go_polar_radialaxis_title(text = "title")
-#'       )
+#' go_layout(
+#'   polar = go_polar(
+#'     radialaxis = go_polar_radialaxis(
+#'       title = go_polar_radialaxis_title(text = "title")
 #'     )
 #'   )
+#' )
 go_polar_radialaxis_title <- function(
     arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
 ) {
@@ -3469,10 +3436,9 @@ go_polar_radialaxis_title <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     scene = go_scene()
-#'   )
+#' go_layout(
+#'   scene = go_scene()
+#' )
 go_scene <- function(
     arg = NULL, ..., annotations = NULL, aspectmode = NULL,
     aspectratio = NULL, bgcolor = NULL, camera = NULL, domain = NULL,
@@ -3632,12 +3598,11 @@ go_scene <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     scene = go_scene(
-#'       annotations = list(go_scene_annotation(text = "title"))
-#'     )
+#' go_layout(
+#'   scene = go_scene(
+#'     annotations = list(go_scene_annotation(text = "title"))
 #'   )
+#' )
 go_scene_annotation <- function(
     arg = NULL, ..., align = NULL, arrowcolor = NULL, arrowhead = NULL,
     arrowside = NULL, arrowsize = NULL, arrowwidth = NULL, ax = NULL,
@@ -3682,12 +3647,11 @@ go_scene_annotation <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     scene = go_scene(
-#'       aspectratio = go_scene_aspectratio()
-#'     )
+#' go_layout(
+#'   scene = go_scene(
+#'     aspectratio = go_scene_aspectratio()
 #'   )
+#' )
 go_scene_aspectratio <- function(
     arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
@@ -3739,12 +3703,11 @@ go_scene_aspectratio <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     scene = go_scene(
-#'       camera = go_scene_camera()
-#'     )
+#' go_layout(
+#'   scene = go_scene(
+#'     camera = go_scene_camera()
 #'   )
+#' )
 go_scene_camera <- function(
     arg = NULL, ..., center = NULL, eye = NULL, projection = NULL,
     up = NULL, skip_invalid = FALSE
@@ -3783,14 +3746,13 @@ go_scene_camera <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     scene = go_scene(
-#'       camera = go_scene_camera(
-#'         center = go_scene_camera_center()
-#'       )
+#' go_layout(
+#'   scene = go_scene(
+#'     camera = go_scene_camera(
+#'       center = go_scene_camera_center()
 #'     )
 #'   )
+#' )
 go_scene_camera_center <- function(
     arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
@@ -3827,14 +3789,13 @@ go_scene_camera_center <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     scene = go_scene(
-#'       camera = go_scene_camera(
-#'         eye = go_scene_camera_eye()
-#'       )
+#' go_layout(
+#'   scene = go_scene(
+#'     camera = go_scene_camera(
+#'       eye = go_scene_camera_eye()
 #'     )
 #'   )
+#' )
 go_scene_camera_eye <- function(
     arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
@@ -3870,14 +3831,13 @@ go_scene_camera_eye <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     scene = go_scene(
-#'       camera = go_scene_camera(
-#'         projection = go_scene_camera_projection()
-#'       )
+#' go_layout(
+#'   scene = go_scene(
+#'     camera = go_scene_camera(
+#'       projection = go_scene_camera_projection()
 #'     )
 #'   )
+#' )
 go_scene_camera_projection <- function(
     arg = NULL, ..., type = NULL, skip_invalid = FALSE
 ) {
@@ -3916,14 +3876,13 @@ go_scene_camera_projection <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     scene = go_scene(
-#'       camera = go_scene_camera(
-#'         up = go_scene_camera_up()
-#'       )
+#' go_layout(
+#'   scene = go_scene(
+#'     camera = go_scene_camera(
+#'       up = go_scene_camera_up()
 #'     )
 #'   )
+#' )
 go_scene_camera_up <- function(
     arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
@@ -4009,10 +3968,9 @@ go_scene_camera_up <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     selections = list(go_selection(opacity = 0.5))
-#'   )
+#' go_layout(
+#'   selections = list(go_selection(opacity = 0.5))
+#' )
 go_selection <- function(
     arg = NULL, ..., line = NULL, name = NULL, opacity = NULL, path = NULL,
     templateitemname = NULL, type = NULL, x0 = NULL, x1 = NULL, xref = NULL,
@@ -4057,12 +4015,11 @@ go_selection <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     selections = list(go_selection(
-#'       line = go_selection_line(color = "red")
-#'     ))
-#'   )
+#' go_layout(
+#'   selections = list(go_selection(
+#'     line = go_selection_line(color = "red")
+#'   ))
+#' )
 go_selection_line <- function(
     arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
     skip_invalid = FALSE
@@ -4266,10 +4223,9 @@ go_selection_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     shapes = list(go_shape(opacity = 0.5))
-#'   )
+#' go_layout(
+#'   shapes = list(go_shape(opacity = 0.5))
+#' )
 go_shape <- function(
     arg = NULL, ..., editable = NULL, fillcolor = NULL, fillrule = NULL,
     label = NULL, layer = NULL, legend = NULL, legendgroup = NULL,
@@ -4319,12 +4275,11 @@ go_shape <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     shapes = list(go_shape(
-#'       line = go_shape_line(color = "red")
-#'     ))
-#'   )
+#' go_layout(
+#'   shapes = list(go_shape(
+#'     line = go_shape_line(color = "red")
+#'   ))
+#' )
 go_shape_line <- function(
     arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
     skip_invalid = FALSE
@@ -4427,10 +4382,9 @@ go_shape_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     sliders = list(go_slider(visible = TRUE))
-#'   )
+#' go_layout(
+#'   sliders = list(go_slider(visible = TRUE))
+#' )
 go_slider <- function(
     arg = NULL, ..., active = NULL, activebgcolor = NULL, bgcolor = NULL,
     bordercolor = NULL, borderwidth = NULL, currentvalue = NULL,
@@ -4484,12 +4438,11 @@ go_slider <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     sliders = list(go_slider(
-#'       currentvalue = go_slider_currentvalue(visible = TRUE)
-#'     ))
-#'   )
+#' go_layout(
+#'   sliders = list(go_slider(
+#'     currentvalue = go_slider_currentvalue(visible = TRUE)
+#'   ))
+#' )
 go_slider_currentvalue <- function(
     arg = NULL, ..., font = NULL, offset = NULL, prefix = NULL,
     suffix = NULL, visible = NULL, xanchor = NULL, skip_invalid = FALSE
@@ -4531,12 +4484,11 @@ go_slider_currentvalue <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     sliders = list(go_slider(
-#'       pad = go_slider_pad()
-#'     ))
-#'   )
+#' go_layout(
+#'   sliders = list(go_slider(
+#'     pad = go_slider_pad()
+#'   ))
+#' )
 go_slider_pad <- function(
     arg = NULL, ..., b = NULL, l = NULL, r = NULL, t = NULL,
     skip_invalid = FALSE
@@ -4605,12 +4557,11 @@ go_slider_pad <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     sliders = list(go_slider(
-#'       steps = list(go_slider_step(visible = TRUE))
-#'     ))
-#'   )
+#' go_layout(
+#'   sliders = list(go_slider(
+#'     steps = list(go_slider_step(visible = TRUE))
+#'   ))
+#' )
 go_slider_step <- function(
     arg = NULL, ..., args = NULL, execute = NULL, label = NULL,
     method = NULL, name = NULL, templateitemname = NULL, value = NULL,
@@ -4660,12 +4611,11 @@ go_slider_step <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     sliders = list(go_slider(
-#'       transition = go_slider_transition()
-#'     ))
-#'   )
+#' go_layout(
+#'   sliders = list(go_slider(
+#'     transition = go_slider_transition()
+#'   ))
+#' )
 go_slider_transition <- function(
     arg = NULL, ..., duration = NULL, easing = NULL, skip_invalid = FALSE
 ) {
@@ -4715,10 +4665,9 @@ go_slider_transition <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     smith = go_smith()
-#'   )
+#' go_layout(
+#'   smith = go_smith()
+#' )
 go_smith <- function(
     arg = NULL, ..., bgcolor = NULL, domain = NULL, imaginaryaxis = NULL,
     realaxis = NULL, skip_invalid = FALSE
@@ -4839,12 +4788,11 @@ go_smith <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     smith = go_smith(
-#'       imaginaryaxis = go_smith_imaginaryaxis(color = "red")
-#'     )
+#' go_layout(
+#'   smith = go_smith(
+#'     imaginaryaxis = go_smith_imaginaryaxis(color = "red")
 #'   )
+#' )
 go_smith_imaginaryaxis <- function(
     arg = NULL, ..., color = NULL, gridcolor = NULL, griddash = NULL,
     gridwidth = NULL, hoverformat = NULL, labelalias = NULL, layer = NULL,
@@ -4973,12 +4921,11 @@ go_smith_imaginaryaxis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     smith = go_smith(
-#'       realaxis = go_smith_realaxis(color = "red")
-#'     )
+#' go_layout(
+#'   smith = go_smith(
+#'     realaxis = go_smith_realaxis(color = "red")
 #'   )
+#' )
 go_smith_realaxis <- function(
     arg = NULL, ..., color = NULL, gridcolor = NULL, griddash = NULL,
     gridwidth = NULL, hoverformat = NULL, labelalias = NULL, layer = NULL,
@@ -5046,10 +4993,9 @@ go_smith_realaxis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     ternary = go_ternary()
-#'   )
+#' go_layout(
+#'   ternary = go_ternary()
+#' )
 go_ternary <- function(
     arg = NULL, ..., aaxis = NULL, baxis = NULL, bgcolor = NULL,
     caxis = NULL, domain = NULL, sum = NULL, uirevision = NULL,
@@ -5134,10 +5080,9 @@ go_ternary <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     title = go_layout_title(text = "title")
-#'   )
+#' go_layout(
+#'   title = go_layout_title(text = "title")
+#' )
 go_layout_title <- function(
     arg = NULL, ..., automargin = NULL, font = NULL, pad = NULL,
     subtitle = NULL, text = NULL, x = NULL, xanchor = NULL, xref = NULL,
@@ -5184,12 +5129,11 @@ go_layout_title <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     title = go_layout_title(
-#'       pad = go_title_pad()
-#'     )
+#' go_layout(
+#'   title = go_layout_title(
+#'     pad = go_title_pad()
 #'   )
+#' )
 go_title_pad <- function(
     arg = NULL, ..., b = NULL, l = NULL, r = NULL, t = NULL,
     skip_invalid = FALSE
@@ -5229,12 +5173,11 @@ go_title_pad <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     title = go_layout_title(
-#'       subtitle = go_title_subtitle(text = "title")
-#'     )
+#' go_layout(
+#'   title = go_layout_title(
+#'     subtitle = go_title_subtitle(text = "title")
 #'   )
+#' )
 go_title_subtitle <- function(
     arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
 ) {
@@ -5286,10 +5229,9 @@ go_title_subtitle <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     transition = go_layout_transition()
-#'   )
+#' go_layout(
+#'   transition = go_layout_transition()
+#' )
 go_layout_transition <- function(
     arg = NULL, ..., duration = NULL, easing = NULL, ordering = NULL,
     skip_invalid = FALSE
@@ -5331,10 +5273,9 @@ go_layout_transition <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     uniformtext = go_uniformtext()
-#'   )
+#' go_layout(
+#'   uniformtext = go_uniformtext()
+#' )
 go_uniformtext <- function(
     arg = NULL, ..., minsize = NULL, mode = NULL, skip_invalid = FALSE
 ) {
@@ -5425,10 +5366,9 @@ go_uniformtext <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     updatemenus = list(go_updatemenu(visible = TRUE))
-#'   )
+#' go_layout(
+#'   updatemenus = list(go_updatemenu(visible = TRUE))
+#' )
 go_updatemenu <- function(
     arg = NULL, ..., active = NULL, bgcolor = NULL, bordercolor = NULL,
     borderwidth = NULL, buttons = NULL, direction = NULL, font = NULL,
@@ -5500,12 +5440,11 @@ go_updatemenu <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     updatemenus = list(go_updatemenu(
-#'       buttons = list(go_updatemenu_button(visible = TRUE))
-#'     ))
-#'   )
+#' go_layout(
+#'   updatemenus = list(go_updatemenu(
+#'     buttons = list(go_updatemenu_button(visible = TRUE))
+#'   ))
+#' )
 go_updatemenu_button <- function(
     arg = NULL, ..., args = NULL, args2 = NULL, execute = NULL,
     label = NULL, method = NULL, name = NULL, templateitemname = NULL,
@@ -5548,12 +5487,11 @@ go_updatemenu_button <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     updatemenus = list(go_updatemenu(
-#'       pad = go_updatemenu_pad()
-#'     ))
-#'   )
+#' go_layout(
+#'   updatemenus = list(go_updatemenu(
+#'     pad = go_updatemenu_pad()
+#'   ))
+#' )
 go_updatemenu_pad <- function(
     arg = NULL, ..., b = NULL, l = NULL, r = NULL, t = NULL,
     skip_invalid = FALSE
@@ -6059,10 +5997,9 @@ go_updatemenu_pad <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     xaxis = go_xaxis(color = "red")
-#'   )
+#' go_layout(
+#'   xaxis = go_xaxis(color = "red")
+#' )
 go_xaxis <- function(
     arg = NULL, ..., anchor = NULL, automargin = NULL, autorange = NULL,
     autorangeoptions = NULL, autotickangles = NULL, autotypenumbers = NULL,
@@ -6156,12 +6093,11 @@ go_xaxis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     xaxis = go_xaxis(
-#'       rangeselector = go_xaxis_rangeselector(visible = TRUE)
-#'     )
+#' go_layout(
+#'   xaxis = go_xaxis(
+#'     rangeselector = go_xaxis_rangeselector(visible = TRUE)
 #'   )
+#' )
 go_xaxis_rangeselector <- function(
     arg = NULL, ..., activecolor = NULL, bgcolor = NULL, bordercolor = NULL,
     borderwidth = NULL, buttons = NULL, font = NULL, visible = NULL,
@@ -6229,14 +6165,13 @@ go_xaxis_rangeselector <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     xaxis = go_xaxis(
-#'       rangeselector = go_xaxis_rangeselector(
-#'         buttons = list(go_xaxis_rangeselector_button(visible = TRUE))
-#'       )
+#' go_layout(
+#'   xaxis = go_xaxis(
+#'     rangeselector = go_xaxis_rangeselector(
+#'       buttons = list(go_xaxis_rangeselector_button(visible = TRUE))
 #'     )
 #'   )
+#' )
 go_xaxis_rangeselector_button <- function(
     arg = NULL, ..., count = NULL, label = NULL, name = NULL, step = NULL,
     stepmode = NULL, templateitemname = NULL, visible = NULL,
@@ -6296,12 +6231,11 @@ go_xaxis_rangeselector_button <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     xaxis = go_xaxis(
-#'       rangeslider = go_xaxis_rangeslider(visible = TRUE)
-#'     )
+#' go_layout(
+#'   xaxis = go_xaxis(
+#'     rangeslider = go_xaxis_rangeslider(visible = TRUE)
 #'   )
+#' )
 go_xaxis_rangeslider <- function(
     arg = NULL, ..., autorange = NULL, bgcolor = NULL, bordercolor = NULL,
     borderwidth = NULL, range = NULL, thickness = NULL, visible = NULL,
@@ -6344,14 +6278,13 @@ go_xaxis_rangeslider <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     xaxis = go_xaxis(
-#'       rangeslider = go_xaxis_rangeslider(
-#'         yaxis = go_xaxis_rangeslider_yaxis()
-#'       )
+#' go_layout(
+#'   xaxis = go_xaxis(
+#'     rangeslider = go_xaxis_rangeslider(
+#'       yaxis = go_xaxis_rangeslider_yaxis()
 #'     )
 #'   )
+#' )
 go_xaxis_rangeslider_yaxis <- function(
     arg = NULL, ..., range = NULL, rangemode = NULL, skip_invalid = FALSE
 ) {
@@ -6397,12 +6330,11 @@ go_xaxis_rangeslider_yaxis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     xaxis = go_xaxis(
-#'       title = go_xaxis_title(text = "title")
-#'     )
+#' go_layout(
+#'   xaxis = go_xaxis(
+#'     title = go_xaxis_title(text = "title")
 #'   )
+#' )
 go_xaxis_title <- function(
     arg = NULL, ..., font = NULL, standoff = NULL, text = NULL,
     skip_invalid = FALSE
@@ -6910,10 +6842,9 @@ go_xaxis_title <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     yaxis = go_yaxis(color = "red")
-#'   )
+#' go_layout(
+#'   yaxis = go_yaxis(color = "red")
+#' )
 go_yaxis <- function(
     arg = NULL, ..., anchor = NULL, automargin = NULL, autorange = NULL,
     autorangeoptions = NULL, autoshift = NULL, autotickangles = NULL,
@@ -6986,12 +6917,11 @@ go_yaxis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     yaxis = go_yaxis(
-#'       title = go_yaxis_title(text = "title")
-#'     )
+#' go_layout(
+#'   yaxis = go_yaxis(
+#'     title = go_yaxis_title(text = "title")
 #'   )
+#' )
 go_yaxis_title <- function(
     arg = NULL, ..., font = NULL, standoff = NULL, text = NULL,
     skip_invalid = FALSE

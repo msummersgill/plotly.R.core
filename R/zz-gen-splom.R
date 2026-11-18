@@ -259,10 +259,9 @@ go_splom <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_splom(
-#'     diagonal = go_splom_diagonal(visible = TRUE)
-#'   )
+#' go_splom(
+#'   diagonal = go_splom_diagonal(visible = TRUE)
+#' )
 go_splom_diagonal <- function(
     arg = NULL, ..., visible = NULL, skip_invalid = FALSE
 ) {
@@ -317,10 +316,9 @@ go_splom_diagonal <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_splom(
-#'     dimensions = list(go_splom_dimension(visible = TRUE))
-#'   )
+#' go_splom(
+#'   dimensions = list(go_splom_dimension(visible = TRUE))
+#' )
 go_splom_dimension <- function(
     arg = NULL, ..., axis = NULL, label = NULL, name = NULL,
     templateitemname = NULL, values = NULL, visible = NULL,
@@ -362,12 +360,11 @@ go_splom_dimension <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_splom(
-#'     dimensions = list(go_splom_dimension(
-#'       axis = go_splom_dimension_axis()
-#'     ))
-#'   )
+#' go_splom(
+#'   dimensions = list(go_splom_dimension(
+#'     axis = go_splom_dimension_axis()
+#'   ))
+#' )
 go_splom_dimension_axis <- function(
     arg = NULL, ..., matches = NULL, type = NULL, skip_invalid = FALSE
 ) {
@@ -614,10 +611,9 @@ go_splom_dimension_axis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_splom(
-#'     marker = go_splom_marker(color = "red")
-#'   )
+#' go_splom(
+#'   marker = go_splom_marker(color = "red")
+#' )
 go_splom_marker <- function(
     arg = NULL, ..., angle = NULL, autocolorscale = NULL, cauto = NULL,
     cmax = NULL, cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
@@ -712,12 +708,11 @@ go_splom_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_splom(
-#'     marker = go_splom_marker(
-#'       line = go_splom_marker_line(color = "red")
-#'     )
+#' go_splom(
+#'   marker = go_splom_marker(
+#'     line = go_splom_marker_line(color = "red")
 #'   )
+#' )
 go_splom_marker_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

@@ -67,11 +67,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    geo = go_geo(
-      lataxis = go_geo_lataxis()
-    )
+go_layout(
+  geo = go_geo(
+    lataxis = go_geo_lataxis()
   )
+)
 }
 \concept{layout objects}

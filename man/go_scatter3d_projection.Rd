@@ -52,9 +52,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_scatter3d(
-    projection = go_scatter3d_projection()
-  )
+go_scatter3d(
+  projection = go_scatter3d_projection()
+)
 }
 \concept{trace objects}

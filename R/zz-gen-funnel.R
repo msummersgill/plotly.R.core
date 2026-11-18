@@ -393,10 +393,9 @@ go_funnel <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_funnel(
-#'     connector = go_funnel_connector(visible = TRUE)
-#'   )
+#' go_funnel(
+#'   connector = go_funnel_connector(visible = TRUE)
+#' )
 go_funnel_connector <- function(
     arg = NULL, ..., fillcolor = NULL, line = NULL, visible = NULL,
     skip_invalid = FALSE
@@ -440,12 +439,11 @@ go_funnel_connector <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_funnel(
-#'     connector = go_funnel_connector(
-#'       line = go_funnel_connector_line(color = "red")
-#'     )
+#' go_funnel(
+#'   connector = go_funnel_connector(
+#'     line = go_funnel_connector_line(color = "red")
 #'   )
+#' )
 go_funnel_connector_line <- function(
     arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
     skip_invalid = FALSE
@@ -547,10 +545,9 @@ go_funnel_connector_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_funnel(
-#'     marker = go_funnel_marker(color = "red")
-#'   )
+#' go_funnel(
+#'   marker = go_funnel_marker(color = "red")
+#' )
 go_funnel_marker <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
@@ -644,12 +641,11 @@ go_funnel_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_funnel(
-#'     marker = go_funnel_marker(
-#'       line = go_funnel_marker_line(color = "red")
-#'     )
+#' go_funnel(
+#'   marker = go_funnel_marker(
+#'     line = go_funnel_marker_line(color = "red")
 #'   )
+#' )
 go_funnel_marker_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

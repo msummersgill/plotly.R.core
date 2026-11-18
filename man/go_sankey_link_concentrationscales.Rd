@@ -77,11 +77,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_sankey(
-    link = go_sankey_link(
-      colorscales = list(go_sankey_link_concentrationscales())
-    )
+go_sankey(
+  link = go_sankey_link(
+    colorscales = list(go_sankey_link_concentrationscales())
   )
+)
 }
 \concept{trace objects}

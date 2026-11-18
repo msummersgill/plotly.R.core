@@ -480,10 +480,9 @@ go_bar <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_bar(
-#'     marker = go_bar_marker(color = "red")
-#'   )
+#' go_bar(
+#'   marker = go_bar_marker(color = "red")
+#' )
 go_bar_marker <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
@@ -578,12 +577,11 @@ go_bar_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_bar(
-#'     marker = go_bar_marker(
-#'       line = go_bar_marker_line(color = "red")
-#'     )
+#' go_bar(
+#'   marker = go_bar_marker(
+#'     line = go_bar_marker_line(color = "red")
 #'   )
+#' )
 go_bar_marker_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

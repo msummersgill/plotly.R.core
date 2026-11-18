@@ -39,11 +39,10 @@ named \code{x}, \code{y}, \code{z}), all with the same properties and
 rules.
 }
 \examples{
-go_figure() |>
-  add_isosurface(
-    caps = go_caps(
-      x = go_caps_axis(show = TRUE)
-    )
+go_isosurface(
+  caps = go_caps(
+    x = go_caps_axis(show = TRUE)
   )
+)
 }
 \concept{shared object types}

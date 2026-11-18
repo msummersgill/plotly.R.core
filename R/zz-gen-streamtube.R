@@ -354,10 +354,9 @@ go_streamtube <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_streamtube(
-#'     lighting = go_streamtube_lighting()
-#'   )
+#' go_streamtube(
+#'   lighting = go_streamtube_lighting()
+#' )
 go_streamtube_lighting <- function(
     arg = NULL, ..., ambient = NULL, diffuse = NULL,
     facenormalsepsilon = NULL, fresnel = NULL, roughness = NULL,
@@ -401,10 +400,9 @@ go_streamtube_lighting <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_streamtube(
-#'     starts = go_streamtube_starts()
-#'   )
+#' go_streamtube(
+#'   starts = go_streamtube_starts()
+#' )
 go_streamtube_starts <- function(
     arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {

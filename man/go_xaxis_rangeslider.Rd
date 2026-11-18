@@ -78,11 +78,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    xaxis = go_xaxis(
-      rangeslider = go_xaxis_rangeslider(visible = TRUE)
-    )
+go_layout(
+  xaxis = go_xaxis(
+    rangeslider = go_xaxis_rangeslider(visible = TRUE)
   )
+)
 }
 \concept{layout objects}

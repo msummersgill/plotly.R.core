@@ -397,10 +397,9 @@ go_mesh3d <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_mesh3d(
-#'     contour = go_mesh3d_contour(color = "red")
-#'   )
+#' go_mesh3d(
+#'   contour = go_mesh3d_contour(color = "red")
+#' )
 go_mesh3d_contour <- function(
     arg = NULL, ..., color = NULL, show = NULL, width = NULL,
     skip_invalid = FALSE
@@ -452,10 +451,9 @@ go_mesh3d_contour <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_mesh3d(
-#'     lighting = go_mesh3d_lighting()
-#'   )
+#' go_mesh3d(
+#'   lighting = go_mesh3d_lighting()
+#' )
 go_mesh3d_lighting <- function(
     arg = NULL, ..., ambient = NULL, diffuse = NULL,
     facenormalsepsilon = NULL, fresnel = NULL, roughness = NULL,

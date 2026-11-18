@@ -229,10 +229,20 @@ print.go_figure <- function(x, ...) {
 #' @param options Chunk options (from knitr).
 #' @exportS3Method knitr::knit_print
 knit_print.go_figure <- function(x, ..., options = NULL) {
-  static <- options$plotly.static %||% !knitr::is_html_output()
+  # Static unless the document is HTML made by pandoc (R Markdown, Quarto):
+  # knitting without pandoc (R's "Run examples" help pages, knitr::knit())
+  # can't load widgets, and knitr would screenshot them with PhantomJS
+  static <- options$plotly.static %||%
+    (!knitr::is_html_output() || is.null(knitr::pandoc_to()))
   if (isTRUE(static)) {
     img <- knit_static_image(x, options)
-    if (!is.null(img)) return(img)
+    if (!is.null(img)) {
+      return(img)
+    }
+    if (is.null(knitr::pandoc_to())) {
+      # no widget either: knitr would try a PhantomJS screenshot
+      return(invisible(x))
+    }
   }
   knitr::knit_print(plotly_widget(x), ..., options = options)
 }
@@ -249,10 +259,25 @@ knit_static_image <- function(x, options) {
     return(NULL)
   }
   dpi <- options$dpi %||% 96
-  width <- x$layout$width %||% round((options$fig.width %||% 7) * dpi)
-  height <- x$layout$height %||% round((options$fig.height %||% 5) * dpi)
+  fig_width <- options$fig.width %||% 7
+  fig_height <- options$fig.height %||% 5
+  if (is.null(knitr::pandoc_to())) {
+    # without pandoc (R's "Run examples" help pages): a size that fits the help
+    # pane, a part of the screen (help pages knit at 9 x 7 in)
+    fig_width <- min(fig_width, 5)
+    fig_height <- min(fig_height, 3.5)
+  }
+  width <- x$layout$width %||% round(fig_width * dpi)
+  height <- x$layout$height %||% round(fig_height * dpi)
   ext <- if (knitr::is_latex_output()) "pdf" else "png"
-  path <- knitr::fig_path(paste0(".", ext), options)
+  # numbered, so several figures in one chunk get their own files
+  label <- options$label %||% "plotly"
+  if (!identical(the$knit_label, label)) {
+    the$knit_label <- label
+    the$knit_n <- 0L
+  }
+  the$knit_n <- the$knit_n + 1L
+  path <- knitr::fig_path(paste0(".", ext), options, number = the$knit_n)
   dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
   ok <- tryCatch(
     {
@@ -278,7 +303,11 @@ knit_static_image <- function(x, options) {
   if (!ok) {
     return(NULL)
   }
-  knitr::knit_print(knitr::include_graphics(path), options = options)
+  # PNGs are exported at twice the size: shown at their figure size in HTML
+  knitr::knit_print(
+    knitr::include_graphics(path, dpi = if (ext == "png") 2 * dpi else NULL),
+    options = options
+  )
 }
 
 # Adding traces -----------------------------------------------------------------

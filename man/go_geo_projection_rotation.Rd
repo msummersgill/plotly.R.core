@@ -48,13 +48,12 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    geo = go_geo(
-      projection = go_geo_projection(
-        rotation = go_geo_projection_rotation()
-      )
+go_layout(
+  geo = go_geo(
+    projection = go_geo_projection(
+      rotation = go_geo_projection_rotation()
     )
   )
+)
 }
 \concept{layout objects}

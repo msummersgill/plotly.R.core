@@ -234,9 +234,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    legend = go_legend(visible = TRUE)
-  )
+go_layout(
+  legend = go_legend(visible = TRUE)
+)
 }
 \concept{layout objects}

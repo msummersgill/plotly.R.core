@@ -106,9 +106,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_histogram2dcontour(
-    contours = go_histogram2dcontour_contours(size = 10)
-  )
+go_histogram2dcontour(
+  contours = go_histogram2dcontour_contours(size = 10)
+)
 }
 \concept{trace objects}

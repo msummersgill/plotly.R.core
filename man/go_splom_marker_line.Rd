@@ -115,11 +115,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_splom(
-    marker = go_splom_marker(
-      line = go_splom_marker_line(color = "red")
-    )
+go_splom(
+  marker = go_splom_marker(
+    line = go_splom_marker_line(color = "red")
   )
+)
 }
 \concept{trace objects}

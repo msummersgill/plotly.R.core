@@ -355,10 +355,9 @@ go_surface <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_surface(
-#'     contours = go_surface_contours()
-#'   )
+#' go_surface(
+#'   contours = go_surface_contours()
+#' )
 go_surface_contours <- function(
     arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
@@ -403,10 +402,9 @@ go_surface_contours <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_surface(
-#'     lighting = go_surface_lighting()
-#'   )
+#' go_surface(
+#'   lighting = go_surface_lighting()
+#' )
 go_surface_lighting <- function(
     arg = NULL, ..., ambient = NULL, diffuse = NULL, fresnel = NULL,
     roughness = NULL, specular = NULL, skip_invalid = FALSE

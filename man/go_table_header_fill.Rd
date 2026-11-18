@@ -37,11 +37,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_table(
-    header = go_table_header(
-      fill = go_table_header_fill(color = "red")
-    )
+go_table(
+  header = go_table_header(
+    fill = go_table_header_fill(color = "red")
   )
+)
 }
 \concept{trace objects}

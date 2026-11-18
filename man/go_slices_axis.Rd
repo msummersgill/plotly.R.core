@@ -50,11 +50,10 @@ named \code{x}, \code{y}, \code{z}), all with the same properties and
 rules.
 }
 \examples{
-go_figure() |>
-  add_isosurface(
-    slices = go_slices(
-      x = go_slices_axis(show = TRUE)
-    )
+go_isosurface(
+  slices = go_slices(
+    x = go_slices_axis(show = TRUE)
   )
+)
 }
 \concept{shared object types}

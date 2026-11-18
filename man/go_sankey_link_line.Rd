@@ -45,11 +45,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_sankey(
-    link = go_sankey_link(
-      line = go_sankey_link_line(color = "red")
-    )
+go_sankey(
+  link = go_sankey_link(
+    line = go_sankey_link_line(color = "red")
   )
+)
 }
 \concept{trace objects}

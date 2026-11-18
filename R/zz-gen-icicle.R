@@ -369,10 +369,9 @@ go_icicle <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_icicle(
-#'     marker = go_icicle_marker(colors = c("red", "blue"))
-#'   )
+#' go_icicle(
+#'   marker = go_icicle_marker(colors = c("red", "blue"))
+#' )
 go_icicle_marker <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, coloraxis = NULL, colorbar = NULL,
@@ -413,12 +412,11 @@ go_icicle_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_icicle(
-#'     marker = go_icicle_marker(
-#'       line = go_icicle_marker_line(color = "red")
-#'     )
+#' go_icicle(
+#'   marker = go_icicle_marker(
+#'     line = go_icicle_marker_line(color = "red")
 #'   )
+#' )
 go_icicle_marker_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -463,10 +461,9 @@ go_icicle_marker_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_icicle(
-#'     tiling = go_icicle_tiling()
-#'   )
+#' go_icicle(
+#'   tiling = go_icicle_tiling()
+#' )
 go_icicle_tiling <- function(
     arg = NULL, ..., flip = NULL, orientation = NULL, pad = NULL,
     skip_invalid = FALSE

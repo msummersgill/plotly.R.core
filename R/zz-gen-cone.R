@@ -362,10 +362,9 @@ go_cone <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_cone(
-#'     lighting = go_cone_lighting()
-#'   )
+#' go_cone(
+#'   lighting = go_cone_lighting()
+#' )
 go_cone_lighting <- function(
     arg = NULL, ..., ambient = NULL, diffuse = NULL,
     facenormalsepsilon = NULL, fresnel = NULL, roughness = NULL,

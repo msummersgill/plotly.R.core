@@ -69,9 +69,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_streamtube(
-    lighting = go_streamtube_lighting()
-  )
+go_streamtube(
+  lighting = go_streamtube_lighting()
+)
 }
 \concept{trace objects}

@@ -44,11 +44,10 @@ named \code{x}, \code{y}, \code{z}), all with the same properties and
 rules.
 }
 \examples{
-go_figure() |>
-  add_scatter3d(
-    projection = go_scatter3d_projection(
-      x = go_scatter3d_projection_axis(opacity = 0.5)
-    )
+go_scatter3d(
+  projection = go_scatter3d_projection(
+    x = go_scatter3d_projection_axis(opacity = 0.5)
   )
+)
 }
 \concept{shared object types}

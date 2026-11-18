@@ -314,10 +314,9 @@ go_barpolar <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_barpolar(
-#'     marker = go_barpolar_marker(color = "red")
-#'   )
+#' go_barpolar(
+#'   marker = go_barpolar_marker(color = "red")
+#' )
 go_barpolar_marker <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
@@ -412,12 +411,11 @@ go_barpolar_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_barpolar(
-#'     marker = go_barpolar_marker(
-#'       line = go_barpolar_marker_line(color = "red")
-#'     )
+#' go_barpolar(
+#'   marker = go_barpolar_marker(
+#'     line = go_barpolar_marker_line(color = "red")
 #'   )
+#' )
 go_barpolar_marker_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

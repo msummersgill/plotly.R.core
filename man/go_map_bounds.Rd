@@ -52,11 +52,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    map = go_map(
-      bounds = go_map_bounds()
-    )
+go_layout(
+  map = go_map(
+    bounds = go_map_bounds()
   )
+)
 }
 \concept{layout objects}

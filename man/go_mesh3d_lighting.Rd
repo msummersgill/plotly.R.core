@@ -69,9 +69,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_mesh3d(
-    lighting = go_mesh3d_lighting()
-  )
+go_mesh3d(
+  lighting = go_mesh3d_lighting()
+)
 }
 \concept{trace objects}

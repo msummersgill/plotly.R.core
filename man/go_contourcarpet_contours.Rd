@@ -105,9 +105,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_contourcarpet(
-    contours = go_contourcarpet_contours(size = 10)
-  )
+go_contourcarpet(
+  contours = go_contourcarpet_contours(size = 10)
+)
 }
 \concept{trace objects}

@@ -56,9 +56,8 @@ These objects appear in 2 places in the plotly.js schema (properties
 named \code{pathbar}), all with the same properties and rules.
 }
 \examples{
-go_figure() |>
-  add_icicle(
-    pathbar = go_pathbar(visible = TRUE)
-  )
+go_icicle(
+  pathbar = go_pathbar(visible = TRUE)
+)
 }
 \concept{shared object types}

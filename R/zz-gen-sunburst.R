@@ -371,10 +371,9 @@ go_sunburst <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_sunburst(
-#'     marker = go_sunburst_marker(colors = c("red", "blue"))
-#'   )
+#' go_sunburst(
+#'   marker = go_sunburst_marker(colors = c("red", "blue"))
+#' )
 go_sunburst_marker <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, coloraxis = NULL, colorbar = NULL,
@@ -415,12 +414,11 @@ go_sunburst_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_sunburst(
-#'     marker = go_sunburst_marker(
-#'       line = go_sunburst_marker_line(color = "red")
-#'     )
+#' go_sunburst(
+#'   marker = go_sunburst_marker(
+#'     line = go_sunburst_marker_line(color = "red")
 #'   )
+#' )
 go_sunburst_marker_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {

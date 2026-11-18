@@ -312,10 +312,9 @@ go_contourcarpet <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_contourcarpet(
-#'     contours = go_contourcarpet_contours(size = 10)
-#'   )
+#' go_contourcarpet(
+#'   contours = go_contourcarpet_contours(size = 10)
+#' )
 go_contourcarpet_contours <- function(
     arg = NULL, ..., coloring = NULL, end = NULL, labelfont = NULL,
     labelformat = NULL, operation = NULL, showlabels = NULL,
@@ -365,10 +364,9 @@ go_contourcarpet_contours <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_contourcarpet(
-#'     line = go_contourcarpet_line(color = "red")
-#'   )
+#' go_contourcarpet(
+#'   line = go_contourcarpet_line(color = "red")
+#' )
 go_contourcarpet_line <- function(
     arg = NULL, ..., color = NULL, dash = NULL, smoothing = NULL,
     width = NULL, skip_invalid = FALSE

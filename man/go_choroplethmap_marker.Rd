@@ -46,9 +46,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_choroplethmap(
-    marker = go_choroplethmap_marker(opacity = 0.5)
-  )
+go_choroplethmap(
+  marker = go_choroplethmap_marker(opacity = 0.5)
+)
 }
 \concept{trace objects}

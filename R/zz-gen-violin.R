@@ -366,10 +366,9 @@ go_violin <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_violin(
-#'     box = go_violin_box(width = 0.5)
-#'   )
+#' go_violin(
+#'   box = go_violin_box(width = 0.5)
+#' )
 go_violin_box <- function(
     arg = NULL, ..., fillcolor = NULL, line = NULL, visible = NULL,
     width = NULL, skip_invalid = FALSE
@@ -407,12 +406,11 @@ go_violin_box <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_violin(
-#'     box = go_violin_box(
-#'       line = go_violin_box_line(color = "red")
-#'     )
+#' go_violin(
+#'   box = go_violin_box(
+#'     line = go_violin_box_line(color = "red")
 #'   )
+#' )
 go_violin_box_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -448,10 +446,9 @@ go_violin_box_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_violin(
-#'     line = go_violin_line(color = "red")
-#'   )
+#' go_violin(
+#'   line = go_violin_line(color = "red")
+#' )
 go_violin_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -631,10 +628,9 @@ go_violin_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_violin(
-#'     marker = go_violin_marker(color = "red")
-#'   )
+#' go_violin(
+#'   marker = go_violin_marker(color = "red")
+#' )
 go_violin_marker <- function(
     arg = NULL, ..., angle = NULL, color = NULL, line = NULL,
     opacity = NULL, outliercolor = NULL, size = NULL, symbol = NULL,
@@ -681,12 +677,11 @@ go_violin_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_violin(
-#'     marker = go_violin_marker(
-#'       line = go_violin_marker_line(color = "red")
-#'     )
+#' go_violin(
+#'   marker = go_violin_marker(
+#'     line = go_violin_marker_line(color = "red")
 #'   )
+#' )
 go_violin_marker_line <- function(
     arg = NULL, ..., color = NULL, outliercolor = NULL, outlierwidth = NULL,
     width = NULL, skip_invalid = FALSE
@@ -727,10 +722,9 @@ go_violin_marker_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_violin(
-#'     meanline = go_violin_meanline(color = "red")
-#'   )
+#' go_violin(
+#'   meanline = go_violin_meanline(color = "red")
+#' )
 go_violin_meanline <- function(
     arg = NULL, ..., color = NULL, visible = NULL, width = NULL,
     skip_invalid = FALSE

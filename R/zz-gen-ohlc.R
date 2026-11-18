@@ -285,10 +285,9 @@ go_ohlc <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_ohlc(
-#'     decreasing = go_ohlc_decreasing()
-#'   )
+#' go_ohlc(
+#'   decreasing = go_ohlc_decreasing()
+#' )
 go_ohlc_decreasing <- function(
     arg = NULL, ..., line = NULL, skip_invalid = FALSE
 ) {
@@ -331,12 +330,11 @@ go_ohlc_decreasing <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_ohlc(
-#'     decreasing = go_ohlc_decreasing(
-#'       line = go_ohlc_decreasing_line(color = "red")
-#'     )
+#' go_ohlc(
+#'   decreasing = go_ohlc_decreasing(
+#'     line = go_ohlc_decreasing_line(color = "red")
 #'   )
+#' )
 go_ohlc_decreasing_line <- function(
     arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
     skip_invalid = FALSE
@@ -372,10 +370,9 @@ go_ohlc_decreasing_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_ohlc(
-#'     increasing = go_ohlc_increasing()
-#'   )
+#' go_ohlc(
+#'   increasing = go_ohlc_increasing()
+#' )
 go_ohlc_increasing <- function(
     arg = NULL, ..., line = NULL, skip_invalid = FALSE
 ) {
@@ -418,12 +415,11 @@ go_ohlc_increasing <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_ohlc(
-#'     increasing = go_ohlc_increasing(
-#'       line = go_ohlc_increasing_line(color = "red")
-#'     )
+#' go_ohlc(
+#'   increasing = go_ohlc_increasing(
+#'     line = go_ohlc_increasing_line(color = "red")
 #'   )
+#' )
 go_ohlc_increasing_line <- function(
     arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
     skip_invalid = FALSE
@@ -467,10 +463,9 @@ go_ohlc_increasing_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_ohlc(
-#'     line = go_ohlc_line(width = 2)
-#'   )
+#' go_ohlc(
+#'   line = go_ohlc_line(width = 2)
+#' )
 go_ohlc_line <- function(
     arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE
 ) {

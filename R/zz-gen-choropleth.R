@@ -285,10 +285,9 @@ go_choropleth <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_choropleth(
-#'     marker = go_choropleth_marker(opacity = 0.5)
-#'   )
+#' go_choropleth(
+#'   marker = go_choropleth_marker(opacity = 0.5)
+#' )
 go_choropleth_marker <- function(
     arg = NULL, ..., line = NULL, opacity = NULL, skip_invalid = FALSE
 ) {
@@ -328,12 +327,11 @@ go_choropleth_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_choropleth(
-#'     marker = go_choropleth_marker(
-#'       line = go_choropleth_marker_line(color = "red")
-#'     )
+#' go_choropleth(
+#'   marker = go_choropleth_marker(
+#'     line = go_choropleth_marker_line(color = "red")
 #'   )
+#' )
 go_choropleth_marker_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {

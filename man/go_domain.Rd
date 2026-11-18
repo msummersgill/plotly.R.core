@@ -52,9 +52,8 @@ values against the contexts it can be used in; when the object is placed
 in a figure it is checked again against that context's rules.
 }
 \examples{
-go_figure() |>
-  add_funnelarea(
-    domain = go_domain()
-  )
+go_funnelarea(
+  domain = go_domain()
+)
 }
 \concept{shared object types}

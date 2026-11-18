@@ -285,10 +285,9 @@ go_funnelarea <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_funnelarea(
-#'     marker = go_funnelarea_marker(colors = c("red", "blue"))
-#'   )
+#' go_funnelarea(
+#'   marker = go_funnelarea_marker(colors = c("red", "blue"))
+#' )
 go_funnelarea_marker <- function(
     arg = NULL, ..., colors = NULL, line = NULL, pattern = NULL,
     skip_invalid = FALSE
@@ -327,12 +326,11 @@ go_funnelarea_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_funnelarea(
-#'     marker = go_funnelarea_marker(
-#'       line = go_funnelarea_marker_line(color = "red")
-#'     )
+#' go_funnelarea(
+#'   marker = go_funnelarea_marker(
+#'     line = go_funnelarea_marker_line(color = "red")
 #'   )
+#' )
 go_funnelarea_marker_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -374,10 +372,9 @@ go_funnelarea_marker_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_funnelarea(
-#'     title = go_funnelarea_title(text = "title")
-#'   )
+#' go_funnelarea(
+#'   title = go_funnelarea_title(text = "title")
+#' )
 go_funnelarea_title <- function(
     arg = NULL, ..., font = NULL, position = NULL, text = NULL,
     skip_invalid = FALSE

@@ -43,11 +43,10 @@ These objects appear in 2 places in the plotly.js schema (properties
 named \code{unifiedhovertitle}), all with the same properties and rules.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    xaxis = go_xaxis(
-      unifiedhovertitle = go_unifiedhovertitle(text = "title")
-    )
+go_layout(
+  xaxis = go_xaxis(
+    unifiedhovertitle = go_unifiedhovertitle(text = "title")
   )
+)
 }
 \concept{shared object types}

@@ -39,9 +39,8 @@ These objects appear in 2 places in the plotly.js schema (properties
 named \code{slices}), all with the same properties and rules.
 }
 \examples{
-go_figure() |>
-  add_isosurface(
-    slices = go_slices()
-  )
+go_isosurface(
+  slices = go_slices()
+)
 }
 \concept{shared object types}

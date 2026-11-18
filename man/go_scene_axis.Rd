@@ -393,11 +393,10 @@ named \code{xaxis}, \code{yaxis}, \code{zaxis}), all with the same
 properties and rules.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    scene = go_scene(
-      xaxis = go_scene_axis(color = "red")
-    )
+go_layout(
+  scene = go_scene(
+    xaxis = go_scene_axis(color = "red")
   )
+)
 }
 \concept{shared object types}

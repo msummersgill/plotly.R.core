@@ -71,13 +71,12 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    map = go_map(
-      layers = list(go_map_layer(
-        symbol = go_map_layer_symbol(text = "title")
-      ))
-    )
+go_layout(
+  map = go_map(
+    layers = list(go_map_layer(
+      symbol = go_map_layer_symbol(text = "title")
+    ))
   )
+)
 }
 \concept{layout objects}

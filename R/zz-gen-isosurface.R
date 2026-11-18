@@ -334,10 +334,9 @@ go_isosurface <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_isosurface(
-#'     contour = go_isosurface_contour(color = "red")
-#'   )
+#' go_isosurface(
+#'   contour = go_isosurface_contour(color = "red")
+#' )
 go_isosurface_contour <- function(
     arg = NULL, ..., color = NULL, show = NULL, width = NULL,
     skip_invalid = FALSE
@@ -389,10 +388,9 @@ go_isosurface_contour <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_isosurface(
-#'     lighting = go_isosurface_lighting()
-#'   )
+#' go_isosurface(
+#'   lighting = go_isosurface_lighting()
+#' )
 go_isosurface_lighting <- function(
     arg = NULL, ..., ambient = NULL, diffuse = NULL,
     facenormalsepsilon = NULL, fresnel = NULL, roughness = NULL,
@@ -446,10 +444,9 @@ go_isosurface_lighting <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_isosurface(
-#'     surface = go_isosurface_surface(show = TRUE)
-#'   )
+#' go_isosurface(
+#'   surface = go_isosurface_surface(show = TRUE)
+#' )
 go_isosurface_surface <- function(
     arg = NULL, ..., count = NULL, fill = NULL, pattern = NULL, show = NULL,
     skip_invalid = FALSE

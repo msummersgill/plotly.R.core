@@ -277,10 +277,9 @@ go_sankey <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_sankey(
-#'     link = go_sankey_link(color = "red")
-#'   )
+#' go_sankey(
+#'   link = go_sankey_link(color = "red")
+#' )
 go_sankey_link <- function(
     arg = NULL, ..., arrowlen = NULL, color = NULL, colorscales = NULL,
     customdata = NULL, hovercolor = NULL, hoverinfo = NULL,
@@ -345,12 +344,11 @@ go_sankey_link <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_sankey(
-#'     link = go_sankey_link(
-#'       colorscales = list(go_sankey_link_concentrationscales())
-#'     )
+#' go_sankey(
+#'   link = go_sankey_link(
+#'     colorscales = list(go_sankey_link_concentrationscales())
 #'   )
+#' )
 go_sankey_link_concentrationscales <- function(
     arg = NULL, ..., cmax = NULL, cmin = NULL, colorscale = NULL,
     label = NULL, name = NULL, templateitemname = NULL, skip_invalid = FALSE
@@ -388,12 +386,11 @@ go_sankey_link_concentrationscales <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_sankey(
-#'     link = go_sankey_link(
-#'       line = go_sankey_link_line(color = "red")
-#'     )
+#' go_sankey(
+#'   link = go_sankey_link(
+#'     line = go_sankey_link_line(color = "red")
 #'   )
+#' )
 go_sankey_link_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -497,10 +494,9 @@ go_sankey_link_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_sankey(
-#'     node = go_sankey_node(color = "red")
-#'   )
+#' go_sankey(
+#'   node = go_sankey_node(color = "red")
+#' )
 go_sankey_node <- function(
     arg = NULL, ..., align = NULL, color = NULL, customdata = NULL,
     groups = NULL, hoverinfo = NULL, hoverlabel = NULL,
@@ -541,12 +537,11 @@ go_sankey_node <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_sankey(
-#'     node = go_sankey_node(
-#'       line = go_sankey_node_line(color = "red")
-#'     )
+#' go_sankey(
+#'   node = go_sankey_node(
+#'     line = go_sankey_node_line(color = "red")
 #'   )
+#' )
 go_sankey_node_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {

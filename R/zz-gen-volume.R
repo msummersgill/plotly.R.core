@@ -341,10 +341,9 @@ go_volume <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_volume(
-#'     contour = go_volume_contour(color = "red")
-#'   )
+#' go_volume(
+#'   contour = go_volume_contour(color = "red")
+#' )
 go_volume_contour <- function(
     arg = NULL, ..., color = NULL, show = NULL, width = NULL,
     skip_invalid = FALSE
@@ -396,10 +395,9 @@ go_volume_contour <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_volume(
-#'     lighting = go_volume_lighting()
-#'   )
+#' go_volume(
+#'   lighting = go_volume_lighting()
+#' )
 go_volume_lighting <- function(
     arg = NULL, ..., ambient = NULL, diffuse = NULL,
     facenormalsepsilon = NULL, fresnel = NULL, roughness = NULL,
@@ -452,10 +450,9 @@ go_volume_lighting <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_volume(
-#'     surface = go_volume_surface(show = TRUE)
-#'   )
+#' go_volume(
+#'   surface = go_volume_surface(show = TRUE)
+#' )
 go_volume_surface <- function(
     arg = NULL, ..., count = NULL, fill = NULL, pattern = NULL, show = NULL,
     skip_invalid = FALSE

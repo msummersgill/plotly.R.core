@@ -279,10 +279,9 @@ go_choroplethmap <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_choroplethmap(
-#'     marker = go_choroplethmap_marker(opacity = 0.5)
-#'   )
+#' go_choroplethmap(
+#'   marker = go_choroplethmap_marker(opacity = 0.5)
+#' )
 go_choroplethmap_marker <- function(
     arg = NULL, ..., line = NULL, opacity = NULL, skip_invalid = FALSE
 ) {
@@ -322,12 +321,11 @@ go_choroplethmap_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_choroplethmap(
-#'     marker = go_choroplethmap_marker(
-#'       line = go_choroplethmap_marker_line(color = "red")
-#'     )
+#' go_choroplethmap(
+#'   marker = go_choroplethmap_marker(
+#'     line = go_choroplethmap_marker_line(color = "red")
 #'   )
+#' )
 go_choroplethmap_marker_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {

@@ -542,5 +542,28 @@ if (
   svg <- paste(readLines(path("tex.svg"), warn = FALSE), collapse = "\n")
   stopifnot(grepl("-math-group", svg), !grepl(">$\\alpha", svg, fixed = TRUE))
 
+  # knitting without pandoc (R's "Run examples" help pages, knitr::knit()):
+  # static images, one file per figure, never a PhantomJS screenshot
+  if (requireNamespace("knitr", quietly = TRUE)) {
+    old <- setwd(dir)
+    rhtml <- c(
+      "<html><body>",
+      "<!--begin.rcode two-figures",
+      "library(plotly.core)",
+      "go_figure() |> add_bar(x = 1:2, y = 1:2)",
+      "go_figure() |> add_scatter(x = 1:2, y = 2:1)",
+      "end.rcode-->",
+      "</body></html>"
+    )
+    out <- knitr::knit(text = rhtml, quiet = TRUE)
+    setwd(old)
+    imgs <- regmatches(out, gregexpr("figure/[^\"]+[.]png", out))[[1L]]
+    stopifnot(
+      length(unique(imgs)) == 2L,
+      all(file.exists(file.path(dir, imgs))),
+      !any(grepl("PhantomJS", out))
+    )
+  }
+
   plotly.core:::export_env$chrome$shutdown()
 }

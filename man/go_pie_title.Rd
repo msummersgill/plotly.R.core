@@ -53,9 +53,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_pie(
-    title = go_pie_title(text = "title")
-  )
+go_pie(
+  title = go_pie_title(text = "title")
+)
 }
 \concept{trace objects}

@@ -62,9 +62,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    transition = go_layout_transition()
-  )
+go_layout(
+  transition = go_layout_transition()
+)
 }
 \concept{layout objects}

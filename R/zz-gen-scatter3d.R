@@ -409,10 +409,9 @@ go_scatter3d <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scatter3d(
-#'     line = go_scatter3d_line(color = "red")
-#'   )
+#' go_scatter3d(
+#'   line = go_scatter3d_line(color = "red")
+#' )
 go_scatter3d_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
@@ -535,10 +534,9 @@ go_scatter3d_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scatter3d(
-#'     marker = go_scatter3d_marker(color = "red")
-#'   )
+#' go_scatter3d(
+#'   marker = go_scatter3d_marker(color = "red")
+#' )
 go_scatter3d_marker <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
@@ -633,12 +631,11 @@ go_scatter3d_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scatter3d(
-#'     marker = go_scatter3d_marker(
-#'       line = go_scatter3d_marker_line(color = "red")
-#'     )
+#' go_scatter3d(
+#'   marker = go_scatter3d_marker(
+#'     line = go_scatter3d_marker_line(color = "red")
 #'   )
+#' )
 go_scatter3d_marker_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
@@ -683,10 +680,9 @@ go_scatter3d_marker_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scatter3d(
-#'     projection = go_scatter3d_projection()
-#'   )
+#' go_scatter3d(
+#'   projection = go_scatter3d_projection()
+#' )
 go_scatter3d_projection <- function(
     arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {

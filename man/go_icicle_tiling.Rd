@@ -55,9 +55,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_icicle(
-    tiling = go_icicle_tiling()
-  )
+go_icicle(
+  tiling = go_icicle_tiling()
+)
 }
 \concept{trace objects}

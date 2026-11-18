@@ -42,13 +42,12 @@ These objects appear in 3 places in the plotly.js schema (properties
 named \code{title}), all with the same properties and rules.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    ternary = go_ternary(
-      aaxis = go_ternary_axis(
-        title = go_ternary_axis_title(text = "title")
-      )
+go_layout(
+  ternary = go_ternary(
+    aaxis = go_ternary_axis(
+      title = go_ternary_axis_title(text = "title")
     )
   )
+)
 }
 \concept{shared object types}

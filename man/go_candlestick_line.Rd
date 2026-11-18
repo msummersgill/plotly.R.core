@@ -38,9 +38,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_candlestick(
-    line = go_candlestick_line(width = 2)
-  )
+go_candlestick(
+  line = go_candlestick_line(width = 2)
+)
 }
 \concept{trace objects}

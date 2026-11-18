@@ -36,9 +36,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_histogram2d(
-    marker = go_histogram2d_marker(color = "red")
-  )
+go_histogram2d(
+  marker = go_histogram2d_marker(color = "red")
+)
 }
 \concept{trace objects}

@@ -228,10 +228,9 @@ go_parcats <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_parcats(
-#'     dimensions = list(go_parcats_dimension(visible = TRUE))
-#'   )
+#' go_parcats(
+#'   dimensions = list(go_parcats_dimension(visible = TRUE))
+#' )
 go_parcats_dimension <- function(
     arg = NULL, ..., categoryarray = NULL, categoryorder = NULL,
     displayindex = NULL, label = NULL, ticktext = NULL, values = NULL,
@@ -361,10 +360,9 @@ go_parcats_dimension <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_parcats(
-#'     line = go_parcats_line(color = "red")
-#'   )
+#' go_parcats(
+#'   line = go_parcats_line(color = "red")
+#' )
 go_parcats_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

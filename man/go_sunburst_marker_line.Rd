@@ -46,11 +46,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_sunburst(
-    marker = go_sunburst_marker(
-      line = go_sunburst_marker_line(color = "red")
-    )
+go_sunburst(
+  marker = go_sunburst_marker(
+    line = go_sunburst_marker_line(color = "red")
   )
+)
 }
 \concept{trace objects}

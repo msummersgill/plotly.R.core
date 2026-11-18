@@ -44,11 +44,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_table(
-    cells = go_table_cells(
-      line = go_table_cells_line(color = "red")
-    )
+go_table(
+  cells = go_table_cells(
+    line = go_table_cells_line(color = "red")
   )
+)
 }
 \concept{trace objects}

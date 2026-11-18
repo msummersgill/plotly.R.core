@@ -381,10 +381,9 @@ go_treemap <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_treemap(
-#'     marker = go_treemap_marker(colors = c("red", "blue"))
-#'   )
+#' go_treemap(
+#'   marker = go_treemap_marker(colors = c("red", "blue"))
+#' )
 go_treemap_marker <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, coloraxis = NULL, colorbar = NULL,
@@ -426,12 +425,11 @@ go_treemap_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_treemap(
-#'     marker = go_treemap_marker(
-#'       line = go_treemap_marker_line(color = "red")
-#'     )
+#' go_treemap(
+#'   marker = go_treemap_marker(
+#'     line = go_treemap_marker_line(color = "red")
 #'   )
+#' )
 go_treemap_marker_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -472,12 +470,11 @@ go_treemap_marker_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_treemap(
-#'     marker = go_treemap_marker(
-#'       pad = go_treemap_marker_pad()
-#'     )
+#' go_treemap(
+#'   marker = go_treemap_marker(
+#'     pad = go_treemap_marker_pad()
 #'   )
+#' )
 go_treemap_marker_pad <- function(
     arg = NULL, ..., b = NULL, l = NULL, r = NULL, t = NULL,
     skip_invalid = FALSE
@@ -531,10 +528,9 @@ go_treemap_marker_pad <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_treemap(
-#'     tiling = go_treemap_tiling()
-#'   )
+#' go_treemap(
+#'   tiling = go_treemap_tiling()
+#' )
 go_treemap_tiling <- function(
     arg = NULL, ..., flip = NULL, packing = NULL, pad = NULL,
     squarifyratio = NULL, skip_invalid = FALSE

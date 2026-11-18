@@ -121,9 +121,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    newshape = go_newshape(opacity = 0.5)
-  )
+go_layout(
+  newshape = go_newshape(opacity = 0.5)
+)
 }
 \concept{layout objects}

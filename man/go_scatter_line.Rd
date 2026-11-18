@@ -76,9 +76,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_scatter(
-    line = go_scatter_line(color = "red")
-  )
+go_scatter(
+  line = go_scatter_line(color = "red")
+)
 }
 \concept{trace objects}

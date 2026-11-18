@@ -52,9 +52,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_indicator(
-    title = go_indicator_title(text = "title")
-  )
+go_indicator(
+  title = go_indicator_title(text = "title")
+)
 }
 \concept{trace objects}

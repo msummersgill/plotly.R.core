@@ -306,11 +306,10 @@ These objects appear in 37 places in the plotly.js schema (properties
 named \code{colorbar}), all with the same properties and rules.
 }
 \examples{
-go_figure() |>
-  add_bar(
-    marker = go_bar_marker(
-      colorbar = go_colorbar()
-    )
+go_bar(
+  marker = go_bar_marker(
+    colorbar = go_colorbar()
   )
+)
 }
 \concept{shared object types}

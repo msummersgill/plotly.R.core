@@ -55,13 +55,12 @@ These objects appear in 6 places in the plotly.js schema (properties
 named \code{autorangeoptions}), all with the same properties and rules.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    polar = go_polar(
-      radialaxis = go_polar_radialaxis(
-        autorangeoptions = go_autorangeoptions()
-      )
+go_layout(
+  polar = go_polar(
+    radialaxis = go_polar_radialaxis(
+      autorangeoptions = go_autorangeoptions()
     )
   )
+)
 }
 \concept{shared object types}

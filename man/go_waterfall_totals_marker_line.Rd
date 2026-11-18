@@ -45,13 +45,12 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_waterfall(
-    totals = go_waterfall_totals(
-      marker = go_waterfall_totals_marker(
-        line = go_waterfall_totals_marker_line(color = "red")
-      )
+go_waterfall(
+  totals = go_waterfall_totals(
+    marker = go_waterfall_totals_marker(
+      line = go_waterfall_totals_marker_line(color = "red")
     )
   )
+)
 }
 \concept{trace objects}

@@ -56,11 +56,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    yaxis = go_yaxis(
-      title = go_yaxis_title(text = "title")
-    )
+go_layout(
+  yaxis = go_yaxis(
+    title = go_yaxis_title(text = "title")
   )
+)
 }
 \concept{layout objects}

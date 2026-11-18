@@ -326,10 +326,9 @@ go_scattercarpet <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scattercarpet(
-#'     line = go_scattercarpet_line(color = "red")
-#'   )
+#' go_scattercarpet(
+#'   line = go_scattercarpet_line(color = "red")
+#' )
 go_scattercarpet_line <- function(
     arg = NULL, ..., backoff = NULL, color = NULL, dash = NULL,
     shape = NULL, smoothing = NULL, width = NULL, skip_invalid = FALSE
@@ -592,10 +591,9 @@ go_scattercarpet_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scattercarpet(
-#'     marker = go_scattercarpet_marker(color = "red")
-#'   )
+#' go_scattercarpet(
+#'   marker = go_scattercarpet_marker(color = "red")
+#' )
 go_scattercarpet_marker <- function(
     arg = NULL, ..., angle = NULL, angleref = NULL, autocolorscale = NULL,
     cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL, color = NULL,
@@ -698,12 +696,11 @@ go_scattercarpet_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scattercarpet(
-#'     marker = go_scattercarpet_marker(
-#'       line = go_scattercarpet_marker_line(color = "red")
-#'     )
+#' go_scattercarpet(
+#'   marker = go_scattercarpet_marker(
+#'     line = go_scattercarpet_marker_line(color = "red")
 #'   )
+#' )
 go_scattercarpet_marker_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

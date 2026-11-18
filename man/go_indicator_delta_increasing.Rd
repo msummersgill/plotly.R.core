@@ -44,11 +44,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_indicator(
-    delta = go_indicator_delta(
-      increasing = go_indicator_delta_increasing(color = "red")
-    )
+go_indicator(
+  delta = go_indicator_delta(
+    increasing = go_indicator_delta_increasing(color = "red")
   )
+)
 }
 \concept{trace objects}

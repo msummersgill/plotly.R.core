@@ -394,10 +394,9 @@ go_histogram2d <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_histogram2d(
-#'     marker = go_histogram2d_marker(color = "red")
-#'   )
+#' go_histogram2d(
+#'   marker = go_histogram2d_marker(color = "red")
+#' )
 go_histogram2d_marker <- function(
     arg = NULL, ..., color = NULL, skip_invalid = FALSE
 ) {

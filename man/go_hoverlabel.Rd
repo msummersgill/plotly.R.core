@@ -90,9 +90,8 @@ used in; when the object is placed in a figure it is checked again
 against that context's rules.
 }
 \examples{
-go_figure() |>
-  add_bar(
-    hoverlabel = go_hoverlabel()
-  )
+go_bar(
+  hoverlabel = go_hoverlabel()
+)
 }
 \concept{shared object types}

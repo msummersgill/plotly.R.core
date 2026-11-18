@@ -75,12 +75,11 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_bar(
-#'     legendgrouptitle = go_legendgrouptitle(
-#'       font = go_font(color = "red")
-#'     )
+#' go_bar(
+#'   legendgrouptitle = go_legendgrouptitle(
+#'     font = go_font(color = "red")
 #'   )
+#' )
 go_font <- function(
     arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
     shadow = NULL, size = NULL, style = NULL, textcase = NULL,
@@ -292,12 +291,11 @@ go_font <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_bar(
-#'     marker = go_bar_marker(
-#'       colorbar = go_colorbar()
-#'     )
+#' go_bar(
+#'   marker = go_bar_marker(
+#'     colorbar = go_colorbar()
 #'   )
+#' )
 go_colorbar <- function(
     arg = NULL, ..., bgcolor = NULL, bordercolor = NULL, borderwidth = NULL,
     dtick = NULL, exponentformat = NULL, labelalias = NULL, len = NULL,
@@ -379,10 +377,9 @@ go_colorbar <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_bar(
-#'     hoverlabel = go_hoverlabel()
-#'   )
+#' go_bar(
+#'   hoverlabel = go_hoverlabel()
+#' )
 go_hoverlabel <- function(
     arg = NULL, ..., align = NULL, bgcolor = NULL, bordercolor = NULL,
     font = NULL, grouptitlefont = NULL, namelength = NULL, showarrow = NULL,
@@ -418,10 +415,9 @@ go_hoverlabel <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_bar(
-#'     legendgrouptitle = go_legendgrouptitle(text = "title")
-#'   )
+#' go_bar(
+#'   legendgrouptitle = go_legendgrouptitle(text = "title")
+#' )
 go_legendgrouptitle <- function(
     arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
 ) {
@@ -469,14 +465,13 @@ go_legendgrouptitle <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_bar(
-#'     marker = go_bar_marker(
-#'       colorbar = go_colorbar(
-#'         tickformatstops = list(go_tickformatstop())
-#'       )
+#' go_bar(
+#'   marker = go_bar_marker(
+#'     colorbar = go_colorbar(
+#'       tickformatstops = list(go_tickformatstop())
 #'     )
 #'   )
+#' )
 go_tickformatstop <- function(
     arg = NULL, ..., dtickrange = NULL, enabled = NULL, name = NULL,
     templateitemname = NULL, value = NULL, skip_invalid = FALSE
@@ -517,10 +512,9 @@ go_tickformatstop <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_funnelarea(
-#'     domain = go_domain()
-#'   )
+#' go_funnelarea(
+#'   domain = go_domain()
+#' )
 go_domain <- function(
     arg = NULL, ..., column = NULL, row = NULL, x = NULL, y = NULL,
     skip_invalid = FALSE
@@ -580,12 +574,11 @@ go_domain <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_bar(
-#'     marker = go_bar_marker(
-#'       pattern = go_pattern(size = 10)
-#'     )
+#' go_bar(
+#'   marker = go_bar_marker(
+#'     pattern = go_pattern(size = 10)
 #'   )
+#' )
 go_pattern <- function(
     arg = NULL, ..., bgcolor = NULL, fgcolor = NULL, fgopacity = NULL,
     fillmode = NULL, path = NULL, shape = NULL, size = NULL,
@@ -657,10 +650,9 @@ go_pattern <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_bar(
-#'     error_y = go_error_bar(color = "red")
-#'   )
+#' go_bar(
+#'   error_y = go_error_bar(color = "red")
+#' )
 go_error_bar <- function(
     arg = NULL, ..., array = NULL, arrayminus = NULL, color = NULL,
     copy_ystyle = NULL, copy_zstyle = NULL, symmetric = NULL,
@@ -705,14 +697,13 @@ go_error_bar <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     polar = go_polar(
-#'       radialaxis = go_polar_radialaxis(
-#'         autorangeoptions = go_autorangeoptions()
-#'       )
+#' go_layout(
+#'   polar = go_polar(
+#'     radialaxis = go_polar_radialaxis(
+#'       autorangeoptions = go_autorangeoptions()
 #'     )
 #'   )
+#' )
 go_autorangeoptions <- function(
     arg = NULL, ..., clipmax = NULL, clipmin = NULL, include = NULL,
     maxallowed = NULL, minallowed = NULL, skip_invalid = FALSE
@@ -770,10 +761,9 @@ go_autorangeoptions <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_histogram(
-#'     xbins = go_bins(size = 10)
-#'   )
+#' go_histogram(
+#'   xbins = go_bins(size = 10)
+#' )
 go_bins <- function(
     arg = NULL, ..., end = NULL, size = NULL, start = NULL,
     skip_invalid = FALSE
@@ -810,10 +800,9 @@ go_bins <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_isosurface(
-#'     caps = go_caps()
-#'   )
+#' go_isosurface(
+#'   caps = go_caps()
+#' )
 go_caps <- function(
     arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
@@ -858,12 +847,11 @@ go_caps <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     xaxis = go_xaxis(
-#'       domainpad = go_domainpad()
-#'     )
+#' go_layout(
+#'   xaxis = go_xaxis(
+#'     domainpad = go_domainpad()
 #'   )
+#' )
 go_domainpad <- function(
     arg = NULL, ..., bottom = NULL, left = NULL, right = NULL, top = NULL,
     skip_invalid = FALSE
@@ -897,12 +885,11 @@ go_domainpad <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scatter(
-#'     marker = go_scatter_marker(
-#'       gradient = go_gradient(color = "red")
-#'     )
+#' go_scatter(
+#'   marker = go_scatter_marker(
+#'     gradient = go_gradient(color = "red")
 #'   )
+#' )
 go_gradient <- function(
     arg = NULL, ..., color = NULL, type = NULL, skip_invalid = FALSE
 ) {
@@ -992,12 +979,11 @@ go_gradient <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     newshape = go_newshape(
-#'       label = go_label(text = "title")
-#'     )
+#' go_layout(
+#'   newshape = go_newshape(
+#'     label = go_label(text = "title")
 #'   )
+#' )
 go_label <- function(
     arg = NULL, ..., font = NULL, padding = NULL, text = NULL,
     textangle = NULL, textposition = NULL, texttemplate = NULL,
@@ -1030,10 +1016,9 @@ go_label <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_icicle(
-#'     leaf = go_leaf(opacity = 0.5)
-#'   )
+#' go_icicle(
+#'   leaf = go_leaf(opacity = 0.5)
+#' )
 go_leaf <- function(
     arg = NULL, ..., opacity = NULL, skip_invalid = FALSE
 ) {
@@ -1067,10 +1052,9 @@ go_leaf <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_cone(
-#'     lightposition = go_lightposition()
-#'   )
+#' go_cone(
+#'   lightposition = go_lightposition()
+#' )
 go_lightposition <- function(
     arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
@@ -1160,12 +1144,11 @@ go_lightposition <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     xaxis = go_xaxis(
-#'       minor = go_minor()
-#'     )
+#' go_layout(
+#'   xaxis = go_xaxis(
+#'     minor = go_minor()
 #'   )
+#' )
 go_minor <- function(
     arg = NULL, ..., dtick = NULL, gridcolor = NULL, griddash = NULL,
     gridwidth = NULL, nticks = NULL, showgrid = NULL, tick0 = NULL,
@@ -1210,10 +1193,9 @@ go_minor <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_icicle(
-#'     pathbar = go_pathbar(visible = TRUE)
-#'   )
+#' go_icicle(
+#'   pathbar = go_pathbar(visible = TRUE)
+#' )
 go_pathbar <- function(
     arg = NULL, ..., edgeshape = NULL, side = NULL, textfont = NULL,
     thickness = NULL, visible = NULL, skip_invalid = FALSE
@@ -1253,14 +1235,13 @@ go_pathbar <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_surface(
-#'     contours = go_surface_contours(
-#'       x = go_surface_contours_axis(
-#'         project = go_project()
-#'       )
+#' go_surface(
+#'   contours = go_surface_contours(
+#'     x = go_surface_contours_axis(
+#'       project = go_project()
 #'     )
 #'   )
+#' )
 go_project <- function(
     arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
@@ -1321,12 +1302,11 @@ go_project <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     xaxis = go_xaxis(
-#'       rangebreaks = list(go_rangebreak())
-#'     )
+#' go_layout(
+#'   xaxis = go_xaxis(
+#'     rangebreaks = list(go_rangebreak())
 #'   )
+#' )
 go_rangebreak <- function(
     arg = NULL, ..., bounds = NULL, dvalue = NULL, enabled = NULL,
     name = NULL, pattern = NULL, templateitemname = NULL, values = NULL,
@@ -1358,10 +1338,9 @@ go_rangebreak <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_icicle(
-#'     root = go_root(color = "red")
-#'   )
+#' go_icicle(
+#'   root = go_root(color = "red")
+#' )
 go_root <- function(
     arg = NULL, ..., color = NULL, skip_invalid = FALSE
 ) {
@@ -1397,10 +1376,9 @@ go_root <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_isosurface(
-#'     slices = go_slices()
-#'   )
+#' go_isosurface(
+#'   slices = go_slices()
+#' )
 go_slices <- function(
     arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
@@ -1437,10 +1415,9 @@ go_slices <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_isosurface(
-#'     spaceframe = go_spaceframe(show = TRUE)
-#'   )
+#' go_isosurface(
+#'   spaceframe = go_spaceframe(show = TRUE)
+#' )
 go_spaceframe <- function(
     arg = NULL, ..., fill = NULL, show = NULL, skip_invalid = FALSE
 ) {
@@ -1482,12 +1459,11 @@ go_spaceframe <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     xaxis = go_xaxis(
-#'       unifiedhovertitle = go_unifiedhovertitle(text = "title")
-#'     )
+#' go_layout(
+#'   xaxis = go_xaxis(
+#'     unifiedhovertitle = go_unifiedhovertitle(text = "title")
 #'   )
+#' )
 go_unifiedhovertitle <- function(
     arg = NULL, ..., text = NULL, skip_invalid = FALSE
 ) {
@@ -1764,12 +1740,11 @@ go_unifiedhovertitle <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     scene = go_scene(
-#'       xaxis = go_scene_axis(color = "red")
-#'     )
+#' go_layout(
+#'   scene = go_scene(
+#'     xaxis = go_scene_axis(color = "red")
 #'   )
+#' )
 go_scene_axis <- function(
     arg = NULL, ..., autorange = NULL, autorangeoptions = NULL,
     autotypenumbers = NULL, backgroundcolor = NULL, calendar = NULL,
@@ -2009,12 +1984,11 @@ go_scene_axis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     ternary = go_ternary(
-#'       aaxis = go_ternary_axis(color = "red")
-#'     )
+#' go_layout(
+#'   ternary = go_ternary(
+#'     aaxis = go_ternary_axis(color = "red")
 #'   )
+#' )
 go_ternary_axis <- function(
     arg = NULL, ..., color = NULL, dtick = NULL, exponentformat = NULL,
     gridcolor = NULL, griddash = NULL, gridwidth = NULL, hoverformat = NULL,
@@ -2060,12 +2034,11 @@ go_ternary_axis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scatter3d(
-#'     projection = go_scatter3d_projection(
-#'       x = go_scatter3d_projection_axis(opacity = 0.5)
-#'     )
+#' go_scatter3d(
+#'   projection = go_scatter3d_projection(
+#'     x = go_scatter3d_projection_axis(opacity = 0.5)
 #'   )
+#' )
 go_scatter3d_projection_axis <- function(
     arg = NULL, ..., opacity = NULL, scale = NULL, show = NULL,
     skip_invalid = FALSE
@@ -2118,12 +2091,11 @@ go_scatter3d_projection_axis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_surface(
-#'     contours = go_surface_contours(
-#'       x = go_surface_contours_axis(color = "red")
-#'     )
+#' go_surface(
+#'   contours = go_surface_contours(
+#'     x = go_surface_contours_axis(color = "red")
 #'   )
+#' )
 go_surface_contours_axis <- function(
     arg = NULL, ..., color = NULL, end = NULL, highlight = NULL,
     highlightcolor = NULL, highlightwidth = NULL, project = NULL,
@@ -2170,10 +2142,9 @@ go_surface_contours_axis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scatter(
-#'     selected = go_selected()
-#'   )
+#' go_scatter(
+#'   selected = go_selected()
+#' )
 go_selected <- function(
     arg = NULL, ..., marker = NULL, textfont = NULL, skip_invalid = FALSE
 ) {
@@ -2222,10 +2193,9 @@ go_selected <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scatter(
-#'     unselected = go_unselected()
-#'   )
+#' go_scatter(
+#'   unselected = go_unselected()
+#' )
 go_unselected <- function(
     arg = NULL, ..., line = NULL, marker = NULL, textfont = NULL,
     skip_invalid = FALSE
@@ -2263,12 +2233,11 @@ go_unselected <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_isosurface(
-#'     caps = go_caps(
-#'       x = go_caps_axis(show = TRUE)
-#'     )
+#' go_isosurface(
+#'   caps = go_caps(
+#'     x = go_caps_axis(show = TRUE)
 #'   )
+#' )
 go_caps_axis <- function(
     arg = NULL, ..., fill = NULL, show = NULL, skip_invalid = FALSE
 ) {
@@ -2306,14 +2275,13 @@ go_caps_axis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_bar(
-#'     marker = go_bar_marker(
-#'       colorbar = go_colorbar(
-#'         title = go_colorbar_title(text = "title")
-#'       )
+#' go_bar(
+#'   marker = go_bar_marker(
+#'     colorbar = go_colorbar(
+#'       title = go_colorbar_title(text = "title")
 #'     )
 #'   )
+#' )
 go_colorbar_title <- function(
     arg = NULL, ..., font = NULL, side = NULL, text = NULL,
     skip_invalid = FALSE
@@ -2348,14 +2316,13 @@ go_colorbar_title <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     scene = go_scene(
-#'       xaxis = go_scene_axis(
-#'         title = go_scene_axis_title(text = "title")
-#'       )
+#' go_layout(
+#'   scene = go_scene(
+#'     xaxis = go_scene_axis(
+#'       title = go_scene_axis_title(text = "title")
 #'     )
 #'   )
+#' )
 go_scene_axis_title <- function(
     arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
 ) {
@@ -2396,12 +2363,11 @@ go_scene_axis_title <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_box(
-#'     selected = go_selected(
-#'       marker = go_selected_marker(color = "red")
-#'     )
+#' go_box(
+#'   selected = go_selected(
+#'     marker = go_selected_marker(color = "red")
 #'   )
+#' )
 go_selected_marker <- function(
     arg = NULL, ..., color = NULL, line = NULL, opacity = NULL, size = NULL,
     skip_invalid = FALSE
@@ -2432,14 +2398,13 @@ go_selected_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_quiver(
-#'     selected = go_selected(
-#'       marker = go_selected_marker(
-#'         line = go_selected_marker_line(width = 2)
-#'       )
+#' go_quiver(
+#'   selected = go_selected(
+#'     marker = go_selected_marker(
+#'       line = go_selected_marker_line(width = 2)
 #'     )
 #'   )
+#' )
 go_selected_marker_line <- function(
     arg = NULL, ..., width = NULL, skip_invalid = FALSE
 ) {
@@ -2479,12 +2444,11 @@ go_selected_marker_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_isosurface(
-#'     slices = go_slices(
-#'       x = go_slices_axis(show = TRUE)
-#'     )
+#' go_isosurface(
+#'   slices = go_slices(
+#'     x = go_slices_axis(show = TRUE)
 #'   )
+#' )
 go_slices_axis <- function(
     arg = NULL, ..., fill = NULL, locations = NULL, show = NULL,
     skip_invalid = FALSE
@@ -2519,14 +2483,13 @@ go_slices_axis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     ternary = go_ternary(
-#'       aaxis = go_ternary_axis(
-#'         title = go_ternary_axis_title(text = "title")
-#'       )
+#' go_layout(
+#'   ternary = go_ternary(
+#'     aaxis = go_ternary_axis(
+#'       title = go_ternary_axis_title(text = "title")
 #'     )
 #'   )
+#' )
 go_ternary_axis_title <- function(
     arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
 ) {
@@ -2560,12 +2523,11 @@ go_ternary_axis_title <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_parcoords(
-#'     unselected = go_unselected(
-#'       line = go_unselected_line(color = "red")
-#'     )
+#' go_parcoords(
+#'   unselected = go_unselected(
+#'     line = go_unselected_line(color = "red")
 #'   )
+#' )
 go_unselected_line <- function(
     arg = NULL, ..., color = NULL, opacity = NULL, skip_invalid = FALSE
 ) {
@@ -2609,12 +2571,11 @@ go_unselected_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_box(
-#'     unselected = go_unselected(
-#'       marker = go_unselected_marker(color = "red")
-#'     )
+#' go_box(
+#'   unselected = go_unselected(
+#'     marker = go_unselected_marker(color = "red")
 #'   )
+#' )
 go_unselected_marker <- function(
     arg = NULL, ..., color = NULL, line = NULL, opacity = NULL, size = NULL,
     skip_invalid = FALSE
@@ -2645,14 +2606,13 @@ go_unselected_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_quiver(
-#'     unselected = go_unselected(
-#'       marker = go_unselected_marker(
-#'         line = go_unselected_marker_line(width = 2)
-#'       )
+#' go_quiver(
+#'   unselected = go_unselected(
+#'     marker = go_unselected_marker(
+#'       line = go_unselected_marker_line(width = 2)
 #'     )
 #'   )
+#' )
 go_unselected_marker_line <- function(
     arg = NULL, ..., width = NULL, skip_invalid = FALSE
 ) {

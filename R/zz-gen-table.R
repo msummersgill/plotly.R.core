@@ -194,10 +194,9 @@ go_table <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_table(
-#'     cells = go_table_cells()
-#'   )
+#' go_table(
+#'   cells = go_table_cells()
+#' )
 go_table_cells <- function(
     arg = NULL, ..., align = NULL, fill = NULL, font = NULL, format = NULL,
     height = NULL, line = NULL, prefix = NULL, suffix = NULL, values = NULL,
@@ -235,12 +234,11 @@ go_table_cells <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_table(
-#'     cells = go_table_cells(
-#'       fill = go_table_cells_fill(color = "red")
-#'     )
+#' go_table(
+#'   cells = go_table_cells(
+#'     fill = go_table_cells_fill(color = "red")
 #'   )
+#' )
 go_table_cells_fill <- function(
     arg = NULL, ..., color = NULL, skip_invalid = FALSE
 ) {
@@ -276,12 +274,11 @@ go_table_cells_fill <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_table(
-#'     cells = go_table_cells(
-#'       line = go_table_cells_line(color = "red")
-#'     )
+#' go_table(
+#'   cells = go_table_cells(
+#'     line = go_table_cells_line(color = "red")
 #'   )
+#' )
 go_table_cells_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -340,10 +337,9 @@ go_table_cells_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_table(
-#'     header = go_table_header()
-#'   )
+#' go_table(
+#'   header = go_table_header()
+#' )
 go_table_header <- function(
     arg = NULL, ..., align = NULL, fill = NULL, font = NULL, format = NULL,
     height = NULL, line = NULL, prefix = NULL, suffix = NULL, values = NULL,
@@ -381,12 +377,11 @@ go_table_header <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_table(
-#'     header = go_table_header(
-#'       fill = go_table_header_fill(color = "red")
-#'     )
+#' go_table(
+#'   header = go_table_header(
+#'     fill = go_table_header_fill(color = "red")
 #'   )
+#' )
 go_table_header_fill <- function(
     arg = NULL, ..., color = NULL, skip_invalid = FALSE
 ) {
@@ -422,12 +417,11 @@ go_table_header_fill <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_table(
-#'     header = go_table_header(
-#'       line = go_table_header_line(color = "red")
-#'     )
+#' go_table(
+#'   header = go_table_header(
+#'     line = go_table_header_line(color = "red")
 #'   )
+#' )
 go_table_header_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {

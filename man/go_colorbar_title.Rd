@@ -48,13 +48,12 @@ These objects appear in 37 places in the plotly.js schema (properties
 named \code{title}), all with the same properties and rules.
 }
 \examples{
-go_figure() |>
-  add_bar(
-    marker = go_bar_marker(
-      colorbar = go_colorbar(
-        title = go_colorbar_title(text = "title")
-      )
+go_bar(
+  marker = go_bar_marker(
+    colorbar = go_colorbar(
+      title = go_colorbar_title(text = "title")
     )
   )
+)
 }
 \concept{shared object types}

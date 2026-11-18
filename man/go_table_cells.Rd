@@ -81,9 +81,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_table(
-    cells = go_table_cells()
-  )
+go_table(
+  cells = go_table_cells()
+)
 }
 \concept{trace objects}

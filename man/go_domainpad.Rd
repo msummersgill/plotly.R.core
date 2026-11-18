@@ -57,11 +57,10 @@ These objects appear in 2 places in the plotly.js schema (properties
 named \code{domainpad}), all with the same properties and rules.
 }
 \examples{
-go_figure() |>
-  update_layout(
-    xaxis = go_xaxis(
-      domainpad = go_domainpad()
-    )
+go_layout(
+  xaxis = go_xaxis(
+    domainpad = go_domainpad()
   )
+)
 }
 \concept{shared object types}

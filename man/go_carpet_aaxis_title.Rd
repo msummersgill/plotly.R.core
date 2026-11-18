@@ -51,11 +51,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_carpet(
-    aaxis = go_carpet_aaxis(
-      title = go_carpet_aaxis_title(text = "title")
-    )
+go_carpet(
+  aaxis = go_carpet_aaxis(
+    title = go_carpet_aaxis_title(text = "title")
   )
+)
 }
 \concept{trace objects}

@@ -45,9 +45,8 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_ohlc(
-    line = go_ohlc_line(width = 2)
-  )
+go_ohlc(
+  line = go_ohlc_line(width = 2)
+)
 }
 \concept{trace objects}

@@ -46,11 +46,10 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_figure() |>
-  add_waterfall(
-    decreasing = go_waterfall_decreasing(
-      marker = go_waterfall_decreasing_marker(color = "red")
-    )
+go_waterfall(
+  decreasing = go_waterfall_decreasing(
+    marker = go_waterfall_decreasing_marker(color = "red")
   )
+)
 }
 \concept{trace objects}

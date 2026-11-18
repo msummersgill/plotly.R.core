@@ -303,10 +303,9 @@ go_scattermap <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scattermap(
-#'     cluster = go_scattermap_cluster(color = "red")
-#'   )
+#' go_scattermap(
+#'   cluster = go_scattermap_cluster(color = "red")
+#' )
 go_scattermap_cluster <- function(
     arg = NULL, ..., color = NULL, enabled = NULL, maxzoom = NULL,
     opacity = NULL, size = NULL, step = NULL, skip_invalid = FALSE
@@ -344,10 +343,9 @@ go_scattermap_cluster <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scattermap(
-#'     line = go_scattermap_line(color = "red")
-#'   )
+#' go_scattermap(
+#'   line = go_scattermap_line(color = "red")
+#' )
 go_scattermap_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -465,10 +463,9 @@ go_scattermap_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_figure() |>
-#'   add_scattermap(
-#'     marker = go_scattermap_marker(color = "red")
-#'   )
+#' go_scattermap(
+#'   marker = go_scattermap_marker(color = "red")
+#' )
 go_scattermap_marker <- function(
     arg = NULL, ..., allowoverlap = NULL, angle = NULL,
     autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
