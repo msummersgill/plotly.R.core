@@ -4,21 +4,6 @@
 \alias{add_sankey}
 \alias{add_sankey.default}
 \alias{go_sankey}
-\alias{go_sankey_domain}
-\alias{go_sankey_hoverlabel}
-\alias{go_sankey_hoverlabel_font}
-\alias{go_sankey_legendgrouptitle}
-\alias{go_sankey_legendgrouptitle_font}
-\alias{go_sankey_link}
-\alias{go_sankey_link_concentrationscales}
-\alias{go_sankey_link_hoverlabel}
-\alias{go_sankey_link_hoverlabel_font}
-\alias{go_sankey_link_line}
-\alias{go_sankey_node}
-\alias{go_sankey_node_hoverlabel}
-\alias{go_sankey_node_hoverlabel_font}
-\alias{go_sankey_node_line}
-\alias{go_sankey_textfont}
 \title{Sankey traces}
 \usage{
 add_sankey(fig, ...)
@@ -83,217 +68,17 @@ go_sankey(
   visible = NULL,
   skip_invalid = FALSE
 )
-
-go_sankey_domain(
-  arg = NULL,
-  ...,
-  column = NULL,
-  row = NULL,
-  x = NULL,
-  y = NULL,
-  skip_invalid = FALSE
-)
-
-go_sankey_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  skip_invalid = FALSE
-)
-
-go_sankey_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_sankey_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_sankey_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_sankey_link(
-  arg = NULL,
-  ...,
-  arrowlen = NULL,
-  color = NULL,
-  colorscales = NULL,
-  customdata = NULL,
-  hovercolor = NULL,
-  hoverinfo = NULL,
-  hoverlabel = NULL,
-  hovertemplate = NULL,
-  hovertemplatefallback = NULL,
-  label = NULL,
-  line = NULL,
-  sort = NULL,
-  source = NULL,
-  target = NULL,
-  value = NULL,
-  skip_invalid = FALSE
-)
-
-go_sankey_link_concentrationscales(
-  arg = NULL,
-  ...,
-  cmax = NULL,
-  cmin = NULL,
-  colorscale = NULL,
-  label = NULL,
-  name = NULL,
-  templateitemname = NULL,
-  skip_invalid = FALSE
-)
-
-go_sankey_link_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  skip_invalid = FALSE
-)
-
-go_sankey_link_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_sankey_link_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_sankey_node(
-  arg = NULL,
-  ...,
-  align = NULL,
-  color = NULL,
-  customdata = NULL,
-  groups = NULL,
-  hoverinfo = NULL,
-  hoverlabel = NULL,
-  hovertemplate = NULL,
-  hovertemplatefallback = NULL,
-  label = NULL,
-  line = NULL,
-  pad = NULL,
-  sort = NULL,
-  thickness = NULL,
-  x = NULL,
-  y = NULL,
-  skip_invalid = FALSE
-)
-
-go_sankey_node_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  skip_invalid = FALSE
-)
-
-go_sankey_node_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_sankey_node_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_sankey_textfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
 }
 \arguments{
 \item{fig}{A \code{go_figure} object.}
 
-\item{...}{Further properties, including nested properties in
-"magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}. Property values may be one-sided
-formulas, evaluated in \code{data} for \code{add_*()} functions.}
+\item{...}{Further properties, by their full names (e.g. numbered subplots
+such as \code{xaxis2} in \code{go_layout()}). Nested properties are set
+with named lists: \code{marker = list(size = 10)}.}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
-~col}, \code{marker_size = ~col}) are evaluated. Default: the data
-given to \code{\link{go_figure}()}. Only the evaluated values are
+~col}, \code{marker = list(size = ~col)}) are evaluated. Default: the
+data given to \code{\link{go_figure}()}. Only the evaluated values are
 added to the trace. A \code{crosstalk::SharedData} works the same way,
 and links the trace to its crosstalk group (see
 \code{\link{highlight}()}).}
@@ -307,17 +92,10 @@ plane. If value is `fixed`, the nodes are stationary. One of
 \code{"snap"}, \code{"perpendicular"}, \code{"freeform"},
 \code{"fixed"}.}
 
-\item{customdata}{\strong{\code{go_sankey()}}: Assigns extra data each
-  datum. This may be useful when listening to hover, click and selection
-  events. Note that, "scatter" traces also appends customdata items in
-  the markers DOM elements Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
-
-  \strong{\code{go_sankey_link()}}: Assigns extra data to each link.
-  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-
-  \strong{\code{go_sankey_node()}}: Assigns extra data to each node.
-  Data array: a vector, factor, Date/POSIXct vector, matrix or list.}
+\item{customdata}{Assigns extra data each datum. This may be useful when
+listening to hover, click and selection events. Note that, "scatter"
+traces also appends customdata items in the markers DOM elements Data
+array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{direction}{Sets the direction of the flow along the `orientation`
 axis. With `forward` (the default), sources are on the left
@@ -325,36 +103,22 @@ axis. With `forward` (the default), sources are on the left
 right (horizontal) or bottom (vertical). One of \code{"forward"},
 \code{"reversed"}.}
 
-\item{domain}{Named list or \code{\link{go_sankey_domain}()} object.}
+\item{domain}{A \code{\link{go_domain}()} object or named list, with
+properties \code{column}, \code{row}, \code{x} and \code{y} (see
+\code{\link{go_domain}()}).}
 
-\item{hoverinfo}{\strong{\code{go_sankey()}}: Determines what trace
-  information appears on hover. If `none` or `skip` are set, no
-  information is displayed upon hovering. But, if `none` is set, click
-  and hover events are still fired. Note that this attribute is
-  superseded by `node.hoverinfo` and `node.hoverinfo` for nodes and
-  links respectively. Any combination of \code{""} joined with
-  \code{"+"}, or one of \code{"all"}, \code{"none"}, \code{"skip"}.
+\item{hoverinfo}{Determines what trace information appears on hover. If
+`none` or `skip` are set, no information is displayed upon hovering.
+But, if `none` is set, click and hover events are still fired. Note
+that this attribute is superseded by `node.hoverinfo` and
+`node.hoverinfo` for nodes and links respectively. Any combination of
+\code{""} joined with \code{"+"}, or one of \code{"all"},
+\code{"none"}, \code{"skip"}.}
 
-  \strong{\code{go_sankey_link()}}: Determines what trace information
-  appears when hovering links. If `none` or `skip` are set, no
-  information is displayed upon hovering. But, if `none` is set, click
-  and hover events are still fired. One of \code{"all"}, \code{"none"},
-  \code{"skip"}.
-
-  \strong{\code{go_sankey_node()}}: Determines what trace information
-  appears when hovering nodes. If `none` or `skip` are set, no
-  information is displayed upon hovering. But, if `none` is set, click
-  and hover events are still fired. One of \code{"all"}, \code{"none"},
-  \code{"skip"}.}
-
-\item{hoverlabel}{\strong{\code{go_sankey()}}: Named list or
-  \code{\link{go_sankey_hoverlabel}()} object.
-
-  \strong{\code{go_sankey_link()}}: Named list or
-  \code{\link{go_sankey_link_hoverlabel}()} object.
-
-  \strong{\code{go_sankey_node()}}: Named list or
-  \code{\link{go_sankey_node_hoverlabel}()} object.}
+\item{hoverlabel}{A \code{\link{go_hoverlabel}()} object or named list,
+with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+\code{font}, \code{namelength} and \code{showarrow} (see
+\code{\link{go_hoverlabel}()}).}
 
 \item{ids}{Assigns id labels to each datum. These ids for object
 constancy of data points during animation. Should be an array of
@@ -367,8 +131,9 @@ Settings for these legends are set in the layout, under
 `layout.legend`, `layout.legend2`, etc. Subplot id: \code{"legend"},
 \code{"legend2"}, \code{"legend3"}, ....}
 
-\item{legendgrouptitle}{Named list or
-\code{\link{go_sankey_legendgrouptitle}()} object.}
+\item{legendgrouptitle}{A \code{\link{go_legendgrouptitle}()} object or
+named list, with properties \code{font} and \code{text} (see
+\code{\link{go_legendgrouptitle}()}).}
 
 \item{legendrank}{Sets the legend rank for this trace. Items and groups
 with smaller ranks are presented on top/left side while with
@@ -382,8 +147,12 @@ to their order in data and layout. Number.}
 \item{legendwidth}{Sets the width (in px or fraction) of the legend for
 this trace. Number in the interval [0, Inf].}
 
-\item{link}{The links of the Sankey plot. Named list or
-\code{\link{go_sankey_link}()} object.}
+\item{link}{The links of the Sankey plot. A named list with properties
+\code{arrowlen}, \code{color}, \code{colorscales}, \code{customdata},
+\code{hovercolor}, \code{hoverinfo}, \code{hoverlabel},
+\code{hovertemplate}, \code{hovertemplatefallback}, \code{label},
+\code{line}, \code{sort}, \code{source}, \code{target} and
+\code{value} (described in section "link properties" below).}
 
 \item{meta}{Assigns extra meta information associated with this trace
 that can be used in various text attributes. Attributes such as trace
@@ -395,19 +164,15 @@ trace, simply use `\%\{meta[i]\}` where `i` is the index or key of the
 use `\%\{data[n[.meta[i]\}` where `i` is the index or key of the
 `meta` and `n` is the trace index. Any value.}
 
-\item{name}{\strong{\code{go_sankey()}}: Sets the trace name. The trace
-  name appears as the legend item and on hover. String.
+\item{name}{Sets the trace name. The trace name appears as the legend
+item and on hover. String.}
 
-  \strong{\code{go_sankey_link_concentrationscales()}}: When used in a
-  template, named items are created in the output figure in addition to
-  any items the figure already has in this array. You can modify these
-  items in the output figure by making your own item with
-  `templateitemname` matching this `name` alongside your modifications
-  (including `visible: false` or `enabled: false` to hide it). Has no
-  effect outside of a template. String.}
-
-\item{node}{The nodes of the Sankey plot. Named list or
-\code{\link{go_sankey_node}()} object.}
+\item{node}{The nodes of the Sankey plot. A named list with properties
+\code{align}, \code{color}, \code{customdata}, \code{groups},
+\code{hoverinfo}, \code{hoverlabel}, \code{hovertemplate},
+\code{hovertemplatefallback}, \code{label}, \code{line}, \code{pad},
+\code{sort}, \code{thickness}, \code{x} and \code{y} (described in
+section "node properties" below).}
 
 \item{orientation}{Sets the orientation of the Sankey diagram. With `h`
 (the default), the flow runs horizontally. With `v`, the flow runs
@@ -421,8 +186,11 @@ are turned on for all points, whereas, any other non-array values
 means no selection all where the `selected` and `unselected` styles
 have no effect. Any value.}
 
-\item{textfont}{Sets the font for node labels Named list or
-\code{\link{go_sankey_textfont}()} object.}
+\item{textfont}{Sets the font for node labels A \code{\link{go_font}()}
+object or named list, with properties \code{color}, \code{family},
+\code{lineposition}, \code{shadow}, \code{size}, \code{style},
+\code{textcase}, \code{variant} and \code{weight} (see
+\code{\link{go_font}()}).}
 
 \item{uid}{Assign an id to this trace, Use this to provide object
 constancy between traces during animations and transitions. String.}
@@ -454,13 +222,9 @@ Add a space if a separation is necessary from the value. String.}
 (provided that the legend itself is visible). One of
 \code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
 
-\item{row}{\strong{\code{add_sankey()}}: Subplot grid row (figures
-  created with \code{\link{make_subplots}()} only). May be \code{"all"}
-  or a vector to address several cells.
-
-  \strong{\code{go_sankey_domain()}}: If there is a layout grid, use the
-  domain for this row in the grid for this sankey trace. Integer in the
-  interval [0, Inf].}
+\item{row}{Subplot grid row (figures created with
+\code{\link{make_subplots}()} only). May be \code{"all"} or a vector
+to address several cells.}
 
 \item{col}{Subplot grid column (figures created with
 \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
@@ -471,292 +235,130 @@ instead of raising an error.}
 
 \item{arg}{Optional named list, or graph object of the same type, to
 initialise properties from (constructors). Named arguments take precedence.}
+}
+\value{
+\code{go_*()} functions return a graph object;
+  \code{add_*()} functions return the modified figure.
+}
+\description{
+Sankey plots for network flow data analysis. The nodes are specified in
+`nodes` and the links between sources and targets in `links`. The colors
+are set in `nodes[i].color` and `links[i].color`, otherwise defaults are
+used.
+}
+\details{
+\code{go_sankey()} creates a validated graph object (a named list).
+\code{add_sankey()} creates one and adds it to a figure.
 
-\item{column}{If there is a layout grid, use the domain for this column
-in the grid for this sankey trace. Integer in the interval [0, Inf].}
 
-\item{x}{\strong{\code{go_sankey_domain()}}: Sets the horizontal domain
-  of this sankey trace (in plot fraction). Vector or list of 2
-  element(s).
+Nested objects are named lists, e.g. \code{marker = list(size = 10, line
+= list(width = 2))}. Each nested object's properties are described in a
+section of its own near the end of this page (after \emph{Value}), titled
+with its path: \emph{marker properties}, \emph{marker.line properties},
+.... Objects that appear in several places in the schema can also be
+created with a constructor of their own, and are documented on its page:
+\code{\link{go_font}()}, \code{\link{go_colorbar}()},
+\code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
+\code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
+\code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
+\code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
+\code{\link{go_caps}()}, \code{\link{go_domainpad}()},
+\code{\link{go_gradient}()}, \code{\link{go_label}()},
+\code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
+\code{\link{go_minor}()}, \code{\link{go_pathbar}()},
+\code{\link{go_project}()}, \code{\link{go_rangebreak}()},
+\code{\link{go_root}()}, \code{\link{go_slices}()},
+\code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
+Every property is checked against the plotly.js schema when the object is
+created or modified (see \code{\link{plotly_obj-modify}}).
+}
+\section{link properties}{
 
-  \strong{\code{go_sankey_node()}}: The normalized horizontal position
-  of the node. Data array: a vector, factor, Date/POSIXct vector, matrix
-  or list.}
+The links of the Sankey plot.
 
-\item{y}{\strong{\code{go_sankey_domain()}}: Sets the vertical domain of
-  this sankey trace (in plot fraction). Vector or list of 2 element(s).
-
-  \strong{\code{go_sankey_node()}}: The normalized vertical position of
-  the node. Data array: a vector, factor, Date/POSIXct vector, matrix or
-  list.}
-
-\item{align}{\strong{\code{go_sankey_hoverlabel()},
-  \code{go_sankey_link_hoverlabel()},
-  \code{go_sankey_node_hoverlabel()}}: Sets the horizontal alignment of
-  the text content within hover label box. Has an effect only if the
-  hover label text spans two or more lines One of \code{"left"},
-  \code{"right"}, \code{"auto"}, or a vector of these.
-
-  \strong{\code{go_sankey_node()}}: Sets the alignment method used to
-  position the nodes along the horizontal axis. One of \code{"justify"},
-  \code{"left"}, \code{"right"}, \code{"center"}.}
-
-\item{bgcolor}{Sets the background color of the hover labels for this
-trace Color: a CSS color string or R color name, or a vector of these.}
-
-\item{bordercolor}{Sets the border color of the hover labels for this
-trace. Color: a CSS color string or R color name, or a vector of
-these.}
-
-\item{font}{\strong{\code{go_sankey_hoverlabel()}}: Sets the font used
-  in hover labels. Named list or
-  \code{\link{go_sankey_hoverlabel_font}()} object.
-
-  \strong{\code{go_sankey_legendgrouptitle()}}: Sets this legend group's
-  title font. Named list or
-  \code{\link{go_sankey_legendgrouptitle_font}()} object.
-
-  \strong{\code{go_sankey_link_hoverlabel()}}: Sets the font used in
-  hover labels. Named list or
-  \code{\link{go_sankey_link_hoverlabel_font}()} object.
-
-  \strong{\code{go_sankey_node_hoverlabel()}}: Sets the font used in
-  hover labels. Named list or
-  \code{\link{go_sankey_node_hoverlabel_font}()} object.}
-
-\item{namelength}{Sets the default length (in number of characters) of
-the trace name in the hover labels for all traces. -1 shows the whole
-name regardless of length. 0-3 shows the first 0-3 characters, and an
-integer >3 will show the whole name if it is less than that many
-characters, but if it is longer, will truncate to `namelength - 3`
-characters and add an ellipsis. Integer in the interval [-1, Inf], or
-a vector of these.}
-
-\item{showarrow}{Sets whether or not to show the hover label
-arrow/triangle pointing to the data point. Logical.}
-
-\item{color}{\strong{\code{go_sankey_hoverlabel_font()},
-  \code{go_sankey_link_hoverlabel_font()},
-  \code{go_sankey_node_hoverlabel_font()}}: Color: a CSS color string or
-  R color name, or a vector of these.
-
-  \strong{\code{go_sankey_legendgrouptitle_font()},
-  \code{go_sankey_textfont()}}: Color: a CSS color string or R color
-  name.
-
-  \strong{\code{go_sankey_link()}}: Sets the `link` color. It can be a
-  single value, or an array for specifying color for each `link`. If
-  `link.color` is omitted, then by default, a translucent grey link will
-  be used. Color: a CSS color string or R color name, or a vector of
-  these.
-
-  \strong{\code{go_sankey_link_line()}}: Sets the color of the `line`
-  around each `link`. Color: a CSS color string or R color name, or a
-  vector of these.
-
-  \strong{\code{go_sankey_node()}}: Sets the `node` color. It can be a
-  single value, or an array for specifying color for each `node`. If
-  `node.color` is omitted, then the default `Plotly` color palette will
-  be cycled through to have a variety of colors. These defaults are not
-  fully opaque, to allow some visibility of what is beneath the node.
-  Color: a CSS color string or R color name, or a vector of these.
-
-  \strong{\code{go_sankey_node_line()}}: Sets the color of the `line`
-  around each `node`. Color: a CSS color string or R color name, or a
-  vector of these.}
-
-\item{family}{\strong{\code{go_sankey_hoverlabel_font()},
-  \code{go_sankey_link_hoverlabel_font()},
-  \code{go_sankey_node_hoverlabel_font()}}: HTML font family - the
-  typeface that will be applied by the web browser. The web browser can
-  only apply a font if it is available on the system where it runs.
-  Provide multiple font families, separated by commas, to indicate the
-  order in which to apply fonts if they aren't available. String, or a
-  vector of these.
-
-  \strong{\code{go_sankey_legendgrouptitle_font()},
-  \code{go_sankey_textfont()}}: HTML font family - the typeface that
-  will be applied by the web browser. The web browser can only apply a
-  font if it is available on the system where it runs. Provide multiple
-  font families, separated by commas, to indicate the order in which to
-  apply fonts if they aren't available. String.}
-
-\item{lineposition}{\strong{\code{go_sankey_hoverlabel_font()},
-  \code{go_sankey_link_hoverlabel_font()},
-  \code{go_sankey_node_hoverlabel_font()}}: Sets the kind of decoration
-  line(s) with text, such as an "under", "over" or "through" as well as
-  combinations e.g. "under+over", etc. Any combination of
-  \code{"under"}, \code{"over"}, \code{"through"} joined with
-  \code{"+"}, or one of \code{"none"}, or a vector of these.
-
-  \strong{\code{go_sankey_legendgrouptitle_font()},
-  \code{go_sankey_textfont()}}: Sets the kind of decoration line(s) with
-  text, such as an "under", "over" or "through" as well as combinations
-  e.g. "under+over", etc. Any combination of \code{"under"},
-  \code{"over"}, \code{"through"} joined with \code{"+"}, or one of
-  \code{"none"}.}
-
-\item{shadow}{\strong{\code{go_sankey_hoverlabel_font()},
-  \code{go_sankey_link_hoverlabel_font()},
-  \code{go_sankey_node_hoverlabel_font()}}: Sets the shape and color of
-  the shadow behind text. "auto" places minimal shadow and applies
-  contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.
-
-  \strong{\code{go_sankey_legendgrouptitle_font()},
-  \code{go_sankey_textfont()}}: Sets the shape and color of the shadow
-  behind text. "auto" places minimal shadow and applies contrast text
-  font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.}
-
-\item{size}{\strong{\code{go_sankey_hoverlabel_font()},
-  \code{go_sankey_link_hoverlabel_font()},
-  \code{go_sankey_node_hoverlabel_font()}}: Number in the interval [1,
-  Inf], or a vector of these.
-
-  \strong{\code{go_sankey_legendgrouptitle_font()},
-  \code{go_sankey_textfont()}}: Number in the interval [1, Inf].}
-
-\item{style}{\strong{\code{go_sankey_hoverlabel_font()},
-  \code{go_sankey_link_hoverlabel_font()},
-  \code{go_sankey_node_hoverlabel_font()}}: Sets whether a font should
-  be styled with a normal or italic face from its family. One of
-  \code{"normal"}, \code{"italic"}, or a vector of these.
-
-  \strong{\code{go_sankey_legendgrouptitle_font()},
-  \code{go_sankey_textfont()}}: Sets whether a font should be styled
-  with a normal or italic face from its family. One of \code{"normal"},
-  \code{"italic"}.}
-
-\item{textcase}{\strong{\code{go_sankey_hoverlabel_font()},
-  \code{go_sankey_link_hoverlabel_font()},
-  \code{go_sankey_node_hoverlabel_font()}}: Sets capitalization of text.
-  It can be used to make text appear in all-uppercase or all-lowercase,
-  or with each word capitalized. One of \code{"normal"}, \code{"word
-  caps"}, \code{"upper"}, \code{"lower"}, or a vector of these.
-
-  \strong{\code{go_sankey_legendgrouptitle_font()},
-  \code{go_sankey_textfont()}}: Sets capitalization of text. It can be
-  used to make text appear in all-uppercase or all-lowercase, or with
-  each word capitalized. One of \code{"normal"}, \code{"word caps"},
-  \code{"upper"}, \code{"lower"}.}
-
-\item{variant}{\strong{\code{go_sankey_hoverlabel_font()},
-  \code{go_sankey_link_hoverlabel_font()},
-  \code{go_sankey_node_hoverlabel_font()}}: Sets the variant of the
-  font. One of \code{"normal"}, \code{"small-caps"},
-  \code{"all-small-caps"}, \code{"all-petite-caps"},
-  \code{"petite-caps"}, \code{"unicase"}, or a vector of these.
-
-  \strong{\code{go_sankey_legendgrouptitle_font()},
-  \code{go_sankey_textfont()}}: Sets the variant of the font. One of
-  \code{"normal"}, \code{"small-caps"}, \code{"all-small-caps"},
-  \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.}
-
-\item{weight}{\strong{\code{go_sankey_hoverlabel_font()},
-  \code{go_sankey_link_hoverlabel_font()},
-  \code{go_sankey_node_hoverlabel_font()}}: Sets the weight (or
-  boldness) of the font. Integer in the interval [1, 1000], or a vector
-  of these.
-
-  \strong{\code{go_sankey_legendgrouptitle_font()},
-  \code{go_sankey_textfont()}}: Sets the weight (or boldness) of the
-  font. Integer in the interval [1, 1000].}
-
-\item{text}{Sets the title of the legend group. String.}
-
-\item{arrowlen}{Sets the length (in px) of the links arrow, if 0 no
-arrow will be drawn. Number in the interval [0, Inf].}
-
-\item{colorscales}{List of named lists or
-\code{\link{go_sankey_link_concentrationscales}()} objects.}
-
-\item{hovercolor}{Sets the `link` hover color. It can be a single value,
-or an array for specifying hover colors for each `link`. If
-`link.hovercolor` is omitted, then by default, links will become
-slightly more opaque when hovered over. Color: a CSS color string or R
-color name, or a vector of these.}
-
-\item{hovertemplate}{Template string used for rendering the information
-that appear on hover box. Note that this will override `hoverinfo`.
-Variables are inserted using \%\{variable\}, for example "y: \%\{y\}"
-as well as \%\{xother\}, \{\%_xother\}, \{\%_xother_\}, \{\%xother_\}.
-When showing info for several points, "xother" will be added to those
-with different x positions from the first point. An underscore before
-or after "(x|y)other" will add a space on that side, only when this
-field is shown. Numbers are formatted using d3-format's syntax
-\%\{variable:d3-format\}, for example "Price: \%\{y:$.2f\}".
-https://github.com/d3/d3-format/tree/v1.4.5#d3-format for details on
-the formatting syntax. Dates are formatted using d3-time-format's
-syntax \%\{variable|d3-time-format\}, for example "Day:
-\%\{2019-01-01|\%A\}".
+\describe{
+\item{\code{arrowlen}}{Sets the length (in px) of the links arrow, if 0
+no arrow will be drawn. Number in the interval [0, Inf].}
+\item{\code{color}}{Sets the `link` color. It can be a single value, or
+an array for specifying color for each `link`. If `link.color` is
+omitted, then by default, a translucent grey link will be used. Color: a
+CSS color string or R color name, or a vector of these.}
+\item{\code{colorscales}}{List, each element a named list with properties
+\code{cmax}, \code{cmin}, \code{colorscale}, \code{label}, \code{name}
+and \code{templateitemname} (described in section
+"link.concentrationscales properties" below).}
+\item{\code{customdata}}{Assigns extra data to each link. Data array: a
+vector, factor, Date/POSIXct vector, matrix or list.}
+\item{\code{hovercolor}}{Sets the `link` hover color. It can be a single
+value, or an array for specifying hover colors for each `link`. If
+`link.hovercolor` is omitted, then by default, links will become slightly
+more opaque when hovered over. Color: a CSS color string or R color name,
+or a vector of these.}
+\item{\code{hoverinfo}}{Determines what trace information appears when
+hovering links. If `none` or `skip` are set, no information is displayed
+upon hovering. But, if `none` is set, click and hover events are still
+fired. One of \code{"all"}, \code{"none"}, \code{"skip"}.}
+\item{\code{hoverlabel}}{A \code{\link{go_hoverlabel}()} object or named
+list, with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+\code{font}, \code{namelength} and \code{showarrow} (see
+\code{\link{go_hoverlabel}()}).}
+\item{\code{hovertemplate}}{Template string used for rendering the
+information that appear on hover box. Note that this will override
+`hoverinfo`. Variables are inserted using \%\{variable\}, for example "y:
+\%\{y\}" as well as \%\{xother\}, \{\%_xother\}, \{\%_xother_\},
+\{\%xother_\}. When showing info for several points, "xother" will be
+added to those with different x positions from the first point. An
+underscore before or after "(x|y)other" will add a space on that side,
+only when this field is shown. Numbers are formatted using d3-format's
+syntax \%\{variable:d3-format\}, for example "Price: \%\{y:$.2f\}".
+https://github.com/d3/d3-format/tree/v1.4.5#d3-format for details on the
+formatting syntax. Dates are formatted using d3-time-format's syntax
+\%\{variable|d3-time-format\}, for example "Day: \%\{2019-01-01|\%A\}".
 https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format for
-details on the date formatting syntax. Variables that can't be found
-will be replaced with the specifier. For example, a template of "data:
-\%\{x\}, \%\{y\}" will result in a value of "data: 1, \%\{y\}" if x is
-1 and y is missing. Variables with an undefined value will be replaced
-with the fallback value. The variables available in `hovertemplate`
-are the ones emitted as event data described at this link
-https://plotly.com/javascript/plotlyjs-events/#event-data.
-Additionally, all attributes that can be specified per-point (the ones
-that are `arrayOk: true`) are available.  Finally, the template string
-has access to variables `value` and `label`. Anything contained in tag
-`<extra>` is displayed in the secondary box, for example
+details on the date formatting syntax. Variables that can't be found will
+be replaced with the specifier. For example, a template of "data:
+\%\{x\}, \%\{y\}" will result in a value of "data: 1, \%\{y\}" if x is 1
+and y is missing. Variables with an undefined value will be replaced with
+the fallback value. The variables available in `hovertemplate` are the
+ones emitted as event data described at this link
+https://plotly.com/javascript/plotlyjs-events/#event-data. Additionally,
+all attributes that can be specified per-point (the ones that are
+`arrayOk: true`) are available.  Finally, the template string has access
+to variables `value` and `label`. Anything contained in tag `<extra>` is
+displayed in the secondary box, for example
 `<extra>\%\{fullData.name\}</extra>`. To hide the secondary box
 completely, use an empty tag `<extra></extra>`. String, or a vector of
 these.}
-
-\item{hovertemplatefallback}{Fallback string that's displayed when a
-variable referenced in a template is missing. If the boolean value
+\item{\code{hovertemplatefallback}}{Fallback string that's displayed when
+a variable referenced in a template is missing. If the boolean value
 'false' is passed in, the specifier with the missing variable will be
 displayed. Any value.}
+\item{\code{label}}{The shown name of the link. Data array: a vector,
+factor, Date/POSIXct vector, matrix or list.}
+\item{\code{line}}{A named list with properties \code{color} and
+\code{width} (described in section "link.line properties" below).}
+\item{\code{sort}}{For `auto` (the default), the order of links attached
+to each node is determined automatically by the layout. For `input`, the
+order of links at each node is kept the same as the order in the input
+array. One of \code{"auto"}, \code{"input"}.}
+\item{\code{source}}{An integer number `[0..nodes.length - 1]` that
+represents the source node. Data array: a vector, factor, Date/POSIXct
+vector, matrix or list.}
+\item{\code{target}}{An integer number `[0..nodes.length - 1]` that
+represents the target node. Data array: a vector, factor, Date/POSIXct
+vector, matrix or list.}
+\item{\code{value}}{A numeric value representing the flow volume value.
+Data array: a vector, factor, Date/POSIXct vector, matrix or list.}
+}
+}
 
-\item{label}{\strong{\code{go_sankey_link()}}: The shown name of the
-  link. Data array: a vector, factor, Date/POSIXct vector, matrix or
-  list.
+\section{link.concentrationscales properties (each list element)}{
 
-  \strong{\code{go_sankey_link_concentrationscales()}}: The label of the
-  links to color based on their concentration within a flow. String.
-
-  \strong{\code{go_sankey_node()}}: The shown name of the node. Data
-  array: a vector, factor, Date/POSIXct vector, matrix or list.}
-
-\item{line}{\strong{\code{go_sankey_link()}}: Named list or
-  \code{\link{go_sankey_link_line}()} object.
-
-  \strong{\code{go_sankey_node()}}: Named list or
-  \code{\link{go_sankey_node_line}()} object.}
-
-\item{sort}{\strong{\code{go_sankey_link()}}: For `auto` (the default),
-  the order of links attached to each node is determined automatically
-  by the layout. For `input`, the order of links at each node is kept
-  the same as the order in the input array. One of \code{"auto"},
-  \code{"input"}.
-
-  \strong{\code{go_sankey_node()}}: For `auto` (the default), the
-  vertical order of nodes will be determined automatically by the
-  layout. For `input`, the vertical order of nodes is kept the same as
-  the order in the input array. One of \code{"auto"}, \code{"input"}.}
-
-\item{source}{An integer number `[0..nodes.length - 1]` that represents
-the source node. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.}
-
-\item{target}{An integer number `[0..nodes.length - 1]` that represents
-the target node. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.}
-
-\item{value}{A numeric value representing the flow volume value. Data
-array: a vector, factor, Date/POSIXct vector, matrix or list.}
-
-\item{cmax}{Sets the upper bound of the color domain. Number.}
-
-\item{cmin}{Sets the lower bound of the color domain. Number.}
-
-\item{colorscale}{Sets the colorscale. The colorscale must be an array
-containing arrays mapping a normalized value to an rgb, rgba, hex,
+\describe{
+\item{\code{cmax}}{Sets the upper bound of the color domain. Number.}
+\item{\code{cmin}}{Sets the lower bound of the color domain. Number.}
+\item{\code{colorscale}}{Sets the colorscale. The colorscale must be an
+array containing arrays mapping a normalized value to an rgb, rgba, hex,
 hsl, hsla, hwb, or named color string. At minimum, a mapping for the
 lowest (0) and highest (1) values are required. For example, `[[0,
 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
@@ -766,76 +368,121 @@ Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portl
 Colorscale: a vector of colors, a two-column data.frame of (value,
 color), or the name of a sequential, diverging or cyclical scale in
 \code{\link{px_colors}()} (append \code{"_r"} to reverse).}
-
-\item{templateitemname}{Used to refer to a named item in this array in
-the template. Named items from the template will be created even
+\item{\code{label}}{The label of the links to color based on their
+concentration within a flow. String.}
+\item{\code{name}}{When used in a template, named items are created in
+the output figure in addition to any items the figure already has in this
+array. You can modify these items in the output figure by making your own
+item with `templateitemname` matching this `name` alongside your
+modifications (including `visible: false` or `enabled: false` to hide
+it). Has no effect outside of a template. String.}
+\item{\code{templateitemname}}{Used to refer to a named item in this
+array in the template. Named items from the template will be created even
 without a matching item in the input figure, but you can modify one by
 making an item with `templateitemname` matching its `name`, alongside
 your modifications (including `visible: false` or `enabled: false` to
-hide it). If there is no template or no matching item, this item will
-be hidden unless you explicitly show it with `visible: true`. String.}
-
-\item{width}{\strong{\code{go_sankey_link_line()}}: Sets the width (in
-  px) of the `line` around each `link`. Number in the interval [0, Inf],
-  or a vector of these.
-
-  \strong{\code{go_sankey_node_line()}}: Sets the width (in px) of the
-  `line` around each `node`. Number in the interval [0, Inf], or a
-  vector of these.}
-
-\item{groups}{Groups of nodes. Each group is defined by an array with
-the indices of the nodes it contains. Multiple groups can be
-specified. Vector or list of up to 1 element(s).}
-
-\item{pad}{Sets the padding (in px) between the `nodes`. Number in the
-interval [0, Inf].}
-
-\item{thickness}{Sets the thickness (in px) of the `nodes`. Number in
-the interval [1, Inf].}
+hide it). If there is no template or no matching item, this item will be
+hidden unless you explicitly show it with `visible: true`. String.}
 }
-\value{
-Each \code{go_*()} function returns a graph object of the same
-  class as its name; \code{add_*()} functions return the modified figure.
 }
-\description{
-Sankey plots for network flow data analysis. The nodes are specified in
-`nodes` and the links between sources and targets in `links`. The colors
-are set in `nodes[i].color` and `links[i].color`, otherwise defaults are
-used.
-}
-\details{
-\code{go_sankey()} and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-\code{\link{plotly_obj-modify}()}). \code{add_sankey()} creates an object
-and adds it to a figure.
 
-Nested objects documented here:
+\section{link.line properties}{
+
 \describe{
-\item{\code{go_sankey_domain()}}{\code{sankey.domain}}
-\item{\code{go_sankey_hoverlabel()}}{\code{sankey.hoverlabel}}
-\item{\code{go_sankey_hoverlabel_font()}}{\code{sankey.hoverlabel.font}:
-Sets the font used in hover labels.}
-\item{\code{go_sankey_legendgrouptitle()}}{\code{sankey.legendgrouptitle}}
-\item{\code{go_sankey_legendgrouptitle_font()}}{\code{sankey.legendgrouptitle.font}:
-Sets this legend group's title font.}
-\item{\code{go_sankey_link()}}{\code{sankey.link}: The links of the
-Sankey plot.}
-\item{\code{go_sankey_link_concentrationscales()}}{\code{sankey.link.concentrationscales}}
-\item{\code{go_sankey_link_hoverlabel()}}{\code{sankey.link.hoverlabel}}
-\item{\code{go_sankey_link_hoverlabel_font()}}{\code{sankey.link.hoverlabel.font}:
-Sets the font used in hover labels.}
-\item{\code{go_sankey_link_line()}}{\code{sankey.link.line}}
-\item{\code{go_sankey_node()}}{\code{sankey.node}: The nodes of the
-Sankey plot.}
-\item{\code{go_sankey_node_hoverlabel()}}{\code{sankey.node.hoverlabel}}
-\item{\code{go_sankey_node_hoverlabel_font()}}{\code{sankey.node.hoverlabel.font}:
-Sets the font used in hover labels.}
-\item{\code{go_sankey_node_line()}}{\code{sankey.node.line}}
-\item{\code{go_sankey_textfont()}}{\code{sankey.textfont}: Sets the font
-for node labels}
+\item{\code{color}}{Sets the color of the `line` around each `link`.
+Color: a CSS color string or R color name, or a vector of these.}
+\item{\code{width}}{Sets the width (in px) of the `line` around each
+`link`. Number in the interval [0, Inf], or a vector of these.}
 }
 }
+
+\section{node properties}{
+
+The nodes of the Sankey plot.
+
+\describe{
+\item{\code{align}}{Sets the alignment method used to position the nodes
+along the horizontal axis. One of \code{"justify"}, \code{"left"},
+\code{"right"}, \code{"center"}.}
+\item{\code{color}}{Sets the `node` color. It can be a single value, or
+an array for specifying color for each `node`. If `node.color` is
+omitted, then the default `Plotly` color palette will be cycled through
+to have a variety of colors. These defaults are not fully opaque, to
+allow some visibility of what is beneath the node. Color: a CSS color
+string or R color name, or a vector of these.}
+\item{\code{customdata}}{Assigns extra data to each node. Data array: a
+vector, factor, Date/POSIXct vector, matrix or list.}
+\item{\code{groups}}{Groups of nodes. Each group is defined by an array
+with the indices of the nodes it contains. Multiple groups can be
+specified. Vector or list of up to 1 element(s).}
+\item{\code{hoverinfo}}{Determines what trace information appears when
+hovering nodes. If `none` or `skip` are set, no information is displayed
+upon hovering. But, if `none` is set, click and hover events are still
+fired. One of \code{"all"}, \code{"none"}, \code{"skip"}.}
+\item{\code{hoverlabel}}{A \code{\link{go_hoverlabel}()} object or named
+list, with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+\code{font}, \code{namelength} and \code{showarrow} (see
+\code{\link{go_hoverlabel}()}).}
+\item{\code{hovertemplate}}{Template string used for rendering the
+information that appear on hover box. Note that this will override
+`hoverinfo`. Variables are inserted using \%\{variable\}, for example "y:
+\%\{y\}" as well as \%\{xother\}, \{\%_xother\}, \{\%_xother_\},
+\{\%xother_\}. When showing info for several points, "xother" will be
+added to those with different x positions from the first point. An
+underscore before or after "(x|y)other" will add a space on that side,
+only when this field is shown. Numbers are formatted using d3-format's
+syntax \%\{variable:d3-format\}, for example "Price: \%\{y:$.2f\}".
+https://github.com/d3/d3-format/tree/v1.4.5#d3-format for details on the
+formatting syntax. Dates are formatted using d3-time-format's syntax
+\%\{variable|d3-time-format\}, for example "Day: \%\{2019-01-01|\%A\}".
+https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format for
+details on the date formatting syntax. Variables that can't be found will
+be replaced with the specifier. For example, a template of "data:
+\%\{x\}, \%\{y\}" will result in a value of "data: 1, \%\{y\}" if x is 1
+and y is missing. Variables with an undefined value will be replaced with
+the fallback value. The variables available in `hovertemplate` are the
+ones emitted as event data described at this link
+https://plotly.com/javascript/plotlyjs-events/#event-data. Additionally,
+all attributes that can be specified per-point (the ones that are
+`arrayOk: true`) are available.  Finally, the template string has access
+to variables `value` and `label`. Anything contained in tag `<extra>` is
+displayed in the secondary box, for example
+`<extra>\%\{fullData.name\}</extra>`. To hide the secondary box
+completely, use an empty tag `<extra></extra>`. String, or a vector of
+these.}
+\item{\code{hovertemplatefallback}}{Fallback string that's displayed when
+a variable referenced in a template is missing. If the boolean value
+'false' is passed in, the specifier with the missing variable will be
+displayed. Any value.}
+\item{\code{label}}{The shown name of the node. Data array: a vector,
+factor, Date/POSIXct vector, matrix or list.}
+\item{\code{line}}{A named list with properties \code{color} and
+\code{width} (described in section "node.line properties" below).}
+\item{\code{pad}}{Sets the padding (in px) between the `nodes`. Number in
+the interval [0, Inf].}
+\item{\code{sort}}{For `auto` (the default), the vertical order of nodes
+will be determined automatically by the layout. For `input`, the vertical
+order of nodes is kept the same as the order in the input array. One of
+\code{"auto"}, \code{"input"}.}
+\item{\code{thickness}}{Sets the thickness (in px) of the `nodes`. Number
+in the interval [1, Inf].}
+\item{\code{x}}{The normalized horizontal position of the node. Data
+array: a vector, factor, Date/POSIXct vector, matrix or list.}
+\item{\code{y}}{The normalized vertical position of the node. Data array:
+a vector, factor, Date/POSIXct vector, matrix or list.}
+}
+}
+
+\section{node.line properties}{
+
+\describe{
+\item{\code{color}}{Sets the color of the `line` around each `node`.
+Color: a CSS color string or R color name, or a vector of these.}
+\item{\code{width}}{Sets the width (in px) of the `line` around each
+`node`. Number in the interval [0, Inf], or a vector of these.}
+}
+}
+
 \examples{
 go_sankey()
 }

@@ -2,19 +2,6 @@
 % Please edit documentation in R/zz-gen-carpet.R, R/zz-gen-figure.R
 \name{go_carpet}
 \alias{go_carpet}
-\alias{go_carpet_aaxis}
-\alias{go_carpet_aaxis_tickfont}
-\alias{go_carpet_aaxis_tickformatstop}
-\alias{go_carpet_aaxis_title}
-\alias{go_carpet_aaxis_title_font}
-\alias{go_carpet_baxis}
-\alias{go_carpet_baxis_tickfont}
-\alias{go_carpet_baxis_tickformatstop}
-\alias{go_carpet_baxis_title}
-\alias{go_carpet_baxis_title_font}
-\alias{go_carpet_font}
-\alias{go_carpet_legendgrouptitle}
-\alias{go_carpet_legendgrouptitle_font}
 \alias{add_carpet}
 \alias{add_carpet.default}
 \title{Carpet traces}
@@ -51,264 +38,6 @@ go_carpet(
   y = NULL,
   yaxis = NULL,
   zorder = NULL,
-  skip_invalid = FALSE
-)
-
-go_carpet_aaxis(
-  arg = NULL,
-  ...,
-  arraydtick = NULL,
-  arraytick0 = NULL,
-  autorange = NULL,
-  autotypenumbers = NULL,
-  categoryarray = NULL,
-  categoryorder = NULL,
-  cheatertype = NULL,
-  color = NULL,
-  dtick = NULL,
-  endline = NULL,
-  endlinecolor = NULL,
-  endlinewidth = NULL,
-  exponentformat = NULL,
-  fixedrange = NULL,
-  gridcolor = NULL,
-  griddash = NULL,
-  gridwidth = NULL,
-  labelalias = NULL,
-  labelpadding = NULL,
-  labelprefix = NULL,
-  labelsuffix = NULL,
-  linecolor = NULL,
-  linewidth = NULL,
-  minexponent = NULL,
-  minorgridcolor = NULL,
-  minorgridcount = NULL,
-  minorgriddash = NULL,
-  minorgridwidth = NULL,
-  nticks = NULL,
-  range = NULL,
-  rangemode = NULL,
-  separatethousands = NULL,
-  showexponent = NULL,
-  showgrid = NULL,
-  showline = NULL,
-  showticklabels = NULL,
-  showtickprefix = NULL,
-  showticksuffix = NULL,
-  smoothing = NULL,
-  startline = NULL,
-  startlinecolor = NULL,
-  startlinewidth = NULL,
-  tick0 = NULL,
-  tickangle = NULL,
-  tickfont = NULL,
-  tickformat = NULL,
-  tickformatstops = NULL,
-  tickmode = NULL,
-  tickprefix = NULL,
-  ticksuffix = NULL,
-  ticktext = NULL,
-  tickvals = NULL,
-  title = NULL,
-  type = NULL,
-  skip_invalid = FALSE
-)
-
-go_carpet_aaxis_tickfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_carpet_aaxis_tickformatstop(
-  arg = NULL,
-  ...,
-  dtickrange = NULL,
-  enabled = NULL,
-  name = NULL,
-  templateitemname = NULL,
-  value = NULL,
-  skip_invalid = FALSE
-)
-
-go_carpet_aaxis_title(
-  arg = NULL,
-  ...,
-  font = NULL,
-  offset = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_carpet_aaxis_title_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_carpet_baxis(
-  arg = NULL,
-  ...,
-  arraydtick = NULL,
-  arraytick0 = NULL,
-  autorange = NULL,
-  autotypenumbers = NULL,
-  categoryarray = NULL,
-  categoryorder = NULL,
-  cheatertype = NULL,
-  color = NULL,
-  dtick = NULL,
-  endline = NULL,
-  endlinecolor = NULL,
-  endlinewidth = NULL,
-  exponentformat = NULL,
-  fixedrange = NULL,
-  gridcolor = NULL,
-  griddash = NULL,
-  gridwidth = NULL,
-  labelalias = NULL,
-  labelpadding = NULL,
-  labelprefix = NULL,
-  labelsuffix = NULL,
-  linecolor = NULL,
-  linewidth = NULL,
-  minexponent = NULL,
-  minorgridcolor = NULL,
-  minorgridcount = NULL,
-  minorgriddash = NULL,
-  minorgridwidth = NULL,
-  nticks = NULL,
-  range = NULL,
-  rangemode = NULL,
-  separatethousands = NULL,
-  showexponent = NULL,
-  showgrid = NULL,
-  showline = NULL,
-  showticklabels = NULL,
-  showtickprefix = NULL,
-  showticksuffix = NULL,
-  smoothing = NULL,
-  startline = NULL,
-  startlinecolor = NULL,
-  startlinewidth = NULL,
-  tick0 = NULL,
-  tickangle = NULL,
-  tickfont = NULL,
-  tickformat = NULL,
-  tickformatstops = NULL,
-  tickmode = NULL,
-  tickprefix = NULL,
-  ticksuffix = NULL,
-  ticktext = NULL,
-  tickvals = NULL,
-  title = NULL,
-  type = NULL,
-  skip_invalid = FALSE
-)
-
-go_carpet_baxis_tickfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_carpet_baxis_tickformatstop(
-  arg = NULL,
-  ...,
-  dtickrange = NULL,
-  enabled = NULL,
-  name = NULL,
-  templateitemname = NULL,
-  value = NULL,
-  skip_invalid = FALSE
-)
-
-go_carpet_baxis_title(
-  arg = NULL,
-  ...,
-  font = NULL,
-  offset = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_carpet_baxis_title_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_carpet_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_carpet_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_carpet_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
   skip_invalid = FALSE
 )
 
@@ -357,10 +86,9 @@ add_carpet(fig, ...)
 \item{arg}{Optional named list, or graph object of the same type, to
 initialise properties from (constructors). Named arguments take precedence.}
 
-\item{...}{Further properties, including nested properties in
-"magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}. Property values may be one-sided
-formulas, evaluated in \code{data} for \code{add_*()} functions.}
+\item{...}{Further properties, by their full names (e.g. numbered subplots
+such as \code{xaxis2} in \code{go_layout()}). Nested properties are set
+with named lists: \code{marker = list(size = 10)}.}
 
 \item{a}{An array containing values of the first parameter value Data
 array: a vector, factor, Date/POSIXct vector, matrix or list.}
@@ -369,7 +97,12 @@ array: a vector, factor, Date/POSIXct vector, matrix or list.}
 with `da` where `a0` is the starting coordinate and `da` the step.
 Number.}
 
-\item{aaxis}{Named list or \code{\link{go_carpet_aaxis}()} object.}
+\item{aaxis}{A named list with properties \code{arraydtick},
+\code{arraytick0}, \code{autorange}, \code{autotypenumbers},
+\code{categoryarray}, \code{categoryorder}, \code{cheatertype},
+\code{color}, \code{dtick}, \code{endline}, \code{endlinecolor},
+\code{endlinewidth} and 42 more (described in section "aaxis
+properties" below).}
 
 \item{b}{A two dimensional array of y coordinates at each carpet point.
 Data array: a vector, factor, Date/POSIXct vector, matrix or list.}
@@ -378,7 +111,12 @@ Data array: a vector, factor, Date/POSIXct vector, matrix or list.}
 with `db` where `b0` is the starting coordinate and `db` the step.
 Number.}
 
-\item{baxis}{Named list or \code{\link{go_carpet_baxis}()} object.}
+\item{baxis}{A named list with properties \code{arraydtick},
+\code{arraytick0}, \code{autorange}, \code{autotypenumbers},
+\code{categoryarray}, \code{categoryorder}, \code{cheatertype},
+\code{color}, \code{dtick}, \code{endline}, \code{endlinecolor},
+\code{endlinewidth} and 42 more (described in section "baxis
+properties" below).}
 
 \item{carpet}{An identifier for this carpet, so that `scattercarpet` and
 `contourcarpet` traces can specify a carpet plot on which they lie
@@ -387,18 +125,10 @@ String.}
 \item{cheaterslope}{The shift applied to each successive row of data in
 creating a cheater plot. Only used if `x` is been omitted. Number.}
 
-\item{color}{\strong{\code{go_carpet()}, \code{go_carpet_aaxis()},
-  \code{go_carpet_baxis()}}: Sets default for all colors associated with
-  this axis all at once: line, font, tick, and grid colors. Grid color
-  is lightened by blending this with the plot background Individual
-  pieces can override this. Color: a CSS color string or R color name.
-
-  \strong{\code{go_carpet_aaxis_tickfont()},
-  \code{go_carpet_aaxis_title_font()},
-  \code{go_carpet_baxis_tickfont()},
-  \code{go_carpet_baxis_title_font()}, \code{go_carpet_font()},
-  \code{go_carpet_legendgrouptitle_font()}}: Color: a CSS color string
-  or R color name.}
+\item{color}{Sets default for all colors associated with this axis all
+at once: line, font, tick, and grid colors. Grid color is lightened by
+blending this with the plot background Individual pieces can override
+this. Color: a CSS color string or R color name.}
 
 \item{customdata}{Assigns extra data each datum. This may be useful when
 listening to hover, click and selection events. Note that, "scatter"
@@ -409,19 +139,11 @@ array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{db}{Sets the b coordinate step. See `b0` for more info. Number.}
 
-\item{font}{\strong{\code{go_carpet()}}: The default font used for axis
-  & tick labels on this carpet Named list or
-  \code{\link{go_carpet_font}()} object.
-
-  \strong{\code{go_carpet_aaxis_title()}}: Sets this axis' title font.
-  Named list or \code{\link{go_carpet_aaxis_title_font}()} object.
-
-  \strong{\code{go_carpet_baxis_title()}}: Sets this axis' title font.
-  Named list or \code{\link{go_carpet_baxis_title_font}()} object.
-
-  \strong{\code{go_carpet_legendgrouptitle()}}: Sets this legend group's
-  title font. Named list or
-  \code{\link{go_carpet_legendgrouptitle_font}()} object.}
+\item{font}{The default font used for axis & tick labels on this carpet
+A \code{\link{go_font}()} object or named list, with properties
+\code{color}, \code{family}, \code{lineposition}, \code{shadow},
+\code{size}, \code{style}, \code{textcase}, \code{variant} and
+\code{weight} (see \code{\link{go_font}()}).}
 
 \item{ids}{Assigns id labels to each datum. These ids for object
 constancy of data points during animation. Should be an array of
@@ -434,8 +156,9 @@ Settings for these legends are set in the layout, under
 `layout.legend`, `layout.legend2`, etc. Subplot id: \code{"legend"},
 \code{"legend2"}, \code{"legend3"}, ....}
 
-\item{legendgrouptitle}{Named list or
-\code{\link{go_carpet_legendgrouptitle}()} object.}
+\item{legendgrouptitle}{A \code{\link{go_legendgrouptitle}()} object or
+named list, with properties \code{font} and \code{text} (see
+\code{\link{go_legendgrouptitle}()}).}
 
 \item{legendrank}{Sets the legend rank for this trace. Items and groups
 with smaller ranks are presented on top/left side while with
@@ -459,17 +182,8 @@ trace, simply use `\%\{meta[i]\}` where `i` is the index or key of the
 use `\%\{data[n[.meta[i]\}` where `i` is the index or key of the
 `meta` and `n` is the trace index. Any value.}
 
-\item{name}{\strong{\code{go_carpet()}}: Sets the trace name. The trace
-  name appears as the legend item and on hover. String.
-
-  \strong{\code{go_carpet_aaxis_tickformatstop()},
-  \code{go_carpet_baxis_tickformatstop()}}: When used in a template,
-  named items are created in the output figure in addition to any items
-  the figure already has in this array. You can modify these items in
-  the output figure by making your own item with `templateitemname`
-  matching this `name` alongside your modifications (including `visible:
-  false` or `enabled: false` to hide it). Has no effect outside of a
-  template. String.}
+\item{name}{Sets the trace name. The trace name appears as the legend
+item and on hover. String.}
 
 \item{opacity}{Sets the opacity of the trace. Number in the interval [0,
 1].}
@@ -524,297 +238,11 @@ to other SVG traces on the same subplot. SVG traces with higher
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
 
-\item{arraydtick}{The stride between grid lines along the axis Integer
-in the interval [1, Inf].}
-
-\item{arraytick0}{The starting index of grid lines along the axis
-Integer in the interval [0, Inf].}
-
-\item{autorange}{Determines whether or not the range of this axis is
-computed in relation to the input data. See `rangemode` for more info.
-If `range` is provided, then `autorange` is set to FALSE. One of
-\code{"reversed"}, \code{TRUE}, \code{FALSE}.}
-
-\item{autotypenumbers}{Using "strict" a numeric string in trace data is
-not converted to a number. Using "convert types" a numeric string in
-trace data may be treated as a number during automatic axis `type`
-detection. Defaults to layout.autotypenumbers. One of \code{"convert
-types"}, \code{"strict"}.}
-
-\item{categoryarray}{Sets the order in which categories on this axis
-appear. Only has an effect if `categoryorder` is set to "array". Used
-with `categoryorder`. Data array: a vector, factor, Date/POSIXct
-vector, matrix or list.}
-
-\item{categoryorder}{Specifies the ordering logic for the case of
-categorical variables. By default, plotly uses "trace", which
-specifies the order that is present in the data supplied. Set
-`categoryorder` to "category ascending" or "category descending" if
-order should be determined by the alphanumerical order of the category
-names. Set `categoryorder` to "array" to derive the ordering from the
-attribute `categoryarray`. If a category is not found in the
-`categoryarray` array, the sorting behavior for that attribute will be
-identical to the "trace" mode. The unspecified categories will follow
-the categories in `categoryarray`. One of \code{"trace"},
-\code{"category ascending"}, \code{"category descending"},
-\code{"array"}.}
-
-\item{cheatertype}{One of \code{"index"}, \code{"value"}.}
-
-\item{dtick}{The stride between grid lines along the axis Number in the
-interval [0, Inf].}
-
-\item{endline}{Determines whether or not a line is drawn at along the
-final value of this axis. If TRUE, the end line is drawn on top of the
-grid lines. Logical.}
-
-\item{endlinecolor}{Sets the line color of the end line. Color: a CSS
-color string or R color name.}
-
-\item{endlinewidth}{Sets the width (in px) of the end line. Number.}
-
-\item{exponentformat}{Determines a formatting rule for the tick
-exponents. For example, consider the number 1,000,000,000. If "none",
-it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. One of
-\code{"none"}, \code{"e"}, \code{"E"}, \code{"power"}, \code{"SI"},
-\code{"B"}, \code{"SI extended"}.}
-
-\item{fixedrange}{Determines whether or not this axis is zoom-able. If
-true, then zoom is disabled. Logical.}
-
-\item{gridcolor}{Sets the axis line color. Color: a CSS color string or
-R color name.}
-
-\item{griddash}{Sets the dash style of lines. Set to a dash type string
-("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-\code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-\code{"longdashdot"}, or a string matching
-\code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
-
-\item{gridwidth}{Sets the width (in px) of the axis line. Number in the
-interval [0, Inf].}
-
-\item{labelalias}{Replacement text for specific tick or hover labels.
-For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-to Canada. The labels we would have shown must match the keys exactly,
-after adding any tickprefix or ticksuffix. For negative numbers the
-minus sign symbol used (U+2212) is wider than the regular ascii dash.
-That means you need to use -1 instead of -1. labelalias can be used
-with any axis type, and both keys (if needed) and values (if desired)
-can include html-like tags or MathJax. Any value.}
-
-\item{labelpadding}{Extra padding between label and the axis Integer.}
-
-\item{labelprefix}{Sets a axis label prefix. String.}
-
-\item{labelsuffix}{Sets a axis label suffix. String.}
-
-\item{linecolor}{Sets the axis line color. Color: a CSS color string or
-R color name.}
-
-\item{linewidth}{Sets the width (in px) of the axis line. Number in the
-interval [0, Inf].}
-
-\item{minexponent}{Hide SI prefix for 10^n if |n| is below this number
-Number in the interval [0, Inf].}
-
-\item{minorgridcolor}{Sets the color of the grid lines. Color: a CSS
-color string or R color name.}
-
-\item{minorgridcount}{Sets the number of minor grid ticks per major grid
-tick Integer in the interval [0, Inf].}
-
-\item{minorgriddash}{Sets the dash style of lines. Set to a dash type
-string ("solid", "dot", "dash", "longdash", "dashdot", or
-"longdashdot") or a dash length list in px (eg "5px,10px,2px,2px").
-One of \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
-\code{"dashdot"}, \code{"longdashdot"}, or a string matching
-\code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
-
-\item{minorgridwidth}{Sets the width (in px) of the grid lines. Number
-in the interval [0, Inf].}
-
-\item{nticks}{Specifies the maximum number of ticks for the particular
-axis. The actual number of ticks will be chosen automatically to be
-less than or equal to `nticks`. Has an effect only if `tickmode` is
-set to "auto". Integer in the interval [0, Inf].}
-
-\item{range}{Sets the range of this axis. If the axis `type` is "log",
-then you must take the log of your desired range (e.g. to set the
-range from 1 to 100, set the range from 0 to 2). If the axis `type` is
-"date", it should be date strings, like date data, though Date objects
-and unix milliseconds will be accepted and converted to strings. If
-the axis `type` is "category", it should be numbers, using the scale
-where each category is assigned a serial number from zero in the order
-it appears. Vector or list of 2 element(s).}
-
-\item{rangemode}{If "normal", the range is computed in relation to the
-extrema of the input data. If "tozero", the range extends to 0,
-regardless of the input data If "nonnegative", the range is
-non-negative, regardless of the input data. One of \code{"normal"},
-\code{"tozero"}, \code{"nonnegative"}.}
-
-\item{separatethousands}{If "true", even 4-digit integers are separated
-Logical.}
-
-\item{showexponent}{If "all", all exponents are shown besides their
-significands. If "first", only the exponent of the first tick is
-shown. If "last", only the exponent of the last tick is shown. If
-"none", no exponents appear. One of \code{"all"}, \code{"first"},
-\code{"last"}, \code{"none"}.}
-
-\item{showgrid}{Determines whether or not grid lines are drawn. If TRUE,
-the grid lines are drawn at every tick mark. Logical.}
-
-\item{showline}{Determines whether or not a line bounding this axis is
-drawn. Logical.}
-
-\item{showticklabels}{Determines whether axis labels are drawn on the
-low side, the high side, both, or neither side of the axis. One of
-\code{"start"}, \code{"end"}, \code{"both"}, \code{"none"}.}
-
-\item{showtickprefix}{If "all", all tick labels are displayed with a
-prefix. If "first", only the first tick is displayed with a prefix. If
-"last", only the last tick is displayed with a suffix. If "none", tick
-prefixes are hidden. One of \code{"all"}, \code{"first"},
-\code{"last"}, \code{"none"}.}
-
-\item{showticksuffix}{Same as `showtickprefix` but for tick suffixes.
-One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.}
-
-\item{smoothing}{Number in the interval [0, 1.3].}
-
-\item{startline}{Determines whether or not a line is drawn at along the
-starting value of this axis. If TRUE, the start line is drawn on top
-of the grid lines. Logical.}
-
-\item{startlinecolor}{Sets the line color of the start line. Color: a
-CSS color string or R color name.}
-
-\item{startlinewidth}{Sets the width (in px) of the start line. Number.}
-
-\item{tick0}{The starting index of grid lines along the axis Number in
-the interval [0, Inf].}
-
-\item{tickangle}{Sets the angle of the tick labels with respect to the
-horizontal. For example, a `tickangle` of -90 draws the tick labels
-vertically. Angle in degrees.}
-
-\item{tickfont}{\strong{\code{go_carpet_aaxis()}}: Sets the tick font.
-  Named list or \code{\link{go_carpet_aaxis_tickfont}()} object.
-
-  \strong{\code{go_carpet_baxis()}}: Sets the tick font. Named list or
-  \code{\link{go_carpet_baxis_tickfont}()} object.}
-
-\item{tickformat}{Sets the tick label formatting rule using d3
-formatting mini-languages which are very similar to those in Python.
-For numbers, see:
-https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-We add two items to d3's date formatter: "\%h" for half of the year as
-a decimal number as well as "\%\{n\}f" for fractional seconds with n
-digits. For example, "2016-10-13 09:15:23.456" with tickformat
-"\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.}
-
-\item{tickformatstops}{\strong{\code{go_carpet_aaxis()}}: List of named
-  lists or \code{\link{go_carpet_aaxis_tickformatstop}()} objects.
-
-  \strong{\code{go_carpet_baxis()}}: List of named lists or
-  \code{\link{go_carpet_baxis_tickformatstop}()} objects.}
-
-\item{tickmode}{One of \code{"linear"}, \code{"array"}.}
-
-\item{tickprefix}{Sets a tick label prefix. String.}
-
-\item{ticksuffix}{Sets a tick label suffix. String.}
-
-\item{ticktext}{Sets the text displayed at the ticks position via
-`tickvals`. Only has an effect if `tickmode` is set to "array". Used
-with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.}
-
-\item{tickvals}{Sets the values at which ticks on this axis appear. Only
-has an effect if `tickmode` is set to "array". Used with `ticktext`.
-Data array: a vector, factor, Date/POSIXct vector, matrix or list.}
-
-\item{title}{\strong{\code{go_carpet_aaxis()}}: String (the title text),
-  named list or \code{\link{go_carpet_aaxis_title}()} object.
-
-  \strong{\code{go_carpet_baxis()}}: String (the title text), named list
-  or \code{\link{go_carpet_baxis_title}()} object.}
-
-\item{type}{Sets the axis type. By default, plotly attempts to
-determined the axis type by looking into the data of the traces that
-referenced the axis in question. One of \code{"-"}, \code{"linear"},
-\code{"date"}, \code{"category"}.}
-
-\item{family}{HTML font family - the typeface that will be applied by
-the web browser. The web browser can only apply a font if it is
-available on the system where it runs. Provide multiple font families,
-separated by commas, to indicate the order in which to apply fonts if
-they aren't available. String.}
-
-\item{lineposition}{Sets the kind of decoration line(s) with text, such
-as an "under", "over" or "through" as well as combinations e.g.
-"under+over", etc. Any combination of \code{"under"}, \code{"over"},
-\code{"through"} joined with \code{"+"}, or one of \code{"none"}.}
-
-\item{shadow}{Sets the shape and color of the shadow behind text. "auto"
-places minimal shadow and applies contrast text font color. See
-https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-additional options. String.}
-
-\item{size}{Number in the interval [1, Inf].}
-
-\item{style}{Sets whether a font should be styled with a normal or
-italic face from its family. One of \code{"normal"}, \code{"italic"}.}
-
-\item{textcase}{Sets capitalization of text. It can be used to make text
-appear in all-uppercase or all-lowercase, or with each word
-capitalized. One of \code{"normal"}, \code{"word caps"},
-\code{"upper"}, \code{"lower"}.}
-
-\item{variant}{Sets the variant of the font. One of \code{"normal"},
-\code{"small-caps"}, \code{"all-small-caps"},
-\code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.}
-
-\item{weight}{Sets the weight (or boldness) of the font. Integer in the
-interval [1, 1000].}
-
-\item{dtickrange}{range ["min", "max"], where "min", "max" - dtick
-values which describe some zoom level, it is possible to omit "min" or
-"max" value by passing "null" Vector or list of 2 element(s).}
-
-\item{enabled}{Determines whether or not this stop is used. If `false`,
-this stop is ignored even within its `dtickrange`. Logical.}
-
-\item{templateitemname}{Used to refer to a named item in this array in
-the template. Named items from the template will be created even
-without a matching item in the input figure, but you can modify one by
-making an item with `templateitemname` matching its `name`, alongside
-your modifications (including `visible: false` or `enabled: false` to
-hide it). If there is no template or no matching item, this item will
-be hidden unless you explicitly show it with `visible: true`. String.}
-
-\item{value}{string - dtickformat for described zoom level, the same as
-"tickformat" String.}
-
-\item{offset}{An additional amount by which to offset the title from the
-tick labels, given in pixels. Number.}
-
-\item{text}{\strong{\code{go_carpet_aaxis_title()},
-  \code{go_carpet_baxis_title()}}: Sets the title of this axis. String.
-
-  \strong{\code{go_carpet_legendgrouptitle()}}: Sets the title of the
-  legend group. String.}
-
 \item{fig}{A \code{go_figure} object.}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
-~col}, \code{marker_size = ~col}) are evaluated. Default: the data
-given to \code{\link{go_figure}()}. Only the evaluated values are
+~col}, \code{marker = list(size = ~col)}) are evaluated. Default: the
+data given to \code{\link{go_figure}()}. Only the evaluated values are
 added to the trace. A \code{crosstalk::SharedData} works the same way,
 and links the trace to its crosstalk group (see
 \code{\link{highlight}()}).}
@@ -831,8 +259,8 @@ to address several cells.}
 subplot.}
 }
 \value{
-Each \code{go_*()} function returns a graph object of the same
-  class as its name; \code{add_*()} functions return the modified figure.
+\code{go_*()} functions return a graph object;
+  \code{add_*()} functions return the modified figure.
 }
 \description{
 The data describing carpet axis layout is set in `y` and (optionally)
@@ -843,35 +271,427 @@ either be 2D arrays matching with each dimension matching that of `a` and
 `b`.
 }
 \details{
-\code{go_carpet()} and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-\code{\link{plotly_obj-modify}()}). \code{add_carpet()} creates an object
-and adds it to a figure.
+\code{go_carpet()} creates a validated graph object (a named list).
+\code{add_carpet()} creates one and adds it to a figure.
 
-Nested objects documented here:
+
+Nested objects are named lists, e.g. \code{marker = list(size = 10, line
+= list(width = 2))}. Each nested object's properties are described in a
+section of its own near the end of this page (after \emph{Value}), titled
+with its path: \emph{marker properties}, \emph{marker.line properties},
+.... Objects that appear in several places in the schema can also be
+created with a constructor of their own, and are documented on its page:
+\code{\link{go_font}()}, \code{\link{go_colorbar}()},
+\code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
+\code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
+\code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
+\code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
+\code{\link{go_caps}()}, \code{\link{go_domainpad}()},
+\code{\link{go_gradient}()}, \code{\link{go_label}()},
+\code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
+\code{\link{go_minor}()}, \code{\link{go_pathbar}()},
+\code{\link{go_project}()}, \code{\link{go_rangebreak}()},
+\code{\link{go_root}()}, \code{\link{go_slices}()},
+\code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
+Every property is checked against the plotly.js schema when the object is
+created or modified (see \code{\link{plotly_obj-modify}}).
+}
+\section{aaxis properties}{
+
 \describe{
-\item{\code{go_carpet_aaxis()}}{\code{carpet.aaxis}}
-\item{\code{go_carpet_aaxis_tickfont()}}{\code{carpet.aaxis.tickfont}:
-Sets the tick font.}
-\item{\code{go_carpet_aaxis_tickformatstop()}}{\code{carpet.aaxis.tickformatstop}}
-\item{\code{go_carpet_aaxis_title()}}{\code{carpet.aaxis.title}}
-\item{\code{go_carpet_aaxis_title_font()}}{\code{carpet.aaxis.title.font}:
-Sets this axis' title font.}
-\item{\code{go_carpet_baxis()}}{\code{carpet.baxis}}
-\item{\code{go_carpet_baxis_tickfont()}}{\code{carpet.baxis.tickfont}:
-Sets the tick font.}
-\item{\code{go_carpet_baxis_tickformatstop()}}{\code{carpet.baxis.tickformatstop}}
-\item{\code{go_carpet_baxis_title()}}{\code{carpet.baxis.title}}
-\item{\code{go_carpet_baxis_title_font()}}{\code{carpet.baxis.title.font}:
-Sets this axis' title font.}
-\item{\code{go_carpet_font()}}{\code{carpet.font}: The default font used
-for axis & tick labels on this carpet}
-\item{\code{go_carpet_legendgrouptitle()}}{\code{carpet.legendgrouptitle}}
-\item{\code{go_carpet_legendgrouptitle_font()}}{\code{carpet.legendgrouptitle.font}:
-Sets this legend group's title font.}
+\item{\code{arraydtick}}{The stride between grid lines along the axis
+Integer in the interval [1, Inf].}
+\item{\code{arraytick0}}{The starting index of grid lines along the axis
+Integer in the interval [0, Inf].}
+\item{\code{autorange}}{Determines whether or not the range of this axis
+is computed in relation to the input data. See `rangemode` for more info.
+If `range` is provided, then `autorange` is set to FALSE. One of
+\code{"reversed"}, \code{TRUE}, \code{FALSE}.}
+\item{\code{autotypenumbers}}{Using "strict" a numeric string in trace
+data is not converted to a number. Using "convert types" a numeric string
+in trace data may be treated as a number during automatic axis `type`
+detection. Defaults to layout.autotypenumbers. One of \code{"convert
+types"}, \code{"strict"}.}
+\item{\code{categoryarray}}{Sets the order in which categories on this
+axis appear. Only has an effect if `categoryorder` is set to "array".
+Used with `categoryorder`. Data array: a vector, factor, Date/POSIXct
+vector, matrix or list.}
+\item{\code{categoryorder}}{Specifies the ordering logic for the case of
+categorical variables. By default, plotly uses "trace", which specifies
+the order that is present in the data supplied. Set `categoryorder` to
+"category ascending" or "category descending" if order should be
+determined by the alphanumerical order of the category names. Set
+`categoryorder` to "array" to derive the ordering from the attribute
+`categoryarray`. If a category is not found in the `categoryarray` array,
+the sorting behavior for that attribute will be identical to the "trace"
+mode. The unspecified categories will follow the categories in
+`categoryarray`. One of \code{"trace"}, \code{"category ascending"},
+\code{"category descending"}, \code{"array"}.}
+\item{\code{cheatertype}}{One of \code{"index"}, \code{"value"}.}
+\item{\code{color}}{Sets default for all colors associated with this axis
+all at once: line, font, tick, and grid colors. Grid color is lightened
+by blending this with the plot background Individual pieces can override
+this. Color: a CSS color string or R color name.}
+\item{\code{dtick}}{The stride between grid lines along the axis Number
+in the interval [0, Inf].}
+\item{\code{endline}}{Determines whether or not a line is drawn at along
+the final value of this axis. If TRUE, the end line is drawn on top of
+the grid lines. Logical.}
+\item{\code{endlinecolor}}{Sets the line color of the end line. Color: a
+CSS color string or R color name.}
+\item{\code{endlinewidth}}{Sets the width (in px) of the end line.
+Number.}
+\item{\code{exponentformat}}{Determines a formatting rule for the tick
+exponents. For example, consider the number 1,000,000,000. If "none", it
+appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power", 1x10^9
+(with 9 in a super script). If "SI", 1G. If "B", 1B. One of
+\code{"none"}, \code{"e"}, \code{"E"}, \code{"power"}, \code{"SI"},
+\code{"B"}, \code{"SI extended"}.}
+\item{\code{fixedrange}}{Determines whether or not this axis is
+zoom-able. If true, then zoom is disabled. Logical.}
+\item{\code{gridcolor}}{Sets the axis line color. Color: a CSS color
+string or R color name.}
+\item{\code{griddash}}{Sets the dash style of lines. Set to a dash type
+string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+or a dash length list in px (eg "5px,10px,2px,2px"). One of
+\code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+\code{"dashdot"}, \code{"longdashdot"}, or a string matching
+\code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+\item{\code{gridwidth}}{Sets the width (in px) of the axis line. Number
+in the interval [0, Inf].}
+\item{\code{labelalias}}{Replacement text for specific tick or hover
+labels. For example using \{US: 'USA', CA: 'Canada'\} changes US to USA
+and CA to Canada. The labels we would have shown must match the keys
+exactly, after adding any tickprefix or ticksuffix. For negative numbers
+the minus sign symbol used (U+2212) is wider than the regular ascii dash.
+That means you need to use -1 instead of -1. labelalias can be used with
+any axis type, and both keys (if needed) and values (if desired) can
+include html-like tags or MathJax. Any value.}
+\item{\code{labelpadding}}{Extra padding between label and the axis
+Integer.}
+\item{\code{labelprefix}}{Sets a axis label prefix. String.}
+\item{\code{labelsuffix}}{Sets a axis label suffix. String.}
+\item{\code{linecolor}}{Sets the axis line color. Color: a CSS color
+string or R color name.}
+\item{\code{linewidth}}{Sets the width (in px) of the axis line. Number
+in the interval [0, Inf].}
+\item{\code{minexponent}}{Hide SI prefix for 10^n if |n| is below this
+number Number in the interval [0, Inf].}
+\item{\code{minorgridcolor}}{Sets the color of the grid lines. Color: a
+CSS color string or R color name.}
+\item{\code{minorgridcount}}{Sets the number of minor grid ticks per
+major grid tick Integer in the interval [0, Inf].}
+\item{\code{minorgriddash}}{Sets the dash style of lines. Set to a dash
+type string ("solid", "dot", "dash", "longdash", "dashdot", or
+"longdashdot") or a dash length list in px (eg "5px,10px,2px,2px"). One
+of \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+\code{"dashdot"}, \code{"longdashdot"}, or a string matching
+\code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+\item{\code{minorgridwidth}}{Sets the width (in px) of the grid lines.
+Number in the interval [0, Inf].}
+\item{\code{nticks}}{Specifies the maximum number of ticks for the
+particular axis. The actual number of ticks will be chosen automatically
+to be less than or equal to `nticks`. Has an effect only if `tickmode` is
+set to "auto". Integer in the interval [0, Inf].}
+\item{\code{range}}{Sets the range of this axis. If the axis `type` is
+"log", then you must take the log of your desired range (e.g. to set the
+range from 1 to 100, set the range from 0 to 2). If the axis `type` is
+"date", it should be date strings, like date data, though Date objects
+and unix milliseconds will be accepted and converted to strings. If the
+axis `type` is "category", it should be numbers, using the scale where
+each category is assigned a serial number from zero in the order it
+appears. Vector or list of 2 element(s).}
+\item{\code{rangemode}}{If "normal", the range is computed in relation to
+the extrema of the input data. If "tozero", the range extends to 0,
+regardless of the input data If "nonnegative", the range is non-negative,
+regardless of the input data. One of \code{"normal"}, \code{"tozero"},
+\code{"nonnegative"}.}
+\item{\code{separatethousands}}{If "true", even 4-digit integers are
+separated Logical.}
+\item{\code{showexponent}}{If "all", all exponents are shown besides
+their significands. If "first", only the exponent of the first tick is
+shown. If "last", only the exponent of the last tick is shown. If "none",
+no exponents appear. One of \code{"all"}, \code{"first"}, \code{"last"},
+\code{"none"}.}
+\item{\code{showgrid}}{Determines whether or not grid lines are drawn. If
+TRUE, the grid lines are drawn at every tick mark. Logical.}
+\item{\code{showline}}{Determines whether or not a line bounding this
+axis is drawn. Logical.}
+\item{\code{showticklabels}}{Determines whether axis labels are drawn on
+the low side, the high side, both, or neither side of the axis. One of
+\code{"start"}, \code{"end"}, \code{"both"}, \code{"none"}.}
+\item{\code{showtickprefix}}{If "all", all tick labels are displayed with
+a prefix. If "first", only the first tick is displayed with a prefix. If
+"last", only the last tick is displayed with a suffix. If "none", tick
+prefixes are hidden. One of \code{"all"}, \code{"first"}, \code{"last"},
+\code{"none"}.}
+\item{\code{showticksuffix}}{Same as `showtickprefix` but for tick
+suffixes. One of \code{"all"}, \code{"first"}, \code{"last"},
+\code{"none"}.}
+\item{\code{smoothing}}{Number in the interval [0, 1.3].}
+\item{\code{startline}}{Determines whether or not a line is drawn at
+along the starting value of this axis. If TRUE, the start line is drawn
+on top of the grid lines. Logical.}
+\item{\code{startlinecolor}}{Sets the line color of the start line.
+Color: a CSS color string or R color name.}
+\item{\code{startlinewidth}}{Sets the width (in px) of the start line.
+Number.}
+\item{\code{tick0}}{The starting index of grid lines along the axis
+Number in the interval [0, Inf].}
+\item{\code{tickangle}}{Sets the angle of the tick labels with respect to
+the horizontal. For example, a `tickangle` of -90 draws the tick labels
+vertically. Angle in degrees.}
+\item{\code{tickfont}}{Sets the tick font. A \code{\link{go_font}()}
+object or named list, with properties \code{color}, \code{family},
+\code{lineposition}, \code{shadow}, \code{size}, \code{style},
+\code{textcase}, \code{variant} and \code{weight} (see
+\code{\link{go_font}()}).}
+\item{\code{tickformat}}{Sets the tick label formatting rule using d3
+formatting mini-languages which are very similar to those in Python. For
+numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+for dates see:
+https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+two items to d3's date formatter: "\%h" for half of the year as a decimal
+number as well as "\%\{n\}f" for fractional seconds with n digits. For
+example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+would display "09~15~23.46" String.}
+\item{\code{tickformatstops}}{List, each element a
+\code{\link{go_tickformatstop}()} object or named list, with properties
+\code{dtickrange}, \code{enabled}, \code{name}, \code{templateitemname}
+and \code{value} (see \code{\link{go_tickformatstop}()}).}
+\item{\code{tickmode}}{One of \code{"linear"}, \code{"array"}.}
+\item{\code{tickprefix}}{Sets a tick label prefix. String.}
+\item{\code{ticksuffix}}{Sets a tick label suffix. String.}
+\item{\code{ticktext}}{Sets the text displayed at the ticks position via
+`tickvals`. Only has an effect if `tickmode` is set to "array". Used with
+`tickvals`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
+\item{\code{tickvals}}{Sets the values at which ticks on this axis
+appear. Only has an effect if `tickmode` is set to "array". Used with
+`ticktext`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
+\item{\code{title}}{String (the title text), or a named list with
+properties \code{font}, \code{offset} and \code{text} (described in
+section "aaxis.title properties" below).}
+\item{\code{type}}{Sets the axis type. By default, plotly attempts to
+determined the axis type by looking into the data of the traces that
+referenced the axis in question. One of \code{"-"}, \code{"linear"},
+\code{"date"}, \code{"category"}.}
 }
 }
+
+\section{aaxis.title properties}{
+
+\describe{
+\item{\code{font}}{Sets this axis' title font. A \code{\link{go_font}()}
+object or named list, with properties \code{color}, \code{family},
+\code{lineposition}, \code{shadow}, \code{size}, \code{style},
+\code{textcase}, \code{variant} and \code{weight} (see
+\code{\link{go_font}()}).}
+\item{\code{offset}}{An additional amount by which to offset the title
+from the tick labels, given in pixels. Number.}
+\item{\code{text}}{Sets the title of this axis. String.}
+}
+}
+
+\section{baxis properties}{
+
+\describe{
+\item{\code{arraydtick}}{The stride between grid lines along the axis
+Integer in the interval [1, Inf].}
+\item{\code{arraytick0}}{The starting index of grid lines along the axis
+Integer in the interval [0, Inf].}
+\item{\code{autorange}}{Determines whether or not the range of this axis
+is computed in relation to the input data. See `rangemode` for more info.
+If `range` is provided, then `autorange` is set to FALSE. One of
+\code{"reversed"}, \code{TRUE}, \code{FALSE}.}
+\item{\code{autotypenumbers}}{Using "strict" a numeric string in trace
+data is not converted to a number. Using "convert types" a numeric string
+in trace data may be treated as a number during automatic axis `type`
+detection. Defaults to layout.autotypenumbers. One of \code{"convert
+types"}, \code{"strict"}.}
+\item{\code{categoryarray}}{Sets the order in which categories on this
+axis appear. Only has an effect if `categoryorder` is set to "array".
+Used with `categoryorder`. Data array: a vector, factor, Date/POSIXct
+vector, matrix or list.}
+\item{\code{categoryorder}}{Specifies the ordering logic for the case of
+categorical variables. By default, plotly uses "trace", which specifies
+the order that is present in the data supplied. Set `categoryorder` to
+"category ascending" or "category descending" if order should be
+determined by the alphanumerical order of the category names. Set
+`categoryorder` to "array" to derive the ordering from the attribute
+`categoryarray`. If a category is not found in the `categoryarray` array,
+the sorting behavior for that attribute will be identical to the "trace"
+mode. The unspecified categories will follow the categories in
+`categoryarray`. One of \code{"trace"}, \code{"category ascending"},
+\code{"category descending"}, \code{"array"}.}
+\item{\code{cheatertype}}{One of \code{"index"}, \code{"value"}.}
+\item{\code{color}}{Sets default for all colors associated with this axis
+all at once: line, font, tick, and grid colors. Grid color is lightened
+by blending this with the plot background Individual pieces can override
+this. Color: a CSS color string or R color name.}
+\item{\code{dtick}}{The stride between grid lines along the axis Number
+in the interval [0, Inf].}
+\item{\code{endline}}{Determines whether or not a line is drawn at along
+the final value of this axis. If TRUE, the end line is drawn on top of
+the grid lines. Logical.}
+\item{\code{endlinecolor}}{Sets the line color of the end line. Color: a
+CSS color string or R color name.}
+\item{\code{endlinewidth}}{Sets the width (in px) of the end line.
+Number.}
+\item{\code{exponentformat}}{Determines a formatting rule for the tick
+exponents. For example, consider the number 1,000,000,000. If "none", it
+appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power", 1x10^9
+(with 9 in a super script). If "SI", 1G. If "B", 1B. One of
+\code{"none"}, \code{"e"}, \code{"E"}, \code{"power"}, \code{"SI"},
+\code{"B"}, \code{"SI extended"}.}
+\item{\code{fixedrange}}{Determines whether or not this axis is
+zoom-able. If true, then zoom is disabled. Logical.}
+\item{\code{gridcolor}}{Sets the axis line color. Color: a CSS color
+string or R color name.}
+\item{\code{griddash}}{Sets the dash style of lines. Set to a dash type
+string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+or a dash length list in px (eg "5px,10px,2px,2px"). One of
+\code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+\code{"dashdot"}, \code{"longdashdot"}, or a string matching
+\code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+\item{\code{gridwidth}}{Sets the width (in px) of the axis line. Number
+in the interval [0, Inf].}
+\item{\code{labelalias}}{Replacement text for specific tick or hover
+labels. For example using \{US: 'USA', CA: 'Canada'\} changes US to USA
+and CA to Canada. The labels we would have shown must match the keys
+exactly, after adding any tickprefix or ticksuffix. For negative numbers
+the minus sign symbol used (U+2212) is wider than the regular ascii dash.
+That means you need to use -1 instead of -1. labelalias can be used with
+any axis type, and both keys (if needed) and values (if desired) can
+include html-like tags or MathJax. Any value.}
+\item{\code{labelpadding}}{Extra padding between label and the axis
+Integer.}
+\item{\code{labelprefix}}{Sets a axis label prefix. String.}
+\item{\code{labelsuffix}}{Sets a axis label suffix. String.}
+\item{\code{linecolor}}{Sets the axis line color. Color: a CSS color
+string or R color name.}
+\item{\code{linewidth}}{Sets the width (in px) of the axis line. Number
+in the interval [0, Inf].}
+\item{\code{minexponent}}{Hide SI prefix for 10^n if |n| is below this
+number Number in the interval [0, Inf].}
+\item{\code{minorgridcolor}}{Sets the color of the grid lines. Color: a
+CSS color string or R color name.}
+\item{\code{minorgridcount}}{Sets the number of minor grid ticks per
+major grid tick Integer in the interval [0, Inf].}
+\item{\code{minorgriddash}}{Sets the dash style of lines. Set to a dash
+type string ("solid", "dot", "dash", "longdash", "dashdot", or
+"longdashdot") or a dash length list in px (eg "5px,10px,2px,2px"). One
+of \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+\code{"dashdot"}, \code{"longdashdot"}, or a string matching
+\code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+\item{\code{minorgridwidth}}{Sets the width (in px) of the grid lines.
+Number in the interval [0, Inf].}
+\item{\code{nticks}}{Specifies the maximum number of ticks for the
+particular axis. The actual number of ticks will be chosen automatically
+to be less than or equal to `nticks`. Has an effect only if `tickmode` is
+set to "auto". Integer in the interval [0, Inf].}
+\item{\code{range}}{Sets the range of this axis. If the axis `type` is
+"log", then you must take the log of your desired range (e.g. to set the
+range from 1 to 100, set the range from 0 to 2). If the axis `type` is
+"date", it should be date strings, like date data, though Date objects
+and unix milliseconds will be accepted and converted to strings. If the
+axis `type` is "category", it should be numbers, using the scale where
+each category is assigned a serial number from zero in the order it
+appears. Vector or list of 2 element(s).}
+\item{\code{rangemode}}{If "normal", the range is computed in relation to
+the extrema of the input data. If "tozero", the range extends to 0,
+regardless of the input data If "nonnegative", the range is non-negative,
+regardless of the input data. One of \code{"normal"}, \code{"tozero"},
+\code{"nonnegative"}.}
+\item{\code{separatethousands}}{If "true", even 4-digit integers are
+separated Logical.}
+\item{\code{showexponent}}{If "all", all exponents are shown besides
+their significands. If "first", only the exponent of the first tick is
+shown. If "last", only the exponent of the last tick is shown. If "none",
+no exponents appear. One of \code{"all"}, \code{"first"}, \code{"last"},
+\code{"none"}.}
+\item{\code{showgrid}}{Determines whether or not grid lines are drawn. If
+TRUE, the grid lines are drawn at every tick mark. Logical.}
+\item{\code{showline}}{Determines whether or not a line bounding this
+axis is drawn. Logical.}
+\item{\code{showticklabels}}{Determines whether axis labels are drawn on
+the low side, the high side, both, or neither side of the axis. One of
+\code{"start"}, \code{"end"}, \code{"both"}, \code{"none"}.}
+\item{\code{showtickprefix}}{If "all", all tick labels are displayed with
+a prefix. If "first", only the first tick is displayed with a prefix. If
+"last", only the last tick is displayed with a suffix. If "none", tick
+prefixes are hidden. One of \code{"all"}, \code{"first"}, \code{"last"},
+\code{"none"}.}
+\item{\code{showticksuffix}}{Same as `showtickprefix` but for tick
+suffixes. One of \code{"all"}, \code{"first"}, \code{"last"},
+\code{"none"}.}
+\item{\code{smoothing}}{Number in the interval [0, 1.3].}
+\item{\code{startline}}{Determines whether or not a line is drawn at
+along the starting value of this axis. If TRUE, the start line is drawn
+on top of the grid lines. Logical.}
+\item{\code{startlinecolor}}{Sets the line color of the start line.
+Color: a CSS color string or R color name.}
+\item{\code{startlinewidth}}{Sets the width (in px) of the start line.
+Number.}
+\item{\code{tick0}}{The starting index of grid lines along the axis
+Number in the interval [0, Inf].}
+\item{\code{tickangle}}{Sets the angle of the tick labels with respect to
+the horizontal. For example, a `tickangle` of -90 draws the tick labels
+vertically. Angle in degrees.}
+\item{\code{tickfont}}{Sets the tick font. A \code{\link{go_font}()}
+object or named list, with properties \code{color}, \code{family},
+\code{lineposition}, \code{shadow}, \code{size}, \code{style},
+\code{textcase}, \code{variant} and \code{weight} (see
+\code{\link{go_font}()}).}
+\item{\code{tickformat}}{Sets the tick label formatting rule using d3
+formatting mini-languages which are very similar to those in Python. For
+numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+for dates see:
+https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+two items to d3's date formatter: "\%h" for half of the year as a decimal
+number as well as "\%\{n\}f" for fractional seconds with n digits. For
+example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+would display "09~15~23.46" String.}
+\item{\code{tickformatstops}}{List, each element a
+\code{\link{go_tickformatstop}()} object or named list, with properties
+\code{dtickrange}, \code{enabled}, \code{name}, \code{templateitemname}
+and \code{value} (see \code{\link{go_tickformatstop}()}).}
+\item{\code{tickmode}}{One of \code{"linear"}, \code{"array"}.}
+\item{\code{tickprefix}}{Sets a tick label prefix. String.}
+\item{\code{ticksuffix}}{Sets a tick label suffix. String.}
+\item{\code{ticktext}}{Sets the text displayed at the ticks position via
+`tickvals`. Only has an effect if `tickmode` is set to "array". Used with
+`tickvals`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
+\item{\code{tickvals}}{Sets the values at which ticks on this axis
+appear. Only has an effect if `tickmode` is set to "array". Used with
+`ticktext`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
+\item{\code{title}}{String (the title text), or a named list with
+properties \code{font}, \code{offset} and \code{text} (described in
+section "baxis.title properties" below).}
+\item{\code{type}}{Sets the axis type. By default, plotly attempts to
+determined the axis type by looking into the data of the traces that
+referenced the axis in question. One of \code{"-"}, \code{"linear"},
+\code{"date"}, \code{"category"}.}
+}
+}
+
+\section{baxis.title properties}{
+
+\describe{
+\item{\code{font}}{Sets this axis' title font. A \code{\link{go_font}()}
+object or named list, with properties \code{color}, \code{family},
+\code{lineposition}, \code{shadow}, \code{size}, \code{style},
+\code{textcase}, \code{variant} and \code{weight} (see
+\code{\link{go_font}()}).}
+\item{\code{offset}}{An additional amount by which to offset the title
+from the tick labels, given in pixels. Number.}
+\item{\code{text}}{Sets the title of this axis. String.}
+}
+}
+
 \examples{
 go_carpet(x = 1:3, y = c(2, 1, 3))
 }

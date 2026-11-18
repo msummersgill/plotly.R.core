@@ -30,9 +30,9 @@ or a function that takes an object and returns \code{TRUE} or \code{FALSE}.}
 \item{row, col}{Only objects in this subplot grid row and/or column
 (figures created with \code{\link{make_subplots}()} only).}
 
-\item{patch}{A named list or \code{\link{go_layout_smith}()} object of property updates.}
+\item{patch}{A named list of smith property updates (see section "smith properties").}
 
-\item{...}{Further named updates (names may use magic underscores).}
+\item{...}{Further named updates, by their full names.}
 
 \item{overwrite}{If \code{TRUE}, replace nested objects instead of merging.}
 
@@ -40,7 +40,7 @@ or a function that takes an object and returns \code{TRUE} or \code{FALSE}.}
 If it returns anything other than a list, the object is left unchanged.}
 }
 \value{
-\code{select_smiths()} returns a named list of \code{\link{go_layout_smith}()} objects; the
+\code{select_smiths()} returns a named list of smith objects; the
   others return the modified figure.
 }
 \description{
@@ -50,3 +50,215 @@ their properties like \code{\link{update_layout}()} does, and \code{for_each_smi
 replaces each one with the result of \code{fn}. The base object (e.g.
 \code{smith}) is always included, even if it has not been set yet.
 }
+\section{smith properties}{
+
+\describe{
+\item{\code{bgcolor}}{Set the background color of the subplot Color: a
+CSS color string or R color name.}
+\item{\code{domain}}{A \code{\link{go_domain}()} object or named list,
+with properties \code{column}, \code{row}, \code{x} and \code{y} (see
+\code{\link{go_domain}()}).}
+\item{\code{imaginaryaxis}}{A named list with properties \code{color},
+\code{gridcolor}, \code{griddash}, \code{gridwidth}, \code{hoverformat},
+\code{labelalias}, \code{layer}, \code{linecolor}, \code{linewidth},
+\code{showgrid}, \code{showline}, \code{showticklabels} and 12 more
+(described in section "imaginaryaxis properties" below).}
+\item{\code{realaxis}}{A named list with properties \code{color},
+\code{gridcolor}, \code{griddash}, \code{gridwidth}, \code{hoverformat},
+\code{labelalias}, \code{layer}, \code{linecolor}, \code{linewidth},
+\code{showgrid}, \code{showline}, \code{showticklabels} and 14 more
+(described in section "realaxis properties" below).}
+}
+}
+
+\section{imaginaryaxis properties}{
+
+\describe{
+\item{\code{color}}{Sets default for all colors associated with this axis
+all at once: line, font, tick, and grid colors. Grid color is lightened
+by blending this with the plot background Individual pieces can override
+this. Color: a CSS color string or R color name.}
+\item{\code{gridcolor}}{Sets the color of the grid lines. Color: a CSS
+color string or R color name.}
+\item{\code{griddash}}{Sets the dash style of lines. Set to a dash type
+string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+or a dash length list in px (eg "5px,10px,2px,2px"). One of
+\code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+\code{"dashdot"}, \code{"longdashdot"}, or a string matching
+\code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+\item{\code{gridwidth}}{Sets the width (in px) of the grid lines. Number
+in the interval [0, Inf].}
+\item{\code{hoverformat}}{Sets the hover text formatting rule using d3
+formatting mini-languages which are very similar to those in Python. For
+numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+for dates see:
+https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+two items to d3's date formatter: "\%h" for half of the year as a decimal
+number as well as "\%\{n\}f" for fractional seconds with n digits. For
+example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+would display "09~15~23.46" String.}
+\item{\code{labelalias}}{Replacement text for specific tick or hover
+labels. For example using \{US: 'USA', CA: 'Canada'\} changes US to USA
+and CA to Canada. The labels we would have shown must match the keys
+exactly, after adding any tickprefix or ticksuffix. For negative numbers
+the minus sign symbol used (U+2212) is wider than the regular ascii dash.
+That means you need to use -1 instead of -1. labelalias can be used with
+any axis type, and both keys (if needed) and values (if desired) can
+include html-like tags or MathJax. Any value.}
+\item{\code{layer}}{Sets the layer on which this axis is displayed. If
+"above traces", this axis is displayed above all the subplot's traces If
+"below traces", this axis is displayed below all the subplot's traces,
+but above the grid lines. Useful when used together with scatter-like
+traces with `cliponaxis` set to FALSE to show markers and/or text nodes
+above this axis. One of \code{"above traces"}, \code{"below traces"}.}
+\item{\code{linecolor}}{Sets the axis line color. Color: a CSS color
+string or R color name.}
+\item{\code{linewidth}}{Sets the width (in px) of the axis line. Number
+in the interval [0, Inf].}
+\item{\code{showgrid}}{Determines whether or not grid lines are drawn. If
+TRUE, the grid lines are drawn at every tick mark. Logical.}
+\item{\code{showline}}{Determines whether or not a line bounding this
+axis is drawn. Logical.}
+\item{\code{showticklabels}}{Determines whether or not the tick labels
+are drawn. Logical.}
+\item{\code{showtickprefix}}{If "all", all tick labels are displayed with
+a prefix. If "first", only the first tick is displayed with a prefix. If
+"last", only the last tick is displayed with a suffix. If "none", tick
+prefixes are hidden. One of \code{"all"}, \code{"first"}, \code{"last"},
+\code{"none"}.}
+\item{\code{showticksuffix}}{Same as `showtickprefix` but for tick
+suffixes. One of \code{"all"}, \code{"first"}, \code{"last"},
+\code{"none"}.}
+\item{\code{tickcolor}}{Sets the tick color. Color: a CSS color string or
+R color name.}
+\item{\code{tickfont}}{Sets the tick font. A \code{\link{go_font}()}
+object or named list, with properties \code{color}, \code{family},
+\code{lineposition}, \code{shadow}, \code{size}, \code{style},
+\code{textcase}, \code{variant} and \code{weight} (see
+\code{\link{go_font}()}).}
+\item{\code{tickformat}}{Sets the tick label formatting rule using d3
+formatting mini-languages which are very similar to those in Python. For
+numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+for dates see:
+https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+two items to d3's date formatter: "\%h" for half of the year as a decimal
+number as well as "\%\{n\}f" for fractional seconds with n digits. For
+example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+would display "09~15~23.46" String.}
+\item{\code{ticklen}}{Sets the tick length (in px). Number in the
+interval [0, Inf].}
+\item{\code{tickprefix}}{Sets a tick label prefix. String.}
+\item{\code{ticks}}{Determines whether ticks are drawn or not. If **,
+this axis' ticks are not drawn. If "outside" ("inside"), this axis' are
+drawn outside (inside) the axis lines. One of \code{"outside"},
+\code{"inside"}, \code{""}.}
+\item{\code{ticksuffix}}{Sets a tick label suffix. String.}
+\item{\code{tickvals}}{Sets the values at which ticks on this axis
+appear. Defaults to `realaxis.tickvals` plus the same as negatives and
+zero. Data array: a vector, factor, Date/POSIXct vector, matrix or list.}
+\item{\code{tickwidth}}{Sets the tick width (in px). Number in the
+interval [0, Inf].}
+\item{\code{visible}}{A single toggle to hide the axis while preserving
+interaction like dragging. Default is true when a cheater plot is present
+on the axis, otherwise false Logical.}
+}
+}
+
+\section{realaxis properties}{
+
+\describe{
+\item{\code{color}}{Sets default for all colors associated with this axis
+all at once: line, font, tick, and grid colors. Grid color is lightened
+by blending this with the plot background Individual pieces can override
+this. Color: a CSS color string or R color name.}
+\item{\code{gridcolor}}{Sets the color of the grid lines. Color: a CSS
+color string or R color name.}
+\item{\code{griddash}}{Sets the dash style of lines. Set to a dash type
+string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+or a dash length list in px (eg "5px,10px,2px,2px"). One of
+\code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+\code{"dashdot"}, \code{"longdashdot"}, or a string matching
+\code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+\item{\code{gridwidth}}{Sets the width (in px) of the grid lines. Number
+in the interval [0, Inf].}
+\item{\code{hoverformat}}{Sets the hover text formatting rule using d3
+formatting mini-languages which are very similar to those in Python. For
+numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+for dates see:
+https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+two items to d3's date formatter: "\%h" for half of the year as a decimal
+number as well as "\%\{n\}f" for fractional seconds with n digits. For
+example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+would display "09~15~23.46" String.}
+\item{\code{labelalias}}{Replacement text for specific tick or hover
+labels. For example using \{US: 'USA', CA: 'Canada'\} changes US to USA
+and CA to Canada. The labels we would have shown must match the keys
+exactly, after adding any tickprefix or ticksuffix. For negative numbers
+the minus sign symbol used (U+2212) is wider than the regular ascii dash.
+That means you need to use -1 instead of -1. labelalias can be used with
+any axis type, and both keys (if needed) and values (if desired) can
+include html-like tags or MathJax. Any value.}
+\item{\code{layer}}{Sets the layer on which this axis is displayed. If
+"above traces", this axis is displayed above all the subplot's traces If
+"below traces", this axis is displayed below all the subplot's traces,
+but above the grid lines. Useful when used together with scatter-like
+traces with `cliponaxis` set to FALSE to show markers and/or text nodes
+above this axis. One of \code{"above traces"}, \code{"below traces"}.}
+\item{\code{linecolor}}{Sets the axis line color. Color: a CSS color
+string or R color name.}
+\item{\code{linewidth}}{Sets the width (in px) of the axis line. Number
+in the interval [0, Inf].}
+\item{\code{showgrid}}{Determines whether or not grid lines are drawn. If
+TRUE, the grid lines are drawn at every tick mark. Logical.}
+\item{\code{showline}}{Determines whether or not a line bounding this
+axis is drawn. Logical.}
+\item{\code{showticklabels}}{Determines whether or not the tick labels
+are drawn. Logical.}
+\item{\code{showtickprefix}}{If "all", all tick labels are displayed with
+a prefix. If "first", only the first tick is displayed with a prefix. If
+"last", only the last tick is displayed with a suffix. If "none", tick
+prefixes are hidden. One of \code{"all"}, \code{"first"}, \code{"last"},
+\code{"none"}.}
+\item{\code{showticksuffix}}{Same as `showtickprefix` but for tick
+suffixes. One of \code{"all"}, \code{"first"}, \code{"last"},
+\code{"none"}.}
+\item{\code{side}}{Determines on which side of real axis line the tick
+and tick labels appear. One of \code{"top"}, \code{"bottom"}.}
+\item{\code{tickangle}}{Sets the angle of the tick labels with respect to
+the horizontal. For example, a `tickangle` of -90 draws the tick labels
+vertically. Angle in degrees.}
+\item{\code{tickcolor}}{Sets the tick color. Color: a CSS color string or
+R color name.}
+\item{\code{tickfont}}{Sets the tick font. A \code{\link{go_font}()}
+object or named list, with properties \code{color}, \code{family},
+\code{lineposition}, \code{shadow}, \code{size}, \code{style},
+\code{textcase}, \code{variant} and \code{weight} (see
+\code{\link{go_font}()}).}
+\item{\code{tickformat}}{Sets the tick label formatting rule using d3
+formatting mini-languages which are very similar to those in Python. For
+numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+for dates see:
+https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+two items to d3's date formatter: "\%h" for half of the year as a decimal
+number as well as "\%\{n\}f" for fractional seconds with n digits. For
+example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+would display "09~15~23.46" String.}
+\item{\code{ticklen}}{Sets the tick length (in px). Number in the
+interval [0, Inf].}
+\item{\code{tickprefix}}{Sets a tick label prefix. String.}
+\item{\code{ticks}}{Determines whether ticks are drawn or not. If **,
+this axis' ticks are not drawn. If "top" ("bottom"), this axis' are drawn
+above (below) the axis line. One of \code{"top"}, \code{"bottom"},
+\code{""}.}
+\item{\code{ticksuffix}}{Sets a tick label suffix. String.}
+\item{\code{tickvals}}{Sets the values at which ticks on this axis
+appear. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
+\item{\code{tickwidth}}{Sets the tick width (in px). Number in the
+interval [0, Inf].}
+\item{\code{visible}}{A single toggle to hide the axis while preserving
+interaction like dragging. Default is true when a cheater plot is present
+on the axis, otherwise false Logical.}
+}
+}
+

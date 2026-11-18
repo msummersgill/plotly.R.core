@@ -103,7 +103,8 @@ add_trace_source <- function(trace, validators) {
   )
 }
 
-subplot_source <- function(singular, validators) {
+subplot_source <- function(singular, ctx) {
+  validators <- ctx$validators
   plural <- pluralize(singular)
   entry <- validators[[paste0("layout.", singular)]]
   sy <- singular == "yaxis"
@@ -147,19 +148,25 @@ subplot_source <- function(singular, validators) {
       "#' @param secondary_y Only secondary (\\code{TRUE}) or primary (\\code{FALSE}) y axes."
     },
     sprintf(
-      "#' @param patch A named list or %s object of property updates.",
-      rd_link(entry$data_class)
+      "#' @param patch A named list of %s property updates (see section \"%s properties\").",
+      singular,
+      singular
     ),
-    "#' @param ... Further named updates (names may use magic underscores).",
+    "#' @param ... Further named updates, by their full names.",
     "#' @param overwrite If \\code{TRUE}, replace nested objects instead of merging.",
     "#' @param fn A function that takes an object and returns the modified object.",
     "#'   If it returns anything other than a list, the object is left unchanged.",
     sprintf(
       "#' @return \\code{select_%s()} returns a named list of %s objects; the",
       plural,
-      rd_link(entry$data_class)
+      singular
     ),
     "#'   others return the modified figure.",
+    "#'",
+    sprintf("#' @section %s properties:", singular),
+    property_describe(paste0("layout.", singular), paste0("layout.", singular), ctx),
+    nested_sections(paste0("layout.", singular), ctx),
+    "#'",
     sprintf("#' @name update_%s", plural),
     "#' @noMd",
     "NULL",
@@ -221,7 +228,8 @@ layout_array_props <- function(validators) {
   )]
 }
 
-layout_array_source <- function(array_key, validators) {
+layout_array_source <- function(array_key, ctx) {
+  validators <- ctx$validators
   prop <- sub("^layout\\.", "", array_key)
   element_key <- validators[[array_key]]$element_key
   element <- validators[[element_key]]
@@ -242,8 +250,35 @@ layout_array_source <- function(array_key, validators) {
     "exclude_empty_subplots = FALSE",
     "skip_invalid = FALSE"
   )
+  fig_docs <- FIGURE_ARG_DOCS[c("fig", "row", "col", "secondary_y", "exclude_empty_subplots")]
+  fig_docs$row <- "Subplot grid row whose axes the object refers to (figures created with \\code{\\link{make_subplots}()} only). May be \\code{\"all\"} or a vector to add the object to several cells."
+  fig_docs$col <- "Subplot grid column whose axes the object refers to (see \\code{row})."
+  fig_docs$secondary_y <- "If \\code{TRUE}, refer to the secondary y axis of the subplot."
+  desc <- object_description(element_key, ctx)
   c(
-    sprintf("#' @rdname %s", element$data_class), # documented with the element constructor
+    sprintf("#' Add %s layout %s", "a", singular),
+    "#'",
+    if (nzchar(desc)) c(roxygen_lines(desc), "#'"),
+    roxygen_lines(sprintf(
+      "\\code{add_%s()} adds %s %s to the figure's layout \\code{%s}. %s",
+      sing,
+      if (grepl("^[aeiou]", singular)) "an" else "a",
+      singular,
+      prop,
+      "Nested objects are named lists, e.g. \\code{font = list(size = 14)} or a \\code{\\link{go_font}()} object; each one's properties are described in a section of its own near the end of this page."
+    )),
+    "#'",
+    "#' @param arg Optional named list of properties to start from. Named",
+    "#'   arguments take precedence.",
+    property_params(element_key, element_key, ctx, fig_docs),
+    "#' @param ... Further properties, by their full names.",
+    "#' @param skip_invalid If \\code{TRUE}, silently drop invalid properties",
+    "#'   instead of raising an error.",
+    "#' @return The modified figure.",
+    sprintf("#' @seealso %s", rd_link(paste0("update_", plur))),
+    nested_sections(element_key, ctx),
+    "#'",
+    "#' @noMd",
     "#' @export",
     sprintf("add_%s <- function(", sing),
     wrap_args(args),
@@ -283,16 +318,16 @@ layout_array_source <- function(array_key, validators) {
     "#' @param secondary_y Only objects on secondary (\\code{TRUE}) or primary (\\code{FALSE}) y axes.",
     sprintf(
       "#' @param patch A named list of property updates (see %s).",
-      rd_link(element$data_class)
+      rd_link(paste0("add_", sing))
     ),
-    "#' @param ... Further named updates (names may use magic underscores).",
+    "#' @param ... Further named updates, by their full names.",
     "#' @param overwrite If \\code{TRUE}, replace nested objects instead of merging.",
     "#' @param fn A function that takes an object and returns the modified object.",
     "#'   If it returns anything other than a list, the object is left unchanged.",
     sprintf(
       "#' @return \\code{select_%s()} returns a list of %s objects; the",
       plur,
-      rd_link(element$data_class)
+      singular
     ),
     "#'   others return the modified figure.",
     sprintf("#' @seealso %s", rd_link(paste0("add_", sing))),
@@ -334,7 +369,8 @@ layout_array_source <- function(array_key, validators) {
   )
 }
 
-write_figure <- function(validators, outdir = ".") {
+write_figure <- function(ctx, outdir = ".") {
+  validators <- ctx$validators
   traces <- sort(names(validators)[vapply(
     validators,
     function(v) !is.null(v$trace_type),
@@ -351,8 +387,8 @@ write_figure <- function(validators, outdir = ".") {
     ),
     "",
     unlist(lapply(traces, add_trace_source, validators = validators)),
-    unlist(lapply(subplots, subplot_source, validators = validators)),
-    unlist(lapply(arrays, layout_array_source, validators = validators))
+    unlist(lapply(subplots, subplot_source, ctx = ctx)),
+    unlist(lapply(arrays, layout_array_source, ctx = ctx))
   )
   writeLines(src, file.path(outdir, "R", "zz-gen-figure.R"))
   message(sprintf(

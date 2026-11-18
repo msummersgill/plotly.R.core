@@ -60,7 +60,7 @@ stopifnot(
 
 # Adding traces ---------------------------------------------------------------------
 fig <- go_figure() |>
-  add_scatter(x = 1:3, y = c(2, 1, 3), name = "a", marker_color = "red") |>
+  add_scatter(x = 1:3, y = c(2, 1, 3), name = "a", marker = list(color = "red")) |>
   add_trace(go_scatter(y = 3:1, name = "b", mode = "markers")) |>
   add_traces(list(list(y = c(1, 1, 1), name = "c")))
 stopifnot(
@@ -69,17 +69,17 @@ stopifnot(
   identical(vapply(fig$data, `[[`, "", "name"), c("a", "b", "c"))
 )
 expect_error(
-  add_scatter(fig, marker_size = -1),
+  add_scatter(fig, marker = list(size = -1)),
   "'size' property of scatter.marker"
 )
 expect_error(add_trace(list(), go_scatter()), "Don.t know how to add a trace")
 
-# update_layout: merging, magic underscores, overwrite, NULL ------------------------
+# update_layout: merging, overwrite, NULL ------------------------
 fig <- fig |>
   update_layout(title = "Title", xaxis = list(range = c(0, 10), title = "x")) |>
   update_layout(
     list(xaxis = list(type = "log")),
-    xaxis_title_font_size = 20,
+    xaxis = list(title = list(font = list(size = 20))),
     width = 600
   )
 stopifnot(
@@ -94,7 +94,8 @@ fig2 <- update_layout(fig, xaxis = list(type = "linear"), overwrite = TRUE)
 stopifnot(identical(names(fig2$layout$xaxis), "type"))
 fig2 <- update_layout(fig, width = NULL)
 stopifnot(is.null(fig2$layout$width))
-expect_error(update_layout(fig, xaxis_rnage = c(0, 1)), "Invalid property")
+expect_error(update_layout(fig, xaxis = list(rnage = c(0, 1))), "Invalid property")
+expect_error(update_layout(fig, xaxis_title = "x"), "xaxis = list\\(title = ...\\)")
 expect_error(update_layout(fig, width = 1), "interval \\[10, Inf\\]")
 
 # Selecting and updating traces ---------------------------------------------------------
@@ -102,14 +103,14 @@ stopifnot(
   length(select_traces(fig)) == 3L,
   length(select_traces(fig, "scatter")) == 3L,
   identical(select_traces(fig, list(name = "b"))[[1L]]$name, "b"),
-  identical(select_traces(fig, list(marker_color = "red"))[[1L]]$name, "a"),
+  identical(select_traces(fig, list(marker = list(color = "red")))[[1L]]$name, "a"),
   length(select_traces(fig, function(tr) identical(tr$mode, "markers"))) == 1L,
   identical(select_traces(fig, 2:3)[[2L]]$name, "c"),
   length(select_traces(fig, list(name = "zzz"))) == 0L
 )
 expect_error(select_traces(fig, 4), "out of range")
 
-fig3 <- update_traces(fig, marker_size = 12, selector = list(mode = "markers"))
+fig3 <- update_traces(fig, marker = list(size = 12), selector = list(mode = "markers"))
 stopifnot(
   identical(fig3$data[[2L]]$marker$size, 12),
   is.null(fig3$data[[1L]]$marker$size)
@@ -140,7 +141,7 @@ stopifnot(
   identical(names(select_yaxes(fig5)), c("yaxis", "yaxis2")),
   identical(names(select_xaxes(fig5)), "xaxis")
 )
-fig5 <- update_yaxes(fig5, title_text = "y", showgrid = FALSE)
+fig5 <- update_yaxes(fig5, title = list(text = "y"), showgrid = FALSE)
 stopifnot(
   identical(fig5$layout$yaxis$title$text, "y"),
   identical(fig5$layout$yaxis2$title$text, "y"),
@@ -204,7 +205,7 @@ fig <- iris_df |>
     x = ~a,
     y = ~ b * 2,
     mode = "markers",
-    marker_size = ~ a + 5,
+    marker = list(size = ~ a + 5),
     text = ~g
   ) |>
   add_bar(data = data.frame(k = c("p", "q"), v = 3:4), x = ~k, y = ~v)

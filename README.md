@@ -10,11 +10,12 @@ plotly.core is a rendering engine for the [plotly R package](https://github.com/
   for single precision floats allows up to 2x reduction of browser memory. _(See
   the render-performance vignette for more details)_
 - **Machine-generated code and documentation from the plotly.js schema.** 
-  All 47 trace types and every layout object have a machine-generated `go_*()`
-  constructor _(`go_scatter()`,`go_layout_xaxis()`, ... 979 in total)_ and 
-  comprehensive R documentation of arguments and thorough validation generated 
-  from the schema. Future changes to the plotly.js schema can be ported to the R
-  implementation without hand-writing any R code or documentation.
+  All 47 trace types and the layout have a machine-generated `go_*()`
+  constructor, with comprehensive R documentation of every property, including
+  nested objects, and thorough validation generated from the schema. Objects
+  shared across the schema have their own constructors (`go_font()`,
+  `go_colorbar()`, `go_hoverlabel()`, ...). Future changes to the plotly.js
+  schema can be ported to the R implementation without hand-writing any R code or documentation.
 - **Full backwards compatibility with the plotly R package.** plotly's `plot_ly()`
   and `ggplotly()` plots are rendered by plotly.core, so existing plotly R
   code gets the same performance work and plotly.js version.
@@ -77,8 +78,8 @@ mtcars |>
     hovertemplate = "%{text}<br>Weight: %{x} (1000 lbs)<br>MPG: %{y}<extra></extra>"
   ) |>
   update_layout(title = "Fuel economy vs. weight (mtcars)") |>
-  update_xaxes(title_text = "Weight (1000 lbs)") |>
-  update_yaxes(title_text = "Miles per gallon")
+  update_xaxes(title = "Weight (1000 lbs)") |>
+  update_yaxes(title = "Miles per gallon")
 ```
 
 ![](man/figures/README-mtcars-scatter.png)
@@ -99,7 +100,7 @@ fig <- make_subplots(
               row = 1, col = 1, secondary_y = TRUE) |>
   add_pie(labels = c("4", "6", "8"), values = as.vector(table(mtcars$cyl)), row = 1, col = 2) |>
   add_bar(x = rownames(mtcars), y = mtcars$qsec, name = "qsec", row = 2, col = 1) |>
-  update_yaxes(title_text = "hp", row = 1, col = 1, secondary_y = TRUE) |>
+  update_yaxes(title = "hp", row = 1, col = 1, secondary_y = TRUE) |>
   update_layout(showlegend = FALSE)
 ```
 
@@ -107,9 +108,10 @@ fig <- make_subplots(
 
 ## Graph objects and validation
 
-Nested properties can also be written with "magic underscores", as in plotly.py:
-`marker_size = 12` is the same as `marker = list(size = 12)`. Invalid values are
-caught immediately:
+Nested objects are named lists, such as `marker = list(size = 12)`, or objects
+from the shared type constructors: `textfont = go_font(size = 14)`. Every
+property is checked against the plotly.js schema, so invalid values are caught
+immediately:
 
 ```r
 add_scatter(fig, x = mtcars$wt, y = mtcars$mpg, mode = "dots")

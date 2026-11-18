@@ -147,14 +147,14 @@ fig <- make_subplots(
   add_trace(go_bar(y = c(5, 6)), row = 2, col = 1) |>
   add_trace(go_scatterpolar(r = c(1, 2), theta = c(0, 90)), row = 2, col = 2) |>
   add_scatter(y = c(7, 8), row = "all", col = 1) |>
-  update_xaxes(title_text = "bottom x", row = 2, col = 1) |>
+  update_xaxes(title = list(text = "bottom x"), row = 2, col = 1) |>
   update_yaxes(
-    title_text = "secondary",
+    title = list(text = "secondary"),
     row = 1,
     col = 1,
     secondary_y = TRUE
   ) |>
-  update_traces(marker_color = "red", row = 1, col = 1) |>
+  update_traces(marker = list(color = "red"), row = 1, col = 1) |>
   add_annotation(text = "note", x = 1, y = 1, row = 2, col = 1) |>
   add_shape(
     type = "line",
@@ -167,8 +167,8 @@ fig <- make_subplots(
     col = 1,
     secondary_y = TRUE
   ) |>
-  update_annotations(font_size = 20, row = 2, col = 1) |>
-  update_polars(radialaxis_range = c(0, 3), row = 2, col = 2)
+  update_annotations(font = list(size = 20), row = 2, col = 1) |>
+  update_polars(radialaxis = list(range = c(0, 3)), row = 2, col = 2)
 expect_same_json(fig$data, fixtures$placement$data, "Placement data")
 expect_same_json(fig$layout, fixtures$placement$layout, "Placement layout")
 

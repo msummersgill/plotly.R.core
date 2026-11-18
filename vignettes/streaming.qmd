@@ -45,7 +45,7 @@ server <- function(input, output, session) {
     go_figure() |>
       add_scatter(x = stamp(t), y = sin(as.numeric(t)), mode = "lines", name = "sin(t)") |>
       add_scatter(x = stamp(t), y = cos(as.numeric(t)), mode = "lines", name = "cos(t)") |>
-      update_layout(yaxis_range = c(-1.1, 1.1))
+      update_layout(yaxis = list(range = c(-1.1, 1.1)))
   })
 
   proxy <- plotlyProxy("stream", session)
@@ -89,7 +89,7 @@ library(plotly.core)
 fig <- go_figure() |>
   add_scatter(x = character(), y = numeric(), mode = "lines", name = "sin(t)") |>
   add_scatter(x = character(), y = numeric(), mode = "lines", name = "cos(t)") |>
-  update_layout(height = 350, yaxis_range = c(-1.1, 1.1), xaxis_type = "date")
+  update_layout(height = 350, yaxis = list(range = c(-1.1, 1.1)), xaxis = list(type = "date"))
 htmlwidgets::onRender(as_widget(fig), "
 function(el) {
   var n = 600, step = 100;
@@ -138,10 +138,10 @@ server <- function(input, output, session) {
                        mode = "lines", name = "t mod 2π") |>
       add_scatterpolar(r = s - t0, theta = (s + pi / 2) %% (2 * pi), thetaunit = "radians",
                        mode = "lines", name = "(t + π/2) mod 2π") |>
-      update_layout(
-        polar_angularaxis_thetaunit = "radians", # axis labels in radians too
-        polar_radialaxis_rangemode = "normal" # not from 0: the last 60 seconds
-      )
+      update_layout(polar = list(
+        angularaxis = list(thetaunit = "radians"), # axis labels in radians too
+        radialaxis = list(rangemode = "normal") # not from 0: the last 60 seconds
+      ))
   })
 
   proxy <- plotlyProxy("spiral", session)
@@ -175,8 +175,8 @@ spiral <- go_figure() |>
                    name = "t mod 2π") |>
   add_scatterpolar(r = numeric(), theta = numeric(), thetaunit = "radians", mode = "lines",
                    name = "(t + π/2) mod 2π") |>
-  update_layout(height = 500, polar_angularaxis_thetaunit = "radians",
-                polar_radialaxis_rangemode = "normal")
+  update_layout(height = 500, polar = list(angularaxis = list(thetaunit = "radians"),
+                                           radialaxis = list(rangemode = "normal")))
 htmlwidgets::onRender(as_widget(spiral), "
 function(el) {
   var n = 600, step = 100, t0 = Date.now() / 1000 - 60, tau = 2 * Math.PI;
@@ -368,7 +368,7 @@ server <- function(input, output, session) {
         zmax = 1,
         colorscale = "RdBu"
       ) |>
-      update_layout(yaxis_title = "y (radians)")
+      update_layout(yaxis = list(title = "y (radians)"))
   })
 
   proxy <- plotlyProxy("heat", session)
@@ -399,7 +399,7 @@ In the browser:
 heat <- go_figure() |>
   add_heatmap(x = character(), y = seq(0, 2 * pi, length.out = 61), z = list(),
               transpose = TRUE, zmin = -1, zmax = 1, colorscale = "RdBu") |>
-  update_layout(height = 400, yaxis_title = "y (radians)", xaxis_type = "date")
+  update_layout(height = 400, yaxis = list(title = "y (radians)"), xaxis = list(type = "date"))
 htmlwidgets::onRender(as_widget(heat), "
 function(el) {
   var n = 600, step = 100, tau = 2 * Math.PI, y = [];

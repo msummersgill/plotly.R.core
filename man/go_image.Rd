@@ -4,10 +4,6 @@
 \alias{add_image}
 \alias{add_image.default}
 \alias{go_image}
-\alias{go_image_hoverlabel}
-\alias{go_image_hoverlabel_font}
-\alias{go_image_legendgrouptitle}
-\alias{go_image_legendgrouptitle_font}
 \title{Image traces}
 \usage{
 add_image(fig, ...)
@@ -89,68 +85,17 @@ go_image(
   zsmooth = NULL,
   skip_invalid = FALSE
 )
-
-go_image_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  skip_invalid = FALSE
-)
-
-go_image_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_image_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_image_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
 }
 \arguments{
 \item{fig}{A \code{go_figure} object.}
 
-\item{...}{Further properties, including nested properties in
-"magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}. Property values may be one-sided
-formulas, evaluated in \code{data} for \code{add_*()} functions.}
+\item{...}{Further properties, by their full names (e.g. numbered subplots
+such as \code{xaxis2} in \code{go_layout()}). Nested properties are set
+with named lists: \code{marker = list(size = 10)}.}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
-~col}, \code{marker_size = ~col}) are evaluated. Default: the data
-given to \code{\link{go_figure}()}. Only the evaluated values are
+~col}, \code{marker = list(size = ~col)}) are evaluated. Default: the
+data given to \code{\link{go_figure}()}. Only the evaluated values are
 added to the trace. A \code{crosstalk::SharedData} works the same way,
 and links the trace to its crosstalk group (see
 \code{\link{highlight}()}).}
@@ -177,8 +122,10 @@ combination of \code{"x"}, \code{"y"}, \code{"z"}, \code{"color"},
 \code{"name"}, \code{"text"} joined with \code{"+"}, or one of
 \code{"all"}, \code{"none"}, \code{"skip"}, or a vector of these.}
 
-\item{hoverlabel}{Named list or \code{\link{go_image_hoverlabel}()}
-object.}
+\item{hoverlabel}{A \code{\link{go_hoverlabel}()} object or named list,
+with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+\code{font}, \code{namelength} and \code{showarrow} (see
+\code{\link{go_hoverlabel}()}).}
 
 \item{hovertemplate}{Template string used for rendering the information
 that appear on hover box. Note that this will override `hoverinfo`.
@@ -228,8 +175,9 @@ Settings for these legends are set in the layout, under
 `layout.legend`, `layout.legend2`, etc. Subplot id: \code{"legend"},
 \code{"legend2"}, \code{"legend3"}, ....}
 
-\item{legendgrouptitle}{Named list or
-\code{\link{go_image_legendgrouptitle}()} object.}
+\item{legendgrouptitle}{A \code{\link{go_legendgrouptitle}()} object or
+named list, with properties \code{font} and \code{text} (see
+\code{\link{go_legendgrouptitle}()}).}
 
 \item{legendrank}{Sets the legend rank for this trace. Items and groups
 with smaller ranks are presented on top/left side while with
@@ -263,12 +211,8 @@ item and on hover. String.}
 URI consists of "data:image/[<media
 subtype\\\\>][;base64\\\\],<data\\\\>" String.}
 
-\item{text}{\strong{\code{go_image()}}: Sets the text elements
-  associated with each z value. Data array: a vector, factor,
-  Date/POSIXct vector, matrix or list.
-
-  \strong{\code{go_image_legendgrouptitle()}}: Sets the title of the
-  legend group. String.}
+\item{text}{Sets the text elements associated with each z value. Data
+array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{uid}{Assign an id to this trace, Use this to provide object
 constancy between traces during animations and transitions. String.}
@@ -359,126 +303,10 @@ instead of raising an error.}
 
 \item{arg}{Optional named list, or graph object of the same type, to
 initialise properties from (constructors). Named arguments take precedence.}
-
-\item{align}{Sets the horizontal alignment of the text content within
-hover label box. Has an effect only if the hover label text spans two
-or more lines One of \code{"left"}, \code{"right"}, \code{"auto"}, or
-a vector of these.}
-
-\item{bgcolor}{Sets the background color of the hover labels for this
-trace Color: a CSS color string or R color name, or a vector of these.}
-
-\item{bordercolor}{Sets the border color of the hover labels for this
-trace. Color: a CSS color string or R color name, or a vector of
-these.}
-
-\item{font}{\strong{\code{go_image_hoverlabel()}}: Sets the font used in
-  hover labels. Named list or \code{\link{go_image_hoverlabel_font}()}
-  object.
-
-  \strong{\code{go_image_legendgrouptitle()}}: Sets this legend group's
-  title font. Named list or
-  \code{\link{go_image_legendgrouptitle_font}()} object.}
-
-\item{namelength}{Sets the default length (in number of characters) of
-the trace name in the hover labels for all traces. -1 shows the whole
-name regardless of length. 0-3 shows the first 0-3 characters, and an
-integer >3 will show the whole name if it is less than that many
-characters, but if it is longer, will truncate to `namelength - 3`
-characters and add an ellipsis. Integer in the interval [-1, Inf], or
-a vector of these.}
-
-\item{showarrow}{Sets whether or not to show the hover label
-arrow/triangle pointing to the data point. Logical.}
-
-\item{color}{\strong{\code{go_image_hoverlabel_font()}}: Color: a CSS
-  color string or R color name, or a vector of these.
-
-  \strong{\code{go_image_legendgrouptitle_font()}}: Color: a CSS color
-  string or R color name.}
-
-\item{family}{\strong{\code{go_image_hoverlabel_font()}}: HTML font
-  family - the typeface that will be applied by the web browser. The web
-  browser can only apply a font if it is available on the system where
-  it runs. Provide multiple font families, separated by commas, to
-  indicate the order in which to apply fonts if they aren't available.
-  String, or a vector of these.
-
-  \strong{\code{go_image_legendgrouptitle_font()}}: HTML font family -
-  the typeface that will be applied by the web browser. The web browser
-  can only apply a font if it is available on the system where it runs.
-  Provide multiple font families, separated by commas, to indicate the
-  order in which to apply fonts if they aren't available. String.}
-
-\item{lineposition}{\strong{\code{go_image_hoverlabel_font()}}: Sets the
-  kind of decoration line(s) with text, such as an "under", "over" or
-  "through" as well as combinations e.g. "under+over", etc. Any
-  combination of \code{"under"}, \code{"over"}, \code{"through"} joined
-  with \code{"+"}, or one of \code{"none"}, or a vector of these.
-
-  \strong{\code{go_image_legendgrouptitle_font()}}: Sets the kind of
-  decoration line(s) with text, such as an "under", "over" or "through"
-  as well as combinations e.g. "under+over", etc. Any combination of
-  \code{"under"}, \code{"over"}, \code{"through"} joined with
-  \code{"+"}, or one of \code{"none"}.}
-
-\item{shadow}{\strong{\code{go_image_hoverlabel_font()}}: Sets the shape
-  and color of the shadow behind text. "auto" places minimal shadow and
-  applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.
-
-  \strong{\code{go_image_legendgrouptitle_font()}}: Sets the shape and
-  color of the shadow behind text. "auto" places minimal shadow and
-  applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.}
-
-\item{size}{\strong{\code{go_image_hoverlabel_font()}}: Number in the
-  interval [1, Inf], or a vector of these.
-
-  \strong{\code{go_image_legendgrouptitle_font()}}: Number in the
-  interval [1, Inf].}
-
-\item{style}{\strong{\code{go_image_hoverlabel_font()}}: Sets whether a
-  font should be styled with a normal or italic face from its family.
-  One of \code{"normal"}, \code{"italic"}, or a vector of these.
-
-  \strong{\code{go_image_legendgrouptitle_font()}}: Sets whether a font
-  should be styled with a normal or italic face from its family. One of
-  \code{"normal"}, \code{"italic"}.}
-
-\item{textcase}{\strong{\code{go_image_hoverlabel_font()}}: Sets
-  capitalization of text. It can be used to make text appear in
-  all-uppercase or all-lowercase, or with each word capitalized. One of
-  \code{"normal"}, \code{"word caps"}, \code{"upper"}, \code{"lower"},
-  or a vector of these.
-
-  \strong{\code{go_image_legendgrouptitle_font()}}: Sets capitalization
-  of text. It can be used to make text appear in all-uppercase or
-  all-lowercase, or with each word capitalized. One of \code{"normal"},
-  \code{"word caps"}, \code{"upper"}, \code{"lower"}.}
-
-\item{variant}{\strong{\code{go_image_hoverlabel_font()}}: Sets the
-  variant of the font. One of \code{"normal"}, \code{"small-caps"},
-  \code{"all-small-caps"}, \code{"all-petite-caps"},
-  \code{"petite-caps"}, \code{"unicase"}, or a vector of these.
-
-  \strong{\code{go_image_legendgrouptitle_font()}}: Sets the variant of
-  the font. One of \code{"normal"}, \code{"small-caps"},
-  \code{"all-small-caps"}, \code{"all-petite-caps"},
-  \code{"petite-caps"}, \code{"unicase"}.}
-
-\item{weight}{\strong{\code{go_image_hoverlabel_font()}}: Sets the
-  weight (or boldness) of the font. Integer in the interval [1, 1000],
-  or a vector of these.
-
-  \strong{\code{go_image_legendgrouptitle_font()}}: Sets the weight (or
-  boldness) of the font. Integer in the interval [1, 1000].}
 }
 \value{
-Each \code{go_*()} function returns a graph object of the same
-  class as its name; \code{add_*()} functions return the modified figure.
+\code{go_*()} functions return a graph object;
+  \code{add_*()} functions return the modified figure.
 }
 \description{
 Display an image, i.e. data on a 2D regular raster. By default, when an
@@ -488,21 +316,30 @@ image is displayed in a subplot, its y axis will be reversed (ie.
 `scaleanchor: 'x,`) in order for pixels to be rendered as squares.
 }
 \details{
-\code{go_image()} and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-\code{\link{plotly_obj-modify}()}). \code{add_image()} creates an object
-and adds it to a figure.
+\code{go_image()} creates a validated graph object (a named list).
+\code{add_image()} creates one and adds it to a figure.
 
-Nested objects documented here:
-\describe{
-\item{\code{go_image_hoverlabel()}}{\code{image.hoverlabel}}
-\item{\code{go_image_hoverlabel_font()}}{\code{image.hoverlabel.font}:
-Sets the font used in hover labels.}
-\item{\code{go_image_legendgrouptitle()}}{\code{image.legendgrouptitle}}
-\item{\code{go_image_legendgrouptitle_font()}}{\code{image.legendgrouptitle.font}:
-Sets this legend group's title font.}
-}
+
+Nested objects are named lists, e.g. \code{marker = list(size = 10, line
+= list(width = 2))}. Each nested object's properties are described in a
+section of its own near the end of this page (after \emph{Value}), titled
+with its path: \emph{marker properties}, \emph{marker.line properties},
+.... Objects that appear in several places in the schema can also be
+created with a constructor of their own, and are documented on its page:
+\code{\link{go_font}()}, \code{\link{go_colorbar}()},
+\code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
+\code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
+\code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
+\code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
+\code{\link{go_caps}()}, \code{\link{go_domainpad}()},
+\code{\link{go_gradient}()}, \code{\link{go_label}()},
+\code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
+\code{\link{go_minor}()}, \code{\link{go_pathbar}()},
+\code{\link{go_project}()}, \code{\link{go_rangebreak}()},
+\code{\link{go_root}()}, \code{\link{go_slices}()},
+\code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
+Every property is checked against the plotly.js schema when the object is
+created or modified (see \code{\link{plotly_obj-modify}}).
 }
 \examples{
 go_image()

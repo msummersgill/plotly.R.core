@@ -26,8 +26,12 @@ validates the new value, just like the constructor does. Setting a
 property to \code{NULL} removes it.
 }
 \examples{
-m <- go_scatter_marker(size = 10)
-m$color <- "red"
-m[["symbol"]] <- "diamond"
-try(m$size <- -1)
+f <- go_font(size = 10)
+f$color <- "red"
+f[["family"]] <- "Georgia"
+try(f$size <- -1)
+
+tr <- go_scatter(x = 1:3, y = 3:1)
+tr$mode <- "markers"
+tr$marker <- list(size = 12, color = "red")
 }

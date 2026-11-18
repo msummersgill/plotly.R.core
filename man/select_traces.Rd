@@ -33,9 +33,9 @@ for_each_trace(
 
 \item{selector}{Which traces to use: \code{NULL} (all), a trace type such as
 \code{"scatter"}, indices into the matching traces, a named list of property
-values that must all match (names may use magic underscores, e.g.
-\code{list(marker_color = "red")}), or a function that takes a trace and
-returns \code{TRUE} or \code{FALSE}.}
+values that must all match (nested lists match nested properties, e.g.
+\code{list(marker = list(color = "red"))}), or a function that takes a trace
+and returns \code{TRUE} or \code{FALSE}.}
 
 \item{row, col}{Only traces in this subplot grid row and/or column.}
 
@@ -67,7 +67,7 @@ fig <- go_figure() |>
   add_scatter(y = 1:3, name = "a") |>
   add_scatter(y = 3:1, name = "b", mode = "markers")
 select_traces(fig, list(name = "b"))
-fig <- update_traces(fig, marker_size = 12, selector = list(mode = "markers"))
+fig <- update_traces(fig, marker = list(size = 12), selector = list(mode = "markers"))
 fig <- for_each_trace(fig, function(tr) {
   tr$name <- toupper(tr$name)
   tr

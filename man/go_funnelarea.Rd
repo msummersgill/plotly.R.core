@@ -4,18 +4,6 @@
 \alias{add_funnelarea}
 \alias{add_funnelarea.default}
 \alias{go_funnelarea}
-\alias{go_funnelarea_domain}
-\alias{go_funnelarea_hoverlabel}
-\alias{go_funnelarea_hoverlabel_font}
-\alias{go_funnelarea_insidetextfont}
-\alias{go_funnelarea_legendgrouptitle}
-\alias{go_funnelarea_legendgrouptitle_font}
-\alias{go_funnelarea_marker}
-\alias{go_funnelarea_marker_line}
-\alias{go_funnelarea_marker_pattern}
-\alias{go_funnelarea_textfont}
-\alias{go_funnelarea_title}
-\alias{go_funnelarea_title_font}
 \title{Funnelarea traces}
 \usage{
 add_funnelarea(fig, ...)
@@ -106,163 +94,17 @@ go_funnelarea(
   visible = NULL,
   skip_invalid = FALSE
 )
-
-go_funnelarea_domain(
-  arg = NULL,
-  ...,
-  column = NULL,
-  row = NULL,
-  x = NULL,
-  y = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_insidetextfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_marker(
-  arg = NULL,
-  ...,
-  colors = NULL,
-  line = NULL,
-  pattern = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_marker_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_marker_pattern(
-  arg = NULL,
-  ...,
-  bgcolor = NULL,
-  fgcolor = NULL,
-  fgopacity = NULL,
-  fillmode = NULL,
-  path = NULL,
-  shape = NULL,
-  size = NULL,
-  solidity = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_textfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_title(
-  arg = NULL,
-  ...,
-  font = NULL,
-  position = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_title_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
 }
 \arguments{
 \item{fig}{A \code{go_figure} object.}
 
-\item{...}{Further properties, including nested properties in
-"magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}. Property values may be one-sided
-formulas, evaluated in \code{data} for \code{add_*()} functions.}
+\item{...}{Further properties, by their full names (e.g. numbered subplots
+such as \code{xaxis2} in \code{go_layout()}). Nested properties are set
+with named lists: \code{marker = list(size = 10)}.}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
-~col}, \code{marker_size = ~col}) are evaluated. Default: the data
-given to \code{\link{go_figure}()}. Only the evaluated values are
+~col}, \code{marker = list(size = ~col)}) are evaluated. Default: the
+data given to \code{\link{go_figure}()}. Only the evaluated values are
 added to the trace. A \code{crosstalk::SharedData} works the same way,
 and links the trace to its crosstalk group (see
 \code{\link{highlight}()}).}
@@ -280,7 +122,9 @@ array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{dlabel}{Sets the label step. See `label0` for more info. Number.}
 
-\item{domain}{Named list or \code{\link{go_funnelarea_domain}()} object.}
+\item{domain}{A \code{\link{go_domain}()} object or named list, with
+properties \code{column}, \code{row}, \code{x} and \code{y} (see
+\code{\link{go_domain}()}).}
 
 \item{hoverinfo}{Determines what trace information appears on hover.
 Flags are rendered in a fixed order; use `hovertemplate` if you need
@@ -290,8 +134,10 @@ fields and surrounding text. Any combination of \code{"label"},
 with \code{"+"}, or one of \code{"all"}, \code{"none"}, \code{"skip"},
 or a vector of these.}
 
-\item{hoverlabel}{Named list or \code{\link{go_funnelarea_hoverlabel}()}
-object.}
+\item{hoverlabel}{A \code{\link{go_hoverlabel}()} object or named list,
+with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+\code{font}, \code{namelength} and \code{showarrow} (see
+\code{\link{go_hoverlabel}()}).}
 
 \item{hovertemplate}{Template string used for rendering the information
 that appear on hover box. Note that this will override `hoverinfo`.
@@ -339,8 +185,10 @@ strings, not numbers or any other type. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.}
 
 \item{insidetextfont}{Sets the font used for `textinfo` lying inside the
-sector. Named list or \code{\link{go_funnelarea_insidetextfont}()}
-object.}
+sector. A \code{\link{go_font}()} object or named list, with
+properties \code{color}, \code{family}, \code{lineposition},
+\code{shadow}, \code{size}, \code{style}, \code{textcase},
+\code{variant} and \code{weight} (see \code{\link{go_font}()}).}
 
 \item{label0}{Alternate to `labels`. Builds a numeric set of labels. Use
 with `dlabel` where `label0` is the starting label and `dlabel` the
@@ -362,8 +210,9 @@ Settings for these legends are set in the layout, under
 shapes part of the same legend group hide/show at the same time when
 toggling legend items. String.}
 
-\item{legendgrouptitle}{Named list or
-\code{\link{go_funnelarea_legendgrouptitle}()} object.}
+\item{legendgrouptitle}{A \code{\link{go_legendgrouptitle}()} object or
+named list, with properties \code{font} and \code{text} (see
+\code{\link{go_legendgrouptitle}()}).}
 
 \item{legendrank}{Sets the legend rank for this trace. Items and groups
 with smaller ranks are presented on top/left side while with
@@ -377,7 +226,8 @@ to their order in data and layout. Number.}
 \item{legendwidth}{Sets the width (in px or fraction) of the legend for
 this trace. Number in the interval [0, Inf].}
 
-\item{marker}{Named list or \code{\link{go_funnelarea_marker}()} object.}
+\item{marker}{A named list with properties \code{colors}, \code{line}
+and \code{pattern} (described in section "marker properties" below).}
 
 \item{meta}{Assigns extra meta information associated with this trace
 that can be used in various text attributes. Attributes such as trace
@@ -402,21 +252,17 @@ here shared by every trace in the same group. String.}
 \item{showlegend}{Determines whether or not an item corresponding to
 this trace is shown in the legend. Logical.}
 
-\item{text}{\strong{\code{go_funnelarea()}}: Sets text elements
-  associated with each sector. If trace `textinfo` contains a "text"
-  flag, these elements will be seen on the chart. If trace `hoverinfo`
-  contains a "text" flag and "hovertext" is not set, these elements will
-  be seen in the hover labels. Data array: a vector, factor,
-  Date/POSIXct vector, matrix or list.
+\item{text}{Sets text elements associated with each sector. If trace
+`textinfo` contains a "text" flag, these elements will be seen on the
+chart. If trace `hoverinfo` contains a "text" flag and "hovertext" is
+not set, these elements will be seen in the hover labels. Data array:
+a vector, factor, Date/POSIXct vector, matrix or list.}
 
-  \strong{\code{go_funnelarea_legendgrouptitle()}}: Sets the title of
-  the legend group. String.
-
-  \strong{\code{go_funnelarea_title()}}: Sets the title of the chart. If
-  it is empty, no title is displayed. String.}
-
-\item{textfont}{Sets the font used for `textinfo`. Named list or
-\code{\link{go_funnelarea_textfont}()} object.}
+\item{textfont}{Sets the font used for `textinfo`. A
+\code{\link{go_font}()} object or named list, with properties
+\code{color}, \code{family}, \code{lineposition}, \code{shadow},
+\code{size}, \code{style}, \code{textcase}, \code{variant} and
+\code{weight} (see \code{\link{go_font}()}).}
 
 \item{textinfo}{Determines what trace information appears on the graph.
 Flags are rendered in a fixed order; use `texttemplate` if you need
@@ -452,8 +298,9 @@ variable referenced in a template is missing. If the boolean value
 'false' is passed in, the specifier with the missing variable will be
 displayed. Any value.}
 
-\item{title}{String (the title text), named list or
-\code{\link{go_funnelarea_title}()} object.}
+\item{title}{String (the title text), or a named list with properties
+\code{font}, \code{position} and \code{text} (described in section
+"title properties" below).}
 
 \item{uid}{Assign an id to this trace, Use this to provide object
 constancy between traces during animations and transitions. String.}
@@ -482,13 +329,9 @@ vector, matrix or list.}
 (provided that the legend itself is visible). One of
 \code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
 
-\item{row}{\strong{\code{add_funnelarea()}}: Subplot grid row (figures
-  created with \code{\link{make_subplots}()} only). May be \code{"all"}
-  or a vector to address several cells.
-
-  \strong{\code{go_funnelarea_domain()}}: If there is a layout grid, use
-  the domain for this row in the grid for this funnelarea trace. Integer
-  in the interval [0, Inf].}
+\item{row}{Subplot grid row (figures created with
+\code{\link{make_subplots}()} only). May be \code{"all"} or a vector
+to address several cells.}
 
 \item{col}{Subplot grid column (figures created with
 \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
@@ -499,221 +342,10 @@ instead of raising an error.}
 
 \item{arg}{Optional named list, or graph object of the same type, to
 initialise properties from (constructors). Named arguments take precedence.}
-
-\item{column}{If there is a layout grid, use the domain for this column
-in the grid for this funnelarea trace. Integer in the interval [0,
-Inf].}
-
-\item{x}{Sets the horizontal domain of this funnelarea trace (in plot
-fraction). Vector or list of 2 element(s).}
-
-\item{y}{Sets the vertical domain of this funnelarea trace (in plot
-fraction). Vector or list of 2 element(s).}
-
-\item{align}{Sets the horizontal alignment of the text content within
-hover label box. Has an effect only if the hover label text spans two
-or more lines One of \code{"left"}, \code{"right"}, \code{"auto"}, or
-a vector of these.}
-
-\item{bgcolor}{\strong{\code{go_funnelarea_hoverlabel()}}: Sets the
-  background color of the hover labels for this trace Color: a CSS color
-  string or R color name, or a vector of these.
-
-  \strong{\code{go_funnelarea_marker_pattern()}}: When there is no
-  colorscale sets the color of background pattern fill. Defaults to a
-  `marker.color` background when `fillmode` is "overlay". Otherwise,
-  defaults to a transparent background. Color: a CSS color string or R
-  color name, or a vector of these.}
-
-\item{bordercolor}{Sets the border color of the hover labels for this
-trace. Color: a CSS color string or R color name, or a vector of
-these.}
-
-\item{font}{\strong{\code{go_funnelarea_hoverlabel()}}: Sets the font
-  used in hover labels. Named list or
-  \code{\link{go_funnelarea_hoverlabel_font}()} object.
-
-  \strong{\code{go_funnelarea_legendgrouptitle()}}: Sets this legend
-  group's title font. Named list or
-  \code{\link{go_funnelarea_legendgrouptitle_font}()} object.
-
-  \strong{\code{go_funnelarea_title()}}: Sets the font used for `title`.
-  Named list or \code{\link{go_funnelarea_title_font}()} object.}
-
-\item{namelength}{Sets the default length (in number of characters) of
-the trace name in the hover labels for all traces. -1 shows the whole
-name regardless of length. 0-3 shows the first 0-3 characters, and an
-integer >3 will show the whole name if it is less than that many
-characters, but if it is longer, will truncate to `namelength - 3`
-characters and add an ellipsis. Integer in the interval [-1, Inf], or
-a vector of these.}
-
-\item{showarrow}{Sets whether or not to show the hover label
-arrow/triangle pointing to the data point. Logical.}
-
-\item{color}{\strong{\code{go_funnelarea_hoverlabel_font()},
-  \code{go_funnelarea_insidetextfont()},
-  \code{go_funnelarea_textfont()}, \code{go_funnelarea_title_font()}}:
-  Color: a CSS color string or R color name, or a vector of these.
-
-  \strong{\code{go_funnelarea_legendgrouptitle_font()}}: Color: a CSS
-  color string or R color name.
-
-  \strong{\code{go_funnelarea_marker_line()}}: Sets the color of the
-  line enclosing each sector. Defaults to the `paper_bgcolor` value.
-  Color: a CSS color string or R color name, or a vector of these.}
-
-\item{family}{\strong{\code{go_funnelarea_hoverlabel_font()},
-  \code{go_funnelarea_insidetextfont()},
-  \code{go_funnelarea_textfont()}, \code{go_funnelarea_title_font()}}:
-  HTML font family - the typeface that will be applied by the web
-  browser. The web browser can only apply a font if it is available on
-  the system where it runs. Provide multiple font families, separated by
-  commas, to indicate the order in which to apply fonts if they aren't
-  available. String, or a vector of these.
-
-  \strong{\code{go_funnelarea_legendgrouptitle_font()}}: HTML font
-  family - the typeface that will be applied by the web browser. The web
-  browser can only apply a font if it is available on the system where
-  it runs. Provide multiple font families, separated by commas, to
-  indicate the order in which to apply fonts if they aren't available.
-  String.}
-
-\item{lineposition}{\strong{\code{go_funnelarea_hoverlabel_font()},
-  \code{go_funnelarea_insidetextfont()},
-  \code{go_funnelarea_textfont()}, \code{go_funnelarea_title_font()}}:
-  Sets the kind of decoration line(s) with text, such as an "under",
-  "over" or "through" as well as combinations e.g. "under+over", etc.
-  Any combination of \code{"under"}, \code{"over"}, \code{"through"}
-  joined with \code{"+"}, or one of \code{"none"}, or a vector of these.
-
-  \strong{\code{go_funnelarea_legendgrouptitle_font()}}: Sets the kind
-  of decoration line(s) with text, such as an "under", "over" or
-  "through" as well as combinations e.g. "under+over", etc. Any
-  combination of \code{"under"}, \code{"over"}, \code{"through"} joined
-  with \code{"+"}, or one of \code{"none"}.}
-
-\item{shadow}{\strong{\code{go_funnelarea_hoverlabel_font()},
-  \code{go_funnelarea_insidetextfont()},
-  \code{go_funnelarea_textfont()}, \code{go_funnelarea_title_font()}}:
-  Sets the shape and color of the shadow behind text. "auto" places
-  minimal shadow and applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.
-
-  \strong{\code{go_funnelarea_legendgrouptitle_font()}}: Sets the shape
-  and color of the shadow behind text. "auto" places minimal shadow and
-  applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.}
-
-\item{size}{\strong{\code{go_funnelarea_hoverlabel_font()},
-  \code{go_funnelarea_insidetextfont()},
-  \code{go_funnelarea_textfont()}, \code{go_funnelarea_title_font()}}:
-  Number in the interval [1, Inf], or a vector of these.
-
-  \strong{\code{go_funnelarea_legendgrouptitle_font()}}: Number in the
-  interval [1, Inf].
-
-  \strong{\code{go_funnelarea_marker_pattern()}}: Sets the size of unit
-  squares of the pattern fill in pixels, which corresponds to the
-  interval of repetition of the pattern. Number in the interval [0,
-  Inf], or a vector of these.}
-
-\item{style}{\strong{\code{go_funnelarea_hoverlabel_font()},
-  \code{go_funnelarea_insidetextfont()},
-  \code{go_funnelarea_textfont()}, \code{go_funnelarea_title_font()}}:
-  Sets whether a font should be styled with a normal or italic face from
-  its family. One of \code{"normal"}, \code{"italic"}, or a vector of
-  these.
-
-  \strong{\code{go_funnelarea_legendgrouptitle_font()}}: Sets whether a
-  font should be styled with a normal or italic face from its family.
-  One of \code{"normal"}, \code{"italic"}.}
-
-\item{textcase}{\strong{\code{go_funnelarea_hoverlabel_font()},
-  \code{go_funnelarea_insidetextfont()},
-  \code{go_funnelarea_textfont()}, \code{go_funnelarea_title_font()}}:
-  Sets capitalization of text. It can be used to make text appear in
-  all-uppercase or all-lowercase, or with each word capitalized. One of
-  \code{"normal"}, \code{"word caps"}, \code{"upper"}, \code{"lower"},
-  or a vector of these.
-
-  \strong{\code{go_funnelarea_legendgrouptitle_font()}}: Sets
-  capitalization of text. It can be used to make text appear in
-  all-uppercase or all-lowercase, or with each word capitalized. One of
-  \code{"normal"}, \code{"word caps"}, \code{"upper"}, \code{"lower"}.}
-
-\item{variant}{\strong{\code{go_funnelarea_hoverlabel_font()},
-  \code{go_funnelarea_insidetextfont()},
-  \code{go_funnelarea_textfont()}, \code{go_funnelarea_title_font()}}:
-  Sets the variant of the font. One of \code{"normal"},
-  \code{"small-caps"}, \code{"all-small-caps"},
-  \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}, or a
-  vector of these.
-
-  \strong{\code{go_funnelarea_legendgrouptitle_font()}}: Sets the
-  variant of the font. One of \code{"normal"}, \code{"small-caps"},
-  \code{"all-small-caps"}, \code{"all-petite-caps"},
-  \code{"petite-caps"}, \code{"unicase"}.}
-
-\item{weight}{\strong{\code{go_funnelarea_hoverlabel_font()},
-  \code{go_funnelarea_insidetextfont()},
-  \code{go_funnelarea_textfont()}, \code{go_funnelarea_title_font()}}:
-  Sets the weight (or boldness) of the font. Integer in the interval [1,
-  1000], or a vector of these.
-
-  \strong{\code{go_funnelarea_legendgrouptitle_font()}}: Sets the weight
-  (or boldness) of the font. Integer in the interval [1, 1000].}
-
-\item{colors}{Sets the color of each sector. If not specified, the
-default trace color set is used to pick the sector colors. Data array:
-a vector, factor, Date/POSIXct vector, matrix or list.}
-
-\item{line}{Named list or \code{\link{go_funnelarea_marker_line}()}
-object.}
-
-\item{pattern}{Sets the pattern within the marker. Named list or
-\code{\link{go_funnelarea_marker_pattern}()} object.}
-
-\item{width}{Sets the width (in px) of the line enclosing each sector.
-Number in the interval [0, Inf], or a vector of these.}
-
-\item{fgcolor}{When there is no colorscale sets the color of foreground
-pattern fill. Defaults to a `marker.color` background when `fillmode`
-is "replace". Otherwise, defaults to dark grey or white to increase
-contrast with the `bgcolor`. Color: a CSS color string or R color
-name, or a vector of these.}
-
-\item{fgopacity}{Sets the opacity of the foreground pattern fill.
-Defaults to a 0.5 when `fillmode` is "overlay". Otherwise, defaults to
-1. Number in the interval [0, 1].}
-
-\item{fillmode}{Determines whether `marker.color` should be used as a
-default to `bgcolor` or a `fgcolor`. One of \code{"replace"},
-\code{"overlay"}.}
-
-\item{path}{Sets a custom path for pattern fill. Use with no `shape` or
-`solidity`, provide an SVG path string for the regions of the square
-from (0,0) to (`size`,`size`) to color. String, or a vector of these.}
-
-\item{shape}{Sets the shape of the pattern fill. By default, no pattern
-is used for filling the area. One of \code{""}, \code{"/"},
-\code{"\\\\"}, \code{"x"}, \code{"-"}, \code{"|"}, \code{"+"},
-\code{"."}, or a vector of these.}
-
-\item{solidity}{Sets the solidity of the pattern fill. Solidity is
-roughly the fraction of the area filled by the pattern. Solidity of 0
-shows only the background color without pattern and solidty of 1 shows
-only the foreground color without pattern. Number in the interval [0,
-1], or a vector of these.}
-
-\item{position}{Specifies the location of the `title`. One of \code{"top
-left"}, \code{"top center"}, \code{"top right"}.}
 }
 \value{
-Each \code{go_*()} function returns a graph object of the same
-  class as its name; \code{add_*()} functions return the modified figure.
+\code{go_*()} functions return a graph object;
+  \code{add_*()} functions return the modified figure.
 }
 \description{
 Visualize stages in a process using area-encoded trapezoids. This trace
@@ -722,34 +354,73 @@ can be used to show data in a part-to-whole representation similar to a
 "funnel" trace type for a different approach to visualizing funnel data.
 }
 \details{
-\code{go_funnelarea()} and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-\code{\link{plotly_obj-modify}()}). \code{add_funnelarea()} creates an
-object and adds it to a figure.
+\code{go_funnelarea()} creates a validated graph object (a named list).
+\code{add_funnelarea()} creates one and adds it to a figure.
 
-Nested objects documented here:
+
+Nested objects are named lists, e.g. \code{marker = list(size = 10, line
+= list(width = 2))}. Each nested object's properties are described in a
+section of its own near the end of this page (after \emph{Value}), titled
+with its path: \emph{marker properties}, \emph{marker.line properties},
+.... Objects that appear in several places in the schema can also be
+created with a constructor of their own, and are documented on its page:
+\code{\link{go_font}()}, \code{\link{go_colorbar}()},
+\code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
+\code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
+\code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
+\code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
+\code{\link{go_caps}()}, \code{\link{go_domainpad}()},
+\code{\link{go_gradient}()}, \code{\link{go_label}()},
+\code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
+\code{\link{go_minor}()}, \code{\link{go_pathbar}()},
+\code{\link{go_project}()}, \code{\link{go_rangebreak}()},
+\code{\link{go_root}()}, \code{\link{go_slices}()},
+\code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
+Every property is checked against the plotly.js schema when the object is
+created or modified (see \code{\link{plotly_obj-modify}}).
+}
+\section{marker properties}{
+
 \describe{
-\item{\code{go_funnelarea_domain()}}{\code{funnelarea.domain}}
-\item{\code{go_funnelarea_hoverlabel()}}{\code{funnelarea.hoverlabel}}
-\item{\code{go_funnelarea_hoverlabel_font()}}{\code{funnelarea.hoverlabel.font}:
-Sets the font used in hover labels.}
-\item{\code{go_funnelarea_insidetextfont()}}{\code{funnelarea.insidetextfont}:
-Sets the font used for `textinfo` lying inside the sector.}
-\item{\code{go_funnelarea_legendgrouptitle()}}{\code{funnelarea.legendgrouptitle}}
-\item{\code{go_funnelarea_legendgrouptitle_font()}}{\code{funnelarea.legendgrouptitle.font}:
-Sets this legend group's title font.}
-\item{\code{go_funnelarea_marker()}}{\code{funnelarea.marker}}
-\item{\code{go_funnelarea_marker_line()}}{\code{funnelarea.marker.line}}
-\item{\code{go_funnelarea_marker_pattern()}}{\code{funnelarea.marker.pattern}:
-Sets the pattern within the marker.}
-\item{\code{go_funnelarea_textfont()}}{\code{funnelarea.textfont}: Sets
-the font used for `textinfo`.}
-\item{\code{go_funnelarea_title()}}{\code{funnelarea.title}}
-\item{\code{go_funnelarea_title_font()}}{\code{funnelarea.title.font}:
-Sets the font used for `title`.}
+\item{\code{colors}}{Sets the color of each sector. If not specified, the
+default trace color set is used to pick the sector colors. Data array: a
+vector, factor, Date/POSIXct vector, matrix or list.}
+\item{\code{line}}{A named list with properties \code{color} and
+\code{width} (described in section "marker.line properties" below).}
+\item{\code{pattern}}{Sets the pattern within the marker. A
+\code{\link{go_pattern}()} object or named list, with properties
+\code{bgcolor}, \code{fgcolor}, \code{fgopacity}, \code{fillmode},
+\code{path}, \code{shape}, \code{size} and \code{solidity} (see
+\code{\link{go_pattern}()}).}
 }
 }
+
+\section{marker.line properties}{
+
+\describe{
+\item{\code{color}}{Sets the color of the line enclosing each sector.
+Defaults to the `paper_bgcolor` value. Color: a CSS color string or R
+color name, or a vector of these.}
+\item{\code{width}}{Sets the width (in px) of the line enclosing each
+sector. Number in the interval [0, Inf], or a vector of these.}
+}
+}
+
+\section{title properties}{
+
+\describe{
+\item{\code{font}}{Sets the font used for `title`. A
+\code{\link{go_font}()} object or named list, with properties
+\code{color}, \code{family}, \code{lineposition}, \code{shadow},
+\code{size}, \code{style}, \code{textcase}, \code{variant} and
+\code{weight} (see \code{\link{go_font}()}).}
+\item{\code{position}}{Specifies the location of the `title`. One of
+\code{"top left"}, \code{"top center"}, \code{"top right"}.}
+\item{\code{text}}{Sets the title of the chart. If it is empty, no title
+is displayed. String.}
+}
+}
+
 \examples{
 go_funnelarea()
 }

@@ -30,9 +30,9 @@ or a function that takes an object and returns \code{TRUE} or \code{FALSE}.}
 \item{row, col}{Only objects in this subplot grid row and/or column
 (figures created with \code{\link{make_subplots}()} only).}
 
-\item{patch}{A named list or \code{\link{go_layout_polar}()} object of property updates.}
+\item{patch}{A named list of polar property updates (see section "polar properties").}
 
-\item{...}{Further named updates (names may use magic underscores).}
+\item{...}{Further named updates, by their full names.}
 
 \item{overwrite}{If \code{TRUE}, replace nested objects instead of merging.}
 
@@ -40,7 +40,7 @@ or a function that takes an object and returns \code{TRUE} or \code{FALSE}.}
 If it returns anything other than a list, the object is left unchanged.}
 }
 \value{
-\code{select_polars()} returns a named list of \code{\link{go_layout_polar}()} objects; the
+\code{select_polars()} returns a named list of polar objects; the
   others return the modified figure.
 }
 \description{
@@ -50,3 +50,550 @@ their properties like \code{\link{update_layout}()} does, and \code{for_each_pol
 replaces each one with the result of \code{fn}. The base object (e.g.
 \code{polar}) is always included, even if it has not been set yet.
 }
+\section{polar properties}{
+
+\describe{
+\item{\code{angularaxis}}{A named list with properties
+\code{autotypenumbers}, \code{categoryarray}, \code{categoryorder},
+\code{color}, \code{direction}, \code{dtick}, \code{exponentformat},
+\code{gridcolor}, \code{griddash}, \code{gridwidth}, \code{hoverformat},
+\code{labelalias} and 34 more (described in section "angularaxis
+properties" below).}
+\item{\code{bargap}}{Sets the gap between bars of adjacent location
+coordinates. Values are unitless, they represent fractions of the minimum
+difference in bar positions in the data. Number in the interval [0, 1].}
+\item{\code{barmode}}{Determines how bars at the same location coordinate
+are displayed on the graph. With "stack", the bars are stacked on top of
+one another With "overlay", the bars are plotted over one another, you
+might need to reduce "opacity" to see multiple bars. One of
+\code{"stack"}, \code{"overlay"}.}
+\item{\code{bgcolor}}{Set the background color of the subplot Color: a
+CSS color string or R color name.}
+\item{\code{domain}}{A \code{\link{go_domain}()} object or named list,
+with properties \code{column}, \code{row}, \code{x} and \code{y} (see
+\code{\link{go_domain}()}).}
+\item{\code{gridshape}}{Determines if the radial axis grid lines and
+angular axis line are drawn as "circular" sectors or as "linear"
+(polygon) sectors. Has an effect only when the angular axis has `type`
+"category". Note that `radialaxis.angle` is snapped to the angle of the
+closest vertex when `gridshape` is "circular" (so that radial axis scale
+is the same as the data scale). One of \code{"circular"},
+\code{"linear"}.}
+\item{\code{hole}}{Sets the fraction of the radius to cut out of the
+polar subplot. Number in the interval [0, 1].}
+\item{\code{radialaxis}}{A named list with properties \code{angle},
+\code{autorange}, \code{autorangeoptions}, \code{autotickangles},
+\code{autotypenumbers}, \code{calendar}, \code{categoryarray},
+\code{categoryorder}, \code{color}, \code{dtick}, \code{exponentformat},
+\code{gridcolor} and 41 more (described in section "radialaxis
+properties" below).}
+\item{\code{sector}}{Sets angular span of this polar subplot with two
+angles (in degrees). Sector are assumed to be spanned in the
+counterclockwise direction with 0 corresponding to rightmost limit of the
+polar subplot. Vector or list of 2 element(s).}
+\item{\code{uirevision}}{Controls persistence of user-driven changes in
+axis attributes, if not overridden in the individual axes. Defaults to
+`layout.uirevision`. Any value.}
+}
+}
+
+\section{angularaxis properties}{
+
+\describe{
+\item{\code{autotypenumbers}}{Using "strict" a numeric string in trace
+data is not converted to a number. Using "convert types" a numeric string
+in trace data may be treated as a number during automatic axis `type`
+detection. Defaults to layout.autotypenumbers. One of \code{"convert
+types"}, \code{"strict"}.}
+\item{\code{categoryarray}}{Sets the order in which categories on this
+axis appear. Only has an effect if `categoryorder` is set to "array".
+Used with `categoryorder`. Data array: a vector, factor, Date/POSIXct
+vector, matrix or list.}
+\item{\code{categoryorder}}{Specifies the ordering logic for the case of
+categorical variables. By default, plotly uses "trace", which specifies
+the order that is present in the data supplied. Set `categoryorder` to
+"category ascending" or "category descending" if order should be
+determined by the alphanumerical order of the category names. Set
+`categoryorder` to "array" to derive the ordering from the attribute
+`categoryarray`. If a category is not found in the `categoryarray` array,
+the sorting behavior for that attribute will be identical to the "trace"
+mode. The unspecified categories will follow the categories in
+`categoryarray`. Set `categoryorder` to "total ascending" or "total
+descending" if order should be determined by the numerical order of the
+values. Similarly, the order can be determined by the min, max, sum,
+mean, geometric mean or median of all the values. One of \code{"trace"},
+\code{"category ascending"}, \code{"category descending"},
+\code{"array"}, \code{"total ascending"}, \code{"total descending"},
+\code{"min ascending"}, \code{"min descending"}, \code{"max ascending"},
+\code{"max descending"}, \code{"sum ascending"}, \code{"sum descending"},
+\code{"mean ascending"}, \code{"mean descending"}, \code{"geometric mean
+ascending"}, \code{"geometric mean descending"}, \code{"median
+ascending"}, \code{"median descending"}.}
+\item{\code{color}}{Sets default for all colors associated with this axis
+all at once: line, font, tick, and grid colors. Grid color is lightened
+by blending this with the plot background Individual pieces can override
+this. Color: a CSS color string or R color name.}
+\item{\code{direction}}{Sets the direction corresponding to positive
+angles. One of \code{"counterclockwise"}, \code{"clockwise"}.}
+\item{\code{dtick}}{Sets the step in-between ticks on this axis. Use with
+`tick0`. Must be a positive number, or special strings available to "log"
+and "date" axes. If the axis `type` is "log", then ticks are set every
+10^(n*dtick) where n is the tick number. For example, to set a tick mark
+at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks at 1, 100,
+10000, ... set dtick to 2. To set tick marks at 1, 5, 25, 125, 625, 3125,
+... set dtick to log_10(5), or 0.69897000433. "log" has several special
+values; "L<f>", where `f` is a positive number, gives ticks linearly
+spaced in value (but not position). For example `tick0` = 0.1, `dtick` =
+"L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6 etc. To show powers of 10
+plus small digits between, use "D1" (all digits) or "D2" (only 2 and 5).
+`tick0` is ignored for "D1" and "D2". If the axis `type` is "date", then
+you must convert the time to milliseconds. For example, to set the
+interval between ticks to one day, set `dtick` to 86400000.0. "date" also
+has special values "M<n>" gives ticks spaced by a number of months. `n`
+must be a positive integer. To set ticks on the 15th of every third
+month, set `tick0` to "2000-01-15" and `dtick` to "M3". To set ticks
+every 4 years, set `dtick` to "M48" Any value.}
+\item{\code{exponentformat}}{Determines a formatting rule for the tick
+exponents. For example, consider the number 1,000,000,000. If "none", it
+appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power", 1x10^9
+(with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses prefixes
+from "femto" f (10^-15) to "tera" T (10^12). "SI extended" covers instead
+the full SI range from "quecto" q (10^-30) to "quetta" Q (10^30). If "SI"
+or "SI extended" is used and the exponent is beyond the above ranges, the
+formatting rule will automatically be switched to the power notation. One
+of \code{"none"}, \code{"e"}, \code{"E"}, \code{"power"}, \code{"SI"},
+\code{"B"}, \code{"SI extended"}.}
+\item{\code{gridcolor}}{Sets the color of the grid lines. Color: a CSS
+color string or R color name.}
+\item{\code{griddash}}{Sets the dash style of lines. Set to a dash type
+string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+or a dash length list in px (eg "5px,10px,2px,2px"). One of
+\code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+\code{"dashdot"}, \code{"longdashdot"}, or a string matching
+\code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+\item{\code{gridwidth}}{Sets the width (in px) of the grid lines. Number
+in the interval [0, Inf].}
+\item{\code{hoverformat}}{Sets the hover text formatting rule using d3
+formatting mini-languages which are very similar to those in Python. For
+numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+for dates see:
+https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+two items to d3's date formatter: "\%h" for half of the year as a decimal
+number as well as "\%\{n\}f" for fractional seconds with n digits. For
+example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+would display "09~15~23.46" String.}
+\item{\code{labelalias}}{Replacement text for specific tick or hover
+labels. For example using \{US: 'USA', CA: 'Canada'\} changes US to USA
+and CA to Canada. The labels we would have shown must match the keys
+exactly, after adding any tickprefix or ticksuffix. For negative numbers
+the minus sign symbol used (U+2212) is wider than the regular ascii dash.
+That means you need to use -1 instead of -1. labelalias can be used with
+any axis type, and both keys (if needed) and values (if desired) can
+include html-like tags or MathJax. Any value.}
+\item{\code{layer}}{Sets the layer on which this axis is displayed. If
+"above traces", this axis is displayed above all the subplot's traces If
+"below traces", this axis is displayed below all the subplot's traces,
+but above the grid lines. Useful when used together with scatter-like
+traces with `cliponaxis` set to FALSE to show markers and/or text nodes
+above this axis. One of \code{"above traces"}, \code{"below traces"}.}
+\item{\code{linecolor}}{Sets the axis line color. Color: a CSS color
+string or R color name.}
+\item{\code{linewidth}}{Sets the width (in px) of the axis line. Number
+in the interval [0, Inf].}
+\item{\code{minexponent}}{Hide SI prefix for 10^n if |n| is below this
+number. This only has an effect when `tickformat` is "SI" or "B". Number
+in the interval [0, Inf].}
+\item{\code{minorloglabels}}{Determines how minor log labels are
+displayed. If "small digits", small digits i.e. 2 or 5 are displayed. If
+"complete", complete digits are displayed. If "none", no labels are
+displayed. One of \code{"small digits"}, \code{"complete"},
+\code{"none"}.}
+\item{\code{nticks}}{Specifies the maximum number of ticks for the
+particular axis. The actual number of ticks will be chosen automatically
+to be less than or equal to `nticks`. Has an effect only if `tickmode` is
+set to "auto". Integer in the interval [0, Inf].}
+\item{\code{period}}{Set the angular period. Has an effect only when
+`angularaxis.type` is "category". Number in the interval [0, Inf].}
+\item{\code{rotation}}{Sets that start position (in degrees) of the
+angular axis By default, polar subplots with `direction` set to
+"counterclockwise" get a `rotation` of 0 which corresponds to due East
+(like what mathematicians prefer). In turn, polar with `direction` set to
+"clockwise" get a rotation of 90 which corresponds to due North (like on
+a compass), Angle in degrees.}
+\item{\code{separatethousands}}{If "true", even 4-digit integers are
+separated Logical.}
+\item{\code{showexponent}}{If "all", all exponents are shown besides
+their significands. If "first", only the exponent of the first tick is
+shown. If "last", only the exponent of the last tick is shown. If "none",
+no exponents appear. One of \code{"all"}, \code{"first"}, \code{"last"},
+\code{"none"}.}
+\item{\code{showgrid}}{Determines whether or not grid lines are drawn. If
+TRUE, the grid lines are drawn at every tick mark. Logical.}
+\item{\code{showline}}{Determines whether or not a line bounding this
+axis is drawn. Logical.}
+\item{\code{showticklabels}}{Determines whether or not the tick labels
+are drawn. Logical.}
+\item{\code{showtickprefix}}{If "all", all tick labels are displayed with
+a prefix. If "first", only the first tick is displayed with a prefix. If
+"last", only the last tick is displayed with a suffix. If "none", tick
+prefixes are hidden. One of \code{"all"}, \code{"first"}, \code{"last"},
+\code{"none"}.}
+\item{\code{showticksuffix}}{Same as `showtickprefix` but for tick
+suffixes. One of \code{"all"}, \code{"first"}, \code{"last"},
+\code{"none"}.}
+\item{\code{thetaunit}}{Sets the format unit of the formatted "theta"
+values. Has an effect only when `angularaxis.type` is "linear". One of
+\code{"radians"}, \code{"degrees"}.}
+\item{\code{tick0}}{Sets the placement of the first tick on this axis.
+Use with `dtick`. If the axis `type` is "log", then you must take the log
+of your starting tick (e.g. to set the starting tick to 100, set the
+`tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info). If
+the axis `type` is "date", it should be a date string, like date data. If
+the axis `type` is "category", it should be a number, using the scale
+where each category is assigned a serial number from zero in the order it
+appears. Any value.}
+\item{\code{tickangle}}{Sets the angle of the tick labels with respect to
+the horizontal. For example, a `tickangle` of -90 draws the tick labels
+vertically. Angle in degrees.}
+\item{\code{tickcolor}}{Sets the tick color. Color: a CSS color string or
+R color name.}
+\item{\code{tickfont}}{Sets the tick font. A \code{\link{go_font}()}
+object or named list, with properties \code{color}, \code{family},
+\code{lineposition}, \code{shadow}, \code{size}, \code{style},
+\code{textcase}, \code{variant} and \code{weight} (see
+\code{\link{go_font}()}).}
+\item{\code{tickformat}}{Sets the tick label formatting rule using d3
+formatting mini-languages which are very similar to those in Python. For
+numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+for dates see:
+https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+two items to d3's date formatter: "\%h" for half of the year as a decimal
+number as well as "\%\{n\}f" for fractional seconds with n digits. For
+example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+would display "09~15~23.46" String.}
+\item{\code{tickformatstops}}{List, each element a
+\code{\link{go_tickformatstop}()} object or named list, with properties
+\code{dtickrange}, \code{enabled}, \code{name}, \code{templateitemname}
+and \code{value} (see \code{\link{go_tickformatstop}()}).}
+\item{\code{ticklabelstep}}{Sets the spacing between tick labels as
+compared to the spacing between ticks. A value of 1 (default) means each
+tick gets a label. A value of 2 means shows every 2nd label. A larger
+value n means only every nth tick is labeled. `tick0` determines which
+labels are shown. Not implemented for axes with `type` "log" or
+"multicategory", or when `tickmode` is "array". Integer in the interval
+[1, Inf].}
+\item{\code{ticklen}}{Sets the tick length (in px). Number in the
+interval [0, Inf].}
+\item{\code{tickmode}}{Sets the tick mode for this axis. If "auto", the
+number of ticks is set via `nticks`. If "linear", the placement of the
+ticks is determined by a starting position `tick0` and a tick step
+`dtick` ("linear" is the default value if `tick0` and `dtick` are
+provided). If "array", the placement of the ticks is set via `tickvals`
+and the tick text is `ticktext`. ("array" is the default value if
+`tickvals` is provided). One of \code{"auto"}, \code{"linear"},
+\code{"array"}.}
+\item{\code{tickprefix}}{Sets a tick label prefix. String.}
+\item{\code{ticks}}{Determines whether ticks are drawn or not. If **,
+this axis' ticks are not drawn. If "outside" ("inside"), this axis' are
+drawn outside (inside) the axis lines. One of \code{"outside"},
+\code{"inside"}, \code{""}.}
+\item{\code{ticksuffix}}{Sets a tick label suffix. String.}
+\item{\code{ticktext}}{Sets the text displayed at the ticks position via
+`tickvals`. Only has an effect if `tickmode` is set to "array". Used with
+`tickvals`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
+\item{\code{tickvals}}{Sets the values at which ticks on this axis
+appear. Only has an effect if `tickmode` is set to "array". Used with
+`ticktext`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
+\item{\code{tickwidth}}{Sets the tick width (in px). Number in the
+interval [0, Inf].}
+\item{\code{type}}{Sets the angular axis type. If "linear", set
+`thetaunit` to determine the unit in which axis value are shown. If
+*category, use `period` to set the number of integer coordinates around
+polar axis. One of \code{"-"}, \code{"linear"}, \code{"category"}.}
+\item{\code{uirevision}}{Controls persistence of user-driven changes in
+axis `rotation`. Defaults to `polar<N>.uirevision`. Any value.}
+\item{\code{visible}}{A single toggle to hide the axis while preserving
+interaction like dragging. Default is true when a cheater plot is present
+on the axis, otherwise false Logical.}
+}
+}
+
+\section{radialaxis properties}{
+
+\describe{
+\item{\code{angle}}{Sets the angle (in degrees) from which the radial
+axis is drawn. Note that by default, radial axis line on the theta=0 line
+corresponds to a line pointing right (like what mathematicians prefer).
+Defaults to the first `polar.sector` angle. Angle in degrees.}
+\item{\code{autorange}}{Determines whether or not the range of this axis
+is computed in relation to the input data. See `rangemode` for more info.
+If `range` is provided and it has a value for both the lower and upper
+bound, `autorange` is set to FALSE. Using "min" applies autorange only to
+set the minimum. Using "max" applies autorange only to set the maximum.
+Using "min reversed" applies autorange only to set the minimum on a
+reversed axis. Using "max reversed" applies autorange only to set the
+maximum on a reversed axis. Using "reversed" applies autorange on both
+ends and reverses the axis direction. One of \code{"reversed"},
+\code{"min reversed"}, \code{"max reversed"}, \code{"min"}, \code{"max"},
+\code{TRUE}, \code{FALSE}.}
+\item{\code{autorangeoptions}}{A \code{\link{go_autorangeoptions}()}
+object or named list, with properties \code{clipmax}, \code{clipmin},
+\code{include}, \code{maxallowed} and \code{minallowed} (see
+\code{\link{go_autorangeoptions}()}).}
+\item{\code{autotickangles}}{When `tickangle` is set to "auto", it will
+be set to the first angle in this array that is large enough to prevent
+label overlap. Vector or list of up to 1 element(s).}
+\item{\code{autotypenumbers}}{Using "strict" a numeric string in trace
+data is not converted to a number. Using "convert types" a numeric string
+in trace data may be treated as a number during automatic axis `type`
+detection. Defaults to layout.autotypenumbers. One of \code{"convert
+types"}, \code{"strict"}.}
+\item{\code{calendar}}{Sets the calendar system to use for `range` and
+`tick0` if this is a date axis. This does not set the calendar for
+interpreting data on this axis, that's specified in the trace or via the
+global `layout.calendar` One of \code{"chinese"}, \code{"coptic"},
+\code{"discworld"}, \code{"ethiopian"}, \code{"gregorian"},
+\code{"hebrew"}, \code{"islamic"}, \code{"jalali"}, \code{"julian"},
+\code{"mayan"}, \code{"nanakshahi"}, \code{"nepali"}, \code{"persian"},
+\code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.}
+\item{\code{categoryarray}}{Sets the order in which categories on this
+axis appear. Only has an effect if `categoryorder` is set to "array".
+Used with `categoryorder`. Data array: a vector, factor, Date/POSIXct
+vector, matrix or list.}
+\item{\code{categoryorder}}{Specifies the ordering logic for the case of
+categorical variables. By default, plotly uses "trace", which specifies
+the order that is present in the data supplied. Set `categoryorder` to
+"category ascending" or "category descending" if order should be
+determined by the alphanumerical order of the category names. Set
+`categoryorder` to "array" to derive the ordering from the attribute
+`categoryarray`. If a category is not found in the `categoryarray` array,
+the sorting behavior for that attribute will be identical to the "trace"
+mode. The unspecified categories will follow the categories in
+`categoryarray`. Set `categoryorder` to "total ascending" or "total
+descending" if order should be determined by the numerical order of the
+values. Similarly, the order can be determined by the min, max, sum,
+mean, geometric mean or median of all the values. One of \code{"trace"},
+\code{"category ascending"}, \code{"category descending"},
+\code{"array"}, \code{"total ascending"}, \code{"total descending"},
+\code{"min ascending"}, \code{"min descending"}, \code{"max ascending"},
+\code{"max descending"}, \code{"sum ascending"}, \code{"sum descending"},
+\code{"mean ascending"}, \code{"mean descending"}, \code{"geometric mean
+ascending"}, \code{"geometric mean descending"}, \code{"median
+ascending"}, \code{"median descending"}.}
+\item{\code{color}}{Sets default for all colors associated with this axis
+all at once: line, font, tick, and grid colors. Grid color is lightened
+by blending this with the plot background Individual pieces can override
+this. Color: a CSS color string or R color name.}
+\item{\code{dtick}}{Sets the step in-between ticks on this axis. Use with
+`tick0`. Must be a positive number, or special strings available to "log"
+and "date" axes. If the axis `type` is "log", then ticks are set every
+10^(n*dtick) where n is the tick number. For example, to set a tick mark
+at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks at 1, 100,
+10000, ... set dtick to 2. To set tick marks at 1, 5, 25, 125, 625, 3125,
+... set dtick to log_10(5), or 0.69897000433. "log" has several special
+values; "L<f>", where `f` is a positive number, gives ticks linearly
+spaced in value (but not position). For example `tick0` = 0.1, `dtick` =
+"L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6 etc. To show powers of 10
+plus small digits between, use "D1" (all digits) or "D2" (only 2 and 5).
+`tick0` is ignored for "D1" and "D2". If the axis `type` is "date", then
+you must convert the time to milliseconds. For example, to set the
+interval between ticks to one day, set `dtick` to 86400000.0. "date" also
+has special values "M<n>" gives ticks spaced by a number of months. `n`
+must be a positive integer. To set ticks on the 15th of every third
+month, set `tick0` to "2000-01-15" and `dtick` to "M3". To set ticks
+every 4 years, set `dtick` to "M48" Any value.}
+\item{\code{exponentformat}}{Determines a formatting rule for the tick
+exponents. For example, consider the number 1,000,000,000. If "none", it
+appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power", 1x10^9
+(with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses prefixes
+from "femto" f (10^-15) to "tera" T (10^12). "SI extended" covers instead
+the full SI range from "quecto" q (10^-30) to "quetta" Q (10^30). If "SI"
+or "SI extended" is used and the exponent is beyond the above ranges, the
+formatting rule will automatically be switched to the power notation. One
+of \code{"none"}, \code{"e"}, \code{"E"}, \code{"power"}, \code{"SI"},
+\code{"B"}, \code{"SI extended"}.}
+\item{\code{gridcolor}}{Sets the color of the grid lines. Color: a CSS
+color string or R color name.}
+\item{\code{griddash}}{Sets the dash style of lines. Set to a dash type
+string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+or a dash length list in px (eg "5px,10px,2px,2px"). One of
+\code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+\code{"dashdot"}, \code{"longdashdot"}, or a string matching
+\code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+\item{\code{gridwidth}}{Sets the width (in px) of the grid lines. Number
+in the interval [0, Inf].}
+\item{\code{hoverformat}}{Sets the hover text formatting rule using d3
+formatting mini-languages which are very similar to those in Python. For
+numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+for dates see:
+https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+two items to d3's date formatter: "\%h" for half of the year as a decimal
+number as well as "\%\{n\}f" for fractional seconds with n digits. For
+example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+would display "09~15~23.46" String.}
+\item{\code{labelalias}}{Replacement text for specific tick or hover
+labels. For example using \{US: 'USA', CA: 'Canada'\} changes US to USA
+and CA to Canada. The labels we would have shown must match the keys
+exactly, after adding any tickprefix or ticksuffix. For negative numbers
+the minus sign symbol used (U+2212) is wider than the regular ascii dash.
+That means you need to use -1 instead of -1. labelalias can be used with
+any axis type, and both keys (if needed) and values (if desired) can
+include html-like tags or MathJax. Any value.}
+\item{\code{layer}}{Sets the layer on which this axis is displayed. If
+"above traces", this axis is displayed above all the subplot's traces If
+"below traces", this axis is displayed below all the subplot's traces,
+but above the grid lines. Useful when used together with scatter-like
+traces with `cliponaxis` set to FALSE to show markers and/or text nodes
+above this axis. One of \code{"above traces"}, \code{"below traces"}.}
+\item{\code{linecolor}}{Sets the axis line color. Color: a CSS color
+string or R color name.}
+\item{\code{linewidth}}{Sets the width (in px) of the axis line. Number
+in the interval [0, Inf].}
+\item{\code{maxallowed}}{Determines the maximum range of this axis. Any
+value.}
+\item{\code{minallowed}}{Determines the minimum range of this axis. Any
+value.}
+\item{\code{minexponent}}{Hide SI prefix for 10^n if |n| is below this
+number. This only has an effect when `tickformat` is "SI" or "B". Number
+in the interval [0, Inf].}
+\item{\code{minorloglabels}}{Determines how minor log labels are
+displayed. If "small digits", small digits i.e. 2 or 5 are displayed. If
+"complete", complete digits are displayed. If "none", no labels are
+displayed. One of \code{"small digits"}, \code{"complete"},
+\code{"none"}.}
+\item{\code{nticks}}{Specifies the maximum number of ticks for the
+particular axis. The actual number of ticks will be chosen automatically
+to be less than or equal to `nticks`. Has an effect only if `tickmode` is
+set to "auto". Integer in the interval [0, Inf].}
+\item{\code{range}}{Sets the range of this axis. If the axis `type` is
+"log", then you must take the log of your desired range (e.g. to set the
+range from 1 to 100, set the range from 0 to 2). If the axis `type` is
+"date", it should be date strings, like date data, though Date objects
+and unix milliseconds will be accepted and converted to strings. If the
+axis `type` is "category", it should be numbers, using the scale where
+each category is assigned a serial number from zero in the order it
+appears. Leaving either or both elements `null` impacts the default
+`autorange`. Vector or list of 2 element(s).}
+\item{\code{rangemode}}{If "tozero", the range extends to 0, regardless
+of the input data If "nonnegative", the range is non-negative, regardless
+of the input data. If "normal", the range is computed in relation to the
+extrema of the input data (same behavior as for cartesian axes). One of
+\code{"tozero"}, \code{"nonnegative"}, \code{"normal"}.}
+\item{\code{separatethousands}}{If "true", even 4-digit integers are
+separated Logical.}
+\item{\code{showexponent}}{If "all", all exponents are shown besides
+their significands. If "first", only the exponent of the first tick is
+shown. If "last", only the exponent of the last tick is shown. If "none",
+no exponents appear. One of \code{"all"}, \code{"first"}, \code{"last"},
+\code{"none"}.}
+\item{\code{showgrid}}{Determines whether or not grid lines are drawn. If
+TRUE, the grid lines are drawn at every tick mark. Logical.}
+\item{\code{showline}}{Determines whether or not a line bounding this
+axis is drawn. Logical.}
+\item{\code{showticklabels}}{Determines whether or not the tick labels
+are drawn. Logical.}
+\item{\code{showtickprefix}}{If "all", all tick labels are displayed with
+a prefix. If "first", only the first tick is displayed with a prefix. If
+"last", only the last tick is displayed with a suffix. If "none", tick
+prefixes are hidden. One of \code{"all"}, \code{"first"}, \code{"last"},
+\code{"none"}.}
+\item{\code{showticksuffix}}{Same as `showtickprefix` but for tick
+suffixes. One of \code{"all"}, \code{"first"}, \code{"last"},
+\code{"none"}.}
+\item{\code{side}}{Determines on which side of radial axis line the tick
+and tick labels appear. One of \code{"clockwise"},
+\code{"counterclockwise"}.}
+\item{\code{tick0}}{Sets the placement of the first tick on this axis.
+Use with `dtick`. If the axis `type` is "log", then you must take the log
+of your starting tick (e.g. to set the starting tick to 100, set the
+`tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info). If
+the axis `type` is "date", it should be a date string, like date data. If
+the axis `type` is "category", it should be a number, using the scale
+where each category is assigned a serial number from zero in the order it
+appears. Any value.}
+\item{\code{tickangle}}{Sets the angle of the tick labels with respect to
+the horizontal. For example, a `tickangle` of -90 draws the tick labels
+vertically. Angle in degrees.}
+\item{\code{tickcolor}}{Sets the tick color. Color: a CSS color string or
+R color name.}
+\item{\code{tickfont}}{Sets the tick font. A \code{\link{go_font}()}
+object or named list, with properties \code{color}, \code{family},
+\code{lineposition}, \code{shadow}, \code{size}, \code{style},
+\code{textcase}, \code{variant} and \code{weight} (see
+\code{\link{go_font}()}).}
+\item{\code{tickformat}}{Sets the tick label formatting rule using d3
+formatting mini-languages which are very similar to those in Python. For
+numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+for dates see:
+https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+two items to d3's date formatter: "\%h" for half of the year as a decimal
+number as well as "\%\{n\}f" for fractional seconds with n digits. For
+example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+would display "09~15~23.46" String.}
+\item{\code{tickformatstops}}{List, each element a
+\code{\link{go_tickformatstop}()} object or named list, with properties
+\code{dtickrange}, \code{enabled}, \code{name}, \code{templateitemname}
+and \code{value} (see \code{\link{go_tickformatstop}()}).}
+\item{\code{ticklabelstep}}{Sets the spacing between tick labels as
+compared to the spacing between ticks. A value of 1 (default) means each
+tick gets a label. A value of 2 means shows every 2nd label. A larger
+value n means only every nth tick is labeled. `tick0` determines which
+labels are shown. Not implemented for axes with `type` "log" or
+"multicategory", or when `tickmode` is "array". Integer in the interval
+[1, Inf].}
+\item{\code{ticklen}}{Sets the tick length (in px). Number in the
+interval [0, Inf].}
+\item{\code{tickmode}}{Sets the tick mode for this axis. If "auto", the
+number of ticks is set via `nticks`. If "linear", the placement of the
+ticks is determined by a starting position `tick0` and a tick step
+`dtick` ("linear" is the default value if `tick0` and `dtick` are
+provided). If "array", the placement of the ticks is set via `tickvals`
+and the tick text is `ticktext`. ("array" is the default value if
+`tickvals` is provided). One of \code{"auto"}, \code{"linear"},
+\code{"array"}.}
+\item{\code{tickprefix}}{Sets a tick label prefix. String.}
+\item{\code{ticks}}{Determines whether ticks are drawn or not. If **,
+this axis' ticks are not drawn. If "outside" ("inside"), this axis' are
+drawn outside (inside) the axis lines. One of \code{"outside"},
+\code{"inside"}, \code{""}.}
+\item{\code{ticksuffix}}{Sets a tick label suffix. String.}
+\item{\code{ticktext}}{Sets the text displayed at the ticks position via
+`tickvals`. Only has an effect if `tickmode` is set to "array". Used with
+`tickvals`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
+\item{\code{tickvals}}{Sets the values at which ticks on this axis
+appear. Only has an effect if `tickmode` is set to "array". Used with
+`ticktext`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
+\item{\code{tickwidth}}{Sets the tick width (in px). Number in the
+interval [0, Inf].}
+\item{\code{title}}{String (the title text), or a named list with
+properties \code{font} and \code{text} (described in section
+"radialaxis.title properties" below).}
+\item{\code{type}}{Sets the axis type. By default, plotly attempts to
+determined the axis type by looking into the data of the traces that
+referenced the axis in question. One of \code{"-"}, \code{"linear"},
+\code{"log"}, \code{"date"}, \code{"category"}.}
+\item{\code{uirevision}}{Controls persistence of user-driven changes in
+axis `range`, `autorange`, `angle`, and `title` if in `editable: true`
+configuration. Defaults to `polar<N>.uirevision`. Any value.}
+\item{\code{visible}}{A single toggle to hide the axis while preserving
+interaction like dragging. Default is true when a cheater plot is present
+on the axis, otherwise false Logical.}
+}
+}
+
+\section{radialaxis.title properties}{
+
+\describe{
+\item{\code{font}}{Sets this axis' title font. A \code{\link{go_font}()}
+object or named list, with properties \code{color}, \code{family},
+\code{lineposition}, \code{shadow}, \code{size}, \code{style},
+\code{textcase}, \code{variant} and \code{weight} (see
+\code{\link{go_font}()}).}
+\item{\code{text}}{Sets the title of this axis. String.}
+}
+}
+

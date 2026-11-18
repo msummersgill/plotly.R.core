@@ -331,20 +331,39 @@ describe_validator <- function(entry, name) {
     ),
     CompoundValidator = ,
     TitleValidator = sprintf(
-      "%s an object (a named list) that may be created with %s()",
+      "%s an object (a named list)%s",
       head,
-      entry$data_class
+      shared_hint(class_key(entry$data_class))
     ),
     CompoundArrayValidator = sprintf(
-      "%s a list of objects (named lists) that may be created with %s()",
+      "%s a list of objects (named lists)%s",
       head,
-      entry$data_class
+      shared_hint(entry$element_key)
     ),
     paste(head, "of an unknown type")
   )
 }
 
 # Helpers --------------------------------------------------------------------
+
+# ", or a go_font() object" for keys of a shared type.
+shared_hint <- function(key) {
+  type <- if (is.null(key)) NA else shared_type_of(key)
+  if (is.na(type)) "" else sprintf(", or a go_%s() object", type)
+}
+
+# How errors name the object at schema key `key`: its constructor for traces
+# and the layout ("go_scatter()"), its path for nested objects ("scatter.marker").
+object_label <- function(key, entry) {
+  if (!is.null(entry$label)) {
+    return(entry$label)
+  }
+  if (!is.null(entry$trace_type) || identical(key, "layout")) {
+    paste0(entry$data_class, "()")
+  } else {
+    key
+  }
+}
 
 as_char_if_factor <- function(v) if (is.factor(v)) as.character(v) else v
 
@@ -832,9 +851,20 @@ raise_invalid_prop <- function(name, key, entry) {
   } else {
     ""
   }
+  # plotly.py's "magic underscore" names (marker_size) are not supported
+  if (!nzchar(hint) && grepl("_", name, fixed = TRUE)) {
+    head <- sub("_.*$", "", name)
+    if (head %in% valid) {
+      hint <- sprintf(
+        "\n\nNested properties are set with named lists: %s = list(%s = ...)",
+        head,
+        sub("^[^_]*_", "", name)
+      )
+    }
+  }
   msg <- sprintf(
-    "Invalid property specified for object of type %s: '%s'%s\n\n    Valid properties:\n%s",
-    entry$data_class,
+    "Invalid property specified for %s: '%s'%s\n\n    Valid properties:\n%s",
+    object_label(key, entry),
     name,
     hint,
     paste(
@@ -863,6 +893,21 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
   if (inherits(v, entry$data_class)) {
     return(v)
   } # already validated
+  if (inherits(v, "plotly_shared")) {
+    # a go_font(), go_colorbar(), ... object: only where the schema has one
+    type <- sub("^go_", "", class(v)[[1L]])
+    if (!identical(shared_type_of(key), type)) {
+      stop(
+        sprintf(
+          "A go_%s() object can't be used for %s, which is %s",
+          type,
+          key,
+          sub("^ *The '[^']*' property is ", "", describe_validator(entry, prop_name(key)))
+        ),
+        call. = FALSE
+      )
+    }
+  }
   if (is.data.frame(v) || !is.list(v)) {
     raise_invalid_val(v, key, entry)
   }
@@ -877,7 +922,7 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
   if (anyDuplicated(nms)) {
     msg <- sprintf(
       "Duplicate properties for %s: %s",
-      entry$data_class,
+      object_label(key, entry),
       paste(unique(nms[duplicated(nms)]), collapse = ", ")
     )
     if (!skip_invalid) {

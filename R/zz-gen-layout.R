@@ -5,18 +5,42 @@
 #' Layout properties of a figure: axes, title, legend, margins, fonts and
 #' other settings that are not specific to a trace.
 #'
-#' \code{go_layout()} create validated graph objects (named lists). Every
-#' property is checked against the plotly.js schema when an object is
-#' created or modified (see \code{\link{plotly_obj-modify}()}).
+#' \code{go_layout()} creates a validated graph object (a named list).
+#'
+#' @details
+#' Nested objects are named lists, e.g. \code{marker = list(size = 10, line
+#' = list(width = 2))}. Each nested object's properties are described in a
+#' section of its own near the end of this page (after \emph{Value}), titled
+#' with its path: \emph{marker properties}, \emph{marker.line properties},
+#' .... Objects that appear in several places in the schema can also be
+#' created with a constructor of their own, and are documented on its page:
+#' \code{\link{go_font}()}, \code{\link{go_colorbar}()},
+#' \code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
+#' \code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
+#' \code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
+#' \code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
+#' \code{\link{go_caps}()}, \code{\link{go_domainpad}()},
+#' \code{\link{go_gradient}()}, \code{\link{go_label}()},
+#' \code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
+#' \code{\link{go_minor}()}, \code{\link{go_pathbar}()},
+#' \code{\link{go_project}()}, \code{\link{go_rangebreak}()},
+#' \code{\link{go_root}()}, \code{\link{go_slices}()},
+#' \code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
+#' Every property is checked against the plotly.js schema when the object is
+#' created or modified (see \code{\link{plotly_obj-modify}}).
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
-#' @param activeselection Named list or
-#'   \code{\link{go_layout_activeselection}()} object.
-#' @param activeshape Named list or \code{\link{go_layout_activeshape}()}
-#'   object.
-#' @param annotations List of named lists or
-#'   \code{\link{go_layout_annotation}()} objects.
+#' @param activeselection A named list with properties \code{fillcolor} and
+#'   \code{opacity} (described in section "activeselection properties"
+#'   below).
+#' @param activeshape A named list with properties \code{fillcolor} and
+#'   \code{opacity} (described in section "activeshape properties" below).
+#' @param annotations List, each element a named list with properties
+#'   \code{align}, \code{arrowcolor}, \code{arrowhead}, \code{arrowside},
+#'   \code{arrowsize}, \code{arrowwidth}, \code{ax}, \code{axref},
+#'   \code{ay}, \code{ayref}, \code{bgcolor}, \code{bordercolor} and 31
+#'   more (see \code{\link{add_annotation}()}).
 #' @param autosize Determines whether or not a layout width or height that
 #'   has been left undefined by the user is initialized on each relayout.
 #'   Note that, regardless of this attribute, an undefined layout width or
@@ -87,10 +111,13 @@
 #'   `plotly_click` and `plotly_selected` events are not fired. Any
 #'   combination of \code{"event"}, \code{"select"} joined with \code{"+"},
 #'   or one of \code{"none"}.
-#' @param coloraxis Named list or \code{\link{go_layout_coloraxis}()}
-#'   object.
-#' @param colorscale Named list or \code{\link{go_layout_colorscale}()}
-#'   object.
+#' @param coloraxis A named list with properties \code{autocolorscale},
+#'   \code{cauto}, \code{cmax}, \code{cmid}, \code{cmin}, \code{colorbar},
+#'   \code{colorscale}, \code{reversescale} and \code{showscale} (see
+#'   \code{\link{update_coloraxes}()}).
+#' @param colorscale A named list with properties \code{diverging},
+#'   \code{sequential} and \code{sequentialminus} (described in section
+#'   "colorscale properties" below).
 #' @param colorway Sets the default trace colors. Vector of colors.
 #' @param computed Placeholder for exporting automargin-impacting values
 #'   namely `margin.t`, `margin.b`, `margin.l` and `margin.r` in
@@ -147,8 +174,11 @@
 #'   slices, but you can set `false` to disable. Colors provided in the
 #'   trace, using `marker.colors`, are never extended. Logical.
 #' @param font Sets the global font. Note that fonts used in traces and
-#'   other layout components inherit from the global font. Named list or
-#'   \code{\link{go_layout_font}()} object.
+#'   other layout components inherit from the global font. A
+#'   \code{\link{go_font}()} object or named list, with properties
+#'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#'   \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#'   \code{weight} (see \code{\link{go_font}()}).
 #' @param funnelareacolorway Sets the default funnelarea slice colors.
 #'   Defaults to the main `colorway` used for trace colors. If you specify
 #'   a new list here it can still be extended with lighter and darker
@@ -164,8 +194,15 @@
 #'   plotted over one another, you might need to reduce "opacity" to see
 #'   multiple bars. One of \code{"stack"}, \code{"group"},
 #'   \code{"overlay"}.
-#' @param geo Named list or \code{\link{go_layout_geo}()} object.
-#' @param grid Named list or \code{\link{go_layout_grid}()} object.
+#' @param geo A named list with properties \code{bgcolor}, \code{center},
+#'   \code{coastlinecolor}, \code{coastlinewidth}, \code{countrycolor},
+#'   \code{countrywidth}, \code{domain}, \code{fitbounds},
+#'   \code{framecolor}, \code{framewidth}, \code{lakecolor},
+#'   \code{landcolor} and 20 more (see \code{\link{update_geos}()}).
+#' @param grid A named list with properties \code{columns}, \code{domain},
+#'   \code{pattern}, \code{roworder}, \code{rows}, \code{subplots},
+#'   \code{xaxes}, \code{xgap}, \code{xside}, \code{yaxes}, \code{ygap} and
+#'   \code{yside} (described in section "grid properties" below).
 #' @param height Sets the plot's height (in px). Number in the interval
 #'   [10, Inf].
 #' @param hiddenlabels hiddenlabels is the funnelarea & pie chart analog of
@@ -187,8 +224,10 @@
 #'   fills, etc) hovering is on inside the area and off outside, but these
 #'   objects will not supersede hover on point-like objects in case of
 #'   conflict. Integer in the interval [-1, Inf].
-#' @param hoverlabel Named list or \code{\link{go_layout_hoverlabel}()}
-#'   object.
+#' @param hoverlabel A \code{\link{go_hoverlabel}()} object or named list,
+#'   with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+#'   \code{font}, \code{grouptitlefont}, \code{namelength} and
+#'   \code{showarrow} (see \code{\link{go_hoverlabel}()}).
 #' @param hovermode Determines the mode of hover interactions. If
 #'   "closest", a single hoverlabel will appear for the "closest" point
 #'   within the `hoverdistance`. If "x" (or "y"), multiple hoverlabels will
@@ -219,11 +258,24 @@
 #'   the main `colorway` used for trace colors. If you specify a new list
 #'   here it can still be extended with lighter and darker colors, see
 #'   `extendiciclecolors`. Vector of colors.
-#' @param images List of named lists or \code{\link{go_layout_image}()}
-#'   objects.
-#' @param legend Named list or \code{\link{go_layout_legend}()} object.
-#' @param map Named list or \code{\link{go_layout_map}()} object.
-#' @param margin Named list or \code{\link{go_layout_margin}()} object.
+#' @param images List, each element a named list with properties
+#'   \code{layer}, \code{name}, \code{opacity}, \code{sizex}, \code{sizey},
+#'   \code{sizing}, \code{source}, \code{templateitemname}, \code{visible},
+#'   \code{x}, \code{xanchor}, \code{xref}, \code{y}, \code{yanchor} and
+#'   \code{yref} (see \code{\link{add_layout_image}()}).
+#' @param legend A named list with properties \code{bgcolor},
+#'   \code{bordercolor}, \code{borderwidth}, \code{entrywidth},
+#'   \code{entrywidthmode}, \code{font}, \code{groupclick},
+#'   \code{groupdoubleclick}, \code{grouptitlefont}, \code{indentation},
+#'   \code{itemclick}, \code{itemdoubleclick} and 19 more (see
+#'   \code{\link{update_legends}()}).
+#' @param map A named list with properties \code{bearing}, \code{bounds},
+#'   \code{center}, \code{domain}, \code{fitbounds}, \code{layers},
+#'   \code{pitch}, \code{style}, \code{uirevision} and \code{zoom} (see
+#'   \code{\link{update_maps}()}).
+#' @param margin A named list with properties \code{autoexpand}, \code{b},
+#'   \code{l}, \code{pad}, \code{r} and \code{t} (described in section
+#'   "margin properties" below).
 #' @param meta Assigns extra meta information that can be used in various
 #'   `text` attributes. Attributes such as the graph, axis and colorbar
 #'   `title.text`, annotation `text` `trace.name` in legend items,
@@ -236,10 +288,18 @@
 #'   margin.automargin applied (in px) Number in the interval [2, Inf].
 #' @param minreducedwidth Minimum width of the plot with margin.automargin
 #'   applied (in px) Number in the interval [2, Inf].
-#' @param modebar Named list or \code{\link{go_layout_modebar}()} object.
-#' @param newselection Named list or \code{\link{go_layout_newselection}()}
-#'   object.
-#' @param newshape Named list or \code{\link{go_layout_newshape}()} object.
+#' @param modebar A named list with properties \code{activecolor},
+#'   \code{add}, \code{bgcolor}, \code{color}, \code{orientation},
+#'   \code{remove} and \code{uirevision} (described in section "modebar
+#'   properties" below).
+#' @param newselection A named list with properties \code{line} and
+#'   \code{mode} (described in section "newselection properties" below).
+#' @param newshape A named list with properties \code{drawdirection},
+#'   \code{fillcolor}, \code{fillrule}, \code{label}, \code{layer},
+#'   \code{legend}, \code{legendgroup}, \code{legendgrouptitle},
+#'   \code{legendrank}, \code{legendwidth}, \code{line}, \code{name},
+#'   \code{opacity}, \code{showlegend} and \code{visible} (described in
+#'   section "newshape properties" below).
 #' @param paper_bgcolor Sets the background color of the paper where the
 #'   graph is drawn. Color: a CSS color string or R color name.
 #' @param piecolorway Sets the default pie slice colors. Defaults to the
@@ -248,7 +308,10 @@
 #'   `extendpiecolors`. Vector of colors.
 #' @param plot_bgcolor Sets the background color of the plotting area
 #'   in-between x and y axes. Color: a CSS color string or R color name.
-#' @param polar Named list or \code{\link{go_layout_polar}()} object.
+#' @param polar A named list with properties \code{angularaxis},
+#'   \code{bargap}, \code{barmode}, \code{bgcolor}, \code{domain},
+#'   \code{gridshape}, \code{hole}, \code{radialaxis}, \code{sector} and
+#'   \code{uirevision} (see \code{\link{update_polars}()}).
 #' @param scattergap Sets the gap (in plot fraction) between scatter points
 #'   of adjacent location coordinates. Defaults to `bargap`. Number in the
 #'   interval [0, 1].
@@ -258,7 +321,11 @@
 #'   location. With "overlay", the scatter points are plotted over one
 #'   another, you might need to reduce "opacity" to see multiple scatter
 #'   points. One of \code{"group"}, \code{"overlay"}.
-#' @param scene Named list or \code{\link{go_layout_scene}()} object.
+#' @param scene A named list with properties \code{annotations},
+#'   \code{aspectmode}, \code{aspectratio}, \code{bgcolor}, \code{camera},
+#'   \code{domain}, \code{dragmode}, \code{hovermode}, \code{uirevision},
+#'   \code{xaxis}, \code{yaxis} and \code{zaxis} (see
+#'   \code{\link{update_scenes}()}).
 #' @param selectdirection When `dragmode` is set to "select", this limits
 #'   the selection of the drag to horizontal, vertical or diagonal. "h"
 #'   only allows horizontal selection, "v" only vertical, "d" only diagonal
@@ -266,22 +333,34 @@
 #'   \code{"any"}.
 #' @param selectionrevision Controls persistence of user-driven changes in
 #'   selected points from all traces. Any value.
-#' @param selections List of named lists or
-#'   \code{\link{go_layout_selection}()} objects.
+#' @param selections List, each element a named list with properties
+#'   \code{line}, \code{name}, \code{opacity}, \code{path},
+#'   \code{templateitemname}, \code{type}, \code{x0}, \code{x1},
+#'   \code{xref}, \code{y0}, \code{y1} and \code{yref} (see
+#'   \code{\link{add_selection}()}).
 #' @param separators Sets the decimal and thousand separators. For example,
 #'   ". " puts a '.' before decimals and a space between thousands. In
 #'   English locales, dflt is ".," but other locales may alter this
 #'   default. String.
-#' @param shapes List of named lists or \code{\link{go_layout_shape}()}
-#'   objects.
+#' @param shapes List, each element a named list with properties
+#'   \code{editable}, \code{fillcolor}, \code{fillrule}, \code{label},
+#'   \code{layer}, \code{legend}, \code{legendgroup},
+#'   \code{legendgrouptitle}, \code{legendrank}, \code{legendwidth},
+#'   \code{line}, \code{name} and 20 more (see \code{\link{add_shape}()}).
 #' @param showlegend Determines whether or not a legend is drawn. Default
 #'   is `true` if there is a trace to show and any of these: a) Two or more
 #'   traces would by default be shown in the legend. b) One pie trace is
 #'   shown in the legend. c) One trace is explicitly given with
 #'   `showlegend: true`. Logical.
-#' @param sliders List of named lists or \code{\link{go_layout_slider}()}
-#'   objects.
-#' @param smith Named list or \code{\link{go_layout_smith}()} object.
+#' @param sliders List, each element a named list with properties
+#'   \code{active}, \code{activebgcolor}, \code{bgcolor},
+#'   \code{bordercolor}, \code{borderwidth}, \code{currentvalue},
+#'   \code{font}, \code{len}, \code{lenmode}, \code{minorticklen},
+#'   \code{name}, \code{pad} and 11 more (described in section "slider
+#'   properties" below).
+#' @param smith A named list with properties \code{bgcolor}, \code{domain},
+#'   \code{imaginaryaxis} and \code{realaxis} (see
+#'   \code{\link{update_smiths}()}).
 #' @param spikedistance Sets the default distance (in pixels) to look for
 #'   data to draw spikelines to (-1 means no cutoff, 0 means no looking for
 #'   data). As with hoverdistance, distance does not apply to area-like
@@ -308,11 +387,18 @@
 #'   this for a watermark annotation or a logo image, for example. To omit
 #'   one of these items on the plot, make an item with matching
 #'   `templateitemname` and `visible: false`. Any value.
-#' @param ternary Named list or \code{\link{go_layout_ternary}()} object.
-#' @param title String (the title text), named list or
-#'   \code{\link{go_layout_title}()} object.
+#' @param ternary A named list with properties \code{aaxis}, \code{baxis},
+#'   \code{bgcolor}, \code{caxis}, \code{domain}, \code{sum} and
+#'   \code{uirevision} (see \code{\link{update_ternaries}()}).
+#' @param title String (the title text), or a named list with properties
+#'   \code{automargin}, \code{font}, \code{pad}, \code{subtitle},
+#'   \code{text}, \code{x}, \code{xanchor}, \code{xref}, \code{y},
+#'   \code{yanchor} and \code{yref} (described in section "title
+#'   properties" below).
 #' @param transition Sets transition options used during Plotly.react
-#'   updates. Named list or \code{\link{go_layout_transition}()} object.
+#'   updates. A named list with properties \code{duration}, \code{easing}
+#'   and \code{ordering} (described in section "transition properties"
+#'   below).
 #' @param treemapcolorway Sets the default treemap slice colors. Defaults
 #'   to the main `colorway` used for trace colors. If you specify a new
 #'   list here it can still be extended with lighter and darker colors, see
@@ -332,10 +418,13 @@
 #'   the y data is changed, you can update `yaxis.uirevision="quantity"`
 #'   and the y axis range will reset but the x axis range will retain any
 #'   user-driven zoom. Any value.
-#' @param uniformtext Named list or \code{\link{go_layout_uniformtext}()}
-#'   object.
-#' @param updatemenus List of named lists or
-#'   \code{\link{go_layout_updatemenu}()} objects.
+#' @param uniformtext A named list with properties \code{minsize} and
+#'   \code{mode} (described in section "uniformtext properties" below).
+#' @param updatemenus List, each element a named list with properties
+#'   \code{active}, \code{bgcolor}, \code{bordercolor}, \code{borderwidth},
+#'   \code{buttons}, \code{direction}, \code{font}, \code{name},
+#'   \code{pad}, \code{showactive}, \code{templateitemname}, \code{type}
+#'   and 5 more (described in section "updatemenu properties" below).
 #' @param violingap Sets the gap (in plot fraction) between violins of
 #'   adjacent location coordinates. Has no effect on traces that have
 #'   "width" set. Number in the interval [0, 1].
@@ -359,17 +448,678 @@
 #'   to see multiple bars. One of \code{"group"}, \code{"overlay"}.
 #' @param width Sets the plot's width (in px). Number in the interval [10,
 #'   Inf].
-#' @param xaxis Named list or \code{\link{go_layout_xaxis}()} object.
-#' @param yaxis Named list or \code{\link{go_layout_yaxis}()} object.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
+#' @param xaxis A named list with properties \code{anchor},
+#'   \code{automargin}, \code{autorange}, \code{autorangeoptions},
+#'   \code{autotickangles}, \code{autotypenumbers}, \code{calendar},
+#'   \code{categoryarray}, \code{categoryorder}, \code{color},
+#'   \code{constrain}, \code{constraintoward} and 80 more (see
+#'   \code{\link{update_xaxes}()}).
+#' @param yaxis A named list with properties \code{anchor},
+#'   \code{automargin}, \code{autorange}, \code{autorangeoptions},
+#'   \code{autoshift}, \code{autotickangles}, \code{autotypenumbers},
+#'   \code{calendar}, \code{categoryarray}, \code{categoryorder},
+#'   \code{color}, \code{constrain} and 80 more (see
+#'   \code{\link{update_yaxes}()}).
+#' @param ... Further properties, by their full names (e.g. numbered subplots
+#'   such as \code{xaxis2} in \code{go_layout()}). Nested properties are set
+#'   with named lists: \code{marker = list(size = 10)}.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
+#' @return \code{go_*()} functions return a graph object;
+#'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{update_layout}()}
+#'
+#' @section activeselection properties:
+#' \describe{
+#' \item{\code{fillcolor}}{Sets the color filling the active selection'
+#' interior. Color: a CSS color string or R color name.}
+#' \item{\code{opacity}}{Sets the opacity of the active selection. Number in
+#' the interval [0, 1].}
+#' }
+#'
+#' @section activeshape properties:
+#' \describe{
+#' \item{\code{fillcolor}}{Sets the color filling the active shape'
+#' interior. Color: a CSS color string or R color name.}
+#' \item{\code{opacity}}{Sets the opacity of the active shape. Number in the
+#' interval [0, 1].}
+#' }
+#'
+#' @section colorscale properties:
+#' \describe{
+#' \item{\code{diverging}}{Sets the default diverging colorscale. Note that
+#' `autocolorscale` must be true for this attribute to work. Colorscale: a
+#' vector of colors, a two-column data.frame of (value, color), or the name
+#' of a sequential, diverging or cyclical scale in \code{\link{px_colors}()}
+#' (append \code{"_r"} to reverse).}
+#' \item{\code{sequential}}{Sets the default sequential colorscale for
+#' positive values. Note that `autocolorscale` must be true for this
+#' attribute to work. Colorscale: a vector of colors, a two-column
+#' data.frame of (value, color), or the name of a sequential, diverging or
+#' cyclical scale in \code{\link{px_colors}()} (append \code{"_r"} to
+#' reverse).}
+#' \item{\code{sequentialminus}}{Sets the default sequential colorscale for
+#' negative values. Note that `autocolorscale` must be true for this
+#' attribute to work. Colorscale: a vector of colors, a two-column
+#' data.frame of (value, color), or the name of a sequential, diverging or
+#' cyclical scale in \code{\link{px_colors}()} (append \code{"_r"} to
+#' reverse).}
+#' }
+#'
+#' @section grid properties:
+#' \describe{
+#' \item{\code{columns}}{The number of columns in the grid. If you provide a
+#' 2D `subplots` array, the length of its longest row is used as the
+#' default. If you give an `xaxes` array, its length is used as the default.
+#' But it's also possible to have a different length, if you want to leave a
+#' row at the end for non-cartesian subplots. Integer in the interval [1,
+#' Inf].}
+#' \item{\code{domain}}{A \code{\link{go_domain}()} object or named list,
+#' with properties \code{x} and \code{y} (see \code{\link{go_domain}()}).}
+#' \item{\code{pattern}}{If no `subplots`, `xaxes`, or `yaxes` are given but
+#' we do have `rows` and `columns`, we can generate defaults using
+#' consecutive axis IDs, in two ways: "coupled" gives one x axis per column
+#' and one y axis per row. "independent" uses a new xy pair for each cell,
+#' left-to-right across each row then iterating rows according to
+#' `roworder`. One of \code{"independent"}, \code{"coupled"}.}
+#' \item{\code{roworder}}{Is the first row the top or the bottom? Note that
+#' columns are always enumerated from left to right. One of \code{"top to
+#' bottom"}, \code{"bottom to top"}.}
+#' \item{\code{rows}}{The number of rows in the grid. If you provide a 2D
+#' `subplots` array or a `yaxes` array, its length is used as the default.
+#' But it's also possible to have a different length, if you want to leave a
+#' row at the end for non-cartesian subplots. Integer in the interval [1,
+#' Inf].}
+#' \item{\code{subplots}}{Used for freeform grids, where some axes may be
+#' shared across subplots but others are not. Each entry should be a
+#' cartesian subplot id, like "xy" or "x3y2", or ** to leave that cell
+#' empty. You may reuse x axes within the same column, and y axes within the
+#' same row. Non-cartesian subplots and traces that support `domain` can
+#' place themselves in this grid separately using the `gridcell` attribute.
+#' Vector or list of up to 1 element(s).}
+#' \item{\code{xaxes}}{Used with `yaxes` when the x and y axes are shared
+#' across columns and rows. Each entry should be an x axis id like "x",
+#' "x2", etc., or *" to not put an x axis in that column. Entries other than
+#' "* must be unique. Ignored if `subplots` is present. If missing but
+#' `yaxes` is present, will generate consecutive IDs. Vector or list of up
+#' to 1 element(s).}
+#' \item{\code{xgap}}{Horizontal space between grid cells, expressed as a
+#' fraction of the total width available to one cell. Defaults to 0.1 for
+#' coupled-axes grids and 0.2 for independent grids. Number in the interval
+#' [0, 1].}
+#' \item{\code{xside}}{Sets where the x axis labels and titles go. "bottom"
+#' means the very bottom of the grid. "bottom plot" is the lowest plot that
+#' each x axis is used in. "top" and "top plot" are similar. One of
+#' \code{"bottom"}, \code{"bottom plot"}, \code{"top plot"}, \code{"top"}.}
+#' \item{\code{yaxes}}{Used with `yaxes` when the x and y axes are shared
+#' across columns and rows. Each entry should be an y axis id like "y",
+#' "y2", etc., or *" to not put a y axis in that row. Entries other than "*
+#' must be unique. Ignored if `subplots` is present. If missing but `xaxes`
+#' is present, will generate consecutive IDs. Vector or list of up to 1
+#' element(s).}
+#' \item{\code{ygap}}{Vertical space between grid cells, expressed as a
+#' fraction of the total height available to one cell. Defaults to 0.1 for
+#' coupled-axes grids and 0.3 for independent grids. Number in the interval
+#' [0, 1].}
+#' \item{\code{yside}}{Sets where the y axis labels and titles go. "left"
+#' means the very left edge of the grid. "left plot" is the leftmost plot
+#' that each y axis is used in. "right" and "right plot" are similar. One of
+#' \code{"left"}, \code{"left plot"}, \code{"right plot"}, \code{"right"}.}
+#' }
+#'
+#' @section margin properties:
+#' \describe{
+#' \item{\code{autoexpand}}{Turns on/off margin expansion computations.
+#' Legends, colorbars, updatemenus, sliders, axis rangeselector and
+#' rangeslider are allowed to push the margins by defaults. Logical.}
+#' \item{\code{b}}{Sets the bottom margin (in px). Number in the interval
+#' [0, Inf].}
+#' \item{\code{l}}{Sets the left margin (in px). Number in the interval [0,
+#' Inf].}
+#' \item{\code{pad}}{Sets the amount of padding (in px) between the plotting
+#' area and the axis lines Number in the interval [0, Inf].}
+#' \item{\code{r}}{Sets the right margin (in px). Number in the interval [0,
+#' Inf].}
+#' \item{\code{t}}{Sets the top margin (in px). Number in the interval [0,
+#' Inf].}
+#' }
+#'
+#' @section modebar properties:
+#' \describe{
+#' \item{\code{activecolor}}{Sets the color of the active or hovered on
+#' icons in the modebar. Color: a CSS color string or R color name.}
+#' \item{\code{add}}{Determines which predefined modebar buttons to add.
+#' Please note that these buttons will only be shown if they are compatible
+#' with all trace types used in a graph. Similar to
+#' `config.modeBarButtonsToAdd` option. This may include "v1hovermode",
+#' "hoverclosest", "hovercompare", "togglehover", "togglespikelines",
+#' "drawline", "drawopenpath", "drawclosedpath", "drawcircle", "drawrect",
+#' "eraseshape", "downloadJson". String, or a vector of these.}
+#' \item{\code{bgcolor}}{Sets the background color of the modebar. Color: a
+#' CSS color string or R color name.}
+#' \item{\code{color}}{Sets the color of the icons in the modebar. Color: a
+#' CSS color string or R color name.}
+#' \item{\code{orientation}}{Sets the orientation of the modebar. One of
+#' \code{"v"}, \code{"h"}.}
+#' \item{\code{remove}}{Determines which predefined modebar buttons to
+#' remove. Similar to `config.modeBarButtonsToRemove` option. This may
+#' include "autoScale2d", "autoscale", "hoverCompareCartesian",
+#' "hovercompare", "lasso", "lasso2d", "orbitRotation", "orbitrotation",
+#' "pan", "pan2d", "pan3d", "reset", "resetCameraDefault3d",
+#' "resetCameraLastSave3d", "resetGeo", "resetSankeyGroup", "resetScale2d",
+#' "resetViewMap", "resetViews", "resetcameradefault",
+#' "resetcameralastsave", "resetsankeygroup", "resetscale", "resetview",
+#' "resetviews", "select", "select2d", "sendChartToCloud",
+#' "sendcharttocloud", "tableRotation", "tablerotation", "toImage",
+#' "toggleHover", "toggleSpikelines", "togglehover", "togglespikelines",
+#' "toimage", "zoom", "zoom2d", "zoom3d", "zoomIn2d", "zoomInGeo",
+#' "zoomInMap", "zoomOut2d", "zoomOutGeo", "zoomOutMap", "zoomin",
+#' "zoomout". String, or a vector of these.}
+#' \item{\code{uirevision}}{Controls persistence of user-driven changes
+#' related to the modebar, including `hovermode`, `dragmode`, and
+#' `showspikes` at both the root level and inside subplots. Defaults to
+#' `layout.uirevision`. Any value.}
+#' }
+#'
+#' @section newselection properties:
+#' \describe{
+#' \item{\code{line}}{A named list with properties \code{color}, \code{dash}
+#' and \code{width} (described in section "newselection.line properties"
+#' below).}
+#' \item{\code{mode}}{Describes how a new selection is created. If
+#' `immediate`, a new selection is created after first mouse up. If
+#' `gradual`, a new selection is not created after first mouse. By adding to
+#' and subtracting from the initial selection, this option allows declaring
+#' extra outlines of the selection. One of \code{"immediate"},
+#' \code{"gradual"}.}
+#' }
+#'
+#' @section newselection.line properties:
+#' \describe{
+#' \item{\code{color}}{Sets the line color. By default uses either dark grey
+#' or white to increase contrast with background color. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{dash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{width}}{Sets the line width (in px). Number in the interval
+#' [1, Inf].}
+#' }
+#'
+#' @section newshape properties:
+#' \describe{
+#' \item{\code{drawdirection}}{When `dragmode` is set to "drawrect",
+#' "drawline" or "drawcircle" this limits the drag to be horizontal,
+#' vertical or diagonal. Using "diagonal" there is no limit e.g. in drawing
+#' lines in any direction. "ortho" limits the draw to be either horizontal
+#' or vertical. "horizontal" allows horizontal extend. "vertical" allows
+#' vertical extend. One of \code{"ortho"}, \code{"horizontal"},
+#' \code{"vertical"}, \code{"diagonal"}.}
+#' \item{\code{fillcolor}}{Sets the color filling new shapes' interior.
+#' Please note that if using a fillcolor with alpha greater than half, drag
+#' inside the active shape starts moving the shape underneath, otherwise a
+#' new shape could be started over. Color: a CSS color string or R color
+#' name.}
+#' \item{\code{fillrule}}{Determines the path's interior. For more info
+#' please visit
+#' https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule One
+#' of \code{"evenodd"}, \code{"nonzero"}.}
+#' \item{\code{label}}{A \code{\link{go_label}()} object or named list, with
+#' properties \code{font}, \code{padding}, \code{text}, \code{textangle},
+#' \code{textposition}, \code{texttemplate}, \code{texttemplatefallback},
+#' \code{xanchor} and \code{yanchor} (see \code{\link{go_label}()}).}
+#' \item{\code{layer}}{Specifies whether new shapes are drawn below
+#' gridlines ("below"), between gridlines and traces ("between") or above
+#' traces ("above"). One of \code{"below"}, \code{"above"},
+#' \code{"between"}.}
+#' \item{\code{legend}}{Sets the reference to a legend to show new shape in.
+#' References to these legends are "legend", "legend2", "legend3", etc.
+#' Settings for these legends are set in the layout, under `layout.legend`,
+#' `layout.legend2`, etc. Subplot id: \code{"legend"}, \code{"legend2"},
+#' \code{"legend3"}, ....}
+#' \item{\code{legendgroup}}{Sets the legend group for new shape. Traces and
+#' shapes part of the same legend group hide/show at the same time when
+#' toggling legend items. String.}
+#' \item{\code{legendgrouptitle}}{A \code{\link{go_legendgrouptitle}()}
+#' object or named list, with properties \code{font} and \code{text} (see
+#' \code{\link{go_legendgrouptitle}()}).}
+#' \item{\code{legendrank}}{Sets the legend rank for new shape. Items and
+#' groups with smaller ranks are presented on top/left side while with
+#' "reversed" `legend.traceorder` they are on bottom/right side. The default
+#' legendrank is 1000, so that you can use ranks less than 1000 to place
+#' certain items before all unranked items, and ranks greater than 1000 to
+#' go after all unranked items. Number.}
+#' \item{\code{legendwidth}}{Sets the width (in px or fraction) of the
+#' legend for new shape. Number in the interval [0, Inf].}
+#' \item{\code{line}}{A named list with properties \code{color}, \code{dash}
+#' and \code{width} (described in section "newshape.line properties"
+#' below).}
+#' \item{\code{name}}{Sets new shape name. The name appears as the legend
+#' item. String.}
+#' \item{\code{opacity}}{Sets the opacity of new shapes. Number in the
+#' interval [0, 1].}
+#' \item{\code{showlegend}}{Determines whether or not new shape is shown in
+#' the legend. Logical.}
+#' \item{\code{visible}}{Determines whether or not new shape is visible. If
+#' "legendonly", the shape is not drawn, but can appear as a legend item
+#' (provided that the legend itself is visible). One of \code{"legendonly"},
+#' \code{TRUE}, \code{FALSE}.}
+#' }
+#'
+#' @section newshape.line properties:
+#' \describe{
+#' \item{\code{color}}{Sets the line color. By default uses either dark grey
+#' or white to increase contrast with background color. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{dash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{width}}{Sets the line width (in px). Number in the interval
+#' [0, Inf].}
+#' }
+#'
+#' @section slider properties (each list element):
+#' \describe{
+#' \item{\code{active}}{Determines which button (by index starting from 0)
+#' is considered active. Number in the interval [0, Inf].}
+#' \item{\code{activebgcolor}}{Sets the background color of the slider grip
+#' while dragging. Color: a CSS color string or R color name.}
+#' \item{\code{bgcolor}}{Sets the background color of the slider. Color: a
+#' CSS color string or R color name.}
+#' \item{\code{bordercolor}}{Sets the color of the border enclosing the
+#' slider. Color: a CSS color string or R color name.}
+#' \item{\code{borderwidth}}{Sets the width (in px) of the border enclosing
+#' the slider. Number in the interval [0, Inf].}
+#' \item{\code{currentvalue}}{A named list with properties \code{font},
+#' \code{offset}, \code{prefix}, \code{suffix}, \code{visible} and
+#' \code{xanchor} (described in section "slider.currentvalue properties"
+#' below).}
+#' \item{\code{font}}{Sets the font of the slider step labels. A
+#' \code{\link{go_font}()} object or named list, with properties
+#' \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#' \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#' \code{weight} (see \code{\link{go_font}()}).}
+#' \item{\code{len}}{Sets the length of the slider This measure excludes the
+#' padding of both ends. That is, the slider's length is this length minus
+#' the padding on both ends. Number in the interval [0, Inf].}
+#' \item{\code{lenmode}}{Determines whether this slider length is set in
+#' units of plot "fraction" or in *pixels. Use `len` to set the value. One
+#' of \code{"fraction"}, \code{"pixels"}.}
+#' \item{\code{minorticklen}}{Sets the length in pixels of minor step tick
+#' marks Number in the interval [0, Inf].}
+#' \item{\code{name}}{When used in a template, named items are created in
+#' the output figure in addition to any items the figure already has in this
+#' array. You can modify these items in the output figure by making your own
+#' item with `templateitemname` matching this `name` alongside your
+#' modifications (including `visible: false` or `enabled: false` to hide
+#' it). Has no effect outside of a template. String.}
+#' \item{\code{pad}}{Set the padding of the slider component along each
+#' side. A named list with properties \code{b}, \code{l}, \code{r} and
+#' \code{t} (described in section "slider.pad properties" below).}
+#' \item{\code{steps}}{List, each element a named list with properties
+#' \code{args}, \code{execute}, \code{label}, \code{method}, \code{name},
+#' \code{templateitemname}, \code{value} and \code{visible} (described in
+#' section "slider.step properties" below).}
+#' \item{\code{templateitemname}}{Used to refer to a named item in this
+#' array in the template. Named items from the template will be created even
+#' without a matching item in the input figure, but you can modify one by
+#' making an item with `templateitemname` matching its `name`, alongside
+#' your modifications (including `visible: false` or `enabled: false` to
+#' hide it). If there is no template or no matching item, this item will be
+#' hidden unless you explicitly show it with `visible: true`. String.}
+#' \item{\code{tickcolor}}{Sets the color of the border enclosing the
+#' slider. Color: a CSS color string or R color name.}
+#' \item{\code{ticklen}}{Sets the length in pixels of step tick marks Number
+#' in the interval [0, Inf].}
+#' \item{\code{tickwidth}}{Sets the tick width (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{transition}}{A named list with properties \code{duration} and
+#' \code{easing} (described in section "slider.transition properties"
+#' below).}
+#' \item{\code{visible}}{Determines whether or not the slider is visible.
+#' Logical.}
+#' \item{\code{x}}{Sets the x position (in normalized coordinates) of the
+#' slider. Number in the interval [-2, 3].}
+#' \item{\code{xanchor}}{Sets the slider's horizontal position anchor. This
+#' anchor binds the `x` position to the "left", "center" or "right" of the
+#' range selector. One of \code{"auto"}, \code{"left"}, \code{"center"},
+#' \code{"right"}.}
+#' \item{\code{y}}{Sets the y position (in normalized coordinates) of the
+#' slider. Number in the interval [-2, 3].}
+#' \item{\code{yanchor}}{Sets the slider's vertical position anchor This
+#' anchor binds the `y` position to the "top", "middle" or "bottom" of the
+#' range selector. One of \code{"auto"}, \code{"top"}, \code{"middle"},
+#' \code{"bottom"}.}
+#' }
+#'
+#' @section slider.currentvalue properties:
+#' \describe{
+#' \item{\code{font}}{Sets the font of the current value label text. A
+#' \code{\link{go_font}()} object or named list, with properties
+#' \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#' \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#' \code{weight} (see \code{\link{go_font}()}).}
+#' \item{\code{offset}}{The amount of space, in pixels, between the current
+#' value label and the slider. Number.}
+#' \item{\code{prefix}}{When currentvalue.visible is true, this sets the
+#' prefix of the label. String.}
+#' \item{\code{suffix}}{When currentvalue.visible is true, this sets the
+#' suffix of the label. String.}
+#' \item{\code{visible}}{Shows the currently-selected value above the
+#' slider. Logical.}
+#' \item{\code{xanchor}}{The alignment of the value readout relative to the
+#' length of the slider. One of \code{"left"}, \code{"center"},
+#' \code{"right"}.}
+#' }
+#'
+#' @section slider.pad properties:
+#' Set the padding of the slider component along each side.
+#'
+#' \describe{
+#' \item{\code{b}}{The amount of padding (in px) along the bottom of the
+#' component. Number.}
+#' \item{\code{l}}{The amount of padding (in px) on the left side of the
+#' component. Number.}
+#' \item{\code{r}}{The amount of padding (in px) on the right side of the
+#' component. Number.}
+#' \item{\code{t}}{The amount of padding (in px) along the top of the
+#' component. Number.}
+#' }
+#'
+#' @section slider.step properties (each list element):
+#' \describe{
+#' \item{\code{args}}{Sets the arguments values to be passed to the Plotly
+#' method set in `method` on slide. Vector or list of up to 3 element(s).}
+#' \item{\code{execute}}{When true, the API method is executed. When false,
+#' all other behaviors are the same and command execution is skipped. This
+#' may be useful when hooking into, for example, the `plotly_sliderchange`
+#' method and executing the API command manually without losing the benefit
+#' of the slider automatically binding to the state of the plot through the
+#' specification of `method` and `args`. Logical.}
+#' \item{\code{label}}{Sets the text label to appear on the slider String.}
+#' \item{\code{method}}{Sets the Plotly method to be called when the slider
+#' value is changed. If the `skip` method is used, the API slider will
+#' function as normal but will perform no API calls and will not bind
+#' automatically to state updates. This may be used to create a component
+#' interface and attach to slider events manually via JavaScript. One of
+#' \code{"restyle"}, \code{"relayout"}, \code{"animate"}, \code{"update"},
+#' \code{"skip"}.}
+#' \item{\code{name}}{When used in a template, named items are created in
+#' the output figure in addition to any items the figure already has in this
+#' array. You can modify these items in the output figure by making your own
+#' item with `templateitemname` matching this `name` alongside your
+#' modifications (including `visible: false` or `enabled: false` to hide
+#' it). Has no effect outside of a template. String.}
+#' \item{\code{templateitemname}}{Used to refer to a named item in this
+#' array in the template. Named items from the template will be created even
+#' without a matching item in the input figure, but you can modify one by
+#' making an item with `templateitemname` matching its `name`, alongside
+#' your modifications (including `visible: false` or `enabled: false` to
+#' hide it). If there is no template or no matching item, this item will be
+#' hidden unless you explicitly show it with `visible: true`. String.}
+#' \item{\code{value}}{Sets the value of the slider step, used to refer to
+#' the step programatically. Defaults to the slider label if not provided.
+#' String.}
+#' \item{\code{visible}}{Determines whether or not this step is included in
+#' the slider. Logical.}
+#' }
+#'
+#' @section slider.transition properties:
+#' \describe{
+#' \item{\code{duration}}{Sets the duration of the slider transition Number
+#' in the interval [0, Inf].}
+#' \item{\code{easing}}{Sets the easing function of the slider transition
+#' One of \code{"linear"}, \code{"quad"}, \code{"cubic"}, \code{"sin"},
+#' \code{"exp"}, \code{"circle"}, \code{"elastic"}, \code{"back"},
+#' \code{"bounce"}, \code{"linear-in"}, \code{"quad-in"}, \code{"cubic-in"},
+#' \code{"sin-in"}, \code{"exp-in"}, \code{"circle-in"},
+#' \code{"elastic-in"}, \code{"back-in"}, \code{"bounce-in"},
+#' \code{"linear-out"}, \code{"quad-out"}, \code{"cubic-out"},
+#' \code{"sin-out"}, \code{"exp-out"}, \code{"circle-out"},
+#' \code{"elastic-out"}, \code{"back-out"}, \code{"bounce-out"},
+#' \code{"linear-in-out"}, \code{"quad-in-out"}, \code{"cubic-in-out"},
+#' \code{"sin-in-out"}, \code{"exp-in-out"}, \code{"circle-in-out"},
+#' \code{"elastic-in-out"}, \code{"back-in-out"}, \code{"bounce-in-out"}.}
+#' }
+#'
+#' @section title properties:
+#' \describe{
+#' \item{\code{automargin}}{Determines whether the title can automatically
+#' push the figure margins. If `yref='paper'` then the margin will expand to
+#' ensure that the title doesn't overlap with the edges of the container. If
+#' `yref='container'` then the margins will ensure that the title doesn't
+#' overlap with the plot area, tick labels, and axis titles. If
+#' `automargin=true` and the margins need to be expanded, then y will be set
+#' to a default 1 and yanchor will be set to an appropriate default to
+#' ensure that minimal margin space is needed. Note that when
+#' `yref='paper'`, only 1 or 0 are allowed y values. Invalid values will be
+#' reset to the default 1. Logical.}
+#' \item{\code{font}}{Sets the title font. A \code{\link{go_font}()} object
+#' or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{pad}}{Sets the padding of the title. Each padding value only
+#' applies when the corresponding `xanchor`/`yanchor` value is set
+#' accordingly. E.g. for left padding to take effect, `xanchor` must be set
+#' to "left". The same rule applies if `xanchor`/`yanchor` is determined
+#' automatically. Padding is muted if the respective anchor value is
+#' "middle"/"center". A named list with properties \code{b}, \code{l},
+#' \code{r} and \code{t} (described in section "title.pad properties"
+#' below).}
+#' \item{\code{subtitle}}{A named list with properties \code{font} and
+#' \code{text} (described in section "title.subtitle properties" below).}
+#' \item{\code{text}}{Sets the plot's title. String.}
+#' \item{\code{x}}{Sets the x position with respect to `xref` in normalized
+#' coordinates from 0 (left) to 1 (right). Number in the interval [0, 1].}
+#' \item{\code{xanchor}}{Sets the title's horizontal alignment with respect
+#' to its x position. "left" means that the title starts at x, "right" means
+#' that the title ends at x and "center" means that the title's center is at
+#' x. "auto" divides `xref` by three and calculates the `xanchor` value
+#' automatically based on the value of `x`. One of \code{"auto"},
+#' \code{"left"}, \code{"center"}, \code{"right"}.}
+#' \item{\code{xref}}{Sets the container `x` refers to. "container" spans
+#' the entire `width` of the plot. "paper" refers to the width of the
+#' plotting area only. One of \code{"container"}, \code{"paper"}.}
+#' \item{\code{y}}{Sets the y position with respect to `yref` in normalized
+#' coordinates from 0 (bottom) to 1 (top). "auto" places the baseline of the
+#' title onto the vertical center of the top margin. Number in the interval
+#' [0, 1].}
+#' \item{\code{yanchor}}{Sets the title's vertical alignment with respect to
+#' its y position. "top" means that the title's cap line is at y, "bottom"
+#' means that the title's baseline is at y and "middle" means that the
+#' title's midline is at y. "auto" divides `yref` by three and calculates
+#' the `yanchor` value automatically based on the value of `y`. One of
+#' \code{"auto"}, \code{"top"}, \code{"middle"}, \code{"bottom"}.}
+#' \item{\code{yref}}{Sets the container `y` refers to. "container" spans
+#' the entire `height` of the plot. "paper" refers to the height of the
+#' plotting area only. One of \code{"container"}, \code{"paper"}.}
+#' }
+#'
+#' @section title.pad properties:
+#' Sets the padding of the title. Each padding value only applies when the
+#' corresponding `xanchor`/`yanchor` value is set accordingly. E.g. for left
+#' padding to take effect, `xanchor` must be set to "left". The same rule
+#' applies if `xanchor`/`yanchor` is determined automatically. Padding is
+#' muted if the respective anchor value is "middle"/"center".
+#'
+#' \describe{
+#' \item{\code{b}}{The amount of padding (in px) along the bottom of the
+#' component. Number.}
+#' \item{\code{l}}{The amount of padding (in px) on the left side of the
+#' component. Number.}
+#' \item{\code{r}}{The amount of padding (in px) on the right side of the
+#' component. Number.}
+#' \item{\code{t}}{The amount of padding (in px) along the top of the
+#' component. Number.}
+#' }
+#'
+#' @section title.subtitle properties:
+#' \describe{
+#' \item{\code{font}}{Sets the subtitle font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{text}}{Sets the plot's subtitle. String.}
+#' }
+#'
+#' @section transition properties:
+#' Sets transition options used during Plotly.react updates.
+#'
+#' \describe{
+#' \item{\code{duration}}{The duration of the transition, in milliseconds.
+#' If equal to zero, updates are synchronous. Number in the interval [0,
+#' Inf].}
+#' \item{\code{easing}}{The easing function used for the transition One of
+#' \code{"linear"}, \code{"quad"}, \code{"cubic"}, \code{"sin"},
+#' \code{"exp"}, \code{"circle"}, \code{"elastic"}, \code{"back"},
+#' \code{"bounce"}, \code{"linear-in"}, \code{"quad-in"}, \code{"cubic-in"},
+#' \code{"sin-in"}, \code{"exp-in"}, \code{"circle-in"},
+#' \code{"elastic-in"}, \code{"back-in"}, \code{"bounce-in"},
+#' \code{"linear-out"}, \code{"quad-out"}, \code{"cubic-out"},
+#' \code{"sin-out"}, \code{"exp-out"}, \code{"circle-out"},
+#' \code{"elastic-out"}, \code{"back-out"}, \code{"bounce-out"},
+#' \code{"linear-in-out"}, \code{"quad-in-out"}, \code{"cubic-in-out"},
+#' \code{"sin-in-out"}, \code{"exp-in-out"}, \code{"circle-in-out"},
+#' \code{"elastic-in-out"}, \code{"back-in-out"}, \code{"bounce-in-out"}.}
+#' \item{\code{ordering}}{Determines whether the figure's layout or traces
+#' smoothly transitions during updates that make both traces and layout
+#' change. One of \code{"layout first"}, \code{"traces first"}.}
+#' }
+#'
+#' @section uniformtext properties:
+#' \describe{
+#' \item{\code{minsize}}{Sets the minimum text size between traces of the
+#' same type. Number in the interval [0, Inf].}
+#' \item{\code{mode}}{Determines how the font size for various text elements
+#' are uniformed between each trace type. If the computed text sizes were
+#' smaller than the minimum size defined by `uniformtext.minsize` using
+#' "hide" option hides the text; and using "show" option shows the text
+#' without further downscaling. Please note that if the size defined by
+#' `minsize` is greater than the font size defined by trace, then the
+#' `minsize` is used. One of \code{"hide"}, \code{"show"}, \code{FALSE}.}
+#' }
+#'
+#' @section updatemenu properties (each list element):
+#' \describe{
+#' \item{\code{active}}{Determines which button (by index starting from 0)
+#' is considered active. Integer in the interval [-1, Inf].}
+#' \item{\code{bgcolor}}{Sets the background color of the update menu
+#' buttons. Color: a CSS color string or R color name.}
+#' \item{\code{bordercolor}}{Sets the color of the border enclosing the
+#' update menu. Color: a CSS color string or R color name.}
+#' \item{\code{borderwidth}}{Sets the width (in px) of the border enclosing
+#' the update menu. Number in the interval [0, Inf].}
+#' \item{\code{buttons}}{List, each element a named list with properties
+#' \code{args}, \code{args2}, \code{execute}, \code{label}, \code{method},
+#' \code{name}, \code{templateitemname} and \code{visible} (described in
+#' section "updatemenu.button properties" below).}
+#' \item{\code{direction}}{Determines the direction in which the buttons are
+#' laid out, whether in a dropdown menu or a row/column of buttons. For
+#' `left` and `up`, the buttons will still appear in left-to-right or
+#' top-to-bottom order respectively. One of \code{"left"}, \code{"right"},
+#' \code{"up"}, \code{"down"}.}
+#' \item{\code{font}}{Sets the font of the update menu button text. A
+#' \code{\link{go_font}()} object or named list, with properties
+#' \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#' \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#' \code{weight} (see \code{\link{go_font}()}).}
+#' \item{\code{name}}{When used in a template, named items are created in
+#' the output figure in addition to any items the figure already has in this
+#' array. You can modify these items in the output figure by making your own
+#' item with `templateitemname` matching this `name` alongside your
+#' modifications (including `visible: false` or `enabled: false` to hide
+#' it). Has no effect outside of a template. String.}
+#' \item{\code{pad}}{Sets the padding around the buttons or dropdown menu. A
+#' named list with properties \code{b}, \code{l}, \code{r} and \code{t}
+#' (described in section "updatemenu.pad properties" below).}
+#' \item{\code{showactive}}{Highlights active dropdown item or active button
+#' if true. Logical.}
+#' \item{\code{templateitemname}}{Used to refer to a named item in this
+#' array in the template. Named items from the template will be created even
+#' without a matching item in the input figure, but you can modify one by
+#' making an item with `templateitemname` matching its `name`, alongside
+#' your modifications (including `visible: false` or `enabled: false` to
+#' hide it). If there is no template or no matching item, this item will be
+#' hidden unless you explicitly show it with `visible: true`. String.}
+#' \item{\code{type}}{Determines whether the buttons are accessible via a
+#' dropdown menu or whether the buttons are stacked horizontally or
+#' vertically One of \code{"dropdown"}, \code{"buttons"}.}
+#' \item{\code{visible}}{Determines whether or not the update menu is
+#' visible. Logical.}
+#' \item{\code{x}}{Sets the x position (in normalized coordinates) of the
+#' update menu. Number in the interval [-2, 3].}
+#' \item{\code{xanchor}}{Sets the update menu's horizontal position anchor.
+#' This anchor binds the `x` position to the "left", "center" or "right" of
+#' the range selector. One of \code{"auto"}, \code{"left"}, \code{"center"},
+#' \code{"right"}.}
+#' \item{\code{y}}{Sets the y position (in normalized coordinates) of the
+#' update menu. Number in the interval [-2, 3].}
+#' \item{\code{yanchor}}{Sets the update menu's vertical position anchor
+#' This anchor binds the `y` position to the "top", "middle" or "bottom" of
+#' the range selector. One of \code{"auto"}, \code{"top"}, \code{"middle"},
+#' \code{"bottom"}.}
+#' }
+#'
+#' @section updatemenu.button properties (each list element):
+#' \describe{
+#' \item{\code{args}}{Sets the arguments values to be passed to the Plotly
+#' method set in `method` on click. Vector or list of up to 3 element(s).}
+#' \item{\code{args2}}{Sets a 2nd set of `args`, these arguments values are
+#' passed to the Plotly method set in `method` when clicking this button
+#' while in the active state. Use this to create toggle buttons. Vector or
+#' list of up to 3 element(s).}
+#' \item{\code{execute}}{When true, the API method is executed. When false,
+#' all other behaviors are the same and command execution is skipped. This
+#' may be useful when hooking into, for example, the `plotly_buttonclicked`
+#' method and executing the API command manually without losing the benefit
+#' of the updatemenu automatically binding to the state of the plot through
+#' the specification of `method` and `args`. Logical.}
+#' \item{\code{label}}{Sets the text label to appear on the button. String.}
+#' \item{\code{method}}{Sets the Plotly method to be called on click. If the
+#' `skip` method is used, the API updatemenu will function as normal but
+#' will perform no API calls and will not bind automatically to state
+#' updates. This may be used to create a component interface and attach to
+#' updatemenu events manually via JavaScript. One of \code{"restyle"},
+#' \code{"relayout"}, \code{"animate"}, \code{"update"}, \code{"skip"}.}
+#' \item{\code{name}}{When used in a template, named items are created in
+#' the output figure in addition to any items the figure already has in this
+#' array. You can modify these items in the output figure by making your own
+#' item with `templateitemname` matching this `name` alongside your
+#' modifications (including `visible: false` or `enabled: false` to hide
+#' it). Has no effect outside of a template. String.}
+#' \item{\code{templateitemname}}{Used to refer to a named item in this
+#' array in the template. Named items from the template will be created even
+#' without a matching item in the input figure, but you can modify one by
+#' making an item with `templateitemname` matching its `name`, alongside
+#' your modifications (including `visible: false` or `enabled: false` to
+#' hide it). If there is no template or no matching item, this item will be
+#' hidden unless you explicitly show it with `visible: true`. String.}
+#' \item{\code{visible}}{Determines whether or not this button is visible.
+#' Logical.}
+#' }
+#'
+#' @section updatemenu.pad properties:
+#' Sets the padding around the buttons or dropdown menu.
+#'
+#' \describe{
+#' \item{\code{b}}{The amount of padding (in px) along the bottom of the
+#' component. Number.}
+#' \item{\code{l}}{The amount of padding (in px) on the left side of the
+#' component. Number.}
+#' \item{\code{r}}{The amount of padding (in px) on the right side of the
+#' component. Number.}
+#' \item{\code{t}}{The amount of padding (in px) along the top of the
+#' component. Number.}
+#' }
+#'
 #' @noMd
 #' @export
 #' @examples
@@ -405,7627 +1155,5 @@ go_layout <- function(
     skip_invalid = FALSE
 ) {
   plotly_object("layout", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout activeselection objects
-#'
-#' Properties of \code{layout.activeselection}.
-#'
-#' \code{go_layout_activeselection()} create validated graph objects (named
-#' lists). Every property is checked against the plotly.js schema when an
-#' object is created or modified (see \code{\link{plotly_obj-modify}()}).
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param fillcolor Sets the color filling the active selection' interior.
-#'   Color: a CSS color string or R color name.
-#' @param opacity Sets the opacity of the active selection. Number in the
-#'   interval [0, 1].
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_activeselection <- function(
-    arg = NULL, ..., fillcolor = NULL, opacity = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.activeselection", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout activeshape objects
-#'
-#' Properties of \code{layout.activeshape}.
-#'
-#' \code{go_layout_activeshape()} create validated graph objects (named
-#' lists). Every property is checked against the plotly.js schema when an
-#' object is created or modified (see \code{\link{plotly_obj-modify}()}).
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param fillcolor Sets the color filling the active shape' interior.
-#'   Color: a CSS color string or R color name.
-#' @param opacity Sets the opacity of the active shape. Number in the
-#'   interval [0, 1].
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_activeshape <- function(
-    arg = NULL, ..., fillcolor = NULL, opacity = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.activeshape", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout annotation objects
-#'
-#' Properties of \code{layout.annotation}.
-#'
-#' \code{go_layout_annotation()} and the nested object constructors below
-#' create validated graph objects (named lists). Every property is checked
-#' against the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}). \code{add_annotation()} creates an
-#' object and adds it to a figure.
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_annotation_font()}}{\code{layout.annotation.font}:
-#' Sets the annotation text font.}
-#' \item{\code{go_layout_annotation_hoverlabel()}}{\code{layout.annotation.hoverlabel}}
-#' \item{\code{go_layout_annotation_hoverlabel_font()}}{\code{layout.annotation.hoverlabel.font}:
-#' Sets the hover label text font. By default uses the global hover font and
-#' size, with color from `hoverlabel.bordercolor`.}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param align Sets the horizontal alignment of the `text` within the box.
-#'   Has an effect only if `text` spans two or more lines (i.e. `text`
-#'   contains one or more <br> HTML tags) or if an explicit width is set to
-#'   override the text width. One of \code{"left"}, \code{"center"},
-#'   \code{"right"}.
-#' @param arrowcolor Sets the color of the annotation arrow. Color: a CSS
-#'   color string or R color name.
-#' @param arrowhead Sets the end annotation arrow head style. Integer in
-#'   the interval [0, 8].
-#' @param arrowside Sets the annotation arrow head position. Any
-#'   combination of \code{"end"}, \code{"start"} joined with \code{"+"}, or
-#'   one of \code{"none"}.
-#' @param arrowsize Sets the size of the end annotation arrow head,
-#'   relative to `arrowwidth`. A value of 1 (default) gives a head about 3x
-#'   as wide as the line. Number in the interval [0.3, Inf].
-#' @param arrowwidth Sets the width (in px) of annotation arrow line.
-#'   Number in the interval [0.1, Inf].
-#' @param ax Sets the x component of the arrow tail about the arrow head.
-#'   If `axref` is `pixel`, a positive (negative) component corresponds to
-#'   an arrow pointing from right to left (left to right). If `axref` is
-#'   not `pixel` and is exactly the same as `xref`, this is an absolute
-#'   value on that axis, like `x`, specified in the same coordinates as
-#'   `xref`. Any value.
-#' @param axref Indicates in what coordinates the tail of the annotation
-#'   (ax,ay) is specified. If set to a x axis id (e.g. "x" or "x2"), the
-#'   `x` position refers to a x coordinate. If set to "paper", the `x`
-#'   position refers to the distance from the left of the plotting area in
-#'   normalized coordinates where 0 (1) corresponds to the left (right). If
-#'   set to a x axis ID followed by "domain" (separated by a space), the
-#'   position behaves like for "paper", but refers to the distance in
-#'   fractions of the domain length from the left of the domain of that
-#'   axis: e.g., "x2 domain" refers to the domain of the second x axis and
-#'   a x position of 0.5 refers to the point between the left and the right
-#'   of the domain of the second x axis. In order for absolute positioning
-#'   of the arrow to work, "axref" must be exactly the same as "xref",
-#'   otherwise "axref" will revert to "pixel" (explained next). For
-#'   relative positioning, "axref" can be set to "pixel", in which case the
-#'   "ax" value is specified in pixels relative to "x". Absolute
-#'   positioning is useful for trendline annotations which should continue
-#'   to indicate the correct trend when zoomed. Relative positioning is
-#'   useful for specifying the text offset for an annotated point. One of
-#'   \code{"pixel"}, or a string matching \code{"^x([2-9]|[1-9][0-9]+)?(
-#'   domain)?$"}.
-#' @param ay Sets the y component of the arrow tail about the arrow head.
-#'   If `ayref` is `pixel`, a positive (negative) component corresponds to
-#'   an arrow pointing from bottom to top (top to bottom). If `ayref` is
-#'   not `pixel` and is exactly the same as `yref`, this is an absolute
-#'   value on that axis, like `y`, specified in the same coordinates as
-#'   `yref`. Any value.
-#' @param ayref Indicates in what coordinates the tail of the annotation
-#'   (ax,ay) is specified. If set to a y axis id (e.g. "y" or "y2"), the
-#'   `y` position refers to a y coordinate. If set to "paper", the `y`
-#'   position refers to the distance from the bottom of the plotting area
-#'   in normalized coordinates where 0 (1) corresponds to the bottom (top).
-#'   If set to a y axis ID followed by "domain" (separated by a space), the
-#'   position behaves like for "paper", but refers to the distance in
-#'   fractions of the domain length from the bottom of the domain of that
-#'   axis: e.g., "y2 domain" refers to the domain of the second y axis and
-#'   a y position of 0.5 refers to the point between the bottom and the top
-#'   of the domain of the second y axis. In order for absolute positioning
-#'   of the arrow to work, "ayref" must be exactly the same as "yref",
-#'   otherwise "ayref" will revert to "pixel" (explained next). For
-#'   relative positioning, "ayref" can be set to "pixel", in which case the
-#'   "ay" value is specified in pixels relative to "y". Absolute
-#'   positioning is useful for trendline annotations which should continue
-#'   to indicate the correct trend when zoomed. Relative positioning is
-#'   useful for specifying the text offset for an annotated point. One of
-#'   \code{"pixel"}, or a string matching \code{"^y([2-9]|[1-9][0-9]+)?(
-#'   domain)?$"}.
-#' @param bgcolor \strong{\code{go_layout_annotation()}}: Sets the
-#'   background color of the annotation. Color: a CSS color string or R
-#'   color name.
-#'
-#'   \strong{\code{go_layout_annotation_hoverlabel()}}: Sets the background
-#'   color of the hover label. By default uses the annotation's `bgcolor`
-#'   made opaque, or white if it was transparent. Color: a CSS color string
-#'   or R color name.
-#' @param bordercolor \strong{\code{go_layout_annotation()}}: Sets the
-#'   color of the border enclosing the annotation `text`. Color: a CSS
-#'   color string or R color name.
-#'
-#'   \strong{\code{go_layout_annotation_hoverlabel()}}: Sets the border
-#'   color of the hover label. By default uses either dark grey or white,
-#'   for maximum contrast with `hoverlabel.bgcolor`. Color: a CSS color
-#'   string or R color name.
-#' @param borderpad Sets the padding (in px) between the `text` and the
-#'   enclosing border. Number in the interval [0, Inf].
-#' @param borderwidth Sets the width (in px) of the border enclosing the
-#'   annotation `text`. Number in the interval [0, Inf].
-#' @param captureevents Determines whether the annotation text box captures
-#'   mouse move and click events, or allows those events to pass through to
-#'   data points in the plot that may be behind the annotation. By default
-#'   `captureevents` is FALSE unless `hovertext` is provided. If you use
-#'   the event `plotly_clickannotation` without `hovertext` you must
-#'   explicitly enable `captureevents`. Logical.
-#' @param clicktoshow Makes this annotation respond to clicks on the plot.
-#'   If you click a data point that exactly matches the `x` and `y` values
-#'   of this annotation, and it is hidden (visible: false), it will appear.
-#'   In "onoff" mode, you must click the same point again to make it
-#'   disappear, so if you click multiple points, you can show multiple
-#'   annotations. In "onout" mode, a click anywhere else in the plot (on
-#'   another data point or not) will hide this annotation. If you need to
-#'   show/hide this annotation in response to different `x` or `y` values,
-#'   you can set `xclick` and/or `yclick`. This is useful for example to
-#'   label the side of a bar. To label markers though, `standoff` is
-#'   preferred over `xclick` and `yclick`. One of \code{"onoff"},
-#'   \code{"onout"}, \code{FALSE}.
-#' @param col Subplot grid column (figures created with
-#'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
-#'   to address several cells.
-#' @param color Color: a CSS color string or R color name.
-#' @param exclude_empty_subplots If \code{TRUE}, skip subplots that have no
-#'   traces or layout objects.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param fig A \code{go_figure} object.
-#' @param font \strong{\code{go_layout_annotation()}}: Sets the annotation
-#'   text font. Named list or \code{\link{go_layout_annotation_font}()}
-#'   object.
-#'
-#'   \strong{\code{go_layout_annotation_hoverlabel()}}: Sets the hover
-#'   label text font. By default uses the global hover font and size, with
-#'   color from `hoverlabel.bordercolor`. Named list or
-#'   \code{\link{go_layout_annotation_hoverlabel_font}()} object.
-#' @param height Sets an explicit height for the text box. null (default)
-#'   lets the text set the box height. Taller text will be clipped. Number
-#'   in the interval [1, Inf].
-#' @param hoverlabel Named list or
-#'   \code{\link{go_layout_annotation_hoverlabel}()} object.
-#' @param hovertext Sets text to appear when hovering over this annotation.
-#'   If omitted or blank, no hover label will appear. String.
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param name When used in a template, named items are created in the
-#'   output figure in addition to any items the figure already has in this
-#'   array. You can modify these items in the output figure by making your
-#'   own item with `templateitemname` matching this `name` alongside your
-#'   modifications (including `visible: false` or `enabled: false` to hide
-#'   it). Has no effect outside of a template. String.
-#' @param opacity Sets the opacity of the annotation (text + arrow). Number
-#'   in the interval [0, 1].
-#' @param row Subplot grid row (figures created with
-#'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
-#'   to address several cells.
-#' @param secondary_y If \code{TRUE}, use the secondary y axis of the
-#'   subplot.
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param showarrow Determines whether or not the annotation is drawn with
-#'   an arrow. If TRUE, `text` is placed near the arrow's tail. If FALSE,
-#'   `text` lines up with the `x` and `y` provided. Logical.
-#' @param size Number in the interval [1, Inf].
-#' @param standoff Sets a distance, in pixels, to move the end arrowhead
-#'   away from the position it is pointing at, for example to point at the
-#'   edge of a marker independent of zoom. Note that this shortens the
-#'   arrow from the `ax` / `ay` vector, in contrast to `xshift` / `yshift`
-#'   which moves everything by this amount. Number in the interval [0,
-#'   Inf].
-#' @param startarrowhead Sets the start annotation arrow head style.
-#'   Integer in the interval [0, 8].
-#' @param startarrowsize Sets the size of the start annotation arrow head,
-#'   relative to `arrowwidth`. A value of 1 (default) gives a head about 3x
-#'   as wide as the line. Number in the interval [0.3, Inf].
-#' @param startstandoff Sets a distance, in pixels, to move the start
-#'   arrowhead away from the position it is pointing at, for example to
-#'   point at the edge of a marker independent of zoom. Note that this
-#'   shortens the arrow from the `ax` / `ay` vector, in contrast to
-#'   `xshift` / `yshift` which moves everything by this amount. Number in
-#'   the interval [0, Inf].
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param templateitemname Used to refer to a named item in this array in
-#'   the template. Named items from the template will be created even
-#'   without a matching item in the input figure, but you can modify one by
-#'   making an item with `templateitemname` matching its `name`, alongside
-#'   your modifications (including `visible: false` or `enabled: false` to
-#'   hide it). If there is no template or no matching item, this item will
-#'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param text Sets the text associated with this annotation. Plotly uses a
-#'   subset of HTML tags to do things like newline (`<br>`), bold
-#'   (`<b></b>`), italics (`<i></i>`), hyperlinks (`<a href='...'></a>`).
-#'   Tags `<em>`, `<sup>`, `<sub>`, `<s>`, `<u>`, and `<span>` are also
-#'   supported. String.
-#' @param textangle Sets the angle at which the `text` is drawn with
-#'   respect to the horizontal. Angle in degrees.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param valign Sets the vertical alignment of the `text` within the box.
-#'   Has an effect only if an explicit height is set to override the text
-#'   height. One of \code{"top"}, \code{"middle"}, \code{"bottom"}.
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param visible Determines whether or not this annotation is visible.
-#'   Logical.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param width Sets an explicit width for the text box. null (default)
-#'   lets the text set the box width. Wider text will be clipped. There is
-#'   no automatic wrapping; use <br> to start a new line. Number in the
-#'   interval [1, Inf].
-#' @param x Sets the annotation's x position. If the axis `type` is "log",
-#'   then you must take the log of your desired range. If the axis `type`
-#'   is "date", it should be date strings, like date data, though Date
-#'   objects and unix milliseconds will be accepted and converted to
-#'   strings. If the axis `type` is "category", it should be numbers, using
-#'   the scale where each category is assigned a serial number from zero in
-#'   the order it appears. Any value.
-#' @param xanchor Sets the text box's horizontal position anchor This
-#'   anchor binds the `x` position to the "left", "center" or "right" of
-#'   the annotation. For example, if `x` is set to 1, `xref` to "paper" and
-#'   `xanchor` to "right" then the right-most portion of the annotation
-#'   lines up with the right-most edge of the plotting area. If "auto", the
-#'   anchor is equivalent to "center" for data-referenced annotations or if
-#'   there is an arrow, whereas for paper-referenced with no arrow, the
-#'   anchor picked corresponds to the closest side. One of \code{"auto"},
-#'   \code{"left"}, \code{"center"}, \code{"right"}.
-#' @param xclick Toggle this annotation when clicking a data point whose
-#'   `x` value is `xclick` rather than the annotation's `x` value. Any
-#'   value.
-#' @param xref Sets the annotation's x coordinate axis. If set to a x axis
-#'   id (e.g. "x" or "x2"), the `x` position refers to a x coordinate. If
-#'   set to "paper", the `x` position refers to the distance from the left
-#'   of the plotting area in normalized coordinates where 0 (1) corresponds
-#'   to the left (right). If set to a x axis ID followed by "domain"
-#'   (separated by a space), the position behaves like for "paper", but
-#'   refers to the distance in fractions of the domain length from the left
-#'   of the domain of that axis: e.g., "x2 domain" refers to the domain of
-#'   the second x axis and a x position of 0.5 refers to the point between
-#'   the left and the right of the domain of the second x axis. One of
-#'   \code{"paper"}, or a string matching \code{"^x([2-9]|[1-9][0-9]+)?(
-#'   domain)?$"}.
-#' @param xshift Shifts the position of the whole annotation and arrow to
-#'   the right (positive) or left (negative) by this many pixels. Number.
-#' @param y Sets the annotation's y position. If the axis `type` is "log",
-#'   then you must take the log of your desired range. If the axis `type`
-#'   is "date", it should be date strings, like date data, though Date
-#'   objects and unix milliseconds will be accepted and converted to
-#'   strings. If the axis `type` is "category", it should be numbers, using
-#'   the scale where each category is assigned a serial number from zero in
-#'   the order it appears. Any value.
-#' @param yanchor Sets the text box's vertical position anchor This anchor
-#'   binds the `y` position to the "top", "middle" or "bottom" of the
-#'   annotation. For example, if `y` is set to 1, `yref` to "paper" and
-#'   `yanchor` to "top" then the top-most portion of the annotation lines
-#'   up with the top-most edge of the plotting area. If "auto", the anchor
-#'   is equivalent to "middle" for data-referenced annotations or if there
-#'   is an arrow, whereas for paper-referenced with no arrow, the anchor
-#'   picked corresponds to the closest side. One of \code{"auto"},
-#'   \code{"top"}, \code{"middle"}, \code{"bottom"}.
-#' @param yclick Toggle this annotation when clicking a data point whose
-#'   `y` value is `yclick` rather than the annotation's `y` value. Any
-#'   value.
-#' @param yref Sets the annotation's y coordinate axis. If set to a y axis
-#'   id (e.g. "y" or "y2"), the `y` position refers to a y coordinate. If
-#'   set to "paper", the `y` position refers to the distance from the
-#'   bottom of the plotting area in normalized coordinates where 0 (1)
-#'   corresponds to the bottom (top). If set to a y axis ID followed by
-#'   "domain" (separated by a space), the position behaves like for
-#'   "paper", but refers to the distance in fractions of the domain length
-#'   from the bottom of the domain of that axis: e.g., "y2 domain" refers
-#'   to the domain of the second y axis and a y position of 0.5 refers to
-#'   the point between the bottom and the top of the domain of the second y
-#'   axis. One of \code{"paper"}, or a string matching
-#'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
-#' @param yshift Shifts the position of the whole annotation and arrow up
-#'   (positive) or down (negative) by this many pixels. Number.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_annotation <- function(
-    arg = NULL, ..., align = NULL, arrowcolor = NULL, arrowhead = NULL,
-    arrowside = NULL, arrowsize = NULL, arrowwidth = NULL, ax = NULL,
-    axref = NULL, ay = NULL, ayref = NULL, bgcolor = NULL,
-    bordercolor = NULL, borderpad = NULL, borderwidth = NULL,
-    captureevents = NULL, clicktoshow = NULL, font = NULL, height = NULL,
-    hoverlabel = NULL, hovertext = NULL, name = NULL, opacity = NULL,
-    showarrow = NULL, standoff = NULL, startarrowhead = NULL,
-    startarrowsize = NULL, startstandoff = NULL, templateitemname = NULL,
-    text = NULL, textangle = NULL, valign = NULL, visible = NULL,
-    width = NULL, x = NULL, xanchor = NULL, xclick = NULL, xref = NULL,
-    xshift = NULL, y = NULL, yanchor = NULL, yclick = NULL, yref = NULL,
-    yshift = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.annotation", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_annotation
-#' @export
-go_layout_annotation_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.annotation.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_annotation
-#' @export
-go_layout_annotation_hoverlabel <- function(
-    arg = NULL, ..., bgcolor = NULL, bordercolor = NULL, font = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.annotation.hoverlabel", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_annotation
-#' @export
-go_layout_annotation_hoverlabel_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.annotation.hoverlabel.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout coloraxis objects
-#'
-#' Properties of \code{layout.coloraxis}.
-#'
-#' \code{go_layout_coloraxis()} and the nested object constructors below
-#' create validated graph objects (named lists). Every property is checked
-#' against the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}).
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_coloraxis_colorbar()}}{\code{layout.coloraxis.colorbar}}
-#' \item{\code{go_layout_coloraxis_colorbar_tickfont()}}{\code{layout.coloraxis.colorbar.tickfont}:
-#' Sets the color bar's tick label font}
-#' \item{\code{go_layout_coloraxis_colorbar_tickformatstop()}}{\code{layout.coloraxis.colorbar.tickformatstop}}
-#' \item{\code{go_layout_coloraxis_colorbar_title()}}{\code{layout.coloraxis.colorbar.title}}
-#' \item{\code{go_layout_coloraxis_colorbar_title_font()}}{\code{layout.coloraxis.colorbar.title.font}:
-#' Sets this color bar's title font.}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param autocolorscale Determines whether the colorscale is a default
-#'   palette (`autocolorscale: true`) or the palette determined by
-#'   `colorscale`. In case `colorscale` is unspecified or `autocolorscale`
-#'   is true, the default palette will be chosen according to whether
-#'   numbers in the `color` array are all positive, all negative or mixed.
-#'   Logical.
-#' @param bgcolor Sets the color of padded area. Color: a CSS color string
-#'   or R color name.
-#' @param bordercolor Sets the axis line color. Color: a CSS color string
-#'   or R color name.
-#' @param borderwidth Sets the width (in px) or the border enclosing this
-#'   color bar. Number in the interval [0, Inf].
-#' @param cauto Determines whether or not the color domain is computed with
-#'   respect to the input data (here corresponding trace color array(s)) or
-#'   the bounds set in `cmin` and `cmax` Defaults to `false` when `cmin`
-#'   and `cmax` are set by the user. Logical.
-#' @param cmax Sets the upper bound of the color domain. Value should have
-#'   the same units as corresponding trace color array(s) and if set,
-#'   `cmin` must be set as well. Number.
-#' @param cmid Sets the mid-point of the color domain by scaling `cmin`
-#'   and/or `cmax` to be equidistant to this point. Value should have the
-#'   same units as corresponding trace color array(s). Has no effect when
-#'   `cauto` is `false`. Number.
-#' @param cmin Sets the lower bound of the color domain. Value should have
-#'   the same units as corresponding trace color array(s) and if set,
-#'   `cmax` must be set as well. Number.
-#' @param color Color: a CSS color string or R color name.
-#' @param colorbar Named list or
-#'   \code{\link{go_layout_coloraxis_colorbar}()} object.
-#' @param colorscale Sets the colorscale. The colorscale must be an array
-#'   containing arrays mapping a normalized value to an rgb, rgba, hex,
-#'   hsl, hsla, hwb, or named color string. At minimum, a mapping for the
-#'   lowest (0) and highest (1) values are required. For example, `[[0,
-#'   'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
-#'   colorscale in color space, use `cmin` and `cmax`. Alternatively,
-#'   `colorscale` may be a palette name string of the following list:
-#'   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-#'   Colorscale: a vector of colors, a two-column data.frame of (value,
-#'   color), or the name of a sequential, diverging or cyclical scale in
-#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
-#' @param dtick Sets the step in-between ticks on this color bar. Use with
-#'   `tick0`. Must be a positive number. Note: unlike on x/y axes, the
-#'   special "log" and "date" string forms ("L<f>", "D1", "D2", "M<n>") are
-#'   not supported here: this axis is always linear, so such strings are
-#'   silently ignored and the step is set to 1. Any value.
-#' @param dtickrange range ["min", "max"], where "min", "max" - dtick
-#'   values which describe some zoom level, it is possible to omit "min" or
-#'   "max" value by passing "null" Vector or list of 2 element(s).
-#' @param enabled Determines whether or not this stop is used. If `false`,
-#'   this stop is ignored even within its `dtickrange`. Logical.
-#' @param exponentformat Determines a formatting rule for the tick
-#'   exponents. For example, consider the number 1,000,000,000. If "none",
-#'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-#'   1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-#'   prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-#'   covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-#'   Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-#'   the above ranges, the formatting rule will automatically be switched
-#'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-#'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param font Sets this color bar's title font. Named list or
-#'   \code{\link{go_layout_coloraxis_colorbar_title_font}()} object.
-#' @param labelalias Replacement text for specific tick or hover labels.
-#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-#'   to Canada. The labels we would have shown must match the keys exactly,
-#'   after adding any tickprefix or ticksuffix. For negative numbers the
-#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
-#'   That means you need to use -1 instead of -1. labelalias can be used
-#'   with any axis type, and both keys (if needed) and values (if desired)
-#'   can include html-like tags or MathJax. Any value.
-#' @param len Sets the length of the color bar This measure excludes the
-#'   padding of both ends. That is, the color bar length is this length
-#'   minus the padding on both ends. Number in the interval [0, Inf].
-#' @param lenmode Determines whether this color bar's length (i.e. the
-#'   measure in the color variation direction) is set in units of plot
-#'   "fraction" or in *pixels. Use `len` to set the value. One of
-#'   \code{"fraction"}, \code{"pixels"}.
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
-#'   This only has an effect when `tickformat` is "SI" or "B". Number in
-#'   the interval [0, Inf].
-#' @param name When used in a template, named items are created in the
-#'   output figure in addition to any items the figure already has in this
-#'   array. You can modify these items in the output figure by making your
-#'   own item with `templateitemname` matching this `name` alongside your
-#'   modifications (including `visible: false` or `enabled: false` to hide
-#'   it). Has no effect outside of a template. String.
-#' @param nticks Specifies the maximum number of ticks for the particular
-#'   axis. The actual number of ticks will be chosen automatically to be
-#'   less than or equal to `nticks`. Has an effect only if `tickmode` is
-#'   set to "auto". Integer in the interval [0, Inf].
-#' @param orientation Sets the orientation of the colorbar. One of
-#'   \code{"h"}, \code{"v"}.
-#' @param outlinecolor Sets the axis line color. Color: a CSS color string
-#'   or R color name.
-#' @param outlinewidth Sets the width (in px) of the axis line. Number in
-#'   the interval [0, Inf].
-#' @param reversescale Reverses the color mapping if true. If true, `cmin`
-#'   will correspond to the last color in the array and `cmax` will
-#'   correspond to the first color. Logical.
-#' @param separatethousands If "true", even 4-digit integers are separated
-#'   Logical.
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param showexponent If "all", all exponents are shown besides their
-#'   significands. If "first", only the exponent of the first tick is
-#'   shown. If "last", only the exponent of the last tick is shown. If
-#'   "none", no exponents appear. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showscale Determines whether or not a colorbar is displayed for
-#'   this trace. Logical.
-#' @param showticklabels Determines whether or not the tick labels are
-#'   drawn. Logical.
-#' @param showtickprefix If "all", all tick labels are displayed with a
-#'   prefix. If "first", only the first tick is displayed with a prefix. If
-#'   "last", only the last tick is displayed with a suffix. If "none", tick
-#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
-#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
-#' @param side Determines the location of color bar's title with respect to
-#'   the color bar. Defaults to "top" when `orientation` is "v" and
-#'   defaults to "right" when `orientation` is "h". One of \code{"right"},
-#'   \code{"top"}, \code{"bottom"}.
-#' @param size Number in the interval [1, Inf].
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param templateitemname Used to refer to a named item in this array in
-#'   the template. Named items from the template will be created even
-#'   without a matching item in the input figure, but you can modify one by
-#'   making an item with `templateitemname` matching its `name`, alongside
-#'   your modifications (including `visible: false` or `enabled: false` to
-#'   hide it). If there is no template or no matching item, this item will
-#'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param text Sets the title of the color bar. String.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param thickness Sets the thickness of the color bar This measure
-#'   excludes the size of the padding, ticks and labels. Number in the
-#'   interval [0, Inf].
-#' @param thicknessmode Determines whether this color bar's thickness (i.e.
-#'   the measure in the constant color direction) is set in units of plot
-#'   "fraction" or in "pixels". Use `thickness` to set the value. One of
-#'   \code{"fraction"}, \code{"pixels"}.
-#' @param tick0 Sets the placement of the first tick on this axis. Use with
-#'   `dtick`. If the axis `type` is "log", then you must take the log of
-#'   your starting tick (e.g. to set the starting tick to 100, set the
-#'   `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-#'   If the axis `type` is "date", it should be a date string, like date
-#'   data. If the axis `type` is "category", it should be a number, using
-#'   the scale where each category is assigned a serial number from zero in
-#'   the order it appears. Any value.
-#' @param tickangle Sets the angle of the tick labels with respect to the
-#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
-#'   vertically. Angle in degrees.
-#' @param tickcolor Sets the tick color. Color: a CSS color string or R
-#'   color name.
-#' @param tickfont Sets the color bar's tick label font Named list or
-#'   \code{\link{go_layout_coloraxis_colorbar_tickfont}()} object.
-#' @param tickformat Sets the tick label formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param tickformatstops List of named lists or
-#'   \code{\link{go_layout_coloraxis_colorbar_tickformatstop}()} objects.
-#' @param ticklabeloverflow Determines how we handle tick labels that would
-#'   overflow either the graph div or the domain of the axis. The default
-#'   value for inside tick labels is "hide past domain". In other cases the
-#'   default is "hide past div". One of \code{"allow"}, \code{"hide past
-#'   div"}, \code{"hide past domain"}.
-#' @param ticklabelposition Determines where tick labels are drawn relative
-#'   to the ticks. Left and right options are used when `orientation` is
-#'   "h", top and bottom when `orientation` is "v". One of
-#'   \code{"outside"}, \code{"inside"}, \code{"outside top"}, \code{"inside
-#'   top"}, \code{"outside left"}, \code{"inside left"}, \code{"outside
-#'   right"}, \code{"inside right"}, \code{"outside bottom"}, \code{"inside
-#'   bottom"}.
-#' @param ticklabelstep Sets the spacing between tick labels as compared to
-#'   the spacing between ticks. A value of 1 (default) means each tick gets
-#'   a label. A value of 2 means shows every 2nd label. A larger value n
-#'   means only every nth tick is labeled. `tick0` determines which labels
-#'   are shown. Not implemented for axes with `type` "log" or
-#'   "multicategory", or when `tickmode` is "array". Integer in the
-#'   interval [1, Inf].
-#' @param ticklen Sets the tick length (in px). Number in the interval [0,
-#'   Inf].
-#' @param tickmode Sets the tick mode for this axis. If "auto", the number
-#'   of ticks is set via `nticks`. If "linear", the placement of the ticks
-#'   is determined by a starting position `tick0` and a tick step `dtick`
-#'   ("linear" is the default value if `tick0` and `dtick` are provided).
-#'   If "array", the placement of the ticks is set via `tickvals` and the
-#'   tick text is `ticktext`. ("array" is the default value if `tickvals`
-#'   is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.
-#' @param tickprefix Sets a tick label prefix. String.
-#' @param ticks Determines whether ticks are drawn or not. If **, this
-#'   axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-#'   drawn outside (inside) the axis lines. One of \code{"outside"},
-#'   \code{"inside"}, \code{""}.
-#' @param ticksuffix Sets a tick label suffix. String.
-#' @param ticktext Sets the text displayed at the ticks position via
-#'   `tickvals`. Only has an effect if `tickmode` is set to "array". Used
-#'   with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#' @param tickvals Sets the values at which ticks on this axis appear. Only
-#'   has an effect if `tickmode` is set to "array". Used with `ticktext`.
-#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
-#'   Inf].
-#' @param title String (the title text), named list or
-#'   \code{\link{go_layout_coloraxis_colorbar_title}()} object.
-#' @param value string - dtickformat for described zoom level, the same as
-#'   "tickformat" String.
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param x Sets the x position with respect to `xref` of the color bar (in
-#'   plot fraction). When `xref` is "paper", defaults to 1.02 when
-#'   `orientation` is "v" and 0.5 when `orientation` is "h". When `xref` is
-#'   "container", defaults to 1 when `orientation` is "v" and 0.5 when
-#'   `orientation` is "h". Must be between 0 and 1 if `xref` is "container"
-#'   and between "-2" and 3 if `xref` is "paper". Number.
-#' @param xanchor Sets this color bar's horizontal position anchor. This
-#'   anchor binds the `x` position to the "left", "center" or "right" of
-#'   the color bar. Defaults to "left" when `orientation` is "v" and
-#'   "center" when `orientation` is "h". One of \code{"left"},
-#'   \code{"center"}, \code{"right"}.
-#' @param xpad Sets the amount of padding (in px) along the x direction.
-#'   Number in the interval [0, Inf].
-#' @param xref Sets the container `x` refers to. "container" spans the
-#'   entire `width` of the plot. "paper" refers to the width of the
-#'   plotting area only. One of \code{"container"}, \code{"paper"}.
-#' @param y Sets the y position with respect to `yref` of the color bar (in
-#'   plot fraction). When `yref` is "paper", defaults to 0.5 when
-#'   `orientation` is "v" and 1.02 when `orientation` is "h". When `yref`
-#'   is "container", defaults to 0.5 when `orientation` is "v" and 1 when
-#'   `orientation` is "h". Must be between 0 and 1 if `yref` is "container"
-#'   and between "-2" and 3 if `yref` is "paper". Number.
-#' @param yanchor Sets this color bar's vertical position anchor This
-#'   anchor binds the `y` position to the "top", "middle" or "bottom" of
-#'   the color bar. Defaults to "middle" when `orientation` is "v" and
-#'   "bottom" when `orientation` is "h". One of \code{"top"},
-#'   \code{"middle"}, \code{"bottom"}.
-#' @param ypad Sets the amount of padding (in px) along the y direction.
-#'   Number in the interval [0, Inf].
-#' @param yref Sets the container `y` refers to. "container" spans the
-#'   entire `height` of the plot. "paper" refers to the height of the
-#'   plotting area only. One of \code{"container"}, \code{"paper"}.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_coloraxis <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, colorbar = NULL, colorscale = NULL,
-    reversescale = NULL, showscale = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.coloraxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_coloraxis
-#' @export
-go_layout_coloraxis_colorbar <- function(
-    arg = NULL, ..., bgcolor = NULL, bordercolor = NULL, borderwidth = NULL,
-    dtick = NULL, exponentformat = NULL, labelalias = NULL, len = NULL,
-    lenmode = NULL, minexponent = NULL, nticks = NULL, orientation = NULL,
-    outlinecolor = NULL, outlinewidth = NULL, separatethousands = NULL,
-    showexponent = NULL, showticklabels = NULL, showtickprefix = NULL,
-    showticksuffix = NULL, thickness = NULL, thicknessmode = NULL,
-    tick0 = NULL, tickangle = NULL, tickcolor = NULL, tickfont = NULL,
-    tickformat = NULL, tickformatstops = NULL, ticklabeloverflow = NULL,
-    ticklabelposition = NULL, ticklabelstep = NULL, ticklen = NULL,
-    tickmode = NULL, tickprefix = NULL, ticks = NULL, ticksuffix = NULL,
-    ticktext = NULL, tickvals = NULL, tickwidth = NULL, title = NULL,
-    x = NULL, xanchor = NULL, xpad = NULL, xref = NULL, y = NULL,
-    yanchor = NULL, ypad = NULL, yref = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.coloraxis.colorbar", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_coloraxis
-#' @export
-go_layout_coloraxis_colorbar_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.coloraxis.colorbar.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_coloraxis
-#' @export
-go_layout_coloraxis_colorbar_tickformatstop <- function(
-    arg = NULL, ..., dtickrange = NULL, enabled = NULL, name = NULL,
-    templateitemname = NULL, value = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.coloraxis.colorbar.tickformatstop", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_coloraxis
-#' @export
-go_layout_coloraxis_colorbar_title <- function(
-    arg = NULL, ..., font = NULL, side = NULL, text = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.coloraxis.colorbar.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_coloraxis
-#' @export
-go_layout_coloraxis_colorbar_title_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.coloraxis.colorbar.title.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout colorscale objects
-#'
-#' Properties of \code{layout.colorscale}.
-#'
-#' \code{go_layout_colorscale()} create validated graph objects (named
-#' lists). Every property is checked against the plotly.js schema when an
-#' object is created or modified (see \code{\link{plotly_obj-modify}()}).
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param diverging Sets the default diverging colorscale. Note that
-#'   `autocolorscale` must be true for this attribute to work. Colorscale:
-#'   a vector of colors, a two-column data.frame of (value, color), or the
-#'   name of a sequential, diverging or cyclical scale in
-#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
-#' @param sequential Sets the default sequential colorscale for positive
-#'   values. Note that `autocolorscale` must be true for this attribute to
-#'   work. Colorscale: a vector of colors, a two-column data.frame of
-#'   (value, color), or the name of a sequential, diverging or cyclical
-#'   scale in \code{\link{px_colors}()} (append \code{"_r"} to reverse).
-#' @param sequentialminus Sets the default sequential colorscale for
-#'   negative values. Note that `autocolorscale` must be true for this
-#'   attribute to work. Colorscale: a vector of colors, a two-column
-#'   data.frame of (value, color), or the name of a sequential, diverging
-#'   or cyclical scale in \code{\link{px_colors}()} (append \code{"_r"} to
-#'   reverse).
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_colorscale <- function(
-    arg = NULL, ..., diverging = NULL, sequential = NULL,
-    sequentialminus = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.colorscale", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout font objects
-#'
-#' Sets the global font. Note that fonts used in traces and other layout
-#' components inherit from the global font.
-#'
-#' \code{go_layout_font()} create validated graph objects (named lists).
-#' Every property is checked against the plotly.js schema when an object is
-#' created or modified (see \code{\link{plotly_obj-modify}()}).
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param color Color: a CSS color string or R color name.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param size Number in the interval [1, Inf].
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout geo objects
-#'
-#' Properties of \code{layout.geo}.
-#'
-#' \code{go_layout_geo()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}).
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_geo_center()}}{\code{layout.geo.center}}
-#' \item{\code{go_layout_geo_domain()}}{\code{layout.geo.domain}}
-#' \item{\code{go_layout_geo_lataxis()}}{\code{layout.geo.lataxis}}
-#' \item{\code{go_layout_geo_lonaxis()}}{\code{layout.geo.lonaxis}}
-#' \item{\code{go_layout_geo_projection()}}{\code{layout.geo.projection}}
-#' \item{\code{go_layout_geo_projection_rotation()}}{\code{layout.geo.projection.rotation}}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param bgcolor Set the background color of the map Color: a CSS color
-#'   string or R color name.
-#' @param center Named list or \code{\link{go_layout_geo_center}()} object.
-#' @param coastlinecolor Sets the coastline color. Color: a CSS color
-#'   string or R color name.
-#' @param coastlinewidth Sets the coastline stroke width (in px). Number in
-#'   the interval [0, Inf].
-#' @param column If there is a layout grid, use the domain for this column
-#'   in the grid for this geo subplot. Note that geo subplots are
-#'   constrained by domain. In general, when `projection.scale` is set to
-#'   1. a map will fit either its x or y domain, but not both. Integer in
-#'   the interval [0, Inf].
-#' @param countrycolor Sets line color of the country boundaries. Color: a
-#'   CSS color string or R color name.
-#' @param countrywidth Sets line width (in px) of the country boundaries.
-#'   Number in the interval [0, Inf].
-#' @param distance For satellite projection type only. Sets the distance
-#'   from the center of the sphere to the point of view as a proportion of
-#'   the sphere's radius. Number in the interval [1.001, Inf].
-#' @param domain Named list or \code{\link{go_layout_geo_domain}()} object.
-#' @param dtick Sets the graticule's longitude/latitude tick step. Number.
-#' @param fitbounds Determines if this subplot's view settings are
-#'   auto-computed to fit trace data. On scoped maps, setting `fitbounds`
-#'   leads to `center.lon` and `center.lat` getting auto-filled. On maps
-#'   with a non-clipped projection, setting `fitbounds` leads to
-#'   `center.lon`, `center.lat`, and `projection.rotation.lon` getting
-#'   auto-filled. On maps with a clipped projection, setting `fitbounds`
-#'   leads to `center.lon`, `center.lat`, `projection.rotation.lon`,
-#'   `projection.rotation.lat`, `lonaxis.range` and `lataxis.range` getting
-#'   auto-filled. If "locations" (default), only the trace's visible
-#'   locations are considered in the `fitbounds` computations. If
-#'   "geojson", the entire trace input `geojson` (if provided) is
-#'   considered in the `fitbounds` computations. If FALSE, the view
-#'   settings are used as-is; set this to opt out of auto-fitting. One of
-#'   \code{"locations"}, \code{"geojson"}, \code{FALSE}.
-#' @param framecolor Sets the color the frame. Color: a CSS color string or
-#'   R color name.
-#' @param framewidth Sets the stroke width (in px) of the frame. Number in
-#'   the interval [0, Inf].
-#' @param gridcolor Sets the graticule's stroke color. Color: a CSS color
-#'   string or R color name.
-#' @param griddash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param gridwidth Sets the graticule's stroke width (in px). Number in
-#'   the interval [0, Inf].
-#' @param lakecolor Sets the color of the lakes. Color: a CSS color string
-#'   or R color name.
-#' @param landcolor Sets the land mass color. Color: a CSS color string or
-#'   R color name.
-#' @param lat \strong{\code{go_layout_geo_center()}}: Sets the latitude of
-#'   the map's center. For all projection types, the map's latitude center
-#'   lies at the middle of the latitude range by default. Number.
-#'
-#'   \strong{\code{go_layout_geo_projection_rotation()}}: Rotates the map
-#'   along meridians (in degrees North). Number.
-#' @param lataxis Named list or \code{\link{go_layout_geo_lataxis}()}
-#'   object.
-#' @param lon \strong{\code{go_layout_geo_center()}}: Sets the longitude of
-#'   the map's center. By default, the map's longitude center lies at the
-#'   middle of the longitude range for scoped projection and above
-#'   `projection.rotation.lon` otherwise. Number.
-#'
-#'   \strong{\code{go_layout_geo_projection_rotation()}}: Rotates the map
-#'   along parallels (in degrees East). Defaults to the center of the
-#'   `lonaxis.range` values. Number.
-#' @param lonaxis Named list or \code{\link{go_layout_geo_lonaxis}()}
-#'   object.
-#' @param maxscale Sets the maximum zoom level of the map view, relative to
-#'   `projection.scale`. A `maxscale` of 2 (200\%) prevents the user from
-#'   zooming in beyond twice the base zoom level. Must be greater than or
-#'   equal to "0"; has no upper bound. Defaults to "null" for no upper
-#'   bound on zoom. Number in the interval [0, Inf].
-#' @param minscale Sets the minimum zoom level of the map view, relative to
-#'   `projection.scale`. A `minscale` of 0.5 (50\%) prevents the user from
-#'   zooming out beyond half the base zoom level. Must be greater than or
-#'   equal to "0"; has no upper bound. The default of 0 imposes no lower
-#'   bound on zoom. Number in the interval [0, Inf].
-#' @param oceancolor Sets the ocean color Color: a CSS color string or R
-#'   color name.
-#' @param parallels For conic projection types only. Sets the parallels
-#'   (tangent, secant) where the cone intersects the sphere. Vector or list
-#'   of 2 element(s).
-#' @param projection Named list or \code{\link{go_layout_geo_projection}()}
-#'   object.
-#' @param range Sets the range of this axis (in degrees), sets the map's
-#'   clipped coordinates. Vector or list of 2 element(s).
-#' @param resolution Sets the resolution of the base layers. The values
-#'   have units of km/mm e.g. 110 corresponds to a scale ratio of
-#'   1:110,000,000. One of \code{110}, \code{50}.
-#' @param rivercolor Sets color of the rivers. Color: a CSS color string or
-#'   R color name.
-#' @param riverwidth Sets the stroke width (in px) of the rivers. Number in
-#'   the interval [0, Inf].
-#' @param roll Roll the map (in degrees) For example, a roll of 180 makes
-#'   the map appear upside down. Number.
-#' @param rotation Named list or
-#'   \code{\link{go_layout_geo_projection_rotation}()} object.
-#' @param row If there is a layout grid, use the domain for this row in the
-#'   grid for this geo subplot. Note that geo subplots are constrained by
-#'   domain. In general, when `projection.scale` is set to 1. a map will
-#'   fit either its x or y domain, but not both. Integer in the interval
-#'   [0, Inf].
-#' @param scale Zooms in or out on the map view. A scale of 1 corresponds
-#'   to the largest zoom level that fits the map's lon and lat ranges.
-#'   Number in the interval [0, Inf].
-#' @param scope Set the scope of the map. One of \code{"africa"},
-#'   \code{"antarctica"}, \code{"asia"}, \code{"europe"}, \code{"north
-#'   america"}, \code{"oceania"}, \code{"south america"}, \code{"usa"},
-#'   \code{"world"}.
-#' @param showcoastlines Sets whether or not the coastlines are drawn.
-#'   Logical.
-#' @param showcountries Sets whether or not country boundaries are drawn.
-#'   Logical.
-#' @param showframe Sets whether or not a frame is drawn around the map.
-#'   Logical.
-#' @param showgrid Sets whether or not graticule are shown on the map.
-#'   Logical.
-#' @param showlakes Sets whether or not lakes are drawn. Logical.
-#' @param showland Sets whether or not land masses are filled in color.
-#'   Logical.
-#' @param showocean Sets whether or not oceans are filled in color.
-#'   Logical.
-#' @param showrivers Sets whether or not rivers are drawn. Logical.
-#' @param showsubunits Sets whether or not boundaries of subunits within
-#'   countries (e.g. states, provinces) are drawn. Logical.
-#' @param subunitcolor Sets the color of the subunits boundaries. Color: a
-#'   CSS color string or R color name.
-#' @param subunitwidth Sets the stroke width (in px) of the subunits
-#'   boundaries. Number in the interval [0, Inf].
-#' @param tick0 Sets the graticule's starting tick longitude/latitude.
-#'   Number.
-#' @param tilt For satellite projection type only. Sets the tilt angle of
-#'   perspective projection. Number.
-#' @param type Sets the projection type. One of \code{"airy"},
-#'   \code{"aitoff"}, \code{"albers"}, \code{"albers usa"},
-#'   \code{"august"}, \code{"azimuthal equal area"}, \code{"azimuthal
-#'   equidistant"}, \code{"baker"}, \code{"bertin1953"}, \code{"boggs"},
-#'   \code{"bonne"}, \code{"bottomley"}, \code{"bromley"},
-#'   \code{"collignon"}, \code{"conic conformal"}, \code{"conic equal
-#'   area"}, \code{"conic equidistant"}, \code{"craig"}, \code{"craster"},
-#'   \code{"cylindrical equal area"}, \code{"cylindrical stereographic"},
-#'   \code{"eckert1"}, \code{"eckert2"}, \code{"eckert3"},
-#'   \code{"eckert4"}, \code{"eckert5"}, \code{"eckert6"},
-#'   \code{"eisenlohr"}, \code{"equal earth"}, \code{"equirectangular"},
-#'   \code{"fahey"}, \code{"foucaut"}, \code{"foucaut sinusoidal"},
-#'   \code{"ginzburg4"}, \code{"ginzburg5"}, \code{"ginzburg6"},
-#'   \code{"ginzburg8"}, \code{"ginzburg9"}, \code{"gnomonic"},
-#'   \code{"gringorten"}, \code{"gringorten quincuncial"}, \code{"guyou"},
-#'   \code{"hammer"}, \code{"hill"}, \code{"homolosine"},
-#'   \code{"hufnagel"}, \code{"hyperelliptical"}, \code{"kavrayskiy7"},
-#'   \code{"lagrange"}, \code{"larrivee"}, \code{"laskowski"},
-#'   \code{"loximuthal"}, \code{"mercator"}, \code{"miller"},
-#'   \code{"mollweide"}, \code{"mt flat polar parabolic"}, \code{"mt flat
-#'   polar quartic"}, \code{"mt flat polar sinusoidal"}, \code{"natural
-#'   earth"}, \code{"natural earth1"}, \code{"natural earth2"}, \code{"nell
-#'   hammer"}, \code{"nicolosi"}, \code{"orthographic"},
-#'   \code{"patterson"}, \code{"peirce quincuncial"}, \code{"polyconic"},
-#'   \code{"rectangular polyconic"}, \code{"robinson"}, \code{"satellite"},
-#'   \code{"sinu mollweide"}, \code{"sinusoidal"}, \code{"stereographic"},
-#'   \code{"times"}, \code{"transverse mercator"}, \code{"van der
-#'   grinten"}, \code{"van der grinten2"}, \code{"van der grinten3"},
-#'   \code{"van der grinten4"}, \code{"wagner4"}, \code{"wagner6"},
-#'   \code{"wiechel"}, \code{"winkel tripel"}, \code{"winkel3"}.
-#' @param uirevision Controls persistence of user-driven changes in the
-#'   view (projection and center). Defaults to `layout.uirevision`. Any
-#'   value.
-#' @param visible Sets the default visibility of the base layers. Logical.
-#' @param x Sets the horizontal domain of this geo subplot (in plot
-#'   fraction). Note that geo subplots are constrained by domain. In
-#'   general, when `projection.scale` is set to 1. a map will fit either
-#'   its x or y domain, but not both. Vector or list of 2 element(s).
-#' @param y Sets the vertical domain of this geo subplot (in plot
-#'   fraction). Note that geo subplots are constrained by domain. In
-#'   general, when `projection.scale` is set to 1. a map will fit either
-#'   its x or y domain, but not both. Vector or list of 2 element(s).
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_geo <- function(
-    arg = NULL, ..., bgcolor = NULL, center = NULL, coastlinecolor = NULL,
-    coastlinewidth = NULL, countrycolor = NULL, countrywidth = NULL,
-    domain = NULL, fitbounds = NULL, framecolor = NULL, framewidth = NULL,
-    lakecolor = NULL, landcolor = NULL, lataxis = NULL, lonaxis = NULL,
-    oceancolor = NULL, projection = NULL, resolution = NULL,
-    rivercolor = NULL, riverwidth = NULL, scope = NULL,
-    showcoastlines = NULL, showcountries = NULL, showframe = NULL,
-    showlakes = NULL, showland = NULL, showocean = NULL, showrivers = NULL,
-    showsubunits = NULL, subunitcolor = NULL, subunitwidth = NULL,
-    uirevision = NULL, visible = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.geo", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_geo
-#' @export
-go_layout_geo_center <- function(
-    arg = NULL, ..., lat = NULL, lon = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.geo.center", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_geo
-#' @export
-go_layout_geo_domain <- function(
-    arg = NULL, ..., column = NULL, row = NULL, x = NULL, y = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.geo.domain", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_geo
-#' @export
-go_layout_geo_lataxis <- function(
-    arg = NULL, ..., dtick = NULL, gridcolor = NULL, griddash = NULL,
-    gridwidth = NULL, range = NULL, showgrid = NULL, tick0 = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.geo.lataxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_geo
-#' @export
-go_layout_geo_lonaxis <- function(
-    arg = NULL, ..., dtick = NULL, gridcolor = NULL, griddash = NULL,
-    gridwidth = NULL, range = NULL, showgrid = NULL, tick0 = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.geo.lonaxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_geo
-#' @export
-go_layout_geo_projection <- function(
-    arg = NULL, ..., distance = NULL, maxscale = NULL, minscale = NULL,
-    parallels = NULL, rotation = NULL, scale = NULL, tilt = NULL,
-    type = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.geo.projection", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_geo
-#' @export
-go_layout_geo_projection_rotation <- function(
-    arg = NULL, ..., lat = NULL, lon = NULL, roll = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.geo.projection.rotation", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout grid objects
-#'
-#' Properties of \code{layout.grid}.
-#'
-#' \code{go_layout_grid()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}).
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_grid_domain()}}{\code{layout.grid.domain}}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param columns The number of columns in the grid. If you provide a 2D
-#'   `subplots` array, the length of its longest row is used as the
-#'   default. If you give an `xaxes` array, its length is used as the
-#'   default. But it's also possible to have a different length, if you
-#'   want to leave a row at the end for non-cartesian subplots. Integer in
-#'   the interval [1, Inf].
-#' @param domain Named list or \code{\link{go_layout_grid_domain}()}
-#'   object.
-#' @param pattern If no `subplots`, `xaxes`, or `yaxes` are given but we do
-#'   have `rows` and `columns`, we can generate defaults using consecutive
-#'   axis IDs, in two ways: "coupled" gives one x axis per column and one y
-#'   axis per row. "independent" uses a new xy pair for each cell,
-#'   left-to-right across each row then iterating rows according to
-#'   `roworder`. One of \code{"independent"}, \code{"coupled"}.
-#' @param roworder Is the first row the top or the bottom? Note that
-#'   columns are always enumerated from left to right. One of \code{"top to
-#'   bottom"}, \code{"bottom to top"}.
-#' @param rows The number of rows in the grid. If you provide a 2D
-#'   `subplots` array or a `yaxes` array, its length is used as the
-#'   default. But it's also possible to have a different length, if you
-#'   want to leave a row at the end for non-cartesian subplots. Integer in
-#'   the interval [1, Inf].
-#' @param subplots Used for freeform grids, where some axes may be shared
-#'   across subplots but others are not. Each entry should be a cartesian
-#'   subplot id, like "xy" or "x3y2", or ** to leave that cell empty. You
-#'   may reuse x axes within the same column, and y axes within the same
-#'   row. Non-cartesian subplots and traces that support `domain` can place
-#'   themselves in this grid separately using the `gridcell` attribute.
-#'   Vector or list of up to 1 element(s).
-#' @param x Sets the horizontal domain of this grid subplot (in plot
-#'   fraction). The first and last cells end exactly at the domain edges,
-#'   with no grout around the edges. Vector or list of 2 element(s).
-#' @param xaxes Used with `yaxes` when the x and y axes are shared across
-#'   columns and rows. Each entry should be an x axis id like "x", "x2",
-#'   etc., or *" to not put an x axis in that column. Entries other than "*
-#'   must be unique. Ignored if `subplots` is present. If missing but
-#'   `yaxes` is present, will generate consecutive IDs. Vector or list of
-#'   up to 1 element(s).
-#' @param xgap Horizontal space between grid cells, expressed as a fraction
-#'   of the total width available to one cell. Defaults to 0.1 for
-#'   coupled-axes grids and 0.2 for independent grids. Number in the
-#'   interval [0, 1].
-#' @param xside Sets where the x axis labels and titles go. "bottom" means
-#'   the very bottom of the grid. "bottom plot" is the lowest plot that
-#'   each x axis is used in. "top" and "top plot" are similar. One of
-#'   \code{"bottom"}, \code{"bottom plot"}, \code{"top plot"},
-#'   \code{"top"}.
-#' @param y Sets the vertical domain of this grid subplot (in plot
-#'   fraction). The first and last cells end exactly at the domain edges,
-#'   with no grout around the edges. Vector or list of 2 element(s).
-#' @param yaxes Used with `yaxes` when the x and y axes are shared across
-#'   columns and rows. Each entry should be an y axis id like "y", "y2",
-#'   etc., or *" to not put a y axis in that row. Entries other than "*
-#'   must be unique. Ignored if `subplots` is present. If missing but
-#'   `xaxes` is present, will generate consecutive IDs. Vector or list of
-#'   up to 1 element(s).
-#' @param ygap Vertical space between grid cells, expressed as a fraction
-#'   of the total height available to one cell. Defaults to 0.1 for
-#'   coupled-axes grids and 0.3 for independent grids. Number in the
-#'   interval [0, 1].
-#' @param yside Sets where the y axis labels and titles go. "left" means
-#'   the very left edge of the grid. "left plot" is the leftmost plot that
-#'   each y axis is used in. "right" and "right plot" are similar. One of
-#'   \code{"left"}, \code{"left plot"}, \code{"right plot"},
-#'   \code{"right"}.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_grid <- function(
-    arg = NULL, ..., columns = NULL, domain = NULL, pattern = NULL,
-    roworder = NULL, rows = NULL, subplots = NULL, xaxes = NULL,
-    xgap = NULL, xside = NULL, yaxes = NULL, ygap = NULL, yside = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.grid", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_grid
-#' @export
-go_layout_grid_domain <- function(
-    arg = NULL, ..., x = NULL, y = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.grid.domain", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout hoverlabel objects
-#'
-#' Properties of \code{layout.hoverlabel}.
-#'
-#' \code{go_layout_hoverlabel()} and the nested object constructors below
-#' create validated graph objects (named lists). Every property is checked
-#' against the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}).
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_hoverlabel_font()}}{\code{layout.hoverlabel.font}:
-#' Sets the default hover label font used by all traces on the graph.}
-#' \item{\code{go_layout_hoverlabel_grouptitlefont()}}{\code{layout.hoverlabel.grouptitlefont}:
-#' Sets the font for group titles in hover (unified modes). Defaults to
-#' `hoverlabel.font`.}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param align Sets the horizontal alignment of the text content within
-#'   hover label box. Has an effect only if the hover label text spans two
-#'   or more lines One of \code{"left"}, \code{"right"}, \code{"auto"}.
-#' @param bgcolor Sets the background color of all hover labels on graph
-#'   Color: a CSS color string or R color name.
-#' @param bordercolor Sets the border color of all hover labels on graph.
-#'   Color: a CSS color string or R color name.
-#' @param color Color: a CSS color string or R color name.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param font Sets the default hover label font used by all traces on the
-#'   graph. Named list or \code{\link{go_layout_hoverlabel_font}()} object.
-#' @param grouptitlefont Sets the font for group titles in hover (unified
-#'   modes). Defaults to `hoverlabel.font`. Named list or
-#'   \code{\link{go_layout_hoverlabel_grouptitlefont}()} object.
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param namelength Sets the default length (in number of characters) of
-#'   the trace name in the hover labels for all traces. -1 shows the whole
-#'   name regardless of length. 0-3 shows the first 0-3 characters, and an
-#'   integer >3 will show the whole name if it is less than that many
-#'   characters, but if it is longer, will truncate to `namelength - 3`
-#'   characters and add an ellipsis. Integer in the interval [-1, Inf].
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param showarrow Sets whether or not to show the hover label
-#'   arrow/triangle pointing to the data point. Logical.
-#' @param size Number in the interval [1, Inf].
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_hoverlabel <- function(
-    arg = NULL, ..., align = NULL, bgcolor = NULL, bordercolor = NULL,
-    font = NULL, grouptitlefont = NULL, namelength = NULL, showarrow = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.hoverlabel", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_hoverlabel
-#' @export
-go_layout_hoverlabel_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.hoverlabel.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_hoverlabel
-#' @export
-go_layout_hoverlabel_grouptitlefont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.hoverlabel.grouptitlefont", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout image objects
-#'
-#' Properties of \code{layout.image}.
-#'
-#' \code{go_layout_image()} create validated graph objects (named lists).
-#' Every property is checked against the plotly.js schema when an object is
-#' created or modified (see \code{\link{plotly_obj-modify}()}).
-#' \code{add_layout_image()} creates an object and adds it to a figure.
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param col Subplot grid column (figures created with
-#'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
-#'   to address several cells.
-#' @param exclude_empty_subplots If \code{TRUE}, skip subplots that have no
-#'   traces or layout objects.
-#' @param fig A \code{go_figure} object.
-#' @param layer Specifies whether images are drawn below or above traces.
-#'   When `xref` and `yref` are both set to `paper`, image is drawn below
-#'   the entire plot area. One of \code{"below"}, \code{"above"}.
-#' @param name When used in a template, named items are created in the
-#'   output figure in addition to any items the figure already has in this
-#'   array. You can modify these items in the output figure by making your
-#'   own item with `templateitemname` matching this `name` alongside your
-#'   modifications (including `visible: false` or `enabled: false` to hide
-#'   it). Has no effect outside of a template. String.
-#' @param opacity Sets the opacity of the image. Number in the interval [0,
-#'   1].
-#' @param row Subplot grid row (figures created with
-#'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
-#'   to address several cells.
-#' @param secondary_y If \code{TRUE}, use the secondary y axis of the
-#'   subplot.
-#' @param sizex Sets the image container size horizontally. The image will
-#'   be sized based on the `position` value. When `xref` is set to `paper`,
-#'   units are sized relative to the plot width. When `xref` ends with `
-#'   domain`, units are sized relative to the axis width. Number.
-#' @param sizey Sets the image container size vertically. The image will be
-#'   sized based on the `position` value. When `yref` is set to `paper`,
-#'   units are sized relative to the plot height. When `yref` ends with `
-#'   domain`, units are sized relative to the axis height. Number.
-#' @param sizing Specifies which dimension of the image to constrain. One
-#'   of \code{"fill"}, \code{"contain"}, \code{"stretch"}.
-#' @param source Specifies the URL of the image to be used. The URL must be
-#'   accessible from the domain where the plot code is run, and can be
-#'   either relative or absolute. String.
-#' @param templateitemname Used to refer to a named item in this array in
-#'   the template. Named items from the template will be created even
-#'   without a matching item in the input figure, but you can modify one by
-#'   making an item with `templateitemname` matching its `name`, alongside
-#'   your modifications (including `visible: false` or `enabled: false` to
-#'   hide it). If there is no template or no matching item, this item will
-#'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param visible Determines whether or not this image is visible. Logical.
-#' @param x Sets the image's x position. When `xref` is set to `paper`,
-#'   units are sized relative to the plot height. See `xref` for more info
-#'   Any value.
-#' @param xanchor Sets the anchor for the x position One of \code{"left"},
-#'   \code{"center"}, \code{"right"}.
-#' @param xref Sets the images's x coordinate axis. If set to a x axis id
-#'   (e.g. "x" or "x2"), the `x` position refers to a x coordinate. If set
-#'   to "paper", the `x` position refers to the distance from the left of
-#'   the plotting area in normalized coordinates where 0 (1) corresponds to
-#'   the left (right). If set to a x axis ID followed by "domain"
-#'   (separated by a space), the position behaves like for "paper", but
-#'   refers to the distance in fractions of the domain length from the left
-#'   of the domain of that axis: e.g., "x2 domain" refers to the domain of
-#'   the second x axis and a x position of 0.5 refers to the point between
-#'   the left and the right of the domain of the second x axis. One of
-#'   \code{"paper"}, or a string matching \code{"^x([2-9]|[1-9][0-9]+)?(
-#'   domain)?$"}.
-#' @param y Sets the image's y position. When `yref` is set to `paper`,
-#'   units are sized relative to the plot height. See `yref` for more info
-#'   Any value.
-#' @param yanchor Sets the anchor for the y position. One of \code{"top"},
-#'   \code{"middle"}, \code{"bottom"}.
-#' @param yref Sets the images's y coordinate axis. If set to a y axis id
-#'   (e.g. "y" or "y2"), the `y` position refers to a y coordinate. If set
-#'   to "paper", the `y` position refers to the distance from the bottom of
-#'   the plotting area in normalized coordinates where 0 (1) corresponds to
-#'   the bottom (top). If set to a y axis ID followed by "domain"
-#'   (separated by a space), the position behaves like for "paper", but
-#'   refers to the distance in fractions of the domain length from the
-#'   bottom of the domain of that axis: e.g., "y2 domain" refers to the
-#'   domain of the second y axis and a y position of 0.5 refers to the
-#'   point between the bottom and the top of the domain of the second y
-#'   axis. One of \code{"paper"}, or a string matching
-#'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_image <- function(
-    arg = NULL, ..., layer = NULL, name = NULL, opacity = NULL,
-    sizex = NULL, sizey = NULL, sizing = NULL, source = NULL,
-    templateitemname = NULL, visible = NULL, x = NULL, xanchor = NULL,
-    xref = NULL, y = NULL, yanchor = NULL, yref = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.image", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout legend objects
-#'
-#' Properties of \code{layout.legend}.
-#'
-#' \code{go_layout_legend()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}).
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_legend_font()}}{\code{layout.legend.font}: Sets the
-#' font used to text the legend items.}
-#' \item{\code{go_layout_legend_grouptitlefont()}}{\code{layout.legend.grouptitlefont}:
-#' Sets the font for group titles in legend. Defaults to `legend.font` with
-#' its size increased about 10\%.}
-#' \item{\code{go_layout_legend_title()}}{\code{layout.legend.title}}
-#' \item{\code{go_layout_legend_title_font()}}{\code{layout.legend.title.font}:
-#' Sets this legend's title font. Defaults to `legend.font` with its size
-#' increased about 20\%.}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param bgcolor Sets the legend background color. Defaults to
-#'   `layout.paper_bgcolor`. Color: a CSS color string or R color name.
-#' @param bordercolor Sets the color of the border enclosing the legend.
-#'   Color: a CSS color string or R color name.
-#' @param borderwidth Sets the width (in px) of the border enclosing the
-#'   legend. Number in the interval [0, Inf].
-#' @param color Color: a CSS color string or R color name.
-#' @param entrywidth Sets the width (in px or fraction) of the legend. Use
-#'   0 to size the entry based on the text width, when `entrywidthmode` is
-#'   set to "pixels". Number in the interval [0, Inf].
-#' @param entrywidthmode Determines what entrywidth means. One of
-#'   \code{"fraction"}, \code{"pixels"}.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param font \strong{\code{go_layout_legend()}}: Sets the font used to
-#'   text the legend items. Named list or
-#'   \code{\link{go_layout_legend_font}()} object.
-#'
-#'   \strong{\code{go_layout_legend_title()}}: Sets this legend's title
-#'   font. Defaults to `legend.font` with its size increased about 20\%.
-#'   Named list or \code{\link{go_layout_legend_title_font}()} object.
-#' @param groupclick Determines the behavior on legend group item click.
-#'   "toggleitem" toggles the visibility of the individual item clicked on
-#'   the graph. "togglegroup" toggles the visibility of all items in the
-#'   same legendgroup as the item clicked on the graph. One of
-#'   \code{"toggleitem"}, \code{"togglegroup"}.
-#' @param groupdoubleclick Determines the behavior on legend group item
-#'   double-click. "toggleitem" toggles the visibility of the individual
-#'   item clicked on the graph. "togglegroup" toggles the visibility of all
-#'   items in the same legendgroup as the item clicked on the graph.
-#'   Defaults to the value of `groupclick`. One of \code{"toggleitem"},
-#'   \code{"togglegroup"}.
-#' @param grouptitlefont Sets the font for group titles in legend. Defaults
-#'   to `legend.font` with its size increased about 10\%. Named list or
-#'   \code{\link{go_layout_legend_grouptitlefont}()} object.
-#' @param indentation Sets the indentation (in px) of the legend entries.
-#'   Number in the interval [-15, Inf].
-#' @param itemclick Determines the behavior on legend item click. "toggle"
-#'   toggles the visibility of the item clicked on the graph.
-#'   "toggleothers" makes the clicked item the sole visible item on the
-#'   graph. FALSE disables legend item click interactions. One of
-#'   \code{"toggle"}, \code{"toggleothers"}, \code{FALSE}.
-#' @param itemdoubleclick Determines the behavior on legend item
-#'   double-click. "toggle" toggles the visibility of the item clicked on
-#'   the graph. "toggleothers" makes the clicked item the sole visible item
-#'   on the graph. FALSE disables legend item double-click interactions.
-#'   One of \code{"toggle"}, \code{"toggleothers"}, \code{FALSE}.
-#' @param itemheight Sets the height (in px) of the legend item fill
-#'   swatch. A taller swatch shows more of a trace "fill" or "fillpattern".
-#'   Only traces with a "fill" use this value. Every legend item grows to
-#'   fit, so a larger value makes every row taller. Number in the interval
-#'   [6, Inf].
-#' @param itemsizing Determines if the legend items symbols scale with
-#'   their corresponding "trace" attributes or remain "constant"
-#'   independent of the symbol size on the graph. One of \code{"trace"},
-#'   \code{"constant"}.
-#' @param itemwidth Sets the width (in px) of the legend item symbols (the
-#'   part other than the title.text). Number in the interval [30, Inf].
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param maxheight Sets the max height (in px) of the legend, or max
-#'   height ratio (reference height * ratio) if less than or equal to 1.
-#'   Default value is: 0.5 for horizontal legends; 1 for vertical legends.
-#'   The minimum allowed height is 30px. For a ratio of 0.5, the legend
-#'   will take up to 50\% of the reference height before displaying a
-#'   scrollbar. The reference height is the full layout height with the
-#'   following exception: vertically oriented legends with a `yref` of
-#'   `"paper", located to the side of the plot. In this case, the reference
-#'   height is the plot height. Number in the interval [0, Inf].
-#' @param orientation Sets the orientation of the legend. One of
-#'   \code{"v"}, \code{"h"}.
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param side Determines the location of legend's title with respect to
-#'   the legend items. Defaulted to "top" with `orientation` is "h".
-#'   Defaulted to "left" with `orientation` is "v". The "top left" options
-#'   could be used to expand top center and top right are for horizontal
-#'   alignment legend area in both x and y sides. One of \code{"top"},
-#'   \code{"left"}, \code{"top left"}, \code{"top center"}, \code{"top
-#'   right"}.
-#' @param size Number in the interval [1, Inf].
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param text Sets the title of the legend. String.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param title String (the title text), named list or
-#'   \code{\link{go_layout_legend_title}()} object.
-#' @param titleclick Determines the behavior on legend title click.
-#'   "toggle" toggles the visibility of all items in the legend.
-#'   "toggleothers" toggles the visibility of all other legends. FALSE
-#'   disables legend title click interactions. Defaults to "toggle" when
-#'   there are multiple legends, FALSE otherwise. Not supported for legends
-#'   containing pie and pie-like traces. One of \code{"toggle"},
-#'   \code{"toggleothers"}, \code{FALSE}.
-#' @param titledoubleclick Determines the behavior on legend title
-#'   double-click. "toggle" toggles the visibility of all items in the
-#'   legend. "toggleothers" toggles the visibility of all other legends.
-#'   FALSE disables legend title double-click interactions. Defaults to
-#'   "toggleothers" when there are multiple legends, FALSE otherwise. Not
-#'   supported for legends containing pie and pie-like traces. One of
-#'   \code{"toggle"}, \code{"toggleothers"}, \code{FALSE}.
-#' @param tracegroupgap Sets the amount of vertical space (in px) between
-#'   legend groups. Number in the interval [0, Inf].
-#' @param traceorder Determines the order at which the legend items are
-#'   displayed. If "normal", the items are displayed top-to-bottom in the
-#'   same order as the input data. If "reversed", the items are displayed
-#'   in the opposite order as "normal". If "grouped", the items are
-#'   displayed in groups (when a trace `legendgroup` is provided). if
-#'   "grouped+reversed", the items are displayed in the opposite order as
-#'   "grouped". Any combination of \code{"reversed"}, \code{"grouped"}
-#'   joined with \code{"+"}, or one of \code{"normal"}.
-#' @param uirevision Controls persistence of legend-driven changes in trace
-#'   and pie label visibility. Defaults to `layout.uirevision`. Any value.
-#' @param valign Sets the vertical alignment of the symbols with respect to
-#'   their associated text. One of \code{"top"}, \code{"middle"},
-#'   \code{"bottom"}.
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param visible Determines whether or not this legend is visible.
-#'   Logical.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param x Sets the x position with respect to `xref` (in normalized
-#'   coordinates) of the legend. When `xref` is "paper", defaults to 1.02
-#'   for vertical legends and defaults to 0 for horizontal legends. When
-#'   `xref` is "container", defaults to 1 for vertical legends and defaults
-#'   to 0 for horizontal legends. Must be between 0 and 1 if `xref` is
-#'   "container". and between "-2" and 3 if `xref` is "paper". Number.
-#' @param xanchor Sets the legend's horizontal position anchor. This anchor
-#'   binds the `x` position to the "left", "center" or "right" of the
-#'   legend. Value "auto" anchors legends to the right for `x` values
-#'   greater than or equal to 2/3, anchors legends to the left for `x`
-#'   values less than or equal to 1/3 and anchors legends with respect to
-#'   their center otherwise. One of \code{"auto"}, \code{"left"},
-#'   \code{"center"}, \code{"right"}.
-#' @param xref Sets the container `x` refers to. "container" spans the
-#'   entire `width` of the plot. "paper" refers to the width of the
-#'   plotting area only. One of \code{"container"}, \code{"paper"}.
-#' @param y Sets the y position with respect to `yref` (in normalized
-#'   coordinates) of the legend. When `yref` is "paper", defaults to 1 for
-#'   vertical legends, defaults to "-0.1" for horizontal legends on graphs
-#'   w/o range sliders and defaults to 1.1 for horizontal legends on graph
-#'   with one or multiple range sliders. When `yref` is "container",
-#'   defaults to 1. Must be between 0 and 1 if `yref` is "container" and
-#'   between "-2" and 3 if `yref` is "paper". Number.
-#' @param yanchor Sets the legend's vertical position anchor. This anchor
-#'   binds the `y` position to the "top", "middle" or "bottom" of the
-#'   legend. Value "auto" anchors legends at their bottom for `y` values
-#'   less than or equal to 1/3, anchors legends to at their top for `y`
-#'   values greater than or equal to 2/3 and anchors legends with respect
-#'   to their middle otherwise. One of \code{"auto"}, \code{"top"},
-#'   \code{"middle"}, \code{"bottom"}.
-#' @param yref Sets the container `y` refers to. "container" spans the
-#'   entire `height` of the plot. "paper" refers to the height of the
-#'   plotting area only. One of \code{"container"}, \code{"paper"}.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_legend <- function(
-    arg = NULL, ..., bgcolor = NULL, bordercolor = NULL, borderwidth = NULL,
-    entrywidth = NULL, entrywidthmode = NULL, font = NULL,
-    groupclick = NULL, groupdoubleclick = NULL, grouptitlefont = NULL,
-    indentation = NULL, itemclick = NULL, itemdoubleclick = NULL,
-    itemheight = NULL, itemsizing = NULL, itemwidth = NULL,
-    maxheight = NULL, orientation = NULL, title = NULL, titleclick = NULL,
-    titledoubleclick = NULL, tracegroupgap = NULL, traceorder = NULL,
-    uirevision = NULL, valign = NULL, visible = NULL, x = NULL,
-    xanchor = NULL, xref = NULL, y = NULL, yanchor = NULL, yref = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.legend", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_legend
-#' @export
-go_layout_legend_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.legend.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_legend
-#' @export
-go_layout_legend_grouptitlefont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.legend.grouptitlefont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_legend
-#' @export
-go_layout_legend_title <- function(
-    arg = NULL, ..., font = NULL, side = NULL, text = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.legend.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_legend
-#' @export
-go_layout_legend_title_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.legend.title.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout map objects
-#'
-#' Properties of \code{layout.map}.
-#'
-#' \code{go_layout_map()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}).
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_map_bounds()}}{\code{layout.map.bounds}}
-#' \item{\code{go_layout_map_center()}}{\code{layout.map.center}}
-#' \item{\code{go_layout_map_domain()}}{\code{layout.map.domain}}
-#' \item{\code{go_layout_map_layer()}}{\code{layout.map.layer}}
-#' \item{\code{go_layout_map_layer_circle()}}{\code{layout.map.layer.circle}}
-#' \item{\code{go_layout_map_layer_fill()}}{\code{layout.map.layer.fill}}
-#' \item{\code{go_layout_map_layer_line()}}{\code{layout.map.layer.line}}
-#' \item{\code{go_layout_map_layer_symbol()}}{\code{layout.map.layer.symbol}}
-#' \item{\code{go_layout_map_layer_symbol_textfont()}}{\code{layout.map.layer.symbol.textfont}:
-#' Sets the icon text font (color=map.layer.paint.text-color,
-#' size=map.layer.layout.text-size). Has an effect only when `type` is set
-#' to "symbol".}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param bearing Sets the bearing angle of the map in degrees
-#'   counter-clockwise from North (map.bearing). Number.
-#' @param below Determines if the layer will be inserted before the layer
-#'   with the specified ID. If omitted or set to '', the layer will be
-#'   inserted above every existing layer. String.
-#' @param bounds Named list or \code{\link{go_layout_map_bounds}()} object.
-#' @param center Named list or \code{\link{go_layout_map_center}()} object.
-#' @param circle Named list or \code{\link{go_layout_map_layer_circle}()}
-#'   object.
-#' @param color \strong{\code{go_layout_map_layer()}}: Sets the primary
-#'   layer color. If `type` is "circle", color corresponds to the circle
-#'   color (map.layer.paint.circle-color) If `type` is "line", color
-#'   corresponds to the line color (map.layer.paint.line-color) If `type`
-#'   is "fill", color corresponds to the fill color
-#'   (map.layer.paint.fill-color) If `type` is "symbol", color corresponds
-#'   to the icon color (map.layer.paint.icon-color) Color: a CSS color
-#'   string or R color name.
-#'
-#'   \strong{\code{go_layout_map_layer_symbol_textfont()}}: Color: a CSS
-#'   color string or R color name.
-#' @param column If there is a layout grid, use the domain for this column
-#'   in the grid for this map subplot. Integer in the interval [0, Inf].
-#' @param coordinates Sets the coordinates array contains [longitude,
-#'   latitude] pairs for the image corners listed in clockwise order: top
-#'   left, top right, bottom right, bottom left. Only has an effect for
-#'   "image" `sourcetype`. Any value.
-#' @param dash Sets the length of dashes and gaps
-#'   (map.layer.paint.line-dasharray). Has an effect only when `type` is
-#'   set to "line". Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#' @param domain Named list or \code{\link{go_layout_map_domain}()} object.
-#' @param east Sets the maximum longitude of the map (in degrees East) if
-#'   `west`, `south` and `north` are declared. Number.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param fill Named list or \code{\link{go_layout_map_layer_fill}()}
-#'   object.
-#' @param fitbounds Determines if this subplot's view settings are
-#'   auto-computed to fit trace data. If "locations" (default), the view is
-#'   auto-fit to the lon/lat coordinates of the visible trace data. If
-#'   FALSE, the view settings are used as-is; set this to opt out of
-#'   auto-fitting. If `fitbounds` is enabled but a user provides `center`
-#'   or `zoom`, auto-fit will be skipped. One of \code{"locations"},
-#'   \code{FALSE}.
-#' @param icon Sets the symbol icon image (map.layer.layout.icon-image).
-#'   Full list: https://www.mapbox.com/maki-icons/ String.
-#' @param iconsize Sets the symbol icon size (map.layer.layout.icon-size).
-#'   Has an effect only when `type` is set to "symbol". Number.
-#' @param lat Sets the latitude of the center of the map (in degrees
-#'   North). Number.
-#' @param layers List of named lists or \code{\link{go_layout_map_layer}()}
-#'   objects.
-#' @param line Named list or \code{\link{go_layout_map_layer_line}()}
-#'   object.
-#' @param lon Sets the longitude of the center of the map (in degrees
-#'   East). Number.
-#' @param maxzoom Sets the maximum zoom level (map.layer.maxzoom). At zoom
-#'   levels equal to or greater than the maxzoom, the layer will be hidden.
-#'   Number in the interval [0, 24].
-#' @param minzoom Sets the minimum zoom level (map.layer.minzoom). At zoom
-#'   levels less than the minzoom, the layer will be hidden. Number in the
-#'   interval [0, 24].
-#' @param name When used in a template, named items are created in the
-#'   output figure in addition to any items the figure already has in this
-#'   array. You can modify these items in the output figure by making your
-#'   own item with `templateitemname` matching this `name` alongside your
-#'   modifications (including `visible: false` or `enabled: false` to hide
-#'   it). Has no effect outside of a template. String.
-#' @param north Sets the maximum latitude of the map (in degrees North) if
-#'   `east`, `west` and `south` are declared. Number.
-#' @param opacity Sets the opacity of the layer. If `type` is "circle",
-#'   opacity corresponds to the circle opacity
-#'   (map.layer.paint.circle-opacity) If `type` is "line", opacity
-#'   corresponds to the line opacity (map.layer.paint.line-opacity) If
-#'   `type` is "fill", opacity corresponds to the fill opacity
-#'   (map.layer.paint.fill-opacity) If `type` is "symbol", opacity
-#'   corresponds to the icon/text opacity (map.layer.paint.text-opacity)
-#'   Number in the interval [0, 1].
-#' @param outlinecolor Sets the fill outline color
-#'   (map.layer.paint.fill-outline-color). Has an effect only when `type`
-#'   is set to "fill". Color: a CSS color string or R color name.
-#' @param pitch Sets the pitch angle of the map (in degrees, where 0 means
-#'   perpendicular to the surface of the map) (map.pitch). Number.
-#' @param placement Sets the symbol and/or text placement
-#'   (map.layer.layout.symbol-placement). If `placement` is "point", the
-#'   label is placed where the geometry is located If `placement` is
-#'   "line", the label is placed along the line of the geometry If
-#'   `placement` is "line-center", the label is placed on the center of the
-#'   geometry One of \code{"point"}, \code{"line"}, \code{"line-center"}.
-#' @param radius Sets the circle radius (map.layer.paint.circle-radius).
-#'   Has an effect only when `type` is set to "circle". Number.
-#' @param row If there is a layout grid, use the domain for this row in the
-#'   grid for this map subplot. Integer in the interval [0, Inf].
-#' @param size Number in the interval [1, Inf].
-#' @param source Sets the source data for this layer (map.layer.source).
-#'   When `sourcetype` is set to "geojson", `source` can be a URL to a
-#'   GeoJSON or a GeoJSON object. When `sourcetype` is set to "vector" or
-#'   "raster", `source` can be a URL or an array of tile URLs. When
-#'   `sourcetype` is set to "image", `source` can be a URL to an image. Any
-#'   value.
-#' @param sourceattribution Sets the attribution for this source. String.
-#' @param sourcelayer Specifies the layer to use from a vector tile source
-#'   (map.layer.source-layer). Required for "vector" source type that
-#'   supports multiple layers. String.
-#' @param sourcetype Sets the source type for this layer, that is the type
-#'   of the layer data. One of \code{"geojson"}, \code{"vector"},
-#'   \code{"raster"}, \code{"image"}.
-#' @param south Sets the minimum latitude of the map (in degrees North) if
-#'   `east`, `west` and `north` are declared. Number.
-#' @param style \strong{\code{go_layout_map()}}: Defines the map layers
-#'   that are rendered by default below the trace layers defined in `data`,
-#'   which are themselves by default rendered below the layers defined in
-#'   `layout.map.layers`.  These layers can be defined either explicitly as
-#'   a Map Style object which can contain multiple layer definitions that
-#'   load data from any public or private Tile Map Service (TMS or XYZ) or
-#'   Web Map Service (WMS) or implicitly by using one of the built-in style
-#'   objects which use WMSes or by using a custom style URL Map Style
-#'   objects are of the form described in the MapLibre GL JS documentation
-#'   available at https://maplibre.org/maplibre-style-spec/ The built-in
-#'   plotly.js styles objects are: basic, carto-darkmatter,
-#'   carto-darkmatter-nolabels, carto-positron, carto-positron-nolabels,
-#'   carto-voyager, carto-voyager-nolabels, dark, light, open-street-map,
-#'   outdoors, satellite, satellite-streets, streets, white-bg. Any value.
-#'
-#'   \strong{\code{go_layout_map_layer_symbol_textfont()}}: Sets whether a
-#'   font should be styled with a normal or italic face from its family.
-#'   One of \code{"normal"}, \code{"italic"}.
-#' @param symbol Named list or \code{\link{go_layout_map_layer_symbol}()}
-#'   object.
-#' @param templateitemname Used to refer to a named item in this array in
-#'   the template. Named items from the template will be created even
-#'   without a matching item in the input figure, but you can modify one by
-#'   making an item with `templateitemname` matching its `name`, alongside
-#'   your modifications (including `visible: false` or `enabled: false` to
-#'   hide it). If there is no template or no matching item, this item will
-#'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param text Sets the symbol text (map.layer.layout.text-field). String.
-#' @param textfont Sets the icon text font
-#'   (color=map.layer.paint.text-color, size=map.layer.layout.text-size).
-#'   Has an effect only when `type` is set to "symbol". Named list or
-#'   \code{\link{go_layout_map_layer_symbol_textfont}()} object.
-#' @param textposition Sets the positions of the `text` elements with
-#'   respects to the (x,y) coordinates. One of \code{"top left"},
-#'   \code{"top center"}, \code{"top right"}, \code{"middle left"},
-#'   \code{"middle center"}, \code{"middle right"}, \code{"bottom left"},
-#'   \code{"bottom center"}, \code{"bottom right"}.
-#' @param type Sets the layer type, that is the how the layer data set in
-#'   `source` will be rendered With `sourcetype` set to "geojson", the
-#'   following values are allowed: "circle", "line", "fill" and "symbol".
-#'   but note that "line" and "fill" are not compatible with Point GeoJSON
-#'   geometries. With `sourcetype` set to "vector", the following values
-#'   are allowed: "circle", "line", "fill" and "symbol". With `sourcetype`
-#'   set to "raster" or "image", only the "raster" value is allowed. One of
-#'   \code{"circle"}, \code{"line"}, \code{"fill"}, \code{"symbol"},
-#'   \code{"raster"}.
-#' @param uirevision Controls persistence of user-driven changes in the
-#'   view: `center`, `zoom`, `bearing`, `pitch`. Defaults to
-#'   `layout.uirevision`. Any value.
-#' @param visible Determines whether this layer is displayed Logical.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param west Sets the minimum longitude of the map (in degrees East) if
-#'   `east`, `south` and `north` are declared. Number.
-#' @param width Sets the line width (map.layer.paint.line-width). Has an
-#'   effect only when `type` is set to "line". Number.
-#' @param x Sets the horizontal domain of this map subplot (in plot
-#'   fraction). Vector or list of 2 element(s).
-#' @param y Sets the vertical domain of this map subplot (in plot
-#'   fraction). Vector or list of 2 element(s).
-#' @param zoom Sets the zoom level of the map (map.zoom). Number.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_map <- function(
-    arg = NULL, ..., bearing = NULL, bounds = NULL, center = NULL,
-    domain = NULL, fitbounds = NULL, layers = NULL, pitch = NULL,
-    style = NULL, uirevision = NULL, zoom = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.map", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_map
-#' @export
-go_layout_map_bounds <- function(
-    arg = NULL, ..., east = NULL, north = NULL, south = NULL, west = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.map.bounds", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_map
-#' @export
-go_layout_map_center <- function(
-    arg = NULL, ..., lat = NULL, lon = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.map.center", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_map
-#' @export
-go_layout_map_domain <- function(
-    arg = NULL, ..., column = NULL, row = NULL, x = NULL, y = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.map.domain", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_map
-#' @export
-go_layout_map_layer <- function(
-    arg = NULL, ..., below = NULL, circle = NULL, color = NULL,
-    coordinates = NULL, fill = NULL, line = NULL, maxzoom = NULL,
-    minzoom = NULL, name = NULL, opacity = NULL, source = NULL,
-    sourceattribution = NULL, sourcelayer = NULL, sourcetype = NULL,
-    symbol = NULL, templateitemname = NULL, type = NULL, visible = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.map.layer", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_map
-#' @export
-go_layout_map_layer_circle <- function(
-    arg = NULL, ..., radius = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.map.layer.circle", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_map
-#' @export
-go_layout_map_layer_fill <- function(
-    arg = NULL, ..., outlinecolor = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.map.layer.fill", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_map
-#' @export
-go_layout_map_layer_line <- function(
-    arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.map.layer.line", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_map
-#' @export
-go_layout_map_layer_symbol <- function(
-    arg = NULL, ..., icon = NULL, iconsize = NULL, placement = NULL,
-    text = NULL, textfont = NULL, textposition = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.map.layer.symbol", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_map
-#' @export
-go_layout_map_layer_symbol_textfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, size = NULL, style = NULL,
-    weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.map.layer.symbol.textfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout margin objects
-#'
-#' Properties of \code{layout.margin}.
-#'
-#' \code{go_layout_margin()} create validated graph objects (named lists).
-#' Every property is checked against the plotly.js schema when an object is
-#' created or modified (see \code{\link{plotly_obj-modify}()}).
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param autoexpand Turns on/off margin expansion computations. Legends,
-#'   colorbars, updatemenus, sliders, axis rangeselector and rangeslider
-#'   are allowed to push the margins by defaults. Logical.
-#' @param b Sets the bottom margin (in px). Number in the interval [0,
-#'   Inf].
-#' @param l Sets the left margin (in px). Number in the interval [0, Inf].
-#' @param pad Sets the amount of padding (in px) between the plotting area
-#'   and the axis lines Number in the interval [0, Inf].
-#' @param r Sets the right margin (in px). Number in the interval [0, Inf].
-#' @param t Sets the top margin (in px). Number in the interval [0, Inf].
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_margin <- function(
-    arg = NULL, ..., autoexpand = NULL, b = NULL, l = NULL, pad = NULL,
-    r = NULL, t = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.margin", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout modebar objects
-#'
-#' Properties of \code{layout.modebar}.
-#'
-#' \code{go_layout_modebar()} create validated graph objects (named lists).
-#' Every property is checked against the plotly.js schema when an object is
-#' created or modified (see \code{\link{plotly_obj-modify}()}).
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param activecolor Sets the color of the active or hovered on icons in
-#'   the modebar. Color: a CSS color string or R color name.
-#' @param add Determines which predefined modebar buttons to add. Please
-#'   note that these buttons will only be shown if they are compatible with
-#'   all trace types used in a graph. Similar to
-#'   `config.modeBarButtonsToAdd` option. This may include "v1hovermode",
-#'   "hoverclosest", "hovercompare", "togglehover", "togglespikelines",
-#'   "drawline", "drawopenpath", "drawclosedpath", "drawcircle",
-#'   "drawrect", "eraseshape", "downloadJson". String, or a vector of
-#'   these.
-#' @param bgcolor Sets the background color of the modebar. Color: a CSS
-#'   color string or R color name.
-#' @param color Sets the color of the icons in the modebar. Color: a CSS
-#'   color string or R color name.
-#' @param orientation Sets the orientation of the modebar. One of
-#'   \code{"v"}, \code{"h"}.
-#' @param remove Determines which predefined modebar buttons to remove.
-#'   Similar to `config.modeBarButtonsToRemove` option. This may include
-#'   "autoScale2d", "autoscale", "hoverCompareCartesian", "hovercompare",
-#'   "lasso", "lasso2d", "orbitRotation", "orbitrotation", "pan", "pan2d",
-#'   "pan3d", "reset", "resetCameraDefault3d", "resetCameraLastSave3d",
-#'   "resetGeo", "resetSankeyGroup", "resetScale2d", "resetViewMap",
-#'   "resetViews", "resetcameradefault", "resetcameralastsave",
-#'   "resetsankeygroup", "resetscale", "resetview", "resetviews", "select",
-#'   "select2d", "sendChartToCloud", "sendcharttocloud", "tableRotation",
-#'   "tablerotation", "toImage", "toggleHover", "toggleSpikelines",
-#'   "togglehover", "togglespikelines", "toimage", "zoom", "zoom2d",
-#'   "zoom3d", "zoomIn2d", "zoomInGeo", "zoomInMap", "zoomOut2d",
-#'   "zoomOutGeo", "zoomOutMap", "zoomin", "zoomout". String, or a vector
-#'   of these.
-#' @param uirevision Controls persistence of user-driven changes related to
-#'   the modebar, including `hovermode`, `dragmode`, and `showspikes` at
-#'   both the root level and inside subplots. Defaults to
-#'   `layout.uirevision`. Any value.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_modebar <- function(
-    arg = NULL, ..., activecolor = NULL, add = NULL, bgcolor = NULL,
-    color = NULL, orientation = NULL, remove = NULL, uirevision = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.modebar", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout newselection objects
-#'
-#' Properties of \code{layout.newselection}.
-#'
-#' \code{go_layout_newselection()} and the nested object constructors below
-#' create validated graph objects (named lists). Every property is checked
-#' against the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}).
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_newselection_line()}}{\code{layout.newselection.line}}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param color Sets the line color. By default uses either dark grey or
-#'   white to increase contrast with background color. Color: a CSS color
-#'   string or R color name.
-#' @param dash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param line Named list or \code{\link{go_layout_newselection_line}()}
-#'   object.
-#' @param mode Describes how a new selection is created. If `immediate`, a
-#'   new selection is created after first mouse up. If `gradual`, a new
-#'   selection is not created after first mouse. By adding to and
-#'   subtracting from the initial selection, this option allows declaring
-#'   extra outlines of the selection. One of \code{"immediate"},
-#'   \code{"gradual"}.
-#' @param width Sets the line width (in px). Number in the interval [1,
-#'   Inf].
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_newselection <- function(
-    arg = NULL, ..., line = NULL, mode = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.newselection", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_newselection
-#' @export
-go_layout_newselection_line <- function(
-    arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.newselection.line", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout newshape objects
-#'
-#' Properties of \code{layout.newshape}.
-#'
-#' \code{go_layout_newshape()} and the nested object constructors below
-#' create validated graph objects (named lists). Every property is checked
-#' against the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}).
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_newshape_label()}}{\code{layout.newshape.label}}
-#' \item{\code{go_layout_newshape_label_font()}}{\code{layout.newshape.label.font}:
-#' Sets the new shape label text font.}
-#' \item{\code{go_layout_newshape_legendgrouptitle()}}{\code{layout.newshape.legendgrouptitle}}
-#' \item{\code{go_layout_newshape_legendgrouptitle_font()}}{\code{layout.newshape.legendgrouptitle.font}:
-#' Sets this legend group's title font.}
-#' \item{\code{go_layout_newshape_line()}}{\code{layout.newshape.line}}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param color \strong{\code{go_layout_newshape_label_font()},
-#'   \code{go_layout_newshape_legendgrouptitle_font()}}: Color: a CSS color
-#'   string or R color name.
-#'
-#'   \strong{\code{go_layout_newshape_line()}}: Sets the line color. By
-#'   default uses either dark grey or white to increase contrast with
-#'   background color. Color: a CSS color string or R color name.
-#' @param dash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param drawdirection When `dragmode` is set to "drawrect", "drawline" or
-#'   "drawcircle" this limits the drag to be horizontal, vertical or
-#'   diagonal. Using "diagonal" there is no limit e.g. in drawing lines in
-#'   any direction. "ortho" limits the draw to be either horizontal or
-#'   vertical. "horizontal" allows horizontal extend. "vertical" allows
-#'   vertical extend. One of \code{"ortho"}, \code{"horizontal"},
-#'   \code{"vertical"}, \code{"diagonal"}.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param fillcolor Sets the color filling new shapes' interior. Please
-#'   note that if using a fillcolor with alpha greater than half, drag
-#'   inside the active shape starts moving the shape underneath, otherwise
-#'   a new shape could be started over. Color: a CSS color string or R
-#'   color name.
-#' @param fillrule Determines the path's interior. For more info please
-#'   visit
-#'   https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule
-#'   One of \code{"evenodd"}, \code{"nonzero"}.
-#' @param font \strong{\code{go_layout_newshape_label()}}: Sets the new
-#'   shape label text font. Named list or
-#'   \code{\link{go_layout_newshape_label_font}()} object.
-#'
-#'   \strong{\code{go_layout_newshape_legendgrouptitle()}}: Sets this
-#'   legend group's title font. Named list or
-#'   \code{\link{go_layout_newshape_legendgrouptitle_font}()} object.
-#' @param label Named list or \code{\link{go_layout_newshape_label}()}
-#'   object.
-#' @param layer Specifies whether new shapes are drawn below gridlines
-#'   ("below"), between gridlines and traces ("between") or above traces
-#'   ("above"). One of \code{"below"}, \code{"above"}, \code{"between"}.
-#' @param legend Sets the reference to a legend to show new shape in.
-#'   References to these legends are "legend", "legend2", "legend3", etc.
-#'   Settings for these legends are set in the layout, under
-#'   `layout.legend`, `layout.legend2`, etc. Subplot id: \code{"legend"},
-#'   \code{"legend2"}, \code{"legend3"}, ....
-#' @param legendgroup Sets the legend group for new shape. Traces and
-#'   shapes part of the same legend group hide/show at the same time when
-#'   toggling legend items. String.
-#' @param legendgrouptitle Named list or
-#'   \code{\link{go_layout_newshape_legendgrouptitle}()} object.
-#' @param legendrank Sets the legend rank for new shape. Items and groups
-#'   with smaller ranks are presented on top/left side while with
-#'   "reversed" `legend.traceorder` they are on bottom/right side. The
-#'   default legendrank is 1000, so that you can use ranks less than 1000
-#'   to place certain items before all unranked items, and ranks greater
-#'   than 1000 to go after all unranked items. Number.
-#' @param legendwidth Sets the width (in px or fraction) of the legend for
-#'   new shape. Number in the interval [0, Inf].
-#' @param line Named list or \code{\link{go_layout_newshape_line}()}
-#'   object.
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param name Sets new shape name. The name appears as the legend item.
-#'   String.
-#' @param opacity Sets the opacity of new shapes. Number in the interval
-#'   [0, 1].
-#' @param padding Sets padding (in px) between edge of label and edge of
-#'   new shape. Number in the interval [0, Inf].
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param showlegend Determines whether or not new shape is shown in the
-#'   legend. Logical.
-#' @param size Number in the interval [1, Inf].
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param text \strong{\code{go_layout_newshape_label()}}: Sets the text to
-#'   display with the new shape. It is also used for legend item if `name`
-#'   is not provided. String.
-#'
-#'   \strong{\code{go_layout_newshape_legendgrouptitle()}}: Sets the title
-#'   of the legend group. String.
-#' @param textangle Sets the angle at which the label text is drawn with
-#'   respect to the horizontal. For lines, angle "auto" is the same angle
-#'   as the line. For all other shapes, angle "auto" is horizontal. Angle
-#'   in degrees.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param textposition Sets the position of the label text relative to the
-#'   new shape. Supported values for rectangles, circles and paths are "top
-#'   left", "top center", "top right", "middle left", "middle center",
-#'   "middle right", "bottom left", "bottom center", and "bottom right".
-#'   Supported values for lines are "start", "middle", and "end". Default:
-#'   "middle center" for rectangles, circles, and paths; "middle" for
-#'   lines. One of \code{"top left"}, \code{"top center"}, \code{"top
-#'   right"}, \code{"middle left"}, \code{"middle center"}, \code{"middle
-#'   right"}, \code{"bottom left"}, \code{"bottom center"}, \code{"bottom
-#'   right"}, \code{"start"}, \code{"middle"}, \code{"end"}.
-#' @param texttemplate Template string used for rendering the new shape's
-#'   label. Note that this will override `text`. Variables are inserted
-#'   using \%\{variable\}, for example "x0: \%\{x0\}". Numbers are
-#'   formatted using d3-format's syntax \%\{variable:d3-format\}, for
-#'   example "Price: \%\{x0:$.2f\}". See
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format for details on
-#'   the formatting syntax. Dates are formatted using d3-time-format's
-#'   syntax \%\{variable|d3-time-format\}, for example "Day: \%\{x0|\%m \%b
-#'   \%Y\}". See
-#'   https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format for
-#'   details on the date formatting syntax. A single multiplication or
-#'   division operation may be applied to numeric variables, and combined
-#'   with d3 number formatting, for example "Length in cm: \%\{x0"2.54\}",
-#'   "\%\{slope"60:.1f\} meters per second." For log axes, variable values
-#'   are given in log units. For date axes, x/y coordinate variables and
-#'   center variables use datetimes, while all other variable values use
-#'   values in ms. Finally, the template string has access to variables
-#'   `x0`, `x1`, `y0`, `y1`, `slope`, `dx`, `dy`, `width`, `height`,
-#'   `length`, `xcenter`, `ycenter`, `simpleXVariables` and
-#'   `simpleYVariables`. Variables that can't be found will be replaced
-#'   with the specifier. For example, a template of "data: \%\{x\},
-#'   \%\{y\}" will result in a value of "data: 1, \%\{y\}" if x is 1 and y
-#'   is missing. Variables with an undefined value will be replaced with
-#'   the fallback value. String.
-#' @param texttemplatefallback Fallback string that's displayed when a
-#'   variable referenced in a template is missing. If the boolean value
-#'   'false' is passed in, the specifier with the missing variable will be
-#'   displayed. Any value.
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param visible Determines whether or not new shape is visible. If
-#'   "legendonly", the shape is not drawn, but can appear as a legend item
-#'   (provided that the legend itself is visible). One of
-#'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param width Sets the line width (in px). Number in the interval [0,
-#'   Inf].
-#' @param xanchor Sets the label's horizontal position anchor This anchor
-#'   binds the specified `textposition` to the "left", "center" or "right"
-#'   of the label text. For example, if `textposition` is set to "top
-#'   right" and `xanchor` to "right" then the right-most portion of the
-#'   label text lines up with the right-most edge of the new shape. One of
-#'   \code{"auto"}, \code{"left"}, \code{"center"}, \code{"right"}.
-#' @param yanchor Sets the label's vertical position anchor This anchor
-#'   binds the specified `textposition` to the "top", "middle" or "bottom"
-#'   of the label text. For example, if `textposition` is set to "top
-#'   right" and `yanchor` to "top" then the top-most portion of the label
-#'   text lines up with the top-most edge of the new shape. One of
-#'   \code{"top"}, \code{"middle"}, \code{"bottom"}.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_newshape <- function(
-    arg = NULL, ..., drawdirection = NULL, fillcolor = NULL,
-    fillrule = NULL, label = NULL, layer = NULL, legend = NULL,
-    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, line = NULL, name = NULL, opacity = NULL,
-    showlegend = NULL, visible = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.newshape", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_newshape
-#' @export
-go_layout_newshape_label <- function(
-    arg = NULL, ..., font = NULL, padding = NULL, text = NULL,
-    textangle = NULL, textposition = NULL, texttemplate = NULL,
-    texttemplatefallback = NULL, xanchor = NULL, yanchor = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.newshape.label", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_newshape
-#' @export
-go_layout_newshape_label_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.newshape.label.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_newshape
-#' @export
-go_layout_newshape_legendgrouptitle <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.newshape.legendgrouptitle", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_newshape
-#' @export
-go_layout_newshape_legendgrouptitle_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.newshape.legendgrouptitle.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_newshape
-#' @export
-go_layout_newshape_line <- function(
-    arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.newshape.line", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout polar objects
-#'
-#' Properties of \code{layout.polar}.
-#'
-#' \code{go_layout_polar()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}).
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_polar_angularaxis()}}{\code{layout.polar.angularaxis}}
-#' \item{\code{go_layout_polar_angularaxis_tickfont()}}{\code{layout.polar.angularaxis.tickfont}:
-#' Sets the tick font.}
-#' \item{\code{go_layout_polar_angularaxis_tickformatstop()}}{\code{layout.polar.angularaxis.tickformatstop}}
-#' \item{\code{go_layout_polar_domain()}}{\code{layout.polar.domain}}
-#' \item{\code{go_layout_polar_radialaxis()}}{\code{layout.polar.radialaxis}}
-#' \item{\code{go_layout_polar_radialaxis_autorangeoptions()}}{\code{layout.polar.radialaxis.autorangeoptions}}
-#' \item{\code{go_layout_polar_radialaxis_tickfont()}}{\code{layout.polar.radialaxis.tickfont}:
-#' Sets the tick font.}
-#' \item{\code{go_layout_polar_radialaxis_tickformatstop()}}{\code{layout.polar.radialaxis.tickformatstop}}
-#' \item{\code{go_layout_polar_radialaxis_title()}}{\code{layout.polar.radialaxis.title}}
-#' \item{\code{go_layout_polar_radialaxis_title_font()}}{\code{layout.polar.radialaxis.title.font}:
-#' Sets this axis' title font.}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param angle Sets the angle (in degrees) from which the radial axis is
-#'   drawn. Note that by default, radial axis line on the theta=0 line
-#'   corresponds to a line pointing right (like what mathematicians
-#'   prefer). Defaults to the first `polar.sector` angle. Angle in degrees.
-#' @param angularaxis Named list or
-#'   \code{\link{go_layout_polar_angularaxis}()} object.
-#' @param autorange Determines whether or not the range of this axis is
-#'   computed in relation to the input data. See `rangemode` for more info.
-#'   If `range` is provided and it has a value for both the lower and upper
-#'   bound, `autorange` is set to FALSE. Using "min" applies autorange only
-#'   to set the minimum. Using "max" applies autorange only to set the
-#'   maximum. Using "min reversed" applies autorange only to set the
-#'   minimum on a reversed axis. Using "max reversed" applies autorange
-#'   only to set the maximum on a reversed axis. Using "reversed" applies
-#'   autorange on both ends and reverses the axis direction. One of
-#'   \code{"reversed"}, \code{"min reversed"}, \code{"max reversed"},
-#'   \code{"min"}, \code{"max"}, \code{TRUE}, \code{FALSE}.
-#' @param autorangeoptions Named list or
-#'   \code{\link{go_layout_polar_radialaxis_autorangeoptions}()} object.
-#' @param autotickangles When `tickangle` is set to "auto", it will be set
-#'   to the first angle in this array that is large enough to prevent label
-#'   overlap. Vector or list of up to 1 element(s).
-#' @param autotypenumbers Using "strict" a numeric string in trace data is
-#'   not converted to a number. Using "convert types" a numeric string in
-#'   trace data may be treated as a number during automatic axis `type`
-#'   detection. Defaults to layout.autotypenumbers. One of \code{"convert
-#'   types"}, \code{"strict"}.
-#' @param bargap Sets the gap between bars of adjacent location
-#'   coordinates. Values are unitless, they represent fractions of the
-#'   minimum difference in bar positions in the data. Number in the
-#'   interval [0, 1].
-#' @param barmode Determines how bars at the same location coordinate are
-#'   displayed on the graph. With "stack", the bars are stacked on top of
-#'   one another With "overlay", the bars are plotted over one another, you
-#'   might need to reduce "opacity" to see multiple bars. One of
-#'   \code{"stack"}, \code{"overlay"}.
-#' @param bgcolor Set the background color of the subplot Color: a CSS
-#'   color string or R color name.
-#' @param calendar Sets the calendar system to use for `range` and `tick0`
-#'   if this is a date axis. This does not set the calendar for
-#'   interpreting data on this axis, that's specified in the trace or via
-#'   the global `layout.calendar` One of \code{"chinese"}, \code{"coptic"},
-#'   \code{"discworld"}, \code{"ethiopian"}, \code{"gregorian"},
-#'   \code{"hebrew"}, \code{"islamic"}, \code{"jalali"}, \code{"julian"},
-#'   \code{"mayan"}, \code{"nanakshahi"}, \code{"nepali"},
-#'   \code{"persian"}, \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.
-#' @param categoryarray Sets the order in which categories on this axis
-#'   appear. Only has an effect if `categoryorder` is set to "array". Used
-#'   with `categoryorder`. Data array: a vector, factor, Date/POSIXct
-#'   vector, matrix or list.
-#' @param categoryorder Specifies the ordering logic for the case of
-#'   categorical variables. By default, plotly uses "trace", which
-#'   specifies the order that is present in the data supplied. Set
-#'   `categoryorder` to "category ascending" or "category descending" if
-#'   order should be determined by the alphanumerical order of the category
-#'   names. Set `categoryorder` to "array" to derive the ordering from the
-#'   attribute `categoryarray`. If a category is not found in the
-#'   `categoryarray` array, the sorting behavior for that attribute will be
-#'   identical to the "trace" mode. The unspecified categories will follow
-#'   the categories in `categoryarray`. Set `categoryorder` to "total
-#'   ascending" or "total descending" if order should be determined by the
-#'   numerical order of the values. Similarly, the order can be determined
-#'   by the min, max, sum, mean, geometric mean or median of all the
-#'   values. One of \code{"trace"}, \code{"category ascending"},
-#'   \code{"category descending"}, \code{"array"}, \code{"total
-#'   ascending"}, \code{"total descending"}, \code{"min ascending"},
-#'   \code{"min descending"}, \code{"max ascending"}, \code{"max
-#'   descending"}, \code{"sum ascending"}, \code{"sum descending"},
-#'   \code{"mean ascending"}, \code{"mean descending"}, \code{"geometric
-#'   mean ascending"}, \code{"geometric mean descending"}, \code{"median
-#'   ascending"}, \code{"median descending"}.
-#' @param clipmax Clip autorange maximum if it goes beyond this value. Has
-#'   no effect when `autorangeoptions.maxallowed` is provided. Any value.
-#' @param clipmin Clip autorange minimum if it goes beyond this value. Has
-#'   no effect when `autorangeoptions.minallowed` is provided. Any value.
-#' @param color \strong{\code{go_layout_polar_angularaxis()},
-#'   \code{go_layout_polar_radialaxis()}}: Sets default for all colors
-#'   associated with this axis all at once: line, font, tick, and grid
-#'   colors. Grid color is lightened by blending this with the plot
-#'   background Individual pieces can override this. Color: a CSS color
-#'   string or R color name.
-#'
-#'   \strong{\code{go_layout_polar_angularaxis_tickfont()},
-#'   \code{go_layout_polar_radialaxis_tickfont()},
-#'   \code{go_layout_polar_radialaxis_title_font()}}: Color: a CSS color
-#'   string or R color name.
-#' @param column If there is a layout grid, use the domain for this column
-#'   in the grid for this polar subplot. Integer in the interval [0, Inf].
-#' @param direction Sets the direction corresponding to positive angles.
-#'   One of \code{"counterclockwise"}, \code{"clockwise"}.
-#' @param domain Named list or \code{\link{go_layout_polar_domain}()}
-#'   object.
-#' @param dtick Sets the step in-between ticks on this axis. Use with
-#'   `tick0`. Must be a positive number, or special strings available to
-#'   "log" and "date" axes. If the axis `type` is "log", then ticks are set
-#'   every 10^(n*dtick) where n is the tick number. For example, to set a
-#'   tick mark at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks
-#'   at 1, 100, 10000, ... set dtick to 2. To set tick marks at 1, 5, 25,
-#'   125, 625, 3125, ... set dtick to log_10(5), or 0.69897000433. "log"
-#'   has several special values; "L<f>", where `f` is a positive number,
-#'   gives ticks linearly spaced in value (but not position). For example
-#'   `tick0` = 0.1, `dtick` = "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6
-#'   etc. To show powers of 10 plus small digits between, use "D1" (all
-#'   digits) or "D2" (only 2 and 5). `tick0` is ignored for "D1" and "D2".
-#'   If the axis `type` is "date", then you must convert the time to
-#'   milliseconds. For example, to set the interval between ticks to one
-#'   day, set `dtick` to 86400000.0. "date" also has special values "M<n>"
-#'   gives ticks spaced by a number of months. `n` must be a positive
-#'   integer. To set ticks on the 15th of every third month, set `tick0` to
-#'   "2000-01-15" and `dtick` to "M3". To set ticks every 4 years, set
-#'   `dtick` to "M48" Any value.
-#' @param dtickrange range ["min", "max"], where "min", "max" - dtick
-#'   values which describe some zoom level, it is possible to omit "min" or
-#'   "max" value by passing "null" Vector or list of 2 element(s).
-#' @param enabled Determines whether or not this stop is used. If `false`,
-#'   this stop is ignored even within its `dtickrange`. Logical.
-#' @param exponentformat Determines a formatting rule for the tick
-#'   exponents. For example, consider the number 1,000,000,000. If "none",
-#'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-#'   1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-#'   prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-#'   covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-#'   Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-#'   the above ranges, the formatting rule will automatically be switched
-#'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-#'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param font Sets this axis' title font. Named list or
-#'   \code{\link{go_layout_polar_radialaxis_title_font}()} object.
-#' @param gridcolor Sets the color of the grid lines. Color: a CSS color
-#'   string or R color name.
-#' @param griddash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param gridshape Determines if the radial axis grid lines and angular
-#'   axis line are drawn as "circular" sectors or as "linear" (polygon)
-#'   sectors. Has an effect only when the angular axis has `type`
-#'   "category". Note that `radialaxis.angle` is snapped to the angle of
-#'   the closest vertex when `gridshape` is "circular" (so that radial axis
-#'   scale is the same as the data scale). One of \code{"circular"},
-#'   \code{"linear"}.
-#' @param gridwidth Sets the width (in px) of the grid lines. Number in the
-#'   interval [0, Inf].
-#' @param hole Sets the fraction of the radius to cut out of the polar
-#'   subplot. Number in the interval [0, 1].
-#' @param hoverformat Sets the hover text formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param include Extends the autorange to include this value or array of
-#'   values, even when they fall outside the data range. Has no effect on
-#'   endpoints set by `autorangeoptions.minallowed` or
-#'   `autorangeoptions.maxallowed`. Subject to `autorangeoptions.clipmin`
-#'   and `autorangeoptions.clipmax`. Any value.
-#' @param labelalias Replacement text for specific tick or hover labels.
-#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-#'   to Canada. The labels we would have shown must match the keys exactly,
-#'   after adding any tickprefix or ticksuffix. For negative numbers the
-#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
-#'   That means you need to use -1 instead of -1. labelalias can be used
-#'   with any axis type, and both keys (if needed) and values (if desired)
-#'   can include html-like tags or MathJax. Any value.
-#' @param layer Sets the layer on which this axis is displayed. If "above
-#'   traces", this axis is displayed above all the subplot's traces If
-#'   "below traces", this axis is displayed below all the subplot's traces,
-#'   but above the grid lines. Useful when used together with scatter-like
-#'   traces with `cliponaxis` set to FALSE to show markers and/or text
-#'   nodes above this axis. One of \code{"above traces"}, \code{"below
-#'   traces"}.
-#' @param linecolor Sets the axis line color. Color: a CSS color string or
-#'   R color name.
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param linewidth Sets the width (in px) of the axis line. Number in the
-#'   interval [0, Inf].
-#' @param maxallowed \strong{\code{go_layout_polar_radialaxis()}}:
-#'   Determines the maximum range of this axis. Any value.
-#'
-#'   \strong{\code{go_layout_polar_radialaxis_autorangeoptions()}}: Use
-#'   this value exactly as autorange maximum. Any value.
-#' @param minallowed \strong{\code{go_layout_polar_radialaxis()}}:
-#'   Determines the minimum range of this axis. Any value.
-#'
-#'   \strong{\code{go_layout_polar_radialaxis_autorangeoptions()}}: Use
-#'   this value exactly as autorange minimum. Any value.
-#' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
-#'   This only has an effect when `tickformat` is "SI" or "B". Number in
-#'   the interval [0, Inf].
-#' @param minorloglabels Determines how minor log labels are displayed. If
-#'   "small digits", small digits i.e. 2 or 5 are displayed. If "complete",
-#'   complete digits are displayed. If "none", no labels are displayed. One
-#'   of \code{"small digits"}, \code{"complete"}, \code{"none"}.
-#' @param name When used in a template, named items are created in the
-#'   output figure in addition to any items the figure already has in this
-#'   array. You can modify these items in the output figure by making your
-#'   own item with `templateitemname` matching this `name` alongside your
-#'   modifications (including `visible: false` or `enabled: false` to hide
-#'   it). Has no effect outside of a template. String.
-#' @param nticks Specifies the maximum number of ticks for the particular
-#'   axis. The actual number of ticks will be chosen automatically to be
-#'   less than or equal to `nticks`. Has an effect only if `tickmode` is
-#'   set to "auto". Integer in the interval [0, Inf].
-#' @param period Set the angular period. Has an effect only when
-#'   `angularaxis.type` is "category". Number in the interval [0, Inf].
-#' @param radialaxis Named list or
-#'   \code{\link{go_layout_polar_radialaxis}()} object.
-#' @param range Sets the range of this axis. If the axis `type` is "log",
-#'   then you must take the log of your desired range (e.g. to set the
-#'   range from 1 to 100, set the range from 0 to 2). If the axis `type` is
-#'   "date", it should be date strings, like date data, though Date objects
-#'   and unix milliseconds will be accepted and converted to strings. If
-#'   the axis `type` is "category", it should be numbers, using the scale
-#'   where each category is assigned a serial number from zero in the order
-#'   it appears. Leaving either or both elements `null` impacts the default
-#'   `autorange`. Vector or list of 2 element(s).
-#' @param rangemode If "tozero", the range extends to 0, regardless of the
-#'   input data If "nonnegative", the range is non-negative, regardless of
-#'   the input data. If "normal", the range is computed in relation to the
-#'   extrema of the input data (same behavior as for cartesian axes). One
-#'   of \code{"tozero"}, \code{"nonnegative"}, \code{"normal"}.
-#' @param rotation Sets that start position (in degrees) of the angular
-#'   axis By default, polar subplots with `direction` set to
-#'   "counterclockwise" get a `rotation` of 0 which corresponds to due East
-#'   (like what mathematicians prefer). In turn, polar with `direction` set
-#'   to "clockwise" get a rotation of 90 which corresponds to due North
-#'   (like on a compass), Angle in degrees.
-#' @param row If there is a layout grid, use the domain for this row in the
-#'   grid for this polar subplot. Integer in the interval [0, Inf].
-#' @param sector Sets angular span of this polar subplot with two angles
-#'   (in degrees). Sector are assumed to be spanned in the counterclockwise
-#'   direction with 0 corresponding to rightmost limit of the polar
-#'   subplot. Vector or list of 2 element(s).
-#' @param separatethousands If "true", even 4-digit integers are separated
-#'   Logical.
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param showexponent If "all", all exponents are shown besides their
-#'   significands. If "first", only the exponent of the first tick is
-#'   shown. If "last", only the exponent of the last tick is shown. If
-#'   "none", no exponents appear. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showgrid Determines whether or not grid lines are drawn. If TRUE,
-#'   the grid lines are drawn at every tick mark. Logical.
-#' @param showline Determines whether or not a line bounding this axis is
-#'   drawn. Logical.
-#' @param showticklabels Determines whether or not the tick labels are
-#'   drawn. Logical.
-#' @param showtickprefix If "all", all tick labels are displayed with a
-#'   prefix. If "first", only the first tick is displayed with a prefix. If
-#'   "last", only the last tick is displayed with a suffix. If "none", tick
-#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
-#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
-#' @param side Determines on which side of radial axis line the tick and
-#'   tick labels appear. One of \code{"clockwise"},
-#'   \code{"counterclockwise"}.
-#' @param size Number in the interval [1, Inf].
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param templateitemname Used to refer to a named item in this array in
-#'   the template. Named items from the template will be created even
-#'   without a matching item in the input figure, but you can modify one by
-#'   making an item with `templateitemname` matching its `name`, alongside
-#'   your modifications (including `visible: false` or `enabled: false` to
-#'   hide it). If there is no template or no matching item, this item will
-#'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param text Sets the title of this axis. String.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param thetaunit Sets the format unit of the formatted "theta" values.
-#'   Has an effect only when `angularaxis.type` is "linear". One of
-#'   \code{"radians"}, \code{"degrees"}.
-#' @param tick0 Sets the placement of the first tick on this axis. Use with
-#'   `dtick`. If the axis `type` is "log", then you must take the log of
-#'   your starting tick (e.g. to set the starting tick to 100, set the
-#'   `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-#'   If the axis `type` is "date", it should be a date string, like date
-#'   data. If the axis `type` is "category", it should be a number, using
-#'   the scale where each category is assigned a serial number from zero in
-#'   the order it appears. Any value.
-#' @param tickangle Sets the angle of the tick labels with respect to the
-#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
-#'   vertically. Angle in degrees.
-#' @param tickcolor Sets the tick color. Color: a CSS color string or R
-#'   color name.
-#' @param tickfont \strong{\code{go_layout_polar_angularaxis()}}: Sets the
-#'   tick font. Named list or
-#'   \code{\link{go_layout_polar_angularaxis_tickfont}()} object.
-#'
-#'   \strong{\code{go_layout_polar_radialaxis()}}: Sets the tick font.
-#'   Named list or \code{\link{go_layout_polar_radialaxis_tickfont}()}
-#'   object.
-#' @param tickformat Sets the tick label formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param tickformatstops \strong{\code{go_layout_polar_angularaxis()}}:
-#'   List of named lists or
-#'   \code{\link{go_layout_polar_angularaxis_tickformatstop}()} objects.
-#'
-#'   \strong{\code{go_layout_polar_radialaxis()}}: List of named lists or
-#'   \code{\link{go_layout_polar_radialaxis_tickformatstop}()} objects.
-#' @param ticklabelstep Sets the spacing between tick labels as compared to
-#'   the spacing between ticks. A value of 1 (default) means each tick gets
-#'   a label. A value of 2 means shows every 2nd label. A larger value n
-#'   means only every nth tick is labeled. `tick0` determines which labels
-#'   are shown. Not implemented for axes with `type` "log" or
-#'   "multicategory", or when `tickmode` is "array". Integer in the
-#'   interval [1, Inf].
-#' @param ticklen Sets the tick length (in px). Number in the interval [0,
-#'   Inf].
-#' @param tickmode Sets the tick mode for this axis. If "auto", the number
-#'   of ticks is set via `nticks`. If "linear", the placement of the ticks
-#'   is determined by a starting position `tick0` and a tick step `dtick`
-#'   ("linear" is the default value if `tick0` and `dtick` are provided).
-#'   If "array", the placement of the ticks is set via `tickvals` and the
-#'   tick text is `ticktext`. ("array" is the default value if `tickvals`
-#'   is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.
-#' @param tickprefix Sets a tick label prefix. String.
-#' @param ticks Determines whether ticks are drawn or not. If **, this
-#'   axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-#'   drawn outside (inside) the axis lines. One of \code{"outside"},
-#'   \code{"inside"}, \code{""}.
-#' @param ticksuffix Sets a tick label suffix. String.
-#' @param ticktext Sets the text displayed at the ticks position via
-#'   `tickvals`. Only has an effect if `tickmode` is set to "array". Used
-#'   with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#' @param tickvals Sets the values at which ticks on this axis appear. Only
-#'   has an effect if `tickmode` is set to "array". Used with `ticktext`.
-#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
-#'   Inf].
-#' @param title String (the title text), named list or
-#'   \code{\link{go_layout_polar_radialaxis_title}()} object.
-#' @param type \strong{\code{go_layout_polar_angularaxis()}}: Sets the
-#'   angular axis type. If "linear", set `thetaunit` to determine the unit
-#'   in which axis value are shown. If *category, use `period` to set the
-#'   number of integer coordinates around polar axis. One of \code{"-"},
-#'   \code{"linear"}, \code{"category"}.
-#'
-#'   \strong{\code{go_layout_polar_radialaxis()}}: Sets the axis type. By
-#'   default, plotly attempts to determined the axis type by looking into
-#'   the data of the traces that referenced the axis in question. One of
-#'   \code{"-"}, \code{"linear"}, \code{"log"}, \code{"date"},
-#'   \code{"category"}.
-#' @param uirevision \strong{\code{go_layout_polar()}}: Controls
-#'   persistence of user-driven changes in axis attributes, if not
-#'   overridden in the individual axes. Defaults to `layout.uirevision`.
-#'   Any value.
-#'
-#'   \strong{\code{go_layout_polar_angularaxis()}}: Controls persistence of
-#'   user-driven changes in axis `rotation`. Defaults to
-#'   `polar<N>.uirevision`. Any value.
-#'
-#'   \strong{\code{go_layout_polar_radialaxis()}}: Controls persistence of
-#'   user-driven changes in axis `range`, `autorange`, `angle`, and `title`
-#'   if in `editable: true` configuration. Defaults to
-#'   `polar<N>.uirevision`. Any value.
-#' @param value string - dtickformat for described zoom level, the same as
-#'   "tickformat" String.
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param visible A single toggle to hide the axis while preserving
-#'   interaction like dragging. Default is true when a cheater plot is
-#'   present on the axis, otherwise false Logical.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param x Sets the horizontal domain of this polar subplot (in plot
-#'   fraction). Vector or list of 2 element(s).
-#' @param y Sets the vertical domain of this polar subplot (in plot
-#'   fraction). Vector or list of 2 element(s).
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_polar <- function(
-    arg = NULL, ..., angularaxis = NULL, bargap = NULL, barmode = NULL,
-    bgcolor = NULL, domain = NULL, gridshape = NULL, hole = NULL,
-    radialaxis = NULL, sector = NULL, uirevision = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.polar", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_polar
-#' @export
-go_layout_polar_angularaxis <- function(
-    arg = NULL, ..., autotypenumbers = NULL, categoryarray = NULL,
-    categoryorder = NULL, color = NULL, direction = NULL, dtick = NULL,
-    exponentformat = NULL, gridcolor = NULL, griddash = NULL,
-    gridwidth = NULL, hoverformat = NULL, labelalias = NULL, layer = NULL,
-    linecolor = NULL, linewidth = NULL, minexponent = NULL,
-    minorloglabels = NULL, nticks = NULL, period = NULL, rotation = NULL,
-    separatethousands = NULL, showexponent = NULL, showgrid = NULL,
-    showline = NULL, showticklabels = NULL, showtickprefix = NULL,
-    showticksuffix = NULL, thetaunit = NULL, tick0 = NULL, tickangle = NULL,
-    tickcolor = NULL, tickfont = NULL, tickformat = NULL,
-    tickformatstops = NULL, ticklabelstep = NULL, ticklen = NULL,
-    tickmode = NULL, tickprefix = NULL, ticks = NULL, ticksuffix = NULL,
-    ticktext = NULL, tickvals = NULL, tickwidth = NULL, type = NULL,
-    uirevision = NULL, visible = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.polar.angularaxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_polar
-#' @export
-go_layout_polar_angularaxis_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.polar.angularaxis.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_polar
-#' @export
-go_layout_polar_angularaxis_tickformatstop <- function(
-    arg = NULL, ..., dtickrange = NULL, enabled = NULL, name = NULL,
-    templateitemname = NULL, value = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.polar.angularaxis.tickformatstop", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_polar
-#' @export
-go_layout_polar_domain <- function(
-    arg = NULL, ..., column = NULL, row = NULL, x = NULL, y = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.polar.domain", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_polar
-#' @export
-go_layout_polar_radialaxis <- function(
-    arg = NULL, ..., angle = NULL, autorange = NULL,
-    autorangeoptions = NULL, autotickangles = NULL, autotypenumbers = NULL,
-    calendar = NULL, categoryarray = NULL, categoryorder = NULL,
-    color = NULL, dtick = NULL, exponentformat = NULL, gridcolor = NULL,
-    griddash = NULL, gridwidth = NULL, hoverformat = NULL,
-    labelalias = NULL, layer = NULL, linecolor = NULL, linewidth = NULL,
-    maxallowed = NULL, minallowed = NULL, minexponent = NULL,
-    minorloglabels = NULL, nticks = NULL, range = NULL, rangemode = NULL,
-    separatethousands = NULL, showexponent = NULL, showgrid = NULL,
-    showline = NULL, showticklabels = NULL, showtickprefix = NULL,
-    showticksuffix = NULL, side = NULL, tick0 = NULL, tickangle = NULL,
-    tickcolor = NULL, tickfont = NULL, tickformat = NULL,
-    tickformatstops = NULL, ticklabelstep = NULL, ticklen = NULL,
-    tickmode = NULL, tickprefix = NULL, ticks = NULL, ticksuffix = NULL,
-    ticktext = NULL, tickvals = NULL, tickwidth = NULL, title = NULL,
-    type = NULL, uirevision = NULL, visible = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.polar.radialaxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_polar
-#' @export
-go_layout_polar_radialaxis_autorangeoptions <- function(
-    arg = NULL, ..., clipmax = NULL, clipmin = NULL, include = NULL,
-    maxallowed = NULL, minallowed = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.polar.radialaxis.autorangeoptions", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_polar
-#' @export
-go_layout_polar_radialaxis_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.polar.radialaxis.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_polar
-#' @export
-go_layout_polar_radialaxis_tickformatstop <- function(
-    arg = NULL, ..., dtickrange = NULL, enabled = NULL, name = NULL,
-    templateitemname = NULL, value = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.polar.radialaxis.tickformatstop", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_polar
-#' @export
-go_layout_polar_radialaxis_title <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.polar.radialaxis.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_polar
-#' @export
-go_layout_polar_radialaxis_title_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.polar.radialaxis.title.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout scene objects
-#'
-#' Properties of \code{layout.scene}.
-#'
-#' \code{go_layout_scene()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}).
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_scene_annotation()}}{\code{layout.scene.annotation}}
-#' \item{\code{go_layout_scene_annotation_font()}}{\code{layout.scene.annotation.font}:
-#' Sets the annotation text font.}
-#' \item{\code{go_layout_scene_annotation_hoverlabel()}}{\code{layout.scene.annotation.hoverlabel}}
-#' \item{\code{go_layout_scene_annotation_hoverlabel_font()}}{\code{layout.scene.annotation.hoverlabel.font}:
-#' Sets the hover label text font. By default uses the global hover font and
-#' size, with color from `hoverlabel.bordercolor`.}
-#' \item{\code{go_layout_scene_aspectratio()}}{\code{layout.scene.aspectratio}:
-#' Sets this scene's axis aspectratio.}
-#' \item{\code{go_layout_scene_camera()}}{\code{layout.scene.camera}}
-#' \item{\code{go_layout_scene_camera_center()}}{\code{layout.scene.camera.center}:
-#' Sets the (x,y,z) components of the 'center' camera vector This vector
-#' determines the translation (x,y,z) space about the center of this scene.
-#' By default, there is no such translation.}
-#' \item{\code{go_layout_scene_camera_eye()}}{\code{layout.scene.camera.eye}:
-#' Sets the (x,y,z) components of the 'eye' camera vector. This vector
-#' determines the view point about the origin of this scene.}
-#' \item{\code{go_layout_scene_camera_projection()}}{\code{layout.scene.camera.projection}}
-#' \item{\code{go_layout_scene_camera_up()}}{\code{layout.scene.camera.up}:
-#' Sets the (x,y,z) components of the 'up' camera vector. This vector
-#' determines the up direction of this scene with respect to the page. The
-#' default is "\{x: 0, y: 0, z: 1\}" which means that the z axis points up.}
-#' \item{\code{go_layout_scene_domain()}}{\code{layout.scene.domain}}
-#' \item{\code{go_layout_scene_xaxis()}}{\code{layout.scene.xaxis}}
-#' \item{\code{go_layout_scene_xaxis_autorangeoptions()}}{\code{layout.scene.xaxis.autorangeoptions}}
-#' \item{\code{go_layout_scene_xaxis_tickfont()}}{\code{layout.scene.xaxis.tickfont}:
-#' Sets the tick font.}
-#' \item{\code{go_layout_scene_xaxis_tickformatstop()}}{\code{layout.scene.xaxis.tickformatstop}}
-#' \item{\code{go_layout_scene_xaxis_title()}}{\code{layout.scene.xaxis.title}}
-#' \item{\code{go_layout_scene_xaxis_title_font()}}{\code{layout.scene.xaxis.title.font}:
-#' Sets this axis' title font.}
-#' \item{\code{go_layout_scene_yaxis()}}{\code{layout.scene.yaxis}}
-#' \item{\code{go_layout_scene_yaxis_autorangeoptions()}}{\code{layout.scene.yaxis.autorangeoptions}}
-#' \item{\code{go_layout_scene_yaxis_tickfont()}}{\code{layout.scene.yaxis.tickfont}:
-#' Sets the tick font.}
-#' \item{\code{go_layout_scene_yaxis_tickformatstop()}}{\code{layout.scene.yaxis.tickformatstop}}
-#' \item{\code{go_layout_scene_yaxis_title()}}{\code{layout.scene.yaxis.title}}
-#' \item{\code{go_layout_scene_yaxis_title_font()}}{\code{layout.scene.yaxis.title.font}:
-#' Sets this axis' title font.}
-#' \item{\code{go_layout_scene_zaxis()}}{\code{layout.scene.zaxis}}
-#' \item{\code{go_layout_scene_zaxis_autorangeoptions()}}{\code{layout.scene.zaxis.autorangeoptions}}
-#' \item{\code{go_layout_scene_zaxis_tickfont()}}{\code{layout.scene.zaxis.tickfont}:
-#' Sets the tick font.}
-#' \item{\code{go_layout_scene_zaxis_tickformatstop()}}{\code{layout.scene.zaxis.tickformatstop}}
-#' \item{\code{go_layout_scene_zaxis_title()}}{\code{layout.scene.zaxis.title}}
-#' \item{\code{go_layout_scene_zaxis_title_font()}}{\code{layout.scene.zaxis.title.font}:
-#' Sets this axis' title font.}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param align Sets the horizontal alignment of the `text` within the box.
-#'   Has an effect only if `text` spans two or more lines (i.e. `text`
-#'   contains one or more <br> HTML tags) or if an explicit width is set to
-#'   override the text width. One of \code{"left"}, \code{"center"},
-#'   \code{"right"}.
-#' @param annotations List of named lists or
-#'   \code{\link{go_layout_scene_annotation}()} objects.
-#' @param arrowcolor Sets the color of the annotation arrow. Color: a CSS
-#'   color string or R color name.
-#' @param arrowhead Sets the end annotation arrow head style. Integer in
-#'   the interval [0, 8].
-#' @param arrowside Sets the annotation arrow head position. Any
-#'   combination of \code{"end"}, \code{"start"} joined with \code{"+"}, or
-#'   one of \code{"none"}.
-#' @param arrowsize Sets the size of the end annotation arrow head,
-#'   relative to `arrowwidth`. A value of 1 (default) gives a head about 3x
-#'   as wide as the line. Number in the interval [0.3, Inf].
-#' @param arrowwidth Sets the width (in px) of annotation arrow line.
-#'   Number in the interval [0.1, Inf].
-#' @param aspectmode If "cube", this scene's axes are drawn as a cube,
-#'   regardless of the axes' ranges. If "data", this scene's axes are drawn
-#'   in proportion with the axes' ranges. If "manual", this scene's axes
-#'   are drawn in proportion with the input of "aspectratio" (the default
-#'   behavior if "aspectratio" is provided). If "auto", this scene's axes
-#'   are drawn using the results of "data" except when one axis is more
-#'   than four times the size of the two others, where in that case the
-#'   results of "cube" are used. One of \code{"auto"}, \code{"cube"},
-#'   \code{"data"}, \code{"manual"}.
-#' @param aspectratio Sets this scene's axis aspectratio. Named list or
-#'   \code{\link{go_layout_scene_aspectratio}()} object.
-#' @param autorange Determines whether or not the range of this axis is
-#'   computed in relation to the input data. See `rangemode` for more info.
-#'   If `range` is provided and it has a value for both the lower and upper
-#'   bound, `autorange` is set to FALSE. Using "min" applies autorange only
-#'   to set the minimum. Using "max" applies autorange only to set the
-#'   maximum. Using "min reversed" applies autorange only to set the
-#'   minimum on a reversed axis. Using "max reversed" applies autorange
-#'   only to set the maximum on a reversed axis. Using "reversed" applies
-#'   autorange on both ends and reverses the axis direction. One of
-#'   \code{"reversed"}, \code{"min reversed"}, \code{"max reversed"},
-#'   \code{"min"}, \code{"max"}, \code{TRUE}, \code{FALSE}.
-#' @param autorangeoptions \strong{\code{go_layout_scene_xaxis()}}: Named
-#'   list or \code{\link{go_layout_scene_xaxis_autorangeoptions}()} object.
-#'
-#'   \strong{\code{go_layout_scene_yaxis()}}: Named list or
-#'   \code{\link{go_layout_scene_yaxis_autorangeoptions}()} object.
-#'
-#'   \strong{\code{go_layout_scene_zaxis()}}: Named list or
-#'   \code{\link{go_layout_scene_zaxis_autorangeoptions}()} object.
-#' @param autotypenumbers Using "strict" a numeric string in trace data is
-#'   not converted to a number. Using "convert types" a numeric string in
-#'   trace data may be treated as a number during automatic axis `type`
-#'   detection. Defaults to layout.autotypenumbers. One of \code{"convert
-#'   types"}, \code{"strict"}.
-#' @param ax Sets the x component of the arrow tail about the arrow head
-#'   (in pixels). Number.
-#' @param ay Sets the y component of the arrow tail about the arrow head
-#'   (in pixels). Number.
-#' @param backgroundcolor Sets the background color of this axis' wall.
-#'   Color: a CSS color string or R color name.
-#' @param bgcolor \strong{\code{go_layout_scene()}}: Color: a CSS color
-#'   string or R color name.
-#'
-#'   \strong{\code{go_layout_scene_annotation()}}: Sets the background
-#'   color of the annotation. Color: a CSS color string or R color name.
-#'
-#'   \strong{\code{go_layout_scene_annotation_hoverlabel()}}: Sets the
-#'   background color of the hover label. By default uses the annotation's
-#'   `bgcolor` made opaque, or white if it was transparent. Color: a CSS
-#'   color string or R color name.
-#' @param bordercolor \strong{\code{go_layout_scene_annotation()}}: Sets
-#'   the color of the border enclosing the annotation `text`. Color: a CSS
-#'   color string or R color name.
-#'
-#'   \strong{\code{go_layout_scene_annotation_hoverlabel()}}: Sets the
-#'   border color of the hover label. By default uses either dark grey or
-#'   white, for maximum contrast with `hoverlabel.bgcolor`. Color: a CSS
-#'   color string or R color name.
-#' @param borderpad Sets the padding (in px) between the `text` and the
-#'   enclosing border. Number in the interval [0, Inf].
-#' @param borderwidth Sets the width (in px) of the border enclosing the
-#'   annotation `text`. Number in the interval [0, Inf].
-#' @param calendar Sets the calendar system to use for `range` and `tick0`
-#'   if this is a date axis. This does not set the calendar for
-#'   interpreting data on this axis, that's specified in the trace or via
-#'   the global `layout.calendar` One of \code{"chinese"}, \code{"coptic"},
-#'   \code{"discworld"}, \code{"ethiopian"}, \code{"gregorian"},
-#'   \code{"hebrew"}, \code{"islamic"}, \code{"jalali"}, \code{"julian"},
-#'   \code{"mayan"}, \code{"nanakshahi"}, \code{"nepali"},
-#'   \code{"persian"}, \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.
-#' @param camera Named list or \code{\link{go_layout_scene_camera}()}
-#'   object.
-#' @param captureevents Determines whether the annotation text box captures
-#'   mouse move and click events, or allows those events to pass through to
-#'   data points in the plot that may be behind the annotation. By default
-#'   `captureevents` is FALSE unless `hovertext` is provided. If you use
-#'   the event `plotly_clickannotation` without `hovertext` you must
-#'   explicitly enable `captureevents`. Logical.
-#' @param categoryarray Sets the order in which categories on this axis
-#'   appear. Only has an effect if `categoryorder` is set to "array". Used
-#'   with `categoryorder`. Data array: a vector, factor, Date/POSIXct
-#'   vector, matrix or list.
-#' @param categoryorder Specifies the ordering logic for the case of
-#'   categorical variables. By default, plotly uses "trace", which
-#'   specifies the order that is present in the data supplied. Set
-#'   `categoryorder` to "category ascending" or "category descending" if
-#'   order should be determined by the alphanumerical order of the category
-#'   names. Set `categoryorder` to "array" to derive the ordering from the
-#'   attribute `categoryarray`. If a category is not found in the
-#'   `categoryarray` array, the sorting behavior for that attribute will be
-#'   identical to the "trace" mode. The unspecified categories will follow
-#'   the categories in `categoryarray`. Set `categoryorder` to "total
-#'   ascending" or "total descending" if order should be determined by the
-#'   numerical order of the values. Similarly, the order can be determined
-#'   by the min, max, sum, mean, geometric mean or median of all the
-#'   values. One of \code{"trace"}, \code{"category ascending"},
-#'   \code{"category descending"}, \code{"array"}, \code{"total
-#'   ascending"}, \code{"total descending"}, \code{"min ascending"},
-#'   \code{"min descending"}, \code{"max ascending"}, \code{"max
-#'   descending"}, \code{"sum ascending"}, \code{"sum descending"},
-#'   \code{"mean ascending"}, \code{"mean descending"}, \code{"geometric
-#'   mean ascending"}, \code{"geometric mean descending"}, \code{"median
-#'   ascending"}, \code{"median descending"}.
-#' @param center Sets the (x,y,z) components of the 'center' camera vector
-#'   This vector determines the translation (x,y,z) space about the center
-#'   of this scene. By default, there is no such translation. Named list or
-#'   \code{\link{go_layout_scene_camera_center}()} object.
-#' @param clipmax Clip autorange maximum if it goes beyond this value. Has
-#'   no effect when `autorangeoptions.maxallowed` is provided. Any value.
-#' @param clipmin Clip autorange minimum if it goes beyond this value. Has
-#'   no effect when `autorangeoptions.minallowed` is provided. Any value.
-#' @param color \strong{\code{go_layout_scene_annotation_font()},
-#'   \code{go_layout_scene_annotation_hoverlabel_font()},
-#'   \code{go_layout_scene_xaxis_tickfont()},
-#'   \code{go_layout_scene_xaxis_title_font()},
-#'   \code{go_layout_scene_yaxis_tickfont()},
-#'   \code{go_layout_scene_yaxis_title_font()},
-#'   \code{go_layout_scene_zaxis_tickfont()},
-#'   \code{go_layout_scene_zaxis_title_font()}}: Color: a CSS color string
-#'   or R color name.
-#'
-#'   \strong{\code{go_layout_scene_xaxis()},
-#'   \code{go_layout_scene_yaxis()}, \code{go_layout_scene_zaxis()}}: Sets
-#'   default for all colors associated with this axis all at once: line,
-#'   font, tick, and grid colors. Grid color is lightened by blending this
-#'   with the plot background Individual pieces can override this. Color: a
-#'   CSS color string or R color name.
-#' @param column If there is a layout grid, use the domain for this column
-#'   in the grid for this scene subplot. Integer in the interval [0, Inf].
-#' @param domain Named list or \code{\link{go_layout_scene_domain}()}
-#'   object.
-#' @param dragmode Determines the mode of drag interactions for this scene.
-#'   One of \code{"orbit"}, \code{"turntable"}, \code{"zoom"},
-#'   \code{"pan"}, \code{FALSE}.
-#' @param dtick Sets the step in-between ticks on this axis. Use with
-#'   `tick0`. Must be a positive number, or special strings available to
-#'   "log" and "date" axes. If the axis `type` is "log", then ticks are set
-#'   every 10^(n*dtick) where n is the tick number. For example, to set a
-#'   tick mark at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks
-#'   at 1, 100, 10000, ... set dtick to 2. To set tick marks at 1, 5, 25,
-#'   125, 625, 3125, ... set dtick to log_10(5), or 0.69897000433. "log"
-#'   has several special values; "L<f>", where `f` is a positive number,
-#'   gives ticks linearly spaced in value (but not position). For example
-#'   `tick0` = 0.1, `dtick` = "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6
-#'   etc. To show powers of 10 plus small digits between, use "D1" (all
-#'   digits) or "D2" (only 2 and 5). `tick0` is ignored for "D1" and "D2".
-#'   If the axis `type` is "date", then you must convert the time to
-#'   milliseconds. For example, to set the interval between ticks to one
-#'   day, set `dtick` to 86400000.0. "date" also has special values "M<n>"
-#'   gives ticks spaced by a number of months. `n` must be a positive
-#'   integer. To set ticks on the 15th of every third month, set `tick0` to
-#'   "2000-01-15" and `dtick` to "M3". To set ticks every 4 years, set
-#'   `dtick` to "M48" Any value.
-#' @param dtickrange range ["min", "max"], where "min", "max" - dtick
-#'   values which describe some zoom level, it is possible to omit "min" or
-#'   "max" value by passing "null" Vector or list of 2 element(s).
-#' @param enabled Determines whether or not this stop is used. If `false`,
-#'   this stop is ignored even within its `dtickrange`. Logical.
-#' @param exponentformat Determines a formatting rule for the tick
-#'   exponents. For example, consider the number 1,000,000,000. If "none",
-#'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-#'   1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-#'   prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-#'   covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-#'   Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-#'   the above ranges, the formatting rule will automatically be switched
-#'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-#'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
-#' @param eye Sets the (x,y,z) components of the 'eye' camera vector. This
-#'   vector determines the view point about the origin of this scene. Named
-#'   list or \code{\link{go_layout_scene_camera_eye}()} object.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param font \strong{\code{go_layout_scene_annotation()}}: Sets the
-#'   annotation text font. Named list or
-#'   \code{\link{go_layout_scene_annotation_font}()} object.
-#'
-#'   \strong{\code{go_layout_scene_annotation_hoverlabel()}}: Sets the
-#'   hover label text font. By default uses the global hover font and size,
-#'   with color from `hoverlabel.bordercolor`. Named list or
-#'   \code{\link{go_layout_scene_annotation_hoverlabel_font}()} object.
-#'
-#'   \strong{\code{go_layout_scene_xaxis_title()}}: Sets this axis' title
-#'   font. Named list or \code{\link{go_layout_scene_xaxis_title_font}()}
-#'   object.
-#'
-#'   \strong{\code{go_layout_scene_yaxis_title()}}: Sets this axis' title
-#'   font. Named list or \code{\link{go_layout_scene_yaxis_title_font}()}
-#'   object.
-#'
-#'   \strong{\code{go_layout_scene_zaxis_title()}}: Sets this axis' title
-#'   font. Named list or \code{\link{go_layout_scene_zaxis_title_font}()}
-#'   object.
-#' @param gridcolor Sets the color of the grid lines. Color: a CSS color
-#'   string or R color name.
-#' @param gridwidth Sets the width (in px) of the grid lines. Number in the
-#'   interval [0, Inf].
-#' @param height Sets an explicit height for the text box. null (default)
-#'   lets the text set the box height. Taller text will be clipped. Number
-#'   in the interval [1, Inf].
-#' @param hoverformat Sets the hover text formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param hoverlabel Named list or
-#'   \code{\link{go_layout_scene_annotation_hoverlabel}()} object.
-#' @param hovermode Determines the mode of hover interactions for this
-#'   scene. One of \code{"closest"}, \code{FALSE}.
-#' @param hovertext Sets text to appear when hovering over this annotation.
-#'   If omitted or blank, no hover label will appear. String.
-#' @param include Extends the autorange to include this value or array of
-#'   values, even when they fall outside the data range. Has no effect on
-#'   endpoints set by `autorangeoptions.minallowed` or
-#'   `autorangeoptions.maxallowed`. Subject to `autorangeoptions.clipmin`
-#'   and `autorangeoptions.clipmax`. Any value.
-#' @param labelalias Replacement text for specific tick or hover labels.
-#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-#'   to Canada. The labels we would have shown must match the keys exactly,
-#'   after adding any tickprefix or ticksuffix. For negative numbers the
-#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
-#'   That means you need to use -1 instead of -1. labelalias can be used
-#'   with any axis type, and both keys (if needed) and values (if desired)
-#'   can include html-like tags or MathJax. Any value.
-#' @param linecolor Sets the axis line color. Color: a CSS color string or
-#'   R color name.
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param linewidth Sets the width (in px) of the axis line. Number in the
-#'   interval [0, Inf].
-#' @param maxallowed \strong{\code{go_layout_scene_xaxis()},
-#'   \code{go_layout_scene_yaxis()}, \code{go_layout_scene_zaxis()}}:
-#'   Determines the maximum range of this axis. Any value.
-#'
-#'   \strong{\code{go_layout_scene_xaxis_autorangeoptions()},
-#'   \code{go_layout_scene_yaxis_autorangeoptions()},
-#'   \code{go_layout_scene_zaxis_autorangeoptions()}}: Use this value
-#'   exactly as autorange maximum. Any value.
-#' @param minallowed \strong{\code{go_layout_scene_xaxis()},
-#'   \code{go_layout_scene_yaxis()}, \code{go_layout_scene_zaxis()}}:
-#'   Determines the minimum range of this axis. Any value.
-#'
-#'   \strong{\code{go_layout_scene_xaxis_autorangeoptions()},
-#'   \code{go_layout_scene_yaxis_autorangeoptions()},
-#'   \code{go_layout_scene_zaxis_autorangeoptions()}}: Use this value
-#'   exactly as autorange minimum. Any value.
-#' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
-#'   This only has an effect when `tickformat` is "SI" or "B". Number in
-#'   the interval [0, Inf].
-#' @param mirror Determines if the axis lines or/and ticks are mirrored to
-#'   the opposite side of the plotting area. If TRUE, the axis lines are
-#'   mirrored. If "ticks", the axis lines and ticks are mirrored. If FALSE,
-#'   mirroring is disable. If "all", axis lines are mirrored on all
-#'   shared-axes subplots. If "allticks", axis lines and ticks are mirrored
-#'   on all shared-axes subplots. One of \code{"ticks"}, \code{"all"},
-#'   \code{"allticks"}, \code{TRUE}, \code{FALSE}.
-#' @param name When used in a template, named items are created in the
-#'   output figure in addition to any items the figure already has in this
-#'   array. You can modify these items in the output figure by making your
-#'   own item with `templateitemname` matching this `name` alongside your
-#'   modifications (including `visible: false` or `enabled: false` to hide
-#'   it). Has no effect outside of a template. String.
-#' @param nticks Specifies the maximum number of ticks for the particular
-#'   axis. The actual number of ticks will be chosen automatically to be
-#'   less than or equal to `nticks`. Has an effect only if `tickmode` is
-#'   set to "auto". Integer in the interval [0, Inf].
-#' @param opacity Sets the opacity of the annotation (text + arrow). Number
-#'   in the interval [0, 1].
-#' @param projection Named list or
-#'   \code{\link{go_layout_scene_camera_projection}()} object.
-#' @param range Sets the range of this axis. If the axis `type` is "log",
-#'   then you must take the log of your desired range (e.g. to set the
-#'   range from 1 to 100, set the range from 0 to 2). If the axis `type` is
-#'   "date", it should be date strings, like date data, though Date objects
-#'   and unix milliseconds will be accepted and converted to strings. If
-#'   the axis `type` is "category", it should be numbers, using the scale
-#'   where each category is assigned a serial number from zero in the order
-#'   it appears. Leaving either or both elements `null` impacts the default
-#'   `autorange`. Vector or list of 2 element(s).
-#' @param rangemode If "normal", the range is computed in relation to the
-#'   extrema of the input data. If "tozero", the range extends to 0,
-#'   regardless of the input data If "nonnegative", the range is
-#'   non-negative, regardless of the input data. Applies only to linear
-#'   axes. One of \code{"normal"}, \code{"tozero"}, \code{"nonnegative"}.
-#' @param row If there is a layout grid, use the domain for this row in the
-#'   grid for this scene subplot. Integer in the interval [0, Inf].
-#' @param separatethousands If "true", even 4-digit integers are separated
-#'   Logical.
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param showarrow Determines whether or not the annotation is drawn with
-#'   an arrow. If TRUE, `text` is placed near the arrow's tail. If FALSE,
-#'   `text` lines up with the `x` and `y` provided. Logical.
-#' @param showaxeslabels Sets whether or not this axis is labeled Logical.
-#' @param showbackground Sets whether or not this axis' wall has a
-#'   background color. Logical.
-#' @param showexponent If "all", all exponents are shown besides their
-#'   significands. If "first", only the exponent of the first tick is
-#'   shown. If "last", only the exponent of the last tick is shown. If
-#'   "none", no exponents appear. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showgrid Determines whether or not grid lines are drawn. If TRUE,
-#'   the grid lines are drawn at every tick mark. Logical.
-#' @param showline Determines whether or not a line bounding this axis is
-#'   drawn. Logical.
-#' @param showspikes Sets whether or not spikes starting from data points
-#'   to this axis' wall are shown on hover. Logical.
-#' @param showticklabels Determines whether or not the tick labels are
-#'   drawn. Logical.
-#' @param showtickprefix If "all", all tick labels are displayed with a
-#'   prefix. If "first", only the first tick is displayed with a prefix. If
-#'   "last", only the last tick is displayed with a suffix. If "none", tick
-#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
-#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
-#' @param size Number in the interval [1, Inf].
-#' @param spikecolor Sets the color of the spikes. Color: a CSS color
-#'   string or R color name.
-#' @param spikesides Sets whether or not spikes extending from the
-#'   projection data points to this axis' wall boundaries are shown on
-#'   hover. Logical.
-#' @param spikethickness Sets the thickness (in px) of the spikes. Number
-#'   in the interval [0, Inf].
-#' @param standoff Sets a distance, in pixels, to move the end arrowhead
-#'   away from the position it is pointing at, for example to point at the
-#'   edge of a marker independent of zoom. Note that this shortens the
-#'   arrow from the `ax` / `ay` vector, in contrast to `xshift` / `yshift`
-#'   which moves everything by this amount. Number in the interval [0,
-#'   Inf].
-#' @param startarrowhead Sets the start annotation arrow head style.
-#'   Integer in the interval [0, 8].
-#' @param startarrowsize Sets the size of the start annotation arrow head,
-#'   relative to `arrowwidth`. A value of 1 (default) gives a head about 3x
-#'   as wide as the line. Number in the interval [0.3, Inf].
-#' @param startstandoff Sets a distance, in pixels, to move the start
-#'   arrowhead away from the position it is pointing at, for example to
-#'   point at the edge of a marker independent of zoom. Note that this
-#'   shortens the arrow from the `ax` / `ay` vector, in contrast to
-#'   `xshift` / `yshift` which moves everything by this amount. Number in
-#'   the interval [0, Inf].
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param templateitemname Used to refer to a named item in this array in
-#'   the template. Named items from the template will be created even
-#'   without a matching item in the input figure, but you can modify one by
-#'   making an item with `templateitemname` matching its `name`, alongside
-#'   your modifications (including `visible: false` or `enabled: false` to
-#'   hide it). If there is no template or no matching item, this item will
-#'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param text \strong{\code{go_layout_scene_annotation()}}: Sets the text
-#'   associated with this annotation. Plotly uses a subset of HTML tags to
-#'   do things like newline (`<br>`), bold (`<b></b>`), italics
-#'   (`<i></i>`), hyperlinks (`<a href='...'></a>`). Tags `<em>`, `<sup>`,
-#'   `<sub>`, `<s>`, `<u>`, and `<span>` are also supported. String.
-#'
-#'   \strong{\code{go_layout_scene_xaxis_title()},
-#'   \code{go_layout_scene_yaxis_title()},
-#'   \code{go_layout_scene_zaxis_title()}}: Sets the title of this axis.
-#'   String.
-#' @param textangle Sets the angle at which the `text` is drawn with
-#'   respect to the horizontal. Angle in degrees.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param tick0 Sets the placement of the first tick on this axis. Use with
-#'   `dtick`. If the axis `type` is "log", then you must take the log of
-#'   your starting tick (e.g. to set the starting tick to 100, set the
-#'   `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-#'   If the axis `type` is "date", it should be a date string, like date
-#'   data. If the axis `type` is "category", it should be a number, using
-#'   the scale where each category is assigned a serial number from zero in
-#'   the order it appears. Any value.
-#' @param tickangle Sets the angle of the tick labels with respect to the
-#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
-#'   vertically. Angle in degrees.
-#' @param tickcolor Sets the tick color. Color: a CSS color string or R
-#'   color name.
-#' @param tickfont \strong{\code{go_layout_scene_xaxis()}}: Sets the tick
-#'   font. Named list or \code{\link{go_layout_scene_xaxis_tickfont}()}
-#'   object.
-#'
-#'   \strong{\code{go_layout_scene_yaxis()}}: Sets the tick font. Named
-#'   list or \code{\link{go_layout_scene_yaxis_tickfont}()} object.
-#'
-#'   \strong{\code{go_layout_scene_zaxis()}}: Sets the tick font. Named
-#'   list or \code{\link{go_layout_scene_zaxis_tickfont}()} object.
-#' @param tickformat Sets the tick label formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param tickformatstops \strong{\code{go_layout_scene_xaxis()}}: List of
-#'   named lists or \code{\link{go_layout_scene_xaxis_tickformatstop}()}
-#'   objects.
-#'
-#'   \strong{\code{go_layout_scene_yaxis()}}: List of named lists or
-#'   \code{\link{go_layout_scene_yaxis_tickformatstop}()} objects.
-#'
-#'   \strong{\code{go_layout_scene_zaxis()}}: List of named lists or
-#'   \code{\link{go_layout_scene_zaxis_tickformatstop}()} objects.
-#' @param ticklen Sets the tick length (in px). Number in the interval [0,
-#'   Inf].
-#' @param tickmode Sets the tick mode for this axis. If "auto", the number
-#'   of ticks is set via `nticks`. If "linear", the placement of the ticks
-#'   is determined by a starting position `tick0` and a tick step `dtick`
-#'   ("linear" is the default value if `tick0` and `dtick` are provided).
-#'   If "array", the placement of the ticks is set via `tickvals` and the
-#'   tick text is `ticktext`. ("array" is the default value if `tickvals`
-#'   is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.
-#' @param tickprefix Sets a tick label prefix. String.
-#' @param ticks Determines whether ticks are drawn or not. If **, this
-#'   axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-#'   drawn outside (inside) the axis lines. One of \code{"outside"},
-#'   \code{"inside"}, \code{""}.
-#' @param ticksuffix Sets a tick label suffix. String.
-#' @param ticktext Sets the text displayed at the ticks position via
-#'   `tickvals`. Only has an effect if `tickmode` is set to "array". Used
-#'   with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#' @param tickvals Sets the values at which ticks on this axis appear. Only
-#'   has an effect if `tickmode` is set to "array". Used with `ticktext`.
-#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
-#'   Inf].
-#' @param title \strong{\code{go_layout_scene_xaxis()}}: String (the title
-#'   text), named list or \code{\link{go_layout_scene_xaxis_title}()}
-#'   object.
-#'
-#'   \strong{\code{go_layout_scene_yaxis()}}: String (the title text),
-#'   named list or \code{\link{go_layout_scene_yaxis_title}()} object.
-#'
-#'   \strong{\code{go_layout_scene_zaxis()}}: String (the title text),
-#'   named list or \code{\link{go_layout_scene_zaxis_title}()} object.
-#' @param type \strong{\code{go_layout_scene_camera_projection()}}: Sets
-#'   the projection type. The projection type could be either "perspective"
-#'   or "orthographic". The default is "perspective". One of
-#'   \code{"perspective"}, \code{"orthographic"}.
-#'
-#'   \strong{\code{go_layout_scene_xaxis()},
-#'   \code{go_layout_scene_yaxis()}, \code{go_layout_scene_zaxis()}}: Sets
-#'   the axis type. By default, plotly attempts to determined the axis type
-#'   by looking into the data of the traces that referenced the axis in
-#'   question. One of \code{"-"}, \code{"linear"}, \code{"log"},
-#'   \code{"date"}, \code{"category"}.
-#' @param uirevision Controls persistence of user-driven changes in camera
-#'   attributes. Defaults to `layout.uirevision`. Any value.
-#' @param up Sets the (x,y,z) components of the 'up' camera vector. This
-#'   vector determines the up direction of this scene with respect to the
-#'   page. The default is "\{x: 0, y: 0, z: 1\}" which means that the z
-#'   axis points up. Named list or
-#'   \code{\link{go_layout_scene_camera_up}()} object.
-#' @param valign Sets the vertical alignment of the `text` within the box.
-#'   Has an effect only if an explicit height is set to override the text
-#'   height. One of \code{"top"}, \code{"middle"}, \code{"bottom"}.
-#' @param value string - dtickformat for described zoom level, the same as
-#'   "tickformat" String.
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param visible \strong{\code{go_layout_scene_annotation()}}: Determines
-#'   whether or not this annotation is visible. Logical.
-#'
-#'   \strong{\code{go_layout_scene_xaxis()},
-#'   \code{go_layout_scene_yaxis()}, \code{go_layout_scene_zaxis()}}: A
-#'   single toggle to hide the axis while preserving interaction like
-#'   dragging. Default is true when a cheater plot is present on the axis,
-#'   otherwise false Logical.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param width Sets an explicit width for the text box. null (default)
-#'   lets the text set the box width. Wider text will be clipped. There is
-#'   no automatic wrapping; use <br> to start a new line. Number in the
-#'   interval [1, Inf].
-#' @param x \strong{\code{go_layout_scene_annotation()}}: Sets the
-#'   annotation's x position. Any value.
-#'
-#'   \strong{\code{go_layout_scene_aspectratio()}}: Number in the interval
-#'   [0, Inf].
-#'
-#'   \strong{\code{go_layout_scene_camera_center()},
-#'   \code{go_layout_scene_camera_eye()},
-#'   \code{go_layout_scene_camera_up()}}: Number.
-#'
-#'   \strong{\code{go_layout_scene_domain()}}: Sets the horizontal domain
-#'   of this scene subplot (in plot fraction). Vector or list of 2
-#'   element(s).
-#' @param xanchor Sets the text box's horizontal position anchor This
-#'   anchor binds the `x` position to the "left", "center" or "right" of
-#'   the annotation. For example, if `x` is set to 1, `xref` to "paper" and
-#'   `xanchor` to "right" then the right-most portion of the annotation
-#'   lines up with the right-most edge of the plotting area. If "auto", the
-#'   anchor is equivalent to "center" for data-referenced annotations or if
-#'   there is an arrow, whereas for paper-referenced with no arrow, the
-#'   anchor picked corresponds to the closest side. One of \code{"auto"},
-#'   \code{"left"}, \code{"center"}, \code{"right"}.
-#' @param xaxis Named list or \code{\link{go_layout_scene_xaxis}()} object.
-#' @param xshift Shifts the position of the whole annotation and arrow to
-#'   the right (positive) or left (negative) by this many pixels. Number.
-#' @param y \strong{\code{go_layout_scene_annotation()}}: Sets the
-#'   annotation's y position. Any value.
-#'
-#'   \strong{\code{go_layout_scene_aspectratio()}}: Number in the interval
-#'   [0, Inf].
-#'
-#'   \strong{\code{go_layout_scene_camera_center()},
-#'   \code{go_layout_scene_camera_eye()},
-#'   \code{go_layout_scene_camera_up()}}: Number.
-#'
-#'   \strong{\code{go_layout_scene_domain()}}: Sets the vertical domain of
-#'   this scene subplot (in plot fraction). Vector or list of 2 element(s).
-#' @param yanchor Sets the text box's vertical position anchor This anchor
-#'   binds the `y` position to the "top", "middle" or "bottom" of the
-#'   annotation. For example, if `y` is set to 1, `yref` to "paper" and
-#'   `yanchor` to "top" then the top-most portion of the annotation lines
-#'   up with the top-most edge of the plotting area. If "auto", the anchor
-#'   is equivalent to "middle" for data-referenced annotations or if there
-#'   is an arrow, whereas for paper-referenced with no arrow, the anchor
-#'   picked corresponds to the closest side. One of \code{"auto"},
-#'   \code{"top"}, \code{"middle"}, \code{"bottom"}.
-#' @param yaxis Named list or \code{\link{go_layout_scene_yaxis}()} object.
-#' @param yshift Shifts the position of the whole annotation and arrow up
-#'   (positive) or down (negative) by this many pixels. Number.
-#' @param z \strong{\code{go_layout_scene_annotation()}}: Sets the
-#'   annotation's z position. Any value.
-#'
-#'   \strong{\code{go_layout_scene_aspectratio()}}: Number in the interval
-#'   [0, Inf].
-#'
-#'   \strong{\code{go_layout_scene_camera_center()},
-#'   \code{go_layout_scene_camera_eye()},
-#'   \code{go_layout_scene_camera_up()}}: Number.
-#' @param zaxis Named list or \code{\link{go_layout_scene_zaxis}()} object.
-#' @param zeroline Determines whether or not a line is drawn at along the 0
-#'   value of this axis. If TRUE, the zero line is drawn on top of the grid
-#'   lines. Logical.
-#' @param zerolinecolor Sets the line color of the zero line. Color: a CSS
-#'   color string or R color name.
-#' @param zerolinewidth Sets the width (in px) of the zero line. Number.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_scene <- function(
-    arg = NULL, ..., annotations = NULL, aspectmode = NULL,
-    aspectratio = NULL, bgcolor = NULL, camera = NULL, domain = NULL,
-    dragmode = NULL, hovermode = NULL, uirevision = NULL, xaxis = NULL,
-    yaxis = NULL, zaxis = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_annotation <- function(
-    arg = NULL, ..., align = NULL, arrowcolor = NULL, arrowhead = NULL,
-    arrowside = NULL, arrowsize = NULL, arrowwidth = NULL, ax = NULL,
-    ay = NULL, bgcolor = NULL, bordercolor = NULL, borderpad = NULL,
-    borderwidth = NULL, captureevents = NULL, font = NULL, height = NULL,
-    hoverlabel = NULL, hovertext = NULL, name = NULL, opacity = NULL,
-    showarrow = NULL, standoff = NULL, startarrowhead = NULL,
-    startarrowsize = NULL, startstandoff = NULL, templateitemname = NULL,
-    text = NULL, textangle = NULL, valign = NULL, visible = NULL,
-    width = NULL, x = NULL, xanchor = NULL, xshift = NULL, y = NULL,
-    yanchor = NULL, yshift = NULL, z = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.annotation", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_annotation_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.annotation.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_annotation_hoverlabel <- function(
-    arg = NULL, ..., bgcolor = NULL, bordercolor = NULL, font = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.annotation.hoverlabel", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_annotation_hoverlabel_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.annotation.hoverlabel.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_aspectratio <- function(
-    arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.aspectratio", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_camera <- function(
-    arg = NULL, ..., center = NULL, eye = NULL, projection = NULL,
-    up = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.camera", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_camera_center <- function(
-    arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.camera.center", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_camera_eye <- function(
-    arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.camera.eye", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_camera_projection <- function(
-    arg = NULL, ..., type = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.camera.projection", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_camera_up <- function(
-    arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.camera.up", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_domain <- function(
-    arg = NULL, ..., column = NULL, row = NULL, x = NULL, y = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.domain", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_xaxis <- function(
-    arg = NULL, ..., autorange = NULL, autorangeoptions = NULL,
-    autotypenumbers = NULL, backgroundcolor = NULL, calendar = NULL,
-    categoryarray = NULL, categoryorder = NULL, color = NULL, dtick = NULL,
-    exponentformat = NULL, gridcolor = NULL, gridwidth = NULL,
-    hoverformat = NULL, labelalias = NULL, linecolor = NULL,
-    linewidth = NULL, maxallowed = NULL, minallowed = NULL,
-    minexponent = NULL, mirror = NULL, nticks = NULL, range = NULL,
-    rangemode = NULL, separatethousands = NULL, showaxeslabels = NULL,
-    showbackground = NULL, showexponent = NULL, showgrid = NULL,
-    showline = NULL, showspikes = NULL, showticklabels = NULL,
-    showtickprefix = NULL, showticksuffix = NULL, spikecolor = NULL,
-    spikesides = NULL, spikethickness = NULL, tick0 = NULL,
-    tickangle = NULL, tickcolor = NULL, tickfont = NULL, tickformat = NULL,
-    tickformatstops = NULL, ticklen = NULL, tickmode = NULL,
-    tickprefix = NULL, ticks = NULL, ticksuffix = NULL, ticktext = NULL,
-    tickvals = NULL, tickwidth = NULL, title = NULL, type = NULL,
-    visible = NULL, zeroline = NULL, zerolinecolor = NULL,
-    zerolinewidth = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.xaxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_xaxis_autorangeoptions <- function(
-    arg = NULL, ..., clipmax = NULL, clipmin = NULL, include = NULL,
-    maxallowed = NULL, minallowed = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.xaxis.autorangeoptions", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_xaxis_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.xaxis.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_xaxis_tickformatstop <- function(
-    arg = NULL, ..., dtickrange = NULL, enabled = NULL, name = NULL,
-    templateitemname = NULL, value = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.xaxis.tickformatstop", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_xaxis_title <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.xaxis.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_xaxis_title_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.xaxis.title.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_yaxis <- function(
-    arg = NULL, ..., autorange = NULL, autorangeoptions = NULL,
-    autotypenumbers = NULL, backgroundcolor = NULL, calendar = NULL,
-    categoryarray = NULL, categoryorder = NULL, color = NULL, dtick = NULL,
-    exponentformat = NULL, gridcolor = NULL, gridwidth = NULL,
-    hoverformat = NULL, labelalias = NULL, linecolor = NULL,
-    linewidth = NULL, maxallowed = NULL, minallowed = NULL,
-    minexponent = NULL, mirror = NULL, nticks = NULL, range = NULL,
-    rangemode = NULL, separatethousands = NULL, showaxeslabels = NULL,
-    showbackground = NULL, showexponent = NULL, showgrid = NULL,
-    showline = NULL, showspikes = NULL, showticklabels = NULL,
-    showtickprefix = NULL, showticksuffix = NULL, spikecolor = NULL,
-    spikesides = NULL, spikethickness = NULL, tick0 = NULL,
-    tickangle = NULL, tickcolor = NULL, tickfont = NULL, tickformat = NULL,
-    tickformatstops = NULL, ticklen = NULL, tickmode = NULL,
-    tickprefix = NULL, ticks = NULL, ticksuffix = NULL, ticktext = NULL,
-    tickvals = NULL, tickwidth = NULL, title = NULL, type = NULL,
-    visible = NULL, zeroline = NULL, zerolinecolor = NULL,
-    zerolinewidth = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.yaxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_yaxis_autorangeoptions <- function(
-    arg = NULL, ..., clipmax = NULL, clipmin = NULL, include = NULL,
-    maxallowed = NULL, minallowed = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.yaxis.autorangeoptions", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_yaxis_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.yaxis.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_yaxis_tickformatstop <- function(
-    arg = NULL, ..., dtickrange = NULL, enabled = NULL, name = NULL,
-    templateitemname = NULL, value = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.yaxis.tickformatstop", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_yaxis_title <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.yaxis.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_yaxis_title_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.yaxis.title.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_zaxis <- function(
-    arg = NULL, ..., autorange = NULL, autorangeoptions = NULL,
-    autotypenumbers = NULL, backgroundcolor = NULL, calendar = NULL,
-    categoryarray = NULL, categoryorder = NULL, color = NULL, dtick = NULL,
-    exponentformat = NULL, gridcolor = NULL, gridwidth = NULL,
-    hoverformat = NULL, labelalias = NULL, linecolor = NULL,
-    linewidth = NULL, maxallowed = NULL, minallowed = NULL,
-    minexponent = NULL, mirror = NULL, nticks = NULL, range = NULL,
-    rangemode = NULL, separatethousands = NULL, showaxeslabels = NULL,
-    showbackground = NULL, showexponent = NULL, showgrid = NULL,
-    showline = NULL, showspikes = NULL, showticklabels = NULL,
-    showtickprefix = NULL, showticksuffix = NULL, spikecolor = NULL,
-    spikesides = NULL, spikethickness = NULL, tick0 = NULL,
-    tickangle = NULL, tickcolor = NULL, tickfont = NULL, tickformat = NULL,
-    tickformatstops = NULL, ticklen = NULL, tickmode = NULL,
-    tickprefix = NULL, ticks = NULL, ticksuffix = NULL, ticktext = NULL,
-    tickvals = NULL, tickwidth = NULL, title = NULL, type = NULL,
-    visible = NULL, zeroline = NULL, zerolinecolor = NULL,
-    zerolinewidth = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.zaxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_zaxis_autorangeoptions <- function(
-    arg = NULL, ..., clipmax = NULL, clipmin = NULL, include = NULL,
-    maxallowed = NULL, minallowed = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.zaxis.autorangeoptions", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_zaxis_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.zaxis.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_zaxis_tickformatstop <- function(
-    arg = NULL, ..., dtickrange = NULL, enabled = NULL, name = NULL,
-    templateitemname = NULL, value = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.zaxis.tickformatstop", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_zaxis_title <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.zaxis.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_scene
-#' @export
-go_layout_scene_zaxis_title_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.zaxis.title.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout selection objects
-#'
-#' Properties of \code{layout.selection}.
-#'
-#' \code{go_layout_selection()} and the nested object constructors below
-#' create validated graph objects (named lists). Every property is checked
-#' against the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}). \code{add_selection()} creates an
-#' object and adds it to a figure.
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_selection_line()}}{\code{layout.selection.line}}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param col Subplot grid column (figures created with
-#'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
-#'   to address several cells.
-#' @param color Sets the line color. Color: a CSS color string or R color
-#'   name.
-#' @param dash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param exclude_empty_subplots If \code{TRUE}, skip subplots that have no
-#'   traces or layout objects.
-#' @param fig A \code{go_figure} object.
-#' @param line Named list or \code{\link{go_layout_selection_line}()}
-#'   object.
-#' @param name When used in a template, named items are created in the
-#'   output figure in addition to any items the figure already has in this
-#'   array. You can modify these items in the output figure by making your
-#'   own item with `templateitemname` matching this `name` alongside your
-#'   modifications (including `visible: false` or `enabled: false` to hide
-#'   it). Has no effect outside of a template. String.
-#' @param opacity Sets the opacity of the selection. Number in the interval
-#'   [0, 1].
-#' @param path For `type` "path" - a valid SVG path similar to
-#'   `shapes.path` in data coordinates. Allowed segments are: M, L and Z.
-#'   String.
-#' @param row Subplot grid row (figures created with
-#'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
-#'   to address several cells.
-#' @param secondary_y If \code{TRUE}, use the secondary y axis of the
-#'   subplot.
-#' @param templateitemname Used to refer to a named item in this array in
-#'   the template. Named items from the template will be created even
-#'   without a matching item in the input figure, but you can modify one by
-#'   making an item with `templateitemname` matching its `name`, alongside
-#'   your modifications (including `visible: false` or `enabled: false` to
-#'   hide it). If there is no template or no matching item, this item will
-#'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param type Specifies the selection type to be drawn. If "rect", a
-#'   rectangle is drawn linking (`x0`,`y0`), (`x1`,`y0`), (`x1`,`y1`) and
-#'   (`x0`,`y1`). If "path", draw a custom SVG path using `path`. One of
-#'   \code{"rect"}, \code{"path"}.
-#' @param width Sets the line width (in px). Number in the interval [1,
-#'   Inf].
-#' @param x0 Sets the selection's starting x position. Any value.
-#' @param x1 Sets the selection's end x position. Any value.
-#' @param xref Sets the selection's x coordinate axis. If set to a x axis
-#'   id (e.g. "x" or "x2"), the `x` position refers to a x coordinate. If
-#'   set to "paper", the `x` position refers to the distance from the left
-#'   of the plotting area in normalized coordinates where 0 (1) corresponds
-#'   to the left (right). If set to a x axis ID followed by "domain"
-#'   (separated by a space), the position behaves like for "paper", but
-#'   refers to the distance in fractions of the domain length from the left
-#'   of the domain of that axis: e.g., "x2 domain" refers to the domain of
-#'   the second x axis and a x position of 0.5 refers to the point between
-#'   the left and the right of the domain of the second x axis. One of
-#'   \code{"paper"}, or a string matching \code{"^x([2-9]|[1-9][0-9]+)?(
-#'   domain)?$"}.
-#' @param y0 Sets the selection's starting y position. Any value.
-#' @param y1 Sets the selection's end y position. Any value.
-#' @param yref Sets the selection's x coordinate axis. If set to a y axis
-#'   id (e.g. "y" or "y2"), the `y` position refers to a y coordinate. If
-#'   set to "paper", the `y` position refers to the distance from the
-#'   bottom of the plotting area in normalized coordinates where 0 (1)
-#'   corresponds to the bottom (top). If set to a y axis ID followed by
-#'   "domain" (separated by a space), the position behaves like for
-#'   "paper", but refers to the distance in fractions of the domain length
-#'   from the bottom of the domain of that axis: e.g., "y2 domain" refers
-#'   to the domain of the second y axis and a y position of 0.5 refers to
-#'   the point between the bottom and the top of the domain of the second y
-#'   axis. One of \code{"paper"}, or a string matching
-#'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_selection <- function(
-    arg = NULL, ..., line = NULL, name = NULL, opacity = NULL, path = NULL,
-    templateitemname = NULL, type = NULL, x0 = NULL, x1 = NULL, xref = NULL,
-    y0 = NULL, y1 = NULL, yref = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.selection", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_selection
-#' @export
-go_layout_selection_line <- function(
-    arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.selection.line", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout shape objects
-#'
-#' Properties of \code{layout.shape}.
-#'
-#' \code{go_layout_shape()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}). \code{add_shape()} creates an object
-#' and adds it to a figure.
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_shape_label()}}{\code{layout.shape.label}}
-#' \item{\code{go_layout_shape_label_font()}}{\code{layout.shape.label.font}:
-#' Sets the shape label text font.}
-#' \item{\code{go_layout_shape_legendgrouptitle()}}{\code{layout.shape.legendgrouptitle}}
-#' \item{\code{go_layout_shape_legendgrouptitle_font()}}{\code{layout.shape.legendgrouptitle.font}:
-#' Sets this legend group's title font.}
-#' \item{\code{go_layout_shape_line()}}{\code{layout.shape.line}}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param col Subplot grid column (figures created with
-#'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
-#'   to address several cells.
-#' @param color \strong{\code{go_layout_shape_label_font()},
-#'   \code{go_layout_shape_legendgrouptitle_font()}}: Color: a CSS color
-#'   string or R color name.
-#'
-#'   \strong{\code{go_layout_shape_line()}}: Sets the line color. Color: a
-#'   CSS color string or R color name.
-#' @param dash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param editable Determines whether the shape could be activated for edit
-#'   or not. Has no effect when the older editable shapes mode is enabled
-#'   via `config.editable` or `config.edits.shapePosition`. Logical.
-#' @param exclude_empty_subplots If \code{TRUE}, skip subplots that have no
-#'   traces or layout objects.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param fig A \code{go_figure} object.
-#' @param fillcolor Sets the color filling the shape's interior. Only
-#'   applies to closed shapes. Color: a CSS color string or R color name.
-#' @param fillrule Determines which regions of complex paths constitute the
-#'   interior. For more info please visit
-#'   https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule
-#'   One of \code{"evenodd"}, \code{"nonzero"}.
-#' @param font \strong{\code{go_layout_shape_label()}}: Sets the shape
-#'   label text font. Named list or
-#'   \code{\link{go_layout_shape_label_font}()} object.
-#'
-#'   \strong{\code{go_layout_shape_legendgrouptitle()}}: Sets this legend
-#'   group's title font. Named list or
-#'   \code{\link{go_layout_shape_legendgrouptitle_font}()} object.
-#' @param label Named list or \code{\link{go_layout_shape_label}()} object.
-#' @param layer Specifies whether shapes are drawn below gridlines
-#'   ("below"), between gridlines and traces ("between") or above traces
-#'   ("above"). One of \code{"below"}, \code{"above"}, \code{"between"}.
-#' @param legend Sets the reference to a legend to show this shape in.
-#'   References to these legends are "legend", "legend2", "legend3", etc.
-#'   Settings for these legends are set in the layout, under
-#'   `layout.legend`, `layout.legend2`, etc. Subplot id: \code{"legend"},
-#'   \code{"legend2"}, \code{"legend3"}, ....
-#' @param legendgroup Sets the legend group for this shape. Traces and
-#'   shapes part of the same legend group hide/show at the same time when
-#'   toggling legend items. String.
-#' @param legendgrouptitle Named list or
-#'   \code{\link{go_layout_shape_legendgrouptitle}()} object.
-#' @param legendrank Sets the legend rank for this shape. Items and groups
-#'   with smaller ranks are presented on top/left side while with
-#'   "reversed" `legend.traceorder` they are on bottom/right side. The
-#'   default legendrank is 1000, so that you can use ranks less than 1000
-#'   to place certain items before all unranked items, and ranks greater
-#'   than 1000 to go after all unranked items. When having unranked or
-#'   equal rank items shapes would be displayed after traces i.e. according
-#'   to their order in data and layout. Number.
-#' @param legendwidth Sets the width (in px or fraction) of the legend for
-#'   this shape. Number in the interval [0, Inf].
-#' @param line Named list or \code{\link{go_layout_shape_line}()} object.
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param name When used in a template, named items are created in the
-#'   output figure in addition to any items the figure already has in this
-#'   array. You can modify these items in the output figure by making your
-#'   own item with `templateitemname` matching this `name` alongside your
-#'   modifications (including `visible: false` or `enabled: false` to hide
-#'   it). Has no effect outside of a template. String.
-#' @param opacity Sets the opacity of the shape. Number in the interval [0,
-#'   1].
-#' @param padding Sets padding (in px) between edge of label and edge of
-#'   shape. Number in the interval [0, Inf].
-#' @param path For `type` "path" - a valid SVG path with the pixel values
-#'   replaced by data values in `xsizemode`/`ysizemode` being "scaled" and
-#'   taken unmodified as pixels relative to `xanchor` and `yanchor` in case
-#'   of "pixel" size mode. There are a few restrictions / quirks only
-#'   absolute instructions, not relative. So the allowed segments are: M,
-#'   L, H, V, Q, C, T, S, and Z arcs (A) are not allowed because radius rx
-#'   and ry are relative. In the future we could consider supporting
-#'   relative commands, but we would have to decide on how to handle date
-#'   and log axes. Note that even as is, Q and C Bezier paths that are
-#'   smooth on linear axes may not be smooth on log, and vice versa. no
-#'   chained "polybezier" commands - specify the segment type for each one.
-#'   On category axes, values are numbers scaled to the serial numbers of
-#'   categories because using the categories themselves there would be no
-#'   way to describe fractional positions On data axes: because space and T
-#'   are both normal components of path strings, we can't use either to
-#'   separate date from time parts. Therefore we'll use underscore for this
-#'   purpose: 2015-02-21_13:45:56.789 String.
-#' @param row Subplot grid row (figures created with
-#'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
-#'   to address several cells.
-#' @param secondary_y If \code{TRUE}, use the secondary y axis of the
-#'   subplot.
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param showlegend Determines whether or not this shape is shown in the
-#'   legend. Logical.
-#' @param size Number in the interval [1, Inf].
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param templateitemname Used to refer to a named item in this array in
-#'   the template. Named items from the template will be created even
-#'   without a matching item in the input figure, but you can modify one by
-#'   making an item with `templateitemname` matching its `name`, alongside
-#'   your modifications (including `visible: false` or `enabled: false` to
-#'   hide it). If there is no template or no matching item, this item will
-#'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param text \strong{\code{go_layout_shape_label()}}: Sets the text to
-#'   display with shape. It is also used for legend item if `name` is not
-#'   provided. String.
-#'
-#'   \strong{\code{go_layout_shape_legendgrouptitle()}}: Sets the title of
-#'   the legend group. String.
-#' @param textangle Sets the angle at which the label text is drawn with
-#'   respect to the horizontal. For lines, angle "auto" is the same angle
-#'   as the line. For all other shapes, angle "auto" is horizontal. Angle
-#'   in degrees.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param textposition Sets the position of the label text relative to the
-#'   shape. Supported values for rectangles, circles and paths are "top
-#'   left", "top center", "top right", "middle left", "middle center",
-#'   "middle right", "bottom left", "bottom center", and "bottom right".
-#'   Supported values for lines are "start", "middle", and "end". Default:
-#'   "middle center" for rectangles, circles, and paths; "middle" for
-#'   lines. One of \code{"top left"}, \code{"top center"}, \code{"top
-#'   right"}, \code{"middle left"}, \code{"middle center"}, \code{"middle
-#'   right"}, \code{"bottom left"}, \code{"bottom center"}, \code{"bottom
-#'   right"}, \code{"start"}, \code{"middle"}, \code{"end"}.
-#' @param texttemplate Template string used for rendering the shape's
-#'   label. Note that this will override `text`. Variables are inserted
-#'   using \%\{variable\}, for example "x0: \%\{x0\}". Numbers are
-#'   formatted using d3-format's syntax \%\{variable:d3-format\}, for
-#'   example "Price: \%\{x0:$.2f\}". See
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format for details on
-#'   the formatting syntax. Dates are formatted using d3-time-format's
-#'   syntax \%\{variable|d3-time-format\}, for example "Day: \%\{x0|\%m \%b
-#'   \%Y\}". See
-#'   https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format for
-#'   details on the date formatting syntax. A single multiplication or
-#'   division operation may be applied to numeric variables, and combined
-#'   with d3 number formatting, for example "Length in cm: \%\{x0"2.54\}",
-#'   "\%\{slope"60:.1f\} meters per second." For log axes, variable values
-#'   are given in log units. For date axes, x/y coordinate variables and
-#'   center variables use datetimes, while all other variable values use
-#'   values in ms. Finally, the template string has access to variables
-#'   `x0`, `x1`, `y0`, `y1`, `slope`, `dx`, `dy`, `width`, `height`,
-#'   `length`, `xcenter`, `ycenter`, `simpleXVariables` and
-#'   `simpleYVariables`. Variables that can't be found will be replaced
-#'   with the specifier. For example, a template of "data: \%\{x\},
-#'   \%\{y\}" will result in a value of "data: 1, \%\{y\}" if x is 1 and y
-#'   is missing. Variables with an undefined value will be replaced with
-#'   the fallback value. String.
-#' @param texttemplatefallback Fallback string that's displayed when a
-#'   variable referenced in a template is missing. If the boolean value
-#'   'false' is passed in, the specifier with the missing variable will be
-#'   displayed. Any value.
-#' @param type Specifies the shape type to be drawn. If "line", a line is
-#'   drawn from (`x0`,`y0`) to (`x1`,`y1`) with respect to the axes' sizing
-#'   mode. If "circle", a circle is drawn from ((`x0`+`x1`)/2,
-#'   (`y0`+`y1`)/2)) with radius (|(`x0`+`x1`)/2 - `x0`|, |(`y0`+`y1`)/2
-#'   -`y0`)|) with respect to the axes' sizing mode. If "rect", a rectangle
-#'   is drawn linking (`x0`,`y0`), (`x1`,`y0`), (`x1`,`y1`), (`x0`,`y1`),
-#'   (`x0`,`y0`) with respect to the axes' sizing mode. If "path", draw a
-#'   custom SVG path using `path`. with respect to the axes' sizing mode.
-#'   One of \code{"circle"}, \code{"rect"}, \code{"path"}, \code{"line"}.
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param visible Determines whether or not this shape is visible. If
-#'   "legendonly", the shape is not drawn, but can appear as a legend item
-#'   (provided that the legend itself is visible). One of
-#'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param width Sets the line width (in px). Number in the interval [0,
-#'   Inf].
-#' @param x0 Sets the shape's starting x position. See `type` and
-#'   `xsizemode` for more info. Any value.
-#' @param x0shift Shifts `x0` away from the center of the category when
-#'   `xref` is a "category" or "multicategory" axis. -0.5 corresponds to
-#'   the start of the category and 0.5 corresponds to the end of the
-#'   category. Number in the interval [-1, 1].
-#' @param x1 Sets the shape's end x position. See `type` and `xsizemode`
-#'   for more info. Any value.
-#' @param x1shift Shifts `x1` away from the center of the category when
-#'   `xref` is a "category" or "multicategory" axis. -0.5 corresponds to
-#'   the start of the category and 0.5 corresponds to the end of the
-#'   category. Number in the interval [-1, 1].
-#' @param xanchor \strong{\code{go_layout_shape()}}: Only relevant in
-#'   conjunction with `xsizemode` set to "pixel". Specifies the anchor
-#'   point on the x axis to which `x0`, `x1` and x coordinates within
-#'   `path` are relative to. E.g. useful to attach a pixel sized shape to a
-#'   certain data value. No effect when `xsizemode` not set to "pixel". Any
-#'   value.
-#'
-#'   \strong{\code{go_layout_shape_label()}}: Sets the label's horizontal
-#'   position anchor This anchor binds the specified `textposition` to the
-#'   "left", "center" or "right" of the label text. For example, if
-#'   `textposition` is set to "top right" and `xanchor` to "right" then the
-#'   right-most portion of the label text lines up with the right-most edge
-#'   of the shape. One of \code{"auto"}, \code{"left"}, \code{"center"},
-#'   \code{"right"}.
-#' @param xref Sets the shape's x coordinate axis. If set to a x axis id
-#'   (e.g. "x" or "x2"), the `x` position refers to a x coordinate. If set
-#'   to "paper", the `x` position refers to the distance from the left of
-#'   the plotting area in normalized coordinates where 0 (1) corresponds to
-#'   the left (right). If set to a x axis ID followed by "domain"
-#'   (separated by a space), the position behaves like for "paper", but
-#'   refers to the distance in fractions of the domain length from the left
-#'   of the domain of that axis: e.g., "x2 domain" refers to the domain of
-#'   the second x axis and a x position of 0.5 refers to the point between
-#'   the left and the right of the domain of the second x axis. If an array
-#'   of axis IDs is provided, each `x` value will refer to the
-#'   corresponding axis, e.g., ['x', 'x2'] for a rectangle, line, or circle
-#'   means `x0` uses the `x` axis and `x1` uses the `x2` axis. Path shapes
-#'   using an array should have one entry for each x coordinate in the
-#'   string. One of \code{"paper"}, or a string matching
-#'   \code{"^x([2-9]|[1-9][0-9]+)?( domain)?$"}, or a vector of these.
-#' @param xsizemode Sets the shapes's sizing mode along the x axis. If set
-#'   to "scaled", `x0`, `x1` and x coordinates within `path` refer to data
-#'   values on the x axis or a fraction of the plot area's width (`xref`
-#'   set to "paper"). If set to "pixel", `xanchor` specifies the x position
-#'   in terms of data or plot fraction but `x0`, `x1` and x coordinates
-#'   within `path` are pixels relative to `xanchor`. This way, the shape
-#'   can have a fixed width while maintaining a position relative to data
-#'   or plot fraction. Note: `xsizemode` "pixel" is not supported when
-#'   `xref` is an array. One of \code{"scaled"}, \code{"pixel"}.
-#' @param y0 Sets the shape's starting y position. See `type` and
-#'   `ysizemode` for more info. Any value.
-#' @param y0shift Shifts `y0` away from the center of the category when
-#'   `yref` is a "category" or "multicategory" axis. -0.5 corresponds to
-#'   the start of the category and 0.5 corresponds to the end of the
-#'   category. Number in the interval [-1, 1].
-#' @param y1 Sets the shape's end y position. See `type` and `ysizemode`
-#'   for more info. Any value.
-#' @param y1shift Shifts `y1` away from the center of the category when
-#'   `yref` is a "category" or "multicategory" axis. -0.5 corresponds to
-#'   the start of the category and 0.5 corresponds to the end of the
-#'   category. Number in the interval [-1, 1].
-#' @param yanchor \strong{\code{go_layout_shape()}}: Only relevant in
-#'   conjunction with `ysizemode` set to "pixel". Specifies the anchor
-#'   point on the y axis to which `y0`, `y1` and y coordinates within
-#'   `path` are relative to. E.g. useful to attach a pixel sized shape to a
-#'   certain data value. No effect when `ysizemode` not set to "pixel". Any
-#'   value.
-#'
-#'   \strong{\code{go_layout_shape_label()}}: Sets the label's vertical
-#'   position anchor This anchor binds the specified `textposition` to the
-#'   "top", "middle" or "bottom" of the label text. For example, if
-#'   `textposition` is set to "top right" and `yanchor` to "top" then the
-#'   top-most portion of the label text lines up with the top-most edge of
-#'   the shape. One of \code{"top"}, \code{"middle"}, \code{"bottom"}.
-#' @param yref Sets the shape's y coordinate axis. If set to a y axis id
-#'   (e.g. "y" or "y2"), the `y` position refers to a y coordinate. If set
-#'   to "paper", the `y` position refers to the distance from the bottom of
-#'   the plotting area in normalized coordinates where 0 (1) corresponds to
-#'   the bottom (top). If set to a y axis ID followed by "domain"
-#'   (separated by a space), the position behaves like for "paper", but
-#'   refers to the distance in fractions of the domain length from the
-#'   bottom of the domain of that axis: e.g., "y2 domain" refers to the
-#'   domain of the second y axis and a y position of 0.5 refers to the
-#'   point between the bottom and the top of the domain of the second y
-#'   axis. If an array of axis IDs is provided, each `y` value will refer
-#'   to the corresponding axis, e.g., ['y', 'y2'] for a rectangle, line, or
-#'   circle means `y0` uses the `y` axis and `y1` uses the `y2` axis. Path
-#'   shapes using an array should have one entry for each y coordinate in
-#'   the string. One of \code{"paper"}, or a string matching
-#'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}, or a vector of these.
-#' @param ysizemode Sets the shapes's sizing mode along the y axis. If set
-#'   to "scaled", `y0`, `y1` and y coordinates within `path` refer to data
-#'   values on the y axis or a fraction of the plot area's height (`yref`
-#'   set to "paper"). If set to "pixel", `yanchor` specifies the y position
-#'   in terms of data or plot fraction but `y0`, `y1` and y coordinates
-#'   within `path` are pixels relative to `yanchor`. This way, the shape
-#'   can have a fixed height while maintaining a position relative to data
-#'   or plot fraction. Note: `ysizemode` "pixel" is not supported when
-#'   `yref` is an array. One of \code{"scaled"}, \code{"pixel"}.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_shape <- function(
-    arg = NULL, ..., editable = NULL, fillcolor = NULL, fillrule = NULL,
-    label = NULL, layer = NULL, legend = NULL, legendgroup = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    line = NULL, name = NULL, opacity = NULL, path = NULL,
-    showlegend = NULL, templateitemname = NULL, type = NULL, visible = NULL,
-    x0 = NULL, x0shift = NULL, x1 = NULL, x1shift = NULL, xanchor = NULL,
-    xref = NULL, xsizemode = NULL, y0 = NULL, y0shift = NULL, y1 = NULL,
-    y1shift = NULL, yanchor = NULL, yref = NULL, ysizemode = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.shape", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_shape
-#' @export
-go_layout_shape_label <- function(
-    arg = NULL, ..., font = NULL, padding = NULL, text = NULL,
-    textangle = NULL, textposition = NULL, texttemplate = NULL,
-    texttemplatefallback = NULL, xanchor = NULL, yanchor = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.shape.label", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_shape
-#' @export
-go_layout_shape_label_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.shape.label.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_shape
-#' @export
-go_layout_shape_legendgrouptitle <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.shape.legendgrouptitle", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_shape
-#' @export
-go_layout_shape_legendgrouptitle_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.shape.legendgrouptitle.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_shape
-#' @export
-go_layout_shape_line <- function(
-    arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.shape.line", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout slider objects
-#'
-#' Properties of \code{layout.slider}.
-#'
-#' \code{go_layout_slider()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}).
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_slider_currentvalue()}}{\code{layout.slider.currentvalue}}
-#' \item{\code{go_layout_slider_currentvalue_font()}}{\code{layout.slider.currentvalue.font}:
-#' Sets the font of the current value label text.}
-#' \item{\code{go_layout_slider_font()}}{\code{layout.slider.font}: Sets the
-#' font of the slider step labels.}
-#' \item{\code{go_layout_slider_pad()}}{\code{layout.slider.pad}: Set the
-#' padding of the slider component along each side.}
-#' \item{\code{go_layout_slider_step()}}{\code{layout.slider.step}}
-#' \item{\code{go_layout_slider_transition()}}{\code{layout.slider.transition}}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param active Determines which button (by index starting from 0) is
-#'   considered active. Number in the interval [0, Inf].
-#' @param activebgcolor Sets the background color of the slider grip while
-#'   dragging. Color: a CSS color string or R color name.
-#' @param args Sets the arguments values to be passed to the Plotly method
-#'   set in `method` on slide. Vector or list of up to 3 element(s).
-#' @param b The amount of padding (in px) along the bottom of the
-#'   component. Number.
-#' @param bgcolor Sets the background color of the slider. Color: a CSS
-#'   color string or R color name.
-#' @param bordercolor Sets the color of the border enclosing the slider.
-#'   Color: a CSS color string or R color name.
-#' @param borderwidth Sets the width (in px) of the border enclosing the
-#'   slider. Number in the interval [0, Inf].
-#' @param color Color: a CSS color string or R color name.
-#' @param currentvalue Named list or
-#'   \code{\link{go_layout_slider_currentvalue}()} object.
-#' @param duration Sets the duration of the slider transition Number in the
-#'   interval [0, Inf].
-#' @param easing Sets the easing function of the slider transition One of
-#'   \code{"linear"}, \code{"quad"}, \code{"cubic"}, \code{"sin"},
-#'   \code{"exp"}, \code{"circle"}, \code{"elastic"}, \code{"back"},
-#'   \code{"bounce"}, \code{"linear-in"}, \code{"quad-in"},
-#'   \code{"cubic-in"}, \code{"sin-in"}, \code{"exp-in"},
-#'   \code{"circle-in"}, \code{"elastic-in"}, \code{"back-in"},
-#'   \code{"bounce-in"}, \code{"linear-out"}, \code{"quad-out"},
-#'   \code{"cubic-out"}, \code{"sin-out"}, \code{"exp-out"},
-#'   \code{"circle-out"}, \code{"elastic-out"}, \code{"back-out"},
-#'   \code{"bounce-out"}, \code{"linear-in-out"}, \code{"quad-in-out"},
-#'   \code{"cubic-in-out"}, \code{"sin-in-out"}, \code{"exp-in-out"},
-#'   \code{"circle-in-out"}, \code{"elastic-in-out"}, \code{"back-in-out"},
-#'   \code{"bounce-in-out"}.
-#' @param execute When true, the API method is executed. When false, all
-#'   other behaviors are the same and command execution is skipped. This
-#'   may be useful when hooking into, for example, the
-#'   `plotly_sliderchange` method and executing the API command manually
-#'   without losing the benefit of the slider automatically binding to the
-#'   state of the plot through the specification of `method` and `args`.
-#'   Logical.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param font \strong{\code{go_layout_slider()}}: Sets the font of the
-#'   slider step labels. Named list or
-#'   \code{\link{go_layout_slider_font}()} object.
-#'
-#'   \strong{\code{go_layout_slider_currentvalue()}}: Sets the font of the
-#'   current value label text. Named list or
-#'   \code{\link{go_layout_slider_currentvalue_font}()} object.
-#' @param l The amount of padding (in px) on the left side of the
-#'   component. Number.
-#' @param label Sets the text label to appear on the slider String.
-#' @param len Sets the length of the slider This measure excludes the
-#'   padding of both ends. That is, the slider's length is this length
-#'   minus the padding on both ends. Number in the interval [0, Inf].
-#' @param lenmode Determines whether this slider length is set in units of
-#'   plot "fraction" or in *pixels. Use `len` to set the value. One of
-#'   \code{"fraction"}, \code{"pixels"}.
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param method Sets the Plotly method to be called when the slider value
-#'   is changed. If the `skip` method is used, the API slider will function
-#'   as normal but will perform no API calls and will not bind
-#'   automatically to state updates. This may be used to create a component
-#'   interface and attach to slider events manually via JavaScript. One of
-#'   \code{"restyle"}, \code{"relayout"}, \code{"animate"},
-#'   \code{"update"}, \code{"skip"}.
-#' @param minorticklen Sets the length in pixels of minor step tick marks
-#'   Number in the interval [0, Inf].
-#' @param name When used in a template, named items are created in the
-#'   output figure in addition to any items the figure already has in this
-#'   array. You can modify these items in the output figure by making your
-#'   own item with `templateitemname` matching this `name` alongside your
-#'   modifications (including `visible: false` or `enabled: false` to hide
-#'   it). Has no effect outside of a template. String.
-#' @param offset The amount of space, in pixels, between the current value
-#'   label and the slider. Number.
-#' @param pad Set the padding of the slider component along each side.
-#'   Named list or \code{\link{go_layout_slider_pad}()} object.
-#' @param prefix When currentvalue.visible is true, this sets the prefix of
-#'   the label. String.
-#' @param r The amount of padding (in px) on the right side of the
-#'   component. Number.
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param size Number in the interval [1, Inf].
-#' @param steps List of named lists or
-#'   \code{\link{go_layout_slider_step}()} objects.
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param suffix When currentvalue.visible is true, this sets the suffix of
-#'   the label. String.
-#' @param t The amount of padding (in px) along the top of the component.
-#'   Number.
-#' @param templateitemname Used to refer to a named item in this array in
-#'   the template. Named items from the template will be created even
-#'   without a matching item in the input figure, but you can modify one by
-#'   making an item with `templateitemname` matching its `name`, alongside
-#'   your modifications (including `visible: false` or `enabled: false` to
-#'   hide it). If there is no template or no matching item, this item will
-#'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param tickcolor Sets the color of the border enclosing the slider.
-#'   Color: a CSS color string or R color name.
-#' @param ticklen Sets the length in pixels of step tick marks Number in
-#'   the interval [0, Inf].
-#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
-#'   Inf].
-#' @param transition Named list or
-#'   \code{\link{go_layout_slider_transition}()} object.
-#' @param value Sets the value of the slider step, used to refer to the
-#'   step programatically. Defaults to the slider label if not provided.
-#'   String.
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param visible \strong{\code{go_layout_slider()}}: Determines whether or
-#'   not the slider is visible. Logical.
-#'
-#'   \strong{\code{go_layout_slider_currentvalue()}}: Shows the
-#'   currently-selected value above the slider. Logical.
-#'
-#'   \strong{\code{go_layout_slider_step()}}: Determines whether or not
-#'   this step is included in the slider. Logical.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param x Sets the x position (in normalized coordinates) of the slider.
-#'   Number in the interval [-2, 3].
-#' @param xanchor \strong{\code{go_layout_slider()}}: Sets the slider's
-#'   horizontal position anchor. This anchor binds the `x` position to the
-#'   "left", "center" or "right" of the range selector. One of
-#'   \code{"auto"}, \code{"left"}, \code{"center"}, \code{"right"}.
-#'
-#'   \strong{\code{go_layout_slider_currentvalue()}}: The alignment of the
-#'   value readout relative to the length of the slider. One of
-#'   \code{"left"}, \code{"center"}, \code{"right"}.
-#' @param y Sets the y position (in normalized coordinates) of the slider.
-#'   Number in the interval [-2, 3].
-#' @param yanchor Sets the slider's vertical position anchor This anchor
-#'   binds the `y` position to the "top", "middle" or "bottom" of the range
-#'   selector. One of \code{"auto"}, \code{"top"}, \code{"middle"},
-#'   \code{"bottom"}.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_slider <- function(
-    arg = NULL, ..., active = NULL, activebgcolor = NULL, bgcolor = NULL,
-    bordercolor = NULL, borderwidth = NULL, currentvalue = NULL,
-    font = NULL, len = NULL, lenmode = NULL, minorticklen = NULL,
-    name = NULL, pad = NULL, steps = NULL, templateitemname = NULL,
-    tickcolor = NULL, ticklen = NULL, tickwidth = NULL, transition = NULL,
-    visible = NULL, x = NULL, xanchor = NULL, y = NULL, yanchor = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.slider", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_slider
-#' @export
-go_layout_slider_currentvalue <- function(
-    arg = NULL, ..., font = NULL, offset = NULL, prefix = NULL,
-    suffix = NULL, visible = NULL, xanchor = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.slider.currentvalue", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_slider
-#' @export
-go_layout_slider_currentvalue_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.slider.currentvalue.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_slider
-#' @export
-go_layout_slider_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.slider.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_slider
-#' @export
-go_layout_slider_pad <- function(
-    arg = NULL, ..., b = NULL, l = NULL, r = NULL, t = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.slider.pad", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_slider
-#' @export
-go_layout_slider_step <- function(
-    arg = NULL, ..., args = NULL, execute = NULL, label = NULL,
-    method = NULL, name = NULL, templateitemname = NULL, value = NULL,
-    visible = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.slider.step", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_slider
-#' @export
-go_layout_slider_transition <- function(
-    arg = NULL, ..., duration = NULL, easing = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.slider.transition", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout smith objects
-#'
-#' Properties of \code{layout.smith}.
-#'
-#' \code{go_layout_smith()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}).
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_smith_domain()}}{\code{layout.smith.domain}}
-#' \item{\code{go_layout_smith_imaginaryaxis()}}{\code{layout.smith.imaginaryaxis}}
-#' \item{\code{go_layout_smith_imaginaryaxis_tickfont()}}{\code{layout.smith.imaginaryaxis.tickfont}:
-#' Sets the tick font.}
-#' \item{\code{go_layout_smith_realaxis()}}{\code{layout.smith.realaxis}}
-#' \item{\code{go_layout_smith_realaxis_tickfont()}}{\code{layout.smith.realaxis.tickfont}:
-#' Sets the tick font.}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param bgcolor Set the background color of the subplot Color: a CSS
-#'   color string or R color name.
-#' @param color \strong{\code{go_layout_smith_imaginaryaxis()},
-#'   \code{go_layout_smith_realaxis()}}: Sets default for all colors
-#'   associated with this axis all at once: line, font, tick, and grid
-#'   colors. Grid color is lightened by blending this with the plot
-#'   background Individual pieces can override this. Color: a CSS color
-#'   string or R color name.
-#'
-#'   \strong{\code{go_layout_smith_imaginaryaxis_tickfont()},
-#'   \code{go_layout_smith_realaxis_tickfont()}}: Color: a CSS color string
-#'   or R color name.
-#' @param column If there is a layout grid, use the domain for this column
-#'   in the grid for this smith subplot. Integer in the interval [0, Inf].
-#' @param domain Named list or \code{\link{go_layout_smith_domain}()}
-#'   object.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param gridcolor Sets the color of the grid lines. Color: a CSS color
-#'   string or R color name.
-#' @param griddash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param gridwidth Sets the width (in px) of the grid lines. Number in the
-#'   interval [0, Inf].
-#' @param hoverformat Sets the hover text formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param imaginaryaxis Named list or
-#'   \code{\link{go_layout_smith_imaginaryaxis}()} object.
-#' @param labelalias Replacement text for specific tick or hover labels.
-#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-#'   to Canada. The labels we would have shown must match the keys exactly,
-#'   after adding any tickprefix or ticksuffix. For negative numbers the
-#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
-#'   That means you need to use -1 instead of -1. labelalias can be used
-#'   with any axis type, and both keys (if needed) and values (if desired)
-#'   can include html-like tags or MathJax. Any value.
-#' @param layer Sets the layer on which this axis is displayed. If "above
-#'   traces", this axis is displayed above all the subplot's traces If
-#'   "below traces", this axis is displayed below all the subplot's traces,
-#'   but above the grid lines. Useful when used together with scatter-like
-#'   traces with `cliponaxis` set to FALSE to show markers and/or text
-#'   nodes above this axis. One of \code{"above traces"}, \code{"below
-#'   traces"}.
-#' @param linecolor Sets the axis line color. Color: a CSS color string or
-#'   R color name.
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param linewidth Sets the width (in px) of the axis line. Number in the
-#'   interval [0, Inf].
-#' @param realaxis Named list or \code{\link{go_layout_smith_realaxis}()}
-#'   object.
-#' @param row If there is a layout grid, use the domain for this row in the
-#'   grid for this smith subplot. Integer in the interval [0, Inf].
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param showgrid Determines whether or not grid lines are drawn. If TRUE,
-#'   the grid lines are drawn at every tick mark. Logical.
-#' @param showline Determines whether or not a line bounding this axis is
-#'   drawn. Logical.
-#' @param showticklabels Determines whether or not the tick labels are
-#'   drawn. Logical.
-#' @param showtickprefix If "all", all tick labels are displayed with a
-#'   prefix. If "first", only the first tick is displayed with a prefix. If
-#'   "last", only the last tick is displayed with a suffix. If "none", tick
-#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
-#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
-#' @param side Determines on which side of real axis line the tick and tick
-#'   labels appear. One of \code{"top"}, \code{"bottom"}.
-#' @param size Number in the interval [1, Inf].
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param tickangle Sets the angle of the tick labels with respect to the
-#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
-#'   vertically. Angle in degrees.
-#' @param tickcolor Sets the tick color. Color: a CSS color string or R
-#'   color name.
-#' @param tickfont \strong{\code{go_layout_smith_imaginaryaxis()}}: Sets
-#'   the tick font. Named list or
-#'   \code{\link{go_layout_smith_imaginaryaxis_tickfont}()} object.
-#'
-#'   \strong{\code{go_layout_smith_realaxis()}}: Sets the tick font. Named
-#'   list or \code{\link{go_layout_smith_realaxis_tickfont}()} object.
-#' @param tickformat Sets the tick label formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param ticklen Sets the tick length (in px). Number in the interval [0,
-#'   Inf].
-#' @param tickprefix Sets a tick label prefix. String.
-#' @param ticks \strong{\code{go_layout_smith_imaginaryaxis()}}: Determines
-#'   whether ticks are drawn or not. If **, this axis' ticks are not drawn.
-#'   If "outside" ("inside"), this axis' are drawn outside (inside) the
-#'   axis lines. One of \code{"outside"}, \code{"inside"}, \code{""}.
-#'
-#'   \strong{\code{go_layout_smith_realaxis()}}: Determines whether ticks
-#'   are drawn or not. If **, this axis' ticks are not drawn. If "top"
-#'   ("bottom"), this axis' are drawn above (below) the axis line. One of
-#'   \code{"top"}, \code{"bottom"}, \code{""}.
-#' @param ticksuffix Sets a tick label suffix. String.
-#' @param tickvals \strong{\code{go_layout_smith_imaginaryaxis()}}: Sets
-#'   the values at which ticks on this axis appear. Defaults to
-#'   `realaxis.tickvals` plus the same as negatives and zero. Data array: a
-#'   vector, factor, Date/POSIXct vector, matrix or list.
-#'
-#'   \strong{\code{go_layout_smith_realaxis()}}: Sets the values at which
-#'   ticks on this axis appear. Data array: a vector, factor, Date/POSIXct
-#'   vector, matrix or list.
-#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
-#'   Inf].
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param visible A single toggle to hide the axis while preserving
-#'   interaction like dragging. Default is true when a cheater plot is
-#'   present on the axis, otherwise false Logical.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param x Sets the horizontal domain of this smith subplot (in plot
-#'   fraction). Vector or list of 2 element(s).
-#' @param y Sets the vertical domain of this smith subplot (in plot
-#'   fraction). Vector or list of 2 element(s).
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_smith <- function(
-    arg = NULL, ..., bgcolor = NULL, domain = NULL, imaginaryaxis = NULL,
-    realaxis = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.smith", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_smith
-#' @export
-go_layout_smith_domain <- function(
-    arg = NULL, ..., column = NULL, row = NULL, x = NULL, y = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.smith.domain", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_smith
-#' @export
-go_layout_smith_imaginaryaxis <- function(
-    arg = NULL, ..., color = NULL, gridcolor = NULL, griddash = NULL,
-    gridwidth = NULL, hoverformat = NULL, labelalias = NULL, layer = NULL,
-    linecolor = NULL, linewidth = NULL, showgrid = NULL, showline = NULL,
-    showticklabels = NULL, showtickprefix = NULL, showticksuffix = NULL,
-    tickcolor = NULL, tickfont = NULL, tickformat = NULL, ticklen = NULL,
-    tickprefix = NULL, ticks = NULL, ticksuffix = NULL, tickvals = NULL,
-    tickwidth = NULL, visible = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.smith.imaginaryaxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_smith
-#' @export
-go_layout_smith_imaginaryaxis_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.smith.imaginaryaxis.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_smith
-#' @export
-go_layout_smith_realaxis <- function(
-    arg = NULL, ..., color = NULL, gridcolor = NULL, griddash = NULL,
-    gridwidth = NULL, hoverformat = NULL, labelalias = NULL, layer = NULL,
-    linecolor = NULL, linewidth = NULL, showgrid = NULL, showline = NULL,
-    showticklabels = NULL, showtickprefix = NULL, showticksuffix = NULL,
-    side = NULL, tickangle = NULL, tickcolor = NULL, tickfont = NULL,
-    tickformat = NULL, ticklen = NULL, tickprefix = NULL, ticks = NULL,
-    ticksuffix = NULL, tickvals = NULL, tickwidth = NULL, visible = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.smith.realaxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_smith
-#' @export
-go_layout_smith_realaxis_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.smith.realaxis.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout ternary objects
-#'
-#' Properties of \code{layout.ternary}.
-#'
-#' \code{go_layout_ternary()} and the nested object constructors below
-#' create validated graph objects (named lists). Every property is checked
-#' against the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}).
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_ternary_aaxis()}}{\code{layout.ternary.aaxis}}
-#' \item{\code{go_layout_ternary_aaxis_tickfont()}}{\code{layout.ternary.aaxis.tickfont}:
-#' Sets the tick font.}
-#' \item{\code{go_layout_ternary_aaxis_tickformatstop()}}{\code{layout.ternary.aaxis.tickformatstop}}
-#' \item{\code{go_layout_ternary_aaxis_title()}}{\code{layout.ternary.aaxis.title}}
-#' \item{\code{go_layout_ternary_aaxis_title_font()}}{\code{layout.ternary.aaxis.title.font}:
-#' Sets this axis' title font.}
-#' \item{\code{go_layout_ternary_baxis()}}{\code{layout.ternary.baxis}}
-#' \item{\code{go_layout_ternary_baxis_tickfont()}}{\code{layout.ternary.baxis.tickfont}:
-#' Sets the tick font.}
-#' \item{\code{go_layout_ternary_baxis_tickformatstop()}}{\code{layout.ternary.baxis.tickformatstop}}
-#' \item{\code{go_layout_ternary_baxis_title()}}{\code{layout.ternary.baxis.title}}
-#' \item{\code{go_layout_ternary_baxis_title_font()}}{\code{layout.ternary.baxis.title.font}:
-#' Sets this axis' title font.}
-#' \item{\code{go_layout_ternary_caxis()}}{\code{layout.ternary.caxis}}
-#' \item{\code{go_layout_ternary_caxis_tickfont()}}{\code{layout.ternary.caxis.tickfont}:
-#' Sets the tick font.}
-#' \item{\code{go_layout_ternary_caxis_tickformatstop()}}{\code{layout.ternary.caxis.tickformatstop}}
-#' \item{\code{go_layout_ternary_caxis_title()}}{\code{layout.ternary.caxis.title}}
-#' \item{\code{go_layout_ternary_caxis_title_font()}}{\code{layout.ternary.caxis.title.font}:
-#' Sets this axis' title font.}
-#' \item{\code{go_layout_ternary_domain()}}{\code{layout.ternary.domain}}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param aaxis Named list or \code{\link{go_layout_ternary_aaxis}()}
-#'   object.
-#' @param baxis Named list or \code{\link{go_layout_ternary_baxis}()}
-#'   object.
-#' @param bgcolor Set the background color of the subplot Color: a CSS
-#'   color string or R color name.
-#' @param caxis Named list or \code{\link{go_layout_ternary_caxis}()}
-#'   object.
-#' @param color \strong{\code{go_layout_ternary_aaxis()},
-#'   \code{go_layout_ternary_baxis()}, \code{go_layout_ternary_caxis()}}:
-#'   Sets default for all colors associated with this axis all at once:
-#'   line, font, tick, and grid colors. Grid color is lightened by blending
-#'   this with the plot background Individual pieces can override this.
-#'   Color: a CSS color string or R color name.
-#'
-#'   \strong{\code{go_layout_ternary_aaxis_tickfont()},
-#'   \code{go_layout_ternary_aaxis_title_font()},
-#'   \code{go_layout_ternary_baxis_tickfont()},
-#'   \code{go_layout_ternary_baxis_title_font()},
-#'   \code{go_layout_ternary_caxis_tickfont()},
-#'   \code{go_layout_ternary_caxis_title_font()}}: Color: a CSS color
-#'   string or R color name.
-#' @param column If there is a layout grid, use the domain for this column
-#'   in the grid for this ternary subplot. Integer in the interval [0,
-#'   Inf].
-#' @param domain Named list or \code{\link{go_layout_ternary_domain}()}
-#'   object.
-#' @param dtick Sets the step in-between ticks on this axis. Use with
-#'   `tick0`. Must be a positive number, or special strings available to
-#'   "log" and "date" axes. If the axis `type` is "log", then ticks are set
-#'   every 10^(n*dtick) where n is the tick number. For example, to set a
-#'   tick mark at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks
-#'   at 1, 100, 10000, ... set dtick to 2. To set tick marks at 1, 5, 25,
-#'   125, 625, 3125, ... set dtick to log_10(5), or 0.69897000433. "log"
-#'   has several special values; "L<f>", where `f` is a positive number,
-#'   gives ticks linearly spaced in value (but not position). For example
-#'   `tick0` = 0.1, `dtick` = "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6
-#'   etc. To show powers of 10 plus small digits between, use "D1" (all
-#'   digits) or "D2" (only 2 and 5). `tick0` is ignored for "D1" and "D2".
-#'   If the axis `type` is "date", then you must convert the time to
-#'   milliseconds. For example, to set the interval between ticks to one
-#'   day, set `dtick` to 86400000.0. "date" also has special values "M<n>"
-#'   gives ticks spaced by a number of months. `n` must be a positive
-#'   integer. To set ticks on the 15th of every third month, set `tick0` to
-#'   "2000-01-15" and `dtick` to "M3". To set ticks every 4 years, set
-#'   `dtick` to "M48" Any value.
-#' @param dtickrange range ["min", "max"], where "min", "max" - dtick
-#'   values which describe some zoom level, it is possible to omit "min" or
-#'   "max" value by passing "null" Vector or list of 2 element(s).
-#' @param enabled Determines whether or not this stop is used. If `false`,
-#'   this stop is ignored even within its `dtickrange`. Logical.
-#' @param exponentformat Determines a formatting rule for the tick
-#'   exponents. For example, consider the number 1,000,000,000. If "none",
-#'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-#'   1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-#'   prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-#'   covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-#'   Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-#'   the above ranges, the formatting rule will automatically be switched
-#'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-#'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param font \strong{\code{go_layout_ternary_aaxis_title()}}: Sets this
-#'   axis' title font. Named list or
-#'   \code{\link{go_layout_ternary_aaxis_title_font}()} object.
-#'
-#'   \strong{\code{go_layout_ternary_baxis_title()}}: Sets this axis' title
-#'   font. Named list or \code{\link{go_layout_ternary_baxis_title_font}()}
-#'   object.
-#'
-#'   \strong{\code{go_layout_ternary_caxis_title()}}: Sets this axis' title
-#'   font. Named list or \code{\link{go_layout_ternary_caxis_title_font}()}
-#'   object.
-#' @param gridcolor Sets the color of the grid lines. Color: a CSS color
-#'   string or R color name.
-#' @param griddash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param gridwidth Sets the width (in px) of the grid lines. Number in the
-#'   interval [0, Inf].
-#' @param hoverformat Sets the hover text formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param labelalias Replacement text for specific tick or hover labels.
-#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-#'   to Canada. The labels we would have shown must match the keys exactly,
-#'   after adding any tickprefix or ticksuffix. For negative numbers the
-#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
-#'   That means you need to use -1 instead of -1. labelalias can be used
-#'   with any axis type, and both keys (if needed) and values (if desired)
-#'   can include html-like tags or MathJax. Any value.
-#' @param layer Sets the layer on which this axis is displayed. If "above
-#'   traces", this axis is displayed above all the subplot's traces If
-#'   "below traces", this axis is displayed below all the subplot's traces,
-#'   but above the grid lines. Useful when used together with scatter-like
-#'   traces with `cliponaxis` set to FALSE to show markers and/or text
-#'   nodes above this axis. One of \code{"above traces"}, \code{"below
-#'   traces"}.
-#' @param linecolor Sets the axis line color. Color: a CSS color string or
-#'   R color name.
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param linewidth Sets the width (in px) of the axis line. Number in the
-#'   interval [0, Inf].
-#' @param min The minimum value visible on this axis. The maximum is
-#'   determined by the sum minus the minimum values of the other two axes.
-#'   The full view corresponds to all the minima set to zero. Number in the
-#'   interval [0, Inf].
-#' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
-#'   This only has an effect when `tickformat` is "SI" or "B". Number in
-#'   the interval [0, Inf].
-#' @param name When used in a template, named items are created in the
-#'   output figure in addition to any items the figure already has in this
-#'   array. You can modify these items in the output figure by making your
-#'   own item with `templateitemname` matching this `name` alongside your
-#'   modifications (including `visible: false` or `enabled: false` to hide
-#'   it). Has no effect outside of a template. String.
-#' @param nticks Specifies the maximum number of ticks for the particular
-#'   axis. The actual number of ticks will be chosen automatically to be
-#'   less than or equal to `nticks`. Has an effect only if `tickmode` is
-#'   set to "auto". Integer in the interval [1, Inf].
-#' @param row If there is a layout grid, use the domain for this row in the
-#'   grid for this ternary subplot. Integer in the interval [0, Inf].
-#' @param separatethousands If "true", even 4-digit integers are separated
-#'   Logical.
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param showexponent If "all", all exponents are shown besides their
-#'   significands. If "first", only the exponent of the first tick is
-#'   shown. If "last", only the exponent of the last tick is shown. If
-#'   "none", no exponents appear. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showgrid Determines whether or not grid lines are drawn. If TRUE,
-#'   the grid lines are drawn at every tick mark. Logical.
-#' @param showline Determines whether or not a line bounding this axis is
-#'   drawn. Logical.
-#' @param showspikes Determines whether or not spikes (aka droplines) are
-#'   drawn for this axis. Ternary spikes are accompanied by axis value
-#'   labels formatted according to `hoverformat`. Logical.
-#' @param showticklabels Determines whether or not the tick labels are
-#'   drawn. Logical.
-#' @param showtickprefix If "all", all tick labels are displayed with a
-#'   prefix. If "first", only the first tick is displayed with a prefix. If
-#'   "last", only the last tick is displayed with a suffix. If "none", tick
-#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
-#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
-#' @param size Number in the interval [1, Inf].
-#' @param spikecolor Sets the spike color. If undefined, will use the
-#'   series color Color: a CSS color string or R color name.
-#' @param spikedash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param spikemode Determines the drawing mode for the spike line If
-#'   "toaxis", the line is drawn from the data point to the axis the series
-#'   is plotted on. If "across", the line is drawn across the entire plot
-#'   area, and supercedes "toaxis". If "marker", then a marker dot is drawn
-#'   on the axis the series is plotted on Any combination of
-#'   \code{"toaxis"}, \code{"across"}, \code{"marker"} joined with
-#'   \code{"+"}.
-#' @param spikesnap Determines whether spikelines are stuck to the cursor
-#'   or to the closest datapoints. One of \code{"data"}, \code{"cursor"},
-#'   \code{"hovered data"}.
-#' @param spikethickness Sets the spike line width in pixels. Number.
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param sum The number each triplet should sum to, and the maximum range
-#'   of each axis Number in the interval [0, Inf].
-#' @param templateitemname Used to refer to a named item in this array in
-#'   the template. Named items from the template will be created even
-#'   without a matching item in the input figure, but you can modify one by
-#'   making an item with `templateitemname` matching its `name`, alongside
-#'   your modifications (including `visible: false` or `enabled: false` to
-#'   hide it). If there is no template or no matching item, this item will
-#'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param text Sets the title of this axis. String.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param tick0 Sets the placement of the first tick on this axis. Use with
-#'   `dtick`. If the axis `type` is "log", then you must take the log of
-#'   your starting tick (e.g. to set the starting tick to 100, set the
-#'   `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-#'   If the axis `type` is "date", it should be a date string, like date
-#'   data. If the axis `type` is "category", it should be a number, using
-#'   the scale where each category is assigned a serial number from zero in
-#'   the order it appears. Any value.
-#' @param tickangle Sets the angle of the tick labels with respect to the
-#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
-#'   vertically. Angle in degrees.
-#' @param tickcolor Sets the tick color. Color: a CSS color string or R
-#'   color name.
-#' @param tickfont \strong{\code{go_layout_ternary_aaxis()}}: Sets the tick
-#'   font. Named list or \code{\link{go_layout_ternary_aaxis_tickfont}()}
-#'   object.
-#'
-#'   \strong{\code{go_layout_ternary_baxis()}}: Sets the tick font. Named
-#'   list or \code{\link{go_layout_ternary_baxis_tickfont}()} object.
-#'
-#'   \strong{\code{go_layout_ternary_caxis()}}: Sets the tick font. Named
-#'   list or \code{\link{go_layout_ternary_caxis_tickfont}()} object.
-#' @param tickformat Sets the tick label formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param tickformatstops \strong{\code{go_layout_ternary_aaxis()}}: List
-#'   of named lists or
-#'   \code{\link{go_layout_ternary_aaxis_tickformatstop}()} objects.
-#'
-#'   \strong{\code{go_layout_ternary_baxis()}}: List of named lists or
-#'   \code{\link{go_layout_ternary_baxis_tickformatstop}()} objects.
-#'
-#'   \strong{\code{go_layout_ternary_caxis()}}: List of named lists or
-#'   \code{\link{go_layout_ternary_caxis_tickformatstop}()} objects.
-#' @param ticklabelstep Sets the spacing between tick labels as compared to
-#'   the spacing between ticks. A value of 1 (default) means each tick gets
-#'   a label. A value of 2 means shows every 2nd label. A larger value n
-#'   means only every nth tick is labeled. `tick0` determines which labels
-#'   are shown. Not implemented for axes with `type` "log" or
-#'   "multicategory", or when `tickmode` is "array". Integer in the
-#'   interval [1, Inf].
-#' @param ticklen Sets the tick length (in px). Number in the interval [0,
-#'   Inf].
-#' @param tickmode Sets the tick mode for this axis. If "auto", the number
-#'   of ticks is set via `nticks`. If "linear", the placement of the ticks
-#'   is determined by a starting position `tick0` and a tick step `dtick`
-#'   ("linear" is the default value if `tick0` and `dtick` are provided).
-#'   If "array", the placement of the ticks is set via `tickvals` and the
-#'   tick text is `ticktext`. ("array" is the default value if `tickvals`
-#'   is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.
-#' @param tickprefix Sets a tick label prefix. String.
-#' @param ticks Determines whether ticks are drawn or not. If **, this
-#'   axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-#'   drawn outside (inside) the axis lines. One of \code{"outside"},
-#'   \code{"inside"}, \code{""}.
-#' @param ticksuffix Sets a tick label suffix. String.
-#' @param ticktext Sets the text displayed at the ticks position via
-#'   `tickvals`. Only has an effect if `tickmode` is set to "array". Used
-#'   with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#' @param tickvals Sets the values at which ticks on this axis appear. Only
-#'   has an effect if `tickmode` is set to "array". Used with `ticktext`.
-#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
-#'   Inf].
-#' @param title \strong{\code{go_layout_ternary_aaxis()}}: String (the
-#'   title text), named list or
-#'   \code{\link{go_layout_ternary_aaxis_title}()} object.
-#'
-#'   \strong{\code{go_layout_ternary_baxis()}}: String (the title text),
-#'   named list or \code{\link{go_layout_ternary_baxis_title}()} object.
-#'
-#'   \strong{\code{go_layout_ternary_caxis()}}: String (the title text),
-#'   named list or \code{\link{go_layout_ternary_caxis_title}()} object.
-#' @param uirevision \strong{\code{go_layout_ternary()}}: Controls
-#'   persistence of user-driven changes in axis `min` and `title`, if not
-#'   overridden in the individual axes. Defaults to `layout.uirevision`.
-#'   Any value.
-#'
-#'   \strong{\code{go_layout_ternary_aaxis()},
-#'   \code{go_layout_ternary_baxis()}, \code{go_layout_ternary_caxis()}}:
-#'   Controls persistence of user-driven changes in axis `min`, and `title`
-#'   if in `editable: true` configuration. Defaults to
-#'   `ternary<N>.uirevision`. Any value.
-#' @param value string - dtickformat for described zoom level, the same as
-#'   "tickformat" String.
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param x Sets the horizontal domain of this ternary subplot (in plot
-#'   fraction). Vector or list of 2 element(s).
-#' @param y Sets the vertical domain of this ternary subplot (in plot
-#'   fraction). Vector or list of 2 element(s).
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_ternary <- function(
-    arg = NULL, ..., aaxis = NULL, baxis = NULL, bgcolor = NULL,
-    caxis = NULL, domain = NULL, sum = NULL, uirevision = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_ternary
-#' @export
-go_layout_ternary_aaxis <- function(
-    arg = NULL, ..., color = NULL, dtick = NULL, exponentformat = NULL,
-    gridcolor = NULL, griddash = NULL, gridwidth = NULL, hoverformat = NULL,
-    labelalias = NULL, layer = NULL, linecolor = NULL, linewidth = NULL,
-    min = NULL, minexponent = NULL, nticks = NULL, separatethousands = NULL,
-    showexponent = NULL, showgrid = NULL, showline = NULL,
-    showspikes = NULL, showticklabels = NULL, showtickprefix = NULL,
-    showticksuffix = NULL, spikecolor = NULL, spikedash = NULL,
-    spikemode = NULL, spikesnap = NULL, spikethickness = NULL, tick0 = NULL,
-    tickangle = NULL, tickcolor = NULL, tickfont = NULL, tickformat = NULL,
-    tickformatstops = NULL, ticklabelstep = NULL, ticklen = NULL,
-    tickmode = NULL, tickprefix = NULL, ticks = NULL, ticksuffix = NULL,
-    ticktext = NULL, tickvals = NULL, tickwidth = NULL, title = NULL,
-    uirevision = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.aaxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_ternary
-#' @export
-go_layout_ternary_aaxis_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.aaxis.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_ternary
-#' @export
-go_layout_ternary_aaxis_tickformatstop <- function(
-    arg = NULL, ..., dtickrange = NULL, enabled = NULL, name = NULL,
-    templateitemname = NULL, value = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.aaxis.tickformatstop", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_ternary
-#' @export
-go_layout_ternary_aaxis_title <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.aaxis.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_ternary
-#' @export
-go_layout_ternary_aaxis_title_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.aaxis.title.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_ternary
-#' @export
-go_layout_ternary_baxis <- function(
-    arg = NULL, ..., color = NULL, dtick = NULL, exponentformat = NULL,
-    gridcolor = NULL, griddash = NULL, gridwidth = NULL, hoverformat = NULL,
-    labelalias = NULL, layer = NULL, linecolor = NULL, linewidth = NULL,
-    min = NULL, minexponent = NULL, nticks = NULL, separatethousands = NULL,
-    showexponent = NULL, showgrid = NULL, showline = NULL,
-    showspikes = NULL, showticklabels = NULL, showtickprefix = NULL,
-    showticksuffix = NULL, spikecolor = NULL, spikedash = NULL,
-    spikemode = NULL, spikesnap = NULL, spikethickness = NULL, tick0 = NULL,
-    tickangle = NULL, tickcolor = NULL, tickfont = NULL, tickformat = NULL,
-    tickformatstops = NULL, ticklabelstep = NULL, ticklen = NULL,
-    tickmode = NULL, tickprefix = NULL, ticks = NULL, ticksuffix = NULL,
-    ticktext = NULL, tickvals = NULL, tickwidth = NULL, title = NULL,
-    uirevision = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.baxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_ternary
-#' @export
-go_layout_ternary_baxis_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.baxis.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_ternary
-#' @export
-go_layout_ternary_baxis_tickformatstop <- function(
-    arg = NULL, ..., dtickrange = NULL, enabled = NULL, name = NULL,
-    templateitemname = NULL, value = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.baxis.tickformatstop", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_ternary
-#' @export
-go_layout_ternary_baxis_title <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.baxis.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_ternary
-#' @export
-go_layout_ternary_baxis_title_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.baxis.title.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_ternary
-#' @export
-go_layout_ternary_caxis <- function(
-    arg = NULL, ..., color = NULL, dtick = NULL, exponentformat = NULL,
-    gridcolor = NULL, griddash = NULL, gridwidth = NULL, hoverformat = NULL,
-    labelalias = NULL, layer = NULL, linecolor = NULL, linewidth = NULL,
-    min = NULL, minexponent = NULL, nticks = NULL, separatethousands = NULL,
-    showexponent = NULL, showgrid = NULL, showline = NULL,
-    showspikes = NULL, showticklabels = NULL, showtickprefix = NULL,
-    showticksuffix = NULL, spikecolor = NULL, spikedash = NULL,
-    spikemode = NULL, spikesnap = NULL, spikethickness = NULL, tick0 = NULL,
-    tickangle = NULL, tickcolor = NULL, tickfont = NULL, tickformat = NULL,
-    tickformatstops = NULL, ticklabelstep = NULL, ticklen = NULL,
-    tickmode = NULL, tickprefix = NULL, ticks = NULL, ticksuffix = NULL,
-    ticktext = NULL, tickvals = NULL, tickwidth = NULL, title = NULL,
-    uirevision = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.caxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_ternary
-#' @export
-go_layout_ternary_caxis_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.caxis.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_ternary
-#' @export
-go_layout_ternary_caxis_tickformatstop <- function(
-    arg = NULL, ..., dtickrange = NULL, enabled = NULL, name = NULL,
-    templateitemname = NULL, value = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.caxis.tickformatstop", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_ternary
-#' @export
-go_layout_ternary_caxis_title <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.caxis.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_ternary
-#' @export
-go_layout_ternary_caxis_title_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.caxis.title.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_ternary
-#' @export
-go_layout_ternary_domain <- function(
-    arg = NULL, ..., column = NULL, row = NULL, x = NULL, y = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.domain", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout title objects
-#'
-#' Properties of \code{layout.title}.
-#'
-#' \code{go_layout_title()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}).
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_title_font()}}{\code{layout.title.font}: Sets the
-#' title font.}
-#' \item{\code{go_layout_title_pad()}}{\code{layout.title.pad}: Sets the
-#' padding of the title. Each padding value only applies when the
-#' corresponding `xanchor`/`yanchor` value is set accordingly. E.g. for left
-#' padding to take effect, `xanchor` must be set to "left". The same rule
-#' applies if `xanchor`/`yanchor` is determined automatically. Padding is
-#' muted if the respective anchor value is "middle"/"center".}
-#' \item{\code{go_layout_title_subtitle()}}{\code{layout.title.subtitle}}
-#' \item{\code{go_layout_title_subtitle_font()}}{\code{layout.title.subtitle.font}:
-#' Sets the subtitle font.}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param automargin Determines whether the title can automatically push
-#'   the figure margins. If `yref='paper'` then the margin will expand to
-#'   ensure that the title doesn't overlap with the edges of the container.
-#'   If `yref='container'` then the margins will ensure that the title
-#'   doesn't overlap with the plot area, tick labels, and axis titles. If
-#'   `automargin=true` and the margins need to be expanded, then y will be
-#'   set to a default 1 and yanchor will be set to an appropriate default
-#'   to ensure that minimal margin space is needed. Note that when
-#'   `yref='paper'`, only 1 or 0 are allowed y values. Invalid values will
-#'   be reset to the default 1. Logical.
-#' @param b The amount of padding (in px) along the bottom of the
-#'   component. Number.
-#' @param color Color: a CSS color string or R color name.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param font \strong{\code{go_layout_title()}}: Sets the title font.
-#'   Named list or \code{\link{go_layout_title_font}()} object.
-#'
-#'   \strong{\code{go_layout_title_subtitle()}}: Sets the subtitle font.
-#'   Named list or \code{\link{go_layout_title_subtitle_font}()} object.
-#' @param l The amount of padding (in px) on the left side of the
-#'   component. Number.
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param pad Sets the padding of the title. Each padding value only
-#'   applies when the corresponding `xanchor`/`yanchor` value is set
-#'   accordingly. E.g. for left padding to take effect, `xanchor` must be
-#'   set to "left". The same rule applies if `xanchor`/`yanchor` is
-#'   determined automatically. Padding is muted if the respective anchor
-#'   value is "middle"/"center". Named list or
-#'   \code{\link{go_layout_title_pad}()} object.
-#' @param r The amount of padding (in px) on the right side of the
-#'   component. Number.
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param size Number in the interval [1, Inf].
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param subtitle Named list or \code{\link{go_layout_title_subtitle}()}
-#'   object.
-#' @param t The amount of padding (in px) along the top of the component.
-#'   Number.
-#' @param text \strong{\code{go_layout_title()}}: Sets the plot's title.
-#'   String.
-#'
-#'   \strong{\code{go_layout_title_subtitle()}}: Sets the plot's subtitle.
-#'   String.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param x Sets the x position with respect to `xref` in normalized
-#'   coordinates from 0 (left) to 1 (right). Number in the interval [0, 1].
-#' @param xanchor Sets the title's horizontal alignment with respect to its
-#'   x position. "left" means that the title starts at x, "right" means
-#'   that the title ends at x and "center" means that the title's center is
-#'   at x. "auto" divides `xref` by three and calculates the `xanchor`
-#'   value automatically based on the value of `x`. One of \code{"auto"},
-#'   \code{"left"}, \code{"center"}, \code{"right"}.
-#' @param xref Sets the container `x` refers to. "container" spans the
-#'   entire `width` of the plot. "paper" refers to the width of the
-#'   plotting area only. One of \code{"container"}, \code{"paper"}.
-#' @param y Sets the y position with respect to `yref` in normalized
-#'   coordinates from 0 (bottom) to 1 (top). "auto" places the baseline of
-#'   the title onto the vertical center of the top margin. Number in the
-#'   interval [0, 1].
-#' @param yanchor Sets the title's vertical alignment with respect to its y
-#'   position. "top" means that the title's cap line is at y, "bottom"
-#'   means that the title's baseline is at y and "middle" means that the
-#'   title's midline is at y. "auto" divides `yref` by three and calculates
-#'   the `yanchor` value automatically based on the value of `y`. One of
-#'   \code{"auto"}, \code{"top"}, \code{"middle"}, \code{"bottom"}.
-#' @param yref Sets the container `y` refers to. "container" spans the
-#'   entire `height` of the plot. "paper" refers to the height of the
-#'   plotting area only. One of \code{"container"}, \code{"paper"}.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_title <- function(
-    arg = NULL, ..., automargin = NULL, font = NULL, pad = NULL,
-    subtitle = NULL, text = NULL, x = NULL, xanchor = NULL, xref = NULL,
-    y = NULL, yanchor = NULL, yref = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_title
-#' @export
-go_layout_title_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.title.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_title
-#' @export
-go_layout_title_pad <- function(
-    arg = NULL, ..., b = NULL, l = NULL, r = NULL, t = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.title.pad", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_title
-#' @export
-go_layout_title_subtitle <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.title.subtitle", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_title
-#' @export
-go_layout_title_subtitle_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.title.subtitle.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout transition objects
-#'
-#' Sets transition options used during Plotly.react updates.
-#'
-#' \code{go_layout_transition()} create validated graph objects (named
-#' lists). Every property is checked against the plotly.js schema when an
-#' object is created or modified (see \code{\link{plotly_obj-modify}()}).
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param duration The duration of the transition, in milliseconds. If
-#'   equal to zero, updates are synchronous. Number in the interval [0,
-#'   Inf].
-#' @param easing The easing function used for the transition One of
-#'   \code{"linear"}, \code{"quad"}, \code{"cubic"}, \code{"sin"},
-#'   \code{"exp"}, \code{"circle"}, \code{"elastic"}, \code{"back"},
-#'   \code{"bounce"}, \code{"linear-in"}, \code{"quad-in"},
-#'   \code{"cubic-in"}, \code{"sin-in"}, \code{"exp-in"},
-#'   \code{"circle-in"}, \code{"elastic-in"}, \code{"back-in"},
-#'   \code{"bounce-in"}, \code{"linear-out"}, \code{"quad-out"},
-#'   \code{"cubic-out"}, \code{"sin-out"}, \code{"exp-out"},
-#'   \code{"circle-out"}, \code{"elastic-out"}, \code{"back-out"},
-#'   \code{"bounce-out"}, \code{"linear-in-out"}, \code{"quad-in-out"},
-#'   \code{"cubic-in-out"}, \code{"sin-in-out"}, \code{"exp-in-out"},
-#'   \code{"circle-in-out"}, \code{"elastic-in-out"}, \code{"back-in-out"},
-#'   \code{"bounce-in-out"}.
-#' @param ordering Determines whether the figure's layout or traces
-#'   smoothly transitions during updates that make both traces and layout
-#'   change. One of \code{"layout first"}, \code{"traces first"}.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_transition <- function(
-    arg = NULL, ..., duration = NULL, easing = NULL, ordering = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.transition", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout uniformtext objects
-#'
-#' Properties of \code{layout.uniformtext}.
-#'
-#' \code{go_layout_uniformtext()} create validated graph objects (named
-#' lists). Every property is checked against the plotly.js schema when an
-#' object is created or modified (see \code{\link{plotly_obj-modify}()}).
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param minsize Sets the minimum text size between traces of the same
-#'   type. Number in the interval [0, Inf].
-#' @param mode Determines how the font size for various text elements are
-#'   uniformed between each trace type. If the computed text sizes were
-#'   smaller than the minimum size defined by `uniformtext.minsize` using
-#'   "hide" option hides the text; and using "show" option shows the text
-#'   without further downscaling. Please note that if the size defined by
-#'   `minsize` is greater than the font size defined by trace, then the
-#'   `minsize` is used. One of \code{"hide"}, \code{"show"}, \code{FALSE}.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_uniformtext <- function(
-    arg = NULL, ..., minsize = NULL, mode = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.uniformtext", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout updatemenu objects
-#'
-#' Properties of \code{layout.updatemenu}.
-#'
-#' \code{go_layout_updatemenu()} and the nested object constructors below
-#' create validated graph objects (named lists). Every property is checked
-#' against the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}).
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_updatemenu_button()}}{\code{layout.updatemenu.button}}
-#' \item{\code{go_layout_updatemenu_font()}}{\code{layout.updatemenu.font}:
-#' Sets the font of the update menu button text.}
-#' \item{\code{go_layout_updatemenu_pad()}}{\code{layout.updatemenu.pad}:
-#' Sets the padding around the buttons or dropdown menu.}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param active Determines which button (by index starting from 0) is
-#'   considered active. Integer in the interval [-1, Inf].
-#' @param args Sets the arguments values to be passed to the Plotly method
-#'   set in `method` on click. Vector or list of up to 3 element(s).
-#' @param args2 Sets a 2nd set of `args`, these arguments values are passed
-#'   to the Plotly method set in `method` when clicking this button while
-#'   in the active state. Use this to create toggle buttons. Vector or list
-#'   of up to 3 element(s).
-#' @param b The amount of padding (in px) along the bottom of the
-#'   component. Number.
-#' @param bgcolor Sets the background color of the update menu buttons.
-#'   Color: a CSS color string or R color name.
-#' @param bordercolor Sets the color of the border enclosing the update
-#'   menu. Color: a CSS color string or R color name.
-#' @param borderwidth Sets the width (in px) of the border enclosing the
-#'   update menu. Number in the interval [0, Inf].
-#' @param buttons List of named lists or
-#'   \code{\link{go_layout_updatemenu_button}()} objects.
-#' @param color Color: a CSS color string or R color name.
-#' @param direction Determines the direction in which the buttons are laid
-#'   out, whether in a dropdown menu or a row/column of buttons. For `left`
-#'   and `up`, the buttons will still appear in left-to-right or
-#'   top-to-bottom order respectively. One of \code{"left"},
-#'   \code{"right"}, \code{"up"}, \code{"down"}.
-#' @param execute When true, the API method is executed. When false, all
-#'   other behaviors are the same and command execution is skipped. This
-#'   may be useful when hooking into, for example, the
-#'   `plotly_buttonclicked` method and executing the API command manually
-#'   without losing the benefit of the updatemenu automatically binding to
-#'   the state of the plot through the specification of `method` and
-#'   `args`. Logical.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param font Sets the font of the update menu button text. Named list or
-#'   \code{\link{go_layout_updatemenu_font}()} object.
-#' @param l The amount of padding (in px) on the left side of the
-#'   component. Number.
-#' @param label Sets the text label to appear on the button. String.
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param method Sets the Plotly method to be called on click. If the
-#'   `skip` method is used, the API updatemenu will function as normal but
-#'   will perform no API calls and will not bind automatically to state
-#'   updates. This may be used to create a component interface and attach
-#'   to updatemenu events manually via JavaScript. One of \code{"restyle"},
-#'   \code{"relayout"}, \code{"animate"}, \code{"update"}, \code{"skip"}.
-#' @param name When used in a template, named items are created in the
-#'   output figure in addition to any items the figure already has in this
-#'   array. You can modify these items in the output figure by making your
-#'   own item with `templateitemname` matching this `name` alongside your
-#'   modifications (including `visible: false` or `enabled: false` to hide
-#'   it). Has no effect outside of a template. String.
-#' @param pad Sets the padding around the buttons or dropdown menu. Named
-#'   list or \code{\link{go_layout_updatemenu_pad}()} object.
-#' @param r The amount of padding (in px) on the right side of the
-#'   component. Number.
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param showactive Highlights active dropdown item or active button if
-#'   true. Logical.
-#' @param size Number in the interval [1, Inf].
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param t The amount of padding (in px) along the top of the component.
-#'   Number.
-#' @param templateitemname Used to refer to a named item in this array in
-#'   the template. Named items from the template will be created even
-#'   without a matching item in the input figure, but you can modify one by
-#'   making an item with `templateitemname` matching its `name`, alongside
-#'   your modifications (including `visible: false` or `enabled: false` to
-#'   hide it). If there is no template or no matching item, this item will
-#'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param type Determines whether the buttons are accessible via a dropdown
-#'   menu or whether the buttons are stacked horizontally or vertically One
-#'   of \code{"dropdown"}, \code{"buttons"}.
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param visible \strong{\code{go_layout_updatemenu()}}: Determines
-#'   whether or not the update menu is visible. Logical.
-#'
-#'   \strong{\code{go_layout_updatemenu_button()}}: Determines whether or
-#'   not this button is visible. Logical.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param x Sets the x position (in normalized coordinates) of the update
-#'   menu. Number in the interval [-2, 3].
-#' @param xanchor Sets the update menu's horizontal position anchor. This
-#'   anchor binds the `x` position to the "left", "center" or "right" of
-#'   the range selector. One of \code{"auto"}, \code{"left"},
-#'   \code{"center"}, \code{"right"}.
-#' @param y Sets the y position (in normalized coordinates) of the update
-#'   menu. Number in the interval [-2, 3].
-#' @param yanchor Sets the update menu's vertical position anchor This
-#'   anchor binds the `y` position to the "top", "middle" or "bottom" of
-#'   the range selector. One of \code{"auto"}, \code{"top"},
-#'   \code{"middle"}, \code{"bottom"}.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_updatemenu <- function(
-    arg = NULL, ..., active = NULL, bgcolor = NULL, bordercolor = NULL,
-    borderwidth = NULL, buttons = NULL, direction = NULL, font = NULL,
-    name = NULL, pad = NULL, showactive = NULL, templateitemname = NULL,
-    type = NULL, visible = NULL, x = NULL, xanchor = NULL, y = NULL,
-    yanchor = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.updatemenu", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_updatemenu
-#' @export
-go_layout_updatemenu_button <- function(
-    arg = NULL, ..., args = NULL, args2 = NULL, execute = NULL,
-    label = NULL, method = NULL, name = NULL, templateitemname = NULL,
-    visible = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.updatemenu.button", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_updatemenu
-#' @export
-go_layout_updatemenu_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.updatemenu.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_updatemenu
-#' @export
-go_layout_updatemenu_pad <- function(
-    arg = NULL, ..., b = NULL, l = NULL, r = NULL, t = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.updatemenu.pad", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout xaxis objects
-#'
-#' Properties of \code{layout.xaxis}.
-#'
-#' \code{go_layout_xaxis()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}).
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_xaxis_autorangeoptions()}}{\code{layout.xaxis.autorangeoptions}}
-#' \item{\code{go_layout_xaxis_domainpad()}}{\code{layout.xaxis.domainpad}:
-#' Sets the space in pixels to reserve inside the edges of `domain`. Because
-#' `domain` is a fraction of the plot area, the gap between subplots changes
-#' with the figure size. `domainpad` keeps the same size in pixels at all
-#' figure sizes, so it can hold content with a fixed size, such as a subplot
-#' title. x axes use `left` and `right`. y axes use `top` and `bottom`. If
-#' the padding needs more room than the domain has, the two pads shrink by
-#' the same factor, and the plot area keeps a length of at least 2 pixels.
-#' An axis that sets `overlaying` ignores its own `domainpad` and uses the
-#' `domainpad` of the axis it overlays, so that both axes share the same
-#' plot area.}
-#' \item{\code{go_layout_xaxis_minor()}}{\code{layout.xaxis.minor}}
-#' \item{\code{go_layout_xaxis_rangebreak()}}{\code{layout.xaxis.rangebreak}}
-#' \item{\code{go_layout_xaxis_rangeselector()}}{\code{layout.xaxis.rangeselector}}
-#' \item{\code{go_layout_xaxis_rangeselector_button()}}{\code{layout.xaxis.rangeselector.button}:
-#' Sets the specifications for each buttons. By default, a range selector
-#' comes with no buttons.}
-#' \item{\code{go_layout_xaxis_rangeselector_font()}}{\code{layout.xaxis.rangeselector.font}:
-#' Sets the font of the range selector button text.}
-#' \item{\code{go_layout_xaxis_rangeslider()}}{\code{layout.xaxis.rangeslider}}
-#' \item{\code{go_layout_xaxis_rangeslider_yaxis()}}{\code{layout.xaxis.rangeslider.yaxis}}
-#' \item{\code{go_layout_xaxis_tickfont()}}{\code{layout.xaxis.tickfont}:
-#' Sets the tick font.}
-#' \item{\code{go_layout_xaxis_tickformatstop()}}{\code{layout.xaxis.tickformatstop}}
-#' \item{\code{go_layout_xaxis_title()}}{\code{layout.xaxis.title}}
-#' \item{\code{go_layout_xaxis_title_font()}}{\code{layout.xaxis.title.font}:
-#' Sets this axis' title font.}
-#' \item{\code{go_layout_xaxis_unifiedhovertitle()}}{\code{layout.xaxis.unifiedhovertitle}}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param activecolor Sets the background color of the active range
-#'   selector button. Color: a CSS color string or R color name.
-#' @param anchor If set to an opposite-letter axis id (e.g. `x2`, `y`),
-#'   this axis is bound to the corresponding opposite-letter axis. If set
-#'   to "free", this axis' position is determined by `position`. One of
-#'   \code{"free"}, or a string matching \code{"^x([2-9]|[1-9][0-9]+)?(
-#'   domain)?$"} or \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
-#' @param automargin Determines whether long tick labels automatically grow
-#'   the figure margins. Any combination of \code{"height"},
-#'   \code{"width"}, \code{"left"}, \code{"right"}, \code{"top"},
-#'   \code{"bottom"} joined with \code{"+"}, or one of \code{TRUE},
-#'   \code{FALSE}.
-#' @param autorange \strong{\code{go_layout_xaxis()}}: Determines whether
-#'   or not the range of this axis is computed in relation to the input
-#'   data. See `rangemode` for more info. If `range` is provided and it has
-#'   a value for both the lower and upper bound, `autorange` is set to
-#'   FALSE. Using "min" applies autorange only to set the minimum. Using
-#'   "max" applies autorange only to set the maximum. Using "min reversed"
-#'   applies autorange only to set the minimum on a reversed axis. Using
-#'   "max reversed" applies autorange only to set the maximum on a reversed
-#'   axis. Using "reversed" applies autorange on both ends and reverses the
-#'   axis direction. One of \code{"reversed"}, \code{"min reversed"},
-#'   \code{"max reversed"}, \code{"min"}, \code{"max"}, \code{TRUE},
-#'   \code{FALSE}.
-#'
-#'   \strong{\code{go_layout_xaxis_rangeslider()}}: Determines whether or
-#'   not the range slider range is computed in relation to the input data.
-#'   If `range` is provided, then `autorange` is set to FALSE. Logical.
-#' @param autorangeoptions Named list or
-#'   \code{\link{go_layout_xaxis_autorangeoptions}()} object.
-#' @param autotickangles When `tickangle` is set to "auto", it will be set
-#'   to the first angle in this array that is large enough to prevent label
-#'   overlap. Vector or list of up to 1 element(s).
-#' @param autotypenumbers Using "strict" a numeric string in trace data is
-#'   not converted to a number. Using "convert types" a numeric string in
-#'   trace data may be treated as a number during automatic axis `type`
-#'   detection. Defaults to layout.autotypenumbers. One of \code{"convert
-#'   types"}, \code{"strict"}.
-#' @param bgcolor \strong{\code{go_layout_xaxis_rangeselector()}}: Sets the
-#'   background color of the range selector buttons. Color: a CSS color
-#'   string or R color name.
-#'
-#'   \strong{\code{go_layout_xaxis_rangeslider()}}: Sets the background
-#'   color of the range slider. Color: a CSS color string or R color name.
-#' @param bordercolor \strong{\code{go_layout_xaxis_rangeselector()}}: Sets
-#'   the color of the border enclosing the range selector. Color: a CSS
-#'   color string or R color name.
-#'
-#'   \strong{\code{go_layout_xaxis_rangeslider()}}: Sets the border color
-#'   of the range slider. Color: a CSS color string or R color name.
-#' @param borderwidth \strong{\code{go_layout_xaxis_rangeselector()}}: Sets
-#'   the width (in px) of the border enclosing the range selector. Number
-#'   in the interval [0, Inf].
-#'
-#'   \strong{\code{go_layout_xaxis_rangeslider()}}: Sets the border width
-#'   of the range slider. Integer in the interval [0, Inf].
-#' @param bottom Sets the space in pixels to reserve inside the bottom edge
-#'   of `domain`. Applies to y axes only. Number in the interval [0, Inf].
-#' @param bounds Sets the lower and upper bounds of this axis rangebreak.
-#'   Can be used with `pattern`. Vector or list of 2 element(s).
-#' @param buttons List of named lists or
-#'   \code{\link{go_layout_xaxis_rangeselector_button}()} objects.
-#' @param calendar Sets the calendar system to use for `range` and `tick0`
-#'   if this is a date axis. This does not set the calendar for
-#'   interpreting data on this axis, that's specified in the trace or via
-#'   the global `layout.calendar` One of \code{"chinese"}, \code{"coptic"},
-#'   \code{"discworld"}, \code{"ethiopian"}, \code{"gregorian"},
-#'   \code{"hebrew"}, \code{"islamic"}, \code{"jalali"}, \code{"julian"},
-#'   \code{"mayan"}, \code{"nanakshahi"}, \code{"nepali"},
-#'   \code{"persian"}, \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.
-#' @param categoryarray Sets the order in which categories on this axis
-#'   appear. Only has an effect if `categoryorder` is set to "array". Used
-#'   with `categoryorder`. Data array: a vector, factor, Date/POSIXct
-#'   vector, matrix or list.
-#' @param categoryorder Specifies the ordering logic for the case of
-#'   categorical variables. By default, plotly uses "trace", which
-#'   specifies the order that is present in the data supplied. Set
-#'   `categoryorder` to "category ascending" or "category descending" if
-#'   order should be determined by the alphanumerical order of the category
-#'   names. Set `categoryorder` to "array" to derive the ordering from the
-#'   attribute `categoryarray`. If a category is not found in the
-#'   `categoryarray` array, the sorting behavior for that attribute will be
-#'   identical to the "trace" mode. The unspecified categories will follow
-#'   the categories in `categoryarray`. Set `categoryorder` to "total
-#'   ascending" or "total descending" if order should be determined by the
-#'   numerical order of the values. Similarly, the order can be determined
-#'   by the min, max, sum, mean, geometric mean or median of all the
-#'   values. One of \code{"trace"}, \code{"category ascending"},
-#'   \code{"category descending"}, \code{"array"}, \code{"total
-#'   ascending"}, \code{"total descending"}, \code{"min ascending"},
-#'   \code{"min descending"}, \code{"max ascending"}, \code{"max
-#'   descending"}, \code{"sum ascending"}, \code{"sum descending"},
-#'   \code{"mean ascending"}, \code{"mean descending"}, \code{"geometric
-#'   mean ascending"}, \code{"geometric mean descending"}, \code{"median
-#'   ascending"}, \code{"median descending"}.
-#' @param clipmax Clip autorange maximum if it goes beyond this value. Has
-#'   no effect when `autorangeoptions.maxallowed` is provided. Any value.
-#' @param clipmin Clip autorange minimum if it goes beyond this value. Has
-#'   no effect when `autorangeoptions.minallowed` is provided. Any value.
-#' @param color \strong{\code{go_layout_xaxis()}}: Sets default for all
-#'   colors associated with this axis all at once: line, font, tick, and
-#'   grid colors. Grid color is lightened by blending this with the plot
-#'   background Individual pieces can override this. Color: a CSS color
-#'   string or R color name.
-#'
-#'   \strong{\code{go_layout_xaxis_rangeselector_font()},
-#'   \code{go_layout_xaxis_tickfont()},
-#'   \code{go_layout_xaxis_title_font()}}: Color: a CSS color string or R
-#'   color name.
-#' @param constrain If this axis needs to be compressed (either due to its
-#'   own `scaleanchor` and `scaleratio` or those of the other axis),
-#'   determines how that happens: by increasing the "range", or by
-#'   decreasing the "domain". Default is "domain" for axes containing image
-#'   traces, "range" otherwise. One of \code{"range"}, \code{"domain"}.
-#' @param constraintoward If this axis needs to be compressed (either due
-#'   to its own `scaleanchor` and `scaleratio` or those of the other axis),
-#'   determines which direction we push the originally specified plot area.
-#'   Options are "left", "center" (default), and "right" for x axes, and
-#'   "top", "middle" (default), and "bottom" for y axes. One of
-#'   \code{"left"}, \code{"center"}, \code{"right"}, \code{"top"},
-#'   \code{"middle"}, \code{"bottom"}.
-#' @param count Sets the number of steps to take to update the range. Use
-#'   with `step` to specify the update interval. Number in the interval [0,
-#'   Inf].
-#' @param dividercolor Sets the color of the dividers Only has an effect on
-#'   "multicategory" axes. Color: a CSS color string or R color name.
-#' @param dividerwidth Sets the width (in px) of the dividers Only has an
-#'   effect on "multicategory" axes. Number.
-#' @param domain Sets the domain of this axis (in plot fraction). Vector or
-#'   list of 2 element(s).
-#' @param domainpad Sets the space in pixels to reserve inside the edges of
-#'   `domain`. Because `domain` is a fraction of the plot area, the gap
-#'   between subplots changes with the figure size. `domainpad` keeps the
-#'   same size in pixels at all figure sizes, so it can hold content with a
-#'   fixed size, such as a subplot title. x axes use `left` and `right`. y
-#'   axes use `top` and `bottom`. If the padding needs more room than the
-#'   domain has, the two pads shrink by the same factor, and the plot area
-#'   keeps a length of at least 2 pixels. An axis that sets `overlaying`
-#'   ignores its own `domainpad` and uses the `domainpad` of the axis it
-#'   overlays, so that both axes share the same plot area. Named list or
-#'   \code{\link{go_layout_xaxis_domainpad}()} object.
-#' @param dtick Sets the step in-between ticks on this axis. Use with
-#'   `tick0`. Must be a positive number, or special strings available to
-#'   "log" and "date" axes. If the axis `type` is "log", then ticks are set
-#'   every 10^(n*dtick) where n is the tick number. For example, to set a
-#'   tick mark at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks
-#'   at 1, 100, 10000, ... set dtick to 2. To set tick marks at 1, 5, 25,
-#'   125, 625, 3125, ... set dtick to log_10(5), or 0.69897000433. "log"
-#'   has several special values; "L<f>", where `f` is a positive number,
-#'   gives ticks linearly spaced in value (but not position). For example
-#'   `tick0` = 0.1, `dtick` = "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6
-#'   etc. To show powers of 10 plus small digits between, use "D1" (all
-#'   digits) or "D2" (only 2 and 5). `tick0` is ignored for "D1" and "D2".
-#'   If the axis `type` is "date", then you must convert the time to
-#'   milliseconds. For example, to set the interval between ticks to one
-#'   day, set `dtick` to 86400000.0. "date" also has special values "M<n>"
-#'   gives ticks spaced by a number of months. `n` must be a positive
-#'   integer. To set ticks on the 15th of every third month, set `tick0` to
-#'   "2000-01-15" and `dtick` to "M3". To set ticks every 4 years, set
-#'   `dtick` to "M48" Any value.
-#' @param dtickrange range ["min", "max"], where "min", "max" - dtick
-#'   values which describe some zoom level, it is possible to omit "min" or
-#'   "max" value by passing "null" Vector or list of 2 element(s).
-#' @param dvalue Sets the size of each `values` item. The default is one
-#'   day in milliseconds. Number in the interval [0, Inf].
-#' @param enabled \strong{\code{go_layout_xaxis_rangebreak()}}: Determines
-#'   whether this axis rangebreak is enabled or disabled. Please note that
-#'   `rangebreaks` only work for "date" axis type. Logical.
-#'
-#'   \strong{\code{go_layout_xaxis_tickformatstop()}}: Determines whether
-#'   or not this stop is used. If `false`, this stop is ignored even within
-#'   its `dtickrange`. Logical.
-#' @param exponentformat Determines a formatting rule for the tick
-#'   exponents. For example, consider the number 1,000,000,000. If "none",
-#'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-#'   1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-#'   prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-#'   covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-#'   Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-#'   the above ranges, the formatting rule will automatically be switched
-#'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-#'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param fixedrange Determines whether or not this axis is zoom-able. If
-#'   true, then zoom is disabled. Logical.
-#' @param font \strong{\code{go_layout_xaxis_rangeselector()}}: Sets the
-#'   font of the range selector button text. Named list or
-#'   \code{\link{go_layout_xaxis_rangeselector_font}()} object.
-#'
-#'   \strong{\code{go_layout_xaxis_title()}}: Sets this axis' title font.
-#'   Named list or \code{\link{go_layout_xaxis_title_font}()} object.
-#' @param gridcolor Sets the color of the grid lines. Color: a CSS color
-#'   string or R color name.
-#' @param griddash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param gridwidth Sets the width (in px) of the grid lines. Number in the
-#'   interval [0, Inf].
-#' @param hoverformat Sets the hover text formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param include Extends the autorange to include this value or array of
-#'   values, even when they fall outside the data range. Has no effect on
-#'   endpoints set by `autorangeoptions.minallowed` or
-#'   `autorangeoptions.maxallowed`. Subject to `autorangeoptions.clipmin`
-#'   and `autorangeoptions.clipmax`. Any value.
-#' @param insiderange Could be used to set the desired inside range of this
-#'   axis (excluding the labels) when `ticklabelposition` of the anchored
-#'   axis has "inside". Not implemented for axes with `type` "log". This
-#'   would be ignored when `range` is provided. Vector or list of 2
-#'   element(s).
-#' @param label Sets the text label to appear on the button. String.
-#' @param labelalias Replacement text for specific tick or hover labels.
-#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-#'   to Canada. The labels we would have shown must match the keys exactly,
-#'   after adding any tickprefix or ticksuffix. For negative numbers the
-#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
-#'   That means you need to use -1 instead of -1. labelalias can be used
-#'   with any axis type, and both keys (if needed) and values (if desired)
-#'   can include html-like tags or MathJax. Any value.
-#' @param layer Sets the layer on which this axis is displayed. If "above
-#'   traces", this axis is displayed above all the subplot's traces If
-#'   "below traces", this axis is displayed below all the subplot's traces,
-#'   but above the grid lines. Useful when used together with scatter-like
-#'   traces with `cliponaxis` set to FALSE to show markers and/or text
-#'   nodes above this axis. One of \code{"above traces"}, \code{"below
-#'   traces"}.
-#' @param left Sets the space in pixels to reserve inside the left edge of
-#'   `domain`. Applies to x axes only. Number in the interval [0, Inf].
-#' @param linecolor Sets the axis line color. Color: a CSS color string or
-#'   R color name.
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param linewidth Sets the width (in px) of the axis line. Number in the
-#'   interval [0, Inf].
-#' @param matches If set to another axis id (e.g. `x2`, `y`), the range of
-#'   this axis will match the range of the corresponding axis in
-#'   data-coordinates space. Moreover, matching axes share auto-range
-#'   values, category lists and histogram auto-bins. Note that setting axes
-#'   simultaneously in both a `scaleanchor` and a `matches` constraint is
-#'   currently forbidden. Moreover, note that matching axes must have the
-#'   same `type`. One of , or a string matching
-#'   \code{"^x([2-9]|[1-9][0-9]+)?( domain)?$"} or
-#'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
-#' @param maxallowed \strong{\code{go_layout_xaxis()}}: Determines the
-#'   maximum range of this axis. Any value.
-#'
-#'   \strong{\code{go_layout_xaxis_autorangeoptions()}}: Use this value
-#'   exactly as autorange maximum. Any value.
-#' @param minallowed \strong{\code{go_layout_xaxis()}}: Determines the
-#'   minimum range of this axis. Any value.
-#'
-#'   \strong{\code{go_layout_xaxis_autorangeoptions()}}: Use this value
-#'   exactly as autorange minimum. Any value.
-#' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
-#'   This only has an effect when `tickformat` is "SI" or "B". Number in
-#'   the interval [0, Inf].
-#' @param minor Named list or \code{\link{go_layout_xaxis_minor}()} object.
-#' @param minorloglabels Determines how minor log labels are displayed. If
-#'   "small digits", small digits i.e. 2 or 5 are displayed. If "complete",
-#'   complete digits are displayed. If "none", no labels are displayed. One
-#'   of \code{"small digits"}, \code{"complete"}, \code{"none"}.
-#' @param mirror Determines if the axis lines or/and ticks are mirrored to
-#'   the opposite side of the plotting area. If TRUE, the axis lines are
-#'   mirrored. If "ticks", the axis lines and ticks are mirrored. If FALSE,
-#'   mirroring is disable. If "all", axis lines are mirrored on all
-#'   shared-axes subplots. If "allticks", axis lines and ticks are mirrored
-#'   on all shared-axes subplots. One of \code{"ticks"}, \code{"all"},
-#'   \code{"allticks"}, \code{TRUE}, \code{FALSE}.
-#' @param modebardisable Disables certain modebar buttons for this axis.
-#'   "autoscale" disables the autoscale buttons, "zoominout" disables the
-#'   zoom-in and zoom-out buttons. Any combination of \code{"autoscale"},
-#'   \code{"zoominout"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param name When used in a template, named items are created in the
-#'   output figure in addition to any items the figure already has in this
-#'   array. You can modify these items in the output figure by making your
-#'   own item with `templateitemname` matching this `name` alongside your
-#'   modifications (including `visible: false` or `enabled: false` to hide
-#'   it). Has no effect outside of a template. String.
-#' @param nticks Specifies the maximum number of ticks for the particular
-#'   axis. The actual number of ticks will be chosen automatically to be
-#'   less than or equal to `nticks`. Has an effect only if `tickmode` is
-#'   set to "auto". Integer in the interval [0, Inf].
-#' @param overlaying If set a same-letter axis id, this axis is overlaid on
-#'   top of the corresponding same-letter axis, with traces and axes
-#'   visible for both axes. If FALSE, this axis does not overlay any
-#'   same-letter axes. In this case, for axes with overlapping domains only
-#'   the highest-numbered axis will be visible. One of \code{"free"}, or a
-#'   string matching \code{"^x([2-9]|[1-9][0-9]+)?( domain)?$"} or
-#'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
-#' @param pattern Determines a pattern on the time line that generates
-#'   breaks. If "day of week" - days of the week in English e.g. 'Sunday'
-#'   or `sun` (matching is case-insensitive and considers only the first
-#'   three characters), as well as Sunday-based integers between 0 and 6.
-#'   If "hour" - hour (24-hour clock) as decimal numbers between 0 and 24.
-#'   for more info. Examples: - \{ pattern: 'day of week', bounds: [6, 1]
-#'   \} or simply \{ bounds: ['sat', 'mon'] \} breaks from Saturday to
-#'   Monday (i.e. skips the weekends). - \{ pattern: 'hour', bounds: [17,
-#'   8] \} breaks from 5pm to 8am (i.e. skips non-work hours). One of
-#'   \code{"day of week"}, \code{"hour"}, \code{""}.
-#' @param position Sets the position of this axis in the plotting space (in
-#'   normalized coordinates). Only has an effect if `anchor` is set to
-#'   "free". Number in the interval [0, 1].
-#' @param range \strong{\code{go_layout_xaxis()}}: Sets the range of this
-#'   axis. If the axis `type` is "log", then you must take the log of your
-#'   desired range (e.g. to set the range from 1 to 100, set the range from
-#'   0 to 2). If the axis `type` is "date", it should be date strings, like
-#'   date data, though Date objects and unix milliseconds will be accepted
-#'   and converted to strings. If the axis `type` is "category", it should
-#'   be numbers, using the scale where each category is assigned a serial
-#'   number from zero in the order it appears. Leaving either or both
-#'   elements `null` impacts the default `autorange`. Vector or list of 2
-#'   element(s).
-#'
-#'   \strong{\code{go_layout_xaxis_rangeslider()}}: Sets the range of the
-#'   range slider. If not set, defaults to the full xaxis range. If the
-#'   axis `type` is "log", then you must take the log of your desired
-#'   range. If the axis `type` is "date", it should be date strings, like
-#'   date data, though Date objects and unix milliseconds will be accepted
-#'   and converted to strings. If the axis `type` is "category", it should
-#'   be numbers, using the scale where each category is assigned a serial
-#'   number from zero in the order it appears. Vector or list of 2
-#'   element(s).
-#'
-#'   \strong{\code{go_layout_xaxis_rangeslider_yaxis()}}: Sets the range of
-#'   this axis for the rangeslider. Vector or list of 2 element(s).
-#' @param rangebreaks List of named lists or
-#'   \code{\link{go_layout_xaxis_rangebreak}()} objects.
-#' @param rangemode \strong{\code{go_layout_xaxis()}}: If "normal", the
-#'   range is computed in relation to the extrema of the input data. If
-#'   "tozero", the range extends to 0, regardless of the input data If
-#'   "nonnegative", the range is non-negative, regardless of the input
-#'   data. Applies only to linear axes. One of \code{"normal"},
-#'   \code{"tozero"}, \code{"nonnegative"}.
-#'
-#'   \strong{\code{go_layout_xaxis_rangeslider_yaxis()}}: Determines
-#'   whether or not the range of this axis in the rangeslider use the same
-#'   value than in the main plot when zooming in/out. If "auto", the
-#'   autorange will be used. If "fixed", the `range` is used. If "match",
-#'   the current range of the corresponding y-axis on the main subplot is
-#'   used. One of \code{"auto"}, \code{"fixed"}, \code{"match"}.
-#' @param rangeselector Named list or
-#'   \code{\link{go_layout_xaxis_rangeselector}()} object.
-#' @param rangeslider Named list or
-#'   \code{\link{go_layout_xaxis_rangeslider}()} object.
-#' @param right Sets the space in pixels to reserve inside the right edge
-#'   of `domain`. Applies to x axes only. Number in the interval [0, Inf].
-#' @param scaleanchor If set to another axis id (e.g. `x2`, `y`), the range
-#'   of this axis changes together with the range of the corresponding axis
-#'   such that the scale of pixels per unit is in a constant ratio. Both
-#'   axes are still zoomable, but when you zoom one, the other will zoom
-#'   the same amount, keeping a fixed midpoint. `constrain` and
-#'   `constraintoward` determine how we enforce the constraint. You can
-#'   chain these, ie `yaxis: \{scaleanchor: "x"\}, xaxis2: \{scaleanchor:
-#'   "y"\}` but you can only link axes of the same `type`. The linked axis
-#'   can have the opposite letter (to constrain the aspect ratio) or the
-#'   same letter (to match scales across subplots). Loops (`yaxis:
-#'   \{scaleanchor: "x"\}, xaxis: \{scaleanchor: "y"\}` or longer) are
-#'   redundant and the last constraint encountered will be ignored to avoid
-#'   possible inconsistent constraints via `scaleratio`. Note that setting
-#'   axes simultaneously in both a `scaleanchor` and a `matches` constraint
-#'   is currently forbidden. Setting `false` allows to remove a default
-#'   constraint (occasionally, you may need to prevent a default
-#'   `scaleanchor` constraint from being applied, eg. when having an image
-#'   trace `yaxis: \{scaleanchor: "x"\}` is set automatically in order for
-#'   pixels to be rendered as squares, setting `yaxis: \{scaleanchor:
-#'   false\}` allows to remove the constraint). One of \code{FALSE}, or a
-#'   string matching \code{"^x([2-9]|[1-9][0-9]+)?( domain)?$"} or
-#'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
-#' @param scaleratio If this axis is linked to another by `scaleanchor`,
-#'   this determines the pixel to unit scale ratio. For example, if this
-#'   value is 10, then every unit on this axis spans 10 times the number of
-#'   pixels as a unit on the linked axis. Use this for example to create an
-#'   elevation profile where the vertical scale is exaggerated a fixed
-#'   amount with respect to the horizontal. Number in the interval [0,
-#'   Inf].
-#' @param separatethousands If "true", even 4-digit integers are separated
-#'   Logical.
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param showdividers Determines whether or not a dividers are drawn
-#'   between the category levels of this axis. Only has an effect on
-#'   "multicategory" axes. Logical.
-#' @param showexponent If "all", all exponents are shown besides their
-#'   significands. If "first", only the exponent of the first tick is
-#'   shown. If "last", only the exponent of the last tick is shown. If
-#'   "none", no exponents appear. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showgrid Determines whether or not grid lines are drawn. If TRUE,
-#'   the grid lines are drawn at every tick mark. Logical.
-#' @param showline Determines whether or not a line bounding this axis is
-#'   drawn. Logical.
-#' @param showspikes Determines whether or not spikes (aka droplines) are
-#'   drawn for this axis. Note that spikes will never be drawn when
-#'   `hovermode` is FALSE. Logical.
-#' @param showticklabels Determines whether or not the tick labels are
-#'   drawn. Logical.
-#' @param showtickprefix If "all", all tick labels are displayed with a
-#'   prefix. If "first", only the first tick is displayed with a prefix. If
-#'   "last", only the last tick is displayed with a suffix. If "none", tick
-#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
-#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
-#' @param side Determines whether a x (y) axis is positioned at the
-#'   "bottom" ("left") or "top" ("right") of the plotting area. One of
-#'   \code{"top"}, \code{"bottom"}, \code{"left"}, \code{"right"}.
-#' @param size Number in the interval [1, Inf].
-#' @param spikecolor Sets the spike color. If undefined, will use the
-#'   series color Color: a CSS color string or R color name.
-#' @param spikedash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param spikemode Determines the drawing mode for the spike line If
-#'   "toaxis", the line is drawn from the data point to the axis the series
-#'   is plotted on. If "across", the line is drawn across the entire plot
-#'   area, and supercedes "toaxis". If "marker", then a marker dot is drawn
-#'   on the axis the series is plotted on Any combination of
-#'   \code{"toaxis"}, \code{"across"}, \code{"marker"} joined with
-#'   \code{"+"}.
-#' @param spikesnap Determines whether spikelines are stuck to the cursor
-#'   or to the closest datapoints. One of \code{"data"}, \code{"cursor"},
-#'   \code{"hovered data"}.
-#' @param spikethickness Sets the spike line width in pixels. Number.
-#' @param standoff Sets the standoff distance (in px) between the axis
-#'   labels and the title text The default value is a function of the axis
-#'   tick labels, the title `font.size` and the axis `linewidth`. Note that
-#'   the axis title position is always constrained within the margins, so
-#'   the actual standoff distance is always less than the set or default
-#'   value. By setting `standoff` and turning on `automargin`, plotly.js
-#'   will push the margins to fit the axis title at given standoff
-#'   distance. Number in the interval [0, Inf].
-#' @param step The unit of measurement that the `count` value will set the
-#'   range by. One of \code{"month"}, \code{"year"}, \code{"day"},
-#'   \code{"hour"}, \code{"minute"}, \code{"second"}, \code{"all"}.
-#' @param stepmode Sets the range update mode. If "backward", the range
-#'   update shifts the start of range back "count" times "step"
-#'   milliseconds. If "todate", the range update shifts the start of range
-#'   back to the first timestamp from "count" times "step" milliseconds
-#'   back. For example, with `step` set to "year" and `count` set to 1 the
-#'   range update shifts the start of the range back to January 01 of the
-#'   current year. Month and year "todate" are currently available only for
-#'   the built-in (Gregorian) calendar. One of \code{"backward"},
-#'   \code{"todate"}.
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param templateitemname Used to refer to a named item in this array in
-#'   the template. Named items from the template will be created even
-#'   without a matching item in the input figure, but you can modify one by
-#'   making an item with `templateitemname` matching its `name`, alongside
-#'   your modifications (including `visible: false` or `enabled: false` to
-#'   hide it). If there is no template or no matching item, this item will
-#'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param text \strong{\code{go_layout_xaxis_title()}}: Sets the title of
-#'   this axis. String.
-#'
-#'   \strong{\code{go_layout_xaxis_unifiedhovertitle()}}: Template string
-#'   used for rendering the title that appear on x or y unified hover box.
-#'   Variables are inserted using \%\{variable\}, for example "y: \%\{y\}".
-#'   Numbers are formatted using d3-format's syntax
-#'   \%\{variable:d3-format\}, for example "Price: \%\{y:$.2f\}".
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format for details on
-#'   the formatting syntax. Dates are formatted using d3-time-format's
-#'   syntax \%\{variable|d3-time-format\}, for example "Day:
-#'   \%\{2019-01-01|\%A\}".
-#'   https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format for
-#'   details on the date formatting syntax. Variables that can't be found
-#'   will be replaced with the specifier. For example, a template of "data:
-#'   \%\{x\}, \%\{y\}" will result in a value of "data: 1, \%\{y\}" if x is
-#'   1 and y is missing. Variables with an undefined value will be replaced
-#'   with the fallback value. String.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param thickness The height of the range slider as a fraction of the
-#'   total plot area height. Number in the interval [0, 1].
-#' @param tick0 Sets the placement of the first tick on this axis. Use with
-#'   `dtick`. If the axis `type` is "log", then you must take the log of
-#'   your starting tick (e.g. to set the starting tick to 100, set the
-#'   `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-#'   If the axis `type` is "date", it should be a date string, like date
-#'   data. If the axis `type` is "category", it should be a number, using
-#'   the scale where each category is assigned a serial number from zero in
-#'   the order it appears. Any value.
-#' @param tickangle Sets the angle of the tick labels with respect to the
-#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
-#'   vertically. Angle in degrees.
-#' @param tickcolor Sets the tick color. Color: a CSS color string or R
-#'   color name.
-#' @param tickfont Sets the tick font. Named list or
-#'   \code{\link{go_layout_xaxis_tickfont}()} object.
-#' @param tickformat Sets the tick label formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param tickformatstops List of named lists or
-#'   \code{\link{go_layout_xaxis_tickformatstop}()} objects.
-#' @param ticklabelindex Only for axes with `type` "date" or "linear".
-#'   Instead of drawing the major tick label, draw the label for the minor
-#'   tick that is n positions away from the major tick. E.g. to always draw
-#'   the label for the minor tick before each major tick, choose
-#'   `ticklabelindex` -1. This is useful for date axes with `ticklabelmode`
-#'   "period" if you want to label the period that ends with each major
-#'   tick instead of the period that begins there. Integer, or a vector of
-#'   these.
-#' @param ticklabelmode Determines where tick labels are drawn with respect
-#'   to their corresponding ticks and grid lines. Only has an effect for
-#'   axes of `type` "date" When set to "period", tick labels are drawn in
-#'   the middle of the period between ticks. One of \code{"instant"},
-#'   \code{"period"}.
-#' @param ticklabeloverflow Determines how we handle tick labels that would
-#'   overflow either the graph div or the domain of the axis. The default
-#'   value for inside tick labels is "hide past domain". Otherwise on
-#'   "category" and "multicategory" axes the default is "allow". In other
-#'   cases the default is "hide past div". One of \code{"allow"},
-#'   \code{"hide past div"}, \code{"hide past domain"}.
-#' @param ticklabelposition Determines where tick labels are drawn with
-#'   respect to the axis. Please note that top or bottom has no effect on x
-#'   axes or when `ticklabelmode` is set to "period" or when `tickson` is
-#'   set to "boundaries". Similarly, left or right has no effect on y axes
-#'   or when `ticklabelmode` is set to "period" or when `tickson` is set to
-#'   "boundaries". Has no effect on "multicategory" axes. When used on axes
-#'   linked by `matches` or `scaleanchor`, no extra padding for inside
-#'   labels would be added by autorange, so that the scales could match.
-#'   One of \code{"outside"}, \code{"inside"}, \code{"outside top"},
-#'   \code{"inside top"}, \code{"outside left"}, \code{"inside left"},
-#'   \code{"outside right"}, \code{"inside right"}, \code{"outside
-#'   bottom"}, \code{"inside bottom"}.
-#' @param ticklabelshift Shifts the tick labels by the specified number of
-#'   pixels in parallel to the axis. Positive values move the labels in the
-#'   positive direction of the axis. Integer.
-#' @param ticklabelstandoff Sets the standoff distance (in px) between the
-#'   axis tick labels and their default position. A positive
-#'   `ticklabelstandoff` moves the labels farther away from the plot area
-#'   if `ticklabelposition` is "outside", and deeper into the plot area if
-#'   `ticklabelposition` is "inside". A negative `ticklabelstandoff` works
-#'   in the opposite direction, moving outside ticks towards the plot area
-#'   and inside ticks towards the outside. If the negative value is large
-#'   enough, inside ticks can even end up outside and vice versa. Integer.
-#' @param ticklabelstep Sets the spacing between tick labels as compared to
-#'   the spacing between ticks. A value of 1 (default) means each tick gets
-#'   a label. A value of 2 means shows every 2nd label. A larger value n
-#'   means only every nth tick is labeled. `tick0` determines which labels
-#'   are shown. Not implemented for axes with `type` "log" or
-#'   "multicategory", or when `tickmode` is "array". Integer in the
-#'   interval [1, Inf].
-#' @param ticklen Sets the tick length (in px). Number in the interval [0,
-#'   Inf].
-#' @param tickmode \strong{\code{go_layout_xaxis()}}: Sets the tick mode
-#'   for this axis. If "auto", the number of ticks is set via `nticks`. If
-#'   "linear", the placement of the ticks is determined by a starting
-#'   position `tick0` and a tick step `dtick` ("linear" is the default
-#'   value if `tick0` and `dtick` are provided). If "array", the placement
-#'   of the ticks is set via `tickvals` and the tick text is `ticktext`.
-#'   ("array" is the default value if `tickvals` is provided). If "sync",
-#'   the number of ticks will sync with the overlayed axis set by
-#'   `overlaying` property. When no other tick info is provided, overlaying
-#'   (non-categorical) axes default to "sync", while other axes default to
-#'   "auto". One of \code{"auto"}, \code{"linear"}, \code{"array"},
-#'   \code{"sync"}.
-#'
-#'   \strong{\code{go_layout_xaxis_minor()}}: Sets the tick mode for this
-#'   axis. If "auto", the number of ticks is set via `nticks`. If "linear",
-#'   the placement of the ticks is determined by a starting position
-#'   `tick0` and a tick step `dtick` ("linear" is the default value if
-#'   `tick0` and `dtick` are provided). If "array", the placement of the
-#'   ticks is set via `tickvals` and the tick text is `ticktext`. ("array"
-#'   is the default value if `tickvals` is provided). One of \code{"auto"},
-#'   \code{"linear"}, \code{"array"}.
-#' @param tickprefix Sets a tick label prefix. String.
-#' @param ticks Determines whether ticks are drawn or not. If **, this
-#'   axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-#'   drawn outside (inside) the axis lines. One of \code{"outside"},
-#'   \code{"inside"}, \code{""}.
-#' @param tickson Determines where ticks and grid lines are drawn with
-#'   respect to their corresponding tick labels. Only has an effect for
-#'   axes of `type` "category" or "multicategory". When set to
-#'   "boundaries", ticks and grid lines are drawn half a category to the
-#'   left/bottom of labels. One of \code{"labels"}, \code{"boundaries"}.
-#' @param ticksuffix Sets a tick label suffix. String.
-#' @param ticktext Sets the text displayed at the ticks position via
-#'   `tickvals`. Only has an effect if `tickmode` is set to "array". Used
-#'   with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#' @param tickvals Sets the values at which ticks on this axis appear. Only
-#'   has an effect if `tickmode` is set to "array". Used with `ticktext`.
-#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
-#'   Inf].
-#' @param title String (the title text), named list or
-#'   \code{\link{go_layout_xaxis_title}()} object.
-#' @param top Sets the space in pixels to reserve inside the top edge of
-#'   `domain`. Applies to y axes only. Number in the interval [0, Inf].
-#' @param type Sets the axis type. By default, plotly attempts to
-#'   determined the axis type by looking into the data of the traces that
-#'   referenced the axis in question. One of \code{"-"}, \code{"linear"},
-#'   \code{"log"}, \code{"date"}, \code{"category"},
-#'   \code{"multicategory"}.
-#' @param uirevision Controls persistence of user-driven changes in axis
-#'   `range`, `autorange`, and `title` if in `editable: true`
-#'   configuration. Defaults to `layout.uirevision`. Any value.
-#' @param unifiedhovertitle Named list or
-#'   \code{\link{go_layout_xaxis_unifiedhovertitle}()} object.
-#' @param value string - dtickformat for described zoom level, the same as
-#'   "tickformat" String.
-#' @param values Sets the coordinate values corresponding to the
-#'   rangebreaks. An alternative to `bounds`. Use `dvalue` to set the size
-#'   of the values along the axis. Vector or list of up to 1 element(s).
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param visible \strong{\code{go_layout_xaxis()}}: A single toggle to
-#'   hide the axis while preserving interaction like dragging. Default is
-#'   true when a cheater plot is present on the axis, otherwise false
-#'   Logical.
-#'
-#'   \strong{\code{go_layout_xaxis_rangeselector()}}: Determines whether or
-#'   not this range selector is visible. Note that range selectors are only
-#'   available for x axes of `type` set to or auto-typed to "date".
-#'   Logical.
-#'
-#'   \strong{\code{go_layout_xaxis_rangeselector_button()}}: Determines
-#'   whether or not this button is visible. Logical.
-#'
-#'   \strong{\code{go_layout_xaxis_rangeslider()}}: Determines whether or
-#'   not the range slider will be visible. If visible, perpendicular axes
-#'   will be set to `fixedrange` Logical.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param x Sets the x position (in normalized coordinates) of the range
-#'   selector. Number in the interval [-2, 3].
-#' @param xanchor Sets the range selector's horizontal position anchor.
-#'   This anchor binds the `x` position to the "left", "center" or "right"
-#'   of the range selector. One of \code{"auto"}, \code{"left"},
-#'   \code{"center"}, \code{"right"}.
-#' @param y Sets the y position (in normalized coordinates) of the range
-#'   selector. Number in the interval [-2, 3].
-#' @param yanchor Sets the range selector's vertical position anchor This
-#'   anchor binds the `y` position to the "top", "middle" or "bottom" of
-#'   the range selector. One of \code{"auto"}, \code{"top"},
-#'   \code{"middle"}, \code{"bottom"}.
-#' @param yaxis Named list or
-#'   \code{\link{go_layout_xaxis_rangeslider_yaxis}()} object.
-#' @param zeroline Determines whether or not a line is drawn at along the 0
-#'   value of this axis. If TRUE, the zero line is drawn on top of the grid
-#'   lines. Logical.
-#' @param zerolinecolor Sets the line color of the zero line. Color: a CSS
-#'   color string or R color name.
-#' @param zerolinelayer Sets the layer on which this zeroline is displayed.
-#'   If "above traces", this zeroline is displayed above all the subplot's
-#'   traces If "below traces", this zeroline is displayed below all the
-#'   subplot's traces, but above the grid lines. Limitation:
-#'   "zerolinelayer" currently has no effect if the "zorder" property is
-#'   set on any trace. One of \code{"above traces"}, \code{"below traces"}.
-#' @param zerolinewidth Sets the width (in px) of the zero line. Number.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_xaxis <- function(
-    arg = NULL, ..., anchor = NULL, automargin = NULL, autorange = NULL,
-    autorangeoptions = NULL, autotickangles = NULL, autotypenumbers = NULL,
-    calendar = NULL, categoryarray = NULL, categoryorder = NULL,
-    color = NULL, constrain = NULL, constraintoward = NULL,
-    dividercolor = NULL, dividerwidth = NULL, domain = NULL,
-    domainpad = NULL, dtick = NULL, exponentformat = NULL,
-    fixedrange = NULL, gridcolor = NULL, griddash = NULL, gridwidth = NULL,
-    hoverformat = NULL, insiderange = NULL, labelalias = NULL, layer = NULL,
-    linecolor = NULL, linewidth = NULL, matches = NULL, maxallowed = NULL,
-    minallowed = NULL, minexponent = NULL, minor = NULL,
-    minorloglabels = NULL, mirror = NULL, modebardisable = NULL,
-    nticks = NULL, overlaying = NULL, position = NULL, range = NULL,
-    rangebreaks = NULL, rangemode = NULL, rangeselector = NULL,
-    rangeslider = NULL, scaleanchor = NULL, scaleratio = NULL,
-    separatethousands = NULL, showdividers = NULL, showexponent = NULL,
-    showgrid = NULL, showline = NULL, showspikes = NULL,
-    showticklabels = NULL, showtickprefix = NULL, showticksuffix = NULL,
-    side = NULL, spikecolor = NULL, spikedash = NULL, spikemode = NULL,
-    spikesnap = NULL, spikethickness = NULL, tick0 = NULL, tickangle = NULL,
-    tickcolor = NULL, tickfont = NULL, tickformat = NULL,
-    tickformatstops = NULL, ticklabelindex = NULL, ticklabelmode = NULL,
-    ticklabeloverflow = NULL, ticklabelposition = NULL,
-    ticklabelshift = NULL, ticklabelstandoff = NULL, ticklabelstep = NULL,
-    ticklen = NULL, tickmode = NULL, tickprefix = NULL, ticks = NULL,
-    tickson = NULL, ticksuffix = NULL, ticktext = NULL, tickvals = NULL,
-    tickwidth = NULL, title = NULL, type = NULL, uirevision = NULL,
-    unifiedhovertitle = NULL, visible = NULL, zeroline = NULL,
-    zerolinecolor = NULL, zerolinelayer = NULL, zerolinewidth = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.xaxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_xaxis
-#' @export
-go_layout_xaxis_autorangeoptions <- function(
-    arg = NULL, ..., clipmax = NULL, clipmin = NULL, include = NULL,
-    maxallowed = NULL, minallowed = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.xaxis.autorangeoptions", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_xaxis
-#' @export
-go_layout_xaxis_domainpad <- function(
-    arg = NULL, ..., bottom = NULL, left = NULL, right = NULL, top = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.xaxis.domainpad", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_xaxis
-#' @export
-go_layout_xaxis_minor <- function(
-    arg = NULL, ..., dtick = NULL, gridcolor = NULL, griddash = NULL,
-    gridwidth = NULL, nticks = NULL, showgrid = NULL, tick0 = NULL,
-    tickcolor = NULL, ticklen = NULL, tickmode = NULL, ticks = NULL,
-    tickvals = NULL, tickwidth = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.xaxis.minor", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_xaxis
-#' @export
-go_layout_xaxis_rangebreak <- function(
-    arg = NULL, ..., bounds = NULL, dvalue = NULL, enabled = NULL,
-    name = NULL, pattern = NULL, templateitemname = NULL, values = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.xaxis.rangebreak", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_xaxis
-#' @export
-go_layout_xaxis_rangeselector <- function(
-    arg = NULL, ..., activecolor = NULL, bgcolor = NULL, bordercolor = NULL,
-    borderwidth = NULL, buttons = NULL, font = NULL, visible = NULL,
-    x = NULL, xanchor = NULL, y = NULL, yanchor = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.xaxis.rangeselector", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_xaxis
-#' @export
-go_layout_xaxis_rangeselector_button <- function(
-    arg = NULL, ..., count = NULL, label = NULL, name = NULL, step = NULL,
-    stepmode = NULL, templateitemname = NULL, visible = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.xaxis.rangeselector.button", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_xaxis
-#' @export
-go_layout_xaxis_rangeselector_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.xaxis.rangeselector.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_xaxis
-#' @export
-go_layout_xaxis_rangeslider <- function(
-    arg = NULL, ..., autorange = NULL, bgcolor = NULL, bordercolor = NULL,
-    borderwidth = NULL, range = NULL, thickness = NULL, visible = NULL,
-    yaxis = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.xaxis.rangeslider", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_xaxis
-#' @export
-go_layout_xaxis_rangeslider_yaxis <- function(
-    arg = NULL, ..., range = NULL, rangemode = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.xaxis.rangeslider.yaxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_xaxis
-#' @export
-go_layout_xaxis_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.xaxis.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_xaxis
-#' @export
-go_layout_xaxis_tickformatstop <- function(
-    arg = NULL, ..., dtickrange = NULL, enabled = NULL, name = NULL,
-    templateitemname = NULL, value = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.xaxis.tickformatstop", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_xaxis
-#' @export
-go_layout_xaxis_title <- function(
-    arg = NULL, ..., font = NULL, standoff = NULL, text = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.xaxis.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_xaxis
-#' @export
-go_layout_xaxis_title_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.xaxis.title.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_xaxis
-#' @export
-go_layout_xaxis_unifiedhovertitle <- function(
-    arg = NULL, ..., text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.xaxis.unifiedhovertitle", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout yaxis objects
-#'
-#' Properties of \code{layout.yaxis}.
-#'
-#' \code{go_layout_yaxis()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}).
-#'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_layout_yaxis_autorangeoptions()}}{\code{layout.yaxis.autorangeoptions}}
-#' \item{\code{go_layout_yaxis_domainpad()}}{\code{layout.yaxis.domainpad}:
-#' Sets the space in pixels to reserve inside the edges of `domain`. Because
-#' `domain` is a fraction of the plot area, the gap between subplots changes
-#' with the figure size. `domainpad` keeps the same size in pixels at all
-#' figure sizes, so it can hold content with a fixed size, such as a subplot
-#' title. x axes use `left` and `right`. y axes use `top` and `bottom`. If
-#' the padding needs more room than the domain has, the two pads shrink by
-#' the same factor, and the plot area keeps a length of at least 2 pixels.
-#' An axis that sets `overlaying` ignores its own `domainpad` and uses the
-#' `domainpad` of the axis it overlays, so that both axes share the same
-#' plot area.}
-#' \item{\code{go_layout_yaxis_minor()}}{\code{layout.yaxis.minor}}
-#' \item{\code{go_layout_yaxis_rangebreak()}}{\code{layout.yaxis.rangebreak}}
-#' \item{\code{go_layout_yaxis_tickfont()}}{\code{layout.yaxis.tickfont}:
-#' Sets the tick font.}
-#' \item{\code{go_layout_yaxis_tickformatstop()}}{\code{layout.yaxis.tickformatstop}}
-#' \item{\code{go_layout_yaxis_title()}}{\code{layout.yaxis.title}}
-#' \item{\code{go_layout_yaxis_title_font()}}{\code{layout.yaxis.title.font}:
-#' Sets this axis' title font.}
-#' \item{\code{go_layout_yaxis_unifiedhovertitle()}}{\code{layout.yaxis.unifiedhovertitle}}
-#' }
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
-#' @param anchor If set to an opposite-letter axis id (e.g. `x2`, `y`),
-#'   this axis is bound to the corresponding opposite-letter axis. If set
-#'   to "free", this axis' position is determined by `position`. One of
-#'   \code{"free"}, or a string matching \code{"^x([2-9]|[1-9][0-9]+)?(
-#'   domain)?$"} or \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
-#' @param automargin Determines whether long tick labels automatically grow
-#'   the figure margins. Any combination of \code{"height"},
-#'   \code{"width"}, \code{"left"}, \code{"right"}, \code{"top"},
-#'   \code{"bottom"} joined with \code{"+"}, or one of \code{TRUE},
-#'   \code{FALSE}.
-#' @param autorange Determines whether or not the range of this axis is
-#'   computed in relation to the input data. See `rangemode` for more info.
-#'   If `range` is provided and it has a value for both the lower and upper
-#'   bound, `autorange` is set to FALSE. Using "min" applies autorange only
-#'   to set the minimum. Using "max" applies autorange only to set the
-#'   maximum. Using "min reversed" applies autorange only to set the
-#'   minimum on a reversed axis. Using "max reversed" applies autorange
-#'   only to set the maximum on a reversed axis. Using "reversed" applies
-#'   autorange on both ends and reverses the axis direction. One of
-#'   \code{"reversed"}, \code{"min reversed"}, \code{"max reversed"},
-#'   \code{"min"}, \code{"max"}, \code{TRUE}, \code{FALSE}.
-#' @param autorangeoptions Named list or
-#'   \code{\link{go_layout_yaxis_autorangeoptions}()} object.
-#' @param autoshift Automatically reposition the axis to avoid overlap with
-#'   other axes with the same `overlaying` value. This repositioning will
-#'   account for any `shift` amount applied to other axes on the same side
-#'   with `autoshift` is set to true. Only has an effect if `anchor` is set
-#'   to "free". Logical.
-#' @param autotickangles When `tickangle` is set to "auto", it will be set
-#'   to the first angle in this array that is large enough to prevent label
-#'   overlap. Vector or list of up to 1 element(s).
-#' @param autotypenumbers Using "strict" a numeric string in trace data is
-#'   not converted to a number. Using "convert types" a numeric string in
-#'   trace data may be treated as a number during automatic axis `type`
-#'   detection. Defaults to layout.autotypenumbers. One of \code{"convert
-#'   types"}, \code{"strict"}.
-#' @param bottom Sets the space in pixels to reserve inside the bottom edge
-#'   of `domain`. Applies to y axes only. Number in the interval [0, Inf].
-#' @param bounds Sets the lower and upper bounds of this axis rangebreak.
-#'   Can be used with `pattern`. Vector or list of 2 element(s).
-#' @param calendar Sets the calendar system to use for `range` and `tick0`
-#'   if this is a date axis. This does not set the calendar for
-#'   interpreting data on this axis, that's specified in the trace or via
-#'   the global `layout.calendar` One of \code{"chinese"}, \code{"coptic"},
-#'   \code{"discworld"}, \code{"ethiopian"}, \code{"gregorian"},
-#'   \code{"hebrew"}, \code{"islamic"}, \code{"jalali"}, \code{"julian"},
-#'   \code{"mayan"}, \code{"nanakshahi"}, \code{"nepali"},
-#'   \code{"persian"}, \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.
-#' @param categoryarray Sets the order in which categories on this axis
-#'   appear. Only has an effect if `categoryorder` is set to "array". Used
-#'   with `categoryorder`. Data array: a vector, factor, Date/POSIXct
-#'   vector, matrix or list.
-#' @param categoryorder Specifies the ordering logic for the case of
-#'   categorical variables. By default, plotly uses "trace", which
-#'   specifies the order that is present in the data supplied. Set
-#'   `categoryorder` to "category ascending" or "category descending" if
-#'   order should be determined by the alphanumerical order of the category
-#'   names. Set `categoryorder` to "array" to derive the ordering from the
-#'   attribute `categoryarray`. If a category is not found in the
-#'   `categoryarray` array, the sorting behavior for that attribute will be
-#'   identical to the "trace" mode. The unspecified categories will follow
-#'   the categories in `categoryarray`. Set `categoryorder` to "total
-#'   ascending" or "total descending" if order should be determined by the
-#'   numerical order of the values. Similarly, the order can be determined
-#'   by the min, max, sum, mean, geometric mean or median of all the
-#'   values. One of \code{"trace"}, \code{"category ascending"},
-#'   \code{"category descending"}, \code{"array"}, \code{"total
-#'   ascending"}, \code{"total descending"}, \code{"min ascending"},
-#'   \code{"min descending"}, \code{"max ascending"}, \code{"max
-#'   descending"}, \code{"sum ascending"}, \code{"sum descending"},
-#'   \code{"mean ascending"}, \code{"mean descending"}, \code{"geometric
-#'   mean ascending"}, \code{"geometric mean descending"}, \code{"median
-#'   ascending"}, \code{"median descending"}.
-#' @param clipmax Clip autorange maximum if it goes beyond this value. Has
-#'   no effect when `autorangeoptions.maxallowed` is provided. Any value.
-#' @param clipmin Clip autorange minimum if it goes beyond this value. Has
-#'   no effect when `autorangeoptions.minallowed` is provided. Any value.
-#' @param color \strong{\code{go_layout_yaxis()}}: Sets default for all
-#'   colors associated with this axis all at once: line, font, tick, and
-#'   grid colors. Grid color is lightened by blending this with the plot
-#'   background Individual pieces can override this. Color: a CSS color
-#'   string or R color name.
-#'
-#'   \strong{\code{go_layout_yaxis_tickfont()},
-#'   \code{go_layout_yaxis_title_font()}}: Color: a CSS color string or R
-#'   color name.
-#' @param constrain If this axis needs to be compressed (either due to its
-#'   own `scaleanchor` and `scaleratio` or those of the other axis),
-#'   determines how that happens: by increasing the "range", or by
-#'   decreasing the "domain". Default is "domain" for axes containing image
-#'   traces, "range" otherwise. One of \code{"range"}, \code{"domain"}.
-#' @param constraintoward If this axis needs to be compressed (either due
-#'   to its own `scaleanchor` and `scaleratio` or those of the other axis),
-#'   determines which direction we push the originally specified plot area.
-#'   Options are "left", "center" (default), and "right" for x axes, and
-#'   "top", "middle" (default), and "bottom" for y axes. One of
-#'   \code{"left"}, \code{"center"}, \code{"right"}, \code{"top"},
-#'   \code{"middle"}, \code{"bottom"}.
-#' @param dividercolor Sets the color of the dividers Only has an effect on
-#'   "multicategory" axes. Color: a CSS color string or R color name.
-#' @param dividerwidth Sets the width (in px) of the dividers Only has an
-#'   effect on "multicategory" axes. Number.
-#' @param domain Sets the domain of this axis (in plot fraction). Vector or
-#'   list of 2 element(s).
-#' @param domainpad Sets the space in pixels to reserve inside the edges of
-#'   `domain`. Because `domain` is a fraction of the plot area, the gap
-#'   between subplots changes with the figure size. `domainpad` keeps the
-#'   same size in pixels at all figure sizes, so it can hold content with a
-#'   fixed size, such as a subplot title. x axes use `left` and `right`. y
-#'   axes use `top` and `bottom`. If the padding needs more room than the
-#'   domain has, the two pads shrink by the same factor, and the plot area
-#'   keeps a length of at least 2 pixels. An axis that sets `overlaying`
-#'   ignores its own `domainpad` and uses the `domainpad` of the axis it
-#'   overlays, so that both axes share the same plot area. Named list or
-#'   \code{\link{go_layout_yaxis_domainpad}()} object.
-#' @param dtick Sets the step in-between ticks on this axis. Use with
-#'   `tick0`. Must be a positive number, or special strings available to
-#'   "log" and "date" axes. If the axis `type` is "log", then ticks are set
-#'   every 10^(n*dtick) where n is the tick number. For example, to set a
-#'   tick mark at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks
-#'   at 1, 100, 10000, ... set dtick to 2. To set tick marks at 1, 5, 25,
-#'   125, 625, 3125, ... set dtick to log_10(5), or 0.69897000433. "log"
-#'   has several special values; "L<f>", where `f` is a positive number,
-#'   gives ticks linearly spaced in value (but not position). For example
-#'   `tick0` = 0.1, `dtick` = "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6
-#'   etc. To show powers of 10 plus small digits between, use "D1" (all
-#'   digits) or "D2" (only 2 and 5). `tick0` is ignored for "D1" and "D2".
-#'   If the axis `type` is "date", then you must convert the time to
-#'   milliseconds. For example, to set the interval between ticks to one
-#'   day, set `dtick` to 86400000.0. "date" also has special values "M<n>"
-#'   gives ticks spaced by a number of months. `n` must be a positive
-#'   integer. To set ticks on the 15th of every third month, set `tick0` to
-#'   "2000-01-15" and `dtick` to "M3". To set ticks every 4 years, set
-#'   `dtick` to "M48" Any value.
-#' @param dtickrange range ["min", "max"], where "min", "max" - dtick
-#'   values which describe some zoom level, it is possible to omit "min" or
-#'   "max" value by passing "null" Vector or list of 2 element(s).
-#' @param dvalue Sets the size of each `values` item. The default is one
-#'   day in milliseconds. Number in the interval [0, Inf].
-#' @param enabled \strong{\code{go_layout_yaxis_rangebreak()}}: Determines
-#'   whether this axis rangebreak is enabled or disabled. Please note that
-#'   `rangebreaks` only work for "date" axis type. Logical.
-#'
-#'   \strong{\code{go_layout_yaxis_tickformatstop()}}: Determines whether
-#'   or not this stop is used. If `false`, this stop is ignored even within
-#'   its `dtickrange`. Logical.
-#' @param exponentformat Determines a formatting rule for the tick
-#'   exponents. For example, consider the number 1,000,000,000. If "none",
-#'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-#'   1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-#'   prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-#'   covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-#'   Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-#'   the above ranges, the formatting rule will automatically be switched
-#'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-#'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param fixedrange Determines whether or not this axis is zoom-able. If
-#'   true, then zoom is disabled. Logical.
-#' @param font Sets this axis' title font. Named list or
-#'   \code{\link{go_layout_yaxis_title_font}()} object.
-#' @param gridcolor Sets the color of the grid lines. Color: a CSS color
-#'   string or R color name.
-#' @param griddash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param gridwidth Sets the width (in px) of the grid lines. Number in the
-#'   interval [0, Inf].
-#' @param hoverformat Sets the hover text formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param include Extends the autorange to include this value or array of
-#'   values, even when they fall outside the data range. Has no effect on
-#'   endpoints set by `autorangeoptions.minallowed` or
-#'   `autorangeoptions.maxallowed`. Subject to `autorangeoptions.clipmin`
-#'   and `autorangeoptions.clipmax`. Any value.
-#' @param insiderange Could be used to set the desired inside range of this
-#'   axis (excluding the labels) when `ticklabelposition` of the anchored
-#'   axis has "inside". Not implemented for axes with `type` "log". This
-#'   would be ignored when `range` is provided. Vector or list of 2
-#'   element(s).
-#' @param labelalias Replacement text for specific tick or hover labels.
-#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-#'   to Canada. The labels we would have shown must match the keys exactly,
-#'   after adding any tickprefix or ticksuffix. For negative numbers the
-#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
-#'   That means you need to use -1 instead of -1. labelalias can be used
-#'   with any axis type, and both keys (if needed) and values (if desired)
-#'   can include html-like tags or MathJax. Any value.
-#' @param layer Sets the layer on which this axis is displayed. If "above
-#'   traces", this axis is displayed above all the subplot's traces If
-#'   "below traces", this axis is displayed below all the subplot's traces,
-#'   but above the grid lines. Useful when used together with scatter-like
-#'   traces with `cliponaxis` set to FALSE to show markers and/or text
-#'   nodes above this axis. One of \code{"above traces"}, \code{"below
-#'   traces"}.
-#' @param left Sets the space in pixels to reserve inside the left edge of
-#'   `domain`. Applies to x axes only. Number in the interval [0, Inf].
-#' @param linecolor Sets the axis line color. Color: a CSS color string or
-#'   R color name.
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param linewidth Sets the width (in px) of the axis line. Number in the
-#'   interval [0, Inf].
-#' @param matches If set to another axis id (e.g. `x2`, `y`), the range of
-#'   this axis will match the range of the corresponding axis in
-#'   data-coordinates space. Moreover, matching axes share auto-range
-#'   values, category lists and histogram auto-bins. Note that setting axes
-#'   simultaneously in both a `scaleanchor` and a `matches` constraint is
-#'   currently forbidden. Moreover, note that matching axes must have the
-#'   same `type`. One of , or a string matching
-#'   \code{"^x([2-9]|[1-9][0-9]+)?( domain)?$"} or
-#'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
-#' @param maxallowed \strong{\code{go_layout_yaxis()}}: Determines the
-#'   maximum range of this axis. Any value.
-#'
-#'   \strong{\code{go_layout_yaxis_autorangeoptions()}}: Use this value
-#'   exactly as autorange maximum. Any value.
-#' @param minallowed \strong{\code{go_layout_yaxis()}}: Determines the
-#'   minimum range of this axis. Any value.
-#'
-#'   \strong{\code{go_layout_yaxis_autorangeoptions()}}: Use this value
-#'   exactly as autorange minimum. Any value.
-#' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
-#'   This only has an effect when `tickformat` is "SI" or "B". Number in
-#'   the interval [0, Inf].
-#' @param minor Named list or \code{\link{go_layout_yaxis_minor}()} object.
-#' @param minorloglabels Determines how minor log labels are displayed. If
-#'   "small digits", small digits i.e. 2 or 5 are displayed. If "complete",
-#'   complete digits are displayed. If "none", no labels are displayed. One
-#'   of \code{"small digits"}, \code{"complete"}, \code{"none"}.
-#' @param mirror Determines if the axis lines or/and ticks are mirrored to
-#'   the opposite side of the plotting area. If TRUE, the axis lines are
-#'   mirrored. If "ticks", the axis lines and ticks are mirrored. If FALSE,
-#'   mirroring is disable. If "all", axis lines are mirrored on all
-#'   shared-axes subplots. If "allticks", axis lines and ticks are mirrored
-#'   on all shared-axes subplots. One of \code{"ticks"}, \code{"all"},
-#'   \code{"allticks"}, \code{TRUE}, \code{FALSE}.
-#' @param modebardisable Disables certain modebar buttons for this axis.
-#'   "autoscale" disables the autoscale buttons, "zoominout" disables the
-#'   zoom-in and zoom-out buttons. Any combination of \code{"autoscale"},
-#'   \code{"zoominout"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param name When used in a template, named items are created in the
-#'   output figure in addition to any items the figure already has in this
-#'   array. You can modify these items in the output figure by making your
-#'   own item with `templateitemname` matching this `name` alongside your
-#'   modifications (including `visible: false` or `enabled: false` to hide
-#'   it). Has no effect outside of a template. String.
-#' @param nticks Specifies the maximum number of ticks for the particular
-#'   axis. The actual number of ticks will be chosen automatically to be
-#'   less than or equal to `nticks`. Has an effect only if `tickmode` is
-#'   set to "auto". Integer in the interval [0, Inf].
-#' @param overlaying If set a same-letter axis id, this axis is overlaid on
-#'   top of the corresponding same-letter axis, with traces and axes
-#'   visible for both axes. If FALSE, this axis does not overlay any
-#'   same-letter axes. In this case, for axes with overlapping domains only
-#'   the highest-numbered axis will be visible. One of \code{"free"}, or a
-#'   string matching \code{"^x([2-9]|[1-9][0-9]+)?( domain)?$"} or
-#'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
-#' @param pattern Determines a pattern on the time line that generates
-#'   breaks. If "day of week" - days of the week in English e.g. 'Sunday'
-#'   or `sun` (matching is case-insensitive and considers only the first
-#'   three characters), as well as Sunday-based integers between 0 and 6.
-#'   If "hour" - hour (24-hour clock) as decimal numbers between 0 and 24.
-#'   for more info. Examples: - \{ pattern: 'day of week', bounds: [6, 1]
-#'   \} or simply \{ bounds: ['sat', 'mon'] \} breaks from Saturday to
-#'   Monday (i.e. skips the weekends). - \{ pattern: 'hour', bounds: [17,
-#'   8] \} breaks from 5pm to 8am (i.e. skips non-work hours). One of
-#'   \code{"day of week"}, \code{"hour"}, \code{""}.
-#' @param position Sets the position of this axis in the plotting space (in
-#'   normalized coordinates). Only has an effect if `anchor` is set to
-#'   "free". Number in the interval [0, 1].
-#' @param range Sets the range of this axis. If the axis `type` is "log",
-#'   then you must take the log of your desired range (e.g. to set the
-#'   range from 1 to 100, set the range from 0 to 2). If the axis `type` is
-#'   "date", it should be date strings, like date data, though Date objects
-#'   and unix milliseconds will be accepted and converted to strings. If
-#'   the axis `type` is "category", it should be numbers, using the scale
-#'   where each category is assigned a serial number from zero in the order
-#'   it appears. Leaving either or both elements `null` impacts the default
-#'   `autorange`. Vector or list of 2 element(s).
-#' @param rangebreaks List of named lists or
-#'   \code{\link{go_layout_yaxis_rangebreak}()} objects.
-#' @param rangemode If "normal", the range is computed in relation to the
-#'   extrema of the input data. If "tozero", the range extends to 0,
-#'   regardless of the input data If "nonnegative", the range is
-#'   non-negative, regardless of the input data. Applies only to linear
-#'   axes. One of \code{"normal"}, \code{"tozero"}, \code{"nonnegative"}.
-#' @param right Sets the space in pixels to reserve inside the right edge
-#'   of `domain`. Applies to x axes only. Number in the interval [0, Inf].
-#' @param scaleanchor If set to another axis id (e.g. `x2`, `y`), the range
-#'   of this axis changes together with the range of the corresponding axis
-#'   such that the scale of pixels per unit is in a constant ratio. Both
-#'   axes are still zoomable, but when you zoom one, the other will zoom
-#'   the same amount, keeping a fixed midpoint. `constrain` and
-#'   `constraintoward` determine how we enforce the constraint. You can
-#'   chain these, ie `yaxis: \{scaleanchor: "x"\}, xaxis2: \{scaleanchor:
-#'   "y"\}` but you can only link axes of the same `type`. The linked axis
-#'   can have the opposite letter (to constrain the aspect ratio) or the
-#'   same letter (to match scales across subplots). Loops (`yaxis:
-#'   \{scaleanchor: "x"\}, xaxis: \{scaleanchor: "y"\}` or longer) are
-#'   redundant and the last constraint encountered will be ignored to avoid
-#'   possible inconsistent constraints via `scaleratio`. Note that setting
-#'   axes simultaneously in both a `scaleanchor` and a `matches` constraint
-#'   is currently forbidden. Setting `false` allows to remove a default
-#'   constraint (occasionally, you may need to prevent a default
-#'   `scaleanchor` constraint from being applied, eg. when having an image
-#'   trace `yaxis: \{scaleanchor: "x"\}` is set automatically in order for
-#'   pixels to be rendered as squares, setting `yaxis: \{scaleanchor:
-#'   false\}` allows to remove the constraint). One of \code{FALSE}, or a
-#'   string matching \code{"^x([2-9]|[1-9][0-9]+)?( domain)?$"} or
-#'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
-#' @param scaleratio If this axis is linked to another by `scaleanchor`,
-#'   this determines the pixel to unit scale ratio. For example, if this
-#'   value is 10, then every unit on this axis spans 10 times the number of
-#'   pixels as a unit on the linked axis. Use this for example to create an
-#'   elevation profile where the vertical scale is exaggerated a fixed
-#'   amount with respect to the horizontal. Number in the interval [0,
-#'   Inf].
-#' @param separatethousands If "true", even 4-digit integers are separated
-#'   Logical.
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param shift Moves the axis a given number of pixels from where it would
-#'   have been otherwise. Accepts both positive and negative values, which
-#'   will shift the axis either right or left, respectively. If `autoshift`
-#'   is set to true, then this defaults to a padding of -3 if `side` is set
-#'   to "left". and defaults to +3 if `side` is set to "right". Defaults to
-#'   0 if `autoshift` is set to false. Only has an effect if `anchor` is
-#'   set to "free". Number.
-#' @param showdividers Determines whether or not a dividers are drawn
-#'   between the category levels of this axis. Only has an effect on
-#'   "multicategory" axes. Logical.
-#' @param showexponent If "all", all exponents are shown besides their
-#'   significands. If "first", only the exponent of the first tick is
-#'   shown. If "last", only the exponent of the last tick is shown. If
-#'   "none", no exponents appear. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showgrid Determines whether or not grid lines are drawn. If TRUE,
-#'   the grid lines are drawn at every tick mark. Logical.
-#' @param showline Determines whether or not a line bounding this axis is
-#'   drawn. Logical.
-#' @param showspikes Determines whether or not spikes (aka droplines) are
-#'   drawn for this axis. Note that spikes will never be drawn when
-#'   `hovermode` is FALSE. Logical.
-#' @param showticklabels Determines whether or not the tick labels are
-#'   drawn. Logical.
-#' @param showtickprefix If "all", all tick labels are displayed with a
-#'   prefix. If "first", only the first tick is displayed with a prefix. If
-#'   "last", only the last tick is displayed with a suffix. If "none", tick
-#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
-#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
-#' @param side Determines whether a x (y) axis is positioned at the
-#'   "bottom" ("left") or "top" ("right") of the plotting area. One of
-#'   \code{"top"}, \code{"bottom"}, \code{"left"}, \code{"right"}.
-#' @param size Number in the interval [1, Inf].
-#' @param spikecolor Sets the spike color. If undefined, will use the
-#'   series color Color: a CSS color string or R color name.
-#' @param spikedash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param spikemode Determines the drawing mode for the spike line If
-#'   "toaxis", the line is drawn from the data point to the axis the series
-#'   is plotted on. If "across", the line is drawn across the entire plot
-#'   area, and supercedes "toaxis". If "marker", then a marker dot is drawn
-#'   on the axis the series is plotted on Any combination of
-#'   \code{"toaxis"}, \code{"across"}, \code{"marker"} joined with
-#'   \code{"+"}.
-#' @param spikesnap Determines whether spikelines are stuck to the cursor
-#'   or to the closest datapoints. One of \code{"data"}, \code{"cursor"},
-#'   \code{"hovered data"}.
-#' @param spikethickness Sets the spike line width in pixels. Number.
-#' @param standoff Sets the standoff distance (in px) between the axis
-#'   labels and the title text The default value is a function of the axis
-#'   tick labels, the title `font.size` and the axis `linewidth`. Note that
-#'   the axis title position is always constrained within the margins, so
-#'   the actual standoff distance is always less than the set or default
-#'   value. By setting `standoff` and turning on `automargin`, plotly.js
-#'   will push the margins to fit the axis title at given standoff
-#'   distance. Number in the interval [0, Inf].
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param templateitemname Used to refer to a named item in this array in
-#'   the template. Named items from the template will be created even
-#'   without a matching item in the input figure, but you can modify one by
-#'   making an item with `templateitemname` matching its `name`, alongside
-#'   your modifications (including `visible: false` or `enabled: false` to
-#'   hide it). If there is no template or no matching item, this item will
-#'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param text \strong{\code{go_layout_yaxis_title()}}: Sets the title of
-#'   this axis. String.
-#'
-#'   \strong{\code{go_layout_yaxis_unifiedhovertitle()}}: Template string
-#'   used for rendering the title that appear on x or y unified hover box.
-#'   Variables are inserted using \%\{variable\}, for example "y: \%\{y\}".
-#'   Numbers are formatted using d3-format's syntax
-#'   \%\{variable:d3-format\}, for example "Price: \%\{y:$.2f\}".
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format for details on
-#'   the formatting syntax. Dates are formatted using d3-time-format's
-#'   syntax \%\{variable|d3-time-format\}, for example "Day:
-#'   \%\{2019-01-01|\%A\}".
-#'   https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format for
-#'   details on the date formatting syntax. Variables that can't be found
-#'   will be replaced with the specifier. For example, a template of "data:
-#'   \%\{x\}, \%\{y\}" will result in a value of "data: 1, \%\{y\}" if x is
-#'   1 and y is missing. Variables with an undefined value will be replaced
-#'   with the fallback value. String.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param tick0 Sets the placement of the first tick on this axis. Use with
-#'   `dtick`. If the axis `type` is "log", then you must take the log of
-#'   your starting tick (e.g. to set the starting tick to 100, set the
-#'   `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-#'   If the axis `type` is "date", it should be a date string, like date
-#'   data. If the axis `type` is "category", it should be a number, using
-#'   the scale where each category is assigned a serial number from zero in
-#'   the order it appears. Any value.
-#' @param tickangle Sets the angle of the tick labels with respect to the
-#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
-#'   vertically. Angle in degrees.
-#' @param tickcolor Sets the tick color. Color: a CSS color string or R
-#'   color name.
-#' @param tickfont Sets the tick font. Named list or
-#'   \code{\link{go_layout_yaxis_tickfont}()} object.
-#' @param tickformat Sets the tick label formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param tickformatstops List of named lists or
-#'   \code{\link{go_layout_yaxis_tickformatstop}()} objects.
-#' @param ticklabelindex Only for axes with `type` "date" or "linear".
-#'   Instead of drawing the major tick label, draw the label for the minor
-#'   tick that is n positions away from the major tick. E.g. to always draw
-#'   the label for the minor tick before each major tick, choose
-#'   `ticklabelindex` -1. This is useful for date axes with `ticklabelmode`
-#'   "period" if you want to label the period that ends with each major
-#'   tick instead of the period that begins there. Integer, or a vector of
-#'   these.
-#' @param ticklabelmode Determines where tick labels are drawn with respect
-#'   to their corresponding ticks and grid lines. Only has an effect for
-#'   axes of `type` "date" When set to "period", tick labels are drawn in
-#'   the middle of the period between ticks. One of \code{"instant"},
-#'   \code{"period"}.
-#' @param ticklabeloverflow Determines how we handle tick labels that would
-#'   overflow either the graph div or the domain of the axis. The default
-#'   value for inside tick labels is "hide past domain". Otherwise on
-#'   "category" and "multicategory" axes the default is "allow". In other
-#'   cases the default is "hide past div". One of \code{"allow"},
-#'   \code{"hide past div"}, \code{"hide past domain"}.
-#' @param ticklabelposition Determines where tick labels are drawn with
-#'   respect to the axis. Please note that top or bottom has no effect on x
-#'   axes or when `ticklabelmode` is set to "period" or when `tickson` is
-#'   set to "boundaries". Similarly, left or right has no effect on y axes
-#'   or when `ticklabelmode` is set to "period" or when `tickson` is set to
-#'   "boundaries". Has no effect on "multicategory" axes. When used on axes
-#'   linked by `matches` or `scaleanchor`, no extra padding for inside
-#'   labels would be added by autorange, so that the scales could match.
-#'   One of \code{"outside"}, \code{"inside"}, \code{"outside top"},
-#'   \code{"inside top"}, \code{"outside left"}, \code{"inside left"},
-#'   \code{"outside right"}, \code{"inside right"}, \code{"outside
-#'   bottom"}, \code{"inside bottom"}.
-#' @param ticklabelshift Shifts the tick labels by the specified number of
-#'   pixels in parallel to the axis. Positive values move the labels in the
-#'   positive direction of the axis. Integer.
-#' @param ticklabelstandoff Sets the standoff distance (in px) between the
-#'   axis tick labels and their default position. A positive
-#'   `ticklabelstandoff` moves the labels farther away from the plot area
-#'   if `ticklabelposition` is "outside", and deeper into the plot area if
-#'   `ticklabelposition` is "inside". A negative `ticklabelstandoff` works
-#'   in the opposite direction, moving outside ticks towards the plot area
-#'   and inside ticks towards the outside. If the negative value is large
-#'   enough, inside ticks can even end up outside and vice versa. Integer.
-#' @param ticklabelstep Sets the spacing between tick labels as compared to
-#'   the spacing between ticks. A value of 1 (default) means each tick gets
-#'   a label. A value of 2 means shows every 2nd label. A larger value n
-#'   means only every nth tick is labeled. `tick0` determines which labels
-#'   are shown. Not implemented for axes with `type` "log" or
-#'   "multicategory", or when `tickmode` is "array". Integer in the
-#'   interval [1, Inf].
-#' @param ticklen Sets the tick length (in px). Number in the interval [0,
-#'   Inf].
-#' @param tickmode \strong{\code{go_layout_yaxis()}}: Sets the tick mode
-#'   for this axis. If "auto", the number of ticks is set via `nticks`. If
-#'   "linear", the placement of the ticks is determined by a starting
-#'   position `tick0` and a tick step `dtick` ("linear" is the default
-#'   value if `tick0` and `dtick` are provided). If "array", the placement
-#'   of the ticks is set via `tickvals` and the tick text is `ticktext`.
-#'   ("array" is the default value if `tickvals` is provided). If "sync",
-#'   the number of ticks will sync with the overlayed axis set by
-#'   `overlaying` property. When no other tick info is provided, overlaying
-#'   (non-categorical) axes default to "sync", while other axes default to
-#'   "auto". One of \code{"auto"}, \code{"linear"}, \code{"array"},
-#'   \code{"sync"}.
-#'
-#'   \strong{\code{go_layout_yaxis_minor()}}: Sets the tick mode for this
-#'   axis. If "auto", the number of ticks is set via `nticks`. If "linear",
-#'   the placement of the ticks is determined by a starting position
-#'   `tick0` and a tick step `dtick` ("linear" is the default value if
-#'   `tick0` and `dtick` are provided). If "array", the placement of the
-#'   ticks is set via `tickvals` and the tick text is `ticktext`. ("array"
-#'   is the default value if `tickvals` is provided). One of \code{"auto"},
-#'   \code{"linear"}, \code{"array"}.
-#' @param tickprefix Sets a tick label prefix. String.
-#' @param ticks Determines whether ticks are drawn or not. If **, this
-#'   axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-#'   drawn outside (inside) the axis lines. One of \code{"outside"},
-#'   \code{"inside"}, \code{""}.
-#' @param tickson Determines where ticks and grid lines are drawn with
-#'   respect to their corresponding tick labels. Only has an effect for
-#'   axes of `type` "category" or "multicategory". When set to
-#'   "boundaries", ticks and grid lines are drawn half a category to the
-#'   left/bottom of labels. One of \code{"labels"}, \code{"boundaries"}.
-#' @param ticksuffix Sets a tick label suffix. String.
-#' @param ticktext Sets the text displayed at the ticks position via
-#'   `tickvals`. Only has an effect if `tickmode` is set to "array". Used
-#'   with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#' @param tickvals Sets the values at which ticks on this axis appear. Only
-#'   has an effect if `tickmode` is set to "array". Used with `ticktext`.
-#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
-#'   Inf].
-#' @param title String (the title text), named list or
-#'   \code{\link{go_layout_yaxis_title}()} object.
-#' @param top Sets the space in pixels to reserve inside the top edge of
-#'   `domain`. Applies to y axes only. Number in the interval [0, Inf].
-#' @param type Sets the axis type. By default, plotly attempts to
-#'   determined the axis type by looking into the data of the traces that
-#'   referenced the axis in question. One of \code{"-"}, \code{"linear"},
-#'   \code{"log"}, \code{"date"}, \code{"category"},
-#'   \code{"multicategory"}.
-#' @param uirevision Controls persistence of user-driven changes in axis
-#'   `range`, `autorange`, and `title` if in `editable: true`
-#'   configuration. Defaults to `layout.uirevision`. Any value.
-#' @param unifiedhovertitle Named list or
-#'   \code{\link{go_layout_yaxis_unifiedhovertitle}()} object.
-#' @param value string - dtickformat for described zoom level, the same as
-#'   "tickformat" String.
-#' @param values Sets the coordinate values corresponding to the
-#'   rangebreaks. An alternative to `bounds`. Use `dvalue` to set the size
-#'   of the values along the axis. Vector or list of up to 1 element(s).
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param visible A single toggle to hide the axis while preserving
-#'   interaction like dragging. Default is true when a cheater plot is
-#'   present on the axis, otherwise false Logical.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param zeroline Determines whether or not a line is drawn at along the 0
-#'   value of this axis. If TRUE, the zero line is drawn on top of the grid
-#'   lines. Logical.
-#' @param zerolinecolor Sets the line color of the zero line. Color: a CSS
-#'   color string or R color name.
-#' @param zerolinelayer Sets the layer on which this zeroline is displayed.
-#'   If "above traces", this zeroline is displayed above all the subplot's
-#'   traces If "below traces", this zeroline is displayed below all the
-#'   subplot's traces, but above the grid lines. Limitation:
-#'   "zerolinelayer" currently has no effect if the "zorder" property is
-#'   set on any trace. One of \code{"above traces"}, \code{"below traces"}.
-#' @param zerolinewidth Sets the width (in px) of the zero line. Number.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_layout}()}
-#' @noMd
-#' @export
-go_layout_yaxis <- function(
-    arg = NULL, ..., anchor = NULL, automargin = NULL, autorange = NULL,
-    autorangeoptions = NULL, autoshift = NULL, autotickangles = NULL,
-    autotypenumbers = NULL, calendar = NULL, categoryarray = NULL,
-    categoryorder = NULL, color = NULL, constrain = NULL,
-    constraintoward = NULL, dividercolor = NULL, dividerwidth = NULL,
-    domain = NULL, domainpad = NULL, dtick = NULL, exponentformat = NULL,
-    fixedrange = NULL, gridcolor = NULL, griddash = NULL, gridwidth = NULL,
-    hoverformat = NULL, insiderange = NULL, labelalias = NULL, layer = NULL,
-    linecolor = NULL, linewidth = NULL, matches = NULL, maxallowed = NULL,
-    minallowed = NULL, minexponent = NULL, minor = NULL,
-    minorloglabels = NULL, mirror = NULL, modebardisable = NULL,
-    nticks = NULL, overlaying = NULL, position = NULL, range = NULL,
-    rangebreaks = NULL, rangemode = NULL, scaleanchor = NULL,
-    scaleratio = NULL, separatethousands = NULL, shift = NULL,
-    showdividers = NULL, showexponent = NULL, showgrid = NULL,
-    showline = NULL, showspikes = NULL, showticklabels = NULL,
-    showtickprefix = NULL, showticksuffix = NULL, side = NULL,
-    spikecolor = NULL, spikedash = NULL, spikemode = NULL, spikesnap = NULL,
-    spikethickness = NULL, tick0 = NULL, tickangle = NULL, tickcolor = NULL,
-    tickfont = NULL, tickformat = NULL, tickformatstops = NULL,
-    ticklabelindex = NULL, ticklabelmode = NULL, ticklabeloverflow = NULL,
-    ticklabelposition = NULL, ticklabelshift = NULL,
-    ticklabelstandoff = NULL, ticklabelstep = NULL, ticklen = NULL,
-    tickmode = NULL, tickprefix = NULL, ticks = NULL, tickson = NULL,
-    ticksuffix = NULL, ticktext = NULL, tickvals = NULL, tickwidth = NULL,
-    title = NULL, type = NULL, uirevision = NULL, unifiedhovertitle = NULL,
-    visible = NULL, zeroline = NULL, zerolinecolor = NULL,
-    zerolinelayer = NULL, zerolinewidth = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.yaxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_yaxis
-#' @export
-go_layout_yaxis_autorangeoptions <- function(
-    arg = NULL, ..., clipmax = NULL, clipmin = NULL, include = NULL,
-    maxallowed = NULL, minallowed = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.yaxis.autorangeoptions", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_yaxis
-#' @export
-go_layout_yaxis_domainpad <- function(
-    arg = NULL, ..., bottom = NULL, left = NULL, right = NULL, top = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.yaxis.domainpad", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_yaxis
-#' @export
-go_layout_yaxis_minor <- function(
-    arg = NULL, ..., dtick = NULL, gridcolor = NULL, griddash = NULL,
-    gridwidth = NULL, nticks = NULL, showgrid = NULL, tick0 = NULL,
-    tickcolor = NULL, ticklen = NULL, tickmode = NULL, ticks = NULL,
-    tickvals = NULL, tickwidth = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.yaxis.minor", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_yaxis
-#' @export
-go_layout_yaxis_rangebreak <- function(
-    arg = NULL, ..., bounds = NULL, dvalue = NULL, enabled = NULL,
-    name = NULL, pattern = NULL, templateitemname = NULL, values = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.yaxis.rangebreak", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_yaxis
-#' @export
-go_layout_yaxis_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.yaxis.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_yaxis
-#' @export
-go_layout_yaxis_tickformatstop <- function(
-    arg = NULL, ..., dtickrange = NULL, enabled = NULL, name = NULL,
-    templateitemname = NULL, value = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.yaxis.tickformatstop", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_yaxis
-#' @export
-go_layout_yaxis_title <- function(
-    arg = NULL, ..., font = NULL, standoff = NULL, text = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("layout.yaxis.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_yaxis
-#' @export
-go_layout_yaxis_title_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.yaxis.title.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_layout_yaxis
-#' @export
-go_layout_yaxis_unifiedhovertitle <- function(
-    arg = NULL, ..., text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.yaxis.unifiedhovertitle", arg, environment(), list(...), skip_invalid)
 }
 

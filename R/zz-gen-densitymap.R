@@ -5,35 +5,33 @@
 #' Draws a bivariate kernel density estimation with a Gaussian kernel from
 #' `lon` and `lat` coordinates and optional `z` values using a colorscale.
 #'
-#' \code{go_densitymap()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}). \code{add_densitymap()} creates an
-#' object and adds it to a figure.
+#' \code{go_densitymap()} creates a validated graph object (a named list).
+#' \code{add_densitymap()} creates one and adds it to a figure.
 #'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_densitymap_colorbar()}}{\code{densitymap.colorbar}}
-#' \item{\code{go_densitymap_colorbar_tickfont()}}{\code{densitymap.colorbar.tickfont}:
-#' Sets the color bar's tick label font}
-#' \item{\code{go_densitymap_colorbar_tickformatstop()}}{\code{densitymap.colorbar.tickformatstop}}
-#' \item{\code{go_densitymap_colorbar_title()}}{\code{densitymap.colorbar.title}}
-#' \item{\code{go_densitymap_colorbar_title_font()}}{\code{densitymap.colorbar.title.font}:
-#' Sets this color bar's title font.}
-#' \item{\code{go_densitymap_hoverlabel()}}{\code{densitymap.hoverlabel}}
-#' \item{\code{go_densitymap_hoverlabel_font()}}{\code{densitymap.hoverlabel.font}:
-#' Sets the font used in hover labels.}
-#' \item{\code{go_densitymap_legendgrouptitle()}}{\code{densitymap.legendgrouptitle}}
-#' \item{\code{go_densitymap_legendgrouptitle_font()}}{\code{densitymap.legendgrouptitle.font}:
-#' Sets this legend group's title font.}
-#' }
+#' @details
+#' Nested objects are named lists, e.g. \code{marker = list(size = 10, line
+#' = list(width = 2))}. Each nested object's properties are described in a
+#' section of its own near the end of this page (after \emph{Value}), titled
+#' with its path: \emph{marker properties}, \emph{marker.line properties},
+#' .... Objects that appear in several places in the schema can also be
+#' created with a constructor of their own, and are documented on its page:
+#' \code{\link{go_font}()}, \code{\link{go_colorbar}()},
+#' \code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
+#' \code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
+#' \code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
+#' \code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
+#' \code{\link{go_caps}()}, \code{\link{go_domainpad}()},
+#' \code{\link{go_gradient}()}, \code{\link{go_label}()},
+#' \code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
+#' \code{\link{go_minor}()}, \code{\link{go_pathbar}()},
+#' \code{\link{go_project}()}, \code{\link{go_rangebreak}()},
+#' \code{\link{go_root}()}, \code{\link{go_slices}()},
+#' \code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
+#' Every property is checked against the plotly.js schema when the object is
+#' created or modified (see \code{\link{plotly_obj-modify}}).
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
-#' @param align Sets the horizontal alignment of the text content within
-#'   hover label box. Has an effect only if the hover label text spans two
-#'   or more lines One of \code{"left"}, \code{"right"}, \code{"auto"}, or
-#'   a vector of these.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `colorscale`. In case `colorscale` is unspecified or `autocolorscale`
@@ -44,38 +42,20 @@
 #'   the layer with the specified ID. By default, densitymap traces are
 #'   placed below the first layer of type symbol If set to '', the layer
 #'   will be inserted above every existing layer. String.
-#' @param bgcolor \strong{\code{go_densitymap_colorbar()}}: Sets the color
-#'   of padded area. Color: a CSS color string or R color name.
-#'
-#'   \strong{\code{go_densitymap_hoverlabel()}}: Sets the background color
-#'   of the hover labels for this trace Color: a CSS color string or R
-#'   color name, or a vector of these.
-#' @param bordercolor \strong{\code{go_densitymap_colorbar()}}: Sets the
-#'   axis line color. Color: a CSS color string or R color name.
-#'
-#'   \strong{\code{go_densitymap_hoverlabel()}}: Sets the border color of
-#'   the hover labels for this trace. Color: a CSS color string or R color
-#'   name, or a vector of these.
-#' @param borderwidth Sets the width (in px) or the border enclosing this
-#'   color bar. Number in the interval [0, Inf].
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
-#' @param color \strong{\code{go_densitymap_colorbar_tickfont()},
-#'   \code{go_densitymap_colorbar_title_font()},
-#'   \code{go_densitymap_legendgrouptitle_font()}}: Color: a CSS color
-#'   string or R color name.
-#'
-#'   \strong{\code{go_densitymap_hoverlabel_font()}}: Color: a CSS color
-#'   string or R color name, or a vector of these.
 #' @param coloraxis Sets a reference to a shared color axis. References to
 #'   these shared color axes are "coloraxis", "coloraxis2", "coloraxis3",
 #'   etc. Settings for these shared color axes are set in the layout, under
 #'   `layout.coloraxis`, `layout.coloraxis2`, etc. Note that multiple color
 #'   scales can be linked to the same color axis. Subplot id:
 #'   \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....
-#' @param colorbar Named list or \code{\link{go_densitymap_colorbar}()}
-#'   object.
+#' @param colorbar A \code{\link{go_colorbar}()} object or named list, with
+#'   properties \code{bgcolor}, \code{bordercolor}, \code{borderwidth},
+#'   \code{dtick}, \code{exponentformat}, \code{labelalias}, \code{len},
+#'   \code{lenmode}, \code{minexponent}, \code{nticks}, \code{orientation},
+#'   \code{outlinecolor} and 34 more (see \code{\link{go_colorbar}()}).
 #' @param colorscale Sets the colorscale. The colorscale must be an array
 #'   containing arrays mapping a normalized value to an rgb, rgba, hex,
 #'   hsl, hsla, hwb, or named color string. At minimum, a mapping for the
@@ -92,65 +72,22 @@
 #'   traces also appends customdata items in the markers DOM elements Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param data A data frame in which formula properties (e.g. \code{x =
-#'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
-#'   given to \code{\link{go_figure}()}. Only the evaluated values are
+#'   ~col}, \code{marker = list(size = ~col)}) are evaluated. Default: the
+#'   data given to \code{\link{go_figure}()}. Only the evaluated values are
 #'   added to the trace. A \code{crosstalk::SharedData} works the same way,
 #'   and links the trace to its crosstalk group (see
 #'   \code{\link{highlight}()}).
-#' @param dtick Sets the step in-between ticks on this color bar. Use with
-#'   `tick0`. Must be a positive number. Note: unlike on x/y axes, the
-#'   special "log" and "date" string forms ("L<f>", "D1", "D2", "M<n>") are
-#'   not supported here: this axis is always linear, so such strings are
-#'   silently ignored and the step is set to 1. Any value.
-#' @param dtickrange range ["min", "max"], where "min", "max" - dtick
-#'   values which describe some zoom level, it is possible to omit "min" or
-#'   "max" value by passing "null" Vector or list of 2 element(s).
-#' @param enabled Determines whether or not this stop is used. If `false`,
-#'   this stop is ignored even within its `dtickrange`. Logical.
-#' @param exponentformat Determines a formatting rule for the tick
-#'   exponents. For example, consider the number 1,000,000,000. If "none",
-#'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-#'   1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-#'   prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-#'   covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-#'   Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-#'   the above ranges, the formatting rule will automatically be switched
-#'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-#'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
-#' @param family \strong{\code{go_densitymap_colorbar_tickfont()},
-#'   \code{go_densitymap_colorbar_title_font()},
-#'   \code{go_densitymap_legendgrouptitle_font()}}: HTML font family - the
-#'   typeface that will be applied by the web browser. The web browser can
-#'   only apply a font if it is available on the system where it runs.
-#'   Provide multiple font families, separated by commas, to indicate the
-#'   order in which to apply fonts if they aren't available. String.
-#'
-#'   \strong{\code{go_densitymap_hoverlabel_font()}}: HTML font family -
-#'   the typeface that will be applied by the web browser. The web browser
-#'   can only apply a font if it is available on the system where it runs.
-#'   Provide multiple font families, separated by commas, to indicate the
-#'   order in which to apply fonts if they aren't available. String, or a
-#'   vector of these.
 #' @param fig A \code{go_figure} object.
-#' @param font \strong{\code{go_densitymap_colorbar_title()}}: Sets this
-#'   color bar's title font. Named list or
-#'   \code{\link{go_densitymap_colorbar_title_font}()} object.
-#'
-#'   \strong{\code{go_densitymap_hoverlabel()}}: Sets the font used in
-#'   hover labels. Named list or
-#'   \code{\link{go_densitymap_hoverlabel_font}()} object.
-#'
-#'   \strong{\code{go_densitymap_legendgrouptitle()}}: Sets this legend
-#'   group's title font. Named list or
-#'   \code{\link{go_densitymap_legendgrouptitle_font}()} object.
 #' @param hoverinfo Determines what trace information appears on hover. If
 #'   `none` or `skip` are set, no information is displayed upon hovering.
 #'   But, if `none` is set, click and hover events are still fired. Any
 #'   combination of \code{"lon"}, \code{"lat"}, \code{"z"}, \code{"text"},
 #'   \code{"name"} joined with \code{"+"}, or one of \code{"all"},
 #'   \code{"none"}, \code{"skip"}, or a vector of these.
-#' @param hoverlabel Named list or \code{\link{go_densitymap_hoverlabel}()}
-#'   object.
+#' @param hoverlabel A \code{\link{go_hoverlabel}()} object or named list,
+#'   with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+#'   \code{font}, \code{namelength} and \code{showarrow} (see
+#'   \code{\link{go_hoverlabel}()}).
 #' @param hovertemplate Template string used for rendering the information
 #'   that appear on hover box. Note that this will override `hoverinfo`.
 #'   Variables are inserted using \%\{variable\}, for example "y: \%\{y\}"
@@ -191,14 +128,6 @@
 #'   constancy of data points during animation. Should be an array of
 #'   strings, not numbers or any other type. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
-#' @param labelalias Replacement text for specific tick or hover labels.
-#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-#'   to Canada. The labels we would have shown must match the keys exactly,
-#'   after adding any tickprefix or ticksuffix. For negative numbers the
-#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
-#'   That means you need to use -1 instead of -1. labelalias can be used
-#'   with any axis type, and both keys (if needed) and values (if desired)
-#'   can include html-like tags or MathJax. Any value.
 #' @param lat Sets the latitude coordinates (in degrees North). Data array:
 #'   a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param legend Sets the reference to a legend to show this trace in.
@@ -209,8 +138,9 @@
 #' @param legendgroup Sets the legend group for this trace. Traces and
 #'   shapes part of the same legend group hide/show at the same time when
 #'   toggling legend items. String.
-#' @param legendgrouptitle Named list or
-#'   \code{\link{go_densitymap_legendgrouptitle}()} object.
+#' @param legendgrouptitle A \code{\link{go_legendgrouptitle}()} object or
+#'   named list, with properties \code{font} and \code{text} (see
+#'   \code{\link{go_legendgrouptitle}()}).
 #' @param legendrank Sets the legend rank for this trace. Items and groups
 #'   with smaller ranks are presented on top/left side while with
 #'   "reversed" `legend.traceorder` they are on bottom/right side. The
@@ -221,26 +151,6 @@
 #'   to their order in data and layout. Number.
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param len Sets the length of the color bar This measure excludes the
-#'   padding of both ends. That is, the color bar length is this length
-#'   minus the padding on both ends. Number in the interval [0, Inf].
-#' @param lenmode Determines whether this color bar's length (i.e. the
-#'   measure in the color variation direction) is set in units of plot
-#'   "fraction" or in *pixels. Use `len` to set the value. One of
-#'   \code{"fraction"}, \code{"pixels"}.
-#' @param lineposition \strong{\code{go_densitymap_colorbar_tickfont()},
-#'   \code{go_densitymap_colorbar_title_font()},
-#'   \code{go_densitymap_legendgrouptitle_font()}}: Sets the kind of
-#'   decoration line(s) with text, such as an "under", "over" or "through"
-#'   as well as combinations e.g. "under+over", etc. Any combination of
-#'   \code{"under"}, \code{"over"}, \code{"through"} joined with
-#'   \code{"+"}, or one of \code{"none"}.
-#'
-#'   \strong{\code{go_densitymap_hoverlabel_font()}}: Sets the kind of
-#'   decoration line(s) with text, such as an "under", "over" or "through"
-#'   as well as combinations e.g. "under+over", etc. Any combination of
-#'   \code{"under"}, \code{"over"}, \code{"through"} joined with
-#'   \code{"+"}, or one of \code{"none"}, or a vector of these.
 #' @param lon Sets the longitude coordinates (in degrees East). Data array:
 #'   a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param meta Assigns extra meta information associated with this trace
@@ -252,38 +162,10 @@
 #'   `meta` item in question. To access trace `meta` in layout attributes,
 #'   use `\%\{data[n[.meta[i]\}` where `i` is the index or key of the
 #'   `meta` and `n` is the trace index. Any value.
-#' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
-#'   This only has an effect when `tickformat` is "SI" or "B". Number in
-#'   the interval [0, Inf].
-#' @param name \strong{\code{go_densitymap()}}: Sets the trace name. The
-#'   trace name appears as the legend item and on hover. String.
-#'
-#'   \strong{\code{go_densitymap_colorbar_tickformatstop()}}: When used in
-#'   a template, named items are created in the output figure in addition
-#'   to any items the figure already has in this array. You can modify
-#'   these items in the output figure by making your own item with
-#'   `templateitemname` matching this `name` alongside your modifications
-#'   (including `visible: false` or `enabled: false` to hide it). Has no
-#'   effect outside of a template. String.
-#' @param namelength Sets the default length (in number of characters) of
-#'   the trace name in the hover labels for all traces. -1 shows the whole
-#'   name regardless of length. 0-3 shows the first 0-3 characters, and an
-#'   integer >3 will show the whole name if it is less than that many
-#'   characters, but if it is longer, will truncate to `namelength - 3`
-#'   characters and add an ellipsis. Integer in the interval [-1, Inf], or
-#'   a vector of these.
-#' @param nticks Specifies the maximum number of ticks for the particular
-#'   axis. The actual number of ticks will be chosen automatically to be
-#'   less than or equal to `nticks`. Has an effect only if `tickmode` is
-#'   set to "auto". Integer in the interval [0, Inf].
+#' @param name Sets the trace name. The trace name appears as the legend
+#'   item and on hover. String.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
-#' @param orientation Sets the orientation of the colorbar. One of
-#'   \code{"h"}, \code{"v"}.
-#' @param outlinecolor Sets the axis line color. Color: a CSS color string
-#'   or R color name.
-#' @param outlinewidth Sets the width (in px) of the axis line. Number in
-#'   the interval [0, Inf].
 #' @param radius Sets the radius of influence of one `lon` / `lat` point in
 #'   pixels. Increasing the value makes the densitymap trace smoother, but
 #'   less detailed. Number in the interval [1, Inf], or a vector of these.
@@ -293,175 +175,20 @@
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
-#' @param separatethousands If "true", even 4-digit integers are separated
-#'   Logical.
-#' @param shadow \strong{\code{go_densitymap_colorbar_tickfont()},
-#'   \code{go_densitymap_colorbar_title_font()},
-#'   \code{go_densitymap_legendgrouptitle_font()}}: Sets the shape and
-#'   color of the shadow behind text. "auto" places minimal shadow and
-#'   applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#'
-#'   \strong{\code{go_densitymap_hoverlabel_font()}}: Sets the shape and
-#'   color of the shadow behind text. "auto" places minimal shadow and
-#'   applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String, or a vector of these.
-#' @param showarrow Sets whether or not to show the hover label
-#'   arrow/triangle pointing to the data point. Logical.
-#' @param showexponent If "all", all exponents are shown besides their
-#'   significands. If "first", only the exponent of the first tick is
-#'   shown. If "last", only the exponent of the last tick is shown. If
-#'   "none", no exponents appear. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
 #' @param showlegend Determines whether or not an item corresponding to
 #'   this trace is shown in the legend. Logical.
 #' @param showscale Determines whether or not a colorbar is displayed for
 #'   this trace. Logical.
-#' @param showticklabels Determines whether or not the tick labels are
-#'   drawn. Logical.
-#' @param showtickprefix If "all", all tick labels are displayed with a
-#'   prefix. If "first", only the first tick is displayed with a prefix. If
-#'   "last", only the last tick is displayed with a suffix. If "none", tick
-#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
-#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
-#' @param side Determines the location of color bar's title with respect to
-#'   the color bar. Defaults to "top" when `orientation` is "v" and
-#'   defaults to "right" when `orientation` is "h". One of \code{"right"},
-#'   \code{"top"}, \code{"bottom"}.
-#' @param size \strong{\code{go_densitymap_colorbar_tickfont()},
-#'   \code{go_densitymap_colorbar_title_font()},
-#'   \code{go_densitymap_legendgrouptitle_font()}}: Number in the interval
-#'   [1, Inf].
-#'
-#'   \strong{\code{go_densitymap_hoverlabel_font()}}: Number in the
-#'   interval [1, Inf], or a vector of these.
-#' @param style \strong{\code{go_densitymap_colorbar_tickfont()},
-#'   \code{go_densitymap_colorbar_title_font()},
-#'   \code{go_densitymap_legendgrouptitle_font()}}: Sets whether a font
-#'   should be styled with a normal or italic face from its family. One of
-#'   \code{"normal"}, \code{"italic"}.
-#'
-#'   \strong{\code{go_densitymap_hoverlabel_font()}}: Sets whether a font
-#'   should be styled with a normal or italic face from its family. One of
-#'   \code{"normal"}, \code{"italic"}, or a vector of these.
 #' @param subplot Sets a reference between this trace's data coordinates
 #'   and a map subplot. If "map" (the default value), the data refer to
 #'   `layout.map`. If "map2", the data refer to `layout.map2`, and so on.
 #'   Subplot id: \code{"map"}, \code{"map2"}, \code{"map3"}, ....
-#' @param templateitemname Used to refer to a named item in this array in
-#'   the template. Named items from the template will be created even
-#'   without a matching item in the input figure, but you can modify one by
-#'   making an item with `templateitemname` matching its `name`, alongside
-#'   your modifications (including `visible: false` or `enabled: false` to
-#'   hide it). If there is no template or no matching item, this item will
-#'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param text \strong{\code{go_densitymap()}}: Sets text elements
-#'   associated with each (lon,lat) pair If a single string, the same
-#'   string appears over all the data points. If an array of string, the
-#'   items are mapped in order to the this trace's (lon,lat) coordinates.
-#'   If trace `hoverinfo` contains a "text" flag and "hovertext" is not
-#'   set, these elements will be seen in the hover labels. String, or a
-#'   vector of these.
-#'
-#'   \strong{\code{go_densitymap_colorbar_title()}}: Sets the title of the
-#'   color bar. String.
-#'
-#'   \strong{\code{go_densitymap_legendgrouptitle()}}: Sets the title of
-#'   the legend group. String.
-#' @param textcase \strong{\code{go_densitymap_colorbar_tickfont()},
-#'   \code{go_densitymap_colorbar_title_font()},
-#'   \code{go_densitymap_legendgrouptitle_font()}}: Sets capitalization of
-#'   text. It can be used to make text appear in all-uppercase or
-#'   all-lowercase, or with each word capitalized. One of \code{"normal"},
-#'   \code{"word caps"}, \code{"upper"}, \code{"lower"}.
-#'
-#'   \strong{\code{go_densitymap_hoverlabel_font()}}: Sets capitalization
-#'   of text. It can be used to make text appear in all-uppercase or
-#'   all-lowercase, or with each word capitalized. One of \code{"normal"},
-#'   \code{"word caps"}, \code{"upper"}, \code{"lower"}, or a vector of
-#'   these.
-#' @param thickness Sets the thickness of the color bar This measure
-#'   excludes the size of the padding, ticks and labels. Number in the
-#'   interval [0, Inf].
-#' @param thicknessmode Determines whether this color bar's thickness (i.e.
-#'   the measure in the constant color direction) is set in units of plot
-#'   "fraction" or in "pixels". Use `thickness` to set the value. One of
-#'   \code{"fraction"}, \code{"pixels"}.
-#' @param tick0 Sets the placement of the first tick on this axis. Use with
-#'   `dtick`. If the axis `type` is "log", then you must take the log of
-#'   your starting tick (e.g. to set the starting tick to 100, set the
-#'   `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-#'   If the axis `type` is "date", it should be a date string, like date
-#'   data. If the axis `type` is "category", it should be a number, using
-#'   the scale where each category is assigned a serial number from zero in
-#'   the order it appears. Any value.
-#' @param tickangle Sets the angle of the tick labels with respect to the
-#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
-#'   vertically. Angle in degrees.
-#' @param tickcolor Sets the tick color. Color: a CSS color string or R
-#'   color name.
-#' @param tickfont Sets the color bar's tick label font Named list or
-#'   \code{\link{go_densitymap_colorbar_tickfont}()} object.
-#' @param tickformat Sets the tick label formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param tickformatstops List of named lists or
-#'   \code{\link{go_densitymap_colorbar_tickformatstop}()} objects.
-#' @param ticklabeloverflow Determines how we handle tick labels that would
-#'   overflow either the graph div or the domain of the axis. The default
-#'   value for inside tick labels is "hide past domain". In other cases the
-#'   default is "hide past div". One of \code{"allow"}, \code{"hide past
-#'   div"}, \code{"hide past domain"}.
-#' @param ticklabelposition Determines where tick labels are drawn relative
-#'   to the ticks. Left and right options are used when `orientation` is
-#'   "h", top and bottom when `orientation` is "v". One of
-#'   \code{"outside"}, \code{"inside"}, \code{"outside top"}, \code{"inside
-#'   top"}, \code{"outside left"}, \code{"inside left"}, \code{"outside
-#'   right"}, \code{"inside right"}, \code{"outside bottom"}, \code{"inside
-#'   bottom"}.
-#' @param ticklabelstep Sets the spacing between tick labels as compared to
-#'   the spacing between ticks. A value of 1 (default) means each tick gets
-#'   a label. A value of 2 means shows every 2nd label. A larger value n
-#'   means only every nth tick is labeled. `tick0` determines which labels
-#'   are shown. Not implemented for axes with `type` "log" or
-#'   "multicategory", or when `tickmode` is "array". Integer in the
-#'   interval [1, Inf].
-#' @param ticklen Sets the tick length (in px). Number in the interval [0,
-#'   Inf].
-#' @param tickmode Sets the tick mode for this axis. If "auto", the number
-#'   of ticks is set via `nticks`. If "linear", the placement of the ticks
-#'   is determined by a starting position `tick0` and a tick step `dtick`
-#'   ("linear" is the default value if `tick0` and `dtick` are provided).
-#'   If "array", the placement of the ticks is set via `tickvals` and the
-#'   tick text is `ticktext`. ("array" is the default value if `tickvals`
-#'   is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.
-#' @param tickprefix Sets a tick label prefix. String.
-#' @param ticks Determines whether ticks are drawn or not. If **, this
-#'   axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-#'   drawn outside (inside) the axis lines. One of \code{"outside"},
-#'   \code{"inside"}, \code{""}.
-#' @param ticksuffix Sets a tick label suffix. String.
-#' @param ticktext Sets the text displayed at the ticks position via
-#'   `tickvals`. Only has an effect if `tickmode` is set to "array". Used
-#'   with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#' @param tickvals Sets the values at which ticks on this axis appear. Only
-#'   has an effect if `tickmode` is set to "array". Used with `ticktext`.
-#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
-#'   Inf].
-#' @param title String (the title text), named list or
-#'   \code{\link{go_densitymap_colorbar_title}()} object.
+#' @param text Sets text elements associated with each (lon,lat) pair If a
+#'   single string, the same string appears over all the data points. If an
+#'   array of string, the items are mapped in order to the this trace's
+#'   (lon,lat) coordinates. If trace `hoverinfo` contains a "text" flag and
+#'   "hovertext" is not set, these elements will be seen in the hover
+#'   labels. String, or a vector of these.
 #' @param uid Assign an id to this trace, Use this to provide object
 #'   constancy between traces during animations and transitions. String.
 #' @param uirevision Controls persistence of some user-driven changes to
@@ -478,63 +205,10 @@
 #'   array, such that the same trace has a different index, you can still
 #'   preserve user-driven changes if you give each trace a `uid` that stays
 #'   with it as it moves. Any value.
-#' @param value string - dtickformat for described zoom level, the same as
-#'   "tickformat" String.
-#' @param variant \strong{\code{go_densitymap_colorbar_tickfont()},
-#'   \code{go_densitymap_colorbar_title_font()},
-#'   \code{go_densitymap_legendgrouptitle_font()}}: Sets the variant of the
-#'   font. One of \code{"normal"}, \code{"small-caps"},
-#'   \code{"all-small-caps"}, \code{"all-petite-caps"},
-#'   \code{"petite-caps"}, \code{"unicase"}.
-#'
-#'   \strong{\code{go_densitymap_hoverlabel_font()}}: Sets the variant of
-#'   the font. One of \code{"normal"}, \code{"small-caps"},
-#'   \code{"all-small-caps"}, \code{"all-petite-caps"},
-#'   \code{"petite-caps"}, \code{"unicase"}, or a vector of these.
 #' @param visible Determines whether or not this trace is visible. If
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param weight \strong{\code{go_densitymap_colorbar_tickfont()},
-#'   \code{go_densitymap_colorbar_title_font()},
-#'   \code{go_densitymap_legendgrouptitle_font()}}: Sets the weight (or
-#'   boldness) of the font. Integer in the interval [1, 1000].
-#'
-#'   \strong{\code{go_densitymap_hoverlabel_font()}}: Sets the weight (or
-#'   boldness) of the font. Integer in the interval [1, 1000], or a vector
-#'   of these.
-#' @param x Sets the x position with respect to `xref` of the color bar (in
-#'   plot fraction). When `xref` is "paper", defaults to 1.02 when
-#'   `orientation` is "v" and 0.5 when `orientation` is "h". When `xref` is
-#'   "container", defaults to 1 when `orientation` is "v" and 0.5 when
-#'   `orientation` is "h". Must be between 0 and 1 if `xref` is "container"
-#'   and between "-2" and 3 if `xref` is "paper". Number.
-#' @param xanchor Sets this color bar's horizontal position anchor. This
-#'   anchor binds the `x` position to the "left", "center" or "right" of
-#'   the color bar. Defaults to "left" when `orientation` is "v" and
-#'   "center" when `orientation` is "h". One of \code{"left"},
-#'   \code{"center"}, \code{"right"}.
-#' @param xpad Sets the amount of padding (in px) along the x direction.
-#'   Number in the interval [0, Inf].
-#' @param xref Sets the container `x` refers to. "container" spans the
-#'   entire `width` of the plot. "paper" refers to the width of the
-#'   plotting area only. One of \code{"container"}, \code{"paper"}.
-#' @param y Sets the y position with respect to `yref` of the color bar (in
-#'   plot fraction). When `yref` is "paper", defaults to 0.5 when
-#'   `orientation` is "v" and 1.02 when `orientation` is "h". When `yref`
-#'   is "container", defaults to 0.5 when `orientation` is "v" and 1 when
-#'   `orientation` is "h". Must be between 0 and 1 if `yref` is "container"
-#'   and between "-2" and 3 if `yref` is "paper". Number.
-#' @param yanchor Sets this color bar's vertical position anchor This
-#'   anchor binds the `y` position to the "top", "middle" or "bottom" of
-#'   the color bar. Defaults to "middle" when `orientation` is "v" and
-#'   "bottom" when `orientation` is "h". One of \code{"top"},
-#'   \code{"middle"}, \code{"bottom"}.
-#' @param ypad Sets the amount of padding (in px) along the y direction.
-#'   Number in the interval [0, Inf].
-#' @param yref Sets the container `y` refers to. "container" spans the
-#'   entire `height` of the plot. "paper" refers to the height of the
-#'   plotting area only. One of \code{"container"}, \code{"paper"}.
 #' @param z Sets the points' weight. For example, a value of 10 would be
 #'   equivalent to having 10 points of weight 1 in the same spot Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
@@ -551,15 +225,15 @@
 #' @param zmin Sets the lower bound of the color domain. Value should have
 #'   the same units as in `z` and if set, `zmax` must be set as well.
 #'   Number.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
+#' @param ... Further properties, by their full names (e.g. numbered subplots
+#'   such as \code{xaxis2} in \code{go_layout()}). Nested properties are set
+#'   with named lists: \code{marker = list(size = 10)}.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
+#' @return \code{go_*()} functions return a graph object;
+#'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
+#'
 #' @noMd
 #' @export
 #' @examples
@@ -577,100 +251,5 @@ go_densitymap <- function(
     zmid = NULL, zmin = NULL, skip_invalid = FALSE
 ) {
   plotly_object("densitymap", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_densitymap
-#' @export
-go_densitymap_colorbar <- function(
-    arg = NULL, ..., bgcolor = NULL, bordercolor = NULL, borderwidth = NULL,
-    dtick = NULL, exponentformat = NULL, labelalias = NULL, len = NULL,
-    lenmode = NULL, minexponent = NULL, nticks = NULL, orientation = NULL,
-    outlinecolor = NULL, outlinewidth = NULL, separatethousands = NULL,
-    showexponent = NULL, showticklabels = NULL, showtickprefix = NULL,
-    showticksuffix = NULL, thickness = NULL, thicknessmode = NULL,
-    tick0 = NULL, tickangle = NULL, tickcolor = NULL, tickfont = NULL,
-    tickformat = NULL, tickformatstops = NULL, ticklabeloverflow = NULL,
-    ticklabelposition = NULL, ticklabelstep = NULL, ticklen = NULL,
-    tickmode = NULL, tickprefix = NULL, ticks = NULL, ticksuffix = NULL,
-    ticktext = NULL, tickvals = NULL, tickwidth = NULL, title = NULL,
-    x = NULL, xanchor = NULL, xpad = NULL, xref = NULL, y = NULL,
-    yanchor = NULL, ypad = NULL, yref = NULL, skip_invalid = FALSE
-) {
-  plotly_object("densitymap.colorbar", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_densitymap
-#' @export
-go_densitymap_colorbar_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("densitymap.colorbar.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_densitymap
-#' @export
-go_densitymap_colorbar_tickformatstop <- function(
-    arg = NULL, ..., dtickrange = NULL, enabled = NULL, name = NULL,
-    templateitemname = NULL, value = NULL, skip_invalid = FALSE
-) {
-  plotly_object("densitymap.colorbar.tickformatstop", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_densitymap
-#' @export
-go_densitymap_colorbar_title <- function(
-    arg = NULL, ..., font = NULL, side = NULL, text = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("densitymap.colorbar.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_densitymap
-#' @export
-go_densitymap_colorbar_title_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("densitymap.colorbar.title.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_densitymap
-#' @export
-go_densitymap_hoverlabel <- function(
-    arg = NULL, ..., align = NULL, bgcolor = NULL, bordercolor = NULL,
-    font = NULL, namelength = NULL, showarrow = NULL, skip_invalid = FALSE
-) {
-  plotly_object("densitymap.hoverlabel", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_densitymap
-#' @export
-go_densitymap_hoverlabel_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("densitymap.hoverlabel.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_densitymap
-#' @export
-go_densitymap_legendgrouptitle <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("densitymap.legendgrouptitle", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_densitymap
-#' @export
-go_densitymap_legendgrouptitle_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("densitymap.legendgrouptitle.font", arg, environment(), list(...), skip_invalid)
 }
 

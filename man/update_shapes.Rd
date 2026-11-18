@@ -39,9 +39,9 @@ or a function that takes an object and returns \code{TRUE} or \code{FALSE}.}
 
 \item{secondary_y}{Only objects on secondary (\code{TRUE}) or primary (\code{FALSE}) y axes.}
 
-\item{patch}{A named list of property updates (see \code{\link{go_layout_shape}()}).}
+\item{patch}{A named list of property updates (see \code{\link{add_shape}()}).}
 
-\item{...}{Further named updates (names may use magic underscores).}
+\item{...}{Further named updates, by their full names.}
 
 \item{overwrite}{If \code{TRUE}, replace nested objects instead of merging.}
 
@@ -49,7 +49,7 @@ or a function that takes an object and returns \code{TRUE} or \code{FALSE}.}
 If it returns anything other than a list, the object is left unchanged.}
 }
 \value{
-\code{select_shapes()} returns a list of \code{\link{go_layout_shape}()} objects; the
+\code{select_shapes()} returns a list of shape objects; the
   others return the modified figure.
 }
 \description{

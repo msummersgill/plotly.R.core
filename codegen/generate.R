@@ -46,16 +46,19 @@ perform_codegen <- function(outdir = ".", scope = CODEGEN_SCOPE) {
     "named-colors.txt"
   ))
   .config_options <- sort(names(schema$config))
+  ctx <- doc_context(nodes, validators, schema)
+  .shared_types <- shared_types_data(ctx)
   save(
     .validators,
     .named_colors,
     .config_options,
+    .shared_types,
     file = file.path(outdir, "R", "sysdata.rda"),
     compress = "xz"
   )
 
-  write_datatypes(nodes, validators, schema, outdir)
-  write_figure(validators, outdir)
+  write_datatypes(ctx, outdir)
+  write_figure(ctx, outdir)
   write_colors(outdir)
 
   message(sprintf(

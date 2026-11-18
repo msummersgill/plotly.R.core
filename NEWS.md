@@ -2,9 +2,17 @@
 
 * Initial CRAN submission.
 * Graph objects generated from the plotly.js (4.3.0) schema: a `go_*()`
-  constructor for every trace type and layout object, `add_<trace>()`,
+  constructor for every trace type and the layout, `add_<trace>()`,
   `update_layout()`, `update_traces()` and friends, with plotly.py-style
-  validation and generated documentation.
+  validation and generated documentation. Nested objects are named lists
+  (`marker = list(size = 10)`), documented on their parent's help page; the
+  objects shared across the schema have constructors of their own
+  (`go_font()`, `go_colorbar()`, `go_hoverlabel()`, `go_legendgrouptitle()`,
+  `go_tickformatstop()`, `go_domain()`, `go_pattern()`, `go_error_bar()`,
+  the shared types of plotly.js's TypeScript definitions, and `go_bins()`,
+  `go_minor()`, `go_rangebreak()`, ... for the other objects that are the same
+  everywhere they appear). plotly.py's "magic underscore" property
+  names (`marker_size = 10`) are not supported (#5).
 * Plotly Express: all of plotly.py's `px.*` functions as `px_scatter()`,
   `px_line()`, `px_bar()`, ... plus `px_imshow()`, with faceting, marginals,
   trendlines, animation, the `px.data` datasets and templates.

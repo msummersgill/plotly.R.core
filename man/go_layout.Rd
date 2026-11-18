@@ -102,19 +102,22 @@ go_layout(
 \item{arg}{Optional named list, or graph object of the same type, to
 initialise properties from (constructors). Named arguments take precedence.}
 
-\item{...}{Further properties, including nested properties in
-"magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}. Property values may be one-sided
-formulas, evaluated in \code{data} for \code{add_*()} functions.}
+\item{...}{Further properties, by their full names (e.g. numbered subplots
+such as \code{xaxis2} in \code{go_layout()}). Nested properties are set
+with named lists: \code{marker = list(size = 10)}.}
 
-\item{activeselection}{Named list or
-\code{\link{go_layout_activeselection}()} object.}
+\item{activeselection}{A named list with properties \code{fillcolor} and
+\code{opacity} (described in section "activeselection properties"
+below).}
 
-\item{activeshape}{Named list or \code{\link{go_layout_activeshape}()}
-object.}
+\item{activeshape}{A named list with properties \code{fillcolor} and
+\code{opacity} (described in section "activeshape properties" below).}
 
-\item{annotations}{List of named lists or
-\code{\link{go_layout_annotation}()} objects.}
+\item{annotations}{List, each element a named list with properties
+\code{align}, \code{arrowcolor}, \code{arrowhead}, \code{arrowside},
+\code{arrowsize}, \code{arrowwidth}, \code{ax}, \code{axref},
+\code{ay}, \code{ayref}, \code{bgcolor}, \code{bordercolor} and 31
+more (see \code{\link{add_annotation}()}).}
 
 \item{autosize}{Determines whether or not a layout width or height that
 has been left undefined by the user is initialized on each relayout.
@@ -199,11 +202,14 @@ using this feature. Selection events are sent accordingly as long as
 combination of \code{"event"}, \code{"select"} joined with \code{"+"},
 or one of \code{"none"}.}
 
-\item{coloraxis}{Named list or \code{\link{go_layout_coloraxis}()}
-object.}
+\item{coloraxis}{A named list with properties \code{autocolorscale},
+\code{cauto}, \code{cmax}, \code{cmid}, \code{cmin}, \code{colorbar},
+\code{colorscale}, \code{reversescale} and \code{showscale} (see
+\code{\link{update_coloraxes}()}).}
 
-\item{colorscale}{Named list or \code{\link{go_layout_colorscale}()}
-object.}
+\item{colorscale}{A named list with properties \code{diverging},
+\code{sequential} and \code{sequentialminus} (described in section
+"colorscale properties" below).}
 
 \item{colorway}{Sets the default trace colors. Vector of colors.}
 
@@ -271,8 +277,11 @@ slices, but you can set `false` to disable. Colors provided in the
 trace, using `marker.colors`, are never extended. Logical.}
 
 \item{font}{Sets the global font. Note that fonts used in traces and
-other layout components inherit from the global font. Named list or
-\code{\link{go_layout_font}()} object.}
+other layout components inherit from the global font. A
+\code{\link{go_font}()} object or named list, with properties
+\code{color}, \code{family}, \code{lineposition}, \code{shadow},
+\code{size}, \code{style}, \code{textcase}, \code{variant} and
+\code{weight} (see \code{\link{go_font}()}).}
 
 \item{funnelareacolorway}{Sets the default funnelarea slice colors.
 Defaults to the main `colorway` used for trace colors. If you specify
@@ -293,9 +302,16 @@ plotted over one another, you might need to reduce "opacity" to see
 multiple bars. One of \code{"stack"}, \code{"group"},
 \code{"overlay"}.}
 
-\item{geo}{Named list or \code{\link{go_layout_geo}()} object.}
+\item{geo}{A named list with properties \code{bgcolor}, \code{center},
+\code{coastlinecolor}, \code{coastlinewidth}, \code{countrycolor},
+\code{countrywidth}, \code{domain}, \code{fitbounds},
+\code{framecolor}, \code{framewidth}, \code{lakecolor},
+\code{landcolor} and 20 more (see \code{\link{update_geos}()}).}
 
-\item{grid}{Named list or \code{\link{go_layout_grid}()} object.}
+\item{grid}{A named list with properties \code{columns}, \code{domain},
+\code{pattern}, \code{roworder}, \code{rows}, \code{subplots},
+\code{xaxes}, \code{xgap}, \code{xside}, \code{yaxes}, \code{ygap} and
+\code{yside} (described in section "grid properties" below).}
 
 \item{height}{Sets the plot's height (in px). Number in the interval
 [10, Inf].}
@@ -322,8 +338,10 @@ fills, etc) hovering is on inside the area and off outside, but these
 objects will not supersede hover on point-like objects in case of
 conflict. Integer in the interval [-1, Inf].}
 
-\item{hoverlabel}{Named list or \code{\link{go_layout_hoverlabel}()}
-object.}
+\item{hoverlabel}{A \code{\link{go_hoverlabel}()} object or named list,
+with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+\code{font}, \code{grouptitlefont}, \code{namelength} and
+\code{showarrow} (see \code{\link{go_hoverlabel}()}).}
 
 \item{hovermode}{Determines the mode of hover interactions. If
 "closest", a single hoverlabel will appear for the "closest" point
@@ -359,14 +377,27 @@ the main `colorway` used for trace colors. If you specify a new list
 here it can still be extended with lighter and darker colors, see
 `extendiciclecolors`. Vector of colors.}
 
-\item{images}{List of named lists or \code{\link{go_layout_image}()}
-objects.}
+\item{images}{List, each element a named list with properties
+\code{layer}, \code{name}, \code{opacity}, \code{sizex}, \code{sizey},
+\code{sizing}, \code{source}, \code{templateitemname}, \code{visible},
+\code{x}, \code{xanchor}, \code{xref}, \code{y}, \code{yanchor} and
+\code{yref} (see \code{\link{add_layout_image}()}).}
 
-\item{legend}{Named list or \code{\link{go_layout_legend}()} object.}
+\item{legend}{A named list with properties \code{bgcolor},
+\code{bordercolor}, \code{borderwidth}, \code{entrywidth},
+\code{entrywidthmode}, \code{font}, \code{groupclick},
+\code{groupdoubleclick}, \code{grouptitlefont}, \code{indentation},
+\code{itemclick}, \code{itemdoubleclick} and 19 more (see
+\code{\link{update_legends}()}).}
 
-\item{map}{Named list or \code{\link{go_layout_map}()} object.}
+\item{map}{A named list with properties \code{bearing}, \code{bounds},
+\code{center}, \code{domain}, \code{fitbounds}, \code{layers},
+\code{pitch}, \code{style}, \code{uirevision} and \code{zoom} (see
+\code{\link{update_maps}()}).}
 
-\item{margin}{Named list or \code{\link{go_layout_margin}()} object.}
+\item{margin}{A named list with properties \code{autoexpand}, \code{b},
+\code{l}, \code{pad}, \code{r} and \code{t} (described in section
+"margin properties" below).}
 
 \item{meta}{Assigns extra meta information that can be used in various
 `text` attributes. Attributes such as the graph, axis and colorbar
@@ -383,12 +414,20 @@ margin.automargin applied (in px) Number in the interval [2, Inf].}
 \item{minreducedwidth}{Minimum width of the plot with margin.automargin
 applied (in px) Number in the interval [2, Inf].}
 
-\item{modebar}{Named list or \code{\link{go_layout_modebar}()} object.}
+\item{modebar}{A named list with properties \code{activecolor},
+\code{add}, \code{bgcolor}, \code{color}, \code{orientation},
+\code{remove} and \code{uirevision} (described in section "modebar
+properties" below).}
 
-\item{newselection}{Named list or \code{\link{go_layout_newselection}()}
-object.}
+\item{newselection}{A named list with properties \code{line} and
+\code{mode} (described in section "newselection properties" below).}
 
-\item{newshape}{Named list or \code{\link{go_layout_newshape}()} object.}
+\item{newshape}{A named list with properties \code{drawdirection},
+\code{fillcolor}, \code{fillrule}, \code{label}, \code{layer},
+\code{legend}, \code{legendgroup}, \code{legendgrouptitle},
+\code{legendrank}, \code{legendwidth}, \code{line}, \code{name},
+\code{opacity}, \code{showlegend} and \code{visible} (described in
+section "newshape properties" below).}
 
 \item{paper_bgcolor}{Sets the background color of the paper where the
 graph is drawn. Color: a CSS color string or R color name.}
@@ -401,7 +440,10 @@ it can still be extended with lighter and darker colors, see
 \item{plot_bgcolor}{Sets the background color of the plotting area
 in-between x and y axes. Color: a CSS color string or R color name.}
 
-\item{polar}{Named list or \code{\link{go_layout_polar}()} object.}
+\item{polar}{A named list with properties \code{angularaxis},
+\code{bargap}, \code{barmode}, \code{bgcolor}, \code{domain},
+\code{gridshape}, \code{hole}, \code{radialaxis}, \code{sector} and
+\code{uirevision} (see \code{\link{update_polars}()}).}
 
 \item{scattergap}{Sets the gap (in plot fraction) between scatter points
 of adjacent location coordinates. Defaults to `bargap`. Number in the
@@ -414,7 +456,11 @@ location. With "overlay", the scatter points are plotted over one
 another, you might need to reduce "opacity" to see multiple scatter
 points. One of \code{"group"}, \code{"overlay"}.}
 
-\item{scene}{Named list or \code{\link{go_layout_scene}()} object.}
+\item{scene}{A named list with properties \code{annotations},
+\code{aspectmode}, \code{aspectratio}, \code{bgcolor}, \code{camera},
+\code{domain}, \code{dragmode}, \code{hovermode}, \code{uirevision},
+\code{xaxis}, \code{yaxis} and \code{zaxis} (see
+\code{\link{update_scenes}()}).}
 
 \item{selectdirection}{When `dragmode` is set to "select", this limits
 the selection of the drag to horizontal, vertical or diagonal. "h"
@@ -425,16 +471,22 @@ and "any" sets no limit. One of \code{"h"}, \code{"v"}, \code{"d"},
 \item{selectionrevision}{Controls persistence of user-driven changes in
 selected points from all traces. Any value.}
 
-\item{selections}{List of named lists or
-\code{\link{go_layout_selection}()} objects.}
+\item{selections}{List, each element a named list with properties
+\code{line}, \code{name}, \code{opacity}, \code{path},
+\code{templateitemname}, \code{type}, \code{x0}, \code{x1},
+\code{xref}, \code{y0}, \code{y1} and \code{yref} (see
+\code{\link{add_selection}()}).}
 
 \item{separators}{Sets the decimal and thousand separators. For example,
 ". " puts a '.' before decimals and a space between thousands. In
 English locales, dflt is ".," but other locales may alter this
 default. String.}
 
-\item{shapes}{List of named lists or \code{\link{go_layout_shape}()}
-objects.}
+\item{shapes}{List, each element a named list with properties
+\code{editable}, \code{fillcolor}, \code{fillrule}, \code{label},
+\code{layer}, \code{legend}, \code{legendgroup},
+\code{legendgrouptitle}, \code{legendrank}, \code{legendwidth},
+\code{line}, \code{name} and 20 more (see \code{\link{add_shape}()}).}
 
 \item{showlegend}{Determines whether or not a legend is drawn. Default
 is `true` if there is a trace to show and any of these: a) Two or more
@@ -442,10 +494,16 @@ traces would by default be shown in the legend. b) One pie trace is
 shown in the legend. c) One trace is explicitly given with
 `showlegend: true`. Logical.}
 
-\item{sliders}{List of named lists or \code{\link{go_layout_slider}()}
-objects.}
+\item{sliders}{List, each element a named list with properties
+\code{active}, \code{activebgcolor}, \code{bgcolor},
+\code{bordercolor}, \code{borderwidth}, \code{currentvalue},
+\code{font}, \code{len}, \code{lenmode}, \code{minorticklen},
+\code{name}, \code{pad} and 11 more (described in section "slider
+properties" below).}
 
-\item{smith}{Named list or \code{\link{go_layout_smith}()} object.}
+\item{smith}{A named list with properties \code{bgcolor}, \code{domain},
+\code{imaginaryaxis} and \code{realaxis} (see
+\code{\link{update_smiths}()}).}
 
 \item{spikedistance}{Sets the default distance (in pixels) to look for
 data to draw spikelines to (-1 means no cutoff, 0 means no looking for
@@ -476,13 +534,20 @@ this for a watermark annotation or a logo image, for example. To omit
 one of these items on the plot, make an item with matching
 `templateitemname` and `visible: false`. Any value.}
 
-\item{ternary}{Named list or \code{\link{go_layout_ternary}()} object.}
+\item{ternary}{A named list with properties \code{aaxis}, \code{baxis},
+\code{bgcolor}, \code{caxis}, \code{domain}, \code{sum} and
+\code{uirevision} (see \code{\link{update_ternaries}()}).}
 
-\item{title}{String (the title text), named list or
-\code{\link{go_layout_title}()} object.}
+\item{title}{String (the title text), or a named list with properties
+\code{automargin}, \code{font}, \code{pad}, \code{subtitle},
+\code{text}, \code{x}, \code{xanchor}, \code{xref}, \code{y},
+\code{yanchor} and \code{yref} (described in section "title
+properties" below).}
 
 \item{transition}{Sets transition options used during Plotly.react
-updates. Named list or \code{\link{go_layout_transition}()} object.}
+updates. A named list with properties \code{duration}, \code{easing}
+and \code{ordering} (described in section "transition properties"
+below).}
 
 \item{treemapcolorway}{Sets the default treemap slice colors. Defaults
 to the main `colorway` used for trace colors. If you specify a new
@@ -505,11 +570,14 @@ the y data is changed, you can update `yaxis.uirevision="quantity"`
 and the y axis range will reset but the x axis range will retain any
 user-driven zoom. Any value.}
 
-\item{uniformtext}{Named list or \code{\link{go_layout_uniformtext}()}
-object.}
+\item{uniformtext}{A named list with properties \code{minsize} and
+\code{mode} (described in section "uniformtext properties" below).}
 
-\item{updatemenus}{List of named lists or
-\code{\link{go_layout_updatemenu}()} objects.}
+\item{updatemenus}{List, each element a named list with properties
+\code{active}, \code{bgcolor}, \code{bordercolor}, \code{borderwidth},
+\code{buttons}, \code{direction}, \code{font}, \code{name},
+\code{pad}, \code{showactive}, \code{templateitemname}, \code{type}
+and 5 more (described in section "updatemenu properties" below).}
 
 \item{violingap}{Sets the gap (in plot fraction) between violins of
 adjacent location coordinates. Has no effect on traces that have
@@ -541,26 +609,753 @@ to see multiple bars. One of \code{"group"}, \code{"overlay"}.}
 \item{width}{Sets the plot's width (in px). Number in the interval [10,
 Inf].}
 
-\item{xaxis}{Named list or \code{\link{go_layout_xaxis}()} object.}
+\item{xaxis}{A named list with properties \code{anchor},
+\code{automargin}, \code{autorange}, \code{autorangeoptions},
+\code{autotickangles}, \code{autotypenumbers}, \code{calendar},
+\code{categoryarray}, \code{categoryorder}, \code{color},
+\code{constrain}, \code{constraintoward} and 80 more (see
+\code{\link{update_xaxes}()}).}
 
-\item{yaxis}{Named list or \code{\link{go_layout_yaxis}()} object.}
+\item{yaxis}{A named list with properties \code{anchor},
+\code{automargin}, \code{autorange}, \code{autorangeoptions},
+\code{autoshift}, \code{autotickangles}, \code{autotypenumbers},
+\code{calendar}, \code{categoryarray}, \code{categoryorder},
+\code{color}, \code{constrain} and 80 more (see
+\code{\link{update_yaxes}()}).}
 
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
 }
 \value{
-Each \code{go_*()} function returns a graph object of the same
-  class as its name; \code{add_*()} functions return the modified figure.
+\code{go_*()} functions return a graph object;
+  \code{add_*()} functions return the modified figure.
 }
 \description{
 Layout properties of a figure: axes, title, legend, margins, fonts and
 other settings that are not specific to a trace.
 }
 \details{
-\code{go_layout()} create validated graph objects (named lists). Every
-property is checked against the plotly.js schema when an object is
-created or modified (see \code{\link{plotly_obj-modify}()}).
+\code{go_layout()} creates a validated graph object (a named list).
+
+
+Nested objects are named lists, e.g. \code{marker = list(size = 10, line
+= list(width = 2))}. Each nested object's properties are described in a
+section of its own near the end of this page (after \emph{Value}), titled
+with its path: \emph{marker properties}, \emph{marker.line properties},
+.... Objects that appear in several places in the schema can also be
+created with a constructor of their own, and are documented on its page:
+\code{\link{go_font}()}, \code{\link{go_colorbar}()},
+\code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
+\code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
+\code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
+\code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
+\code{\link{go_caps}()}, \code{\link{go_domainpad}()},
+\code{\link{go_gradient}()}, \code{\link{go_label}()},
+\code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
+\code{\link{go_minor}()}, \code{\link{go_pathbar}()},
+\code{\link{go_project}()}, \code{\link{go_rangebreak}()},
+\code{\link{go_root}()}, \code{\link{go_slices}()},
+\code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
+Every property is checked against the plotly.js schema when the object is
+created or modified (see \code{\link{plotly_obj-modify}}).
 }
+\section{activeselection properties}{
+
+\describe{
+\item{\code{fillcolor}}{Sets the color filling the active selection'
+interior. Color: a CSS color string or R color name.}
+\item{\code{opacity}}{Sets the opacity of the active selection. Number in
+the interval [0, 1].}
+}
+}
+
+\section{activeshape properties}{
+
+\describe{
+\item{\code{fillcolor}}{Sets the color filling the active shape'
+interior. Color: a CSS color string or R color name.}
+\item{\code{opacity}}{Sets the opacity of the active shape. Number in the
+interval [0, 1].}
+}
+}
+
+\section{colorscale properties}{
+
+\describe{
+\item{\code{diverging}}{Sets the default diverging colorscale. Note that
+`autocolorscale` must be true for this attribute to work. Colorscale: a
+vector of colors, a two-column data.frame of (value, color), or the name
+of a sequential, diverging or cyclical scale in \code{\link{px_colors}()}
+(append \code{"_r"} to reverse).}
+\item{\code{sequential}}{Sets the default sequential colorscale for
+positive values. Note that `autocolorscale` must be true for this
+attribute to work. Colorscale: a vector of colors, a two-column
+data.frame of (value, color), or the name of a sequential, diverging or
+cyclical scale in \code{\link{px_colors}()} (append \code{"_r"} to
+reverse).}
+\item{\code{sequentialminus}}{Sets the default sequential colorscale for
+negative values. Note that `autocolorscale` must be true for this
+attribute to work. Colorscale: a vector of colors, a two-column
+data.frame of (value, color), or the name of a sequential, diverging or
+cyclical scale in \code{\link{px_colors}()} (append \code{"_r"} to
+reverse).}
+}
+}
+
+\section{grid properties}{
+
+\describe{
+\item{\code{columns}}{The number of columns in the grid. If you provide a
+2D `subplots` array, the length of its longest row is used as the
+default. If you give an `xaxes` array, its length is used as the default.
+But it's also possible to have a different length, if you want to leave a
+row at the end for non-cartesian subplots. Integer in the interval [1,
+Inf].}
+\item{\code{domain}}{A \code{\link{go_domain}()} object or named list,
+with properties \code{x} and \code{y} (see \code{\link{go_domain}()}).}
+\item{\code{pattern}}{If no `subplots`, `xaxes`, or `yaxes` are given but
+we do have `rows` and `columns`, we can generate defaults using
+consecutive axis IDs, in two ways: "coupled" gives one x axis per column
+and one y axis per row. "independent" uses a new xy pair for each cell,
+left-to-right across each row then iterating rows according to
+`roworder`. One of \code{"independent"}, \code{"coupled"}.}
+\item{\code{roworder}}{Is the first row the top or the bottom? Note that
+columns are always enumerated from left to right. One of \code{"top to
+bottom"}, \code{"bottom to top"}.}
+\item{\code{rows}}{The number of rows in the grid. If you provide a 2D
+`subplots` array or a `yaxes` array, its length is used as the default.
+But it's also possible to have a different length, if you want to leave a
+row at the end for non-cartesian subplots. Integer in the interval [1,
+Inf].}
+\item{\code{subplots}}{Used for freeform grids, where some axes may be
+shared across subplots but others are not. Each entry should be a
+cartesian subplot id, like "xy" or "x3y2", or ** to leave that cell
+empty. You may reuse x axes within the same column, and y axes within the
+same row. Non-cartesian subplots and traces that support `domain` can
+place themselves in this grid separately using the `gridcell` attribute.
+Vector or list of up to 1 element(s).}
+\item{\code{xaxes}}{Used with `yaxes` when the x and y axes are shared
+across columns and rows. Each entry should be an x axis id like "x",
+"x2", etc., or *" to not put an x axis in that column. Entries other than
+"* must be unique. Ignored if `subplots` is present. If missing but
+`yaxes` is present, will generate consecutive IDs. Vector or list of up
+to 1 element(s).}
+\item{\code{xgap}}{Horizontal space between grid cells, expressed as a
+fraction of the total width available to one cell. Defaults to 0.1 for
+coupled-axes grids and 0.2 for independent grids. Number in the interval
+[0, 1].}
+\item{\code{xside}}{Sets where the x axis labels and titles go. "bottom"
+means the very bottom of the grid. "bottom plot" is the lowest plot that
+each x axis is used in. "top" and "top plot" are similar. One of
+\code{"bottom"}, \code{"bottom plot"}, \code{"top plot"}, \code{"top"}.}
+\item{\code{yaxes}}{Used with `yaxes` when the x and y axes are shared
+across columns and rows. Each entry should be an y axis id like "y",
+"y2", etc., or *" to not put a y axis in that row. Entries other than "*
+must be unique. Ignored if `subplots` is present. If missing but `xaxes`
+is present, will generate consecutive IDs. Vector or list of up to 1
+element(s).}
+\item{\code{ygap}}{Vertical space between grid cells, expressed as a
+fraction of the total height available to one cell. Defaults to 0.1 for
+coupled-axes grids and 0.3 for independent grids. Number in the interval
+[0, 1].}
+\item{\code{yside}}{Sets where the y axis labels and titles go. "left"
+means the very left edge of the grid. "left plot" is the leftmost plot
+that each y axis is used in. "right" and "right plot" are similar. One of
+\code{"left"}, \code{"left plot"}, \code{"right plot"}, \code{"right"}.}
+}
+}
+
+\section{margin properties}{
+
+\describe{
+\item{\code{autoexpand}}{Turns on/off margin expansion computations.
+Legends, colorbars, updatemenus, sliders, axis rangeselector and
+rangeslider are allowed to push the margins by defaults. Logical.}
+\item{\code{b}}{Sets the bottom margin (in px). Number in the interval
+[0, Inf].}
+\item{\code{l}}{Sets the left margin (in px). Number in the interval [0,
+Inf].}
+\item{\code{pad}}{Sets the amount of padding (in px) between the plotting
+area and the axis lines Number in the interval [0, Inf].}
+\item{\code{r}}{Sets the right margin (in px). Number in the interval [0,
+Inf].}
+\item{\code{t}}{Sets the top margin (in px). Number in the interval [0,
+Inf].}
+}
+}
+
+\section{modebar properties}{
+
+\describe{
+\item{\code{activecolor}}{Sets the color of the active or hovered on
+icons in the modebar. Color: a CSS color string or R color name.}
+\item{\code{add}}{Determines which predefined modebar buttons to add.
+Please note that these buttons will only be shown if they are compatible
+with all trace types used in a graph. Similar to
+`config.modeBarButtonsToAdd` option. This may include "v1hovermode",
+"hoverclosest", "hovercompare", "togglehover", "togglespikelines",
+"drawline", "drawopenpath", "drawclosedpath", "drawcircle", "drawrect",
+"eraseshape", "downloadJson". String, or a vector of these.}
+\item{\code{bgcolor}}{Sets the background color of the modebar. Color: a
+CSS color string or R color name.}
+\item{\code{color}}{Sets the color of the icons in the modebar. Color: a
+CSS color string or R color name.}
+\item{\code{orientation}}{Sets the orientation of the modebar. One of
+\code{"v"}, \code{"h"}.}
+\item{\code{remove}}{Determines which predefined modebar buttons to
+remove. Similar to `config.modeBarButtonsToRemove` option. This may
+include "autoScale2d", "autoscale", "hoverCompareCartesian",
+"hovercompare", "lasso", "lasso2d", "orbitRotation", "orbitrotation",
+"pan", "pan2d", "pan3d", "reset", "resetCameraDefault3d",
+"resetCameraLastSave3d", "resetGeo", "resetSankeyGroup", "resetScale2d",
+"resetViewMap", "resetViews", "resetcameradefault",
+"resetcameralastsave", "resetsankeygroup", "resetscale", "resetview",
+"resetviews", "select", "select2d", "sendChartToCloud",
+"sendcharttocloud", "tableRotation", "tablerotation", "toImage",
+"toggleHover", "toggleSpikelines", "togglehover", "togglespikelines",
+"toimage", "zoom", "zoom2d", "zoom3d", "zoomIn2d", "zoomInGeo",
+"zoomInMap", "zoomOut2d", "zoomOutGeo", "zoomOutMap", "zoomin",
+"zoomout". String, or a vector of these.}
+\item{\code{uirevision}}{Controls persistence of user-driven changes
+related to the modebar, including `hovermode`, `dragmode`, and
+`showspikes` at both the root level and inside subplots. Defaults to
+`layout.uirevision`. Any value.}
+}
+}
+
+\section{newselection properties}{
+
+\describe{
+\item{\code{line}}{A named list with properties \code{color}, \code{dash}
+and \code{width} (described in section "newselection.line properties"
+below).}
+\item{\code{mode}}{Describes how a new selection is created. If
+`immediate`, a new selection is created after first mouse up. If
+`gradual`, a new selection is not created after first mouse. By adding to
+and subtracting from the initial selection, this option allows declaring
+extra outlines of the selection. One of \code{"immediate"},
+\code{"gradual"}.}
+}
+}
+
+\section{newselection.line properties}{
+
+\describe{
+\item{\code{color}}{Sets the line color. By default uses either dark grey
+or white to increase contrast with background color. Color: a CSS color
+string or R color name.}
+\item{\code{dash}}{Sets the dash style of lines. Set to a dash type
+string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+or a dash length list in px (eg "5px,10px,2px,2px"). One of
+\code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+\code{"dashdot"}, \code{"longdashdot"}, or a string matching
+\code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+\item{\code{width}}{Sets the line width (in px). Number in the interval
+[1, Inf].}
+}
+}
+
+\section{newshape properties}{
+
+\describe{
+\item{\code{drawdirection}}{When `dragmode` is set to "drawrect",
+"drawline" or "drawcircle" this limits the drag to be horizontal,
+vertical or diagonal. Using "diagonal" there is no limit e.g. in drawing
+lines in any direction. "ortho" limits the draw to be either horizontal
+or vertical. "horizontal" allows horizontal extend. "vertical" allows
+vertical extend. One of \code{"ortho"}, \code{"horizontal"},
+\code{"vertical"}, \code{"diagonal"}.}
+\item{\code{fillcolor}}{Sets the color filling new shapes' interior.
+Please note that if using a fillcolor with alpha greater than half, drag
+inside the active shape starts moving the shape underneath, otherwise a
+new shape could be started over. Color: a CSS color string or R color
+name.}
+\item{\code{fillrule}}{Determines the path's interior. For more info
+please visit
+https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule One
+of \code{"evenodd"}, \code{"nonzero"}.}
+\item{\code{label}}{A \code{\link{go_label}()} object or named list, with
+properties \code{font}, \code{padding}, \code{text}, \code{textangle},
+\code{textposition}, \code{texttemplate}, \code{texttemplatefallback},
+\code{xanchor} and \code{yanchor} (see \code{\link{go_label}()}).}
+\item{\code{layer}}{Specifies whether new shapes are drawn below
+gridlines ("below"), between gridlines and traces ("between") or above
+traces ("above"). One of \code{"below"}, \code{"above"},
+\code{"between"}.}
+\item{\code{legend}}{Sets the reference to a legend to show new shape in.
+References to these legends are "legend", "legend2", "legend3", etc.
+Settings for these legends are set in the layout, under `layout.legend`,
+`layout.legend2`, etc. Subplot id: \code{"legend"}, \code{"legend2"},
+\code{"legend3"}, ....}
+\item{\code{legendgroup}}{Sets the legend group for new shape. Traces and
+shapes part of the same legend group hide/show at the same time when
+toggling legend items. String.}
+\item{\code{legendgrouptitle}}{A \code{\link{go_legendgrouptitle}()}
+object or named list, with properties \code{font} and \code{text} (see
+\code{\link{go_legendgrouptitle}()}).}
+\item{\code{legendrank}}{Sets the legend rank for new shape. Items and
+groups with smaller ranks are presented on top/left side while with
+"reversed" `legend.traceorder` they are on bottom/right side. The default
+legendrank is 1000, so that you can use ranks less than 1000 to place
+certain items before all unranked items, and ranks greater than 1000 to
+go after all unranked items. Number.}
+\item{\code{legendwidth}}{Sets the width (in px or fraction) of the
+legend for new shape. Number in the interval [0, Inf].}
+\item{\code{line}}{A named list with properties \code{color}, \code{dash}
+and \code{width} (described in section "newshape.line properties"
+below).}
+\item{\code{name}}{Sets new shape name. The name appears as the legend
+item. String.}
+\item{\code{opacity}}{Sets the opacity of new shapes. Number in the
+interval [0, 1].}
+\item{\code{showlegend}}{Determines whether or not new shape is shown in
+the legend. Logical.}
+\item{\code{visible}}{Determines whether or not new shape is visible. If
+"legendonly", the shape is not drawn, but can appear as a legend item
+(provided that the legend itself is visible). One of \code{"legendonly"},
+\code{TRUE}, \code{FALSE}.}
+}
+}
+
+\section{newshape.line properties}{
+
+\describe{
+\item{\code{color}}{Sets the line color. By default uses either dark grey
+or white to increase contrast with background color. Color: a CSS color
+string or R color name.}
+\item{\code{dash}}{Sets the dash style of lines. Set to a dash type
+string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+or a dash length list in px (eg "5px,10px,2px,2px"). One of
+\code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+\code{"dashdot"}, \code{"longdashdot"}, or a string matching
+\code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+\item{\code{width}}{Sets the line width (in px). Number in the interval
+[0, Inf].}
+}
+}
+
+\section{slider properties (each list element)}{
+
+\describe{
+\item{\code{active}}{Determines which button (by index starting from 0)
+is considered active. Number in the interval [0, Inf].}
+\item{\code{activebgcolor}}{Sets the background color of the slider grip
+while dragging. Color: a CSS color string or R color name.}
+\item{\code{bgcolor}}{Sets the background color of the slider. Color: a
+CSS color string or R color name.}
+\item{\code{bordercolor}}{Sets the color of the border enclosing the
+slider. Color: a CSS color string or R color name.}
+\item{\code{borderwidth}}{Sets the width (in px) of the border enclosing
+the slider. Number in the interval [0, Inf].}
+\item{\code{currentvalue}}{A named list with properties \code{font},
+\code{offset}, \code{prefix}, \code{suffix}, \code{visible} and
+\code{xanchor} (described in section "slider.currentvalue properties"
+below).}
+\item{\code{font}}{Sets the font of the slider step labels. A
+\code{\link{go_font}()} object or named list, with properties
+\code{color}, \code{family}, \code{lineposition}, \code{shadow},
+\code{size}, \code{style}, \code{textcase}, \code{variant} and
+\code{weight} (see \code{\link{go_font}()}).}
+\item{\code{len}}{Sets the length of the slider This measure excludes the
+padding of both ends. That is, the slider's length is this length minus
+the padding on both ends. Number in the interval [0, Inf].}
+\item{\code{lenmode}}{Determines whether this slider length is set in
+units of plot "fraction" or in *pixels. Use `len` to set the value. One
+of \code{"fraction"}, \code{"pixels"}.}
+\item{\code{minorticklen}}{Sets the length in pixels of minor step tick
+marks Number in the interval [0, Inf].}
+\item{\code{name}}{When used in a template, named items are created in
+the output figure in addition to any items the figure already has in this
+array. You can modify these items in the output figure by making your own
+item with `templateitemname` matching this `name` alongside your
+modifications (including `visible: false` or `enabled: false` to hide
+it). Has no effect outside of a template. String.}
+\item{\code{pad}}{Set the padding of the slider component along each
+side. A named list with properties \code{b}, \code{l}, \code{r} and
+\code{t} (described in section "slider.pad properties" below).}
+\item{\code{steps}}{List, each element a named list with properties
+\code{args}, \code{execute}, \code{label}, \code{method}, \code{name},
+\code{templateitemname}, \code{value} and \code{visible} (described in
+section "slider.step properties" below).}
+\item{\code{templateitemname}}{Used to refer to a named item in this
+array in the template. Named items from the template will be created even
+without a matching item in the input figure, but you can modify one by
+making an item with `templateitemname` matching its `name`, alongside
+your modifications (including `visible: false` or `enabled: false` to
+hide it). If there is no template or no matching item, this item will be
+hidden unless you explicitly show it with `visible: true`. String.}
+\item{\code{tickcolor}}{Sets the color of the border enclosing the
+slider. Color: a CSS color string or R color name.}
+\item{\code{ticklen}}{Sets the length in pixels of step tick marks Number
+in the interval [0, Inf].}
+\item{\code{tickwidth}}{Sets the tick width (in px). Number in the
+interval [0, Inf].}
+\item{\code{transition}}{A named list with properties \code{duration} and
+\code{easing} (described in section "slider.transition properties"
+below).}
+\item{\code{visible}}{Determines whether or not the slider is visible.
+Logical.}
+\item{\code{x}}{Sets the x position (in normalized coordinates) of the
+slider. Number in the interval [-2, 3].}
+\item{\code{xanchor}}{Sets the slider's horizontal position anchor. This
+anchor binds the `x` position to the "left", "center" or "right" of the
+range selector. One of \code{"auto"}, \code{"left"}, \code{"center"},
+\code{"right"}.}
+\item{\code{y}}{Sets the y position (in normalized coordinates) of the
+slider. Number in the interval [-2, 3].}
+\item{\code{yanchor}}{Sets the slider's vertical position anchor This
+anchor binds the `y` position to the "top", "middle" or "bottom" of the
+range selector. One of \code{"auto"}, \code{"top"}, \code{"middle"},
+\code{"bottom"}.}
+}
+}
+
+\section{slider.currentvalue properties}{
+
+\describe{
+\item{\code{font}}{Sets the font of the current value label text. A
+\code{\link{go_font}()} object or named list, with properties
+\code{color}, \code{family}, \code{lineposition}, \code{shadow},
+\code{size}, \code{style}, \code{textcase}, \code{variant} and
+\code{weight} (see \code{\link{go_font}()}).}
+\item{\code{offset}}{The amount of space, in pixels, between the current
+value label and the slider. Number.}
+\item{\code{prefix}}{When currentvalue.visible is true, this sets the
+prefix of the label. String.}
+\item{\code{suffix}}{When currentvalue.visible is true, this sets the
+suffix of the label. String.}
+\item{\code{visible}}{Shows the currently-selected value above the
+slider. Logical.}
+\item{\code{xanchor}}{The alignment of the value readout relative to the
+length of the slider. One of \code{"left"}, \code{"center"},
+\code{"right"}.}
+}
+}
+
+\section{slider.pad properties}{
+
+Set the padding of the slider component along each side.
+
+\describe{
+\item{\code{b}}{The amount of padding (in px) along the bottom of the
+component. Number.}
+\item{\code{l}}{The amount of padding (in px) on the left side of the
+component. Number.}
+\item{\code{r}}{The amount of padding (in px) on the right side of the
+component. Number.}
+\item{\code{t}}{The amount of padding (in px) along the top of the
+component. Number.}
+}
+}
+
+\section{slider.step properties (each list element)}{
+
+\describe{
+\item{\code{args}}{Sets the arguments values to be passed to the Plotly
+method set in `method` on slide. Vector or list of up to 3 element(s).}
+\item{\code{execute}}{When true, the API method is executed. When false,
+all other behaviors are the same and command execution is skipped. This
+may be useful when hooking into, for example, the `plotly_sliderchange`
+method and executing the API command manually without losing the benefit
+of the slider automatically binding to the state of the plot through the
+specification of `method` and `args`. Logical.}
+\item{\code{label}}{Sets the text label to appear on the slider String.}
+\item{\code{method}}{Sets the Plotly method to be called when the slider
+value is changed. If the `skip` method is used, the API slider will
+function as normal but will perform no API calls and will not bind
+automatically to state updates. This may be used to create a component
+interface and attach to slider events manually via JavaScript. One of
+\code{"restyle"}, \code{"relayout"}, \code{"animate"}, \code{"update"},
+\code{"skip"}.}
+\item{\code{name}}{When used in a template, named items are created in
+the output figure in addition to any items the figure already has in this
+array. You can modify these items in the output figure by making your own
+item with `templateitemname` matching this `name` alongside your
+modifications (including `visible: false` or `enabled: false` to hide
+it). Has no effect outside of a template. String.}
+\item{\code{templateitemname}}{Used to refer to a named item in this
+array in the template. Named items from the template will be created even
+without a matching item in the input figure, but you can modify one by
+making an item with `templateitemname` matching its `name`, alongside
+your modifications (including `visible: false` or `enabled: false` to
+hide it). If there is no template or no matching item, this item will be
+hidden unless you explicitly show it with `visible: true`. String.}
+\item{\code{value}}{Sets the value of the slider step, used to refer to
+the step programatically. Defaults to the slider label if not provided.
+String.}
+\item{\code{visible}}{Determines whether or not this step is included in
+the slider. Logical.}
+}
+}
+
+\section{slider.transition properties}{
+
+\describe{
+\item{\code{duration}}{Sets the duration of the slider transition Number
+in the interval [0, Inf].}
+\item{\code{easing}}{Sets the easing function of the slider transition
+One of \code{"linear"}, \code{"quad"}, \code{"cubic"}, \code{"sin"},
+\code{"exp"}, \code{"circle"}, \code{"elastic"}, \code{"back"},
+\code{"bounce"}, \code{"linear-in"}, \code{"quad-in"}, \code{"cubic-in"},
+\code{"sin-in"}, \code{"exp-in"}, \code{"circle-in"},
+\code{"elastic-in"}, \code{"back-in"}, \code{"bounce-in"},
+\code{"linear-out"}, \code{"quad-out"}, \code{"cubic-out"},
+\code{"sin-out"}, \code{"exp-out"}, \code{"circle-out"},
+\code{"elastic-out"}, \code{"back-out"}, \code{"bounce-out"},
+\code{"linear-in-out"}, \code{"quad-in-out"}, \code{"cubic-in-out"},
+\code{"sin-in-out"}, \code{"exp-in-out"}, \code{"circle-in-out"},
+\code{"elastic-in-out"}, \code{"back-in-out"}, \code{"bounce-in-out"}.}
+}
+}
+
+\section{title properties}{
+
+\describe{
+\item{\code{automargin}}{Determines whether the title can automatically
+push the figure margins. If `yref='paper'` then the margin will expand to
+ensure that the title doesn't overlap with the edges of the container. If
+`yref='container'` then the margins will ensure that the title doesn't
+overlap with the plot area, tick labels, and axis titles. If
+`automargin=true` and the margins need to be expanded, then y will be set
+to a default 1 and yanchor will be set to an appropriate default to
+ensure that minimal margin space is needed. Note that when
+`yref='paper'`, only 1 or 0 are allowed y values. Invalid values will be
+reset to the default 1. Logical.}
+\item{\code{font}}{Sets the title font. A \code{\link{go_font}()} object
+or named list, with properties \code{color}, \code{family},
+\code{lineposition}, \code{shadow}, \code{size}, \code{style},
+\code{textcase}, \code{variant} and \code{weight} (see
+\code{\link{go_font}()}).}
+\item{\code{pad}}{Sets the padding of the title. Each padding value only
+applies when the corresponding `xanchor`/`yanchor` value is set
+accordingly. E.g. for left padding to take effect, `xanchor` must be set
+to "left". The same rule applies if `xanchor`/`yanchor` is determined
+automatically. Padding is muted if the respective anchor value is
+"middle"/"center". A named list with properties \code{b}, \code{l},
+\code{r} and \code{t} (described in section "title.pad properties"
+below).}
+\item{\code{subtitle}}{A named list with properties \code{font} and
+\code{text} (described in section "title.subtitle properties" below).}
+\item{\code{text}}{Sets the plot's title. String.}
+\item{\code{x}}{Sets the x position with respect to `xref` in normalized
+coordinates from 0 (left) to 1 (right). Number in the interval [0, 1].}
+\item{\code{xanchor}}{Sets the title's horizontal alignment with respect
+to its x position. "left" means that the title starts at x, "right" means
+that the title ends at x and "center" means that the title's center is at
+x. "auto" divides `xref` by three and calculates the `xanchor` value
+automatically based on the value of `x`. One of \code{"auto"},
+\code{"left"}, \code{"center"}, \code{"right"}.}
+\item{\code{xref}}{Sets the container `x` refers to. "container" spans
+the entire `width` of the plot. "paper" refers to the width of the
+plotting area only. One of \code{"container"}, \code{"paper"}.}
+\item{\code{y}}{Sets the y position with respect to `yref` in normalized
+coordinates from 0 (bottom) to 1 (top). "auto" places the baseline of the
+title onto the vertical center of the top margin. Number in the interval
+[0, 1].}
+\item{\code{yanchor}}{Sets the title's vertical alignment with respect to
+its y position. "top" means that the title's cap line is at y, "bottom"
+means that the title's baseline is at y and "middle" means that the
+title's midline is at y. "auto" divides `yref` by three and calculates
+the `yanchor` value automatically based on the value of `y`. One of
+\code{"auto"}, \code{"top"}, \code{"middle"}, \code{"bottom"}.}
+\item{\code{yref}}{Sets the container `y` refers to. "container" spans
+the entire `height` of the plot. "paper" refers to the height of the
+plotting area only. One of \code{"container"}, \code{"paper"}.}
+}
+}
+
+\section{title.pad properties}{
+
+Sets the padding of the title. Each padding value only applies when the
+corresponding `xanchor`/`yanchor` value is set accordingly. E.g. for left
+padding to take effect, `xanchor` must be set to "left". The same rule
+applies if `xanchor`/`yanchor` is determined automatically. Padding is
+muted if the respective anchor value is "middle"/"center".
+
+\describe{
+\item{\code{b}}{The amount of padding (in px) along the bottom of the
+component. Number.}
+\item{\code{l}}{The amount of padding (in px) on the left side of the
+component. Number.}
+\item{\code{r}}{The amount of padding (in px) on the right side of the
+component. Number.}
+\item{\code{t}}{The amount of padding (in px) along the top of the
+component. Number.}
+}
+}
+
+\section{title.subtitle properties}{
+
+\describe{
+\item{\code{font}}{Sets the subtitle font. A \code{\link{go_font}()}
+object or named list, with properties \code{color}, \code{family},
+\code{lineposition}, \code{shadow}, \code{size}, \code{style},
+\code{textcase}, \code{variant} and \code{weight} (see
+\code{\link{go_font}()}).}
+\item{\code{text}}{Sets the plot's subtitle. String.}
+}
+}
+
+\section{transition properties}{
+
+Sets transition options used during Plotly.react updates.
+
+\describe{
+\item{\code{duration}}{The duration of the transition, in milliseconds.
+If equal to zero, updates are synchronous. Number in the interval [0,
+Inf].}
+\item{\code{easing}}{The easing function used for the transition One of
+\code{"linear"}, \code{"quad"}, \code{"cubic"}, \code{"sin"},
+\code{"exp"}, \code{"circle"}, \code{"elastic"}, \code{"back"},
+\code{"bounce"}, \code{"linear-in"}, \code{"quad-in"}, \code{"cubic-in"},
+\code{"sin-in"}, \code{"exp-in"}, \code{"circle-in"},
+\code{"elastic-in"}, \code{"back-in"}, \code{"bounce-in"},
+\code{"linear-out"}, \code{"quad-out"}, \code{"cubic-out"},
+\code{"sin-out"}, \code{"exp-out"}, \code{"circle-out"},
+\code{"elastic-out"}, \code{"back-out"}, \code{"bounce-out"},
+\code{"linear-in-out"}, \code{"quad-in-out"}, \code{"cubic-in-out"},
+\code{"sin-in-out"}, \code{"exp-in-out"}, \code{"circle-in-out"},
+\code{"elastic-in-out"}, \code{"back-in-out"}, \code{"bounce-in-out"}.}
+\item{\code{ordering}}{Determines whether the figure's layout or traces
+smoothly transitions during updates that make both traces and layout
+change. One of \code{"layout first"}, \code{"traces first"}.}
+}
+}
+
+\section{uniformtext properties}{
+
+\describe{
+\item{\code{minsize}}{Sets the minimum text size between traces of the
+same type. Number in the interval [0, Inf].}
+\item{\code{mode}}{Determines how the font size for various text elements
+are uniformed between each trace type. If the computed text sizes were
+smaller than the minimum size defined by `uniformtext.minsize` using
+"hide" option hides the text; and using "show" option shows the text
+without further downscaling. Please note that if the size defined by
+`minsize` is greater than the font size defined by trace, then the
+`minsize` is used. One of \code{"hide"}, \code{"show"}, \code{FALSE}.}
+}
+}
+
+\section{updatemenu properties (each list element)}{
+
+\describe{
+\item{\code{active}}{Determines which button (by index starting from 0)
+is considered active. Integer in the interval [-1, Inf].}
+\item{\code{bgcolor}}{Sets the background color of the update menu
+buttons. Color: a CSS color string or R color name.}
+\item{\code{bordercolor}}{Sets the color of the border enclosing the
+update menu. Color: a CSS color string or R color name.}
+\item{\code{borderwidth}}{Sets the width (in px) of the border enclosing
+the update menu. Number in the interval [0, Inf].}
+\item{\code{buttons}}{List, each element a named list with properties
+\code{args}, \code{args2}, \code{execute}, \code{label}, \code{method},
+\code{name}, \code{templateitemname} and \code{visible} (described in
+section "updatemenu.button properties" below).}
+\item{\code{direction}}{Determines the direction in which the buttons are
+laid out, whether in a dropdown menu or a row/column of buttons. For
+`left` and `up`, the buttons will still appear in left-to-right or
+top-to-bottom order respectively. One of \code{"left"}, \code{"right"},
+\code{"up"}, \code{"down"}.}
+\item{\code{font}}{Sets the font of the update menu button text. A
+\code{\link{go_font}()} object or named list, with properties
+\code{color}, \code{family}, \code{lineposition}, \code{shadow},
+\code{size}, \code{style}, \code{textcase}, \code{variant} and
+\code{weight} (see \code{\link{go_font}()}).}
+\item{\code{name}}{When used in a template, named items are created in
+the output figure in addition to any items the figure already has in this
+array. You can modify these items in the output figure by making your own
+item with `templateitemname` matching this `name` alongside your
+modifications (including `visible: false` or `enabled: false` to hide
+it). Has no effect outside of a template. String.}
+\item{\code{pad}}{Sets the padding around the buttons or dropdown menu. A
+named list with properties \code{b}, \code{l}, \code{r} and \code{t}
+(described in section "updatemenu.pad properties" below).}
+\item{\code{showactive}}{Highlights active dropdown item or active button
+if true. Logical.}
+\item{\code{templateitemname}}{Used to refer to a named item in this
+array in the template. Named items from the template will be created even
+without a matching item in the input figure, but you can modify one by
+making an item with `templateitemname` matching its `name`, alongside
+your modifications (including `visible: false` or `enabled: false` to
+hide it). If there is no template or no matching item, this item will be
+hidden unless you explicitly show it with `visible: true`. String.}
+\item{\code{type}}{Determines whether the buttons are accessible via a
+dropdown menu or whether the buttons are stacked horizontally or
+vertically One of \code{"dropdown"}, \code{"buttons"}.}
+\item{\code{visible}}{Determines whether or not the update menu is
+visible. Logical.}
+\item{\code{x}}{Sets the x position (in normalized coordinates) of the
+update menu. Number in the interval [-2, 3].}
+\item{\code{xanchor}}{Sets the update menu's horizontal position anchor.
+This anchor binds the `x` position to the "left", "center" or "right" of
+the range selector. One of \code{"auto"}, \code{"left"}, \code{"center"},
+\code{"right"}.}
+\item{\code{y}}{Sets the y position (in normalized coordinates) of the
+update menu. Number in the interval [-2, 3].}
+\item{\code{yanchor}}{Sets the update menu's vertical position anchor
+This anchor binds the `y` position to the "top", "middle" or "bottom" of
+the range selector. One of \code{"auto"}, \code{"top"}, \code{"middle"},
+\code{"bottom"}.}
+}
+}
+
+\section{updatemenu.button properties (each list element)}{
+
+\describe{
+\item{\code{args}}{Sets the arguments values to be passed to the Plotly
+method set in `method` on click. Vector or list of up to 3 element(s).}
+\item{\code{args2}}{Sets a 2nd set of `args`, these arguments values are
+passed to the Plotly method set in `method` when clicking this button
+while in the active state. Use this to create toggle buttons. Vector or
+list of up to 3 element(s).}
+\item{\code{execute}}{When true, the API method is executed. When false,
+all other behaviors are the same and command execution is skipped. This
+may be useful when hooking into, for example, the `plotly_buttonclicked`
+method and executing the API command manually without losing the benefit
+of the updatemenu automatically binding to the state of the plot through
+the specification of `method` and `args`. Logical.}
+\item{\code{label}}{Sets the text label to appear on the button. String.}
+\item{\code{method}}{Sets the Plotly method to be called on click. If the
+`skip` method is used, the API updatemenu will function as normal but
+will perform no API calls and will not bind automatically to state
+updates. This may be used to create a component interface and attach to
+updatemenu events manually via JavaScript. One of \code{"restyle"},
+\code{"relayout"}, \code{"animate"}, \code{"update"}, \code{"skip"}.}
+\item{\code{name}}{When used in a template, named items are created in
+the output figure in addition to any items the figure already has in this
+array. You can modify these items in the output figure by making your own
+item with `templateitemname` matching this `name` alongside your
+modifications (including `visible: false` or `enabled: false` to hide
+it). Has no effect outside of a template. String.}
+\item{\code{templateitemname}}{Used to refer to a named item in this
+array in the template. Named items from the template will be created even
+without a matching item in the input figure, but you can modify one by
+making an item with `templateitemname` matching its `name`, alongside
+your modifications (including `visible: false` or `enabled: false` to
+hide it). If there is no template or no matching item, this item will be
+hidden unless you explicitly show it with `visible: true`. String.}
+\item{\code{visible}}{Determines whether or not this button is visible.
+Logical.}
+}
+}
+
+\section{updatemenu.pad properties}{
+
+Sets the padding around the buttons or dropdown menu.
+
+\describe{
+\item{\code{b}}{The amount of padding (in px) along the bottom of the
+component. Number.}
+\item{\code{l}}{The amount of padding (in px) on the left side of the
+component. Number.}
+\item{\code{r}}{The amount of padding (in px) on the right side of the
+component. Number.}
+\item{\code{t}}{The amount of padding (in px) along the top of the
+component. Number.}
+}
+}
+
 \examples{
 go_layout(title = "My plot", xaxis = list(title = "x", range = c(0, 10)))
 }

@@ -128,7 +128,7 @@ f <- data.frame(a = x) |>
   add_scatter(
     x = ~ as_float32(a),
     y = as_float32(1:3 / 2),
-    marker_size = as_float32(c(1.5, 2, 3))
+    marker = list(size = as_float32(c(1.5, 2, 3)))
   )
 stopifnot(
   inherits(f$data[[1]]$x, "plotly_float32"),

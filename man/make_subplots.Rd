@@ -75,7 +75,7 @@ of each row.}
 \item{figure}{An existing \code{\link[=go_figure]{go_figure()}} to add the subplots to.}
 
 \item{font}{Font for the subplot, column, row and x/y titles: a named list
-or \code{\link[=go_layout_annotation_font]{go_layout_annotation_font()}} object. Default \code{list(size = 16)}.}
+or \code{\link[=go_font]{go_font()}} object. Default \code{list(size = 16)}.}
 }
 \value{
 A \code{go_figure} with the subplot grid in its layout.
@@ -90,7 +90,7 @@ functions, \code{\link[=update_xaxes]{update_xaxes()}}, \code{\link[=add_annotat
 fig <- make_subplots(rows = 1, cols = 2, subplot_titles = c("Left", "Right")) |>
   add_scatter(x = 1:3, y = c(4, 5, 6), row = 1, col = 1) |>
   add_scatter(x = 20:22, y = c(50, 60, 70), row = 1, col = 2) |>
-  update_yaxes(title_text = "y", row = 1, col = 1)
+  update_yaxes(title = "y", row = 1, col = 1)
 
 # Mixed subplot types and a secondary y axis
 fig <- make_subplots(

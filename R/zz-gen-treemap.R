@@ -6,156 +6,42 @@
 #' root with rectangles. The treemap sectors are determined by the entries
 #' in "labels" or "ids" and in "parents".
 #'
-#' \code{go_treemap()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}). \code{add_treemap()} creates an
-#' object and adds it to a figure.
+#' \code{go_treemap()} creates a validated graph object (a named list).
+#' \code{add_treemap()} creates one and adds it to a figure.
 #'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_treemap_domain()}}{\code{treemap.domain}}
-#' \item{\code{go_treemap_hoverlabel()}}{\code{treemap.hoverlabel}}
-#' \item{\code{go_treemap_hoverlabel_font()}}{\code{treemap.hoverlabel.font}:
-#' Sets the font used in hover labels.}
-#' \item{\code{go_treemap_insidetextfont()}}{\code{treemap.insidetextfont}:
-#' Sets the font used for `textinfo` lying inside the sector.}
-#' \item{\code{go_treemap_legendgrouptitle()}}{\code{treemap.legendgrouptitle}}
-#' \item{\code{go_treemap_legendgrouptitle_font()}}{\code{treemap.legendgrouptitle.font}:
-#' Sets this legend group's title font.}
-#' \item{\code{go_treemap_marker()}}{\code{treemap.marker}}
-#' \item{\code{go_treemap_marker_colorbar()}}{\code{treemap.marker.colorbar}}
-#' \item{\code{go_treemap_marker_colorbar_tickfont()}}{\code{treemap.marker.colorbar.tickfont}:
-#' Sets the color bar's tick label font}
-#' \item{\code{go_treemap_marker_colorbar_tickformatstop()}}{\code{treemap.marker.colorbar.tickformatstop}}
-#' \item{\code{go_treemap_marker_colorbar_title()}}{\code{treemap.marker.colorbar.title}}
-#' \item{\code{go_treemap_marker_colorbar_title_font()}}{\code{treemap.marker.colorbar.title.font}:
-#' Sets this color bar's title font.}
-#' \item{\code{go_treemap_marker_line()}}{\code{treemap.marker.line}}
-#' \item{\code{go_treemap_marker_pad()}}{\code{treemap.marker.pad}}
-#' \item{\code{go_treemap_marker_pattern()}}{\code{treemap.marker.pattern}:
-#' Sets the pattern within the marker.}
-#' \item{\code{go_treemap_outsidetextfont()}}{\code{treemap.outsidetextfont}:
-#' Sets the font used for `textinfo` lying outside the sector. This option
-#' refers to the root of the hierarchy presented on top left corner of a
-#' treemap graph. Please note that if a hierarchy has multiple root nodes,
-#' this option won't have any effect and `insidetextfont` would be used.}
-#' \item{\code{go_treemap_pathbar()}}{\code{treemap.pathbar}}
-#' \item{\code{go_treemap_pathbar_textfont()}}{\code{treemap.pathbar.textfont}:
-#' Sets the font used inside `pathbar`.}
-#' \item{\code{go_treemap_root()}}{\code{treemap.root}}
-#' \item{\code{go_treemap_textfont()}}{\code{treemap.textfont}: Sets the
-#' font used for `textinfo`.}
-#' \item{\code{go_treemap_tiling()}}{\code{treemap.tiling}}
-#' }
+#' @details
+#' Nested objects are named lists, e.g. \code{marker = list(size = 10, line
+#' = list(width = 2))}. Each nested object's properties are described in a
+#' section of its own near the end of this page (after \emph{Value}), titled
+#' with its path: \emph{marker properties}, \emph{marker.line properties},
+#' .... Objects that appear in several places in the schema can also be
+#' created with a constructor of their own, and are documented on its page:
+#' \code{\link{go_font}()}, \code{\link{go_colorbar}()},
+#' \code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
+#' \code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
+#' \code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
+#' \code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
+#' \code{\link{go_caps}()}, \code{\link{go_domainpad}()},
+#' \code{\link{go_gradient}()}, \code{\link{go_label}()},
+#' \code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
+#' \code{\link{go_minor}()}, \code{\link{go_pathbar}()},
+#' \code{\link{go_project}()}, \code{\link{go_rangebreak}()},
+#' \code{\link{go_root}()}, \code{\link{go_slices}()},
+#' \code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
+#' Every property is checked against the plotly.js schema when the object is
+#' created or modified (see \code{\link{plotly_obj-modify}}).
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
-#' @param align Sets the horizontal alignment of the text content within
-#'   hover label box. Has an effect only if the hover label text spans two
-#'   or more lines One of \code{"left"}, \code{"right"}, \code{"auto"}, or
-#'   a vector of these.
-#' @param autocolorscale Determines whether the colorscale is a default
-#'   palette (`autocolorscale: true`) or the palette determined by
-#'   `marker.colorscale`. Has an effect only if colors is set to a
-#'   numerical array. In case `colorscale` is unspecified or
-#'   `autocolorscale` is true, the default palette will be chosen according
-#'   to whether numbers in the `color` array are all positive, all negative
-#'   or mixed. Logical.
-#' @param b Sets the padding form the bottom (in px). Number in the
-#'   interval [0, Inf].
-#' @param bgcolor \strong{\code{go_treemap_hoverlabel()}}: Sets the
-#'   background color of the hover labels for this trace Color: a CSS color
-#'   string or R color name, or a vector of these.
-#'
-#'   \strong{\code{go_treemap_marker_colorbar()}}: Sets the color of padded
-#'   area. Color: a CSS color string or R color name.
-#'
-#'   \strong{\code{go_treemap_marker_pattern()}}: When there is no
-#'   colorscale sets the color of background pattern fill. Defaults to a
-#'   `marker.color` background when `fillmode` is "overlay". Otherwise,
-#'   defaults to a transparent background. Color: a CSS color string or R
-#'   color name, or a vector of these.
-#' @param bordercolor \strong{\code{go_treemap_hoverlabel()}}: Sets the
-#'   border color of the hover labels for this trace. Color: a CSS color
-#'   string or R color name, or a vector of these.
-#'
-#'   \strong{\code{go_treemap_marker_colorbar()}}: Sets the axis line
-#'   color. Color: a CSS color string or R color name.
-#' @param borderwidth Sets the width (in px) or the border enclosing this
-#'   color bar. Number in the interval [0, Inf].
 #' @param branchvalues Determines how the items in `values` are summed.
 #'   When set to "total", items in `values` are taken to be value of all
 #'   its descendants. When set to "remainder", items in `values`
 #'   corresponding to the root and the branches sectors are taken to be the
 #'   extra part not part of the sum of the values at their leaves. One of
 #'   \code{"remainder"}, \code{"total"}.
-#' @param cauto Determines whether or not the color domain is computed with
-#'   respect to the input data (here colors) or the bounds set in
-#'   `marker.cmin` and `marker.cmax` Has an effect only if colors is set to
-#'   a numerical array. Defaults to `false` when `marker.cmin` and
-#'   `marker.cmax` are set by the user. Logical.
-#' @param cmax Sets the upper bound of the color domain. Has an effect only
-#'   if colors is set to a numerical array. Value should have the same
-#'   units as colors and if set, `marker.cmin` must be set as well. Number.
-#' @param cmid Sets the mid-point of the color domain by scaling
-#'   `marker.cmin` and/or `marker.cmax` to be equidistant to this point.
-#'   Has an effect only if colors is set to a numerical array. Value should
-#'   have the same units as colors. Has no effect when `marker.cauto` is
-#'   `false`. Number.
-#' @param cmin Sets the lower bound of the color domain. Has an effect only
-#'   if colors is set to a numerical array. Value should have the same
-#'   units as colors and if set, `marker.cmax` must be set as well. Number.
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
-#' @param color \strong{\code{go_treemap_hoverlabel_font()},
-#'   \code{go_treemap_insidetextfont()},
-#'   \code{go_treemap_outsidetextfont()},
-#'   \code{go_treemap_pathbar_textfont()}, \code{go_treemap_textfont()}}:
-#'   Color: a CSS color string or R color name, or a vector of these.
-#'
-#'   \strong{\code{go_treemap_legendgrouptitle_font()},
-#'   \code{go_treemap_marker_colorbar_tickfont()},
-#'   \code{go_treemap_marker_colorbar_title_font()}}: Color: a CSS color
-#'   string or R color name.
-#'
-#'   \strong{\code{go_treemap_marker_line()}}: Sets the color of the line
-#'   enclosing each sector. Defaults to the `paper_bgcolor` value. Color: a
-#'   CSS color string or R color name, or a vector of these.
-#'
-#'   \strong{\code{go_treemap_root()}}: sets the color of the root node for
-#'   a sunburst/treemap/icicle trace. this has no effect when a colorscale
-#'   is used to set the markers. Color: a CSS color string or R color name.
-#' @param coloraxis Sets a reference to a shared color axis. References to
-#'   these shared color axes are "coloraxis", "coloraxis2", "coloraxis3",
-#'   etc. Settings for these shared color axes are set in the layout, under
-#'   `layout.coloraxis`, `layout.coloraxis2`, etc. Note that multiple color
-#'   scales can be linked to the same color axis. Subplot id:
-#'   \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....
-#' @param colorbar Named list or \code{\link{go_treemap_marker_colorbar}()}
-#'   object.
-#' @param colors Sets the color of each sector of this trace. If not
-#'   specified, the default trace color set is used to pick the sector
-#'   colors. Data array: a vector, factor, Date/POSIXct vector, matrix or
-#'   list.
-#' @param colorscale Sets the colorscale. Has an effect only if colors is
-#'   set to a numerical array. The colorscale must be an array containing
-#'   arrays mapping a normalized value to an rgb, rgba, hex, hsl, hsla,
-#'   hwb, or named color string. At minimum, a mapping for the lowest (0)
-#'   and highest (1) values are required. For example, `[[0,
-#'   'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
-#'   colorscale in color space, use `marker.cmin` and `marker.cmax`.
-#'   Alternatively, `colorscale` may be a palette name string of the
-#'   following list:
-#'   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-#'   Colorscale: a vector of colors, a two-column data.frame of (value,
-#'   color), or the name of a sequential, diverging or cyclical scale in
-#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
-#' @param column If there is a layout grid, use the domain for this column
-#'   in the grid for this treemap trace. Integer in the interval [0, Inf].
-#' @param cornerradius Sets the maximum rounding of corners (in px). Number
-#'   in the interval [0, Inf].
 #' @param count Determines default for `values` when it is not provided, by
 #'   inferring a 1 for each of the "leaves" and/or "branches", otherwise 0.
 #'   Any combination of \code{"branches"}, \code{"leaves"} joined with
@@ -165,86 +51,15 @@
 #'   traces also appends customdata items in the markers DOM elements Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param data A data frame in which formula properties (e.g. \code{x =
-#'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
-#'   given to \code{\link{go_figure}()}. Only the evaluated values are
+#'   ~col}, \code{marker = list(size = ~col)}) are evaluated. Default: the
+#'   data given to \code{\link{go_figure}()}. Only the evaluated values are
 #'   added to the trace. A \code{crosstalk::SharedData} works the same way,
 #'   and links the trace to its crosstalk group (see
 #'   \code{\link{highlight}()}).
-#' @param depthfade Determines if the sector colors are faded towards the
-#'   background from the leaves up to the headers. This option is
-#'   unavailable when a `colorscale` is present, defaults to false when
-#'   `marker.colors` is set, but otherwise defaults to true. When set to
-#'   "reversed", the fading direction is inverted, that is the top elements
-#'   within hierarchy are drawn with fully saturated colors while the
-#'   leaves are faded towards the background color. One of
-#'   \code{"reversed"}, \code{TRUE}, \code{FALSE}.
-#' @param domain Named list or \code{\link{go_treemap_domain}()} object.
-#' @param dtick Sets the step in-between ticks on this color bar. Use with
-#'   `tick0`. Must be a positive number. Note: unlike on x/y axes, the
-#'   special "log" and "date" string forms ("L<f>", "D1", "D2", "M<n>") are
-#'   not supported here: this axis is always linear, so such strings are
-#'   silently ignored and the step is set to 1. Any value.
-#' @param dtickrange range ["min", "max"], where "min", "max" - dtick
-#'   values which describe some zoom level, it is possible to omit "min" or
-#'   "max" value by passing "null" Vector or list of 2 element(s).
-#' @param edgeshape Determines which shape is used for edges between
-#'   `barpath` labels. One of \code{">"}, \code{"<"}, \code{"|"},
-#'   \code{"/"}, \code{"\\\\"}.
-#' @param enabled Determines whether or not this stop is used. If `false`,
-#'   this stop is ignored even within its `dtickrange`. Logical.
-#' @param exponentformat Determines a formatting rule for the tick
-#'   exponents. For example, consider the number 1,000,000,000. If "none",
-#'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-#'   1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-#'   prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-#'   covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-#'   Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-#'   the above ranges, the formatting rule will automatically be switched
-#'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-#'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
-#' @param family \strong{\code{go_treemap_hoverlabel_font()},
-#'   \code{go_treemap_insidetextfont()},
-#'   \code{go_treemap_outsidetextfont()},
-#'   \code{go_treemap_pathbar_textfont()}, \code{go_treemap_textfont()}}:
-#'   HTML font family - the typeface that will be applied by the web
-#'   browser. The web browser can only apply a font if it is available on
-#'   the system where it runs. Provide multiple font families, separated by
-#'   commas, to indicate the order in which to apply fonts if they aren't
-#'   available. String, or a vector of these.
-#'
-#'   \strong{\code{go_treemap_legendgrouptitle_font()},
-#'   \code{go_treemap_marker_colorbar_tickfont()},
-#'   \code{go_treemap_marker_colorbar_title_font()}}: HTML font family -
-#'   the typeface that will be applied by the web browser. The web browser
-#'   can only apply a font if it is available on the system where it runs.
-#'   Provide multiple font families, separated by commas, to indicate the
-#'   order in which to apply fonts if they aren't available. String.
-#' @param fgcolor When there is no colorscale sets the color of foreground
-#'   pattern fill. Defaults to a `marker.color` background when `fillmode`
-#'   is "replace". Otherwise, defaults to dark grey or white to increase
-#'   contrast with the `bgcolor`. Color: a CSS color string or R color
-#'   name, or a vector of these.
-#' @param fgopacity Sets the opacity of the foreground pattern fill.
-#'   Defaults to a 0.5 when `fillmode` is "overlay". Otherwise, defaults to
-#'   1. Number in the interval [0, 1].
+#' @param domain A \code{\link{go_domain}()} object or named list, with
+#'   properties \code{column}, \code{row}, \code{x} and \code{y} (see
+#'   \code{\link{go_domain}()}).
 #' @param fig A \code{go_figure} object.
-#' @param fillmode Determines whether `marker.color` should be used as a
-#'   default to `bgcolor` or a `fgcolor`. One of \code{"replace"},
-#'   \code{"overlay"}.
-#' @param flip Determines if the positions obtained from solver are flipped
-#'   on each axis. Any combination of \code{"x"}, \code{"y"} joined with
-#'   \code{"+"}.
-#' @param font \strong{\code{go_treemap_hoverlabel()}}: Sets the font used
-#'   in hover labels. Named list or
-#'   \code{\link{go_treemap_hoverlabel_font}()} object.
-#'
-#'   \strong{\code{go_treemap_legendgrouptitle()}}: Sets this legend
-#'   group's title font. Named list or
-#'   \code{\link{go_treemap_legendgrouptitle_font}()} object.
-#'
-#'   \strong{\code{go_treemap_marker_colorbar_title()}}: Sets this color
-#'   bar's title font. Named list or
-#'   \code{\link{go_treemap_marker_colorbar_title_font}()} object.
 #' @param hoverinfo Determines what trace information appears on hover.
 #'   Flags are rendered in a fixed order; use `hovertemplate` if you need
 #'   explicit control over the rendered string, including the order of
@@ -253,8 +68,10 @@
 #'   \code{"percent root"}, \code{"percent entry"}, \code{"percent parent"}
 #'   joined with \code{"+"}, or one of \code{"all"}, \code{"none"},
 #'   \code{"skip"}, or a vector of these.
-#' @param hoverlabel Named list or \code{\link{go_treemap_hoverlabel}()}
-#'   object.
+#' @param hoverlabel A \code{\link{go_hoverlabel}()} object or named list,
+#'   with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+#'   \code{font}, \code{namelength} and \code{showarrow} (see
+#'   \code{\link{go_hoverlabel}()}).
 #' @param hovertemplate Template string used for rendering the information
 #'   that appear on hover box. Note that this will override `hoverinfo`.
 #'   Variables are inserted using \%\{variable\}, for example "y: \%\{y\}"
@@ -298,18 +115,10 @@
 #'   strings, not numbers or any other type. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
 #' @param insidetextfont Sets the font used for `textinfo` lying inside the
-#'   sector. Named list or \code{\link{go_treemap_insidetextfont}()}
-#'   object.
-#' @param l Sets the padding form the left (in px). Number in the interval
-#'   [0, Inf].
-#' @param labelalias Replacement text for specific tick or hover labels.
-#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-#'   to Canada. The labels we would have shown must match the keys exactly,
-#'   after adding any tickprefix or ticksuffix. For negative numbers the
-#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
-#'   That means you need to use -1 instead of -1. labelalias can be used
-#'   with any axis type, and both keys (if needed) and values (if desired)
-#'   can include html-like tags or MathJax. Any value.
+#'   sector. A \code{\link{go_font}()} object or named list, with
+#'   properties \code{color}, \code{family}, \code{lineposition},
+#'   \code{shadow}, \code{size}, \code{style}, \code{textcase},
+#'   \code{variant} and \code{weight} (see \code{\link{go_font}()}).
 #' @param labels Sets the labels of each of the sectors. Data array: a
 #'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param legend Sets the reference to a legend to show this trace in.
@@ -317,8 +126,9 @@
 #'   Settings for these legends are set in the layout, under
 #'   `layout.legend`, `layout.legend2`, etc. Subplot id: \code{"legend"},
 #'   \code{"legend2"}, \code{"legend3"}, ....
-#' @param legendgrouptitle Named list or
-#'   \code{\link{go_treemap_legendgrouptitle}()} object.
+#' @param legendgrouptitle A \code{\link{go_legendgrouptitle}()} object or
+#'   named list, with properties \code{font} and \code{text} (see
+#'   \code{\link{go_legendgrouptitle}()}).
 #' @param legendrank Sets the legend rank for this trace. Items and groups
 #'   with smaller ranks are presented on top/left side while with
 #'   "reversed" `legend.traceorder` they are on bottom/right side. The
@@ -329,35 +139,16 @@
 #'   to their order in data and layout. Number.
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param len Sets the length of the color bar This measure excludes the
-#'   padding of both ends. That is, the color bar length is this length
-#'   minus the padding on both ends. Number in the interval [0, Inf].
-#' @param lenmode Determines whether this color bar's length (i.e. the
-#'   measure in the color variation direction) is set in units of plot
-#'   "fraction" or in *pixels. Use `len` to set the value. One of
-#'   \code{"fraction"}, \code{"pixels"}.
 #' @param level Sets the level from which this trace hierarchy is rendered.
 #'   Set `level` to `''` to start from the root node in the hierarchy. Must
 #'   be an "id" if `ids` is filled in, otherwise plotly attempts to find a
 #'   matching item in `labels`. Any value.
-#' @param line Named list or \code{\link{go_treemap_marker_line}()} object.
-#' @param lineposition \strong{\code{go_treemap_hoverlabel_font()},
-#'   \code{go_treemap_insidetextfont()},
-#'   \code{go_treemap_outsidetextfont()},
-#'   \code{go_treemap_pathbar_textfont()}, \code{go_treemap_textfont()}}:
-#'   Sets the kind of decoration line(s) with text, such as an "under",
-#'   "over" or "through" as well as combinations e.g. "under+over", etc.
-#'   Any combination of \code{"under"}, \code{"over"}, \code{"through"}
-#'   joined with \code{"+"}, or one of \code{"none"}, or a vector of these.
-#'
-#'   \strong{\code{go_treemap_legendgrouptitle_font()},
-#'   \code{go_treemap_marker_colorbar_tickfont()},
-#'   \code{go_treemap_marker_colorbar_title_font()}}: Sets the kind of
-#'   decoration line(s) with text, such as an "under", "over" or "through"
-#'   as well as combinations e.g. "under+over", etc. Any combination of
-#'   \code{"under"}, \code{"over"}, \code{"through"} joined with
-#'   \code{"+"}, or one of \code{"none"}.
-#' @param marker Named list or \code{\link{go_treemap_marker}()} object.
+#' @param marker A named list with properties \code{autocolorscale},
+#'   \code{cauto}, \code{cmax}, \code{cmid}, \code{cmin}, \code{coloraxis},
+#'   \code{colorbar}, \code{colors}, \code{colorscale},
+#'   \code{cornerradius}, \code{depthfade}, \code{line}, \code{pad},
+#'   \code{pattern}, \code{reversescale} and \code{showscale} (described in
+#'   section "marker properties" below).
 #' @param maxdepth Sets the number of rendered sectors from any given
 #'   `level`. Set `maxdepth` to "-1" to render all the levels in the
 #'   hierarchy. Integer.
@@ -370,217 +161,45 @@
 #'   `meta` item in question. To access trace `meta` in layout attributes,
 #'   use `\%\{data[n[.meta[i]\}` where `i` is the index or key of the
 #'   `meta` and `n` is the trace index. Any value.
-#' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
-#'   This only has an effect when `tickformat` is "SI" or "B". Number in
-#'   the interval [0, Inf].
-#' @param name \strong{\code{go_treemap()}}: Sets the trace name. The trace
-#'   name appears as the legend item and on hover. String.
-#'
-#'   \strong{\code{go_treemap_marker_colorbar_tickformatstop()}}: When used
-#'   in a template, named items are created in the output figure in
-#'   addition to any items the figure already has in this array. You can
-#'   modify these items in the output figure by making your own item with
-#'   `templateitemname` matching this `name` alongside your modifications
-#'   (including `visible: false` or `enabled: false` to hide it). Has no
-#'   effect outside of a template. String.
-#' @param namelength Sets the default length (in number of characters) of
-#'   the trace name in the hover labels for all traces. -1 shows the whole
-#'   name regardless of length. 0-3 shows the first 0-3 characters, and an
-#'   integer >3 will show the whole name if it is less than that many
-#'   characters, but if it is longer, will truncate to `namelength - 3`
-#'   characters and add an ellipsis. Integer in the interval [-1, Inf], or
-#'   a vector of these.
-#' @param nticks Specifies the maximum number of ticks for the particular
-#'   axis. The actual number of ticks will be chosen automatically to be
-#'   less than or equal to `nticks`. Has an effect only if `tickmode` is
-#'   set to "auto". Integer in the interval [0, Inf].
+#' @param name Sets the trace name. The trace name appears as the legend
+#'   item and on hover. String.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
-#' @param orientation Sets the orientation of the colorbar. One of
-#'   \code{"h"}, \code{"v"}.
-#' @param outlinecolor Sets the axis line color. Color: a CSS color string
-#'   or R color name.
-#' @param outlinewidth Sets the width (in px) of the axis line. Number in
-#'   the interval [0, Inf].
 #' @param outsidetextfont Sets the font used for `textinfo` lying outside
 #'   the sector. This option refers to the root of the hierarchy presented
 #'   on top left corner of a treemap graph. Please note that if a hierarchy
 #'   has multiple root nodes, this option won't have any effect and
-#'   `insidetextfont` would be used. Named list or
-#'   \code{\link{go_treemap_outsidetextfont}()} object.
-#' @param packing Determines d3 treemap solver. For more info please refer
-#'   to https://github.com/d3/d3-hierarchy#treemap-tiling One of
-#'   \code{"squarify"}, \code{"binary"}, \code{"dice"}, \code{"slice"},
-#'   \code{"slice-dice"}, \code{"dice-slice"}.
-#' @param pad \strong{\code{go_treemap_marker()}}: Named list or
-#'   \code{\link{go_treemap_marker_pad}()} object.
-#'
-#'   \strong{\code{go_treemap_tiling()}}: Sets the inner padding (in px).
-#'   Number in the interval [0, Inf].
+#'   `insidetextfont` would be used. A \code{\link{go_font}()} object or
+#'   named list, with properties \code{color}, \code{family},
+#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#'   \code{textcase}, \code{variant} and \code{weight} (see
+#'   \code{\link{go_font}()}).
 #' @param parents Sets the parent sectors for each of the sectors. Empty
 #'   string items '' are understood to reference the root node in the
 #'   hierarchy. If `ids` is filled, `parents` items are understood to be
 #'   "ids" themselves. When `ids` is not set, plotly attempts to find
 #'   matching items in `labels`, but beware they must be unique. Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param path Sets a custom path for pattern fill. Use with no `shape` or
-#'   `solidity`, provide an SVG path string for the regions of the square
-#'   from (0,0) to (`size`,`size`) to color. String, or a vector of these.
-#' @param pathbar Named list or \code{\link{go_treemap_pathbar}()} object.
-#' @param pattern Sets the pattern within the marker. Named list or
-#'   \code{\link{go_treemap_marker_pattern}()} object.
-#' @param r Sets the padding form the right (in px). Number in the interval
-#'   [0, Inf].
-#' @param reversescale Reverses the color mapping if true. Has an effect
-#'   only if colors is set to a numerical array. If true, `marker.cmin`
-#'   will correspond to the last color in the array and `marker.cmax` will
-#'   correspond to the first color. Logical.
-#' @param root Named list or \code{\link{go_treemap_root}()} object.
-#' @param row \strong{\code{add_treemap()}}: Subplot grid row (figures
-#'   created with \code{\link{make_subplots}()} only). May be \code{"all"}
-#'   or a vector to address several cells.
-#'
-#'   \strong{\code{go_treemap_domain()}}: If there is a layout grid, use
-#'   the domain for this row in the grid for this treemap trace. Integer in
-#'   the interval [0, Inf].
-#' @param separatethousands If "true", even 4-digit integers are separated
-#'   Logical.
-#' @param shadow \strong{\code{go_treemap_hoverlabel_font()},
-#'   \code{go_treemap_insidetextfont()},
-#'   \code{go_treemap_outsidetextfont()},
-#'   \code{go_treemap_pathbar_textfont()}, \code{go_treemap_textfont()}}:
-#'   Sets the shape and color of the shadow behind text. "auto" places
-#'   minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String, or a vector of these.
-#'
-#'   \strong{\code{go_treemap_legendgrouptitle_font()},
-#'   \code{go_treemap_marker_colorbar_tickfont()},
-#'   \code{go_treemap_marker_colorbar_title_font()}}: Sets the shape and
-#'   color of the shadow behind text. "auto" places minimal shadow and
-#'   applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param shape Sets the shape of the pattern fill. By default, no pattern
-#'   is used for filling the area. One of \code{""}, \code{"/"},
-#'   \code{"\\\\"}, \code{"x"}, \code{"-"}, \code{"|"}, \code{"+"},
-#'   \code{"."}, or a vector of these.
-#' @param showarrow Sets whether or not to show the hover label
-#'   arrow/triangle pointing to the data point. Logical.
-#' @param showexponent If "all", all exponents are shown besides their
-#'   significands. If "first", only the exponent of the first tick is
-#'   shown. If "last", only the exponent of the last tick is shown. If
-#'   "none", no exponents appear. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showscale Determines whether or not a colorbar is displayed for
-#'   this trace. Has an effect only if colors is set to a numerical array.
-#'   Logical.
-#' @param showticklabels Determines whether or not the tick labels are
-#'   drawn. Logical.
-#' @param showtickprefix If "all", all tick labels are displayed with a
-#'   prefix. If "first", only the first tick is displayed with a prefix. If
-#'   "last", only the last tick is displayed with a suffix. If "none", tick
-#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
-#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
-#' @param side \strong{\code{go_treemap_marker_colorbar_title()}}:
-#'   Determines the location of color bar's title with respect to the color
-#'   bar. Defaults to "top" when `orientation` is "v" and defaults to
-#'   "right" when `orientation` is "h". One of \code{"right"},
-#'   \code{"top"}, \code{"bottom"}.
-#'
-#'   \strong{\code{go_treemap_pathbar()}}: Determines on which side of the
-#'   treemap the `pathbar` should be presented. One of \code{"top"},
-#'   \code{"bottom"}.
-#' @param size \strong{\code{go_treemap_hoverlabel_font()},
-#'   \code{go_treemap_insidetextfont()},
-#'   \code{go_treemap_outsidetextfont()},
-#'   \code{go_treemap_pathbar_textfont()}, \code{go_treemap_textfont()}}:
-#'   Number in the interval [1, Inf], or a vector of these.
-#'
-#'   \strong{\code{go_treemap_legendgrouptitle_font()},
-#'   \code{go_treemap_marker_colorbar_tickfont()},
-#'   \code{go_treemap_marker_colorbar_title_font()}}: Number in the
-#'   interval [1, Inf].
-#'
-#'   \strong{\code{go_treemap_marker_pattern()}}: Sets the size of unit
-#'   squares of the pattern fill in pixels, which corresponds to the
-#'   interval of repetition of the pattern. Number in the interval [0,
-#'   Inf], or a vector of these.
-#' @param solidity Sets the solidity of the pattern fill. Solidity is
-#'   roughly the fraction of the area filled by the pattern. Solidity of 0
-#'   shows only the background color without pattern and solidty of 1 shows
-#'   only the foreground color without pattern. Number in the interval [0,
-#'   1], or a vector of these.
+#' @param pathbar A \code{\link{go_pathbar}()} object or named list, with
+#'   properties \code{edgeshape}, \code{side}, \code{textfont},
+#'   \code{thickness} and \code{visible} (see \code{\link{go_pathbar}()}).
+#' @param root A \code{\link{go_root}()} object or named list, with
+#'   properties \code{color} (see \code{\link{go_root}()}).
+#' @param row Subplot grid row (figures created with
+#'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
+#'   to address several cells.
 #' @param sort Determines whether or not the sectors are reordered from
 #'   largest to smallest. Logical.
-#' @param squarifyratio When using "squarify" `packing` algorithm,
-#'   according to
-#'   https://github.com/d3/d3-hierarchy/blob/v3.1.1/README.md#squarify_ratio
-#'   this option specifies the desired aspect ratio of the generated
-#'   rectangles. The ratio must be specified as a number greater than or
-#'   equal to one. Note that the orientation of the generated rectangles
-#'   (tall or wide) is not implied by the ratio; for example, a ratio of
-#'   two will attempt to produce a mixture of rectangles whose width:height
-#'   ratio is either 2:1 or 1:2. When using "squarify", unlike d3 which
-#'   uses the Golden Ratio i.e. 1.618034, Plotly applies 1 to increase
-#'   squares in treemap layouts. Number in the interval [1, Inf].
-#' @param style \strong{\code{go_treemap_hoverlabel_font()},
-#'   \code{go_treemap_insidetextfont()},
-#'   \code{go_treemap_outsidetextfont()},
-#'   \code{go_treemap_pathbar_textfont()}, \code{go_treemap_textfont()}}:
-#'   Sets whether a font should be styled with a normal or italic face from
-#'   its family. One of \code{"normal"}, \code{"italic"}, or a vector of
-#'   these.
-#'
-#'   \strong{\code{go_treemap_legendgrouptitle_font()},
-#'   \code{go_treemap_marker_colorbar_tickfont()},
-#'   \code{go_treemap_marker_colorbar_title_font()}}: Sets whether a font
-#'   should be styled with a normal or italic face from its family. One of
-#'   \code{"normal"}, \code{"italic"}.
-#' @param t Sets the padding form the top (in px). Number in the interval
-#'   [0, Inf].
-#' @param templateitemname Used to refer to a named item in this array in
-#'   the template. Named items from the template will be created even
-#'   without a matching item in the input figure, but you can modify one by
-#'   making an item with `templateitemname` matching its `name`, alongside
-#'   your modifications (including `visible: false` or `enabled: false` to
-#'   hide it). If there is no template or no matching item, this item will
-#'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param text \strong{\code{go_treemap()}}: Sets text elements associated
-#'   with each sector. If trace `textinfo` contains a "text" flag, these
-#'   elements will be seen on the chart. If trace `hoverinfo` contains a
-#'   "text" flag and "hovertext" is not set, these elements will be seen in
-#'   the hover labels. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#'
-#'   \strong{\code{go_treemap_legendgrouptitle()}}: Sets the title of the
-#'   legend group. String.
-#'
-#'   \strong{\code{go_treemap_marker_colorbar_title()}}: Sets the title of
-#'   the color bar. String.
-#' @param textcase \strong{\code{go_treemap_hoverlabel_font()},
-#'   \code{go_treemap_insidetextfont()},
-#'   \code{go_treemap_outsidetextfont()},
-#'   \code{go_treemap_pathbar_textfont()}, \code{go_treemap_textfont()}}:
-#'   Sets capitalization of text. It can be used to make text appear in
-#'   all-uppercase or all-lowercase, or with each word capitalized. One of
-#'   \code{"normal"}, \code{"word caps"}, \code{"upper"}, \code{"lower"},
-#'   or a vector of these.
-#'
-#'   \strong{\code{go_treemap_legendgrouptitle_font()},
-#'   \code{go_treemap_marker_colorbar_tickfont()},
-#'   \code{go_treemap_marker_colorbar_title_font()}}: Sets capitalization
-#'   of text. It can be used to make text appear in all-uppercase or
-#'   all-lowercase, or with each word capitalized. One of \code{"normal"},
-#'   \code{"word caps"}, \code{"upper"}, \code{"lower"}.
-#' @param textfont \strong{\code{go_treemap()}}: Sets the font used for
-#'   `textinfo`. Named list or \code{\link{go_treemap_textfont}()} object.
-#'
-#'   \strong{\code{go_treemap_pathbar()}}: Sets the font used inside
-#'   `pathbar`. Named list or \code{\link{go_treemap_pathbar_textfont}()}
-#'   object.
+#' @param text Sets text elements associated with each sector. If trace
+#'   `textinfo` contains a "text" flag, these elements will be seen on the
+#'   chart. If trace `hoverinfo` contains a "text" flag and "hovertext" is
+#'   not set, these elements will be seen in the hover labels. Data array:
+#'   a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param textfont Sets the font used for `textinfo`. A
+#'   \code{\link{go_font}()} object or named list, with properties
+#'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#'   \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#'   \code{weight} (see \code{\link{go_font}()}).
 #' @param textinfo Determines what trace information appears on the graph.
 #'   Flags are rendered in a fixed order; use `texttemplate` if you need
 #'   explicit control over the rendered string, including the order of
@@ -615,89 +234,9 @@
 #'   variable referenced in a template is missing. If the boolean value
 #'   'false' is passed in, the specifier with the missing variable will be
 #'   displayed. Any value.
-#' @param thickness \strong{\code{go_treemap_marker_colorbar()}}: Sets the
-#'   thickness of the color bar This measure excludes the size of the
-#'   padding, ticks and labels. Number in the interval [0, Inf].
-#'
-#'   \strong{\code{go_treemap_pathbar()}}: Sets the thickness of `pathbar`
-#'   (in px). If not specified the `pathbar.textfont.size` is used with 3
-#'   pixles extra padding on each side. Number in the interval [12, Inf].
-#' @param thicknessmode Determines whether this color bar's thickness (i.e.
-#'   the measure in the constant color direction) is set in units of plot
-#'   "fraction" or in "pixels". Use `thickness` to set the value. One of
-#'   \code{"fraction"}, \code{"pixels"}.
-#' @param tick0 Sets the placement of the first tick on this axis. Use with
-#'   `dtick`. If the axis `type` is "log", then you must take the log of
-#'   your starting tick (e.g. to set the starting tick to 100, set the
-#'   `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-#'   If the axis `type` is "date", it should be a date string, like date
-#'   data. If the axis `type` is "category", it should be a number, using
-#'   the scale where each category is assigned a serial number from zero in
-#'   the order it appears. Any value.
-#' @param tickangle Sets the angle of the tick labels with respect to the
-#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
-#'   vertically. Angle in degrees.
-#' @param tickcolor Sets the tick color. Color: a CSS color string or R
-#'   color name.
-#' @param tickfont Sets the color bar's tick label font Named list or
-#'   \code{\link{go_treemap_marker_colorbar_tickfont}()} object.
-#' @param tickformat Sets the tick label formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param tickformatstops List of named lists or
-#'   \code{\link{go_treemap_marker_colorbar_tickformatstop}()} objects.
-#' @param ticklabeloverflow Determines how we handle tick labels that would
-#'   overflow either the graph div or the domain of the axis. The default
-#'   value for inside tick labels is "hide past domain". In other cases the
-#'   default is "hide past div". One of \code{"allow"}, \code{"hide past
-#'   div"}, \code{"hide past domain"}.
-#' @param ticklabelposition Determines where tick labels are drawn relative
-#'   to the ticks. Left and right options are used when `orientation` is
-#'   "h", top and bottom when `orientation` is "v". One of
-#'   \code{"outside"}, \code{"inside"}, \code{"outside top"}, \code{"inside
-#'   top"}, \code{"outside left"}, \code{"inside left"}, \code{"outside
-#'   right"}, \code{"inside right"}, \code{"outside bottom"}, \code{"inside
-#'   bottom"}.
-#' @param ticklabelstep Sets the spacing between tick labels as compared to
-#'   the spacing between ticks. A value of 1 (default) means each tick gets
-#'   a label. A value of 2 means shows every 2nd label. A larger value n
-#'   means only every nth tick is labeled. `tick0` determines which labels
-#'   are shown. Not implemented for axes with `type` "log" or
-#'   "multicategory", or when `tickmode` is "array". Integer in the
-#'   interval [1, Inf].
-#' @param ticklen Sets the tick length (in px). Number in the interval [0,
-#'   Inf].
-#' @param tickmode Sets the tick mode for this axis. If "auto", the number
-#'   of ticks is set via `nticks`. If "linear", the placement of the ticks
-#'   is determined by a starting position `tick0` and a tick step `dtick`
-#'   ("linear" is the default value if `tick0` and `dtick` are provided).
-#'   If "array", the placement of the ticks is set via `tickvals` and the
-#'   tick text is `ticktext`. ("array" is the default value if `tickvals`
-#'   is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.
-#' @param tickprefix Sets a tick label prefix. String.
-#' @param ticks Determines whether ticks are drawn or not. If **, this
-#'   axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-#'   drawn outside (inside) the axis lines. One of \code{"outside"},
-#'   \code{"inside"}, \code{""}.
-#' @param ticksuffix Sets a tick label suffix. String.
-#' @param ticktext Sets the text displayed at the ticks position via
-#'   `tickvals`. Only has an effect if `tickmode` is set to "array". Used
-#'   with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#' @param tickvals Sets the values at which ticks on this axis appear. Only
-#'   has an effect if `tickmode` is set to "array". Used with `ticktext`.
-#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
-#'   Inf].
-#' @param tiling Named list or \code{\link{go_treemap_tiling}()} object.
-#' @param title String (the title text), named list or
-#'   \code{\link{go_treemap_marker_colorbar_title}()} object.
+#' @param tiling A named list with properties \code{flip}, \code{packing},
+#'   \code{pad} and \code{squarifyratio} (described in section "tiling
+#'   properties" below).
 #' @param uid Assign an id to this trace, Use this to provide object
 #'   constancy between traces during animations and transitions. String.
 #' @param uirevision Controls persistence of some user-driven changes to
@@ -714,97 +253,150 @@
 #'   array, such that the same trace has a different index, you can still
 #'   preserve user-driven changes if you give each trace a `uid` that stays
 #'   with it as it moves. Any value.
-#' @param value string - dtickformat for described zoom level, the same as
-#'   "tickformat" String.
 #' @param values Sets the values associated with each of the sectors. Use
 #'   with `branchvalues` to determine how the values are summed. Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param variant \strong{\code{go_treemap_hoverlabel_font()},
-#'   \code{go_treemap_insidetextfont()},
-#'   \code{go_treemap_outsidetextfont()},
-#'   \code{go_treemap_pathbar_textfont()}, \code{go_treemap_textfont()}}:
-#'   Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}, or a
-#'   vector of these.
-#'
-#'   \strong{\code{go_treemap_legendgrouptitle_font()},
-#'   \code{go_treemap_marker_colorbar_tickfont()},
-#'   \code{go_treemap_marker_colorbar_title_font()}}: Sets the variant of
-#'   the font. One of \code{"normal"}, \code{"small-caps"},
-#'   \code{"all-small-caps"}, \code{"all-petite-caps"},
-#'   \code{"petite-caps"}, \code{"unicase"}.
-#' @param visible \strong{\code{go_treemap()}}: Determines whether or not
-#'   this trace is visible. If "legendonly", the trace is not drawn, but
-#'   can appear as a legend item (provided that the legend itself is
-#'   visible). One of \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#'
-#'   \strong{\code{go_treemap_pathbar()}}: Determines if the path bar is
-#'   drawn i.e. outside the trace `domain` and with one pixel gap. Logical.
-#' @param weight \strong{\code{go_treemap_hoverlabel_font()},
-#'   \code{go_treemap_insidetextfont()},
-#'   \code{go_treemap_outsidetextfont()},
-#'   \code{go_treemap_pathbar_textfont()}, \code{go_treemap_textfont()}}:
-#'   Sets the weight (or boldness) of the font. Integer in the interval [1,
-#'   1000], or a vector of these.
-#'
-#'   \strong{\code{go_treemap_legendgrouptitle_font()},
-#'   \code{go_treemap_marker_colorbar_tickfont()},
-#'   \code{go_treemap_marker_colorbar_title_font()}}: Sets the weight (or
-#'   boldness) of the font. Integer in the interval [1, 1000].
-#' @param width Sets the width (in px) of the line enclosing each sector.
-#'   Number in the interval [0, Inf], or a vector of these.
-#' @param x \strong{\code{go_treemap_domain()}}: Sets the horizontal domain
-#'   of this treemap trace (in plot fraction). Vector or list of 2
-#'   element(s).
-#'
-#'   \strong{\code{go_treemap_marker_colorbar()}}: Sets the x position with
-#'   respect to `xref` of the color bar (in plot fraction). When `xref` is
-#'   "paper", defaults to 1.02 when `orientation` is "v" and 0.5 when
-#'   `orientation` is "h". When `xref` is "container", defaults to 1 when
-#'   `orientation` is "v" and 0.5 when `orientation` is "h". Must be
-#'   between 0 and 1 if `xref` is "container" and between "-2" and 3 if
-#'   `xref` is "paper". Number.
-#' @param xanchor Sets this color bar's horizontal position anchor. This
-#'   anchor binds the `x` position to the "left", "center" or "right" of
-#'   the color bar. Defaults to "left" when `orientation` is "v" and
-#'   "center" when `orientation` is "h". One of \code{"left"},
-#'   \code{"center"}, \code{"right"}.
-#' @param xpad Sets the amount of padding (in px) along the x direction.
-#'   Number in the interval [0, Inf].
-#' @param xref Sets the container `x` refers to. "container" spans the
-#'   entire `width` of the plot. "paper" refers to the width of the
-#'   plotting area only. One of \code{"container"}, \code{"paper"}.
-#' @param y \strong{\code{go_treemap_domain()}}: Sets the vertical domain
-#'   of this treemap trace (in plot fraction). Vector or list of 2
-#'   element(s).
-#'
-#'   \strong{\code{go_treemap_marker_colorbar()}}: Sets the y position with
-#'   respect to `yref` of the color bar (in plot fraction). When `yref` is
-#'   "paper", defaults to 0.5 when `orientation` is "v" and 1.02 when
-#'   `orientation` is "h". When `yref` is "container", defaults to 0.5 when
-#'   `orientation` is "v" and 1 when `orientation` is "h". Must be between
-#'   0 and 1 if `yref` is "container" and between "-2" and 3 if `yref` is
-#'   "paper". Number.
-#' @param yanchor Sets this color bar's vertical position anchor This
-#'   anchor binds the `y` position to the "top", "middle" or "bottom" of
-#'   the color bar. Defaults to "middle" when `orientation` is "v" and
-#'   "bottom" when `orientation` is "h". One of \code{"top"},
-#'   \code{"middle"}, \code{"bottom"}.
-#' @param ypad Sets the amount of padding (in px) along the y direction.
-#'   Number in the interval [0, Inf].
-#' @param yref Sets the container `y` refers to. "container" spans the
-#'   entire `height` of the plot. "paper" refers to the height of the
-#'   plotting area only. One of \code{"container"}, \code{"paper"}.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
+#' @param visible Determines whether or not this trace is visible. If
+#'   "legendonly", the trace is not drawn, but can appear as a legend item
+#'   (provided that the legend itself is visible). One of
+#'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
+#' @param ... Further properties, by their full names (e.g. numbered subplots
+#'   such as \code{xaxis2} in \code{go_layout()}). Nested properties are set
+#'   with named lists: \code{marker = list(size = 10)}.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
+#' @return \code{go_*()} functions return a graph object;
+#'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
+#'
+#' @section marker properties:
+#' \describe{
+#' \item{\code{autocolorscale}}{Determines whether the colorscale is a
+#' default palette (`autocolorscale: true`) or the palette determined by
+#' `marker.colorscale`. Has an effect only if colors is set to a numerical
+#' array. In case `colorscale` is unspecified or `autocolorscale` is true,
+#' the default palette will be chosen according to whether numbers in the
+#' `color` array are all positive, all negative or mixed. Logical.}
+#' \item{\code{cauto}}{Determines whether or not the color domain is
+#' computed with respect to the input data (here colors) or the bounds set
+#' in `marker.cmin` and `marker.cmax` Has an effect only if colors is set to
+#' a numerical array. Defaults to `false` when `marker.cmin` and
+#' `marker.cmax` are set by the user. Logical.}
+#' \item{\code{cmax}}{Sets the upper bound of the color domain. Has an
+#' effect only if colors is set to a numerical array. Value should have the
+#' same units as colors and if set, `marker.cmin` must be set as well.
+#' Number.}
+#' \item{\code{cmid}}{Sets the mid-point of the color domain by scaling
+#' `marker.cmin` and/or `marker.cmax` to be equidistant to this point. Has
+#' an effect only if colors is set to a numerical array. Value should have
+#' the same units as colors. Has no effect when `marker.cauto` is `false`.
+#' Number.}
+#' \item{\code{cmin}}{Sets the lower bound of the color domain. Has an
+#' effect only if colors is set to a numerical array. Value should have the
+#' same units as colors and if set, `marker.cmax` must be set as well.
+#' Number.}
+#' \item{\code{coloraxis}}{Sets a reference to a shared color axis.
+#' References to these shared color axes are "coloraxis", "coloraxis2",
+#' "coloraxis3", etc. Settings for these shared color axes are set in the
+#' layout, under `layout.coloraxis`, `layout.coloraxis2`, etc. Note that
+#' multiple color scales can be linked to the same color axis. Subplot id:
+#' \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
+#' \item{\code{colorbar}}{A \code{\link{go_colorbar}()} object or named
+#' list, with properties \code{bgcolor}, \code{bordercolor},
+#' \code{borderwidth}, \code{dtick}, \code{exponentformat},
+#' \code{labelalias}, \code{len}, \code{lenmode}, \code{minexponent},
+#' \code{nticks}, \code{orientation}, \code{outlinecolor} and 34 more (see
+#' \code{\link{go_colorbar}()}).}
+#' \item{\code{colors}}{Sets the color of each sector of this trace. If not
+#' specified, the default trace color set is used to pick the sector colors.
+#' Data array: a vector, factor, Date/POSIXct vector, matrix or list.}
+#' \item{\code{colorscale}}{Sets the colorscale. Has an effect only if
+#' colors is set to a numerical array. The colorscale must be an array
+#' containing arrays mapping a normalized value to an rgb, rgba, hex, hsl,
+#' hsla, hwb, or named color string. At minimum, a mapping for the lowest
+#' (0) and highest (1) values are required. For example, `[[0,
+#' 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
+#' colorscale in color space, use `marker.cmin` and `marker.cmax`.
+#' Alternatively, `colorscale` may be a palette name string of the following
+#' list:
+#' Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
+#' Colorscale: a vector of colors, a two-column data.frame of (value,
+#' color), or the name of a sequential, diverging or cyclical scale in
+#' \code{\link{px_colors}()} (append \code{"_r"} to reverse).}
+#' \item{\code{cornerradius}}{Sets the maximum rounding of corners (in px).
+#' Number in the interval [0, Inf].}
+#' \item{\code{depthfade}}{Determines if the sector colors are faded towards
+#' the background from the leaves up to the headers. This option is
+#' unavailable when a `colorscale` is present, defaults to false when
+#' `marker.colors` is set, but otherwise defaults to true. When set to
+#' "reversed", the fading direction is inverted, that is the top elements
+#' within hierarchy are drawn with fully saturated colors while the leaves
+#' are faded towards the background color. One of \code{"reversed"},
+#' \code{TRUE}, \code{FALSE}.}
+#' \item{\code{line}}{A named list with properties \code{color} and
+#' \code{width} (described in section "marker.line properties" below).}
+#' \item{\code{pad}}{A named list with properties \code{b}, \code{l},
+#' \code{r} and \code{t} (described in section "marker.pad properties"
+#' below).}
+#' \item{\code{pattern}}{Sets the pattern within the marker. A
+#' \code{\link{go_pattern}()} object or named list, with properties
+#' \code{bgcolor}, \code{fgcolor}, \code{fgopacity}, \code{fillmode},
+#' \code{path}, \code{shape}, \code{size} and \code{solidity} (see
+#' \code{\link{go_pattern}()}).}
+#' \item{\code{reversescale}}{Reverses the color mapping if true. Has an
+#' effect only if colors is set to a numerical array. If true, `marker.cmin`
+#' will correspond to the last color in the array and `marker.cmax` will
+#' correspond to the first color. Logical.}
+#' \item{\code{showscale}}{Determines whether or not a colorbar is displayed
+#' for this trace. Has an effect only if colors is set to a numerical array.
+#' Logical.}
+#' }
+#'
+#' @section marker.line properties:
+#' \describe{
+#' \item{\code{color}}{Sets the color of the line enclosing each sector.
+#' Defaults to the `paper_bgcolor` value. Color: a CSS color string or R
+#' color name, or a vector of these.}
+#' \item{\code{width}}{Sets the width (in px) of the line enclosing each
+#' sector. Number in the interval [0, Inf], or a vector of these.}
+#' }
+#'
+#' @section marker.pad properties:
+#' \describe{
+#' \item{\code{b}}{Sets the padding form the bottom (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{l}}{Sets the padding form the left (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{r}}{Sets the padding form the right (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{t}}{Sets the padding form the top (in px). Number in the
+#' interval [0, Inf].}
+#' }
+#'
+#' @section tiling properties:
+#' \describe{
+#' \item{\code{flip}}{Determines if the positions obtained from solver are
+#' flipped on each axis. Any combination of \code{"x"}, \code{"y"} joined
+#' with \code{"+"}.}
+#' \item{\code{packing}}{Determines d3 treemap solver. For more info please
+#' refer to https://github.com/d3/d3-hierarchy#treemap-tiling One of
+#' \code{"squarify"}, \code{"binary"}, \code{"dice"}, \code{"slice"},
+#' \code{"slice-dice"}, \code{"dice-slice"}.}
+#' \item{\code{pad}}{Sets the inner padding (in px). Number in the interval
+#' [0, Inf].}
+#' \item{\code{squarifyratio}}{When using "squarify" `packing` algorithm,
+#' according to
+#' https://github.com/d3/d3-hierarchy/blob/v3.1.1/README.md#squarify_ratio
+#' this option specifies the desired aspect ratio of the generated
+#' rectangles. The ratio must be specified as a number greater than or equal
+#' to one. Note that the orientation of the generated rectangles (tall or
+#' wide) is not implied by the ratio; for example, a ratio of two will
+#' attempt to produce a mixture of rectangles whose width:height ratio is
+#' either 2:1 or 1:2. When using "squarify", unlike d3 which uses the Golden
+#' Ratio i.e. 1.618034, Plotly applies 1 to increase squares in treemap
+#' layouts. Number in the interval [1, Inf].}
+#' }
+#'
 #' @noMd
 #' @export
 #' @examples
@@ -823,214 +415,5 @@ go_treemap <- function(
     visible = NULL, skip_invalid = FALSE
 ) {
   plotly_object("treemap", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_domain <- function(
-    arg = NULL, ..., column = NULL, row = NULL, x = NULL, y = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("treemap.domain", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_hoverlabel <- function(
-    arg = NULL, ..., align = NULL, bgcolor = NULL, bordercolor = NULL,
-    font = NULL, namelength = NULL, showarrow = NULL, skip_invalid = FALSE
-) {
-  plotly_object("treemap.hoverlabel", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_hoverlabel_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("treemap.hoverlabel.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_insidetextfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("treemap.insidetextfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_legendgrouptitle <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("treemap.legendgrouptitle", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_legendgrouptitle_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("treemap.legendgrouptitle.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_marker <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, coloraxis = NULL, colorbar = NULL,
-    colors = NULL, colorscale = NULL, cornerradius = NULL, depthfade = NULL,
-    line = NULL, pad = NULL, pattern = NULL, reversescale = NULL,
-    showscale = NULL, skip_invalid = FALSE
-) {
-  plotly_object("treemap.marker", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_marker_colorbar <- function(
-    arg = NULL, ..., bgcolor = NULL, bordercolor = NULL, borderwidth = NULL,
-    dtick = NULL, exponentformat = NULL, labelalias = NULL, len = NULL,
-    lenmode = NULL, minexponent = NULL, nticks = NULL, orientation = NULL,
-    outlinecolor = NULL, outlinewidth = NULL, separatethousands = NULL,
-    showexponent = NULL, showticklabels = NULL, showtickprefix = NULL,
-    showticksuffix = NULL, thickness = NULL, thicknessmode = NULL,
-    tick0 = NULL, tickangle = NULL, tickcolor = NULL, tickfont = NULL,
-    tickformat = NULL, tickformatstops = NULL, ticklabeloverflow = NULL,
-    ticklabelposition = NULL, ticklabelstep = NULL, ticklen = NULL,
-    tickmode = NULL, tickprefix = NULL, ticks = NULL, ticksuffix = NULL,
-    ticktext = NULL, tickvals = NULL, tickwidth = NULL, title = NULL,
-    x = NULL, xanchor = NULL, xpad = NULL, xref = NULL, y = NULL,
-    yanchor = NULL, ypad = NULL, yref = NULL, skip_invalid = FALSE
-) {
-  plotly_object("treemap.marker.colorbar", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_marker_colorbar_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("treemap.marker.colorbar.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_marker_colorbar_tickformatstop <- function(
-    arg = NULL, ..., dtickrange = NULL, enabled = NULL, name = NULL,
-    templateitemname = NULL, value = NULL, skip_invalid = FALSE
-) {
-  plotly_object("treemap.marker.colorbar.tickformatstop", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_marker_colorbar_title <- function(
-    arg = NULL, ..., font = NULL, side = NULL, text = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("treemap.marker.colorbar.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_marker_colorbar_title_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("treemap.marker.colorbar.title.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_marker_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
-) {
-  plotly_object("treemap.marker.line", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_marker_pad <- function(
-    arg = NULL, ..., b = NULL, l = NULL, r = NULL, t = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("treemap.marker.pad", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_marker_pattern <- function(
-    arg = NULL, ..., bgcolor = NULL, fgcolor = NULL, fgopacity = NULL,
-    fillmode = NULL, path = NULL, shape = NULL, size = NULL,
-    solidity = NULL, skip_invalid = FALSE
-) {
-  plotly_object("treemap.marker.pattern", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_outsidetextfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("treemap.outsidetextfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_pathbar <- function(
-    arg = NULL, ..., edgeshape = NULL, side = NULL, textfont = NULL,
-    thickness = NULL, visible = NULL, skip_invalid = FALSE
-) {
-  plotly_object("treemap.pathbar", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_pathbar_textfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("treemap.pathbar.textfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_root <- function(
-    arg = NULL, ..., color = NULL, skip_invalid = FALSE
-) {
-  plotly_object("treemap.root", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_textfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("treemap.textfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_treemap
-#' @export
-go_treemap_tiling <- function(
-    arg = NULL, ..., flip = NULL, packing = NULL, pad = NULL,
-    squarifyratio = NULL, skip_invalid = FALSE
-) {
-  plotly_object("treemap.tiling", arg, environment(), list(...), skip_invalid)
 }
 

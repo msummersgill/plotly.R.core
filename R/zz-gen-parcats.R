@@ -4,33 +4,30 @@
 #'
 #' Parallel categories diagram for multidimensional categorical data.
 #'
-#' \code{go_parcats()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}). \code{add_parcats()} creates an
-#' object and adds it to a figure.
+#' \code{go_parcats()} creates a validated graph object (a named list).
+#' \code{add_parcats()} creates one and adds it to a figure.
 #'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_parcats_dimension()}}{\code{parcats.dimension}: The
-#' dimensions (variables) of the parallel categories diagram.}
-#' \item{\code{go_parcats_domain()}}{\code{parcats.domain}}
-#' \item{\code{go_parcats_labelfont()}}{\code{parcats.labelfont}: Sets the
-#' font for the `dimension` labels.}
-#' \item{\code{go_parcats_legendgrouptitle()}}{\code{parcats.legendgrouptitle}}
-#' \item{\code{go_parcats_legendgrouptitle_font()}}{\code{parcats.legendgrouptitle.font}:
-#' Sets this legend group's title font.}
-#' \item{\code{go_parcats_line()}}{\code{parcats.line}}
-#' \item{\code{go_parcats_line_colorbar()}}{\code{parcats.line.colorbar}}
-#' \item{\code{go_parcats_line_colorbar_tickfont()}}{\code{parcats.line.colorbar.tickfont}:
-#' Sets the color bar's tick label font}
-#' \item{\code{go_parcats_line_colorbar_tickformatstop()}}{\code{parcats.line.colorbar.tickformatstop}}
-#' \item{\code{go_parcats_line_colorbar_title()}}{\code{parcats.line.colorbar.title}}
-#' \item{\code{go_parcats_line_colorbar_title_font()}}{\code{parcats.line.colorbar.title.font}:
-#' Sets this color bar's title font.}
-#' \item{\code{go_parcats_tickfont()}}{\code{parcats.tickfont}: Sets the
-#' font for the `category` labels.}
-#' }
+#' @details
+#' Nested objects are named lists, e.g. \code{marker = list(size = 10, line
+#' = list(width = 2))}. Each nested object's properties are described in a
+#' section of its own near the end of this page (after \emph{Value}), titled
+#' with its path: \emph{marker properties}, \emph{marker.line properties},
+#' .... Objects that appear in several places in the schema can also be
+#' created with a constructor of their own, and are documented on its page:
+#' \code{\link{go_font}()}, \code{\link{go_colorbar}()},
+#' \code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
+#' \code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
+#' \code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
+#' \code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
+#' \code{\link{go_caps}()}, \code{\link{go_domainpad}()},
+#' \code{\link{go_gradient}()}, \code{\link{go_label}()},
+#' \code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
+#' \code{\link{go_minor}()}, \code{\link{go_pathbar}()},
+#' \code{\link{go_project}()}, \code{\link{go_rangebreak}()},
+#' \code{\link{go_root}()}, \code{\link{go_slices}()},
+#' \code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
+#' Every property is checked against the plotly.js schema when the object is
+#' created or modified (see \code{\link{plotly_obj-modify}}).
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
@@ -40,140 +37,28 @@
 #'   freely move on the plane. If `fixed`, the categories and dimensions
 #'   are stationary. One of \code{"perpendicular"}, \code{"freeform"},
 #'   \code{"fixed"}.
-#' @param autocolorscale Determines whether the colorscale is a default
-#'   palette (`autocolorscale: true`) or the palette determined by
-#'   `line.colorscale`. Has an effect only if in `line.color` is set to a
-#'   numerical array. In case `colorscale` is unspecified or
-#'   `autocolorscale` is true, the default palette will be chosen according
-#'   to whether numbers in the `color` array are all positive, all negative
-#'   or mixed. Logical.
-#' @param bgcolor Sets the color of padded area. Color: a CSS color string
-#'   or R color name.
-#' @param bordercolor Sets the axis line color. Color: a CSS color string
-#'   or R color name.
-#' @param borderwidth Sets the width (in px) or the border enclosing this
-#'   color bar. Number in the interval [0, Inf].
 #' @param bundlecolors Sort paths so that like colors are bundled together
 #'   within each category. Logical.
-#' @param categoryarray Sets the order in which categories in this
-#'   dimension appear. Only has an effect if `categoryorder` is set to
-#'   "array". Used with `categoryorder`. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
-#' @param categoryorder Specifies the ordering logic for the categories in
-#'   the dimension. By default, plotly uses "trace", which specifies the
-#'   order that is present in the data supplied. Set `categoryorder` to
-#'   "category ascending" or "category descending" if order should be
-#'   determined by the alphanumerical order of the category names. Set
-#'   `categoryorder` to "array" to derive the ordering from the attribute
-#'   `categoryarray`. If a category is not found in the `categoryarray`
-#'   array, the sorting behavior for that attribute will be identical to
-#'   the "trace" mode. The unspecified categories will follow the
-#'   categories in `categoryarray`. One of \code{"trace"}, \code{"category
-#'   ascending"}, \code{"category descending"}, \code{"array"}.
-#' @param cauto Determines whether or not the color domain is computed with
-#'   respect to the input data (here in `line.color`) or the bounds set in
-#'   `line.cmin` and `line.cmax` Has an effect only if in `line.color` is
-#'   set to a numerical array. Defaults to `false` when `line.cmin` and
-#'   `line.cmax` are set by the user. Logical.
-#' @param cmax Sets the upper bound of the color domain. Has an effect only
-#'   if in `line.color` is set to a numerical array. Value should have the
-#'   same units as in `line.color` and if set, `line.cmin` must be set as
-#'   well. Number.
-#' @param cmid Sets the mid-point of the color domain by scaling
-#'   `line.cmin` and/or `line.cmax` to be equidistant to this point. Has an
-#'   effect only if in `line.color` is set to a numerical array. Value
-#'   should have the same units as in `line.color`. Has no effect when
-#'   `line.cauto` is `false`. Number.
-#' @param cmin Sets the lower bound of the color domain. Has an effect only
-#'   if in `line.color` is set to a numerical array. Value should have the
-#'   same units as in `line.color` and if set, `line.cmax` must be set as
-#'   well. Number.
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
-#' @param color \strong{\code{go_parcats_labelfont()},
-#'   \code{go_parcats_legendgrouptitle_font()},
-#'   \code{go_parcats_line_colorbar_tickfont()},
-#'   \code{go_parcats_line_colorbar_title_font()},
-#'   \code{go_parcats_tickfont()}}: Color: a CSS color string or R color
-#'   name.
-#'
-#'   \strong{\code{go_parcats_line()}}: Sets the line color. It accepts
-#'   either a specific color or an array of numbers that are mapped to the
-#'   colorscale relative to the max and min values of the array or relative
-#'   to `line.cmin` and `line.cmax` if set. Color: a CSS color string or R
-#'   color name, or a number mapped to a color by
-#'   \code{parcats.line.colorscale}, or a vector of these.
-#' @param coloraxis Sets a reference to a shared color axis. References to
-#'   these shared color axes are "coloraxis", "coloraxis2", "coloraxis3",
-#'   etc. Settings for these shared color axes are set in the layout, under
-#'   `layout.coloraxis`, `layout.coloraxis2`, etc. Note that multiple color
-#'   scales can be linked to the same color axis. Subplot id:
-#'   \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....
-#' @param colorbar Named list or \code{\link{go_parcats_line_colorbar}()}
-#'   object.
-#' @param colorscale Sets the colorscale. Has an effect only if in
-#'   `line.color` is set to a numerical array. The colorscale must be an
-#'   array containing arrays mapping a normalized value to an rgb, rgba,
-#'   hex, hsl, hsla, hwb, or named color string. At minimum, a mapping for
-#'   the lowest (0) and highest (1) values are required. For example, `[[0,
-#'   'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
-#'   colorscale in color space, use `line.cmin` and `line.cmax`.
-#'   Alternatively, `colorscale` may be a palette name string of the
-#'   following list:
-#'   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-#'   Colorscale: a vector of colors, a two-column data.frame of (value,
-#'   color), or the name of a sequential, diverging or cyclical scale in
-#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
-#' @param column If there is a layout grid, use the domain for this column
-#'   in the grid for this parcats trace. Integer in the interval [0, Inf].
 #' @param counts The number of observations represented by each state.
 #'   Defaults to 1 so that each state represents one observation Number in
 #'   the interval [0, Inf], or a vector of these.
 #' @param data A data frame in which formula properties (e.g. \code{x =
-#'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
-#'   given to \code{\link{go_figure}()}. Only the evaluated values are
+#'   ~col}, \code{marker = list(size = ~col)}) are evaluated. Default: the
+#'   data given to \code{\link{go_figure}()}. Only the evaluated values are
 #'   added to the trace. A \code{crosstalk::SharedData} works the same way,
 #'   and links the trace to its crosstalk group (see
 #'   \code{\link{highlight}()}).
-#' @param dimensions List of named lists or
-#'   \code{\link{go_parcats_dimension}()} objects.
-#' @param displayindex The display index of dimension, from left to right,
-#'   zero indexed, defaults to dimension index. Integer.
-#' @param domain Named list or \code{\link{go_parcats_domain}()} object.
-#' @param dtick Sets the step in-between ticks on this color bar. Use with
-#'   `tick0`. Must be a positive number. Note: unlike on x/y axes, the
-#'   special "log" and "date" string forms ("L<f>", "D1", "D2", "M<n>") are
-#'   not supported here: this axis is always linear, so such strings are
-#'   silently ignored and the step is set to 1. Any value.
-#' @param dtickrange range ["min", "max"], where "min", "max" - dtick
-#'   values which describe some zoom level, it is possible to omit "min" or
-#'   "max" value by passing "null" Vector or list of 2 element(s).
-#' @param enabled Determines whether or not this stop is used. If `false`,
-#'   this stop is ignored even within its `dtickrange`. Logical.
-#' @param exponentformat Determines a formatting rule for the tick
-#'   exponents. For example, consider the number 1,000,000,000. If "none",
-#'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-#'   1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-#'   prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-#'   covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-#'   Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-#'   the above ranges, the formatting rule will automatically be switched
-#'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-#'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
+#' @param dimensions List, each element a named list with properties
+#'   \code{categoryarray}, \code{categoryorder}, \code{displayindex},
+#'   \code{label}, \code{ticktext}, \code{values} and \code{visible}
+#'   (described in section "dimension properties" below).
+#' @param domain A \code{\link{go_domain}()} object or named list, with
+#'   properties \code{column}, \code{row}, \code{x} and \code{y} (see
+#'   \code{\link{go_domain}()}).
 #' @param fig A \code{go_figure} object.
-#' @param font \strong{\code{go_parcats_legendgrouptitle()}}: Sets this
-#'   legend group's title font. Named list or
-#'   \code{\link{go_parcats_legendgrouptitle_font}()} object.
-#'
-#'   \strong{\code{go_parcats_line_colorbar_title()}}: Sets this color
-#'   bar's title font. Named list or
-#'   \code{\link{go_parcats_line_colorbar_title_font}()} object.
 #' @param hoverinfo Determines what trace information appears on hover. If
 #'   `none` or `skip` are set, no information is displayed upon hovering.
 #'   But, if `none` is set, click and hover events are still fired. Any
@@ -184,15 +69,14 @@
 #'   hover interactions take place per color per category. If `dimension`,
 #'   hover interactions take place across all categories per dimension. One
 #'   of \code{"category"}, \code{"color"}, \code{"dimension"}.
-#' @param hovertemplate \strong{\code{go_parcats()}}: Template string used
-#'   for rendering the information that appear on hover box. Note that this
-#'   will override `hoverinfo`. Variables are inserted using
-#'   \%\{variable\}, for example "y: \%\{y\}" as well as \%\{xother\},
-#'   \{\%_xother\}, \{\%_xother_\}, \{\%xother_\}. When showing info for
-#'   several points, "xother" will be added to those with different x
-#'   positions from the first point. An underscore before or after
-#'   "(x|y)other" will add a space on that side, only when this field is
-#'   shown. Numbers are formatted using d3-format's syntax
+#' @param hovertemplate Template string used for rendering the information
+#'   that appear on hover box. Note that this will override `hoverinfo`.
+#'   Variables are inserted using \%\{variable\}, for example "y: \%\{y\}"
+#'   as well as \%\{xother\}, \{\%_xother\}, \{\%_xother_\}, \{\%xother_\}.
+#'   When showing info for several points, "xother" will be added to those
+#'   with different x positions from the first point. An underscore before
+#'   or after "(x|y)other" will add a space on that side, only when this
+#'   field is shown. Numbers are formatted using d3-format's syntax
 #'   \%\{variable:d3-format\}, for example "Price: \%\{y:$.2f\}".
 #'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format for details on
 #'   the formatting syntax. Dates are formatted using d3-time-format's
@@ -213,65 +97,26 @@
 #'   in tag `<extra>` is displayed in the secondary box, for example
 #'   `<extra>\%\{fullData.name\}</extra>`. To hide the secondary box
 #'   completely, use an empty tag `<extra></extra>`. String.
-#'
-#'   \strong{\code{go_parcats_line()}}: Template string used for rendering
-#'   the information that appear on hover box. Note that this will override
-#'   `hoverinfo`. Variables are inserted using \%\{variable\}, for example
-#'   "y: \%\{y\}" as well as \%\{xother\}, \{\%_xother\}, \{\%_xother_\},
-#'   \{\%xother_\}. When showing info for several points, "xother" will be
-#'   added to those with different x positions from the first point. An
-#'   underscore before or after "(x|y)other" will add a space on that side,
-#'   only when this field is shown. Numbers are formatted using d3-format's
-#'   syntax \%\{variable:d3-format\}, for example "Price: \%\{y:$.2f\}".
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format for details on
-#'   the formatting syntax. Dates are formatted using d3-time-format's
-#'   syntax \%\{variable|d3-time-format\}, for example "Day:
-#'   \%\{2019-01-01|\%A\}".
-#'   https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format for
-#'   details on the date formatting syntax. Variables that can't be found
-#'   will be replaced with the specifier. For example, a template of "data:
-#'   \%\{x\}, \%\{y\}" will result in a value of "data: 1, \%\{y\}" if x is
-#'   1 and y is missing. Variables with an undefined value will be replaced
-#'   with the fallback value. The variables available in `hovertemplate`
-#'   are the ones emitted as event data described at this link
-#'   https://plotly.com/javascript/plotlyjs-events/#event-data.
-#'   Additionally, all attributes that can be specified per-point (the ones
-#'   that are `arrayOk: true`) are available.  Finally, the template string
-#'   has access to variables `count` and `probability`. Anything contained
-#'   in tag `<extra>` is displayed in the secondary box, for example
-#'   `<extra>\%\{fullData.name\}</extra>`. To hide the secondary box
-#'   completely, use an empty tag `<extra></extra>`. String.
 #' @param hovertemplatefallback Fallback string that's displayed when a
 #'   variable referenced in a template is missing. If the boolean value
 #'   'false' is passed in, the specifier with the missing variable will be
 #'   displayed. Any value.
-#' @param label The shown name of the dimension. String.
-#' @param labelalias Replacement text for specific tick or hover labels.
-#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-#'   to Canada. The labels we would have shown must match the keys exactly,
-#'   after adding any tickprefix or ticksuffix. For negative numbers the
-#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
-#'   That means you need to use -1 instead of -1. labelalias can be used
-#'   with any axis type, and both keys (if needed) and values (if desired)
-#'   can include html-like tags or MathJax. Any value.
-#' @param labelfont Sets the font for the `dimension` labels. Named list or
-#'   \code{\link{go_parcats_labelfont}()} object.
-#' @param legendgrouptitle Named list or
-#'   \code{\link{go_parcats_legendgrouptitle}()} object.
+#' @param labelfont Sets the font for the `dimension` labels. A
+#'   \code{\link{go_font}()} object or named list, with properties
+#'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#'   \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#'   \code{weight} (see \code{\link{go_font}()}).
+#' @param legendgrouptitle A \code{\link{go_legendgrouptitle}()} object or
+#'   named list, with properties \code{font} and \code{text} (see
+#'   \code{\link{go_legendgrouptitle}()}).
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param len Sets the length of the color bar This measure excludes the
-#'   padding of both ends. That is, the color bar length is this length
-#'   minus the padding on both ends. Number in the interval [0, Inf].
-#' @param lenmode Determines whether this color bar's length (i.e. the
-#'   measure in the color variation direction) is set in units of plot
-#'   "fraction" or in *pixels. Use `len` to set the value. One of
-#'   \code{"fraction"}, \code{"pixels"}.
-#' @param line Named list or \code{\link{go_parcats_line}()} object.
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
+#' @param line A named list with properties \code{autocolorscale},
+#'   \code{cauto}, \code{cmax}, \code{cmid}, \code{cmin}, \code{color},
+#'   \code{coloraxis}, \code{colorbar}, \code{colorscale},
+#'   \code{hovertemplate}, \code{hovertemplatefallback},
+#'   \code{reversescale}, \code{shape} and \code{showscale} (described in
+#'   section "line properties" below).
 #' @param meta Assigns extra meta information associated with this trace
 #'   that can be used in various text attributes. Attributes such as trace
 #'   `name`, graph, axis and colorbar `title.text`, annotation `text`
@@ -281,182 +126,20 @@
 #'   `meta` item in question. To access trace `meta` in layout attributes,
 #'   use `\%\{data[n[.meta[i]\}` where `i` is the index or key of the
 #'   `meta` and `n` is the trace index. Any value.
-#' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
-#'   This only has an effect when `tickformat` is "SI" or "B". Number in
-#'   the interval [0, Inf].
-#' @param name \strong{\code{go_parcats()}}: Sets the trace name. The trace
-#'   name appears as the legend item and on hover. String.
-#'
-#'   \strong{\code{go_parcats_line_colorbar_tickformatstop()}}: When used
-#'   in a template, named items are created in the output figure in
-#'   addition to any items the figure already has in this array. You can
-#'   modify these items in the output figure by making your own item with
-#'   `templateitemname` matching this `name` alongside your modifications
-#'   (including `visible: false` or `enabled: false` to hide it). Has no
-#'   effect outside of a template. String.
-#' @param nticks Specifies the maximum number of ticks for the particular
-#'   axis. The actual number of ticks will be chosen automatically to be
-#'   less than or equal to `nticks`. Has an effect only if `tickmode` is
-#'   set to "auto". Integer in the interval [0, Inf].
-#' @param orientation Sets the orientation of the colorbar. One of
-#'   \code{"h"}, \code{"v"}.
-#' @param outlinecolor Sets the axis line color. Color: a CSS color string
-#'   or R color name.
-#' @param outlinewidth Sets the width (in px) of the axis line. Number in
-#'   the interval [0, Inf].
-#' @param reversescale Reverses the color mapping if true. Has an effect
-#'   only if in `line.color` is set to a numerical array. If true,
-#'   `line.cmin` will correspond to the last color in the array and
-#'   `line.cmax` will correspond to the first color. Logical.
-#' @param row \strong{\code{add_parcats()}}: Subplot grid row (figures
-#'   created with \code{\link{make_subplots}()} only). May be \code{"all"}
-#'   or a vector to address several cells.
-#'
-#'   \strong{\code{go_parcats_domain()}}: If there is a layout grid, use
-#'   the domain for this row in the grid for this parcats trace. Integer in
-#'   the interval [0, Inf].
-#' @param separatethousands If "true", even 4-digit integers are separated
-#'   Logical.
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param shape Sets the shape of the paths. If `linear`, paths are
-#'   composed of straight lines. If `hspline`, paths are composed of
-#'   horizontal curved splines One of \code{"linear"}, \code{"hspline"}.
-#' @param showexponent If "all", all exponents are shown besides their
-#'   significands. If "first", only the exponent of the first tick is
-#'   shown. If "last", only the exponent of the last tick is shown. If
-#'   "none", no exponents appear. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showscale Determines whether or not a colorbar is displayed for
-#'   this trace. Has an effect only if in `line.color` is set to a
-#'   numerical array. Logical.
-#' @param showticklabels Determines whether or not the tick labels are
-#'   drawn. Logical.
-#' @param showtickprefix If "all", all tick labels are displayed with a
-#'   prefix. If "first", only the first tick is displayed with a prefix. If
-#'   "last", only the last tick is displayed with a suffix. If "none", tick
-#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
-#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
-#' @param side Determines the location of color bar's title with respect to
-#'   the color bar. Defaults to "top" when `orientation` is "v" and
-#'   defaults to "right" when `orientation` is "h". One of \code{"right"},
-#'   \code{"top"}, \code{"bottom"}.
-#' @param size Number in the interval [1, Inf].
+#' @param name Sets the trace name. The trace name appears as the legend
+#'   item and on hover. String.
+#' @param row Subplot grid row (figures created with
+#'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
+#'   to address several cells.
 #' @param sortpaths Sets the path sorting algorithm. If `forward`, sort
 #'   paths based on dimension categories from left to right. If `backward`,
 #'   sort paths based on dimensions categories from right to left. One of
 #'   \code{"forward"}, \code{"backward"}.
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param templateitemname Used to refer to a named item in this array in
-#'   the template. Named items from the template will be created even
-#'   without a matching item in the input figure, but you can modify one by
-#'   making an item with `templateitemname` matching its `name`, alongside
-#'   your modifications (including `visible: false` or `enabled: false` to
-#'   hide it). If there is no template or no matching item, this item will
-#'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param text \strong{\code{go_parcats_legendgrouptitle()}}: Sets the
-#'   title of the legend group. String.
-#'
-#'   \strong{\code{go_parcats_line_colorbar_title()}}: Sets the title of
-#'   the color bar. String.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param thickness Sets the thickness of the color bar This measure
-#'   excludes the size of the padding, ticks and labels. Number in the
-#'   interval [0, Inf].
-#' @param thicknessmode Determines whether this color bar's thickness (i.e.
-#'   the measure in the constant color direction) is set in units of plot
-#'   "fraction" or in "pixels". Use `thickness` to set the value. One of
-#'   \code{"fraction"}, \code{"pixels"}.
-#' @param tick0 Sets the placement of the first tick on this axis. Use with
-#'   `dtick`. If the axis `type` is "log", then you must take the log of
-#'   your starting tick (e.g. to set the starting tick to 100, set the
-#'   `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-#'   If the axis `type` is "date", it should be a date string, like date
-#'   data. If the axis `type` is "category", it should be a number, using
-#'   the scale where each category is assigned a serial number from zero in
-#'   the order it appears. Any value.
-#' @param tickangle Sets the angle of the tick labels with respect to the
-#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
-#'   vertically. Angle in degrees.
-#' @param tickcolor Sets the tick color. Color: a CSS color string or R
-#'   color name.
-#' @param tickfont \strong{\code{go_parcats()}}: Sets the font for the
-#'   `category` labels. Named list or \code{\link{go_parcats_tickfont}()}
-#'   object.
-#'
-#'   \strong{\code{go_parcats_line_colorbar()}}: Sets the color bar's tick
-#'   label font Named list or
-#'   \code{\link{go_parcats_line_colorbar_tickfont}()} object.
-#' @param tickformat Sets the tick label formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param tickformatstops List of named lists or
-#'   \code{\link{go_parcats_line_colorbar_tickformatstop}()} objects.
-#' @param ticklabeloverflow Determines how we handle tick labels that would
-#'   overflow either the graph div or the domain of the axis. The default
-#'   value for inside tick labels is "hide past domain". In other cases the
-#'   default is "hide past div". One of \code{"allow"}, \code{"hide past
-#'   div"}, \code{"hide past domain"}.
-#' @param ticklabelposition Determines where tick labels are drawn relative
-#'   to the ticks. Left and right options are used when `orientation` is
-#'   "h", top and bottom when `orientation` is "v". One of
-#'   \code{"outside"}, \code{"inside"}, \code{"outside top"}, \code{"inside
-#'   top"}, \code{"outside left"}, \code{"inside left"}, \code{"outside
-#'   right"}, \code{"inside right"}, \code{"outside bottom"}, \code{"inside
-#'   bottom"}.
-#' @param ticklabelstep Sets the spacing between tick labels as compared to
-#'   the spacing between ticks. A value of 1 (default) means each tick gets
-#'   a label. A value of 2 means shows every 2nd label. A larger value n
-#'   means only every nth tick is labeled. `tick0` determines which labels
-#'   are shown. Not implemented for axes with `type` "log" or
-#'   "multicategory", or when `tickmode` is "array". Integer in the
-#'   interval [1, Inf].
-#' @param ticklen Sets the tick length (in px). Number in the interval [0,
-#'   Inf].
-#' @param tickmode Sets the tick mode for this axis. If "auto", the number
-#'   of ticks is set via `nticks`. If "linear", the placement of the ticks
-#'   is determined by a starting position `tick0` and a tick step `dtick`
-#'   ("linear" is the default value if `tick0` and `dtick` are provided).
-#'   If "array", the placement of the ticks is set via `tickvals` and the
-#'   tick text is `ticktext`. ("array" is the default value if `tickvals`
-#'   is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.
-#' @param tickprefix Sets a tick label prefix. String.
-#' @param ticks Determines whether ticks are drawn or not. If **, this
-#'   axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-#'   drawn outside (inside) the axis lines. One of \code{"outside"},
-#'   \code{"inside"}, \code{""}.
-#' @param ticksuffix Sets a tick label suffix. String.
-#' @param ticktext \strong{\code{go_parcats_dimension()}}: Sets alternative
-#'   tick labels for the categories in this dimension. Only has an effect
-#'   if `categoryorder` is set to "array". Should be an array the same
-#'   length as `categoryarray` Used with `categoryorder`. Data array: a
-#'   vector, factor, Date/POSIXct vector, matrix or list.
-#'
-#'   \strong{\code{go_parcats_line_colorbar()}}: Sets the text displayed at
-#'   the ticks position via `tickvals`. Only has an effect if `tickmode` is
-#'   set to "array". Used with `tickvals`. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
-#' @param tickvals Sets the values at which ticks on this axis appear. Only
-#'   has an effect if `tickmode` is set to "array". Used with `ticktext`.
-#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
-#'   Inf].
-#' @param title String (the title text), named list or
-#'   \code{\link{go_parcats_line_colorbar_title}()} object.
+#' @param tickfont Sets the font for the `category` labels. A
+#'   \code{\link{go_font}()} object or named list, with properties
+#'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#'   \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#'   \code{weight} (see \code{\link{go_font}()}).
 #' @param uid Assign an id to this trace, Use this to provide object
 #'   constancy between traces during animations and transitions. String.
 #' @param uirevision Controls persistence of some user-driven changes to
@@ -473,76 +156,154 @@
 #'   array, such that the same trace has a different index, you can still
 #'   preserve user-driven changes if you give each trace a `uid` that stays
 #'   with it as it moves. Any value.
-#' @param value string - dtickformat for described zoom level, the same as
-#'   "tickformat" String.
-#' @param values Dimension values. `values[n]` represents the category
-#'   value of the `n`th point in the dataset, therefore the `values` vector
-#'   for all dimensions must be the same (longer vectors will be
-#'   truncated). Data array: a vector, factor, Date/POSIXct vector, matrix
-#'   or list.
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param visible \strong{\code{go_parcats()}}: Determines whether or not
-#'   this trace is visible. If "legendonly", the trace is not drawn, but
-#'   can appear as a legend item (provided that the legend itself is
-#'   visible). One of \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#'
-#'   \strong{\code{go_parcats_dimension()}}: Shows the dimension when set
-#'   to `true` (the default). Hides the dimension for `false`. Logical.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param x \strong{\code{go_parcats_domain()}}: Sets the horizontal domain
-#'   of this parcats trace (in plot fraction). Vector or list of 2
-#'   element(s).
-#'
-#'   \strong{\code{go_parcats_line_colorbar()}}: Sets the x position with
-#'   respect to `xref` of the color bar (in plot fraction). When `xref` is
-#'   "paper", defaults to 1.02 when `orientation` is "v" and 0.5 when
-#'   `orientation` is "h". When `xref` is "container", defaults to 1 when
-#'   `orientation` is "v" and 0.5 when `orientation` is "h". Must be
-#'   between 0 and 1 if `xref` is "container" and between "-2" and 3 if
-#'   `xref` is "paper". Number.
-#' @param xanchor Sets this color bar's horizontal position anchor. This
-#'   anchor binds the `x` position to the "left", "center" or "right" of
-#'   the color bar. Defaults to "left" when `orientation` is "v" and
-#'   "center" when `orientation` is "h". One of \code{"left"},
-#'   \code{"center"}, \code{"right"}.
-#' @param xpad Sets the amount of padding (in px) along the x direction.
-#'   Number in the interval [0, Inf].
-#' @param xref Sets the container `x` refers to. "container" spans the
-#'   entire `width` of the plot. "paper" refers to the width of the
-#'   plotting area only. One of \code{"container"}, \code{"paper"}.
-#' @param y \strong{\code{go_parcats_domain()}}: Sets the vertical domain
-#'   of this parcats trace (in plot fraction). Vector or list of 2
-#'   element(s).
-#'
-#'   \strong{\code{go_parcats_line_colorbar()}}: Sets the y position with
-#'   respect to `yref` of the color bar (in plot fraction). When `yref` is
-#'   "paper", defaults to 0.5 when `orientation` is "v" and 1.02 when
-#'   `orientation` is "h". When `yref` is "container", defaults to 0.5 when
-#'   `orientation` is "v" and 1 when `orientation` is "h". Must be between
-#'   0 and 1 if `yref` is "container" and between "-2" and 3 if `yref` is
-#'   "paper". Number.
-#' @param yanchor Sets this color bar's vertical position anchor This
-#'   anchor binds the `y` position to the "top", "middle" or "bottom" of
-#'   the color bar. Defaults to "middle" when `orientation` is "v" and
-#'   "bottom" when `orientation` is "h". One of \code{"top"},
-#'   \code{"middle"}, \code{"bottom"}.
-#' @param ypad Sets the amount of padding (in px) along the y direction.
-#'   Number in the interval [0, Inf].
-#' @param yref Sets the container `y` refers to. "container" spans the
-#'   entire `height` of the plot. "paper" refers to the height of the
-#'   plotting area only. One of \code{"container"}, \code{"paper"}.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
+#' @param visible Determines whether or not this trace is visible. If
+#'   "legendonly", the trace is not drawn, but can appear as a legend item
+#'   (provided that the legend itself is visible). One of
+#'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
+#' @param ... Further properties, by their full names (e.g. numbered subplots
+#'   such as \code{xaxis2} in \code{go_layout()}). Nested properties are set
+#'   with named lists: \code{marker = list(size = 10)}.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
+#' @return \code{go_*()} functions return a graph object;
+#'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
+#'
+#' @section dimension properties (each list element):
+#' The dimensions (variables) of the parallel categories diagram.
+#'
+#' \describe{
+#' \item{\code{categoryarray}}{Sets the order in which categories in this
+#' dimension appear. Only has an effect if `categoryorder` is set to
+#' "array". Used with `categoryorder`. Data array: a vector, factor,
+#' Date/POSIXct vector, matrix or list.}
+#' \item{\code{categoryorder}}{Specifies the ordering logic for the
+#' categories in the dimension. By default, plotly uses "trace", which
+#' specifies the order that is present in the data supplied. Set
+#' `categoryorder` to "category ascending" or "category descending" if order
+#' should be determined by the alphanumerical order of the category names.
+#' Set `categoryorder` to "array" to derive the ordering from the attribute
+#' `categoryarray`. If a category is not found in the `categoryarray` array,
+#' the sorting behavior for that attribute will be identical to the "trace"
+#' mode. The unspecified categories will follow the categories in
+#' `categoryarray`. One of \code{"trace"}, \code{"category ascending"},
+#' \code{"category descending"}, \code{"array"}.}
+#' \item{\code{displayindex}}{The display index of dimension, from left to
+#' right, zero indexed, defaults to dimension index. Integer.}
+#' \item{\code{label}}{The shown name of the dimension. String.}
+#' \item{\code{ticktext}}{Sets alternative tick labels for the categories in
+#' this dimension. Only has an effect if `categoryorder` is set to "array".
+#' Should be an array the same length as `categoryarray` Used with
+#' `categoryorder`. Data array: a vector, factor, Date/POSIXct vector,
+#' matrix or list.}
+#' \item{\code{values}}{Dimension values. `values[n]` represents the
+#' category value of the `n`th point in the dataset, therefore the `values`
+#' vector for all dimensions must be the same (longer vectors will be
+#' truncated). Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{visible}}{Shows the dimension when set to `true` (the
+#' default). Hides the dimension for `false`. Logical.}
+#' }
+#'
+#' @section line properties:
+#' \describe{
+#' \item{\code{autocolorscale}}{Determines whether the colorscale is a
+#' default palette (`autocolorscale: true`) or the palette determined by
+#' `line.colorscale`. Has an effect only if in `line.color` is set to a
+#' numerical array. In case `colorscale` is unspecified or `autocolorscale`
+#' is true, the default palette will be chosen according to whether numbers
+#' in the `color` array are all positive, all negative or mixed. Logical.}
+#' \item{\code{cauto}}{Determines whether or not the color domain is
+#' computed with respect to the input data (here in `line.color`) or the
+#' bounds set in `line.cmin` and `line.cmax` Has an effect only if in
+#' `line.color` is set to a numerical array. Defaults to `false` when
+#' `line.cmin` and `line.cmax` are set by the user. Logical.}
+#' \item{\code{cmax}}{Sets the upper bound of the color domain. Has an
+#' effect only if in `line.color` is set to a numerical array. Value should
+#' have the same units as in `line.color` and if set, `line.cmin` must be
+#' set as well. Number.}
+#' \item{\code{cmid}}{Sets the mid-point of the color domain by scaling
+#' `line.cmin` and/or `line.cmax` to be equidistant to this point. Has an
+#' effect only if in `line.color` is set to a numerical array. Value should
+#' have the same units as in `line.color`. Has no effect when `line.cauto`
+#' is `false`. Number.}
+#' \item{\code{cmin}}{Sets the lower bound of the color domain. Has an
+#' effect only if in `line.color` is set to a numerical array. Value should
+#' have the same units as in `line.color` and if set, `line.cmax` must be
+#' set as well. Number.}
+#' \item{\code{color}}{Sets the line color. It accepts either a specific
+#' color or an array of numbers that are mapped to the colorscale relative
+#' to the max and min values of the array or relative to `line.cmin` and
+#' `line.cmax` if set. Color: a CSS color string or R color name, or a
+#' number mapped to a color by \code{parcats.line.colorscale}, or a vector
+#' of these.}
+#' \item{\code{coloraxis}}{Sets a reference to a shared color axis.
+#' References to these shared color axes are "coloraxis", "coloraxis2",
+#' "coloraxis3", etc. Settings for these shared color axes are set in the
+#' layout, under `layout.coloraxis`, `layout.coloraxis2`, etc. Note that
+#' multiple color scales can be linked to the same color axis. Subplot id:
+#' \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
+#' \item{\code{colorbar}}{A \code{\link{go_colorbar}()} object or named
+#' list, with properties \code{bgcolor}, \code{bordercolor},
+#' \code{borderwidth}, \code{dtick}, \code{exponentformat},
+#' \code{labelalias}, \code{len}, \code{lenmode}, \code{minexponent},
+#' \code{nticks}, \code{orientation}, \code{outlinecolor} and 34 more (see
+#' \code{\link{go_colorbar}()}).}
+#' \item{\code{colorscale}}{Sets the colorscale. Has an effect only if in
+#' `line.color` is set to a numerical array. The colorscale must be an array
+#' containing arrays mapping a normalized value to an rgb, rgba, hex, hsl,
+#' hsla, hwb, or named color string. At minimum, a mapping for the lowest
+#' (0) and highest (1) values are required. For example, `[[0,
+#' 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
+#' colorscale in color space, use `line.cmin` and `line.cmax`.
+#' Alternatively, `colorscale` may be a palette name string of the following
+#' list:
+#' Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
+#' Colorscale: a vector of colors, a two-column data.frame of (value,
+#' color), or the name of a sequential, diverging or cyclical scale in
+#' \code{\link{px_colors}()} (append \code{"_r"} to reverse).}
+#' \item{\code{hovertemplate}}{Template string used for rendering the
+#' information that appear on hover box. Note that this will override
+#' `hoverinfo`. Variables are inserted using \%\{variable\}, for example "y:
+#' \%\{y\}" as well as \%\{xother\}, \{\%_xother\}, \{\%_xother_\},
+#' \{\%xother_\}. When showing info for several points, "xother" will be
+#' added to those with different x positions from the first point. An
+#' underscore before or after "(x|y)other" will add a space on that side,
+#' only when this field is shown. Numbers are formatted using d3-format's
+#' syntax \%\{variable:d3-format\}, for example "Price: \%\{y:$.2f\}".
+#' https://github.com/d3/d3-format/tree/v1.4.5#d3-format for details on the
+#' formatting syntax. Dates are formatted using d3-time-format's syntax
+#' \%\{variable|d3-time-format\}, for example "Day: \%\{2019-01-01|\%A\}".
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format for
+#' details on the date formatting syntax. Variables that can't be found will
+#' be replaced with the specifier. For example, a template of "data:
+#' \%\{x\}, \%\{y\}" will result in a value of "data: 1, \%\{y\}" if x is 1
+#' and y is missing. Variables with an undefined value will be replaced with
+#' the fallback value. The variables available in `hovertemplate` are the
+#' ones emitted as event data described at this link
+#' https://plotly.com/javascript/plotlyjs-events/#event-data. Additionally,
+#' all attributes that can be specified per-point (the ones that are
+#' `arrayOk: true`) are available.  Finally, the template string has access
+#' to variables `count` and `probability`. Anything contained in tag
+#' `<extra>` is displayed in the secondary box, for example
+#' `<extra>\%\{fullData.name\}</extra>`. To hide the secondary box
+#' completely, use an empty tag `<extra></extra>`. String.}
+#' \item{\code{hovertemplatefallback}}{Fallback string that's displayed when
+#' a variable referenced in a template is missing. If the boolean value
+#' 'false' is passed in, the specifier with the missing variable will be
+#' displayed. Any value.}
+#' \item{\code{reversescale}}{Reverses the color mapping if true. Has an
+#' effect only if in `line.color` is set to a numerical array. If true,
+#' `line.cmin` will correspond to the last color in the array and
+#' `line.cmax` will correspond to the first color. Logical.}
+#' \item{\code{shape}}{Sets the shape of the paths. If `linear`, paths are
+#' composed of straight lines. If `hspline`, paths are composed of
+#' horizontal curved splines One of \code{"linear"}, \code{"hspline"}.}
+#' \item{\code{showscale}}{Determines whether or not a colorbar is displayed
+#' for this trace. Has an effect only if in `line.color` is set to a
+#' numerical array. Logical.}
+#' }
+#'
 #' @noMd
 #' @export
 #' @examples
@@ -556,132 +317,5 @@ go_parcats <- function(
     uirevision = NULL, visible = NULL, skip_invalid = FALSE
 ) {
   plotly_object("parcats", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcats
-#' @export
-go_parcats_dimension <- function(
-    arg = NULL, ..., categoryarray = NULL, categoryorder = NULL,
-    displayindex = NULL, label = NULL, ticktext = NULL, values = NULL,
-    visible = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcats.dimension", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcats
-#' @export
-go_parcats_domain <- function(
-    arg = NULL, ..., column = NULL, row = NULL, x = NULL, y = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("parcats.domain", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcats
-#' @export
-go_parcats_labelfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcats.labelfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcats
-#' @export
-go_parcats_legendgrouptitle <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcats.legendgrouptitle", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcats
-#' @export
-go_parcats_legendgrouptitle_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcats.legendgrouptitle.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcats
-#' @export
-go_parcats_line <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, reversescale = NULL, shape = NULL,
-    showscale = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcats.line", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcats
-#' @export
-go_parcats_line_colorbar <- function(
-    arg = NULL, ..., bgcolor = NULL, bordercolor = NULL, borderwidth = NULL,
-    dtick = NULL, exponentformat = NULL, labelalias = NULL, len = NULL,
-    lenmode = NULL, minexponent = NULL, nticks = NULL, orientation = NULL,
-    outlinecolor = NULL, outlinewidth = NULL, separatethousands = NULL,
-    showexponent = NULL, showticklabels = NULL, showtickprefix = NULL,
-    showticksuffix = NULL, thickness = NULL, thicknessmode = NULL,
-    tick0 = NULL, tickangle = NULL, tickcolor = NULL, tickfont = NULL,
-    tickformat = NULL, tickformatstops = NULL, ticklabeloverflow = NULL,
-    ticklabelposition = NULL, ticklabelstep = NULL, ticklen = NULL,
-    tickmode = NULL, tickprefix = NULL, ticks = NULL, ticksuffix = NULL,
-    ticktext = NULL, tickvals = NULL, tickwidth = NULL, title = NULL,
-    x = NULL, xanchor = NULL, xpad = NULL, xref = NULL, y = NULL,
-    yanchor = NULL, ypad = NULL, yref = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcats.line.colorbar", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcats
-#' @export
-go_parcats_line_colorbar_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcats.line.colorbar.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcats
-#' @export
-go_parcats_line_colorbar_tickformatstop <- function(
-    arg = NULL, ..., dtickrange = NULL, enabled = NULL, name = NULL,
-    templateitemname = NULL, value = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcats.line.colorbar.tickformatstop", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcats
-#' @export
-go_parcats_line_colorbar_title <- function(
-    arg = NULL, ..., font = NULL, side = NULL, text = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("parcats.line.colorbar.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcats
-#' @export
-go_parcats_line_colorbar_title_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcats.line.colorbar.title.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcats
-#' @export
-go_parcats_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcats.tickfont", arg, environment(), list(...), skip_invalid)
 }
 

@@ -1337,13 +1337,59 @@ add_waterfall.default <- function(
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
-#' @param patch A named list or \code{\link{go_layout_coloraxis}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list of coloraxis property updates (see section "coloraxis properties").
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_coloraxes()} returns a named list of \code{\link{go_layout_coloraxis}()} objects; the
+#' @return \code{select_coloraxes()} returns a named list of coloraxis objects; the
 #'   others return the modified figure.
+#'
+#' @section coloraxis properties:
+#' \describe{
+#' \item{\code{autocolorscale}}{Determines whether the colorscale is a
+#' default palette (`autocolorscale: true`) or the palette determined by
+#' `colorscale`. In case `colorscale` is unspecified or `autocolorscale` is
+#' true, the default palette will be chosen according to whether numbers in
+#' the `color` array are all positive, all negative or mixed. Logical.}
+#' \item{\code{cauto}}{Determines whether or not the color domain is
+#' computed with respect to the input data (here corresponding trace color
+#' array(s)) or the bounds set in `cmin` and `cmax` Defaults to `false` when
+#' `cmin` and `cmax` are set by the user. Logical.}
+#' \item{\code{cmax}}{Sets the upper bound of the color domain. Value should
+#' have the same units as corresponding trace color array(s) and if set,
+#' `cmin` must be set as well. Number.}
+#' \item{\code{cmid}}{Sets the mid-point of the color domain by scaling
+#' `cmin` and/or `cmax` to be equidistant to this point. Value should have
+#' the same units as corresponding trace color array(s). Has no effect when
+#' `cauto` is `false`. Number.}
+#' \item{\code{cmin}}{Sets the lower bound of the color domain. Value should
+#' have the same units as corresponding trace color array(s) and if set,
+#' `cmax` must be set as well. Number.}
+#' \item{\code{colorbar}}{A \code{\link{go_colorbar}()} object or named
+#' list, with properties \code{bgcolor}, \code{bordercolor},
+#' \code{borderwidth}, \code{dtick}, \code{exponentformat},
+#' \code{labelalias}, \code{len}, \code{lenmode}, \code{minexponent},
+#' \code{nticks}, \code{orientation}, \code{outlinecolor} and 34 more (see
+#' \code{\link{go_colorbar}()}).}
+#' \item{\code{colorscale}}{Sets the colorscale. The colorscale must be an
+#' array containing arrays mapping a normalized value to an rgb, rgba, hex,
+#' hsl, hsla, hwb, or named color string. At minimum, a mapping for the
+#' lowest (0) and highest (1) values are required. For example, `[[0,
+#' 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
+#' colorscale in color space, use `cmin` and `cmax`. Alternatively,
+#' `colorscale` may be a palette name string of the following list:
+#' Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
+#' Colorscale: a vector of colors, a two-column data.frame of (value,
+#' color), or the name of a sequential, diverging or cyclical scale in
+#' \code{\link{px_colors}()} (append \code{"_r"} to reverse).}
+#' \item{\code{reversescale}}{Reverses the color mapping if true. If true,
+#' `cmin` will correspond to the last color in the array and `cmax` will
+#' correspond to the first color. Logical.}
+#' \item{\code{showscale}}{Determines whether or not a colorbar is displayed
+#' for this trace. Logical.}
+#' }
+#'
 #' @name update_coloraxes
 #' @noMd
 NULL
@@ -1380,13 +1426,223 @@ for_each_coloraxis <- function(fig, fn, selector = NULL, row = NULL, col = NULL)
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
-#' @param patch A named list or \code{\link{go_layout_geo}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list of geo property updates (see section "geo properties").
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_geos()} returns a named list of \code{\link{go_layout_geo}()} objects; the
+#' @return \code{select_geos()} returns a named list of geo objects; the
 #'   others return the modified figure.
+#'
+#' @section geo properties:
+#' \describe{
+#' \item{\code{bgcolor}}{Set the background color of the map Color: a CSS
+#' color string or R color name.}
+#' \item{\code{center}}{A named list with properties \code{lat} and
+#' \code{lon} (described in section "center properties" below).}
+#' \item{\code{coastlinecolor}}{Sets the coastline color. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{coastlinewidth}}{Sets the coastline stroke width (in px).
+#' Number in the interval [0, Inf].}
+#' \item{\code{countrycolor}}{Sets line color of the country boundaries.
+#' Color: a CSS color string or R color name.}
+#' \item{\code{countrywidth}}{Sets line width (in px) of the country
+#' boundaries. Number in the interval [0, Inf].}
+#' \item{\code{domain}}{A \code{\link{go_domain}()} object or named list,
+#' with properties \code{column}, \code{row}, \code{x} and \code{y} (see
+#' \code{\link{go_domain}()}).}
+#' \item{\code{fitbounds}}{Determines if this subplot's view settings are
+#' auto-computed to fit trace data. On scoped maps, setting `fitbounds`
+#' leads to `center.lon` and `center.lat` getting auto-filled. On maps with
+#' a non-clipped projection, setting `fitbounds` leads to `center.lon`,
+#' `center.lat`, and `projection.rotation.lon` getting auto-filled. On maps
+#' with a clipped projection, setting `fitbounds` leads to `center.lon`,
+#' `center.lat`, `projection.rotation.lon`, `projection.rotation.lat`,
+#' `lonaxis.range` and `lataxis.range` getting auto-filled. If "locations"
+#' (default), only the trace's visible locations are considered in the
+#' `fitbounds` computations. If "geojson", the entire trace input `geojson`
+#' (if provided) is considered in the `fitbounds` computations. If FALSE,
+#' the view settings are used as-is; set this to opt out of auto-fitting.
+#' One of \code{"locations"}, \code{"geojson"}, \code{FALSE}.}
+#' \item{\code{framecolor}}{Sets the color the frame. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{framewidth}}{Sets the stroke width (in px) of the frame.
+#' Number in the interval [0, Inf].}
+#' \item{\code{lakecolor}}{Sets the color of the lakes. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{landcolor}}{Sets the land mass color. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{lataxis}}{A named list with properties \code{dtick},
+#' \code{gridcolor}, \code{griddash}, \code{gridwidth}, \code{range},
+#' \code{showgrid} and \code{tick0} (described in section "lataxis
+#' properties" below).}
+#' \item{\code{lonaxis}}{A named list with properties \code{dtick},
+#' \code{gridcolor}, \code{griddash}, \code{gridwidth}, \code{range},
+#' \code{showgrid} and \code{tick0} (described in section "lonaxis
+#' properties" below).}
+#' \item{\code{oceancolor}}{Sets the ocean color Color: a CSS color string
+#' or R color name.}
+#' \item{\code{projection}}{A named list with properties \code{distance},
+#' \code{maxscale}, \code{minscale}, \code{parallels}, \code{rotation},
+#' \code{scale}, \code{tilt} and \code{type} (described in section
+#' "projection properties" below).}
+#' \item{\code{resolution}}{Sets the resolution of the base layers. The
+#' values have units of km/mm e.g. 110 corresponds to a scale ratio of
+#' 1:110,000,000. One of \code{110}, \code{50}.}
+#' \item{\code{rivercolor}}{Sets color of the rivers. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{riverwidth}}{Sets the stroke width (in px) of the rivers.
+#' Number in the interval [0, Inf].}
+#' \item{\code{scope}}{Set the scope of the map. One of \code{"africa"},
+#' \code{"antarctica"}, \code{"asia"}, \code{"europe"}, \code{"north
+#' america"}, \code{"oceania"}, \code{"south america"}, \code{"usa"},
+#' \code{"world"}.}
+#' \item{\code{showcoastlines}}{Sets whether or not the coastlines are
+#' drawn. Logical.}
+#' \item{\code{showcountries}}{Sets whether or not country boundaries are
+#' drawn. Logical.}
+#' \item{\code{showframe}}{Sets whether or not a frame is drawn around the
+#' map. Logical.}
+#' \item{\code{showlakes}}{Sets whether or not lakes are drawn. Logical.}
+#' \item{\code{showland}}{Sets whether or not land masses are filled in
+#' color. Logical.}
+#' \item{\code{showocean}}{Sets whether or not oceans are filled in color.
+#' Logical.}
+#' \item{\code{showrivers}}{Sets whether or not rivers are drawn. Logical.}
+#' \item{\code{showsubunits}}{Sets whether or not boundaries of subunits
+#' within countries (e.g. states, provinces) are drawn. Logical.}
+#' \item{\code{subunitcolor}}{Sets the color of the subunits boundaries.
+#' Color: a CSS color string or R color name.}
+#' \item{\code{subunitwidth}}{Sets the stroke width (in px) of the subunits
+#' boundaries. Number in the interval [0, Inf].}
+#' \item{\code{uirevision}}{Controls persistence of user-driven changes in
+#' the view (projection and center). Defaults to `layout.uirevision`. Any
+#' value.}
+#' \item{\code{visible}}{Sets the default visibility of the base layers.
+#' Logical.}
+#' }
+#'
+#' @section center properties:
+#' \describe{
+#' \item{\code{lat}}{Sets the latitude of the map's center. For all
+#' projection types, the map's latitude center lies at the middle of the
+#' latitude range by default. Number.}
+#' \item{\code{lon}}{Sets the longitude of the map's center. By default, the
+#' map's longitude center lies at the middle of the longitude range for
+#' scoped projection and above `projection.rotation.lon` otherwise. Number.}
+#' }
+#'
+#' @section lataxis properties:
+#' \describe{
+#' \item{\code{dtick}}{Sets the graticule's longitude/latitude tick step.
+#' Number.}
+#' \item{\code{gridcolor}}{Sets the graticule's stroke color. Color: a CSS
+#' color string or R color name.}
+#' \item{\code{griddash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{gridwidth}}{Sets the graticule's stroke width (in px). Number
+#' in the interval [0, Inf].}
+#' \item{\code{range}}{Sets the range of this axis (in degrees), sets the
+#' map's clipped coordinates. Vector or list of 2 element(s).}
+#' \item{\code{showgrid}}{Sets whether or not graticule are shown on the
+#' map. Logical.}
+#' \item{\code{tick0}}{Sets the graticule's starting tick
+#' longitude/latitude. Number.}
+#' }
+#'
+#' @section lonaxis properties:
+#' \describe{
+#' \item{\code{dtick}}{Sets the graticule's longitude/latitude tick step.
+#' Number.}
+#' \item{\code{gridcolor}}{Sets the graticule's stroke color. Color: a CSS
+#' color string or R color name.}
+#' \item{\code{griddash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{gridwidth}}{Sets the graticule's stroke width (in px). Number
+#' in the interval [0, Inf].}
+#' \item{\code{range}}{Sets the range of this axis (in degrees), sets the
+#' map's clipped coordinates. Vector or list of 2 element(s).}
+#' \item{\code{showgrid}}{Sets whether or not graticule are shown on the
+#' map. Logical.}
+#' \item{\code{tick0}}{Sets the graticule's starting tick
+#' longitude/latitude. Number.}
+#' }
+#'
+#' @section projection properties:
+#' \describe{
+#' \item{\code{distance}}{For satellite projection type only. Sets the
+#' distance from the center of the sphere to the point of view as a
+#' proportion of the sphere's radius. Number in the interval [1.001, Inf].}
+#' \item{\code{maxscale}}{Sets the maximum zoom level of the map view,
+#' relative to `projection.scale`. A `maxscale` of 2 (200\%) prevents the
+#' user from zooming in beyond twice the base zoom level. Must be greater
+#' than or equal to "0"; has no upper bound. Defaults to "null" for no upper
+#' bound on zoom. Number in the interval [0, Inf].}
+#' \item{\code{minscale}}{Sets the minimum zoom level of the map view,
+#' relative to `projection.scale`. A `minscale` of 0.5 (50\%) prevents the
+#' user from zooming out beyond half the base zoom level. Must be greater
+#' than or equal to "0"; has no upper bound. The default of 0 imposes no
+#' lower bound on zoom. Number in the interval [0, Inf].}
+#' \item{\code{parallels}}{For conic projection types only. Sets the
+#' parallels (tangent, secant) where the cone intersects the sphere. Vector
+#' or list of 2 element(s).}
+#' \item{\code{rotation}}{A named list with properties \code{lat},
+#' \code{lon} and \code{roll} (described in section "projection.rotation
+#' properties" below).}
+#' \item{\code{scale}}{Zooms in or out on the map view. A scale of 1
+#' corresponds to the largest zoom level that fits the map's lon and lat
+#' ranges.  Number in the interval [0, Inf].}
+#' \item{\code{tilt}}{For satellite projection type only. Sets the tilt
+#' angle of perspective projection. Number.}
+#' \item{\code{type}}{Sets the projection type. One of \code{"airy"},
+#' \code{"aitoff"}, \code{"albers"}, \code{"albers usa"}, \code{"august"},
+#' \code{"azimuthal equal area"}, \code{"azimuthal equidistant"},
+#' \code{"baker"}, \code{"bertin1953"}, \code{"boggs"}, \code{"bonne"},
+#' \code{"bottomley"}, \code{"bromley"}, \code{"collignon"}, \code{"conic
+#' conformal"}, \code{"conic equal area"}, \code{"conic equidistant"},
+#' \code{"craig"}, \code{"craster"}, \code{"cylindrical equal area"},
+#' \code{"cylindrical stereographic"}, \code{"eckert1"}, \code{"eckert2"},
+#' \code{"eckert3"}, \code{"eckert4"}, \code{"eckert5"}, \code{"eckert6"},
+#' \code{"eisenlohr"}, \code{"equal earth"}, \code{"equirectangular"},
+#' \code{"fahey"}, \code{"foucaut"}, \code{"foucaut sinusoidal"},
+#' \code{"ginzburg4"}, \code{"ginzburg5"}, \code{"ginzburg6"},
+#' \code{"ginzburg8"}, \code{"ginzburg9"}, \code{"gnomonic"},
+#' \code{"gringorten"}, \code{"gringorten quincuncial"}, \code{"guyou"},
+#' \code{"hammer"}, \code{"hill"}, \code{"homolosine"}, \code{"hufnagel"},
+#' \code{"hyperelliptical"}, \code{"kavrayskiy7"}, \code{"lagrange"},
+#' \code{"larrivee"}, \code{"laskowski"}, \code{"loximuthal"},
+#' \code{"mercator"}, \code{"miller"}, \code{"mollweide"}, \code{"mt flat
+#' polar parabolic"}, \code{"mt flat polar quartic"}, \code{"mt flat polar
+#' sinusoidal"}, \code{"natural earth"}, \code{"natural earth1"},
+#' \code{"natural earth2"}, \code{"nell hammer"}, \code{"nicolosi"},
+#' \code{"orthographic"}, \code{"patterson"}, \code{"peirce quincuncial"},
+#' \code{"polyconic"}, \code{"rectangular polyconic"}, \code{"robinson"},
+#' \code{"satellite"}, \code{"sinu mollweide"}, \code{"sinusoidal"},
+#' \code{"stereographic"}, \code{"times"}, \code{"transverse mercator"},
+#' \code{"van der grinten"}, \code{"van der grinten2"}, \code{"van der
+#' grinten3"}, \code{"van der grinten4"}, \code{"wagner4"},
+#' \code{"wagner6"}, \code{"wiechel"}, \code{"winkel tripel"},
+#' \code{"winkel3"}.}
+#' }
+#'
+#' @section projection.rotation properties:
+#' \describe{
+#' \item{\code{lat}}{Rotates the map along meridians (in degrees North).
+#' Number.}
+#' \item{\code{lon}}{Rotates the map along parallels (in degrees East).
+#' Defaults to the center of the `lonaxis.range` values. Number.}
+#' \item{\code{roll}}{Roll the map (in degrees) For example, a roll of 180
+#' makes the map appear upside down. Number.}
+#' }
+#'
 #' @name update_geos
 #' @noMd
 NULL
@@ -1423,13 +1679,171 @@ for_each_geo <- function(fig, fn, selector = NULL, row = NULL, col = NULL) {
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
-#' @param patch A named list or \code{\link{go_layout_legend}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list of legend property updates (see section "legend properties").
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_legends()} returns a named list of \code{\link{go_layout_legend}()} objects; the
+#' @return \code{select_legends()} returns a named list of legend objects; the
 #'   others return the modified figure.
+#'
+#' @section legend properties:
+#' \describe{
+#' \item{\code{bgcolor}}{Sets the legend background color. Defaults to
+#' `layout.paper_bgcolor`. Color: a CSS color string or R color name.}
+#' \item{\code{bordercolor}}{Sets the color of the border enclosing the
+#' legend. Color: a CSS color string or R color name.}
+#' \item{\code{borderwidth}}{Sets the width (in px) of the border enclosing
+#' the legend. Number in the interval [0, Inf].}
+#' \item{\code{entrywidth}}{Sets the width (in px or fraction) of the
+#' legend. Use 0 to size the entry based on the text width, when
+#' `entrywidthmode` is set to "pixels". Number in the interval [0, Inf].}
+#' \item{\code{entrywidthmode}}{Determines what entrywidth means. One of
+#' \code{"fraction"}, \code{"pixels"}.}
+#' \item{\code{font}}{Sets the font used to text the legend items. A
+#' \code{\link{go_font}()} object or named list, with properties
+#' \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#' \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#' \code{weight} (see \code{\link{go_font}()}).}
+#' \item{\code{groupclick}}{Determines the behavior on legend group item
+#' click. "toggleitem" toggles the visibility of the individual item clicked
+#' on the graph. "togglegroup" toggles the visibility of all items in the
+#' same legendgroup as the item clicked on the graph. One of
+#' \code{"toggleitem"}, \code{"togglegroup"}.}
+#' \item{\code{groupdoubleclick}}{Determines the behavior on legend group
+#' item double-click. "toggleitem" toggles the visibility of the individual
+#' item clicked on the graph. "togglegroup" toggles the visibility of all
+#' items in the same legendgroup as the item clicked on the graph. Defaults
+#' to the value of `groupclick`. One of \code{"toggleitem"},
+#' \code{"togglegroup"}.}
+#' \item{\code{grouptitlefont}}{Sets the font for group titles in legend.
+#' Defaults to `legend.font` with its size increased about 10\%. A
+#' \code{\link{go_font}()} object or named list, with properties
+#' \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#' \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#' \code{weight} (see \code{\link{go_font}()}).}
+#' \item{\code{indentation}}{Sets the indentation (in px) of the legend
+#' entries. Number in the interval [-15, Inf].}
+#' \item{\code{itemclick}}{Determines the behavior on legend item click.
+#' "toggle" toggles the visibility of the item clicked on the graph.
+#' "toggleothers" makes the clicked item the sole visible item on the graph.
+#' FALSE disables legend item click interactions. One of \code{"toggle"},
+#' \code{"toggleothers"}, \code{FALSE}.}
+#' \item{\code{itemdoubleclick}}{Determines the behavior on legend item
+#' double-click. "toggle" toggles the visibility of the item clicked on the
+#' graph. "toggleothers" makes the clicked item the sole visible item on the
+#' graph. FALSE disables legend item double-click interactions. One of
+#' \code{"toggle"}, \code{"toggleothers"}, \code{FALSE}.}
+#' \item{\code{itemheight}}{Sets the height (in px) of the legend item fill
+#' swatch. A taller swatch shows more of a trace "fill" or "fillpattern".
+#' Only traces with a "fill" use this value. Every legend item grows to fit,
+#' so a larger value makes every row taller. Number in the interval [6,
+#' Inf].}
+#' \item{\code{itemsizing}}{Determines if the legend items symbols scale
+#' with their corresponding "trace" attributes or remain "constant"
+#' independent of the symbol size on the graph. One of \code{"trace"},
+#' \code{"constant"}.}
+#' \item{\code{itemwidth}}{Sets the width (in px) of the legend item symbols
+#' (the part other than the title.text). Number in the interval [30, Inf].}
+#' \item{\code{maxheight}}{Sets the max height (in px) of the legend, or max
+#' height ratio (reference height * ratio) if less than or equal to 1.
+#' Default value is: 0.5 for horizontal legends; 1 for vertical legends. The
+#' minimum allowed height is 30px. For a ratio of 0.5, the legend will take
+#' up to 50\% of the reference height before displaying a scrollbar. The
+#' reference height is the full layout height with the following exception:
+#' vertically oriented legends with a `yref` of `"paper", located to the
+#' side of the plot. In this case, the reference height is the plot height.
+#' Number in the interval [0, Inf].}
+#' \item{\code{orientation}}{Sets the orientation of the legend. One of
+#' \code{"v"}, \code{"h"}.}
+#' \item{\code{title}}{String (the title text), or a named list with
+#' properties \code{font}, \code{side} and \code{text} (described in section
+#' "title properties" below).}
+#' \item{\code{titleclick}}{Determines the behavior on legend title click.
+#' "toggle" toggles the visibility of all items in the legend.
+#' "toggleothers" toggles the visibility of all other legends. FALSE
+#' disables legend title click interactions. Defaults to "toggle" when there
+#' are multiple legends, FALSE otherwise. Not supported for legends
+#' containing pie and pie-like traces. One of \code{"toggle"},
+#' \code{"toggleothers"}, \code{FALSE}.}
+#' \item{\code{titledoubleclick}}{Determines the behavior on legend title
+#' double-click. "toggle" toggles the visibility of all items in the legend.
+#' "toggleothers" toggles the visibility of all other legends. FALSE
+#' disables legend title double-click interactions. Defaults to
+#' "toggleothers" when there are multiple legends, FALSE otherwise. Not
+#' supported for legends containing pie and pie-like traces. One of
+#' \code{"toggle"}, \code{"toggleothers"}, \code{FALSE}.}
+#' \item{\code{tracegroupgap}}{Sets the amount of vertical space (in px)
+#' between legend groups. Number in the interval [0, Inf].}
+#' \item{\code{traceorder}}{Determines the order at which the legend items
+#' are displayed. If "normal", the items are displayed top-to-bottom in the
+#' same order as the input data. If "reversed", the items are displayed in
+#' the opposite order as "normal". If "grouped", the items are displayed in
+#' groups (when a trace `legendgroup` is provided). if "grouped+reversed",
+#' the items are displayed in the opposite order as "grouped". Any
+#' combination of \code{"reversed"}, \code{"grouped"} joined with
+#' \code{"+"}, or one of \code{"normal"}.}
+#' \item{\code{uirevision}}{Controls persistence of legend-driven changes in
+#' trace and pie label visibility. Defaults to `layout.uirevision`. Any
+#' value.}
+#' \item{\code{valign}}{Sets the vertical alignment of the symbols with
+#' respect to their associated text. One of \code{"top"}, \code{"middle"},
+#' \code{"bottom"}.}
+#' \item{\code{visible}}{Determines whether or not this legend is visible.
+#' Logical.}
+#' \item{\code{x}}{Sets the x position with respect to `xref` (in normalized
+#' coordinates) of the legend. When `xref` is "paper", defaults to 1.02 for
+#' vertical legends and defaults to 0 for horizontal legends. When `xref` is
+#' "container", defaults to 1 for vertical legends and defaults to 0 for
+#' horizontal legends. Must be between 0 and 1 if `xref` is "container". and
+#' between "-2" and 3 if `xref` is "paper". Number.}
+#' \item{\code{xanchor}}{Sets the legend's horizontal position anchor. This
+#' anchor binds the `x` position to the "left", "center" or "right" of the
+#' legend. Value "auto" anchors legends to the right for `x` values greater
+#' than or equal to 2/3, anchors legends to the left for `x` values less
+#' than or equal to 1/3 and anchors legends with respect to their center
+#' otherwise. One of \code{"auto"}, \code{"left"}, \code{"center"},
+#' \code{"right"}.}
+#' \item{\code{xref}}{Sets the container `x` refers to. "container" spans
+#' the entire `width` of the plot. "paper" refers to the width of the
+#' plotting area only. One of \code{"container"}, \code{"paper"}.}
+#' \item{\code{y}}{Sets the y position with respect to `yref` (in normalized
+#' coordinates) of the legend. When `yref` is "paper", defaults to 1 for
+#' vertical legends, defaults to "-0.1" for horizontal legends on graphs w/o
+#' range sliders and defaults to 1.1 for horizontal legends on graph with
+#' one or multiple range sliders. When `yref` is "container", defaults to 1.
+#' Must be between 0 and 1 if `yref` is "container" and between "-2" and 3
+#' if `yref` is "paper". Number.}
+#' \item{\code{yanchor}}{Sets the legend's vertical position anchor. This
+#' anchor binds the `y` position to the "top", "middle" or "bottom" of the
+#' legend. Value "auto" anchors legends at their bottom for `y` values less
+#' than or equal to 1/3, anchors legends to at their top for `y` values
+#' greater than or equal to 2/3 and anchors legends with respect to their
+#' middle otherwise. One of \code{"auto"}, \code{"top"}, \code{"middle"},
+#' \code{"bottom"}.}
+#' \item{\code{yref}}{Sets the container `y` refers to. "container" spans
+#' the entire `height` of the plot. "paper" refers to the height of the
+#' plotting area only. One of \code{"container"}, \code{"paper"}.}
+#' }
+#'
+#' @section title properties:
+#' \describe{
+#' \item{\code{font}}{Sets this legend's title font. Defaults to
+#' `legend.font` with its size increased about 20\%. A
+#' \code{\link{go_font}()} object or named list, with properties
+#' \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#' \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#' \code{weight} (see \code{\link{go_font}()}).}
+#' \item{\code{side}}{Determines the location of legend's title with respect
+#' to the legend items. Defaulted to "top" with `orientation` is "h".
+#' Defaulted to "left" with `orientation` is "v". The "top left" options
+#' could be used to expand top center and top right are for horizontal
+#' alignment legend area in both x and y sides. One of \code{"top"},
+#' \code{"left"}, \code{"top left"}, \code{"top center"}, \code{"top
+#' right"}.}
+#' \item{\code{text}}{Sets the title of the legend. String.}
+#' }
+#'
 #' @name update_legends
 #' @noMd
 NULL
@@ -1466,13 +1880,210 @@ for_each_legend <- function(fig, fn, selector = NULL, row = NULL, col = NULL) {
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
-#' @param patch A named list or \code{\link{go_layout_map}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list of map property updates (see section "map properties").
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_maps()} returns a named list of \code{\link{go_layout_map}()} objects; the
+#' @return \code{select_maps()} returns a named list of map objects; the
 #'   others return the modified figure.
+#'
+#' @section map properties:
+#' \describe{
+#' \item{\code{bearing}}{Sets the bearing angle of the map in degrees
+#' counter-clockwise from North (map.bearing). Number.}
+#' \item{\code{bounds}}{A named list with properties \code{east},
+#' \code{north}, \code{south} and \code{west} (described in section "bounds
+#' properties" below).}
+#' \item{\code{center}}{A named list with properties \code{lat} and
+#' \code{lon} (described in section "center properties" below).}
+#' \item{\code{domain}}{A \code{\link{go_domain}()} object or named list,
+#' with properties \code{column}, \code{row}, \code{x} and \code{y} (see
+#' \code{\link{go_domain}()}).}
+#' \item{\code{fitbounds}}{Determines if this subplot's view settings are
+#' auto-computed to fit trace data. If "locations" (default), the view is
+#' auto-fit to the lon/lat coordinates of the visible trace data. If FALSE,
+#' the view settings are used as-is; set this to opt out of auto-fitting. If
+#' `fitbounds` is enabled but a user provides `center` or `zoom`, auto-fit
+#' will be skipped. One of \code{"locations"}, \code{FALSE}.}
+#' \item{\code{layers}}{List, each element a named list with properties
+#' \code{below}, \code{circle}, \code{color}, \code{coordinates},
+#' \code{fill}, \code{line}, \code{maxzoom}, \code{minzoom}, \code{name},
+#' \code{opacity}, \code{source}, \code{sourceattribution} and 6 more
+#' (described in section "layer properties" below).}
+#' \item{\code{pitch}}{Sets the pitch angle of the map (in degrees, where 0
+#' means perpendicular to the surface of the map) (map.pitch). Number.}
+#' \item{\code{style}}{Defines the map layers that are rendered by default
+#' below the trace layers defined in `data`, which are themselves by default
+#' rendered below the layers defined in `layout.map.layers`.  These layers
+#' can be defined either explicitly as a Map Style object which can contain
+#' multiple layer definitions that load data from any public or private Tile
+#' Map Service (TMS or XYZ) or Web Map Service (WMS) or implicitly by using
+#' one of the built-in style objects which use WMSes or by using a custom
+#' style URL Map Style objects are of the form described in the MapLibre GL
+#' JS documentation available at https://maplibre.org/maplibre-style-spec/
+#' The built-in plotly.js styles objects are: basic, carto-darkmatter,
+#' carto-darkmatter-nolabels, carto-positron, carto-positron-nolabels,
+#' carto-voyager, carto-voyager-nolabels, dark, light, open-street-map,
+#' outdoors, satellite, satellite-streets, streets, white-bg. Any value.}
+#' \item{\code{uirevision}}{Controls persistence of user-driven changes in
+#' the view: `center`, `zoom`, `bearing`, `pitch`. Defaults to
+#' `layout.uirevision`. Any value.}
+#' \item{\code{zoom}}{Sets the zoom level of the map (map.zoom). Number.}
+#' }
+#'
+#' @section bounds properties:
+#' \describe{
+#' \item{\code{east}}{Sets the maximum longitude of the map (in degrees
+#' East) if `west`, `south` and `north` are declared. Number.}
+#' \item{\code{north}}{Sets the maximum latitude of the map (in degrees
+#' North) if `east`, `west` and `south` are declared. Number.}
+#' \item{\code{south}}{Sets the minimum latitude of the map (in degrees
+#' North) if `east`, `west` and `north` are declared. Number.}
+#' \item{\code{west}}{Sets the minimum longitude of the map (in degrees
+#' East) if `east`, `south` and `north` are declared. Number.}
+#' }
+#'
+#' @section center properties:
+#' \describe{
+#' \item{\code{lat}}{Sets the latitude of the center of the map (in degrees
+#' North). Number.}
+#' \item{\code{lon}}{Sets the longitude of the center of the map (in degrees
+#' East). Number.}
+#' }
+#'
+#' @section layer properties (each list element):
+#' \describe{
+#' \item{\code{below}}{Determines if the layer will be inserted before the
+#' layer with the specified ID. If omitted or set to '', the layer will be
+#' inserted above every existing layer. String.}
+#' \item{\code{circle}}{A named list with properties \code{radius}
+#' (described in section "layer.circle properties" below).}
+#' \item{\code{color}}{Sets the primary layer color. If `type` is "circle",
+#' color corresponds to the circle color (map.layer.paint.circle-color) If
+#' `type` is "line", color corresponds to the line color
+#' (map.layer.paint.line-color) If `type` is "fill", color corresponds to
+#' the fill color (map.layer.paint.fill-color) If `type` is "symbol", color
+#' corresponds to the icon color (map.layer.paint.icon-color) Color: a CSS
+#' color string or R color name.}
+#' \item{\code{coordinates}}{Sets the coordinates array contains [longitude,
+#' latitude] pairs for the image corners listed in clockwise order: top
+#' left, top right, bottom right, bottom left. Only has an effect for
+#' "image" `sourcetype`. Any value.}
+#' \item{\code{fill}}{A named list with properties \code{outlinecolor}
+#' (described in section "layer.fill properties" below).}
+#' \item{\code{line}}{A named list with properties \code{dash} and
+#' \code{width} (described in section "layer.line properties" below).}
+#' \item{\code{maxzoom}}{Sets the maximum zoom level (map.layer.maxzoom). At
+#' zoom levels equal to or greater than the maxzoom, the layer will be
+#' hidden. Number in the interval [0, 24].}
+#' \item{\code{minzoom}}{Sets the minimum zoom level (map.layer.minzoom). At
+#' zoom levels less than the minzoom, the layer will be hidden. Number in
+#' the interval [0, 24].}
+#' \item{\code{name}}{When used in a template, named items are created in
+#' the output figure in addition to any items the figure already has in this
+#' array. You can modify these items in the output figure by making your own
+#' item with `templateitemname` matching this `name` alongside your
+#' modifications (including `visible: false` or `enabled: false` to hide
+#' it). Has no effect outside of a template. String.}
+#' \item{\code{opacity}}{Sets the opacity of the layer. If `type` is
+#' "circle", opacity corresponds to the circle opacity
+#' (map.layer.paint.circle-opacity) If `type` is "line", opacity corresponds
+#' to the line opacity (map.layer.paint.line-opacity) If `type` is "fill",
+#' opacity corresponds to the fill opacity (map.layer.paint.fill-opacity) If
+#' `type` is "symbol", opacity corresponds to the icon/text opacity
+#' (map.layer.paint.text-opacity) Number in the interval [0, 1].}
+#' \item{\code{source}}{Sets the source data for this layer
+#' (map.layer.source). When `sourcetype` is set to "geojson", `source` can
+#' be a URL to a GeoJSON or a GeoJSON object. When `sourcetype` is set to
+#' "vector" or "raster", `source` can be a URL or an array of tile URLs.
+#' When `sourcetype` is set to "image", `source` can be a URL to an image.
+#' Any value.}
+#' \item{\code{sourceattribution}}{Sets the attribution for this source.
+#' String.}
+#' \item{\code{sourcelayer}}{Specifies the layer to use from a vector tile
+#' source (map.layer.source-layer). Required for "vector" source type that
+#' supports multiple layers. String.}
+#' \item{\code{sourcetype}}{Sets the source type for this layer, that is the
+#' type of the layer data. One of \code{"geojson"}, \code{"vector"},
+#' \code{"raster"}, \code{"image"}.}
+#' \item{\code{symbol}}{A named list with properties \code{icon},
+#' \code{iconsize}, \code{placement}, \code{text}, \code{textfont} and
+#' \code{textposition} (described in section "layer.symbol properties"
+#' below).}
+#' \item{\code{templateitemname}}{Used to refer to a named item in this
+#' array in the template. Named items from the template will be created even
+#' without a matching item in the input figure, but you can modify one by
+#' making an item with `templateitemname` matching its `name`, alongside
+#' your modifications (including `visible: false` or `enabled: false` to
+#' hide it). If there is no template or no matching item, this item will be
+#' hidden unless you explicitly show it with `visible: true`. String.}
+#' \item{\code{type}}{Sets the layer type, that is the how the layer data
+#' set in `source` will be rendered With `sourcetype` set to "geojson", the
+#' following values are allowed: "circle", "line", "fill" and "symbol". but
+#' note that "line" and "fill" are not compatible with Point GeoJSON
+#' geometries. With `sourcetype` set to "vector", the following values are
+#' allowed: "circle", "line", "fill" and "symbol". With `sourcetype` set to
+#' "raster" or "image", only the "raster" value is allowed. One of
+#' \code{"circle"}, \code{"line"}, \code{"fill"}, \code{"symbol"},
+#' \code{"raster"}.}
+#' \item{\code{visible}}{Determines whether this layer is displayed
+#' Logical.}
+#' }
+#'
+#' @section layer.circle properties:
+#' \describe{
+#' \item{\code{radius}}{Sets the circle radius
+#' (map.layer.paint.circle-radius). Has an effect only when `type` is set to
+#' "circle". Number.}
+#' }
+#'
+#' @section layer.fill properties:
+#' \describe{
+#' \item{\code{outlinecolor}}{Sets the fill outline color
+#' (map.layer.paint.fill-outline-color). Has an effect only when `type` is
+#' set to "fill". Color: a CSS color string or R color name.}
+#' }
+#'
+#' @section layer.line properties:
+#' \describe{
+#' \item{\code{dash}}{Sets the length of dashes and gaps
+#' (map.layer.paint.line-dasharray). Has an effect only when `type` is set
+#' to "line". Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{width}}{Sets the line width (map.layer.paint.line-width). Has
+#' an effect only when `type` is set to "line". Number.}
+#' }
+#'
+#' @section layer.symbol properties:
+#' \describe{
+#' \item{\code{icon}}{Sets the symbol icon image
+#' (map.layer.layout.icon-image). Full list:
+#' https://www.mapbox.com/maki-icons/ String.}
+#' \item{\code{iconsize}}{Sets the symbol icon size
+#' (map.layer.layout.icon-size). Has an effect only when `type` is set to
+#' "symbol". Number.}
+#' \item{\code{placement}}{Sets the symbol and/or text placement
+#' (map.layer.layout.symbol-placement). If `placement` is "point", the label
+#' is placed where the geometry is located If `placement` is "line", the
+#' label is placed along the line of the geometry If `placement` is
+#' "line-center", the label is placed on the center of the geometry One of
+#' \code{"point"}, \code{"line"}, \code{"line-center"}.}
+#' \item{\code{text}}{Sets the symbol text (map.layer.layout.text-field).
+#' String.}
+#' \item{\code{textfont}}{Sets the icon text font
+#' (color=map.layer.paint.text-color, size=map.layer.layout.text-size). Has
+#' an effect only when `type` is set to "symbol". A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{size}, \code{style} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{textposition}}{Sets the positions of the `text` elements with
+#' respects to the (x,y) coordinates. One of \code{"top left"}, \code{"top
+#' center"}, \code{"top right"}, \code{"middle left"}, \code{"middle
+#' center"}, \code{"middle right"}, \code{"bottom left"}, \code{"bottom
+#' center"}, \code{"bottom right"}.}
+#' }
+#'
 #' @name update_maps
 #' @noMd
 NULL
@@ -1509,13 +2120,553 @@ for_each_map <- function(fig, fn, selector = NULL, row = NULL, col = NULL) {
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
-#' @param patch A named list or \code{\link{go_layout_polar}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list of polar property updates (see section "polar properties").
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_polars()} returns a named list of \code{\link{go_layout_polar}()} objects; the
+#' @return \code{select_polars()} returns a named list of polar objects; the
 #'   others return the modified figure.
+#'
+#' @section polar properties:
+#' \describe{
+#' \item{\code{angularaxis}}{A named list with properties
+#' \code{autotypenumbers}, \code{categoryarray}, \code{categoryorder},
+#' \code{color}, \code{direction}, \code{dtick}, \code{exponentformat},
+#' \code{gridcolor}, \code{griddash}, \code{gridwidth}, \code{hoverformat},
+#' \code{labelalias} and 34 more (described in section "angularaxis
+#' properties" below).}
+#' \item{\code{bargap}}{Sets the gap between bars of adjacent location
+#' coordinates. Values are unitless, they represent fractions of the minimum
+#' difference in bar positions in the data. Number in the interval [0, 1].}
+#' \item{\code{barmode}}{Determines how bars at the same location coordinate
+#' are displayed on the graph. With "stack", the bars are stacked on top of
+#' one another With "overlay", the bars are plotted over one another, you
+#' might need to reduce "opacity" to see multiple bars. One of
+#' \code{"stack"}, \code{"overlay"}.}
+#' \item{\code{bgcolor}}{Set the background color of the subplot Color: a
+#' CSS color string or R color name.}
+#' \item{\code{domain}}{A \code{\link{go_domain}()} object or named list,
+#' with properties \code{column}, \code{row}, \code{x} and \code{y} (see
+#' \code{\link{go_domain}()}).}
+#' \item{\code{gridshape}}{Determines if the radial axis grid lines and
+#' angular axis line are drawn as "circular" sectors or as "linear"
+#' (polygon) sectors. Has an effect only when the angular axis has `type`
+#' "category". Note that `radialaxis.angle` is snapped to the angle of the
+#' closest vertex when `gridshape` is "circular" (so that radial axis scale
+#' is the same as the data scale). One of \code{"circular"},
+#' \code{"linear"}.}
+#' \item{\code{hole}}{Sets the fraction of the radius to cut out of the
+#' polar subplot. Number in the interval [0, 1].}
+#' \item{\code{radialaxis}}{A named list with properties \code{angle},
+#' \code{autorange}, \code{autorangeoptions}, \code{autotickangles},
+#' \code{autotypenumbers}, \code{calendar}, \code{categoryarray},
+#' \code{categoryorder}, \code{color}, \code{dtick}, \code{exponentformat},
+#' \code{gridcolor} and 41 more (described in section "radialaxis
+#' properties" below).}
+#' \item{\code{sector}}{Sets angular span of this polar subplot with two
+#' angles (in degrees). Sector are assumed to be spanned in the
+#' counterclockwise direction with 0 corresponding to rightmost limit of the
+#' polar subplot. Vector or list of 2 element(s).}
+#' \item{\code{uirevision}}{Controls persistence of user-driven changes in
+#' axis attributes, if not overridden in the individual axes. Defaults to
+#' `layout.uirevision`. Any value.}
+#' }
+#'
+#' @section angularaxis properties:
+#' \describe{
+#' \item{\code{autotypenumbers}}{Using "strict" a numeric string in trace
+#' data is not converted to a number. Using "convert types" a numeric string
+#' in trace data may be treated as a number during automatic axis `type`
+#' detection. Defaults to layout.autotypenumbers. One of \code{"convert
+#' types"}, \code{"strict"}.}
+#' \item{\code{categoryarray}}{Sets the order in which categories on this
+#' axis appear. Only has an effect if `categoryorder` is set to "array".
+#' Used with `categoryorder`. Data array: a vector, factor, Date/POSIXct
+#' vector, matrix or list.}
+#' \item{\code{categoryorder}}{Specifies the ordering logic for the case of
+#' categorical variables. By default, plotly uses "trace", which specifies
+#' the order that is present in the data supplied. Set `categoryorder` to
+#' "category ascending" or "category descending" if order should be
+#' determined by the alphanumerical order of the category names. Set
+#' `categoryorder` to "array" to derive the ordering from the attribute
+#' `categoryarray`. If a category is not found in the `categoryarray` array,
+#' the sorting behavior for that attribute will be identical to the "trace"
+#' mode. The unspecified categories will follow the categories in
+#' `categoryarray`. Set `categoryorder` to "total ascending" or "total
+#' descending" if order should be determined by the numerical order of the
+#' values. Similarly, the order can be determined by the min, max, sum,
+#' mean, geometric mean or median of all the values. One of \code{"trace"},
+#' \code{"category ascending"}, \code{"category descending"},
+#' \code{"array"}, \code{"total ascending"}, \code{"total descending"},
+#' \code{"min ascending"}, \code{"min descending"}, \code{"max ascending"},
+#' \code{"max descending"}, \code{"sum ascending"}, \code{"sum descending"},
+#' \code{"mean ascending"}, \code{"mean descending"}, \code{"geometric mean
+#' ascending"}, \code{"geometric mean descending"}, \code{"median
+#' ascending"}, \code{"median descending"}.}
+#' \item{\code{color}}{Sets default for all colors associated with this axis
+#' all at once: line, font, tick, and grid colors. Grid color is lightened
+#' by blending this with the plot background Individual pieces can override
+#' this. Color: a CSS color string or R color name.}
+#' \item{\code{direction}}{Sets the direction corresponding to positive
+#' angles. One of \code{"counterclockwise"}, \code{"clockwise"}.}
+#' \item{\code{dtick}}{Sets the step in-between ticks on this axis. Use with
+#' `tick0`. Must be a positive number, or special strings available to "log"
+#' and "date" axes. If the axis `type` is "log", then ticks are set every
+#' 10^(n*dtick) where n is the tick number. For example, to set a tick mark
+#' at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks at 1, 100,
+#' 10000, ... set dtick to 2. To set tick marks at 1, 5, 25, 125, 625, 3125,
+#' ... set dtick to log_10(5), or 0.69897000433. "log" has several special
+#' values; "L<f>", where `f` is a positive number, gives ticks linearly
+#' spaced in value (but not position). For example `tick0` = 0.1, `dtick` =
+#' "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6 etc. To show powers of 10
+#' plus small digits between, use "D1" (all digits) or "D2" (only 2 and 5).
+#' `tick0` is ignored for "D1" and "D2". If the axis `type` is "date", then
+#' you must convert the time to milliseconds. For example, to set the
+#' interval between ticks to one day, set `dtick` to 86400000.0. "date" also
+#' has special values "M<n>" gives ticks spaced by a number of months. `n`
+#' must be a positive integer. To set ticks on the 15th of every third
+#' month, set `tick0` to "2000-01-15" and `dtick` to "M3". To set ticks
+#' every 4 years, set `dtick` to "M48" Any value.}
+#' \item{\code{exponentformat}}{Determines a formatting rule for the tick
+#' exponents. For example, consider the number 1,000,000,000. If "none", it
+#' appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power", 1x10^9
+#' (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses prefixes
+#' from "femto" f (10^-15) to "tera" T (10^12). "SI extended" covers instead
+#' the full SI range from "quecto" q (10^-30) to "quetta" Q (10^30). If "SI"
+#' or "SI extended" is used and the exponent is beyond the above ranges, the
+#' formatting rule will automatically be switched to the power notation. One
+#' of \code{"none"}, \code{"e"}, \code{"E"}, \code{"power"}, \code{"SI"},
+#' \code{"B"}, \code{"SI extended"}.}
+#' \item{\code{gridcolor}}{Sets the color of the grid lines. Color: a CSS
+#' color string or R color name.}
+#' \item{\code{griddash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{gridwidth}}{Sets the width (in px) of the grid lines. Number
+#' in the interval [0, Inf].}
+#' \item{\code{hoverformat}}{Sets the hover text formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{labelalias}}{Replacement text for specific tick or hover
+#' labels. For example using \{US: 'USA', CA: 'Canada'\} changes US to USA
+#' and CA to Canada. The labels we would have shown must match the keys
+#' exactly, after adding any tickprefix or ticksuffix. For negative numbers
+#' the minus sign symbol used (U+2212) is wider than the regular ascii dash.
+#' That means you need to use -1 instead of -1. labelalias can be used with
+#' any axis type, and both keys (if needed) and values (if desired) can
+#' include html-like tags or MathJax. Any value.}
+#' \item{\code{layer}}{Sets the layer on which this axis is displayed. If
+#' "above traces", this axis is displayed above all the subplot's traces If
+#' "below traces", this axis is displayed below all the subplot's traces,
+#' but above the grid lines. Useful when used together with scatter-like
+#' traces with `cliponaxis` set to FALSE to show markers and/or text nodes
+#' above this axis. One of \code{"above traces"}, \code{"below traces"}.}
+#' \item{\code{linecolor}}{Sets the axis line color. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{linewidth}}{Sets the width (in px) of the axis line. Number
+#' in the interval [0, Inf].}
+#' \item{\code{minexponent}}{Hide SI prefix for 10^n if |n| is below this
+#' number. This only has an effect when `tickformat` is "SI" or "B". Number
+#' in the interval [0, Inf].}
+#' \item{\code{minorloglabels}}{Determines how minor log labels are
+#' displayed. If "small digits", small digits i.e. 2 or 5 are displayed. If
+#' "complete", complete digits are displayed. If "none", no labels are
+#' displayed. One of \code{"small digits"}, \code{"complete"},
+#' \code{"none"}.}
+#' \item{\code{nticks}}{Specifies the maximum number of ticks for the
+#' particular axis. The actual number of ticks will be chosen automatically
+#' to be less than or equal to `nticks`. Has an effect only if `tickmode` is
+#' set to "auto". Integer in the interval [0, Inf].}
+#' \item{\code{period}}{Set the angular period. Has an effect only when
+#' `angularaxis.type` is "category". Number in the interval [0, Inf].}
+#' \item{\code{rotation}}{Sets that start position (in degrees) of the
+#' angular axis By default, polar subplots with `direction` set to
+#' "counterclockwise" get a `rotation` of 0 which corresponds to due East
+#' (like what mathematicians prefer). In turn, polar with `direction` set to
+#' "clockwise" get a rotation of 90 which corresponds to due North (like on
+#' a compass), Angle in degrees.}
+#' \item{\code{separatethousands}}{If "true", even 4-digit integers are
+#' separated Logical.}
+#' \item{\code{showexponent}}{If "all", all exponents are shown besides
+#' their significands. If "first", only the exponent of the first tick is
+#' shown. If "last", only the exponent of the last tick is shown. If "none",
+#' no exponents appear. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showgrid}}{Determines whether or not grid lines are drawn. If
+#' TRUE, the grid lines are drawn at every tick mark. Logical.}
+#' \item{\code{showline}}{Determines whether or not a line bounding this
+#' axis is drawn. Logical.}
+#' \item{\code{showticklabels}}{Determines whether or not the tick labels
+#' are drawn. Logical.}
+#' \item{\code{showtickprefix}}{If "all", all tick labels are displayed with
+#' a prefix. If "first", only the first tick is displayed with a prefix. If
+#' "last", only the last tick is displayed with a suffix. If "none", tick
+#' prefixes are hidden. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showticksuffix}}{Same as `showtickprefix` but for tick
+#' suffixes. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{thetaunit}}{Sets the format unit of the formatted "theta"
+#' values. Has an effect only when `angularaxis.type` is "linear". One of
+#' \code{"radians"}, \code{"degrees"}.}
+#' \item{\code{tick0}}{Sets the placement of the first tick on this axis.
+#' Use with `dtick`. If the axis `type` is "log", then you must take the log
+#' of your starting tick (e.g. to set the starting tick to 100, set the
+#' `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info). If
+#' the axis `type` is "date", it should be a date string, like date data. If
+#' the axis `type` is "category", it should be a number, using the scale
+#' where each category is assigned a serial number from zero in the order it
+#' appears. Any value.}
+#' \item{\code{tickangle}}{Sets the angle of the tick labels with respect to
+#' the horizontal. For example, a `tickangle` of -90 draws the tick labels
+#' vertically. Angle in degrees.}
+#' \item{\code{tickcolor}}{Sets the tick color. Color: a CSS color string or
+#' R color name.}
+#' \item{\code{tickfont}}{Sets the tick font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{tickformat}}{Sets the tick label formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{tickformatstops}}{List, each element a
+#' \code{\link{go_tickformatstop}()} object or named list, with properties
+#' \code{dtickrange}, \code{enabled}, \code{name}, \code{templateitemname}
+#' and \code{value} (see \code{\link{go_tickformatstop}()}).}
+#' \item{\code{ticklabelstep}}{Sets the spacing between tick labels as
+#' compared to the spacing between ticks. A value of 1 (default) means each
+#' tick gets a label. A value of 2 means shows every 2nd label. A larger
+#' value n means only every nth tick is labeled. `tick0` determines which
+#' labels are shown. Not implemented for axes with `type` "log" or
+#' "multicategory", or when `tickmode` is "array". Integer in the interval
+#' [1, Inf].}
+#' \item{\code{ticklen}}{Sets the tick length (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{tickmode}}{Sets the tick mode for this axis. If "auto", the
+#' number of ticks is set via `nticks`. If "linear", the placement of the
+#' ticks is determined by a starting position `tick0` and a tick step
+#' `dtick` ("linear" is the default value if `tick0` and `dtick` are
+#' provided). If "array", the placement of the ticks is set via `tickvals`
+#' and the tick text is `ticktext`. ("array" is the default value if
+#' `tickvals` is provided). One of \code{"auto"}, \code{"linear"},
+#' \code{"array"}.}
+#' \item{\code{tickprefix}}{Sets a tick label prefix. String.}
+#' \item{\code{ticks}}{Determines whether ticks are drawn or not. If **,
+#' this axis' ticks are not drawn. If "outside" ("inside"), this axis' are
+#' drawn outside (inside) the axis lines. One of \code{"outside"},
+#' \code{"inside"}, \code{""}.}
+#' \item{\code{ticksuffix}}{Sets a tick label suffix. String.}
+#' \item{\code{ticktext}}{Sets the text displayed at the ticks position via
+#' `tickvals`. Only has an effect if `tickmode` is set to "array". Used with
+#' `tickvals`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickvals}}{Sets the values at which ticks on this axis
+#' appear. Only has an effect if `tickmode` is set to "array". Used with
+#' `ticktext`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickwidth}}{Sets the tick width (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{type}}{Sets the angular axis type. If "linear", set
+#' `thetaunit` to determine the unit in which axis value are shown. If
+#' *category, use `period` to set the number of integer coordinates around
+#' polar axis. One of \code{"-"}, \code{"linear"}, \code{"category"}.}
+#' \item{\code{uirevision}}{Controls persistence of user-driven changes in
+#' axis `rotation`. Defaults to `polar<N>.uirevision`. Any value.}
+#' \item{\code{visible}}{A single toggle to hide the axis while preserving
+#' interaction like dragging. Default is true when a cheater plot is present
+#' on the axis, otherwise false Logical.}
+#' }
+#'
+#' @section radialaxis properties:
+#' \describe{
+#' \item{\code{angle}}{Sets the angle (in degrees) from which the radial
+#' axis is drawn. Note that by default, radial axis line on the theta=0 line
+#' corresponds to a line pointing right (like what mathematicians prefer).
+#' Defaults to the first `polar.sector` angle. Angle in degrees.}
+#' \item{\code{autorange}}{Determines whether or not the range of this axis
+#' is computed in relation to the input data. See `rangemode` for more info.
+#' If `range` is provided and it has a value for both the lower and upper
+#' bound, `autorange` is set to FALSE. Using "min" applies autorange only to
+#' set the minimum. Using "max" applies autorange only to set the maximum.
+#' Using "min reversed" applies autorange only to set the minimum on a
+#' reversed axis. Using "max reversed" applies autorange only to set the
+#' maximum on a reversed axis. Using "reversed" applies autorange on both
+#' ends and reverses the axis direction. One of \code{"reversed"},
+#' \code{"min reversed"}, \code{"max reversed"}, \code{"min"}, \code{"max"},
+#' \code{TRUE}, \code{FALSE}.}
+#' \item{\code{autorangeoptions}}{A \code{\link{go_autorangeoptions}()}
+#' object or named list, with properties \code{clipmax}, \code{clipmin},
+#' \code{include}, \code{maxallowed} and \code{minallowed} (see
+#' \code{\link{go_autorangeoptions}()}).}
+#' \item{\code{autotickangles}}{When `tickangle` is set to "auto", it will
+#' be set to the first angle in this array that is large enough to prevent
+#' label overlap. Vector or list of up to 1 element(s).}
+#' \item{\code{autotypenumbers}}{Using "strict" a numeric string in trace
+#' data is not converted to a number. Using "convert types" a numeric string
+#' in trace data may be treated as a number during automatic axis `type`
+#' detection. Defaults to layout.autotypenumbers. One of \code{"convert
+#' types"}, \code{"strict"}.}
+#' \item{\code{calendar}}{Sets the calendar system to use for `range` and
+#' `tick0` if this is a date axis. This does not set the calendar for
+#' interpreting data on this axis, that's specified in the trace or via the
+#' global `layout.calendar` One of \code{"chinese"}, \code{"coptic"},
+#' \code{"discworld"}, \code{"ethiopian"}, \code{"gregorian"},
+#' \code{"hebrew"}, \code{"islamic"}, \code{"jalali"}, \code{"julian"},
+#' \code{"mayan"}, \code{"nanakshahi"}, \code{"nepali"}, \code{"persian"},
+#' \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.}
+#' \item{\code{categoryarray}}{Sets the order in which categories on this
+#' axis appear. Only has an effect if `categoryorder` is set to "array".
+#' Used with `categoryorder`. Data array: a vector, factor, Date/POSIXct
+#' vector, matrix or list.}
+#' \item{\code{categoryorder}}{Specifies the ordering logic for the case of
+#' categorical variables. By default, plotly uses "trace", which specifies
+#' the order that is present in the data supplied. Set `categoryorder` to
+#' "category ascending" or "category descending" if order should be
+#' determined by the alphanumerical order of the category names. Set
+#' `categoryorder` to "array" to derive the ordering from the attribute
+#' `categoryarray`. If a category is not found in the `categoryarray` array,
+#' the sorting behavior for that attribute will be identical to the "trace"
+#' mode. The unspecified categories will follow the categories in
+#' `categoryarray`. Set `categoryorder` to "total ascending" or "total
+#' descending" if order should be determined by the numerical order of the
+#' values. Similarly, the order can be determined by the min, max, sum,
+#' mean, geometric mean or median of all the values. One of \code{"trace"},
+#' \code{"category ascending"}, \code{"category descending"},
+#' \code{"array"}, \code{"total ascending"}, \code{"total descending"},
+#' \code{"min ascending"}, \code{"min descending"}, \code{"max ascending"},
+#' \code{"max descending"}, \code{"sum ascending"}, \code{"sum descending"},
+#' \code{"mean ascending"}, \code{"mean descending"}, \code{"geometric mean
+#' ascending"}, \code{"geometric mean descending"}, \code{"median
+#' ascending"}, \code{"median descending"}.}
+#' \item{\code{color}}{Sets default for all colors associated with this axis
+#' all at once: line, font, tick, and grid colors. Grid color is lightened
+#' by blending this with the plot background Individual pieces can override
+#' this. Color: a CSS color string or R color name.}
+#' \item{\code{dtick}}{Sets the step in-between ticks on this axis. Use with
+#' `tick0`. Must be a positive number, or special strings available to "log"
+#' and "date" axes. If the axis `type` is "log", then ticks are set every
+#' 10^(n*dtick) where n is the tick number. For example, to set a tick mark
+#' at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks at 1, 100,
+#' 10000, ... set dtick to 2. To set tick marks at 1, 5, 25, 125, 625, 3125,
+#' ... set dtick to log_10(5), or 0.69897000433. "log" has several special
+#' values; "L<f>", where `f` is a positive number, gives ticks linearly
+#' spaced in value (but not position). For example `tick0` = 0.1, `dtick` =
+#' "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6 etc. To show powers of 10
+#' plus small digits between, use "D1" (all digits) or "D2" (only 2 and 5).
+#' `tick0` is ignored for "D1" and "D2". If the axis `type` is "date", then
+#' you must convert the time to milliseconds. For example, to set the
+#' interval between ticks to one day, set `dtick` to 86400000.0. "date" also
+#' has special values "M<n>" gives ticks spaced by a number of months. `n`
+#' must be a positive integer. To set ticks on the 15th of every third
+#' month, set `tick0` to "2000-01-15" and `dtick` to "M3". To set ticks
+#' every 4 years, set `dtick` to "M48" Any value.}
+#' \item{\code{exponentformat}}{Determines a formatting rule for the tick
+#' exponents. For example, consider the number 1,000,000,000. If "none", it
+#' appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power", 1x10^9
+#' (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses prefixes
+#' from "femto" f (10^-15) to "tera" T (10^12). "SI extended" covers instead
+#' the full SI range from "quecto" q (10^-30) to "quetta" Q (10^30). If "SI"
+#' or "SI extended" is used and the exponent is beyond the above ranges, the
+#' formatting rule will automatically be switched to the power notation. One
+#' of \code{"none"}, \code{"e"}, \code{"E"}, \code{"power"}, \code{"SI"},
+#' \code{"B"}, \code{"SI extended"}.}
+#' \item{\code{gridcolor}}{Sets the color of the grid lines. Color: a CSS
+#' color string or R color name.}
+#' \item{\code{griddash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{gridwidth}}{Sets the width (in px) of the grid lines. Number
+#' in the interval [0, Inf].}
+#' \item{\code{hoverformat}}{Sets the hover text formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{labelalias}}{Replacement text for specific tick or hover
+#' labels. For example using \{US: 'USA', CA: 'Canada'\} changes US to USA
+#' and CA to Canada. The labels we would have shown must match the keys
+#' exactly, after adding any tickprefix or ticksuffix. For negative numbers
+#' the minus sign symbol used (U+2212) is wider than the regular ascii dash.
+#' That means you need to use -1 instead of -1. labelalias can be used with
+#' any axis type, and both keys (if needed) and values (if desired) can
+#' include html-like tags or MathJax. Any value.}
+#' \item{\code{layer}}{Sets the layer on which this axis is displayed. If
+#' "above traces", this axis is displayed above all the subplot's traces If
+#' "below traces", this axis is displayed below all the subplot's traces,
+#' but above the grid lines. Useful when used together with scatter-like
+#' traces with `cliponaxis` set to FALSE to show markers and/or text nodes
+#' above this axis. One of \code{"above traces"}, \code{"below traces"}.}
+#' \item{\code{linecolor}}{Sets the axis line color. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{linewidth}}{Sets the width (in px) of the axis line. Number
+#' in the interval [0, Inf].}
+#' \item{\code{maxallowed}}{Determines the maximum range of this axis. Any
+#' value.}
+#' \item{\code{minallowed}}{Determines the minimum range of this axis. Any
+#' value.}
+#' \item{\code{minexponent}}{Hide SI prefix for 10^n if |n| is below this
+#' number. This only has an effect when `tickformat` is "SI" or "B". Number
+#' in the interval [0, Inf].}
+#' \item{\code{minorloglabels}}{Determines how minor log labels are
+#' displayed. If "small digits", small digits i.e. 2 or 5 are displayed. If
+#' "complete", complete digits are displayed. If "none", no labels are
+#' displayed. One of \code{"small digits"}, \code{"complete"},
+#' \code{"none"}.}
+#' \item{\code{nticks}}{Specifies the maximum number of ticks for the
+#' particular axis. The actual number of ticks will be chosen automatically
+#' to be less than or equal to `nticks`. Has an effect only if `tickmode` is
+#' set to "auto". Integer in the interval [0, Inf].}
+#' \item{\code{range}}{Sets the range of this axis. If the axis `type` is
+#' "log", then you must take the log of your desired range (e.g. to set the
+#' range from 1 to 100, set the range from 0 to 2). If the axis `type` is
+#' "date", it should be date strings, like date data, though Date objects
+#' and unix milliseconds will be accepted and converted to strings. If the
+#' axis `type` is "category", it should be numbers, using the scale where
+#' each category is assigned a serial number from zero in the order it
+#' appears. Leaving either or both elements `null` impacts the default
+#' `autorange`. Vector or list of 2 element(s).}
+#' \item{\code{rangemode}}{If "tozero", the range extends to 0, regardless
+#' of the input data If "nonnegative", the range is non-negative, regardless
+#' of the input data. If "normal", the range is computed in relation to the
+#' extrema of the input data (same behavior as for cartesian axes). One of
+#' \code{"tozero"}, \code{"nonnegative"}, \code{"normal"}.}
+#' \item{\code{separatethousands}}{If "true", even 4-digit integers are
+#' separated Logical.}
+#' \item{\code{showexponent}}{If "all", all exponents are shown besides
+#' their significands. If "first", only the exponent of the first tick is
+#' shown. If "last", only the exponent of the last tick is shown. If "none",
+#' no exponents appear. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showgrid}}{Determines whether or not grid lines are drawn. If
+#' TRUE, the grid lines are drawn at every tick mark. Logical.}
+#' \item{\code{showline}}{Determines whether or not a line bounding this
+#' axis is drawn. Logical.}
+#' \item{\code{showticklabels}}{Determines whether or not the tick labels
+#' are drawn. Logical.}
+#' \item{\code{showtickprefix}}{If "all", all tick labels are displayed with
+#' a prefix. If "first", only the first tick is displayed with a prefix. If
+#' "last", only the last tick is displayed with a suffix. If "none", tick
+#' prefixes are hidden. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showticksuffix}}{Same as `showtickprefix` but for tick
+#' suffixes. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{side}}{Determines on which side of radial axis line the tick
+#' and tick labels appear. One of \code{"clockwise"},
+#' \code{"counterclockwise"}.}
+#' \item{\code{tick0}}{Sets the placement of the first tick on this axis.
+#' Use with `dtick`. If the axis `type` is "log", then you must take the log
+#' of your starting tick (e.g. to set the starting tick to 100, set the
+#' `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info). If
+#' the axis `type` is "date", it should be a date string, like date data. If
+#' the axis `type` is "category", it should be a number, using the scale
+#' where each category is assigned a serial number from zero in the order it
+#' appears. Any value.}
+#' \item{\code{tickangle}}{Sets the angle of the tick labels with respect to
+#' the horizontal. For example, a `tickangle` of -90 draws the tick labels
+#' vertically. Angle in degrees.}
+#' \item{\code{tickcolor}}{Sets the tick color. Color: a CSS color string or
+#' R color name.}
+#' \item{\code{tickfont}}{Sets the tick font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{tickformat}}{Sets the tick label formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{tickformatstops}}{List, each element a
+#' \code{\link{go_tickformatstop}()} object or named list, with properties
+#' \code{dtickrange}, \code{enabled}, \code{name}, \code{templateitemname}
+#' and \code{value} (see \code{\link{go_tickformatstop}()}).}
+#' \item{\code{ticklabelstep}}{Sets the spacing between tick labels as
+#' compared to the spacing between ticks. A value of 1 (default) means each
+#' tick gets a label. A value of 2 means shows every 2nd label. A larger
+#' value n means only every nth tick is labeled. `tick0` determines which
+#' labels are shown. Not implemented for axes with `type` "log" or
+#' "multicategory", or when `tickmode` is "array". Integer in the interval
+#' [1, Inf].}
+#' \item{\code{ticklen}}{Sets the tick length (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{tickmode}}{Sets the tick mode for this axis. If "auto", the
+#' number of ticks is set via `nticks`. If "linear", the placement of the
+#' ticks is determined by a starting position `tick0` and a tick step
+#' `dtick` ("linear" is the default value if `tick0` and `dtick` are
+#' provided). If "array", the placement of the ticks is set via `tickvals`
+#' and the tick text is `ticktext`. ("array" is the default value if
+#' `tickvals` is provided). One of \code{"auto"}, \code{"linear"},
+#' \code{"array"}.}
+#' \item{\code{tickprefix}}{Sets a tick label prefix. String.}
+#' \item{\code{ticks}}{Determines whether ticks are drawn or not. If **,
+#' this axis' ticks are not drawn. If "outside" ("inside"), this axis' are
+#' drawn outside (inside) the axis lines. One of \code{"outside"},
+#' \code{"inside"}, \code{""}.}
+#' \item{\code{ticksuffix}}{Sets a tick label suffix. String.}
+#' \item{\code{ticktext}}{Sets the text displayed at the ticks position via
+#' `tickvals`. Only has an effect if `tickmode` is set to "array". Used with
+#' `tickvals`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickvals}}{Sets the values at which ticks on this axis
+#' appear. Only has an effect if `tickmode` is set to "array". Used with
+#' `ticktext`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickwidth}}{Sets the tick width (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{title}}{String (the title text), or a named list with
+#' properties \code{font} and \code{text} (described in section
+#' "radialaxis.title properties" below).}
+#' \item{\code{type}}{Sets the axis type. By default, plotly attempts to
+#' determined the axis type by looking into the data of the traces that
+#' referenced the axis in question. One of \code{"-"}, \code{"linear"},
+#' \code{"log"}, \code{"date"}, \code{"category"}.}
+#' \item{\code{uirevision}}{Controls persistence of user-driven changes in
+#' axis `range`, `autorange`, `angle`, and `title` if in `editable: true`
+#' configuration. Defaults to `polar<N>.uirevision`. Any value.}
+#' \item{\code{visible}}{A single toggle to hide the axis while preserving
+#' interaction like dragging. Default is true when a cheater plot is present
+#' on the axis, otherwise false Logical.}
+#' }
+#'
+#' @section radialaxis.title properties:
+#' \describe{
+#' \item{\code{font}}{Sets this axis' title font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{text}}{Sets the title of this axis. String.}
+#' }
+#'
 #' @name update_polars
 #' @noMd
 NULL
@@ -1552,13 +2703,1057 @@ for_each_polar <- function(fig, fn, selector = NULL, row = NULL, col = NULL) {
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
-#' @param patch A named list or \code{\link{go_layout_scene}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list of scene property updates (see section "scene properties").
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_scenes()} returns a named list of \code{\link{go_layout_scene}()} objects; the
+#' @return \code{select_scenes()} returns a named list of scene objects; the
 #'   others return the modified figure.
+#'
+#' @section scene properties:
+#' \describe{
+#' \item{\code{annotations}}{List, each element a named list with properties
+#' \code{align}, \code{arrowcolor}, \code{arrowhead}, \code{arrowside},
+#' \code{arrowsize}, \code{arrowwidth}, \code{ax}, \code{ay},
+#' \code{bgcolor}, \code{bordercolor}, \code{borderpad}, \code{borderwidth}
+#' and 25 more (described in section "annotation properties" below).}
+#' \item{\code{aspectmode}}{If "cube", this scene's axes are drawn as a
+#' cube, regardless of the axes' ranges. If "data", this scene's axes are
+#' drawn in proportion with the axes' ranges. If "manual", this scene's axes
+#' are drawn in proportion with the input of "aspectratio" (the default
+#' behavior if "aspectratio" is provided). If "auto", this scene's axes are
+#' drawn using the results of "data" except when one axis is more than four
+#' times the size of the two others, where in that case the results of
+#' "cube" are used. One of \code{"auto"}, \code{"cube"}, \code{"data"},
+#' \code{"manual"}.}
+#' \item{\code{aspectratio}}{Sets this scene's axis aspectratio. A named
+#' list with properties \code{x}, \code{y} and \code{z} (described in
+#' section "aspectratio properties" below).}
+#' \item{\code{bgcolor}}{Color: a CSS color string or R color name.}
+#' \item{\code{camera}}{A named list with properties \code{center},
+#' \code{eye}, \code{projection} and \code{up} (described in section "camera
+#' properties" below).}
+#' \item{\code{domain}}{A \code{\link{go_domain}()} object or named list,
+#' with properties \code{column}, \code{row}, \code{x} and \code{y} (see
+#' \code{\link{go_domain}()}).}
+#' \item{\code{dragmode}}{Determines the mode of drag interactions for this
+#' scene. One of \code{"orbit"}, \code{"turntable"}, \code{"zoom"},
+#' \code{"pan"}, \code{FALSE}.}
+#' \item{\code{hovermode}}{Determines the mode of hover interactions for
+#' this scene. One of \code{"closest"}, \code{FALSE}.}
+#' \item{\code{uirevision}}{Controls persistence of user-driven changes in
+#' camera attributes. Defaults to `layout.uirevision`. Any value.}
+#' \item{\code{xaxis}}{A named list with properties \code{autorange},
+#' \code{autorangeoptions}, \code{autotypenumbers}, \code{backgroundcolor},
+#' \code{calendar}, \code{categoryarray}, \code{categoryorder},
+#' \code{color}, \code{dtick}, \code{exponentformat}, \code{gridcolor},
+#' \code{gridwidth} and 44 more (described in section "xaxis properties"
+#' below).}
+#' \item{\code{yaxis}}{A named list with properties \code{autorange},
+#' \code{autorangeoptions}, \code{autotypenumbers}, \code{backgroundcolor},
+#' \code{calendar}, \code{categoryarray}, \code{categoryorder},
+#' \code{color}, \code{dtick}, \code{exponentformat}, \code{gridcolor},
+#' \code{gridwidth} and 44 more (described in section "yaxis properties"
+#' below).}
+#' \item{\code{zaxis}}{A named list with properties \code{autorange},
+#' \code{autorangeoptions}, \code{autotypenumbers}, \code{backgroundcolor},
+#' \code{calendar}, \code{categoryarray}, \code{categoryorder},
+#' \code{color}, \code{dtick}, \code{exponentformat}, \code{gridcolor},
+#' \code{gridwidth} and 44 more (described in section "zaxis properties"
+#' below).}
+#' }
+#'
+#' @section annotation properties (each list element):
+#' \describe{
+#' \item{\code{align}}{Sets the horizontal alignment of the `text` within
+#' the box. Has an effect only if `text` spans two or more lines (i.e.
+#' `text` contains one or more <br> HTML tags) or if an explicit width is
+#' set to override the text width. One of \code{"left"}, \code{"center"},
+#' \code{"right"}.}
+#' \item{\code{arrowcolor}}{Sets the color of the annotation arrow. Color: a
+#' CSS color string or R color name.}
+#' \item{\code{arrowhead}}{Sets the end annotation arrow head style. Integer
+#' in the interval [0, 8].}
+#' \item{\code{arrowside}}{Sets the annotation arrow head position. Any
+#' combination of \code{"end"}, \code{"start"} joined with \code{"+"}, or
+#' one of \code{"none"}.}
+#' \item{\code{arrowsize}}{Sets the size of the end annotation arrow head,
+#' relative to `arrowwidth`. A value of 1 (default) gives a head about 3x as
+#' wide as the line. Number in the interval [0.3, Inf].}
+#' \item{\code{arrowwidth}}{Sets the width (in px) of annotation arrow line.
+#' Number in the interval [0.1, Inf].}
+#' \item{\code{ax}}{Sets the x component of the arrow tail about the arrow
+#' head (in pixels). Number.}
+#' \item{\code{ay}}{Sets the y component of the arrow tail about the arrow
+#' head (in pixels). Number.}
+#' \item{\code{bgcolor}}{Sets the background color of the annotation. Color:
+#' a CSS color string or R color name.}
+#' \item{\code{bordercolor}}{Sets the color of the border enclosing the
+#' annotation `text`. Color: a CSS color string or R color name.}
+#' \item{\code{borderpad}}{Sets the padding (in px) between the `text` and
+#' the enclosing border. Number in the interval [0, Inf].}
+#' \item{\code{borderwidth}}{Sets the width (in px) of the border enclosing
+#' the annotation `text`. Number in the interval [0, Inf].}
+#' \item{\code{captureevents}}{Determines whether the annotation text box
+#' captures mouse move and click events, or allows those events to pass
+#' through to data points in the plot that may be behind the annotation. By
+#' default `captureevents` is FALSE unless `hovertext` is provided. If you
+#' use the event `plotly_clickannotation` without `hovertext` you must
+#' explicitly enable `captureevents`. Logical.}
+#' \item{\code{font}}{Sets the annotation text font. A
+#' \code{\link{go_font}()} object or named list, with properties
+#' \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#' \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#' \code{weight} (see \code{\link{go_font}()}).}
+#' \item{\code{height}}{Sets an explicit height for the text box. null
+#' (default) lets the text set the box height. Taller text will be clipped.
+#' Number in the interval [1, Inf].}
+#' \item{\code{hoverlabel}}{A \code{\link{go_hoverlabel}()} object or named
+#' list, with properties \code{bgcolor}, \code{bordercolor} and \code{font}
+#' (see \code{\link{go_hoverlabel}()}).}
+#' \item{\code{hovertext}}{Sets text to appear when hovering over this
+#' annotation. If omitted or blank, no hover label will appear. String.}
+#' \item{\code{name}}{When used in a template, named items are created in
+#' the output figure in addition to any items the figure already has in this
+#' array. You can modify these items in the output figure by making your own
+#' item with `templateitemname` matching this `name` alongside your
+#' modifications (including `visible: false` or `enabled: false` to hide
+#' it). Has no effect outside of a template. String.}
+#' \item{\code{opacity}}{Sets the opacity of the annotation (text + arrow).
+#' Number in the interval [0, 1].}
+#' \item{\code{showarrow}}{Determines whether or not the annotation is drawn
+#' with an arrow. If TRUE, `text` is placed near the arrow's tail. If FALSE,
+#' `text` lines up with the `x` and `y` provided. Logical.}
+#' \item{\code{standoff}}{Sets a distance, in pixels, to move the end
+#' arrowhead away from the position it is pointing at, for example to point
+#' at the edge of a marker independent of zoom. Note that this shortens the
+#' arrow from the `ax` / `ay` vector, in contrast to `xshift` / `yshift`
+#' which moves everything by this amount. Number in the interval [0, Inf].}
+#' \item{\code{startarrowhead}}{Sets the start annotation arrow head style.
+#' Integer in the interval [0, 8].}
+#' \item{\code{startarrowsize}}{Sets the size of the start annotation arrow
+#' head, relative to `arrowwidth`. A value of 1 (default) gives a head about
+#' 3x as wide as the line. Number in the interval [0.3, Inf].}
+#' \item{\code{startstandoff}}{Sets a distance, in pixels, to move the start
+#' arrowhead away from the position it is pointing at, for example to point
+#' at the edge of a marker independent of zoom. Note that this shortens the
+#' arrow from the `ax` / `ay` vector, in contrast to `xshift` / `yshift`
+#' which moves everything by this amount. Number in the interval [0, Inf].}
+#' \item{\code{templateitemname}}{Used to refer to a named item in this
+#' array in the template. Named items from the template will be created even
+#' without a matching item in the input figure, but you can modify one by
+#' making an item with `templateitemname` matching its `name`, alongside
+#' your modifications (including `visible: false` or `enabled: false` to
+#' hide it). If there is no template or no matching item, this item will be
+#' hidden unless you explicitly show it with `visible: true`. String.}
+#' \item{\code{text}}{Sets the text associated with this annotation. Plotly
+#' uses a subset of HTML tags to do things like newline (`<br>`), bold
+#' (`<b></b>`), italics (`<i></i>`), hyperlinks (`<a href='...'></a>`). Tags
+#' `<em>`, `<sup>`, `<sub>`, `<s>`, `<u>`, and `<span>` are also supported.
+#' String.}
+#' \item{\code{textangle}}{Sets the angle at which the `text` is drawn with
+#' respect to the horizontal. Angle in degrees.}
+#' \item{\code{valign}}{Sets the vertical alignment of the `text` within the
+#' box. Has an effect only if an explicit height is set to override the text
+#' height. One of \code{"top"}, \code{"middle"}, \code{"bottom"}.}
+#' \item{\code{visible}}{Determines whether or not this annotation is
+#' visible. Logical.}
+#' \item{\code{width}}{Sets an explicit width for the text box. null
+#' (default) lets the text set the box width. Wider text will be clipped.
+#' There is no automatic wrapping; use <br> to start a new line. Number in
+#' the interval [1, Inf].}
+#' \item{\code{x}}{Sets the annotation's x position. Any value.}
+#' \item{\code{xanchor}}{Sets the text box's horizontal position anchor This
+#' anchor binds the `x` position to the "left", "center" or "right" of the
+#' annotation. For example, if `x` is set to 1, `xref` to "paper" and
+#' `xanchor` to "right" then the right-most portion of the annotation lines
+#' up with the right-most edge of the plotting area. If "auto", the anchor
+#' is equivalent to "center" for data-referenced annotations or if there is
+#' an arrow, whereas for paper-referenced with no arrow, the anchor picked
+#' corresponds to the closest side. One of \code{"auto"}, \code{"left"},
+#' \code{"center"}, \code{"right"}.}
+#' \item{\code{xshift}}{Shifts the position of the whole annotation and
+#' arrow to the right (positive) or left (negative) by this many pixels.
+#' Number.}
+#' \item{\code{y}}{Sets the annotation's y position. Any value.}
+#' \item{\code{yanchor}}{Sets the text box's vertical position anchor This
+#' anchor binds the `y` position to the "top", "middle" or "bottom" of the
+#' annotation. For example, if `y` is set to 1, `yref` to "paper" and
+#' `yanchor` to "top" then the top-most portion of the annotation lines up
+#' with the top-most edge of the plotting area. If "auto", the anchor is
+#' equivalent to "middle" for data-referenced annotations or if there is an
+#' arrow, whereas for paper-referenced with no arrow, the anchor picked
+#' corresponds to the closest side. One of \code{"auto"}, \code{"top"},
+#' \code{"middle"}, \code{"bottom"}.}
+#' \item{\code{yshift}}{Shifts the position of the whole annotation and
+#' arrow up (positive) or down (negative) by this many pixels. Number.}
+#' \item{\code{z}}{Sets the annotation's z position. Any value.}
+#' }
+#'
+#' @section aspectratio properties:
+#' Sets this scene's axis aspectratio.
+#'
+#' \describe{
+#' \item{\code{x}}{Number in the interval [0, Inf].}
+#' \item{\code{y}}{Number in the interval [0, Inf].}
+#' \item{\code{z}}{Number in the interval [0, Inf].}
+#' }
+#'
+#' @section camera properties:
+#' \describe{
+#' \item{\code{center}}{Sets the (x,y,z) components of the 'center' camera
+#' vector This vector determines the translation (x,y,z) space about the
+#' center of this scene. By default, there is no such translation. A named
+#' list with properties \code{x}, \code{y} and \code{z} (described in
+#' section "camera.center properties" below).}
+#' \item{\code{eye}}{Sets the (x,y,z) components of the 'eye' camera vector.
+#' This vector determines the view point about the origin of this scene. A
+#' named list with properties \code{x}, \code{y} and \code{z} (described in
+#' section "camera.eye properties" below).}
+#' \item{\code{projection}}{A named list with properties \code{type}
+#' (described in section "camera.projection properties" below).}
+#' \item{\code{up}}{Sets the (x,y,z) components of the 'up' camera vector.
+#' This vector determines the up direction of this scene with respect to the
+#' page. The default is "\{x: 0, y: 0, z: 1\}" which means that the z axis
+#' points up. A named list with properties \code{x}, \code{y} and \code{z}
+#' (described in section "camera.up properties" below).}
+#' }
+#'
+#' @section camera.center properties:
+#' Sets the (x,y,z) components of the 'center' camera vector This vector
+#' determines the translation (x,y,z) space about the center of this scene.
+#' By default, there is no such translation.
+#'
+#' \describe{
+#' \item{\code{x}}{Number.}
+#' \item{\code{y}}{Number.}
+#' \item{\code{z}}{Number.}
+#' }
+#'
+#' @section camera.eye properties:
+#' Sets the (x,y,z) components of the 'eye' camera vector. This vector
+#' determines the view point about the origin of this scene.
+#'
+#' \describe{
+#' \item{\code{x}}{Number.}
+#' \item{\code{y}}{Number.}
+#' \item{\code{z}}{Number.}
+#' }
+#'
+#' @section camera.projection properties:
+#' \describe{
+#' \item{\code{type}}{Sets the projection type. The projection type could be
+#' either "perspective" or "orthographic". The default is "perspective". One
+#' of \code{"perspective"}, \code{"orthographic"}.}
+#' }
+#'
+#' @section camera.up properties:
+#' Sets the (x,y,z) components of the 'up' camera vector. This vector
+#' determines the up direction of this scene with respect to the page. The
+#' default is "\{x: 0, y: 0, z: 1\}" which means that the z axis points up.
+#'
+#' \describe{
+#' \item{\code{x}}{Number.}
+#' \item{\code{y}}{Number.}
+#' \item{\code{z}}{Number.}
+#' }
+#'
+#' @section xaxis properties:
+#' \describe{
+#' \item{\code{autorange}}{Determines whether or not the range of this axis
+#' is computed in relation to the input data. See `rangemode` for more info.
+#' If `range` is provided and it has a value for both the lower and upper
+#' bound, `autorange` is set to FALSE. Using "min" applies autorange only to
+#' set the minimum. Using "max" applies autorange only to set the maximum.
+#' Using "min reversed" applies autorange only to set the minimum on a
+#' reversed axis. Using "max reversed" applies autorange only to set the
+#' maximum on a reversed axis. Using "reversed" applies autorange on both
+#' ends and reverses the axis direction. One of \code{"reversed"},
+#' \code{"min reversed"}, \code{"max reversed"}, \code{"min"}, \code{"max"},
+#' \code{TRUE}, \code{FALSE}.}
+#' \item{\code{autorangeoptions}}{A \code{\link{go_autorangeoptions}()}
+#' object or named list, with properties \code{clipmax}, \code{clipmin},
+#' \code{include}, \code{maxallowed} and \code{minallowed} (see
+#' \code{\link{go_autorangeoptions}()}).}
+#' \item{\code{autotypenumbers}}{Using "strict" a numeric string in trace
+#' data is not converted to a number. Using "convert types" a numeric string
+#' in trace data may be treated as a number during automatic axis `type`
+#' detection. Defaults to layout.autotypenumbers. One of \code{"convert
+#' types"}, \code{"strict"}.}
+#' \item{\code{backgroundcolor}}{Sets the background color of this axis'
+#' wall. Color: a CSS color string or R color name.}
+#' \item{\code{calendar}}{Sets the calendar system to use for `range` and
+#' `tick0` if this is a date axis. This does not set the calendar for
+#' interpreting data on this axis, that's specified in the trace or via the
+#' global `layout.calendar` One of \code{"chinese"}, \code{"coptic"},
+#' \code{"discworld"}, \code{"ethiopian"}, \code{"gregorian"},
+#' \code{"hebrew"}, \code{"islamic"}, \code{"jalali"}, \code{"julian"},
+#' \code{"mayan"}, \code{"nanakshahi"}, \code{"nepali"}, \code{"persian"},
+#' \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.}
+#' \item{\code{categoryarray}}{Sets the order in which categories on this
+#' axis appear. Only has an effect if `categoryorder` is set to "array".
+#' Used with `categoryorder`. Data array: a vector, factor, Date/POSIXct
+#' vector, matrix or list.}
+#' \item{\code{categoryorder}}{Specifies the ordering logic for the case of
+#' categorical variables. By default, plotly uses "trace", which specifies
+#' the order that is present in the data supplied. Set `categoryorder` to
+#' "category ascending" or "category descending" if order should be
+#' determined by the alphanumerical order of the category names. Set
+#' `categoryorder` to "array" to derive the ordering from the attribute
+#' `categoryarray`. If a category is not found in the `categoryarray` array,
+#' the sorting behavior for that attribute will be identical to the "trace"
+#' mode. The unspecified categories will follow the categories in
+#' `categoryarray`. Set `categoryorder` to "total ascending" or "total
+#' descending" if order should be determined by the numerical order of the
+#' values. Similarly, the order can be determined by the min, max, sum,
+#' mean, geometric mean or median of all the values. One of \code{"trace"},
+#' \code{"category ascending"}, \code{"category descending"},
+#' \code{"array"}, \code{"total ascending"}, \code{"total descending"},
+#' \code{"min ascending"}, \code{"min descending"}, \code{"max ascending"},
+#' \code{"max descending"}, \code{"sum ascending"}, \code{"sum descending"},
+#' \code{"mean ascending"}, \code{"mean descending"}, \code{"geometric mean
+#' ascending"}, \code{"geometric mean descending"}, \code{"median
+#' ascending"}, \code{"median descending"}.}
+#' \item{\code{color}}{Sets default for all colors associated with this axis
+#' all at once: line, font, tick, and grid colors. Grid color is lightened
+#' by blending this with the plot background Individual pieces can override
+#' this. Color: a CSS color string or R color name.}
+#' \item{\code{dtick}}{Sets the step in-between ticks on this axis. Use with
+#' `tick0`. Must be a positive number, or special strings available to "log"
+#' and "date" axes. If the axis `type` is "log", then ticks are set every
+#' 10^(n*dtick) where n is the tick number. For example, to set a tick mark
+#' at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks at 1, 100,
+#' 10000, ... set dtick to 2. To set tick marks at 1, 5, 25, 125, 625, 3125,
+#' ... set dtick to log_10(5), or 0.69897000433. "log" has several special
+#' values; "L<f>", where `f` is a positive number, gives ticks linearly
+#' spaced in value (but not position). For example `tick0` = 0.1, `dtick` =
+#' "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6 etc. To show powers of 10
+#' plus small digits between, use "D1" (all digits) or "D2" (only 2 and 5).
+#' `tick0` is ignored for "D1" and "D2". If the axis `type` is "date", then
+#' you must convert the time to milliseconds. For example, to set the
+#' interval between ticks to one day, set `dtick` to 86400000.0. "date" also
+#' has special values "M<n>" gives ticks spaced by a number of months. `n`
+#' must be a positive integer. To set ticks on the 15th of every third
+#' month, set `tick0` to "2000-01-15" and `dtick` to "M3". To set ticks
+#' every 4 years, set `dtick` to "M48" Any value.}
+#' \item{\code{exponentformat}}{Determines a formatting rule for the tick
+#' exponents. For example, consider the number 1,000,000,000. If "none", it
+#' appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power", 1x10^9
+#' (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses prefixes
+#' from "femto" f (10^-15) to "tera" T (10^12). "SI extended" covers instead
+#' the full SI range from "quecto" q (10^-30) to "quetta" Q (10^30). If "SI"
+#' or "SI extended" is used and the exponent is beyond the above ranges, the
+#' formatting rule will automatically be switched to the power notation. One
+#' of \code{"none"}, \code{"e"}, \code{"E"}, \code{"power"}, \code{"SI"},
+#' \code{"B"}, \code{"SI extended"}.}
+#' \item{\code{gridcolor}}{Sets the color of the grid lines. Color: a CSS
+#' color string or R color name.}
+#' \item{\code{gridwidth}}{Sets the width (in px) of the grid lines. Number
+#' in the interval [0, Inf].}
+#' \item{\code{hoverformat}}{Sets the hover text formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{labelalias}}{Replacement text for specific tick or hover
+#' labels. For example using \{US: 'USA', CA: 'Canada'\} changes US to USA
+#' and CA to Canada. The labels we would have shown must match the keys
+#' exactly, after adding any tickprefix or ticksuffix. For negative numbers
+#' the minus sign symbol used (U+2212) is wider than the regular ascii dash.
+#' That means you need to use -1 instead of -1. labelalias can be used with
+#' any axis type, and both keys (if needed) and values (if desired) can
+#' include html-like tags or MathJax. Any value.}
+#' \item{\code{linecolor}}{Sets the axis line color. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{linewidth}}{Sets the width (in px) of the axis line. Number
+#' in the interval [0, Inf].}
+#' \item{\code{maxallowed}}{Determines the maximum range of this axis. Any
+#' value.}
+#' \item{\code{minallowed}}{Determines the minimum range of this axis. Any
+#' value.}
+#' \item{\code{minexponent}}{Hide SI prefix for 10^n if |n| is below this
+#' number. This only has an effect when `tickformat` is "SI" or "B". Number
+#' in the interval [0, Inf].}
+#' \item{\code{mirror}}{Determines if the axis lines or/and ticks are
+#' mirrored to the opposite side of the plotting area. If TRUE, the axis
+#' lines are mirrored. If "ticks", the axis lines and ticks are mirrored. If
+#' FALSE, mirroring is disable. If "all", axis lines are mirrored on all
+#' shared-axes subplots. If "allticks", axis lines and ticks are mirrored on
+#' all shared-axes subplots. One of \code{"ticks"}, \code{"all"},
+#' \code{"allticks"}, \code{TRUE}, \code{FALSE}.}
+#' \item{\code{nticks}}{Specifies the maximum number of ticks for the
+#' particular axis. The actual number of ticks will be chosen automatically
+#' to be less than or equal to `nticks`. Has an effect only if `tickmode` is
+#' set to "auto". Integer in the interval [0, Inf].}
+#' \item{\code{range}}{Sets the range of this axis. If the axis `type` is
+#' "log", then you must take the log of your desired range (e.g. to set the
+#' range from 1 to 100, set the range from 0 to 2). If the axis `type` is
+#' "date", it should be date strings, like date data, though Date objects
+#' and unix milliseconds will be accepted and converted to strings. If the
+#' axis `type` is "category", it should be numbers, using the scale where
+#' each category is assigned a serial number from zero in the order it
+#' appears. Leaving either or both elements `null` impacts the default
+#' `autorange`. Vector or list of 2 element(s).}
+#' \item{\code{rangemode}}{If "normal", the range is computed in relation to
+#' the extrema of the input data. If "tozero", the range extends to 0,
+#' regardless of the input data If "nonnegative", the range is non-negative,
+#' regardless of the input data. Applies only to linear axes. One of
+#' \code{"normal"}, \code{"tozero"}, \code{"nonnegative"}.}
+#' \item{\code{separatethousands}}{If "true", even 4-digit integers are
+#' separated Logical.}
+#' \item{\code{showaxeslabels}}{Sets whether or not this axis is labeled
+#' Logical.}
+#' \item{\code{showbackground}}{Sets whether or not this axis' wall has a
+#' background color. Logical.}
+#' \item{\code{showexponent}}{If "all", all exponents are shown besides
+#' their significands. If "first", only the exponent of the first tick is
+#' shown. If "last", only the exponent of the last tick is shown. If "none",
+#' no exponents appear. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showgrid}}{Determines whether or not grid lines are drawn. If
+#' TRUE, the grid lines are drawn at every tick mark. Logical.}
+#' \item{\code{showline}}{Determines whether or not a line bounding this
+#' axis is drawn. Logical.}
+#' \item{\code{showspikes}}{Sets whether or not spikes starting from data
+#' points to this axis' wall are shown on hover. Logical.}
+#' \item{\code{showticklabels}}{Determines whether or not the tick labels
+#' are drawn. Logical.}
+#' \item{\code{showtickprefix}}{If "all", all tick labels are displayed with
+#' a prefix. If "first", only the first tick is displayed with a prefix. If
+#' "last", only the last tick is displayed with a suffix. If "none", tick
+#' prefixes are hidden. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showticksuffix}}{Same as `showtickprefix` but for tick
+#' suffixes. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{spikecolor}}{Sets the color of the spikes. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{spikesides}}{Sets whether or not spikes extending from the
+#' projection data points to this axis' wall boundaries are shown on hover.
+#' Logical.}
+#' \item{\code{spikethickness}}{Sets the thickness (in px) of the spikes.
+#' Number in the interval [0, Inf].}
+#' \item{\code{tick0}}{Sets the placement of the first tick on this axis.
+#' Use with `dtick`. If the axis `type` is "log", then you must take the log
+#' of your starting tick (e.g. to set the starting tick to 100, set the
+#' `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info). If
+#' the axis `type` is "date", it should be a date string, like date data. If
+#' the axis `type` is "category", it should be a number, using the scale
+#' where each category is assigned a serial number from zero in the order it
+#' appears. Any value.}
+#' \item{\code{tickangle}}{Sets the angle of the tick labels with respect to
+#' the horizontal. For example, a `tickangle` of -90 draws the tick labels
+#' vertically. Angle in degrees.}
+#' \item{\code{tickcolor}}{Sets the tick color. Color: a CSS color string or
+#' R color name.}
+#' \item{\code{tickfont}}{Sets the tick font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{tickformat}}{Sets the tick label formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{tickformatstops}}{List, each element a
+#' \code{\link{go_tickformatstop}()} object or named list, with properties
+#' \code{dtickrange}, \code{enabled}, \code{name}, \code{templateitemname}
+#' and \code{value} (see \code{\link{go_tickformatstop}()}).}
+#' \item{\code{ticklen}}{Sets the tick length (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{tickmode}}{Sets the tick mode for this axis. If "auto", the
+#' number of ticks is set via `nticks`. If "linear", the placement of the
+#' ticks is determined by a starting position `tick0` and a tick step
+#' `dtick` ("linear" is the default value if `tick0` and `dtick` are
+#' provided). If "array", the placement of the ticks is set via `tickvals`
+#' and the tick text is `ticktext`. ("array" is the default value if
+#' `tickvals` is provided). One of \code{"auto"}, \code{"linear"},
+#' \code{"array"}.}
+#' \item{\code{tickprefix}}{Sets a tick label prefix. String.}
+#' \item{\code{ticks}}{Determines whether ticks are drawn or not. If **,
+#' this axis' ticks are not drawn. If "outside" ("inside"), this axis' are
+#' drawn outside (inside) the axis lines. One of \code{"outside"},
+#' \code{"inside"}, \code{""}.}
+#' \item{\code{ticksuffix}}{Sets a tick label suffix. String.}
+#' \item{\code{ticktext}}{Sets the text displayed at the ticks position via
+#' `tickvals`. Only has an effect if `tickmode` is set to "array". Used with
+#' `tickvals`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickvals}}{Sets the values at which ticks on this axis
+#' appear. Only has an effect if `tickmode` is set to "array". Used with
+#' `ticktext`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickwidth}}{Sets the tick width (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{title}}{String (the title text), or a named list with
+#' properties \code{font} and \code{text} (described in section "xaxis.title
+#' properties" below).}
+#' \item{\code{type}}{Sets the axis type. By default, plotly attempts to
+#' determined the axis type by looking into the data of the traces that
+#' referenced the axis in question. One of \code{"-"}, \code{"linear"},
+#' \code{"log"}, \code{"date"}, \code{"category"}.}
+#' \item{\code{visible}}{A single toggle to hide the axis while preserving
+#' interaction like dragging. Default is true when a cheater plot is present
+#' on the axis, otherwise false Logical.}
+#' \item{\code{zeroline}}{Determines whether or not a line is drawn at along
+#' the 0 value of this axis. If TRUE, the zero line is drawn on top of the
+#' grid lines. Logical.}
+#' \item{\code{zerolinecolor}}{Sets the line color of the zero line. Color:
+#' a CSS color string or R color name.}
+#' \item{\code{zerolinewidth}}{Sets the width (in px) of the zero line.
+#' Number.}
+#' }
+#'
+#' @section xaxis.title properties:
+#' \describe{
+#' \item{\code{font}}{Sets this axis' title font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{text}}{Sets the title of this axis. String.}
+#' }
+#'
+#' @section yaxis properties:
+#' \describe{
+#' \item{\code{autorange}}{Determines whether or not the range of this axis
+#' is computed in relation to the input data. See `rangemode` for more info.
+#' If `range` is provided and it has a value for both the lower and upper
+#' bound, `autorange` is set to FALSE. Using "min" applies autorange only to
+#' set the minimum. Using "max" applies autorange only to set the maximum.
+#' Using "min reversed" applies autorange only to set the minimum on a
+#' reversed axis. Using "max reversed" applies autorange only to set the
+#' maximum on a reversed axis. Using "reversed" applies autorange on both
+#' ends and reverses the axis direction. One of \code{"reversed"},
+#' \code{"min reversed"}, \code{"max reversed"}, \code{"min"}, \code{"max"},
+#' \code{TRUE}, \code{FALSE}.}
+#' \item{\code{autorangeoptions}}{A \code{\link{go_autorangeoptions}()}
+#' object or named list, with properties \code{clipmax}, \code{clipmin},
+#' \code{include}, \code{maxallowed} and \code{minallowed} (see
+#' \code{\link{go_autorangeoptions}()}).}
+#' \item{\code{autotypenumbers}}{Using "strict" a numeric string in trace
+#' data is not converted to a number. Using "convert types" a numeric string
+#' in trace data may be treated as a number during automatic axis `type`
+#' detection. Defaults to layout.autotypenumbers. One of \code{"convert
+#' types"}, \code{"strict"}.}
+#' \item{\code{backgroundcolor}}{Sets the background color of this axis'
+#' wall. Color: a CSS color string or R color name.}
+#' \item{\code{calendar}}{Sets the calendar system to use for `range` and
+#' `tick0` if this is a date axis. This does not set the calendar for
+#' interpreting data on this axis, that's specified in the trace or via the
+#' global `layout.calendar` One of \code{"chinese"}, \code{"coptic"},
+#' \code{"discworld"}, \code{"ethiopian"}, \code{"gregorian"},
+#' \code{"hebrew"}, \code{"islamic"}, \code{"jalali"}, \code{"julian"},
+#' \code{"mayan"}, \code{"nanakshahi"}, \code{"nepali"}, \code{"persian"},
+#' \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.}
+#' \item{\code{categoryarray}}{Sets the order in which categories on this
+#' axis appear. Only has an effect if `categoryorder` is set to "array".
+#' Used with `categoryorder`. Data array: a vector, factor, Date/POSIXct
+#' vector, matrix or list.}
+#' \item{\code{categoryorder}}{Specifies the ordering logic for the case of
+#' categorical variables. By default, plotly uses "trace", which specifies
+#' the order that is present in the data supplied. Set `categoryorder` to
+#' "category ascending" or "category descending" if order should be
+#' determined by the alphanumerical order of the category names. Set
+#' `categoryorder` to "array" to derive the ordering from the attribute
+#' `categoryarray`. If a category is not found in the `categoryarray` array,
+#' the sorting behavior for that attribute will be identical to the "trace"
+#' mode. The unspecified categories will follow the categories in
+#' `categoryarray`. Set `categoryorder` to "total ascending" or "total
+#' descending" if order should be determined by the numerical order of the
+#' values. Similarly, the order can be determined by the min, max, sum,
+#' mean, geometric mean or median of all the values. One of \code{"trace"},
+#' \code{"category ascending"}, \code{"category descending"},
+#' \code{"array"}, \code{"total ascending"}, \code{"total descending"},
+#' \code{"min ascending"}, \code{"min descending"}, \code{"max ascending"},
+#' \code{"max descending"}, \code{"sum ascending"}, \code{"sum descending"},
+#' \code{"mean ascending"}, \code{"mean descending"}, \code{"geometric mean
+#' ascending"}, \code{"geometric mean descending"}, \code{"median
+#' ascending"}, \code{"median descending"}.}
+#' \item{\code{color}}{Sets default for all colors associated with this axis
+#' all at once: line, font, tick, and grid colors. Grid color is lightened
+#' by blending this with the plot background Individual pieces can override
+#' this. Color: a CSS color string or R color name.}
+#' \item{\code{dtick}}{Sets the step in-between ticks on this axis. Use with
+#' `tick0`. Must be a positive number, or special strings available to "log"
+#' and "date" axes. If the axis `type` is "log", then ticks are set every
+#' 10^(n*dtick) where n is the tick number. For example, to set a tick mark
+#' at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks at 1, 100,
+#' 10000, ... set dtick to 2. To set tick marks at 1, 5, 25, 125, 625, 3125,
+#' ... set dtick to log_10(5), or 0.69897000433. "log" has several special
+#' values; "L<f>", where `f` is a positive number, gives ticks linearly
+#' spaced in value (but not position). For example `tick0` = 0.1, `dtick` =
+#' "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6 etc. To show powers of 10
+#' plus small digits between, use "D1" (all digits) or "D2" (only 2 and 5).
+#' `tick0` is ignored for "D1" and "D2". If the axis `type` is "date", then
+#' you must convert the time to milliseconds. For example, to set the
+#' interval between ticks to one day, set `dtick` to 86400000.0. "date" also
+#' has special values "M<n>" gives ticks spaced by a number of months. `n`
+#' must be a positive integer. To set ticks on the 15th of every third
+#' month, set `tick0` to "2000-01-15" and `dtick` to "M3". To set ticks
+#' every 4 years, set `dtick` to "M48" Any value.}
+#' \item{\code{exponentformat}}{Determines a formatting rule for the tick
+#' exponents. For example, consider the number 1,000,000,000. If "none", it
+#' appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power", 1x10^9
+#' (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses prefixes
+#' from "femto" f (10^-15) to "tera" T (10^12). "SI extended" covers instead
+#' the full SI range from "quecto" q (10^-30) to "quetta" Q (10^30). If "SI"
+#' or "SI extended" is used and the exponent is beyond the above ranges, the
+#' formatting rule will automatically be switched to the power notation. One
+#' of \code{"none"}, \code{"e"}, \code{"E"}, \code{"power"}, \code{"SI"},
+#' \code{"B"}, \code{"SI extended"}.}
+#' \item{\code{gridcolor}}{Sets the color of the grid lines. Color: a CSS
+#' color string or R color name.}
+#' \item{\code{gridwidth}}{Sets the width (in px) of the grid lines. Number
+#' in the interval [0, Inf].}
+#' \item{\code{hoverformat}}{Sets the hover text formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{labelalias}}{Replacement text for specific tick or hover
+#' labels. For example using \{US: 'USA', CA: 'Canada'\} changes US to USA
+#' and CA to Canada. The labels we would have shown must match the keys
+#' exactly, after adding any tickprefix or ticksuffix. For negative numbers
+#' the minus sign symbol used (U+2212) is wider than the regular ascii dash.
+#' That means you need to use -1 instead of -1. labelalias can be used with
+#' any axis type, and both keys (if needed) and values (if desired) can
+#' include html-like tags or MathJax. Any value.}
+#' \item{\code{linecolor}}{Sets the axis line color. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{linewidth}}{Sets the width (in px) of the axis line. Number
+#' in the interval [0, Inf].}
+#' \item{\code{maxallowed}}{Determines the maximum range of this axis. Any
+#' value.}
+#' \item{\code{minallowed}}{Determines the minimum range of this axis. Any
+#' value.}
+#' \item{\code{minexponent}}{Hide SI prefix for 10^n if |n| is below this
+#' number. This only has an effect when `tickformat` is "SI" or "B". Number
+#' in the interval [0, Inf].}
+#' \item{\code{mirror}}{Determines if the axis lines or/and ticks are
+#' mirrored to the opposite side of the plotting area. If TRUE, the axis
+#' lines are mirrored. If "ticks", the axis lines and ticks are mirrored. If
+#' FALSE, mirroring is disable. If "all", axis lines are mirrored on all
+#' shared-axes subplots. If "allticks", axis lines and ticks are mirrored on
+#' all shared-axes subplots. One of \code{"ticks"}, \code{"all"},
+#' \code{"allticks"}, \code{TRUE}, \code{FALSE}.}
+#' \item{\code{nticks}}{Specifies the maximum number of ticks for the
+#' particular axis. The actual number of ticks will be chosen automatically
+#' to be less than or equal to `nticks`. Has an effect only if `tickmode` is
+#' set to "auto". Integer in the interval [0, Inf].}
+#' \item{\code{range}}{Sets the range of this axis. If the axis `type` is
+#' "log", then you must take the log of your desired range (e.g. to set the
+#' range from 1 to 100, set the range from 0 to 2). If the axis `type` is
+#' "date", it should be date strings, like date data, though Date objects
+#' and unix milliseconds will be accepted and converted to strings. If the
+#' axis `type` is "category", it should be numbers, using the scale where
+#' each category is assigned a serial number from zero in the order it
+#' appears. Leaving either or both elements `null` impacts the default
+#' `autorange`. Vector or list of 2 element(s).}
+#' \item{\code{rangemode}}{If "normal", the range is computed in relation to
+#' the extrema of the input data. If "tozero", the range extends to 0,
+#' regardless of the input data If "nonnegative", the range is non-negative,
+#' regardless of the input data. Applies only to linear axes. One of
+#' \code{"normal"}, \code{"tozero"}, \code{"nonnegative"}.}
+#' \item{\code{separatethousands}}{If "true", even 4-digit integers are
+#' separated Logical.}
+#' \item{\code{showaxeslabels}}{Sets whether or not this axis is labeled
+#' Logical.}
+#' \item{\code{showbackground}}{Sets whether or not this axis' wall has a
+#' background color. Logical.}
+#' \item{\code{showexponent}}{If "all", all exponents are shown besides
+#' their significands. If "first", only the exponent of the first tick is
+#' shown. If "last", only the exponent of the last tick is shown. If "none",
+#' no exponents appear. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showgrid}}{Determines whether or not grid lines are drawn. If
+#' TRUE, the grid lines are drawn at every tick mark. Logical.}
+#' \item{\code{showline}}{Determines whether or not a line bounding this
+#' axis is drawn. Logical.}
+#' \item{\code{showspikes}}{Sets whether or not spikes starting from data
+#' points to this axis' wall are shown on hover. Logical.}
+#' \item{\code{showticklabels}}{Determines whether or not the tick labels
+#' are drawn. Logical.}
+#' \item{\code{showtickprefix}}{If "all", all tick labels are displayed with
+#' a prefix. If "first", only the first tick is displayed with a prefix. If
+#' "last", only the last tick is displayed with a suffix. If "none", tick
+#' prefixes are hidden. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showticksuffix}}{Same as `showtickprefix` but for tick
+#' suffixes. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{spikecolor}}{Sets the color of the spikes. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{spikesides}}{Sets whether or not spikes extending from the
+#' projection data points to this axis' wall boundaries are shown on hover.
+#' Logical.}
+#' \item{\code{spikethickness}}{Sets the thickness (in px) of the spikes.
+#' Number in the interval [0, Inf].}
+#' \item{\code{tick0}}{Sets the placement of the first tick on this axis.
+#' Use with `dtick`. If the axis `type` is "log", then you must take the log
+#' of your starting tick (e.g. to set the starting tick to 100, set the
+#' `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info). If
+#' the axis `type` is "date", it should be a date string, like date data. If
+#' the axis `type` is "category", it should be a number, using the scale
+#' where each category is assigned a serial number from zero in the order it
+#' appears. Any value.}
+#' \item{\code{tickangle}}{Sets the angle of the tick labels with respect to
+#' the horizontal. For example, a `tickangle` of -90 draws the tick labels
+#' vertically. Angle in degrees.}
+#' \item{\code{tickcolor}}{Sets the tick color. Color: a CSS color string or
+#' R color name.}
+#' \item{\code{tickfont}}{Sets the tick font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{tickformat}}{Sets the tick label formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{tickformatstops}}{List, each element a
+#' \code{\link{go_tickformatstop}()} object or named list, with properties
+#' \code{dtickrange}, \code{enabled}, \code{name}, \code{templateitemname}
+#' and \code{value} (see \code{\link{go_tickformatstop}()}).}
+#' \item{\code{ticklen}}{Sets the tick length (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{tickmode}}{Sets the tick mode for this axis. If "auto", the
+#' number of ticks is set via `nticks`. If "linear", the placement of the
+#' ticks is determined by a starting position `tick0` and a tick step
+#' `dtick` ("linear" is the default value if `tick0` and `dtick` are
+#' provided). If "array", the placement of the ticks is set via `tickvals`
+#' and the tick text is `ticktext`. ("array" is the default value if
+#' `tickvals` is provided). One of \code{"auto"}, \code{"linear"},
+#' \code{"array"}.}
+#' \item{\code{tickprefix}}{Sets a tick label prefix. String.}
+#' \item{\code{ticks}}{Determines whether ticks are drawn or not. If **,
+#' this axis' ticks are not drawn. If "outside" ("inside"), this axis' are
+#' drawn outside (inside) the axis lines. One of \code{"outside"},
+#' \code{"inside"}, \code{""}.}
+#' \item{\code{ticksuffix}}{Sets a tick label suffix. String.}
+#' \item{\code{ticktext}}{Sets the text displayed at the ticks position via
+#' `tickvals`. Only has an effect if `tickmode` is set to "array". Used with
+#' `tickvals`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickvals}}{Sets the values at which ticks on this axis
+#' appear. Only has an effect if `tickmode` is set to "array". Used with
+#' `ticktext`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickwidth}}{Sets the tick width (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{title}}{String (the title text), or a named list with
+#' properties \code{font} and \code{text} (described in section "yaxis.title
+#' properties" below).}
+#' \item{\code{type}}{Sets the axis type. By default, plotly attempts to
+#' determined the axis type by looking into the data of the traces that
+#' referenced the axis in question. One of \code{"-"}, \code{"linear"},
+#' \code{"log"}, \code{"date"}, \code{"category"}.}
+#' \item{\code{visible}}{A single toggle to hide the axis while preserving
+#' interaction like dragging. Default is true when a cheater plot is present
+#' on the axis, otherwise false Logical.}
+#' \item{\code{zeroline}}{Determines whether or not a line is drawn at along
+#' the 0 value of this axis. If TRUE, the zero line is drawn on top of the
+#' grid lines. Logical.}
+#' \item{\code{zerolinecolor}}{Sets the line color of the zero line. Color:
+#' a CSS color string or R color name.}
+#' \item{\code{zerolinewidth}}{Sets the width (in px) of the zero line.
+#' Number.}
+#' }
+#'
+#' @section yaxis.title properties:
+#' \describe{
+#' \item{\code{font}}{Sets this axis' title font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{text}}{Sets the title of this axis. String.}
+#' }
+#'
+#' @section zaxis properties:
+#' \describe{
+#' \item{\code{autorange}}{Determines whether or not the range of this axis
+#' is computed in relation to the input data. See `rangemode` for more info.
+#' If `range` is provided and it has a value for both the lower and upper
+#' bound, `autorange` is set to FALSE. Using "min" applies autorange only to
+#' set the minimum. Using "max" applies autorange only to set the maximum.
+#' Using "min reversed" applies autorange only to set the minimum on a
+#' reversed axis. Using "max reversed" applies autorange only to set the
+#' maximum on a reversed axis. Using "reversed" applies autorange on both
+#' ends and reverses the axis direction. One of \code{"reversed"},
+#' \code{"min reversed"}, \code{"max reversed"}, \code{"min"}, \code{"max"},
+#' \code{TRUE}, \code{FALSE}.}
+#' \item{\code{autorangeoptions}}{A \code{\link{go_autorangeoptions}()}
+#' object or named list, with properties \code{clipmax}, \code{clipmin},
+#' \code{include}, \code{maxallowed} and \code{minallowed} (see
+#' \code{\link{go_autorangeoptions}()}).}
+#' \item{\code{autotypenumbers}}{Using "strict" a numeric string in trace
+#' data is not converted to a number. Using "convert types" a numeric string
+#' in trace data may be treated as a number during automatic axis `type`
+#' detection. Defaults to layout.autotypenumbers. One of \code{"convert
+#' types"}, \code{"strict"}.}
+#' \item{\code{backgroundcolor}}{Sets the background color of this axis'
+#' wall. Color: a CSS color string or R color name.}
+#' \item{\code{calendar}}{Sets the calendar system to use for `range` and
+#' `tick0` if this is a date axis. This does not set the calendar for
+#' interpreting data on this axis, that's specified in the trace or via the
+#' global `layout.calendar` One of \code{"chinese"}, \code{"coptic"},
+#' \code{"discworld"}, \code{"ethiopian"}, \code{"gregorian"},
+#' \code{"hebrew"}, \code{"islamic"}, \code{"jalali"}, \code{"julian"},
+#' \code{"mayan"}, \code{"nanakshahi"}, \code{"nepali"}, \code{"persian"},
+#' \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.}
+#' \item{\code{categoryarray}}{Sets the order in which categories on this
+#' axis appear. Only has an effect if `categoryorder` is set to "array".
+#' Used with `categoryorder`. Data array: a vector, factor, Date/POSIXct
+#' vector, matrix or list.}
+#' \item{\code{categoryorder}}{Specifies the ordering logic for the case of
+#' categorical variables. By default, plotly uses "trace", which specifies
+#' the order that is present in the data supplied. Set `categoryorder` to
+#' "category ascending" or "category descending" if order should be
+#' determined by the alphanumerical order of the category names. Set
+#' `categoryorder` to "array" to derive the ordering from the attribute
+#' `categoryarray`. If a category is not found in the `categoryarray` array,
+#' the sorting behavior for that attribute will be identical to the "trace"
+#' mode. The unspecified categories will follow the categories in
+#' `categoryarray`. Set `categoryorder` to "total ascending" or "total
+#' descending" if order should be determined by the numerical order of the
+#' values. Similarly, the order can be determined by the min, max, sum,
+#' mean, geometric mean or median of all the values. One of \code{"trace"},
+#' \code{"category ascending"}, \code{"category descending"},
+#' \code{"array"}, \code{"total ascending"}, \code{"total descending"},
+#' \code{"min ascending"}, \code{"min descending"}, \code{"max ascending"},
+#' \code{"max descending"}, \code{"sum ascending"}, \code{"sum descending"},
+#' \code{"mean ascending"}, \code{"mean descending"}, \code{"geometric mean
+#' ascending"}, \code{"geometric mean descending"}, \code{"median
+#' ascending"}, \code{"median descending"}.}
+#' \item{\code{color}}{Sets default for all colors associated with this axis
+#' all at once: line, font, tick, and grid colors. Grid color is lightened
+#' by blending this with the plot background Individual pieces can override
+#' this. Color: a CSS color string or R color name.}
+#' \item{\code{dtick}}{Sets the step in-between ticks on this axis. Use with
+#' `tick0`. Must be a positive number, or special strings available to "log"
+#' and "date" axes. If the axis `type` is "log", then ticks are set every
+#' 10^(n*dtick) where n is the tick number. For example, to set a tick mark
+#' at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks at 1, 100,
+#' 10000, ... set dtick to 2. To set tick marks at 1, 5, 25, 125, 625, 3125,
+#' ... set dtick to log_10(5), or 0.69897000433. "log" has several special
+#' values; "L<f>", where `f` is a positive number, gives ticks linearly
+#' spaced in value (but not position). For example `tick0` = 0.1, `dtick` =
+#' "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6 etc. To show powers of 10
+#' plus small digits between, use "D1" (all digits) or "D2" (only 2 and 5).
+#' `tick0` is ignored for "D1" and "D2". If the axis `type` is "date", then
+#' you must convert the time to milliseconds. For example, to set the
+#' interval between ticks to one day, set `dtick` to 86400000.0. "date" also
+#' has special values "M<n>" gives ticks spaced by a number of months. `n`
+#' must be a positive integer. To set ticks on the 15th of every third
+#' month, set `tick0` to "2000-01-15" and `dtick` to "M3". To set ticks
+#' every 4 years, set `dtick` to "M48" Any value.}
+#' \item{\code{exponentformat}}{Determines a formatting rule for the tick
+#' exponents. For example, consider the number 1,000,000,000. If "none", it
+#' appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power", 1x10^9
+#' (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses prefixes
+#' from "femto" f (10^-15) to "tera" T (10^12). "SI extended" covers instead
+#' the full SI range from "quecto" q (10^-30) to "quetta" Q (10^30). If "SI"
+#' or "SI extended" is used and the exponent is beyond the above ranges, the
+#' formatting rule will automatically be switched to the power notation. One
+#' of \code{"none"}, \code{"e"}, \code{"E"}, \code{"power"}, \code{"SI"},
+#' \code{"B"}, \code{"SI extended"}.}
+#' \item{\code{gridcolor}}{Sets the color of the grid lines. Color: a CSS
+#' color string or R color name.}
+#' \item{\code{gridwidth}}{Sets the width (in px) of the grid lines. Number
+#' in the interval [0, Inf].}
+#' \item{\code{hoverformat}}{Sets the hover text formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{labelalias}}{Replacement text for specific tick or hover
+#' labels. For example using \{US: 'USA', CA: 'Canada'\} changes US to USA
+#' and CA to Canada. The labels we would have shown must match the keys
+#' exactly, after adding any tickprefix or ticksuffix. For negative numbers
+#' the minus sign symbol used (U+2212) is wider than the regular ascii dash.
+#' That means you need to use -1 instead of -1. labelalias can be used with
+#' any axis type, and both keys (if needed) and values (if desired) can
+#' include html-like tags or MathJax. Any value.}
+#' \item{\code{linecolor}}{Sets the axis line color. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{linewidth}}{Sets the width (in px) of the axis line. Number
+#' in the interval [0, Inf].}
+#' \item{\code{maxallowed}}{Determines the maximum range of this axis. Any
+#' value.}
+#' \item{\code{minallowed}}{Determines the minimum range of this axis. Any
+#' value.}
+#' \item{\code{minexponent}}{Hide SI prefix for 10^n if |n| is below this
+#' number. This only has an effect when `tickformat` is "SI" or "B". Number
+#' in the interval [0, Inf].}
+#' \item{\code{mirror}}{Determines if the axis lines or/and ticks are
+#' mirrored to the opposite side of the plotting area. If TRUE, the axis
+#' lines are mirrored. If "ticks", the axis lines and ticks are mirrored. If
+#' FALSE, mirroring is disable. If "all", axis lines are mirrored on all
+#' shared-axes subplots. If "allticks", axis lines and ticks are mirrored on
+#' all shared-axes subplots. One of \code{"ticks"}, \code{"all"},
+#' \code{"allticks"}, \code{TRUE}, \code{FALSE}.}
+#' \item{\code{nticks}}{Specifies the maximum number of ticks for the
+#' particular axis. The actual number of ticks will be chosen automatically
+#' to be less than or equal to `nticks`. Has an effect only if `tickmode` is
+#' set to "auto". Integer in the interval [0, Inf].}
+#' \item{\code{range}}{Sets the range of this axis. If the axis `type` is
+#' "log", then you must take the log of your desired range (e.g. to set the
+#' range from 1 to 100, set the range from 0 to 2). If the axis `type` is
+#' "date", it should be date strings, like date data, though Date objects
+#' and unix milliseconds will be accepted and converted to strings. If the
+#' axis `type` is "category", it should be numbers, using the scale where
+#' each category is assigned a serial number from zero in the order it
+#' appears. Leaving either or both elements `null` impacts the default
+#' `autorange`. Vector or list of 2 element(s).}
+#' \item{\code{rangemode}}{If "normal", the range is computed in relation to
+#' the extrema of the input data. If "tozero", the range extends to 0,
+#' regardless of the input data If "nonnegative", the range is non-negative,
+#' regardless of the input data. Applies only to linear axes. One of
+#' \code{"normal"}, \code{"tozero"}, \code{"nonnegative"}.}
+#' \item{\code{separatethousands}}{If "true", even 4-digit integers are
+#' separated Logical.}
+#' \item{\code{showaxeslabels}}{Sets whether or not this axis is labeled
+#' Logical.}
+#' \item{\code{showbackground}}{Sets whether or not this axis' wall has a
+#' background color. Logical.}
+#' \item{\code{showexponent}}{If "all", all exponents are shown besides
+#' their significands. If "first", only the exponent of the first tick is
+#' shown. If "last", only the exponent of the last tick is shown. If "none",
+#' no exponents appear. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showgrid}}{Determines whether or not grid lines are drawn. If
+#' TRUE, the grid lines are drawn at every tick mark. Logical.}
+#' \item{\code{showline}}{Determines whether or not a line bounding this
+#' axis is drawn. Logical.}
+#' \item{\code{showspikes}}{Sets whether or not spikes starting from data
+#' points to this axis' wall are shown on hover. Logical.}
+#' \item{\code{showticklabels}}{Determines whether or not the tick labels
+#' are drawn. Logical.}
+#' \item{\code{showtickprefix}}{If "all", all tick labels are displayed with
+#' a prefix. If "first", only the first tick is displayed with a prefix. If
+#' "last", only the last tick is displayed with a suffix. If "none", tick
+#' prefixes are hidden. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showticksuffix}}{Same as `showtickprefix` but for tick
+#' suffixes. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{spikecolor}}{Sets the color of the spikes. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{spikesides}}{Sets whether or not spikes extending from the
+#' projection data points to this axis' wall boundaries are shown on hover.
+#' Logical.}
+#' \item{\code{spikethickness}}{Sets the thickness (in px) of the spikes.
+#' Number in the interval [0, Inf].}
+#' \item{\code{tick0}}{Sets the placement of the first tick on this axis.
+#' Use with `dtick`. If the axis `type` is "log", then you must take the log
+#' of your starting tick (e.g. to set the starting tick to 100, set the
+#' `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info). If
+#' the axis `type` is "date", it should be a date string, like date data. If
+#' the axis `type` is "category", it should be a number, using the scale
+#' where each category is assigned a serial number from zero in the order it
+#' appears. Any value.}
+#' \item{\code{tickangle}}{Sets the angle of the tick labels with respect to
+#' the horizontal. For example, a `tickangle` of -90 draws the tick labels
+#' vertically. Angle in degrees.}
+#' \item{\code{tickcolor}}{Sets the tick color. Color: a CSS color string or
+#' R color name.}
+#' \item{\code{tickfont}}{Sets the tick font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{tickformat}}{Sets the tick label formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{tickformatstops}}{List, each element a
+#' \code{\link{go_tickformatstop}()} object or named list, with properties
+#' \code{dtickrange}, \code{enabled}, \code{name}, \code{templateitemname}
+#' and \code{value} (see \code{\link{go_tickformatstop}()}).}
+#' \item{\code{ticklen}}{Sets the tick length (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{tickmode}}{Sets the tick mode for this axis. If "auto", the
+#' number of ticks is set via `nticks`. If "linear", the placement of the
+#' ticks is determined by a starting position `tick0` and a tick step
+#' `dtick` ("linear" is the default value if `tick0` and `dtick` are
+#' provided). If "array", the placement of the ticks is set via `tickvals`
+#' and the tick text is `ticktext`. ("array" is the default value if
+#' `tickvals` is provided). One of \code{"auto"}, \code{"linear"},
+#' \code{"array"}.}
+#' \item{\code{tickprefix}}{Sets a tick label prefix. String.}
+#' \item{\code{ticks}}{Determines whether ticks are drawn or not. If **,
+#' this axis' ticks are not drawn. If "outside" ("inside"), this axis' are
+#' drawn outside (inside) the axis lines. One of \code{"outside"},
+#' \code{"inside"}, \code{""}.}
+#' \item{\code{ticksuffix}}{Sets a tick label suffix. String.}
+#' \item{\code{ticktext}}{Sets the text displayed at the ticks position via
+#' `tickvals`. Only has an effect if `tickmode` is set to "array". Used with
+#' `tickvals`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickvals}}{Sets the values at which ticks on this axis
+#' appear. Only has an effect if `tickmode` is set to "array". Used with
+#' `ticktext`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickwidth}}{Sets the tick width (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{title}}{String (the title text), or a named list with
+#' properties \code{font} and \code{text} (described in section "zaxis.title
+#' properties" below).}
+#' \item{\code{type}}{Sets the axis type. By default, plotly attempts to
+#' determined the axis type by looking into the data of the traces that
+#' referenced the axis in question. One of \code{"-"}, \code{"linear"},
+#' \code{"log"}, \code{"date"}, \code{"category"}.}
+#' \item{\code{visible}}{A single toggle to hide the axis while preserving
+#' interaction like dragging. Default is true when a cheater plot is present
+#' on the axis, otherwise false Logical.}
+#' \item{\code{zeroline}}{Determines whether or not a line is drawn at along
+#' the 0 value of this axis. If TRUE, the zero line is drawn on top of the
+#' grid lines. Logical.}
+#' \item{\code{zerolinecolor}}{Sets the line color of the zero line. Color:
+#' a CSS color string or R color name.}
+#' \item{\code{zerolinewidth}}{Sets the width (in px) of the zero line.
+#' Number.}
+#' }
+#'
+#' @section zaxis.title properties:
+#' \describe{
+#' \item{\code{font}}{Sets this axis' title font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{text}}{Sets the title of this axis. String.}
+#' }
+#'
 #' @name update_scenes
 #' @noMd
 NULL
@@ -1595,13 +3790,220 @@ for_each_scene <- function(fig, fn, selector = NULL, row = NULL, col = NULL) {
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
-#' @param patch A named list or \code{\link{go_layout_smith}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list of smith property updates (see section "smith properties").
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_smiths()} returns a named list of \code{\link{go_layout_smith}()} objects; the
+#' @return \code{select_smiths()} returns a named list of smith objects; the
 #'   others return the modified figure.
+#'
+#' @section smith properties:
+#' \describe{
+#' \item{\code{bgcolor}}{Set the background color of the subplot Color: a
+#' CSS color string or R color name.}
+#' \item{\code{domain}}{A \code{\link{go_domain}()} object or named list,
+#' with properties \code{column}, \code{row}, \code{x} and \code{y} (see
+#' \code{\link{go_domain}()}).}
+#' \item{\code{imaginaryaxis}}{A named list with properties \code{color},
+#' \code{gridcolor}, \code{griddash}, \code{gridwidth}, \code{hoverformat},
+#' \code{labelalias}, \code{layer}, \code{linecolor}, \code{linewidth},
+#' \code{showgrid}, \code{showline}, \code{showticklabels} and 12 more
+#' (described in section "imaginaryaxis properties" below).}
+#' \item{\code{realaxis}}{A named list with properties \code{color},
+#' \code{gridcolor}, \code{griddash}, \code{gridwidth}, \code{hoverformat},
+#' \code{labelalias}, \code{layer}, \code{linecolor}, \code{linewidth},
+#' \code{showgrid}, \code{showline}, \code{showticklabels} and 14 more
+#' (described in section "realaxis properties" below).}
+#' }
+#'
+#' @section imaginaryaxis properties:
+#' \describe{
+#' \item{\code{color}}{Sets default for all colors associated with this axis
+#' all at once: line, font, tick, and grid colors. Grid color is lightened
+#' by blending this with the plot background Individual pieces can override
+#' this. Color: a CSS color string or R color name.}
+#' \item{\code{gridcolor}}{Sets the color of the grid lines. Color: a CSS
+#' color string or R color name.}
+#' \item{\code{griddash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{gridwidth}}{Sets the width (in px) of the grid lines. Number
+#' in the interval [0, Inf].}
+#' \item{\code{hoverformat}}{Sets the hover text formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{labelalias}}{Replacement text for specific tick or hover
+#' labels. For example using \{US: 'USA', CA: 'Canada'\} changes US to USA
+#' and CA to Canada. The labels we would have shown must match the keys
+#' exactly, after adding any tickprefix or ticksuffix. For negative numbers
+#' the minus sign symbol used (U+2212) is wider than the regular ascii dash.
+#' That means you need to use -1 instead of -1. labelalias can be used with
+#' any axis type, and both keys (if needed) and values (if desired) can
+#' include html-like tags or MathJax. Any value.}
+#' \item{\code{layer}}{Sets the layer on which this axis is displayed. If
+#' "above traces", this axis is displayed above all the subplot's traces If
+#' "below traces", this axis is displayed below all the subplot's traces,
+#' but above the grid lines. Useful when used together with scatter-like
+#' traces with `cliponaxis` set to FALSE to show markers and/or text nodes
+#' above this axis. One of \code{"above traces"}, \code{"below traces"}.}
+#' \item{\code{linecolor}}{Sets the axis line color. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{linewidth}}{Sets the width (in px) of the axis line. Number
+#' in the interval [0, Inf].}
+#' \item{\code{showgrid}}{Determines whether or not grid lines are drawn. If
+#' TRUE, the grid lines are drawn at every tick mark. Logical.}
+#' \item{\code{showline}}{Determines whether or not a line bounding this
+#' axis is drawn. Logical.}
+#' \item{\code{showticklabels}}{Determines whether or not the tick labels
+#' are drawn. Logical.}
+#' \item{\code{showtickprefix}}{If "all", all tick labels are displayed with
+#' a prefix. If "first", only the first tick is displayed with a prefix. If
+#' "last", only the last tick is displayed with a suffix. If "none", tick
+#' prefixes are hidden. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showticksuffix}}{Same as `showtickprefix` but for tick
+#' suffixes. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{tickcolor}}{Sets the tick color. Color: a CSS color string or
+#' R color name.}
+#' \item{\code{tickfont}}{Sets the tick font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{tickformat}}{Sets the tick label formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{ticklen}}{Sets the tick length (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{tickprefix}}{Sets a tick label prefix. String.}
+#' \item{\code{ticks}}{Determines whether ticks are drawn or not. If **,
+#' this axis' ticks are not drawn. If "outside" ("inside"), this axis' are
+#' drawn outside (inside) the axis lines. One of \code{"outside"},
+#' \code{"inside"}, \code{""}.}
+#' \item{\code{ticksuffix}}{Sets a tick label suffix. String.}
+#' \item{\code{tickvals}}{Sets the values at which ticks on this axis
+#' appear. Defaults to `realaxis.tickvals` plus the same as negatives and
+#' zero. Data array: a vector, factor, Date/POSIXct vector, matrix or list.}
+#' \item{\code{tickwidth}}{Sets the tick width (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{visible}}{A single toggle to hide the axis while preserving
+#' interaction like dragging. Default is true when a cheater plot is present
+#' on the axis, otherwise false Logical.}
+#' }
+#'
+#' @section realaxis properties:
+#' \describe{
+#' \item{\code{color}}{Sets default for all colors associated with this axis
+#' all at once: line, font, tick, and grid colors. Grid color is lightened
+#' by blending this with the plot background Individual pieces can override
+#' this. Color: a CSS color string or R color name.}
+#' \item{\code{gridcolor}}{Sets the color of the grid lines. Color: a CSS
+#' color string or R color name.}
+#' \item{\code{griddash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{gridwidth}}{Sets the width (in px) of the grid lines. Number
+#' in the interval [0, Inf].}
+#' \item{\code{hoverformat}}{Sets the hover text formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{labelalias}}{Replacement text for specific tick or hover
+#' labels. For example using \{US: 'USA', CA: 'Canada'\} changes US to USA
+#' and CA to Canada. The labels we would have shown must match the keys
+#' exactly, after adding any tickprefix or ticksuffix. For negative numbers
+#' the minus sign symbol used (U+2212) is wider than the regular ascii dash.
+#' That means you need to use -1 instead of -1. labelalias can be used with
+#' any axis type, and both keys (if needed) and values (if desired) can
+#' include html-like tags or MathJax. Any value.}
+#' \item{\code{layer}}{Sets the layer on which this axis is displayed. If
+#' "above traces", this axis is displayed above all the subplot's traces If
+#' "below traces", this axis is displayed below all the subplot's traces,
+#' but above the grid lines. Useful when used together with scatter-like
+#' traces with `cliponaxis` set to FALSE to show markers and/or text nodes
+#' above this axis. One of \code{"above traces"}, \code{"below traces"}.}
+#' \item{\code{linecolor}}{Sets the axis line color. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{linewidth}}{Sets the width (in px) of the axis line. Number
+#' in the interval [0, Inf].}
+#' \item{\code{showgrid}}{Determines whether or not grid lines are drawn. If
+#' TRUE, the grid lines are drawn at every tick mark. Logical.}
+#' \item{\code{showline}}{Determines whether or not a line bounding this
+#' axis is drawn. Logical.}
+#' \item{\code{showticklabels}}{Determines whether or not the tick labels
+#' are drawn. Logical.}
+#' \item{\code{showtickprefix}}{If "all", all tick labels are displayed with
+#' a prefix. If "first", only the first tick is displayed with a prefix. If
+#' "last", only the last tick is displayed with a suffix. If "none", tick
+#' prefixes are hidden. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showticksuffix}}{Same as `showtickprefix` but for tick
+#' suffixes. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{side}}{Determines on which side of real axis line the tick
+#' and tick labels appear. One of \code{"top"}, \code{"bottom"}.}
+#' \item{\code{tickangle}}{Sets the angle of the tick labels with respect to
+#' the horizontal. For example, a `tickangle` of -90 draws the tick labels
+#' vertically. Angle in degrees.}
+#' \item{\code{tickcolor}}{Sets the tick color. Color: a CSS color string or
+#' R color name.}
+#' \item{\code{tickfont}}{Sets the tick font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{tickformat}}{Sets the tick label formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{ticklen}}{Sets the tick length (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{tickprefix}}{Sets a tick label prefix. String.}
+#' \item{\code{ticks}}{Determines whether ticks are drawn or not. If **,
+#' this axis' ticks are not drawn. If "top" ("bottom"), this axis' are drawn
+#' above (below) the axis line. One of \code{"top"}, \code{"bottom"},
+#' \code{""}.}
+#' \item{\code{ticksuffix}}{Sets a tick label suffix. String.}
+#' \item{\code{tickvals}}{Sets the values at which ticks on this axis
+#' appear. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickwidth}}{Sets the tick width (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{visible}}{A single toggle to hide the axis while preserving
+#' interaction like dragging. Default is true when a cheater plot is present
+#' on the axis, otherwise false Logical.}
+#' }
+#'
 #' @name update_smiths
 #' @noMd
 NULL
@@ -1638,13 +4040,664 @@ for_each_smith <- function(fig, fn, selector = NULL, row = NULL, col = NULL) {
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
-#' @param patch A named list or \code{\link{go_layout_ternary}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list of ternary property updates (see section "ternary properties").
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_ternaries()} returns a named list of \code{\link{go_layout_ternary}()} objects; the
+#' @return \code{select_ternaries()} returns a named list of ternary objects; the
 #'   others return the modified figure.
+#'
+#' @section ternary properties:
+#' \describe{
+#' \item{\code{aaxis}}{A named list with properties \code{color},
+#' \code{dtick}, \code{exponentformat}, \code{gridcolor}, \code{griddash},
+#' \code{gridwidth}, \code{hoverformat}, \code{labelalias}, \code{layer},
+#' \code{linecolor}, \code{linewidth}, \code{min} and 32 more (described in
+#' section "aaxis properties" below).}
+#' \item{\code{baxis}}{A named list with properties \code{color},
+#' \code{dtick}, \code{exponentformat}, \code{gridcolor}, \code{griddash},
+#' \code{gridwidth}, \code{hoverformat}, \code{labelalias}, \code{layer},
+#' \code{linecolor}, \code{linewidth}, \code{min} and 32 more (described in
+#' section "baxis properties" below).}
+#' \item{\code{bgcolor}}{Set the background color of the subplot Color: a
+#' CSS color string or R color name.}
+#' \item{\code{caxis}}{A named list with properties \code{color},
+#' \code{dtick}, \code{exponentformat}, \code{gridcolor}, \code{griddash},
+#' \code{gridwidth}, \code{hoverformat}, \code{labelalias}, \code{layer},
+#' \code{linecolor}, \code{linewidth}, \code{min} and 32 more (described in
+#' section "caxis properties" below).}
+#' \item{\code{domain}}{A \code{\link{go_domain}()} object or named list,
+#' with properties \code{column}, \code{row}, \code{x} and \code{y} (see
+#' \code{\link{go_domain}()}).}
+#' \item{\code{sum}}{The number each triplet should sum to, and the maximum
+#' range of each axis Number in the interval [0, Inf].}
+#' \item{\code{uirevision}}{Controls persistence of user-driven changes in
+#' axis `min` and `title`, if not overridden in the individual axes.
+#' Defaults to `layout.uirevision`. Any value.}
+#' }
+#'
+#' @section aaxis properties:
+#' \describe{
+#' \item{\code{color}}{Sets default for all colors associated with this axis
+#' all at once: line, font, tick, and grid colors. Grid color is lightened
+#' by blending this with the plot background Individual pieces can override
+#' this. Color: a CSS color string or R color name.}
+#' \item{\code{dtick}}{Sets the step in-between ticks on this axis. Use with
+#' `tick0`. Must be a positive number, or special strings available to "log"
+#' and "date" axes. If the axis `type` is "log", then ticks are set every
+#' 10^(n*dtick) where n is the tick number. For example, to set a tick mark
+#' at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks at 1, 100,
+#' 10000, ... set dtick to 2. To set tick marks at 1, 5, 25, 125, 625, 3125,
+#' ... set dtick to log_10(5), or 0.69897000433. "log" has several special
+#' values; "L<f>", where `f` is a positive number, gives ticks linearly
+#' spaced in value (but not position). For example `tick0` = 0.1, `dtick` =
+#' "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6 etc. To show powers of 10
+#' plus small digits between, use "D1" (all digits) or "D2" (only 2 and 5).
+#' `tick0` is ignored for "D1" and "D2". If the axis `type` is "date", then
+#' you must convert the time to milliseconds. For example, to set the
+#' interval between ticks to one day, set `dtick` to 86400000.0. "date" also
+#' has special values "M<n>" gives ticks spaced by a number of months. `n`
+#' must be a positive integer. To set ticks on the 15th of every third
+#' month, set `tick0` to "2000-01-15" and `dtick` to "M3". To set ticks
+#' every 4 years, set `dtick` to "M48" Any value.}
+#' \item{\code{exponentformat}}{Determines a formatting rule for the tick
+#' exponents. For example, consider the number 1,000,000,000. If "none", it
+#' appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power", 1x10^9
+#' (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses prefixes
+#' from "femto" f (10^-15) to "tera" T (10^12). "SI extended" covers instead
+#' the full SI range from "quecto" q (10^-30) to "quetta" Q (10^30). If "SI"
+#' or "SI extended" is used and the exponent is beyond the above ranges, the
+#' formatting rule will automatically be switched to the power notation. One
+#' of \code{"none"}, \code{"e"}, \code{"E"}, \code{"power"}, \code{"SI"},
+#' \code{"B"}, \code{"SI extended"}.}
+#' \item{\code{gridcolor}}{Sets the color of the grid lines. Color: a CSS
+#' color string or R color name.}
+#' \item{\code{griddash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{gridwidth}}{Sets the width (in px) of the grid lines. Number
+#' in the interval [0, Inf].}
+#' \item{\code{hoverformat}}{Sets the hover text formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{labelalias}}{Replacement text for specific tick or hover
+#' labels. For example using \{US: 'USA', CA: 'Canada'\} changes US to USA
+#' and CA to Canada. The labels we would have shown must match the keys
+#' exactly, after adding any tickprefix or ticksuffix. For negative numbers
+#' the minus sign symbol used (U+2212) is wider than the regular ascii dash.
+#' That means you need to use -1 instead of -1. labelalias can be used with
+#' any axis type, and both keys (if needed) and values (if desired) can
+#' include html-like tags or MathJax. Any value.}
+#' \item{\code{layer}}{Sets the layer on which this axis is displayed. If
+#' "above traces", this axis is displayed above all the subplot's traces If
+#' "below traces", this axis is displayed below all the subplot's traces,
+#' but above the grid lines. Useful when used together with scatter-like
+#' traces with `cliponaxis` set to FALSE to show markers and/or text nodes
+#' above this axis. One of \code{"above traces"}, \code{"below traces"}.}
+#' \item{\code{linecolor}}{Sets the axis line color. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{linewidth}}{Sets the width (in px) of the axis line. Number
+#' in the interval [0, Inf].}
+#' \item{\code{min}}{The minimum value visible on this axis. The maximum is
+#' determined by the sum minus the minimum values of the other two axes. The
+#' full view corresponds to all the minima set to zero. Number in the
+#' interval [0, Inf].}
+#' \item{\code{minexponent}}{Hide SI prefix for 10^n if |n| is below this
+#' number. This only has an effect when `tickformat` is "SI" or "B". Number
+#' in the interval [0, Inf].}
+#' \item{\code{nticks}}{Specifies the maximum number of ticks for the
+#' particular axis. The actual number of ticks will be chosen automatically
+#' to be less than or equal to `nticks`. Has an effect only if `tickmode` is
+#' set to "auto". Integer in the interval [1, Inf].}
+#' \item{\code{separatethousands}}{If "true", even 4-digit integers are
+#' separated Logical.}
+#' \item{\code{showexponent}}{If "all", all exponents are shown besides
+#' their significands. If "first", only the exponent of the first tick is
+#' shown. If "last", only the exponent of the last tick is shown. If "none",
+#' no exponents appear. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showgrid}}{Determines whether or not grid lines are drawn. If
+#' TRUE, the grid lines are drawn at every tick mark. Logical.}
+#' \item{\code{showline}}{Determines whether or not a line bounding this
+#' axis is drawn. Logical.}
+#' \item{\code{showspikes}}{Determines whether or not spikes (aka droplines)
+#' are drawn for this axis. Ternary spikes are accompanied by axis value
+#' labels formatted according to `hoverformat`. Logical.}
+#' \item{\code{showticklabels}}{Determines whether or not the tick labels
+#' are drawn. Logical.}
+#' \item{\code{showtickprefix}}{If "all", all tick labels are displayed with
+#' a prefix. If "first", only the first tick is displayed with a prefix. If
+#' "last", only the last tick is displayed with a suffix. If "none", tick
+#' prefixes are hidden. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showticksuffix}}{Same as `showtickprefix` but for tick
+#' suffixes. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{spikecolor}}{Sets the spike color. If undefined, will use the
+#' series color Color: a CSS color string or R color name.}
+#' \item{\code{spikedash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{spikemode}}{Determines the drawing mode for the spike line If
+#' "toaxis", the line is drawn from the data point to the axis the series is
+#' plotted on. If "across", the line is drawn across the entire plot area,
+#' and supercedes "toaxis". If "marker", then a marker dot is drawn on the
+#' axis the series is plotted on Any combination of \code{"toaxis"},
+#' \code{"across"}, \code{"marker"} joined with \code{"+"}.}
+#' \item{\code{spikesnap}}{Determines whether spikelines are stuck to the
+#' cursor or to the closest datapoints. One of \code{"data"},
+#' \code{"cursor"}, \code{"hovered data"}.}
+#' \item{\code{spikethickness}}{Sets the spike line width in pixels.
+#' Number.}
+#' \item{\code{tick0}}{Sets the placement of the first tick on this axis.
+#' Use with `dtick`. If the axis `type` is "log", then you must take the log
+#' of your starting tick (e.g. to set the starting tick to 100, set the
+#' `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info). If
+#' the axis `type` is "date", it should be a date string, like date data. If
+#' the axis `type` is "category", it should be a number, using the scale
+#' where each category is assigned a serial number from zero in the order it
+#' appears. Any value.}
+#' \item{\code{tickangle}}{Sets the angle of the tick labels with respect to
+#' the horizontal. For example, a `tickangle` of -90 draws the tick labels
+#' vertically. Angle in degrees.}
+#' \item{\code{tickcolor}}{Sets the tick color. Color: a CSS color string or
+#' R color name.}
+#' \item{\code{tickfont}}{Sets the tick font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{tickformat}}{Sets the tick label formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{tickformatstops}}{List, each element a
+#' \code{\link{go_tickformatstop}()} object or named list, with properties
+#' \code{dtickrange}, \code{enabled}, \code{name}, \code{templateitemname}
+#' and \code{value} (see \code{\link{go_tickformatstop}()}).}
+#' \item{\code{ticklabelstep}}{Sets the spacing between tick labels as
+#' compared to the spacing between ticks. A value of 1 (default) means each
+#' tick gets a label. A value of 2 means shows every 2nd label. A larger
+#' value n means only every nth tick is labeled. `tick0` determines which
+#' labels are shown. Not implemented for axes with `type` "log" or
+#' "multicategory", or when `tickmode` is "array". Integer in the interval
+#' [1, Inf].}
+#' \item{\code{ticklen}}{Sets the tick length (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{tickmode}}{Sets the tick mode for this axis. If "auto", the
+#' number of ticks is set via `nticks`. If "linear", the placement of the
+#' ticks is determined by a starting position `tick0` and a tick step
+#' `dtick` ("linear" is the default value if `tick0` and `dtick` are
+#' provided). If "array", the placement of the ticks is set via `tickvals`
+#' and the tick text is `ticktext`. ("array" is the default value if
+#' `tickvals` is provided). One of \code{"auto"}, \code{"linear"},
+#' \code{"array"}.}
+#' \item{\code{tickprefix}}{Sets a tick label prefix. String.}
+#' \item{\code{ticks}}{Determines whether ticks are drawn or not. If **,
+#' this axis' ticks are not drawn. If "outside" ("inside"), this axis' are
+#' drawn outside (inside) the axis lines. One of \code{"outside"},
+#' \code{"inside"}, \code{""}.}
+#' \item{\code{ticksuffix}}{Sets a tick label suffix. String.}
+#' \item{\code{ticktext}}{Sets the text displayed at the ticks position via
+#' `tickvals`. Only has an effect if `tickmode` is set to "array". Used with
+#' `tickvals`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickvals}}{Sets the values at which ticks on this axis
+#' appear. Only has an effect if `tickmode` is set to "array". Used with
+#' `ticktext`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickwidth}}{Sets the tick width (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{title}}{String (the title text), or a named list with
+#' properties \code{font} and \code{text} (described in section "aaxis.title
+#' properties" below).}
+#' \item{\code{uirevision}}{Controls persistence of user-driven changes in
+#' axis `min`, and `title` if in `editable: true` configuration. Defaults to
+#' `ternary<N>.uirevision`. Any value.}
+#' }
+#'
+#' @section aaxis.title properties:
+#' \describe{
+#' \item{\code{font}}{Sets this axis' title font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{text}}{Sets the title of this axis. String.}
+#' }
+#'
+#' @section baxis properties:
+#' \describe{
+#' \item{\code{color}}{Sets default for all colors associated with this axis
+#' all at once: line, font, tick, and grid colors. Grid color is lightened
+#' by blending this with the plot background Individual pieces can override
+#' this. Color: a CSS color string or R color name.}
+#' \item{\code{dtick}}{Sets the step in-between ticks on this axis. Use with
+#' `tick0`. Must be a positive number, or special strings available to "log"
+#' and "date" axes. If the axis `type` is "log", then ticks are set every
+#' 10^(n*dtick) where n is the tick number. For example, to set a tick mark
+#' at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks at 1, 100,
+#' 10000, ... set dtick to 2. To set tick marks at 1, 5, 25, 125, 625, 3125,
+#' ... set dtick to log_10(5), or 0.69897000433. "log" has several special
+#' values; "L<f>", where `f` is a positive number, gives ticks linearly
+#' spaced in value (but not position). For example `tick0` = 0.1, `dtick` =
+#' "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6 etc. To show powers of 10
+#' plus small digits between, use "D1" (all digits) or "D2" (only 2 and 5).
+#' `tick0` is ignored for "D1" and "D2". If the axis `type` is "date", then
+#' you must convert the time to milliseconds. For example, to set the
+#' interval between ticks to one day, set `dtick` to 86400000.0. "date" also
+#' has special values "M<n>" gives ticks spaced by a number of months. `n`
+#' must be a positive integer. To set ticks on the 15th of every third
+#' month, set `tick0` to "2000-01-15" and `dtick` to "M3". To set ticks
+#' every 4 years, set `dtick` to "M48" Any value.}
+#' \item{\code{exponentformat}}{Determines a formatting rule for the tick
+#' exponents. For example, consider the number 1,000,000,000. If "none", it
+#' appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power", 1x10^9
+#' (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses prefixes
+#' from "femto" f (10^-15) to "tera" T (10^12). "SI extended" covers instead
+#' the full SI range from "quecto" q (10^-30) to "quetta" Q (10^30). If "SI"
+#' or "SI extended" is used and the exponent is beyond the above ranges, the
+#' formatting rule will automatically be switched to the power notation. One
+#' of \code{"none"}, \code{"e"}, \code{"E"}, \code{"power"}, \code{"SI"},
+#' \code{"B"}, \code{"SI extended"}.}
+#' \item{\code{gridcolor}}{Sets the color of the grid lines. Color: a CSS
+#' color string or R color name.}
+#' \item{\code{griddash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{gridwidth}}{Sets the width (in px) of the grid lines. Number
+#' in the interval [0, Inf].}
+#' \item{\code{hoverformat}}{Sets the hover text formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{labelalias}}{Replacement text for specific tick or hover
+#' labels. For example using \{US: 'USA', CA: 'Canada'\} changes US to USA
+#' and CA to Canada. The labels we would have shown must match the keys
+#' exactly, after adding any tickprefix or ticksuffix. For negative numbers
+#' the minus sign symbol used (U+2212) is wider than the regular ascii dash.
+#' That means you need to use -1 instead of -1. labelalias can be used with
+#' any axis type, and both keys (if needed) and values (if desired) can
+#' include html-like tags or MathJax. Any value.}
+#' \item{\code{layer}}{Sets the layer on which this axis is displayed. If
+#' "above traces", this axis is displayed above all the subplot's traces If
+#' "below traces", this axis is displayed below all the subplot's traces,
+#' but above the grid lines. Useful when used together with scatter-like
+#' traces with `cliponaxis` set to FALSE to show markers and/or text nodes
+#' above this axis. One of \code{"above traces"}, \code{"below traces"}.}
+#' \item{\code{linecolor}}{Sets the axis line color. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{linewidth}}{Sets the width (in px) of the axis line. Number
+#' in the interval [0, Inf].}
+#' \item{\code{min}}{The minimum value visible on this axis. The maximum is
+#' determined by the sum minus the minimum values of the other two axes. The
+#' full view corresponds to all the minima set to zero. Number in the
+#' interval [0, Inf].}
+#' \item{\code{minexponent}}{Hide SI prefix for 10^n if |n| is below this
+#' number. This only has an effect when `tickformat` is "SI" or "B". Number
+#' in the interval [0, Inf].}
+#' \item{\code{nticks}}{Specifies the maximum number of ticks for the
+#' particular axis. The actual number of ticks will be chosen automatically
+#' to be less than or equal to `nticks`. Has an effect only if `tickmode` is
+#' set to "auto". Integer in the interval [1, Inf].}
+#' \item{\code{separatethousands}}{If "true", even 4-digit integers are
+#' separated Logical.}
+#' \item{\code{showexponent}}{If "all", all exponents are shown besides
+#' their significands. If "first", only the exponent of the first tick is
+#' shown. If "last", only the exponent of the last tick is shown. If "none",
+#' no exponents appear. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showgrid}}{Determines whether or not grid lines are drawn. If
+#' TRUE, the grid lines are drawn at every tick mark. Logical.}
+#' \item{\code{showline}}{Determines whether or not a line bounding this
+#' axis is drawn. Logical.}
+#' \item{\code{showspikes}}{Determines whether or not spikes (aka droplines)
+#' are drawn for this axis. Ternary spikes are accompanied by axis value
+#' labels formatted according to `hoverformat`. Logical.}
+#' \item{\code{showticklabels}}{Determines whether or not the tick labels
+#' are drawn. Logical.}
+#' \item{\code{showtickprefix}}{If "all", all tick labels are displayed with
+#' a prefix. If "first", only the first tick is displayed with a prefix. If
+#' "last", only the last tick is displayed with a suffix. If "none", tick
+#' prefixes are hidden. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showticksuffix}}{Same as `showtickprefix` but for tick
+#' suffixes. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{spikecolor}}{Sets the spike color. If undefined, will use the
+#' series color Color: a CSS color string or R color name.}
+#' \item{\code{spikedash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{spikemode}}{Determines the drawing mode for the spike line If
+#' "toaxis", the line is drawn from the data point to the axis the series is
+#' plotted on. If "across", the line is drawn across the entire plot area,
+#' and supercedes "toaxis". If "marker", then a marker dot is drawn on the
+#' axis the series is plotted on Any combination of \code{"toaxis"},
+#' \code{"across"}, \code{"marker"} joined with \code{"+"}.}
+#' \item{\code{spikesnap}}{Determines whether spikelines are stuck to the
+#' cursor or to the closest datapoints. One of \code{"data"},
+#' \code{"cursor"}, \code{"hovered data"}.}
+#' \item{\code{spikethickness}}{Sets the spike line width in pixels.
+#' Number.}
+#' \item{\code{tick0}}{Sets the placement of the first tick on this axis.
+#' Use with `dtick`. If the axis `type` is "log", then you must take the log
+#' of your starting tick (e.g. to set the starting tick to 100, set the
+#' `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info). If
+#' the axis `type` is "date", it should be a date string, like date data. If
+#' the axis `type` is "category", it should be a number, using the scale
+#' where each category is assigned a serial number from zero in the order it
+#' appears. Any value.}
+#' \item{\code{tickangle}}{Sets the angle of the tick labels with respect to
+#' the horizontal. For example, a `tickangle` of -90 draws the tick labels
+#' vertically. Angle in degrees.}
+#' \item{\code{tickcolor}}{Sets the tick color. Color: a CSS color string or
+#' R color name.}
+#' \item{\code{tickfont}}{Sets the tick font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{tickformat}}{Sets the tick label formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{tickformatstops}}{List, each element a
+#' \code{\link{go_tickformatstop}()} object or named list, with properties
+#' \code{dtickrange}, \code{enabled}, \code{name}, \code{templateitemname}
+#' and \code{value} (see \code{\link{go_tickformatstop}()}).}
+#' \item{\code{ticklabelstep}}{Sets the spacing between tick labels as
+#' compared to the spacing between ticks. A value of 1 (default) means each
+#' tick gets a label. A value of 2 means shows every 2nd label. A larger
+#' value n means only every nth tick is labeled. `tick0` determines which
+#' labels are shown. Not implemented for axes with `type` "log" or
+#' "multicategory", or when `tickmode` is "array". Integer in the interval
+#' [1, Inf].}
+#' \item{\code{ticklen}}{Sets the tick length (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{tickmode}}{Sets the tick mode for this axis. If "auto", the
+#' number of ticks is set via `nticks`. If "linear", the placement of the
+#' ticks is determined by a starting position `tick0` and a tick step
+#' `dtick` ("linear" is the default value if `tick0` and `dtick` are
+#' provided). If "array", the placement of the ticks is set via `tickvals`
+#' and the tick text is `ticktext`. ("array" is the default value if
+#' `tickvals` is provided). One of \code{"auto"}, \code{"linear"},
+#' \code{"array"}.}
+#' \item{\code{tickprefix}}{Sets a tick label prefix. String.}
+#' \item{\code{ticks}}{Determines whether ticks are drawn or not. If **,
+#' this axis' ticks are not drawn. If "outside" ("inside"), this axis' are
+#' drawn outside (inside) the axis lines. One of \code{"outside"},
+#' \code{"inside"}, \code{""}.}
+#' \item{\code{ticksuffix}}{Sets a tick label suffix. String.}
+#' \item{\code{ticktext}}{Sets the text displayed at the ticks position via
+#' `tickvals`. Only has an effect if `tickmode` is set to "array". Used with
+#' `tickvals`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickvals}}{Sets the values at which ticks on this axis
+#' appear. Only has an effect if `tickmode` is set to "array". Used with
+#' `ticktext`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickwidth}}{Sets the tick width (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{title}}{String (the title text), or a named list with
+#' properties \code{font} and \code{text} (described in section "baxis.title
+#' properties" below).}
+#' \item{\code{uirevision}}{Controls persistence of user-driven changes in
+#' axis `min`, and `title` if in `editable: true` configuration. Defaults to
+#' `ternary<N>.uirevision`. Any value.}
+#' }
+#'
+#' @section baxis.title properties:
+#' \describe{
+#' \item{\code{font}}{Sets this axis' title font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{text}}{Sets the title of this axis. String.}
+#' }
+#'
+#' @section caxis properties:
+#' \describe{
+#' \item{\code{color}}{Sets default for all colors associated with this axis
+#' all at once: line, font, tick, and grid colors. Grid color is lightened
+#' by blending this with the plot background Individual pieces can override
+#' this. Color: a CSS color string or R color name.}
+#' \item{\code{dtick}}{Sets the step in-between ticks on this axis. Use with
+#' `tick0`. Must be a positive number, or special strings available to "log"
+#' and "date" axes. If the axis `type` is "log", then ticks are set every
+#' 10^(n*dtick) where n is the tick number. For example, to set a tick mark
+#' at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks at 1, 100,
+#' 10000, ... set dtick to 2. To set tick marks at 1, 5, 25, 125, 625, 3125,
+#' ... set dtick to log_10(5), or 0.69897000433. "log" has several special
+#' values; "L<f>", where `f` is a positive number, gives ticks linearly
+#' spaced in value (but not position). For example `tick0` = 0.1, `dtick` =
+#' "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6 etc. To show powers of 10
+#' plus small digits between, use "D1" (all digits) or "D2" (only 2 and 5).
+#' `tick0` is ignored for "D1" and "D2". If the axis `type` is "date", then
+#' you must convert the time to milliseconds. For example, to set the
+#' interval between ticks to one day, set `dtick` to 86400000.0. "date" also
+#' has special values "M<n>" gives ticks spaced by a number of months. `n`
+#' must be a positive integer. To set ticks on the 15th of every third
+#' month, set `tick0` to "2000-01-15" and `dtick` to "M3". To set ticks
+#' every 4 years, set `dtick` to "M48" Any value.}
+#' \item{\code{exponentformat}}{Determines a formatting rule for the tick
+#' exponents. For example, consider the number 1,000,000,000. If "none", it
+#' appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power", 1x10^9
+#' (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses prefixes
+#' from "femto" f (10^-15) to "tera" T (10^12). "SI extended" covers instead
+#' the full SI range from "quecto" q (10^-30) to "quetta" Q (10^30). If "SI"
+#' or "SI extended" is used and the exponent is beyond the above ranges, the
+#' formatting rule will automatically be switched to the power notation. One
+#' of \code{"none"}, \code{"e"}, \code{"E"}, \code{"power"}, \code{"SI"},
+#' \code{"B"}, \code{"SI extended"}.}
+#' \item{\code{gridcolor}}{Sets the color of the grid lines. Color: a CSS
+#' color string or R color name.}
+#' \item{\code{griddash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{gridwidth}}{Sets the width (in px) of the grid lines. Number
+#' in the interval [0, Inf].}
+#' \item{\code{hoverformat}}{Sets the hover text formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{labelalias}}{Replacement text for specific tick or hover
+#' labels. For example using \{US: 'USA', CA: 'Canada'\} changes US to USA
+#' and CA to Canada. The labels we would have shown must match the keys
+#' exactly, after adding any tickprefix or ticksuffix. For negative numbers
+#' the minus sign symbol used (U+2212) is wider than the regular ascii dash.
+#' That means you need to use -1 instead of -1. labelalias can be used with
+#' any axis type, and both keys (if needed) and values (if desired) can
+#' include html-like tags or MathJax. Any value.}
+#' \item{\code{layer}}{Sets the layer on which this axis is displayed. If
+#' "above traces", this axis is displayed above all the subplot's traces If
+#' "below traces", this axis is displayed below all the subplot's traces,
+#' but above the grid lines. Useful when used together with scatter-like
+#' traces with `cliponaxis` set to FALSE to show markers and/or text nodes
+#' above this axis. One of \code{"above traces"}, \code{"below traces"}.}
+#' \item{\code{linecolor}}{Sets the axis line color. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{linewidth}}{Sets the width (in px) of the axis line. Number
+#' in the interval [0, Inf].}
+#' \item{\code{min}}{The minimum value visible on this axis. The maximum is
+#' determined by the sum minus the minimum values of the other two axes. The
+#' full view corresponds to all the minima set to zero. Number in the
+#' interval [0, Inf].}
+#' \item{\code{minexponent}}{Hide SI prefix for 10^n if |n| is below this
+#' number. This only has an effect when `tickformat` is "SI" or "B". Number
+#' in the interval [0, Inf].}
+#' \item{\code{nticks}}{Specifies the maximum number of ticks for the
+#' particular axis. The actual number of ticks will be chosen automatically
+#' to be less than or equal to `nticks`. Has an effect only if `tickmode` is
+#' set to "auto". Integer in the interval [1, Inf].}
+#' \item{\code{separatethousands}}{If "true", even 4-digit integers are
+#' separated Logical.}
+#' \item{\code{showexponent}}{If "all", all exponents are shown besides
+#' their significands. If "first", only the exponent of the first tick is
+#' shown. If "last", only the exponent of the last tick is shown. If "none",
+#' no exponents appear. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showgrid}}{Determines whether or not grid lines are drawn. If
+#' TRUE, the grid lines are drawn at every tick mark. Logical.}
+#' \item{\code{showline}}{Determines whether or not a line bounding this
+#' axis is drawn. Logical.}
+#' \item{\code{showspikes}}{Determines whether or not spikes (aka droplines)
+#' are drawn for this axis. Ternary spikes are accompanied by axis value
+#' labels formatted according to `hoverformat`. Logical.}
+#' \item{\code{showticklabels}}{Determines whether or not the tick labels
+#' are drawn. Logical.}
+#' \item{\code{showtickprefix}}{If "all", all tick labels are displayed with
+#' a prefix. If "first", only the first tick is displayed with a prefix. If
+#' "last", only the last tick is displayed with a suffix. If "none", tick
+#' prefixes are hidden. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showticksuffix}}{Same as `showtickprefix` but for tick
+#' suffixes. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{spikecolor}}{Sets the spike color. If undefined, will use the
+#' series color Color: a CSS color string or R color name.}
+#' \item{\code{spikedash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{spikemode}}{Determines the drawing mode for the spike line If
+#' "toaxis", the line is drawn from the data point to the axis the series is
+#' plotted on. If "across", the line is drawn across the entire plot area,
+#' and supercedes "toaxis". If "marker", then a marker dot is drawn on the
+#' axis the series is plotted on Any combination of \code{"toaxis"},
+#' \code{"across"}, \code{"marker"} joined with \code{"+"}.}
+#' \item{\code{spikesnap}}{Determines whether spikelines are stuck to the
+#' cursor or to the closest datapoints. One of \code{"data"},
+#' \code{"cursor"}, \code{"hovered data"}.}
+#' \item{\code{spikethickness}}{Sets the spike line width in pixels.
+#' Number.}
+#' \item{\code{tick0}}{Sets the placement of the first tick on this axis.
+#' Use with `dtick`. If the axis `type` is "log", then you must take the log
+#' of your starting tick (e.g. to set the starting tick to 100, set the
+#' `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info). If
+#' the axis `type` is "date", it should be a date string, like date data. If
+#' the axis `type` is "category", it should be a number, using the scale
+#' where each category is assigned a serial number from zero in the order it
+#' appears. Any value.}
+#' \item{\code{tickangle}}{Sets the angle of the tick labels with respect to
+#' the horizontal. For example, a `tickangle` of -90 draws the tick labels
+#' vertically. Angle in degrees.}
+#' \item{\code{tickcolor}}{Sets the tick color. Color: a CSS color string or
+#' R color name.}
+#' \item{\code{tickfont}}{Sets the tick font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{tickformat}}{Sets the tick label formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{tickformatstops}}{List, each element a
+#' \code{\link{go_tickformatstop}()} object or named list, with properties
+#' \code{dtickrange}, \code{enabled}, \code{name}, \code{templateitemname}
+#' and \code{value} (see \code{\link{go_tickformatstop}()}).}
+#' \item{\code{ticklabelstep}}{Sets the spacing between tick labels as
+#' compared to the spacing between ticks. A value of 1 (default) means each
+#' tick gets a label. A value of 2 means shows every 2nd label. A larger
+#' value n means only every nth tick is labeled. `tick0` determines which
+#' labels are shown. Not implemented for axes with `type` "log" or
+#' "multicategory", or when `tickmode` is "array". Integer in the interval
+#' [1, Inf].}
+#' \item{\code{ticklen}}{Sets the tick length (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{tickmode}}{Sets the tick mode for this axis. If "auto", the
+#' number of ticks is set via `nticks`. If "linear", the placement of the
+#' ticks is determined by a starting position `tick0` and a tick step
+#' `dtick` ("linear" is the default value if `tick0` and `dtick` are
+#' provided). If "array", the placement of the ticks is set via `tickvals`
+#' and the tick text is `ticktext`. ("array" is the default value if
+#' `tickvals` is provided). One of \code{"auto"}, \code{"linear"},
+#' \code{"array"}.}
+#' \item{\code{tickprefix}}{Sets a tick label prefix. String.}
+#' \item{\code{ticks}}{Determines whether ticks are drawn or not. If **,
+#' this axis' ticks are not drawn. If "outside" ("inside"), this axis' are
+#' drawn outside (inside) the axis lines. One of \code{"outside"},
+#' \code{"inside"}, \code{""}.}
+#' \item{\code{ticksuffix}}{Sets a tick label suffix. String.}
+#' \item{\code{ticktext}}{Sets the text displayed at the ticks position via
+#' `tickvals`. Only has an effect if `tickmode` is set to "array". Used with
+#' `tickvals`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickvals}}{Sets the values at which ticks on this axis
+#' appear. Only has an effect if `tickmode` is set to "array". Used with
+#' `ticktext`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickwidth}}{Sets the tick width (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{title}}{String (the title text), or a named list with
+#' properties \code{font} and \code{text} (described in section "caxis.title
+#' properties" below).}
+#' \item{\code{uirevision}}{Controls persistence of user-driven changes in
+#' axis `min`, and `title` if in `editable: true` configuration. Defaults to
+#' `ternary<N>.uirevision`. Any value.}
+#' }
+#'
+#' @section caxis.title properties:
+#' \describe{
+#' \item{\code{font}}{Sets this axis' title font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{text}}{Sets the title of this axis. String.}
+#' }
+#'
 #' @name update_ternaries
 #' @noMd
 NULL
@@ -1681,13 +4734,621 @@ for_each_ternary <- function(fig, fn, selector = NULL, row = NULL, col = NULL) {
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
-#' @param patch A named list or \code{\link{go_layout_xaxis}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list of xaxis property updates (see section "xaxis properties").
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_xaxes()} returns a named list of \code{\link{go_layout_xaxis}()} objects; the
+#' @return \code{select_xaxes()} returns a named list of xaxis objects; the
 #'   others return the modified figure.
+#'
+#' @section xaxis properties:
+#' \describe{
+#' \item{\code{anchor}}{If set to an opposite-letter axis id (e.g. `x2`,
+#' `y`), this axis is bound to the corresponding opposite-letter axis. If
+#' set to "free", this axis' position is determined by `position`. One of
+#' \code{"free"}, or a string matching \code{"^x([2-9]|[1-9][0-9]+)?(
+#' domain)?$"} or \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.}
+#' \item{\code{automargin}}{Determines whether long tick labels
+#' automatically grow the figure margins. Any combination of
+#' \code{"height"}, \code{"width"}, \code{"left"}, \code{"right"},
+#' \code{"top"}, \code{"bottom"} joined with \code{"+"}, or one of
+#' \code{TRUE}, \code{FALSE}.}
+#' \item{\code{autorange}}{Determines whether or not the range of this axis
+#' is computed in relation to the input data. See `rangemode` for more info.
+#' If `range` is provided and it has a value for both the lower and upper
+#' bound, `autorange` is set to FALSE. Using "min" applies autorange only to
+#' set the minimum. Using "max" applies autorange only to set the maximum.
+#' Using "min reversed" applies autorange only to set the minimum on a
+#' reversed axis. Using "max reversed" applies autorange only to set the
+#' maximum on a reversed axis. Using "reversed" applies autorange on both
+#' ends and reverses the axis direction. One of \code{"reversed"},
+#' \code{"min reversed"}, \code{"max reversed"}, \code{"min"}, \code{"max"},
+#' \code{TRUE}, \code{FALSE}.}
+#' \item{\code{autorangeoptions}}{A \code{\link{go_autorangeoptions}()}
+#' object or named list, with properties \code{clipmax}, \code{clipmin},
+#' \code{include}, \code{maxallowed} and \code{minallowed} (see
+#' \code{\link{go_autorangeoptions}()}).}
+#' \item{\code{autotickangles}}{When `tickangle` is set to "auto", it will
+#' be set to the first angle in this array that is large enough to prevent
+#' label overlap. Vector or list of up to 1 element(s).}
+#' \item{\code{autotypenumbers}}{Using "strict" a numeric string in trace
+#' data is not converted to a number. Using "convert types" a numeric string
+#' in trace data may be treated as a number during automatic axis `type`
+#' detection. Defaults to layout.autotypenumbers. One of \code{"convert
+#' types"}, \code{"strict"}.}
+#' \item{\code{calendar}}{Sets the calendar system to use for `range` and
+#' `tick0` if this is a date axis. This does not set the calendar for
+#' interpreting data on this axis, that's specified in the trace or via the
+#' global `layout.calendar` One of \code{"chinese"}, \code{"coptic"},
+#' \code{"discworld"}, \code{"ethiopian"}, \code{"gregorian"},
+#' \code{"hebrew"}, \code{"islamic"}, \code{"jalali"}, \code{"julian"},
+#' \code{"mayan"}, \code{"nanakshahi"}, \code{"nepali"}, \code{"persian"},
+#' \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.}
+#' \item{\code{categoryarray}}{Sets the order in which categories on this
+#' axis appear. Only has an effect if `categoryorder` is set to "array".
+#' Used with `categoryorder`. Data array: a vector, factor, Date/POSIXct
+#' vector, matrix or list.}
+#' \item{\code{categoryorder}}{Specifies the ordering logic for the case of
+#' categorical variables. By default, plotly uses "trace", which specifies
+#' the order that is present in the data supplied. Set `categoryorder` to
+#' "category ascending" or "category descending" if order should be
+#' determined by the alphanumerical order of the category names. Set
+#' `categoryorder` to "array" to derive the ordering from the attribute
+#' `categoryarray`. If a category is not found in the `categoryarray` array,
+#' the sorting behavior for that attribute will be identical to the "trace"
+#' mode. The unspecified categories will follow the categories in
+#' `categoryarray`. Set `categoryorder` to "total ascending" or "total
+#' descending" if order should be determined by the numerical order of the
+#' values. Similarly, the order can be determined by the min, max, sum,
+#' mean, geometric mean or median of all the values. One of \code{"trace"},
+#' \code{"category ascending"}, \code{"category descending"},
+#' \code{"array"}, \code{"total ascending"}, \code{"total descending"},
+#' \code{"min ascending"}, \code{"min descending"}, \code{"max ascending"},
+#' \code{"max descending"}, \code{"sum ascending"}, \code{"sum descending"},
+#' \code{"mean ascending"}, \code{"mean descending"}, \code{"geometric mean
+#' ascending"}, \code{"geometric mean descending"}, \code{"median
+#' ascending"}, \code{"median descending"}.}
+#' \item{\code{color}}{Sets default for all colors associated with this axis
+#' all at once: line, font, tick, and grid colors. Grid color is lightened
+#' by blending this with the plot background Individual pieces can override
+#' this. Color: a CSS color string or R color name.}
+#' \item{\code{constrain}}{If this axis needs to be compressed (either due
+#' to its own `scaleanchor` and `scaleratio` or those of the other axis),
+#' determines how that happens: by increasing the "range", or by decreasing
+#' the "domain". Default is "domain" for axes containing image traces,
+#' "range" otherwise. One of \code{"range"}, \code{"domain"}.}
+#' \item{\code{constraintoward}}{If this axis needs to be compressed (either
+#' due to its own `scaleanchor` and `scaleratio` or those of the other
+#' axis), determines which direction we push the originally specified plot
+#' area. Options are "left", "center" (default), and "right" for x axes, and
+#' "top", "middle" (default), and "bottom" for y axes. One of \code{"left"},
+#' \code{"center"}, \code{"right"}, \code{"top"}, \code{"middle"},
+#' \code{"bottom"}.}
+#' \item{\code{dividercolor}}{Sets the color of the dividers Only has an
+#' effect on "multicategory" axes. Color: a CSS color string or R color
+#' name.}
+#' \item{\code{dividerwidth}}{Sets the width (in px) of the dividers Only
+#' has an effect on "multicategory" axes. Number.}
+#' \item{\code{domain}}{Sets the domain of this axis (in plot fraction).
+#' Vector or list of 2 element(s).}
+#' \item{\code{domainpad}}{Sets the space in pixels to reserve inside the
+#' edges of `domain`. Because `domain` is a fraction of the plot area, the
+#' gap between subplots changes with the figure size. `domainpad` keeps the
+#' same size in pixels at all figure sizes, so it can hold content with a
+#' fixed size, such as a subplot title. x axes use `left` and `right`. y
+#' axes use `top` and `bottom`. If the padding needs more room than the
+#' domain has, the two pads shrink by the same factor, and the plot area
+#' keeps a length of at least 2 pixels. An axis that sets `overlaying`
+#' ignores its own `domainpad` and uses the `domainpad` of the axis it
+#' overlays, so that both axes share the same plot area. A
+#' \code{\link{go_domainpad}()} object or named list, with properties
+#' \code{bottom}, \code{left}, \code{right} and \code{top} (see
+#' \code{\link{go_domainpad}()}).}
+#' \item{\code{dtick}}{Sets the step in-between ticks on this axis. Use with
+#' `tick0`. Must be a positive number, or special strings available to "log"
+#' and "date" axes. If the axis `type` is "log", then ticks are set every
+#' 10^(n*dtick) where n is the tick number. For example, to set a tick mark
+#' at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks at 1, 100,
+#' 10000, ... set dtick to 2. To set tick marks at 1, 5, 25, 125, 625, 3125,
+#' ... set dtick to log_10(5), or 0.69897000433. "log" has several special
+#' values; "L<f>", where `f` is a positive number, gives ticks linearly
+#' spaced in value (but not position). For example `tick0` = 0.1, `dtick` =
+#' "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6 etc. To show powers of 10
+#' plus small digits between, use "D1" (all digits) or "D2" (only 2 and 5).
+#' `tick0` is ignored for "D1" and "D2". If the axis `type` is "date", then
+#' you must convert the time to milliseconds. For example, to set the
+#' interval between ticks to one day, set `dtick` to 86400000.0. "date" also
+#' has special values "M<n>" gives ticks spaced by a number of months. `n`
+#' must be a positive integer. To set ticks on the 15th of every third
+#' month, set `tick0` to "2000-01-15" and `dtick` to "M3". To set ticks
+#' every 4 years, set `dtick` to "M48" Any value.}
+#' \item{\code{exponentformat}}{Determines a formatting rule for the tick
+#' exponents. For example, consider the number 1,000,000,000. If "none", it
+#' appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power", 1x10^9
+#' (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses prefixes
+#' from "femto" f (10^-15) to "tera" T (10^12). "SI extended" covers instead
+#' the full SI range from "quecto" q (10^-30) to "quetta" Q (10^30). If "SI"
+#' or "SI extended" is used and the exponent is beyond the above ranges, the
+#' formatting rule will automatically be switched to the power notation. One
+#' of \code{"none"}, \code{"e"}, \code{"E"}, \code{"power"}, \code{"SI"},
+#' \code{"B"}, \code{"SI extended"}.}
+#' \item{\code{fixedrange}}{Determines whether or not this axis is
+#' zoom-able. If true, then zoom is disabled. Logical.}
+#' \item{\code{gridcolor}}{Sets the color of the grid lines. Color: a CSS
+#' color string or R color name.}
+#' \item{\code{griddash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{gridwidth}}{Sets the width (in px) of the grid lines. Number
+#' in the interval [0, Inf].}
+#' \item{\code{hoverformat}}{Sets the hover text formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{insiderange}}{Could be used to set the desired inside range
+#' of this axis (excluding the labels) when `ticklabelposition` of the
+#' anchored axis has "inside". Not implemented for axes with `type` "log".
+#' This would be ignored when `range` is provided. Vector or list of 2
+#' element(s).}
+#' \item{\code{labelalias}}{Replacement text for specific tick or hover
+#' labels. For example using \{US: 'USA', CA: 'Canada'\} changes US to USA
+#' and CA to Canada. The labels we would have shown must match the keys
+#' exactly, after adding any tickprefix or ticksuffix. For negative numbers
+#' the minus sign symbol used (U+2212) is wider than the regular ascii dash.
+#' That means you need to use -1 instead of -1. labelalias can be used with
+#' any axis type, and both keys (if needed) and values (if desired) can
+#' include html-like tags or MathJax. Any value.}
+#' \item{\code{layer}}{Sets the layer on which this axis is displayed. If
+#' "above traces", this axis is displayed above all the subplot's traces If
+#' "below traces", this axis is displayed below all the subplot's traces,
+#' but above the grid lines. Useful when used together with scatter-like
+#' traces with `cliponaxis` set to FALSE to show markers and/or text nodes
+#' above this axis. One of \code{"above traces"}, \code{"below traces"}.}
+#' \item{\code{linecolor}}{Sets the axis line color. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{linewidth}}{Sets the width (in px) of the axis line. Number
+#' in the interval [0, Inf].}
+#' \item{\code{matches}}{If set to another axis id (e.g. `x2`, `y`), the
+#' range of this axis will match the range of the corresponding axis in
+#' data-coordinates space. Moreover, matching axes share auto-range values,
+#' category lists and histogram auto-bins. Note that setting axes
+#' simultaneously in both a `scaleanchor` and a `matches` constraint is
+#' currently forbidden. Moreover, note that matching axes must have the same
+#' `type`. One of , or a string matching \code{"^x([2-9]|[1-9][0-9]+)?(
+#' domain)?$"} or \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.}
+#' \item{\code{maxallowed}}{Determines the maximum range of this axis. Any
+#' value.}
+#' \item{\code{minallowed}}{Determines the minimum range of this axis. Any
+#' value.}
+#' \item{\code{minexponent}}{Hide SI prefix for 10^n if |n| is below this
+#' number. This only has an effect when `tickformat` is "SI" or "B". Number
+#' in the interval [0, Inf].}
+#' \item{\code{minor}}{A \code{\link{go_minor}()} object or named list, with
+#' properties \code{dtick}, \code{gridcolor}, \code{griddash},
+#' \code{gridwidth}, \code{nticks}, \code{showgrid}, \code{tick0},
+#' \code{tickcolor}, \code{ticklen}, \code{tickmode}, \code{ticks},
+#' \code{tickvals} and \code{tickwidth} (see \code{\link{go_minor}()}).}
+#' \item{\code{minorloglabels}}{Determines how minor log labels are
+#' displayed. If "small digits", small digits i.e. 2 or 5 are displayed. If
+#' "complete", complete digits are displayed. If "none", no labels are
+#' displayed. One of \code{"small digits"}, \code{"complete"},
+#' \code{"none"}.}
+#' \item{\code{mirror}}{Determines if the axis lines or/and ticks are
+#' mirrored to the opposite side of the plotting area. If TRUE, the axis
+#' lines are mirrored. If "ticks", the axis lines and ticks are mirrored. If
+#' FALSE, mirroring is disable. If "all", axis lines are mirrored on all
+#' shared-axes subplots. If "allticks", axis lines and ticks are mirrored on
+#' all shared-axes subplots. One of \code{"ticks"}, \code{"all"},
+#' \code{"allticks"}, \code{TRUE}, \code{FALSE}.}
+#' \item{\code{modebardisable}}{Disables certain modebar buttons for this
+#' axis. "autoscale" disables the autoscale buttons, "zoominout" disables
+#' the zoom-in and zoom-out buttons. Any combination of \code{"autoscale"},
+#' \code{"zoominout"} joined with \code{"+"}, or one of \code{"none"}.}
+#' \item{\code{nticks}}{Specifies the maximum number of ticks for the
+#' particular axis. The actual number of ticks will be chosen automatically
+#' to be less than or equal to `nticks`. Has an effect only if `tickmode` is
+#' set to "auto". Integer in the interval [0, Inf].}
+#' \item{\code{overlaying}}{If set a same-letter axis id, this axis is
+#' overlaid on top of the corresponding same-letter axis, with traces and
+#' axes visible for both axes. If FALSE, this axis does not overlay any
+#' same-letter axes. In this case, for axes with overlapping domains only
+#' the highest-numbered axis will be visible. One of \code{"free"}, or a
+#' string matching \code{"^x([2-9]|[1-9][0-9]+)?( domain)?$"} or
+#' \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.}
+#' \item{\code{position}}{Sets the position of this axis in the plotting
+#' space (in normalized coordinates). Only has an effect if `anchor` is set
+#' to "free". Number in the interval [0, 1].}
+#' \item{\code{range}}{Sets the range of this axis. If the axis `type` is
+#' "log", then you must take the log of your desired range (e.g. to set the
+#' range from 1 to 100, set the range from 0 to 2). If the axis `type` is
+#' "date", it should be date strings, like date data, though Date objects
+#' and unix milliseconds will be accepted and converted to strings. If the
+#' axis `type` is "category", it should be numbers, using the scale where
+#' each category is assigned a serial number from zero in the order it
+#' appears. Leaving either or both elements `null` impacts the default
+#' `autorange`. Vector or list of 2 element(s).}
+#' \item{\code{rangebreaks}}{List, each element a
+#' \code{\link{go_rangebreak}()} object or named list, with properties
+#' \code{bounds}, \code{dvalue}, \code{enabled}, \code{name},
+#' \code{pattern}, \code{templateitemname} and \code{values} (see
+#' \code{\link{go_rangebreak}()}).}
+#' \item{\code{rangemode}}{If "normal", the range is computed in relation to
+#' the extrema of the input data. If "tozero", the range extends to 0,
+#' regardless of the input data If "nonnegative", the range is non-negative,
+#' regardless of the input data. Applies only to linear axes. One of
+#' \code{"normal"}, \code{"tozero"}, \code{"nonnegative"}.}
+#' \item{\code{rangeselector}}{A named list with properties
+#' \code{activecolor}, \code{bgcolor}, \code{bordercolor},
+#' \code{borderwidth}, \code{buttons}, \code{font}, \code{visible},
+#' \code{x}, \code{xanchor}, \code{y} and \code{yanchor} (described in
+#' section "rangeselector properties" below).}
+#' \item{\code{rangeslider}}{A named list with properties \code{autorange},
+#' \code{bgcolor}, \code{bordercolor}, \code{borderwidth}, \code{range},
+#' \code{thickness}, \code{visible} and \code{yaxis} (described in section
+#' "rangeslider properties" below).}
+#' \item{\code{scaleanchor}}{If set to another axis id (e.g. `x2`, `y`), the
+#' range of this axis changes together with the range of the corresponding
+#' axis such that the scale of pixels per unit is in a constant ratio. Both
+#' axes are still zoomable, but when you zoom one, the other will zoom the
+#' same amount, keeping a fixed midpoint. `constrain` and `constraintoward`
+#' determine how we enforce the constraint. You can chain these, ie `yaxis:
+#' \{scaleanchor: "x"\}, xaxis2: \{scaleanchor: "y"\}` but you can only link
+#' axes of the same `type`. The linked axis can have the opposite letter (to
+#' constrain the aspect ratio) or the same letter (to match scales across
+#' subplots). Loops (`yaxis: \{scaleanchor: "x"\}, xaxis: \{scaleanchor:
+#' "y"\}` or longer) are redundant and the last constraint encountered will
+#' be ignored to avoid possible inconsistent constraints via `scaleratio`.
+#' Note that setting axes simultaneously in both a `scaleanchor` and a
+#' `matches` constraint is currently forbidden. Setting `false` allows to
+#' remove a default constraint (occasionally, you may need to prevent a
+#' default `scaleanchor` constraint from being applied, eg. when having an
+#' image trace `yaxis: \{scaleanchor: "x"\}` is set automatically in order
+#' for pixels to be rendered as squares, setting `yaxis: \{scaleanchor:
+#' false\}` allows to remove the constraint). One of \code{FALSE}, or a
+#' string matching \code{"^x([2-9]|[1-9][0-9]+)?( domain)?$"} or
+#' \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.}
+#' \item{\code{scaleratio}}{If this axis is linked to another by
+#' `scaleanchor`, this determines the pixel to unit scale ratio. For
+#' example, if this value is 10, then every unit on this axis spans 10 times
+#' the number of pixels as a unit on the linked axis. Use this for example
+#' to create an elevation profile where the vertical scale is exaggerated a
+#' fixed amount with respect to the horizontal. Number in the interval [0,
+#' Inf].}
+#' \item{\code{separatethousands}}{If "true", even 4-digit integers are
+#' separated Logical.}
+#' \item{\code{showdividers}}{Determines whether or not a dividers are drawn
+#' between the category levels of this axis. Only has an effect on
+#' "multicategory" axes. Logical.}
+#' \item{\code{showexponent}}{If "all", all exponents are shown besides
+#' their significands. If "first", only the exponent of the first tick is
+#' shown. If "last", only the exponent of the last tick is shown. If "none",
+#' no exponents appear. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showgrid}}{Determines whether or not grid lines are drawn. If
+#' TRUE, the grid lines are drawn at every tick mark. Logical.}
+#' \item{\code{showline}}{Determines whether or not a line bounding this
+#' axis is drawn. Logical.}
+#' \item{\code{showspikes}}{Determines whether or not spikes (aka droplines)
+#' are drawn for this axis. Note that spikes will never be drawn when
+#' `hovermode` is FALSE. Logical.}
+#' \item{\code{showticklabels}}{Determines whether or not the tick labels
+#' are drawn. Logical.}
+#' \item{\code{showtickprefix}}{If "all", all tick labels are displayed with
+#' a prefix. If "first", only the first tick is displayed with a prefix. If
+#' "last", only the last tick is displayed with a suffix. If "none", tick
+#' prefixes are hidden. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showticksuffix}}{Same as `showtickprefix` but for tick
+#' suffixes. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{side}}{Determines whether a x (y) axis is positioned at the
+#' "bottom" ("left") or "top" ("right") of the plotting area. One of
+#' \code{"top"}, \code{"bottom"}, \code{"left"}, \code{"right"}.}
+#' \item{\code{spikecolor}}{Sets the spike color. If undefined, will use the
+#' series color Color: a CSS color string or R color name.}
+#' \item{\code{spikedash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{spikemode}}{Determines the drawing mode for the spike line If
+#' "toaxis", the line is drawn from the data point to the axis the series is
+#' plotted on. If "across", the line is drawn across the entire plot area,
+#' and supercedes "toaxis". If "marker", then a marker dot is drawn on the
+#' axis the series is plotted on Any combination of \code{"toaxis"},
+#' \code{"across"}, \code{"marker"} joined with \code{"+"}.}
+#' \item{\code{spikesnap}}{Determines whether spikelines are stuck to the
+#' cursor or to the closest datapoints. One of \code{"data"},
+#' \code{"cursor"}, \code{"hovered data"}.}
+#' \item{\code{spikethickness}}{Sets the spike line width in pixels.
+#' Number.}
+#' \item{\code{tick0}}{Sets the placement of the first tick on this axis.
+#' Use with `dtick`. If the axis `type` is "log", then you must take the log
+#' of your starting tick (e.g. to set the starting tick to 100, set the
+#' `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info). If
+#' the axis `type` is "date", it should be a date string, like date data. If
+#' the axis `type` is "category", it should be a number, using the scale
+#' where each category is assigned a serial number from zero in the order it
+#' appears. Any value.}
+#' \item{\code{tickangle}}{Sets the angle of the tick labels with respect to
+#' the horizontal. For example, a `tickangle` of -90 draws the tick labels
+#' vertically. Angle in degrees.}
+#' \item{\code{tickcolor}}{Sets the tick color. Color: a CSS color string or
+#' R color name.}
+#' \item{\code{tickfont}}{Sets the tick font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{tickformat}}{Sets the tick label formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{tickformatstops}}{List, each element a
+#' \code{\link{go_tickformatstop}()} object or named list, with properties
+#' \code{dtickrange}, \code{enabled}, \code{name}, \code{templateitemname}
+#' and \code{value} (see \code{\link{go_tickformatstop}()}).}
+#' \item{\code{ticklabelindex}}{Only for axes with `type` "date" or
+#' "linear". Instead of drawing the major tick label, draw the label for the
+#' minor tick that is n positions away from the major tick. E.g. to always
+#' draw the label for the minor tick before each major tick, choose
+#' `ticklabelindex` -1. This is useful for date axes with `ticklabelmode`
+#' "period" if you want to label the period that ends with each major tick
+#' instead of the period that begins there. Integer, or a vector of these.}
+#' \item{\code{ticklabelmode}}{Determines where tick labels are drawn with
+#' respect to their corresponding ticks and grid lines. Only has an effect
+#' for axes of `type` "date" When set to "period", tick labels are drawn in
+#' the middle of the period between ticks. One of \code{"instant"},
+#' \code{"period"}.}
+#' \item{\code{ticklabeloverflow}}{Determines how we handle tick labels that
+#' would overflow either the graph div or the domain of the axis. The
+#' default value for inside tick labels is "hide past domain". Otherwise on
+#' "category" and "multicategory" axes the default is "allow". In other
+#' cases the default is "hide past div". One of \code{"allow"}, \code{"hide
+#' past div"}, \code{"hide past domain"}.}
+#' \item{\code{ticklabelposition}}{Determines where tick labels are drawn
+#' with respect to the axis. Please note that top or bottom has no effect on
+#' x axes or when `ticklabelmode` is set to "period" or when `tickson` is
+#' set to "boundaries". Similarly, left or right has no effect on y axes or
+#' when `ticklabelmode` is set to "period" or when `tickson` is set to
+#' "boundaries". Has no effect on "multicategory" axes. When used on axes
+#' linked by `matches` or `scaleanchor`, no extra padding for inside labels
+#' would be added by autorange, so that the scales could match. One of
+#' \code{"outside"}, \code{"inside"}, \code{"outside top"}, \code{"inside
+#' top"}, \code{"outside left"}, \code{"inside left"}, \code{"outside
+#' right"}, \code{"inside right"}, \code{"outside bottom"}, \code{"inside
+#' bottom"}.}
+#' \item{\code{ticklabelshift}}{Shifts the tick labels by the specified
+#' number of pixels in parallel to the axis. Positive values move the labels
+#' in the positive direction of the axis. Integer.}
+#' \item{\code{ticklabelstandoff}}{Sets the standoff distance (in px)
+#' between the axis tick labels and their default position. A positive
+#' `ticklabelstandoff` moves the labels farther away from the plot area if
+#' `ticklabelposition` is "outside", and deeper into the plot area if
+#' `ticklabelposition` is "inside". A negative `ticklabelstandoff` works in
+#' the opposite direction, moving outside ticks towards the plot area and
+#' inside ticks towards the outside. If the negative value is large enough,
+#' inside ticks can even end up outside and vice versa. Integer.}
+#' \item{\code{ticklabelstep}}{Sets the spacing between tick labels as
+#' compared to the spacing between ticks. A value of 1 (default) means each
+#' tick gets a label. A value of 2 means shows every 2nd label. A larger
+#' value n means only every nth tick is labeled. `tick0` determines which
+#' labels are shown. Not implemented for axes with `type` "log" or
+#' "multicategory", or when `tickmode` is "array". Integer in the interval
+#' [1, Inf].}
+#' \item{\code{ticklen}}{Sets the tick length (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{tickmode}}{Sets the tick mode for this axis. If "auto", the
+#' number of ticks is set via `nticks`. If "linear", the placement of the
+#' ticks is determined by a starting position `tick0` and a tick step
+#' `dtick` ("linear" is the default value if `tick0` and `dtick` are
+#' provided). If "array", the placement of the ticks is set via `tickvals`
+#' and the tick text is `ticktext`. ("array" is the default value if
+#' `tickvals` is provided). If "sync", the number of ticks will sync with
+#' the overlayed axis set by `overlaying` property. When no other tick info
+#' is provided, overlaying (non-categorical) axes default to "sync", while
+#' other axes default to "auto". One of \code{"auto"}, \code{"linear"},
+#' \code{"array"}, \code{"sync"}.}
+#' \item{\code{tickprefix}}{Sets a tick label prefix. String.}
+#' \item{\code{ticks}}{Determines whether ticks are drawn or not. If **,
+#' this axis' ticks are not drawn. If "outside" ("inside"), this axis' are
+#' drawn outside (inside) the axis lines. One of \code{"outside"},
+#' \code{"inside"}, \code{""}.}
+#' \item{\code{tickson}}{Determines where ticks and grid lines are drawn
+#' with respect to their corresponding tick labels. Only has an effect for
+#' axes of `type` "category" or "multicategory". When set to "boundaries",
+#' ticks and grid lines are drawn half a category to the left/bottom of
+#' labels. One of \code{"labels"}, \code{"boundaries"}.}
+#' \item{\code{ticksuffix}}{Sets a tick label suffix. String.}
+#' \item{\code{ticktext}}{Sets the text displayed at the ticks position via
+#' `tickvals`. Only has an effect if `tickmode` is set to "array". Used with
+#' `tickvals`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickvals}}{Sets the values at which ticks on this axis
+#' appear. Only has an effect if `tickmode` is set to "array". Used with
+#' `ticktext`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickwidth}}{Sets the tick width (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{title}}{String (the title text), or a named list with
+#' properties \code{font}, \code{standoff} and \code{text} (described in
+#' section "title properties" below).}
+#' \item{\code{type}}{Sets the axis type. By default, plotly attempts to
+#' determined the axis type by looking into the data of the traces that
+#' referenced the axis in question. One of \code{"-"}, \code{"linear"},
+#' \code{"log"}, \code{"date"}, \code{"category"}, \code{"multicategory"}.}
+#' \item{\code{uirevision}}{Controls persistence of user-driven changes in
+#' axis `range`, `autorange`, and `title` if in `editable: true`
+#' configuration. Defaults to `layout.uirevision`. Any value.}
+#' \item{\code{unifiedhovertitle}}{A \code{\link{go_unifiedhovertitle}()}
+#' object or named list, with properties \code{text} (see
+#' \code{\link{go_unifiedhovertitle}()}).}
+#' \item{\code{visible}}{A single toggle to hide the axis while preserving
+#' interaction like dragging. Default is true when a cheater plot is present
+#' on the axis, otherwise false Logical.}
+#' \item{\code{zeroline}}{Determines whether or not a line is drawn at along
+#' the 0 value of this axis. If TRUE, the zero line is drawn on top of the
+#' grid lines. Logical.}
+#' \item{\code{zerolinecolor}}{Sets the line color of the zero line. Color:
+#' a CSS color string or R color name.}
+#' \item{\code{zerolinelayer}}{Sets the layer on which this zeroline is
+#' displayed. If "above traces", this zeroline is displayed above all the
+#' subplot's traces If "below traces", this zeroline is displayed below all
+#' the subplot's traces, but above the grid lines. Limitation:
+#' "zerolinelayer" currently has no effect if the "zorder" property is set
+#' on any trace. One of \code{"above traces"}, \code{"below traces"}.}
+#' \item{\code{zerolinewidth}}{Sets the width (in px) of the zero line.
+#' Number.}
+#' }
+#'
+#' @section rangeselector properties:
+#' \describe{
+#' \item{\code{activecolor}}{Sets the background color of the active range
+#' selector button. Color: a CSS color string or R color name.}
+#' \item{\code{bgcolor}}{Sets the background color of the range selector
+#' buttons. Color: a CSS color string or R color name.}
+#' \item{\code{bordercolor}}{Sets the color of the border enclosing the
+#' range selector. Color: a CSS color string or R color name.}
+#' \item{\code{borderwidth}}{Sets the width (in px) of the border enclosing
+#' the range selector. Number in the interval [0, Inf].}
+#' \item{\code{buttons}}{List, each element a named list with properties
+#' \code{count}, \code{label}, \code{name}, \code{step}, \code{stepmode},
+#' \code{templateitemname} and \code{visible} (described in section
+#' "rangeselector.button properties" below).}
+#' \item{\code{font}}{Sets the font of the range selector button text. A
+#' \code{\link{go_font}()} object or named list, with properties
+#' \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#' \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#' \code{weight} (see \code{\link{go_font}()}).}
+#' \item{\code{visible}}{Determines whether or not this range selector is
+#' visible. Note that range selectors are only available for x axes of
+#' `type` set to or auto-typed to "date". Logical.}
+#' \item{\code{x}}{Sets the x position (in normalized coordinates) of the
+#' range selector. Number in the interval [-2, 3].}
+#' \item{\code{xanchor}}{Sets the range selector's horizontal position
+#' anchor. This anchor binds the `x` position to the "left", "center" or
+#' "right" of the range selector. One of \code{"auto"}, \code{"left"},
+#' \code{"center"}, \code{"right"}.}
+#' \item{\code{y}}{Sets the y position (in normalized coordinates) of the
+#' range selector. Number in the interval [-2, 3].}
+#' \item{\code{yanchor}}{Sets the range selector's vertical position anchor
+#' This anchor binds the `y` position to the "top", "middle" or "bottom" of
+#' the range selector. One of \code{"auto"}, \code{"top"}, \code{"middle"},
+#' \code{"bottom"}.}
+#' }
+#'
+#' @section rangeselector.button properties (each list element):
+#' Sets the specifications for each buttons. By default, a range selector
+#' comes with no buttons.
+#'
+#' \describe{
+#' \item{\code{count}}{Sets the number of steps to take to update the range.
+#' Use with `step` to specify the update interval. Number in the interval
+#' [0, Inf].}
+#' \item{\code{label}}{Sets the text label to appear on the button. String.}
+#' \item{\code{name}}{When used in a template, named items are created in
+#' the output figure in addition to any items the figure already has in this
+#' array. You can modify these items in the output figure by making your own
+#' item with `templateitemname` matching this `name` alongside your
+#' modifications (including `visible: false` or `enabled: false` to hide
+#' it). Has no effect outside of a template. String.}
+#' \item{\code{step}}{The unit of measurement that the `count` value will
+#' set the range by. One of \code{"month"}, \code{"year"}, \code{"day"},
+#' \code{"hour"}, \code{"minute"}, \code{"second"}, \code{"all"}.}
+#' \item{\code{stepmode}}{Sets the range update mode. If "backward", the
+#' range update shifts the start of range back "count" times "step"
+#' milliseconds. If "todate", the range update shifts the start of range
+#' back to the first timestamp from "count" times "step" milliseconds back.
+#' For example, with `step` set to "year" and `count` set to 1 the range
+#' update shifts the start of the range back to January 01 of the current
+#' year. Month and year "todate" are currently available only for the
+#' built-in (Gregorian) calendar. One of \code{"backward"},
+#' \code{"todate"}.}
+#' \item{\code{templateitemname}}{Used to refer to a named item in this
+#' array in the template. Named items from the template will be created even
+#' without a matching item in the input figure, but you can modify one by
+#' making an item with `templateitemname` matching its `name`, alongside
+#' your modifications (including `visible: false` or `enabled: false` to
+#' hide it). If there is no template or no matching item, this item will be
+#' hidden unless you explicitly show it with `visible: true`. String.}
+#' \item{\code{visible}}{Determines whether or not this button is visible.
+#' Logical.}
+#' }
+#'
+#' @section rangeslider properties:
+#' \describe{
+#' \item{\code{autorange}}{Determines whether or not the range slider range
+#' is computed in relation to the input data. If `range` is provided, then
+#' `autorange` is set to FALSE. Logical.}
+#' \item{\code{bgcolor}}{Sets the background color of the range slider.
+#' Color: a CSS color string or R color name.}
+#' \item{\code{bordercolor}}{Sets the border color of the range slider.
+#' Color: a CSS color string or R color name.}
+#' \item{\code{borderwidth}}{Sets the border width of the range slider.
+#' Integer in the interval [0, Inf].}
+#' \item{\code{range}}{Sets the range of the range slider. If not set,
+#' defaults to the full xaxis range. If the axis `type` is "log", then you
+#' must take the log of your desired range. If the axis `type` is "date", it
+#' should be date strings, like date data, though Date objects and unix
+#' milliseconds will be accepted and converted to strings. If the axis
+#' `type` is "category", it should be numbers, using the scale where each
+#' category is assigned a serial number from zero in the order it appears.
+#' Vector or list of 2 element(s).}
+#' \item{\code{thickness}}{The height of the range slider as a fraction of
+#' the total plot area height. Number in the interval [0, 1].}
+#' \item{\code{visible}}{Determines whether or not the range slider will be
+#' visible. If visible, perpendicular axes will be set to `fixedrange`
+#' Logical.}
+#' \item{\code{yaxis}}{A named list with properties \code{range} and
+#' \code{rangemode} (described in section "rangeslider.yaxis properties"
+#' below).}
+#' }
+#'
+#' @section rangeslider.yaxis properties:
+#' \describe{
+#' \item{\code{range}}{Sets the range of this axis for the rangeslider.
+#' Vector or list of 2 element(s).}
+#' \item{\code{rangemode}}{Determines whether or not the range of this axis
+#' in the rangeslider use the same value than in the main plot when zooming
+#' in/out. If "auto", the autorange will be used. If "fixed", the `range` is
+#' used. If "match", the current range of the corresponding y-axis on the
+#' main subplot is used. One of \code{"auto"}, \code{"fixed"},
+#' \code{"match"}.}
+#' }
+#'
+#' @section title properties:
+#' \describe{
+#' \item{\code{font}}{Sets this axis' title font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{standoff}}{Sets the standoff distance (in px) between the
+#' axis labels and the title text The default value is a function of the
+#' axis tick labels, the title `font.size` and the axis `linewidth`. Note
+#' that the axis title position is always constrained within the margins, so
+#' the actual standoff distance is always less than the set or default
+#' value. By setting `standoff` and turning on `automargin`, plotly.js will
+#' push the margins to fit the axis title at given standoff distance. Number
+#' in the interval [0, Inf].}
+#' \item{\code{text}}{Sets the title of this axis. String.}
+#' }
+#'
 #' @name update_xaxes
 #' @noMd
 NULL
@@ -1725,13 +5386,509 @@ for_each_xaxis <- function(fig, fn, selector = NULL, row = NULL, col = NULL) {
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
 #' @param secondary_y Only secondary (\code{TRUE}) or primary (\code{FALSE}) y axes.
-#' @param patch A named list or \code{\link{go_layout_yaxis}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list of yaxis property updates (see section "yaxis properties").
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_yaxes()} returns a named list of \code{\link{go_layout_yaxis}()} objects; the
+#' @return \code{select_yaxes()} returns a named list of yaxis objects; the
 #'   others return the modified figure.
+#'
+#' @section yaxis properties:
+#' \describe{
+#' \item{\code{anchor}}{If set to an opposite-letter axis id (e.g. `x2`,
+#' `y`), this axis is bound to the corresponding opposite-letter axis. If
+#' set to "free", this axis' position is determined by `position`. One of
+#' \code{"free"}, or a string matching \code{"^x([2-9]|[1-9][0-9]+)?(
+#' domain)?$"} or \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.}
+#' \item{\code{automargin}}{Determines whether long tick labels
+#' automatically grow the figure margins. Any combination of
+#' \code{"height"}, \code{"width"}, \code{"left"}, \code{"right"},
+#' \code{"top"}, \code{"bottom"} joined with \code{"+"}, or one of
+#' \code{TRUE}, \code{FALSE}.}
+#' \item{\code{autorange}}{Determines whether or not the range of this axis
+#' is computed in relation to the input data. See `rangemode` for more info.
+#' If `range` is provided and it has a value for both the lower and upper
+#' bound, `autorange` is set to FALSE. Using "min" applies autorange only to
+#' set the minimum. Using "max" applies autorange only to set the maximum.
+#' Using "min reversed" applies autorange only to set the minimum on a
+#' reversed axis. Using "max reversed" applies autorange only to set the
+#' maximum on a reversed axis. Using "reversed" applies autorange on both
+#' ends and reverses the axis direction. One of \code{"reversed"},
+#' \code{"min reversed"}, \code{"max reversed"}, \code{"min"}, \code{"max"},
+#' \code{TRUE}, \code{FALSE}.}
+#' \item{\code{autorangeoptions}}{A \code{\link{go_autorangeoptions}()}
+#' object or named list, with properties \code{clipmax}, \code{clipmin},
+#' \code{include}, \code{maxallowed} and \code{minallowed} (see
+#' \code{\link{go_autorangeoptions}()}).}
+#' \item{\code{autoshift}}{Automatically reposition the axis to avoid
+#' overlap with other axes with the same `overlaying` value. This
+#' repositioning will account for any `shift` amount applied to other axes
+#' on the same side with `autoshift` is set to true. Only has an effect if
+#' `anchor` is set to "free". Logical.}
+#' \item{\code{autotickangles}}{When `tickangle` is set to "auto", it will
+#' be set to the first angle in this array that is large enough to prevent
+#' label overlap. Vector or list of up to 1 element(s).}
+#' \item{\code{autotypenumbers}}{Using "strict" a numeric string in trace
+#' data is not converted to a number. Using "convert types" a numeric string
+#' in trace data may be treated as a number during automatic axis `type`
+#' detection. Defaults to layout.autotypenumbers. One of \code{"convert
+#' types"}, \code{"strict"}.}
+#' \item{\code{calendar}}{Sets the calendar system to use for `range` and
+#' `tick0` if this is a date axis. This does not set the calendar for
+#' interpreting data on this axis, that's specified in the trace or via the
+#' global `layout.calendar` One of \code{"chinese"}, \code{"coptic"},
+#' \code{"discworld"}, \code{"ethiopian"}, \code{"gregorian"},
+#' \code{"hebrew"}, \code{"islamic"}, \code{"jalali"}, \code{"julian"},
+#' \code{"mayan"}, \code{"nanakshahi"}, \code{"nepali"}, \code{"persian"},
+#' \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.}
+#' \item{\code{categoryarray}}{Sets the order in which categories on this
+#' axis appear. Only has an effect if `categoryorder` is set to "array".
+#' Used with `categoryorder`. Data array: a vector, factor, Date/POSIXct
+#' vector, matrix or list.}
+#' \item{\code{categoryorder}}{Specifies the ordering logic for the case of
+#' categorical variables. By default, plotly uses "trace", which specifies
+#' the order that is present in the data supplied. Set `categoryorder` to
+#' "category ascending" or "category descending" if order should be
+#' determined by the alphanumerical order of the category names. Set
+#' `categoryorder` to "array" to derive the ordering from the attribute
+#' `categoryarray`. If a category is not found in the `categoryarray` array,
+#' the sorting behavior for that attribute will be identical to the "trace"
+#' mode. The unspecified categories will follow the categories in
+#' `categoryarray`. Set `categoryorder` to "total ascending" or "total
+#' descending" if order should be determined by the numerical order of the
+#' values. Similarly, the order can be determined by the min, max, sum,
+#' mean, geometric mean or median of all the values. One of \code{"trace"},
+#' \code{"category ascending"}, \code{"category descending"},
+#' \code{"array"}, \code{"total ascending"}, \code{"total descending"},
+#' \code{"min ascending"}, \code{"min descending"}, \code{"max ascending"},
+#' \code{"max descending"}, \code{"sum ascending"}, \code{"sum descending"},
+#' \code{"mean ascending"}, \code{"mean descending"}, \code{"geometric mean
+#' ascending"}, \code{"geometric mean descending"}, \code{"median
+#' ascending"}, \code{"median descending"}.}
+#' \item{\code{color}}{Sets default for all colors associated with this axis
+#' all at once: line, font, tick, and grid colors. Grid color is lightened
+#' by blending this with the plot background Individual pieces can override
+#' this. Color: a CSS color string or R color name.}
+#' \item{\code{constrain}}{If this axis needs to be compressed (either due
+#' to its own `scaleanchor` and `scaleratio` or those of the other axis),
+#' determines how that happens: by increasing the "range", or by decreasing
+#' the "domain". Default is "domain" for axes containing image traces,
+#' "range" otherwise. One of \code{"range"}, \code{"domain"}.}
+#' \item{\code{constraintoward}}{If this axis needs to be compressed (either
+#' due to its own `scaleanchor` and `scaleratio` or those of the other
+#' axis), determines which direction we push the originally specified plot
+#' area. Options are "left", "center" (default), and "right" for x axes, and
+#' "top", "middle" (default), and "bottom" for y axes. One of \code{"left"},
+#' \code{"center"}, \code{"right"}, \code{"top"}, \code{"middle"},
+#' \code{"bottom"}.}
+#' \item{\code{dividercolor}}{Sets the color of the dividers Only has an
+#' effect on "multicategory" axes. Color: a CSS color string or R color
+#' name.}
+#' \item{\code{dividerwidth}}{Sets the width (in px) of the dividers Only
+#' has an effect on "multicategory" axes. Number.}
+#' \item{\code{domain}}{Sets the domain of this axis (in plot fraction).
+#' Vector or list of 2 element(s).}
+#' \item{\code{domainpad}}{Sets the space in pixels to reserve inside the
+#' edges of `domain`. Because `domain` is a fraction of the plot area, the
+#' gap between subplots changes with the figure size. `domainpad` keeps the
+#' same size in pixels at all figure sizes, so it can hold content with a
+#' fixed size, such as a subplot title. x axes use `left` and `right`. y
+#' axes use `top` and `bottom`. If the padding needs more room than the
+#' domain has, the two pads shrink by the same factor, and the plot area
+#' keeps a length of at least 2 pixels. An axis that sets `overlaying`
+#' ignores its own `domainpad` and uses the `domainpad` of the axis it
+#' overlays, so that both axes share the same plot area. A
+#' \code{\link{go_domainpad}()} object or named list, with properties
+#' \code{bottom}, \code{left}, \code{right} and \code{top} (see
+#' \code{\link{go_domainpad}()}).}
+#' \item{\code{dtick}}{Sets the step in-between ticks on this axis. Use with
+#' `tick0`. Must be a positive number, or special strings available to "log"
+#' and "date" axes. If the axis `type` is "log", then ticks are set every
+#' 10^(n*dtick) where n is the tick number. For example, to set a tick mark
+#' at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks at 1, 100,
+#' 10000, ... set dtick to 2. To set tick marks at 1, 5, 25, 125, 625, 3125,
+#' ... set dtick to log_10(5), or 0.69897000433. "log" has several special
+#' values; "L<f>", where `f` is a positive number, gives ticks linearly
+#' spaced in value (but not position). For example `tick0` = 0.1, `dtick` =
+#' "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6 etc. To show powers of 10
+#' plus small digits between, use "D1" (all digits) or "D2" (only 2 and 5).
+#' `tick0` is ignored for "D1" and "D2". If the axis `type` is "date", then
+#' you must convert the time to milliseconds. For example, to set the
+#' interval between ticks to one day, set `dtick` to 86400000.0. "date" also
+#' has special values "M<n>" gives ticks spaced by a number of months. `n`
+#' must be a positive integer. To set ticks on the 15th of every third
+#' month, set `tick0` to "2000-01-15" and `dtick` to "M3". To set ticks
+#' every 4 years, set `dtick` to "M48" Any value.}
+#' \item{\code{exponentformat}}{Determines a formatting rule for the tick
+#' exponents. For example, consider the number 1,000,000,000. If "none", it
+#' appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power", 1x10^9
+#' (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses prefixes
+#' from "femto" f (10^-15) to "tera" T (10^12). "SI extended" covers instead
+#' the full SI range from "quecto" q (10^-30) to "quetta" Q (10^30). If "SI"
+#' or "SI extended" is used and the exponent is beyond the above ranges, the
+#' formatting rule will automatically be switched to the power notation. One
+#' of \code{"none"}, \code{"e"}, \code{"E"}, \code{"power"}, \code{"SI"},
+#' \code{"B"}, \code{"SI extended"}.}
+#' \item{\code{fixedrange}}{Determines whether or not this axis is
+#' zoom-able. If true, then zoom is disabled. Logical.}
+#' \item{\code{gridcolor}}{Sets the color of the grid lines. Color: a CSS
+#' color string or R color name.}
+#' \item{\code{griddash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{gridwidth}}{Sets the width (in px) of the grid lines. Number
+#' in the interval [0, Inf].}
+#' \item{\code{hoverformat}}{Sets the hover text formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{insiderange}}{Could be used to set the desired inside range
+#' of this axis (excluding the labels) when `ticklabelposition` of the
+#' anchored axis has "inside". Not implemented for axes with `type` "log".
+#' This would be ignored when `range` is provided. Vector or list of 2
+#' element(s).}
+#' \item{\code{labelalias}}{Replacement text for specific tick or hover
+#' labels. For example using \{US: 'USA', CA: 'Canada'\} changes US to USA
+#' and CA to Canada. The labels we would have shown must match the keys
+#' exactly, after adding any tickprefix or ticksuffix. For negative numbers
+#' the minus sign symbol used (U+2212) is wider than the regular ascii dash.
+#' That means you need to use -1 instead of -1. labelalias can be used with
+#' any axis type, and both keys (if needed) and values (if desired) can
+#' include html-like tags or MathJax. Any value.}
+#' \item{\code{layer}}{Sets the layer on which this axis is displayed. If
+#' "above traces", this axis is displayed above all the subplot's traces If
+#' "below traces", this axis is displayed below all the subplot's traces,
+#' but above the grid lines. Useful when used together with scatter-like
+#' traces with `cliponaxis` set to FALSE to show markers and/or text nodes
+#' above this axis. One of \code{"above traces"}, \code{"below traces"}.}
+#' \item{\code{linecolor}}{Sets the axis line color. Color: a CSS color
+#' string or R color name.}
+#' \item{\code{linewidth}}{Sets the width (in px) of the axis line. Number
+#' in the interval [0, Inf].}
+#' \item{\code{matches}}{If set to another axis id (e.g. `x2`, `y`), the
+#' range of this axis will match the range of the corresponding axis in
+#' data-coordinates space. Moreover, matching axes share auto-range values,
+#' category lists and histogram auto-bins. Note that setting axes
+#' simultaneously in both a `scaleanchor` and a `matches` constraint is
+#' currently forbidden. Moreover, note that matching axes must have the same
+#' `type`. One of , or a string matching \code{"^x([2-9]|[1-9][0-9]+)?(
+#' domain)?$"} or \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.}
+#' \item{\code{maxallowed}}{Determines the maximum range of this axis. Any
+#' value.}
+#' \item{\code{minallowed}}{Determines the minimum range of this axis. Any
+#' value.}
+#' \item{\code{minexponent}}{Hide SI prefix for 10^n if |n| is below this
+#' number. This only has an effect when `tickformat` is "SI" or "B". Number
+#' in the interval [0, Inf].}
+#' \item{\code{minor}}{A \code{\link{go_minor}()} object or named list, with
+#' properties \code{dtick}, \code{gridcolor}, \code{griddash},
+#' \code{gridwidth}, \code{nticks}, \code{showgrid}, \code{tick0},
+#' \code{tickcolor}, \code{ticklen}, \code{tickmode}, \code{ticks},
+#' \code{tickvals} and \code{tickwidth} (see \code{\link{go_minor}()}).}
+#' \item{\code{minorloglabels}}{Determines how minor log labels are
+#' displayed. If "small digits", small digits i.e. 2 or 5 are displayed. If
+#' "complete", complete digits are displayed. If "none", no labels are
+#' displayed. One of \code{"small digits"}, \code{"complete"},
+#' \code{"none"}.}
+#' \item{\code{mirror}}{Determines if the axis lines or/and ticks are
+#' mirrored to the opposite side of the plotting area. If TRUE, the axis
+#' lines are mirrored. If "ticks", the axis lines and ticks are mirrored. If
+#' FALSE, mirroring is disable. If "all", axis lines are mirrored on all
+#' shared-axes subplots. If "allticks", axis lines and ticks are mirrored on
+#' all shared-axes subplots. One of \code{"ticks"}, \code{"all"},
+#' \code{"allticks"}, \code{TRUE}, \code{FALSE}.}
+#' \item{\code{modebardisable}}{Disables certain modebar buttons for this
+#' axis. "autoscale" disables the autoscale buttons, "zoominout" disables
+#' the zoom-in and zoom-out buttons. Any combination of \code{"autoscale"},
+#' \code{"zoominout"} joined with \code{"+"}, or one of \code{"none"}.}
+#' \item{\code{nticks}}{Specifies the maximum number of ticks for the
+#' particular axis. The actual number of ticks will be chosen automatically
+#' to be less than or equal to `nticks`. Has an effect only if `tickmode` is
+#' set to "auto". Integer in the interval [0, Inf].}
+#' \item{\code{overlaying}}{If set a same-letter axis id, this axis is
+#' overlaid on top of the corresponding same-letter axis, with traces and
+#' axes visible for both axes. If FALSE, this axis does not overlay any
+#' same-letter axes. In this case, for axes with overlapping domains only
+#' the highest-numbered axis will be visible. One of \code{"free"}, or a
+#' string matching \code{"^x([2-9]|[1-9][0-9]+)?( domain)?$"} or
+#' \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.}
+#' \item{\code{position}}{Sets the position of this axis in the plotting
+#' space (in normalized coordinates). Only has an effect if `anchor` is set
+#' to "free". Number in the interval [0, 1].}
+#' \item{\code{range}}{Sets the range of this axis. If the axis `type` is
+#' "log", then you must take the log of your desired range (e.g. to set the
+#' range from 1 to 100, set the range from 0 to 2). If the axis `type` is
+#' "date", it should be date strings, like date data, though Date objects
+#' and unix milliseconds will be accepted and converted to strings. If the
+#' axis `type` is "category", it should be numbers, using the scale where
+#' each category is assigned a serial number from zero in the order it
+#' appears. Leaving either or both elements `null` impacts the default
+#' `autorange`. Vector or list of 2 element(s).}
+#' \item{\code{rangebreaks}}{List, each element a
+#' \code{\link{go_rangebreak}()} object or named list, with properties
+#' \code{bounds}, \code{dvalue}, \code{enabled}, \code{name},
+#' \code{pattern}, \code{templateitemname} and \code{values} (see
+#' \code{\link{go_rangebreak}()}).}
+#' \item{\code{rangemode}}{If "normal", the range is computed in relation to
+#' the extrema of the input data. If "tozero", the range extends to 0,
+#' regardless of the input data If "nonnegative", the range is non-negative,
+#' regardless of the input data. Applies only to linear axes. One of
+#' \code{"normal"}, \code{"tozero"}, \code{"nonnegative"}.}
+#' \item{\code{scaleanchor}}{If set to another axis id (e.g. `x2`, `y`), the
+#' range of this axis changes together with the range of the corresponding
+#' axis such that the scale of pixels per unit is in a constant ratio. Both
+#' axes are still zoomable, but when you zoom one, the other will zoom the
+#' same amount, keeping a fixed midpoint. `constrain` and `constraintoward`
+#' determine how we enforce the constraint. You can chain these, ie `yaxis:
+#' \{scaleanchor: "x"\}, xaxis2: \{scaleanchor: "y"\}` but you can only link
+#' axes of the same `type`. The linked axis can have the opposite letter (to
+#' constrain the aspect ratio) or the same letter (to match scales across
+#' subplots). Loops (`yaxis: \{scaleanchor: "x"\}, xaxis: \{scaleanchor:
+#' "y"\}` or longer) are redundant and the last constraint encountered will
+#' be ignored to avoid possible inconsistent constraints via `scaleratio`.
+#' Note that setting axes simultaneously in both a `scaleanchor` and a
+#' `matches` constraint is currently forbidden. Setting `false` allows to
+#' remove a default constraint (occasionally, you may need to prevent a
+#' default `scaleanchor` constraint from being applied, eg. when having an
+#' image trace `yaxis: \{scaleanchor: "x"\}` is set automatically in order
+#' for pixels to be rendered as squares, setting `yaxis: \{scaleanchor:
+#' false\}` allows to remove the constraint). One of \code{FALSE}, or a
+#' string matching \code{"^x([2-9]|[1-9][0-9]+)?( domain)?$"} or
+#' \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.}
+#' \item{\code{scaleratio}}{If this axis is linked to another by
+#' `scaleanchor`, this determines the pixel to unit scale ratio. For
+#' example, if this value is 10, then every unit on this axis spans 10 times
+#' the number of pixels as a unit on the linked axis. Use this for example
+#' to create an elevation profile where the vertical scale is exaggerated a
+#' fixed amount with respect to the horizontal. Number in the interval [0,
+#' Inf].}
+#' \item{\code{separatethousands}}{If "true", even 4-digit integers are
+#' separated Logical.}
+#' \item{\code{shift}}{Moves the axis a given number of pixels from where it
+#' would have been otherwise. Accepts both positive and negative values,
+#' which will shift the axis either right or left, respectively. If
+#' `autoshift` is set to true, then this defaults to a padding of -3 if
+#' `side` is set to "left". and defaults to +3 if `side` is set to "right".
+#' Defaults to 0 if `autoshift` is set to false. Only has an effect if
+#' `anchor` is set to "free". Number.}
+#' \item{\code{showdividers}}{Determines whether or not a dividers are drawn
+#' between the category levels of this axis. Only has an effect on
+#' "multicategory" axes. Logical.}
+#' \item{\code{showexponent}}{If "all", all exponents are shown besides
+#' their significands. If "first", only the exponent of the first tick is
+#' shown. If "last", only the exponent of the last tick is shown. If "none",
+#' no exponents appear. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showgrid}}{Determines whether or not grid lines are drawn. If
+#' TRUE, the grid lines are drawn at every tick mark. Logical.}
+#' \item{\code{showline}}{Determines whether or not a line bounding this
+#' axis is drawn. Logical.}
+#' \item{\code{showspikes}}{Determines whether or not spikes (aka droplines)
+#' are drawn for this axis. Note that spikes will never be drawn when
+#' `hovermode` is FALSE. Logical.}
+#' \item{\code{showticklabels}}{Determines whether or not the tick labels
+#' are drawn. Logical.}
+#' \item{\code{showtickprefix}}{If "all", all tick labels are displayed with
+#' a prefix. If "first", only the first tick is displayed with a prefix. If
+#' "last", only the last tick is displayed with a suffix. If "none", tick
+#' prefixes are hidden. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{showticksuffix}}{Same as `showtickprefix` but for tick
+#' suffixes. One of \code{"all"}, \code{"first"}, \code{"last"},
+#' \code{"none"}.}
+#' \item{\code{side}}{Determines whether a x (y) axis is positioned at the
+#' "bottom" ("left") or "top" ("right") of the plotting area. One of
+#' \code{"top"}, \code{"bottom"}, \code{"left"}, \code{"right"}.}
+#' \item{\code{spikecolor}}{Sets the spike color. If undefined, will use the
+#' series color Color: a CSS color string or R color name.}
+#' \item{\code{spikedash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{spikemode}}{Determines the drawing mode for the spike line If
+#' "toaxis", the line is drawn from the data point to the axis the series is
+#' plotted on. If "across", the line is drawn across the entire plot area,
+#' and supercedes "toaxis". If "marker", then a marker dot is drawn on the
+#' axis the series is plotted on Any combination of \code{"toaxis"},
+#' \code{"across"}, \code{"marker"} joined with \code{"+"}.}
+#' \item{\code{spikesnap}}{Determines whether spikelines are stuck to the
+#' cursor or to the closest datapoints. One of \code{"data"},
+#' \code{"cursor"}, \code{"hovered data"}.}
+#' \item{\code{spikethickness}}{Sets the spike line width in pixels.
+#' Number.}
+#' \item{\code{tick0}}{Sets the placement of the first tick on this axis.
+#' Use with `dtick`. If the axis `type` is "log", then you must take the log
+#' of your starting tick (e.g. to set the starting tick to 100, set the
+#' `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info). If
+#' the axis `type` is "date", it should be a date string, like date data. If
+#' the axis `type` is "category", it should be a number, using the scale
+#' where each category is assigned a serial number from zero in the order it
+#' appears. Any value.}
+#' \item{\code{tickangle}}{Sets the angle of the tick labels with respect to
+#' the horizontal. For example, a `tickangle` of -90 draws the tick labels
+#' vertically. Angle in degrees.}
+#' \item{\code{tickcolor}}{Sets the tick color. Color: a CSS color string or
+#' R color name.}
+#' \item{\code{tickfont}}{Sets the tick font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{tickformat}}{Sets the tick label formatting rule using d3
+#' formatting mini-languages which are very similar to those in Python. For
+#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+#' for dates see:
+#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+#' two items to d3's date formatter: "\%h" for half of the year as a decimal
+#' number as well as "\%\{n\}f" for fractional seconds with n digits. For
+#' example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+#' would display "09~15~23.46" String.}
+#' \item{\code{tickformatstops}}{List, each element a
+#' \code{\link{go_tickformatstop}()} object or named list, with properties
+#' \code{dtickrange}, \code{enabled}, \code{name}, \code{templateitemname}
+#' and \code{value} (see \code{\link{go_tickformatstop}()}).}
+#' \item{\code{ticklabelindex}}{Only for axes with `type` "date" or
+#' "linear". Instead of drawing the major tick label, draw the label for the
+#' minor tick that is n positions away from the major tick. E.g. to always
+#' draw the label for the minor tick before each major tick, choose
+#' `ticklabelindex` -1. This is useful for date axes with `ticklabelmode`
+#' "period" if you want to label the period that ends with each major tick
+#' instead of the period that begins there. Integer, or a vector of these.}
+#' \item{\code{ticklabelmode}}{Determines where tick labels are drawn with
+#' respect to their corresponding ticks and grid lines. Only has an effect
+#' for axes of `type` "date" When set to "period", tick labels are drawn in
+#' the middle of the period between ticks. One of \code{"instant"},
+#' \code{"period"}.}
+#' \item{\code{ticklabeloverflow}}{Determines how we handle tick labels that
+#' would overflow either the graph div or the domain of the axis. The
+#' default value for inside tick labels is "hide past domain". Otherwise on
+#' "category" and "multicategory" axes the default is "allow". In other
+#' cases the default is "hide past div". One of \code{"allow"}, \code{"hide
+#' past div"}, \code{"hide past domain"}.}
+#' \item{\code{ticklabelposition}}{Determines where tick labels are drawn
+#' with respect to the axis. Please note that top or bottom has no effect on
+#' x axes or when `ticklabelmode` is set to "period" or when `tickson` is
+#' set to "boundaries". Similarly, left or right has no effect on y axes or
+#' when `ticklabelmode` is set to "period" or when `tickson` is set to
+#' "boundaries". Has no effect on "multicategory" axes. When used on axes
+#' linked by `matches` or `scaleanchor`, no extra padding for inside labels
+#' would be added by autorange, so that the scales could match. One of
+#' \code{"outside"}, \code{"inside"}, \code{"outside top"}, \code{"inside
+#' top"}, \code{"outside left"}, \code{"inside left"}, \code{"outside
+#' right"}, \code{"inside right"}, \code{"outside bottom"}, \code{"inside
+#' bottom"}.}
+#' \item{\code{ticklabelshift}}{Shifts the tick labels by the specified
+#' number of pixels in parallel to the axis. Positive values move the labels
+#' in the positive direction of the axis. Integer.}
+#' \item{\code{ticklabelstandoff}}{Sets the standoff distance (in px)
+#' between the axis tick labels and their default position. A positive
+#' `ticklabelstandoff` moves the labels farther away from the plot area if
+#' `ticklabelposition` is "outside", and deeper into the plot area if
+#' `ticklabelposition` is "inside". A negative `ticklabelstandoff` works in
+#' the opposite direction, moving outside ticks towards the plot area and
+#' inside ticks towards the outside. If the negative value is large enough,
+#' inside ticks can even end up outside and vice versa. Integer.}
+#' \item{\code{ticklabelstep}}{Sets the spacing between tick labels as
+#' compared to the spacing between ticks. A value of 1 (default) means each
+#' tick gets a label. A value of 2 means shows every 2nd label. A larger
+#' value n means only every nth tick is labeled. `tick0` determines which
+#' labels are shown. Not implemented for axes with `type` "log" or
+#' "multicategory", or when `tickmode` is "array". Integer in the interval
+#' [1, Inf].}
+#' \item{\code{ticklen}}{Sets the tick length (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{tickmode}}{Sets the tick mode for this axis. If "auto", the
+#' number of ticks is set via `nticks`. If "linear", the placement of the
+#' ticks is determined by a starting position `tick0` and a tick step
+#' `dtick` ("linear" is the default value if `tick0` and `dtick` are
+#' provided). If "array", the placement of the ticks is set via `tickvals`
+#' and the tick text is `ticktext`. ("array" is the default value if
+#' `tickvals` is provided). If "sync", the number of ticks will sync with
+#' the overlayed axis set by `overlaying` property. When no other tick info
+#' is provided, overlaying (non-categorical) axes default to "sync", while
+#' other axes default to "auto". One of \code{"auto"}, \code{"linear"},
+#' \code{"array"}, \code{"sync"}.}
+#' \item{\code{tickprefix}}{Sets a tick label prefix. String.}
+#' \item{\code{ticks}}{Determines whether ticks are drawn or not. If **,
+#' this axis' ticks are not drawn. If "outside" ("inside"), this axis' are
+#' drawn outside (inside) the axis lines. One of \code{"outside"},
+#' \code{"inside"}, \code{""}.}
+#' \item{\code{tickson}}{Determines where ticks and grid lines are drawn
+#' with respect to their corresponding tick labels. Only has an effect for
+#' axes of `type` "category" or "multicategory". When set to "boundaries",
+#' ticks and grid lines are drawn half a category to the left/bottom of
+#' labels. One of \code{"labels"}, \code{"boundaries"}.}
+#' \item{\code{ticksuffix}}{Sets a tick label suffix. String.}
+#' \item{\code{ticktext}}{Sets the text displayed at the ticks position via
+#' `tickvals`. Only has an effect if `tickmode` is set to "array". Used with
+#' `tickvals`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickvals}}{Sets the values at which ticks on this axis
+#' appear. Only has an effect if `tickmode` is set to "array". Used with
+#' `ticktext`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#' list.}
+#' \item{\code{tickwidth}}{Sets the tick width (in px). Number in the
+#' interval [0, Inf].}
+#' \item{\code{title}}{String (the title text), or a named list with
+#' properties \code{font}, \code{standoff} and \code{text} (described in
+#' section "title properties" below).}
+#' \item{\code{type}}{Sets the axis type. By default, plotly attempts to
+#' determined the axis type by looking into the data of the traces that
+#' referenced the axis in question. One of \code{"-"}, \code{"linear"},
+#' \code{"log"}, \code{"date"}, \code{"category"}, \code{"multicategory"}.}
+#' \item{\code{uirevision}}{Controls persistence of user-driven changes in
+#' axis `range`, `autorange`, and `title` if in `editable: true`
+#' configuration. Defaults to `layout.uirevision`. Any value.}
+#' \item{\code{unifiedhovertitle}}{A \code{\link{go_unifiedhovertitle}()}
+#' object or named list, with properties \code{text} (see
+#' \code{\link{go_unifiedhovertitle}()}).}
+#' \item{\code{visible}}{A single toggle to hide the axis while preserving
+#' interaction like dragging. Default is true when a cheater plot is present
+#' on the axis, otherwise false Logical.}
+#' \item{\code{zeroline}}{Determines whether or not a line is drawn at along
+#' the 0 value of this axis. If TRUE, the zero line is drawn on top of the
+#' grid lines. Logical.}
+#' \item{\code{zerolinecolor}}{Sets the line color of the zero line. Color:
+#' a CSS color string or R color name.}
+#' \item{\code{zerolinelayer}}{Sets the layer on which this zeroline is
+#' displayed. If "above traces", this zeroline is displayed above all the
+#' subplot's traces If "below traces", this zeroline is displayed below all
+#' the subplot's traces, but above the grid lines. Limitation:
+#' "zerolinelayer" currently has no effect if the "zorder" property is set
+#' on any trace. One of \code{"above traces"}, \code{"below traces"}.}
+#' \item{\code{zerolinewidth}}{Sets the width (in px) of the zero line.
+#' Number.}
+#' }
+#'
+#' @section title properties:
+#' \describe{
+#' \item{\code{font}}{Sets this axis' title font. A \code{\link{go_font}()}
+#' object or named list, with properties \code{color}, \code{family},
+#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#' \code{textcase}, \code{variant} and \code{weight} (see
+#' \code{\link{go_font}()}).}
+#' \item{\code{standoff}}{Sets the standoff distance (in px) between the
+#' axis labels and the title text The default value is a function of the
+#' axis tick labels, the title `font.size` and the axis `linewidth`. Note
+#' that the axis title position is always constrained within the margins, so
+#' the actual standoff distance is always less than the set or default
+#' value. By setting `standoff` and turning on `automargin`, plotly.js will
+#' push the margins to fit the axis title at given standoff distance. Number
+#' in the interval [0, Inf].}
+#' \item{\code{text}}{Sets the title of this axis. String.}
+#' }
+#'
 #' @name update_yaxes
 #' @noMd
 NULL
@@ -1754,7 +5911,258 @@ for_each_yaxis <- function(fig, fn, selector = NULL, row = NULL, col = NULL, sec
   for_each_layout_subplot(fig, "yaxis", fn, selector, row, col, secondary_y)
 }
 
-#' @rdname go_layout_annotation
+#' Add a layout annotation
+#'
+#' \code{add_annotation()} adds an annotation to the figure's layout
+#' \code{annotations}. Nested objects are named lists, e.g. \code{font =
+#' list(size = 14)} or a \code{\link{go_font}()} object; each one's
+#' properties are described in a section of its own near the end of this
+#' page.
+#'
+#' @param arg Optional named list of properties to start from. Named
+#'   arguments take precedence.
+#' @param align Sets the horizontal alignment of the `text` within the box.
+#'   Has an effect only if `text` spans two or more lines (i.e. `text`
+#'   contains one or more <br> HTML tags) or if an explicit width is set to
+#'   override the text width. One of \code{"left"}, \code{"center"},
+#'   \code{"right"}.
+#' @param arrowcolor Sets the color of the annotation arrow. Color: a CSS
+#'   color string or R color name.
+#' @param arrowhead Sets the end annotation arrow head style. Integer in
+#'   the interval [0, 8].
+#' @param arrowside Sets the annotation arrow head position. Any
+#'   combination of \code{"end"}, \code{"start"} joined with \code{"+"}, or
+#'   one of \code{"none"}.
+#' @param arrowsize Sets the size of the end annotation arrow head,
+#'   relative to `arrowwidth`. A value of 1 (default) gives a head about 3x
+#'   as wide as the line. Number in the interval [0.3, Inf].
+#' @param arrowwidth Sets the width (in px) of annotation arrow line.
+#'   Number in the interval [0.1, Inf].
+#' @param ax Sets the x component of the arrow tail about the arrow head.
+#'   If `axref` is `pixel`, a positive (negative) component corresponds to
+#'   an arrow pointing from right to left (left to right). If `axref` is
+#'   not `pixel` and is exactly the same as `xref`, this is an absolute
+#'   value on that axis, like `x`, specified in the same coordinates as
+#'   `xref`. Any value.
+#' @param axref Indicates in what coordinates the tail of the annotation
+#'   (ax,ay) is specified. If set to a x axis id (e.g. "x" or "x2"), the
+#'   `x` position refers to a x coordinate. If set to "paper", the `x`
+#'   position refers to the distance from the left of the plotting area in
+#'   normalized coordinates where 0 (1) corresponds to the left (right). If
+#'   set to a x axis ID followed by "domain" (separated by a space), the
+#'   position behaves like for "paper", but refers to the distance in
+#'   fractions of the domain length from the left of the domain of that
+#'   axis: e.g., "x2 domain" refers to the domain of the second x axis and
+#'   a x position of 0.5 refers to the point between the left and the right
+#'   of the domain of the second x axis. In order for absolute positioning
+#'   of the arrow to work, "axref" must be exactly the same as "xref",
+#'   otherwise "axref" will revert to "pixel" (explained next). For
+#'   relative positioning, "axref" can be set to "pixel", in which case the
+#'   "ax" value is specified in pixels relative to "x". Absolute
+#'   positioning is useful for trendline annotations which should continue
+#'   to indicate the correct trend when zoomed. Relative positioning is
+#'   useful for specifying the text offset for an annotated point. One of
+#'   \code{"pixel"}, or a string matching \code{"^x([2-9]|[1-9][0-9]+)?(
+#'   domain)?$"}.
+#' @param ay Sets the y component of the arrow tail about the arrow head.
+#'   If `ayref` is `pixel`, a positive (negative) component corresponds to
+#'   an arrow pointing from bottom to top (top to bottom). If `ayref` is
+#'   not `pixel` and is exactly the same as `yref`, this is an absolute
+#'   value on that axis, like `y`, specified in the same coordinates as
+#'   `yref`. Any value.
+#' @param ayref Indicates in what coordinates the tail of the annotation
+#'   (ax,ay) is specified. If set to a y axis id (e.g. "y" or "y2"), the
+#'   `y` position refers to a y coordinate. If set to "paper", the `y`
+#'   position refers to the distance from the bottom of the plotting area
+#'   in normalized coordinates where 0 (1) corresponds to the bottom (top).
+#'   If set to a y axis ID followed by "domain" (separated by a space), the
+#'   position behaves like for "paper", but refers to the distance in
+#'   fractions of the domain length from the bottom of the domain of that
+#'   axis: e.g., "y2 domain" refers to the domain of the second y axis and
+#'   a y position of 0.5 refers to the point between the bottom and the top
+#'   of the domain of the second y axis. In order for absolute positioning
+#'   of the arrow to work, "ayref" must be exactly the same as "yref",
+#'   otherwise "ayref" will revert to "pixel" (explained next). For
+#'   relative positioning, "ayref" can be set to "pixel", in which case the
+#'   "ay" value is specified in pixels relative to "y". Absolute
+#'   positioning is useful for trendline annotations which should continue
+#'   to indicate the correct trend when zoomed. Relative positioning is
+#'   useful for specifying the text offset for an annotated point. One of
+#'   \code{"pixel"}, or a string matching \code{"^y([2-9]|[1-9][0-9]+)?(
+#'   domain)?$"}.
+#' @param bgcolor Sets the background color of the annotation. Color: a CSS
+#'   color string or R color name.
+#' @param bordercolor Sets the color of the border enclosing the annotation
+#'   `text`. Color: a CSS color string or R color name.
+#' @param borderpad Sets the padding (in px) between the `text` and the
+#'   enclosing border. Number in the interval [0, Inf].
+#' @param borderwidth Sets the width (in px) of the border enclosing the
+#'   annotation `text`. Number in the interval [0, Inf].
+#' @param captureevents Determines whether the annotation text box captures
+#'   mouse move and click events, or allows those events to pass through to
+#'   data points in the plot that may be behind the annotation. By default
+#'   `captureevents` is FALSE unless `hovertext` is provided. If you use
+#'   the event `plotly_clickannotation` without `hovertext` you must
+#'   explicitly enable `captureevents`. Logical.
+#' @param clicktoshow Makes this annotation respond to clicks on the plot.
+#'   If you click a data point that exactly matches the `x` and `y` values
+#'   of this annotation, and it is hidden (visible: false), it will appear.
+#'   In "onoff" mode, you must click the same point again to make it
+#'   disappear, so if you click multiple points, you can show multiple
+#'   annotations. In "onout" mode, a click anywhere else in the plot (on
+#'   another data point or not) will hide this annotation. If you need to
+#'   show/hide this annotation in response to different `x` or `y` values,
+#'   you can set `xclick` and/or `yclick`. This is useful for example to
+#'   label the side of a bar. To label markers though, `standoff` is
+#'   preferred over `xclick` and `yclick`. One of \code{"onoff"},
+#'   \code{"onout"}, \code{FALSE}.
+#' @param col Subplot grid column whose axes the object refers to (see
+#'   \code{row}).
+#' @param exclude_empty_subplots If \code{TRUE}, skip subplots that have no
+#'   traces or layout objects.
+#' @param fig A \code{go_figure} object.
+#' @param font Sets the annotation text font. A \code{\link{go_font}()}
+#'   object or named list, with properties \code{color}, \code{family},
+#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#'   \code{textcase}, \code{variant} and \code{weight} (see
+#'   \code{\link{go_font}()}).
+#' @param height Sets an explicit height for the text box. null (default)
+#'   lets the text set the box height. Taller text will be clipped. Number
+#'   in the interval [1, Inf].
+#' @param hoverlabel A \code{\link{go_hoverlabel}()} object or named list,
+#'   with properties \code{bgcolor}, \code{bordercolor} and \code{font}
+#'   (see \code{\link{go_hoverlabel}()}).
+#' @param hovertext Sets text to appear when hovering over this annotation.
+#'   If omitted or blank, no hover label will appear. String.
+#' @param name When used in a template, named items are created in the
+#'   output figure in addition to any items the figure already has in this
+#'   array. You can modify these items in the output figure by making your
+#'   own item with `templateitemname` matching this `name` alongside your
+#'   modifications (including `visible: false` or `enabled: false` to hide
+#'   it). Has no effect outside of a template. String.
+#' @param opacity Sets the opacity of the annotation (text + arrow). Number
+#'   in the interval [0, 1].
+#' @param row Subplot grid row whose axes the object refers to (figures
+#'   created with \code{\link{make_subplots}()} only). May be \code{"all"}
+#'   or a vector to add the object to several cells.
+#' @param secondary_y If \code{TRUE}, refer to the secondary y axis of the
+#'   subplot.
+#' @param showarrow Determines whether or not the annotation is drawn with
+#'   an arrow. If TRUE, `text` is placed near the arrow's tail. If FALSE,
+#'   `text` lines up with the `x` and `y` provided. Logical.
+#' @param standoff Sets a distance, in pixels, to move the end arrowhead
+#'   away from the position it is pointing at, for example to point at the
+#'   edge of a marker independent of zoom. Note that this shortens the
+#'   arrow from the `ax` / `ay` vector, in contrast to `xshift` / `yshift`
+#'   which moves everything by this amount. Number in the interval [0,
+#'   Inf].
+#' @param startarrowhead Sets the start annotation arrow head style.
+#'   Integer in the interval [0, 8].
+#' @param startarrowsize Sets the size of the start annotation arrow head,
+#'   relative to `arrowwidth`. A value of 1 (default) gives a head about 3x
+#'   as wide as the line. Number in the interval [0.3, Inf].
+#' @param startstandoff Sets a distance, in pixels, to move the start
+#'   arrowhead away from the position it is pointing at, for example to
+#'   point at the edge of a marker independent of zoom. Note that this
+#'   shortens the arrow from the `ax` / `ay` vector, in contrast to
+#'   `xshift` / `yshift` which moves everything by this amount. Number in
+#'   the interval [0, Inf].
+#' @param templateitemname Used to refer to a named item in this array in
+#'   the template. Named items from the template will be created even
+#'   without a matching item in the input figure, but you can modify one by
+#'   making an item with `templateitemname` matching its `name`, alongside
+#'   your modifications (including `visible: false` or `enabled: false` to
+#'   hide it). If there is no template or no matching item, this item will
+#'   be hidden unless you explicitly show it with `visible: true`. String.
+#' @param text Sets the text associated with this annotation. Plotly uses a
+#'   subset of HTML tags to do things like newline (`<br>`), bold
+#'   (`<b></b>`), italics (`<i></i>`), hyperlinks (`<a href='...'></a>`).
+#'   Tags `<em>`, `<sup>`, `<sub>`, `<s>`, `<u>`, and `<span>` are also
+#'   supported. String.
+#' @param textangle Sets the angle at which the `text` is drawn with
+#'   respect to the horizontal. Angle in degrees.
+#' @param valign Sets the vertical alignment of the `text` within the box.
+#'   Has an effect only if an explicit height is set to override the text
+#'   height. One of \code{"top"}, \code{"middle"}, \code{"bottom"}.
+#' @param visible Determines whether or not this annotation is visible.
+#'   Logical.
+#' @param width Sets an explicit width for the text box. null (default)
+#'   lets the text set the box width. Wider text will be clipped. There is
+#'   no automatic wrapping; use <br> to start a new line. Number in the
+#'   interval [1, Inf].
+#' @param x Sets the annotation's x position. If the axis `type` is "log",
+#'   then you must take the log of your desired range. If the axis `type`
+#'   is "date", it should be date strings, like date data, though Date
+#'   objects and unix milliseconds will be accepted and converted to
+#'   strings. If the axis `type` is "category", it should be numbers, using
+#'   the scale where each category is assigned a serial number from zero in
+#'   the order it appears. Any value.
+#' @param xanchor Sets the text box's horizontal position anchor This
+#'   anchor binds the `x` position to the "left", "center" or "right" of
+#'   the annotation. For example, if `x` is set to 1, `xref` to "paper" and
+#'   `xanchor` to "right" then the right-most portion of the annotation
+#'   lines up with the right-most edge of the plotting area. If "auto", the
+#'   anchor is equivalent to "center" for data-referenced annotations or if
+#'   there is an arrow, whereas for paper-referenced with no arrow, the
+#'   anchor picked corresponds to the closest side. One of \code{"auto"},
+#'   \code{"left"}, \code{"center"}, \code{"right"}.
+#' @param xclick Toggle this annotation when clicking a data point whose
+#'   `x` value is `xclick` rather than the annotation's `x` value. Any
+#'   value.
+#' @param xref Sets the annotation's x coordinate axis. If set to a x axis
+#'   id (e.g. "x" or "x2"), the `x` position refers to a x coordinate. If
+#'   set to "paper", the `x` position refers to the distance from the left
+#'   of the plotting area in normalized coordinates where 0 (1) corresponds
+#'   to the left (right). If set to a x axis ID followed by "domain"
+#'   (separated by a space), the position behaves like for "paper", but
+#'   refers to the distance in fractions of the domain length from the left
+#'   of the domain of that axis: e.g., "x2 domain" refers to the domain of
+#'   the second x axis and a x position of 0.5 refers to the point between
+#'   the left and the right of the domain of the second x axis. One of
+#'   \code{"paper"}, or a string matching \code{"^x([2-9]|[1-9][0-9]+)?(
+#'   domain)?$"}.
+#' @param xshift Shifts the position of the whole annotation and arrow to
+#'   the right (positive) or left (negative) by this many pixels. Number.
+#' @param y Sets the annotation's y position. If the axis `type` is "log",
+#'   then you must take the log of your desired range. If the axis `type`
+#'   is "date", it should be date strings, like date data, though Date
+#'   objects and unix milliseconds will be accepted and converted to
+#'   strings. If the axis `type` is "category", it should be numbers, using
+#'   the scale where each category is assigned a serial number from zero in
+#'   the order it appears. Any value.
+#' @param yanchor Sets the text box's vertical position anchor This anchor
+#'   binds the `y` position to the "top", "middle" or "bottom" of the
+#'   annotation. For example, if `y` is set to 1, `yref` to "paper" and
+#'   `yanchor` to "top" then the top-most portion of the annotation lines
+#'   up with the top-most edge of the plotting area. If "auto", the anchor
+#'   is equivalent to "middle" for data-referenced annotations or if there
+#'   is an arrow, whereas for paper-referenced with no arrow, the anchor
+#'   picked corresponds to the closest side. One of \code{"auto"},
+#'   \code{"top"}, \code{"middle"}, \code{"bottom"}.
+#' @param yclick Toggle this annotation when clicking a data point whose
+#'   `y` value is `yclick` rather than the annotation's `y` value. Any
+#'   value.
+#' @param yref Sets the annotation's y coordinate axis. If set to a y axis
+#'   id (e.g. "y" or "y2"), the `y` position refers to a y coordinate. If
+#'   set to "paper", the `y` position refers to the distance from the
+#'   bottom of the plotting area in normalized coordinates where 0 (1)
+#'   corresponds to the bottom (top). If set to a y axis ID followed by
+#'   "domain" (separated by a space), the position behaves like for
+#'   "paper", but refers to the distance in fractions of the domain length
+#'   from the bottom of the domain of that axis: e.g., "y2 domain" refers
+#'   to the domain of the second y axis and a y position of 0.5 refers to
+#'   the point between the bottom and the top of the domain of the second y
+#'   axis. One of \code{"paper"}, or a string matching
+#'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
+#' @param yshift Shifts the position of the whole annotation and arrow up
+#'   (positive) or down (negative) by this many pixels. Number.
+#' @param ... Further properties, by their full names.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return The modified figure.
+#' @seealso \code{\link{update_annotations}()}
+#'
+#' @noMd
 #' @export
 add_annotation <- function(
     fig, arg = NULL, ..., align = NULL, arrowcolor = NULL, arrowhead = NULL,
@@ -1788,12 +6196,12 @@ add_annotation <- function(
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects on this subplot grid row and/or column's axes.
 #' @param secondary_y Only objects on secondary (\code{TRUE}) or primary (\code{FALSE}) y axes.
-#' @param patch A named list of property updates (see \code{\link{go_layout_annotation}()}).
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list of property updates (see \code{\link{add_annotation}()}).
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_annotations()} returns a list of \code{\link{go_layout_annotation}()} objects; the
+#' @return \code{select_annotations()} returns a list of annotation objects; the
 #'   others return the modified figure.
 #' @seealso \code{\link{add_annotation}()}
 #' @name update_annotations
@@ -1818,7 +6226,99 @@ for_each_annotation <- function(fig, fn, selector = NULL, row = NULL, col = NULL
   for_each_layout_array(fig, "annotations", fn, selector, row, col, secondary_y)
 }
 
-#' @rdname go_layout_image
+#' Add a layout image
+#'
+#' \code{add_layout_image()} adds an image to the figure's layout
+#' \code{images}. Nested objects are named lists, e.g. \code{font =
+#' list(size = 14)} or a \code{\link{go_font}()} object; each one's
+#' properties are described in a section of its own near the end of this
+#' page.
+#'
+#' @param arg Optional named list of properties to start from. Named
+#'   arguments take precedence.
+#' @param col Subplot grid column whose axes the object refers to (see
+#'   \code{row}).
+#' @param exclude_empty_subplots If \code{TRUE}, skip subplots that have no
+#'   traces or layout objects.
+#' @param fig A \code{go_figure} object.
+#' @param layer Specifies whether images are drawn below or above traces.
+#'   When `xref` and `yref` are both set to `paper`, image is drawn below
+#'   the entire plot area. One of \code{"below"}, \code{"above"}.
+#' @param name When used in a template, named items are created in the
+#'   output figure in addition to any items the figure already has in this
+#'   array. You can modify these items in the output figure by making your
+#'   own item with `templateitemname` matching this `name` alongside your
+#'   modifications (including `visible: false` or `enabled: false` to hide
+#'   it). Has no effect outside of a template. String.
+#' @param opacity Sets the opacity of the image. Number in the interval [0,
+#'   1].
+#' @param row Subplot grid row whose axes the object refers to (figures
+#'   created with \code{\link{make_subplots}()} only). May be \code{"all"}
+#'   or a vector to add the object to several cells.
+#' @param secondary_y If \code{TRUE}, refer to the secondary y axis of the
+#'   subplot.
+#' @param sizex Sets the image container size horizontally. The image will
+#'   be sized based on the `position` value. When `xref` is set to `paper`,
+#'   units are sized relative to the plot width. When `xref` ends with `
+#'   domain`, units are sized relative to the axis width. Number.
+#' @param sizey Sets the image container size vertically. The image will be
+#'   sized based on the `position` value. When `yref` is set to `paper`,
+#'   units are sized relative to the plot height. When `yref` ends with `
+#'   domain`, units are sized relative to the axis height. Number.
+#' @param sizing Specifies which dimension of the image to constrain. One
+#'   of \code{"fill"}, \code{"contain"}, \code{"stretch"}.
+#' @param source Specifies the URL of the image to be used. The URL must be
+#'   accessible from the domain where the plot code is run, and can be
+#'   either relative or absolute. String.
+#' @param templateitemname Used to refer to a named item in this array in
+#'   the template. Named items from the template will be created even
+#'   without a matching item in the input figure, but you can modify one by
+#'   making an item with `templateitemname` matching its `name`, alongside
+#'   your modifications (including `visible: false` or `enabled: false` to
+#'   hide it). If there is no template or no matching item, this item will
+#'   be hidden unless you explicitly show it with `visible: true`. String.
+#' @param visible Determines whether or not this image is visible. Logical.
+#' @param x Sets the image's x position. When `xref` is set to `paper`,
+#'   units are sized relative to the plot height. See `xref` for more info
+#'   Any value.
+#' @param xanchor Sets the anchor for the x position One of \code{"left"},
+#'   \code{"center"}, \code{"right"}.
+#' @param xref Sets the images's x coordinate axis. If set to a x axis id
+#'   (e.g. "x" or "x2"), the `x` position refers to a x coordinate. If set
+#'   to "paper", the `x` position refers to the distance from the left of
+#'   the plotting area in normalized coordinates where 0 (1) corresponds to
+#'   the left (right). If set to a x axis ID followed by "domain"
+#'   (separated by a space), the position behaves like for "paper", but
+#'   refers to the distance in fractions of the domain length from the left
+#'   of the domain of that axis: e.g., "x2 domain" refers to the domain of
+#'   the second x axis and a x position of 0.5 refers to the point between
+#'   the left and the right of the domain of the second x axis. One of
+#'   \code{"paper"}, or a string matching \code{"^x([2-9]|[1-9][0-9]+)?(
+#'   domain)?$"}.
+#' @param y Sets the image's y position. When `yref` is set to `paper`,
+#'   units are sized relative to the plot height. See `yref` for more info
+#'   Any value.
+#' @param yanchor Sets the anchor for the y position. One of \code{"top"},
+#'   \code{"middle"}, \code{"bottom"}.
+#' @param yref Sets the images's y coordinate axis. If set to a y axis id
+#'   (e.g. "y" or "y2"), the `y` position refers to a y coordinate. If set
+#'   to "paper", the `y` position refers to the distance from the bottom of
+#'   the plotting area in normalized coordinates where 0 (1) corresponds to
+#'   the bottom (top). If set to a y axis ID followed by "domain"
+#'   (separated by a space), the position behaves like for "paper", but
+#'   refers to the distance in fractions of the domain length from the
+#'   bottom of the domain of that axis: e.g., "y2 domain" refers to the
+#'   domain of the second y axis and a y position of 0.5 refers to the
+#'   point between the bottom and the top of the domain of the second y
+#'   axis. One of \code{"paper"}, or a string matching
+#'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
+#' @param ... Further properties, by their full names.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return The modified figure.
+#' @seealso \code{\link{update_layout_images}()}
+#'
+#' @noMd
 #' @export
 add_layout_image <- function(
     fig, arg = NULL, ..., layer = NULL, name = NULL, opacity = NULL,
@@ -1845,12 +6345,12 @@ add_layout_image <- function(
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects on this subplot grid row and/or column's axes.
 #' @param secondary_y Only objects on secondary (\code{TRUE}) or primary (\code{FALSE}) y axes.
-#' @param patch A named list of property updates (see \code{\link{go_layout_image}()}).
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list of property updates (see \code{\link{add_layout_image}()}).
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_layout_images()} returns a list of \code{\link{go_layout_image}()} objects; the
+#' @return \code{select_layout_images()} returns a list of image objects; the
 #'   others return the modified figure.
 #' @seealso \code{\link{add_layout_image}()}
 #' @name update_layout_images
@@ -1875,7 +6375,99 @@ for_each_layout_image <- function(fig, fn, selector = NULL, row = NULL, col = NU
   for_each_layout_array(fig, "images", fn, selector, row, col, secondary_y)
 }
 
-#' @rdname go_layout_selection
+#' Add a layout selection
+#'
+#' \code{add_selection()} adds a selection to the figure's layout
+#' \code{selections}. Nested objects are named lists, e.g. \code{font =
+#' list(size = 14)} or a \code{\link{go_font}()} object; each one's
+#' properties are described in a section of its own near the end of this
+#' page.
+#'
+#' @param arg Optional named list of properties to start from. Named
+#'   arguments take precedence.
+#' @param col Subplot grid column whose axes the object refers to (see
+#'   \code{row}).
+#' @param exclude_empty_subplots If \code{TRUE}, skip subplots that have no
+#'   traces or layout objects.
+#' @param fig A \code{go_figure} object.
+#' @param line A named list with properties \code{color}, \code{dash} and
+#'   \code{width} (described in section "line properties" below).
+#' @param name When used in a template, named items are created in the
+#'   output figure in addition to any items the figure already has in this
+#'   array. You can modify these items in the output figure by making your
+#'   own item with `templateitemname` matching this `name` alongside your
+#'   modifications (including `visible: false` or `enabled: false` to hide
+#'   it). Has no effect outside of a template. String.
+#' @param opacity Sets the opacity of the selection. Number in the interval
+#'   [0, 1].
+#' @param path For `type` "path" - a valid SVG path similar to
+#'   `shapes.path` in data coordinates. Allowed segments are: M, L and Z.
+#'   String.
+#' @param row Subplot grid row whose axes the object refers to (figures
+#'   created with \code{\link{make_subplots}()} only). May be \code{"all"}
+#'   or a vector to add the object to several cells.
+#' @param secondary_y If \code{TRUE}, refer to the secondary y axis of the
+#'   subplot.
+#' @param templateitemname Used to refer to a named item in this array in
+#'   the template. Named items from the template will be created even
+#'   without a matching item in the input figure, but you can modify one by
+#'   making an item with `templateitemname` matching its `name`, alongside
+#'   your modifications (including `visible: false` or `enabled: false` to
+#'   hide it). If there is no template or no matching item, this item will
+#'   be hidden unless you explicitly show it with `visible: true`. String.
+#' @param type Specifies the selection type to be drawn. If "rect", a
+#'   rectangle is drawn linking (`x0`,`y0`), (`x1`,`y0`), (`x1`,`y1`) and
+#'   (`x0`,`y1`). If "path", draw a custom SVG path using `path`. One of
+#'   \code{"rect"}, \code{"path"}.
+#' @param x0 Sets the selection's starting x position. Any value.
+#' @param x1 Sets the selection's end x position. Any value.
+#' @param xref Sets the selection's x coordinate axis. If set to a x axis
+#'   id (e.g. "x" or "x2"), the `x` position refers to a x coordinate. If
+#'   set to "paper", the `x` position refers to the distance from the left
+#'   of the plotting area in normalized coordinates where 0 (1) corresponds
+#'   to the left (right). If set to a x axis ID followed by "domain"
+#'   (separated by a space), the position behaves like for "paper", but
+#'   refers to the distance in fractions of the domain length from the left
+#'   of the domain of that axis: e.g., "x2 domain" refers to the domain of
+#'   the second x axis and a x position of 0.5 refers to the point between
+#'   the left and the right of the domain of the second x axis. One of
+#'   \code{"paper"}, or a string matching \code{"^x([2-9]|[1-9][0-9]+)?(
+#'   domain)?$"}.
+#' @param y0 Sets the selection's starting y position. Any value.
+#' @param y1 Sets the selection's end y position. Any value.
+#' @param yref Sets the selection's x coordinate axis. If set to a y axis
+#'   id (e.g. "y" or "y2"), the `y` position refers to a y coordinate. If
+#'   set to "paper", the `y` position refers to the distance from the
+#'   bottom of the plotting area in normalized coordinates where 0 (1)
+#'   corresponds to the bottom (top). If set to a y axis ID followed by
+#'   "domain" (separated by a space), the position behaves like for
+#'   "paper", but refers to the distance in fractions of the domain length
+#'   from the bottom of the domain of that axis: e.g., "y2 domain" refers
+#'   to the domain of the second y axis and a y position of 0.5 refers to
+#'   the point between the bottom and the top of the domain of the second y
+#'   axis. One of \code{"paper"}, or a string matching
+#'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
+#' @param ... Further properties, by their full names.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return The modified figure.
+#' @seealso \code{\link{update_selections}()}
+#'
+#' @section line properties:
+#' \describe{
+#' \item{\code{color}}{Sets the line color. Color: a CSS color string or R
+#' color name.}
+#' \item{\code{dash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{width}}{Sets the line width (in px). Number in the interval
+#' [1, Inf].}
+#' }
+#'
+#' @noMd
 #' @export
 add_selection <- function(
     fig, arg = NULL, ..., line = NULL, name = NULL, opacity = NULL,
@@ -1900,12 +6492,12 @@ add_selection <- function(
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects on this subplot grid row and/or column's axes.
 #' @param secondary_y Only objects on secondary (\code{TRUE}) or primary (\code{FALSE}) y axes.
-#' @param patch A named list of property updates (see \code{\link{go_layout_selection}()}).
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list of property updates (see \code{\link{add_selection}()}).
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_selections()} returns a list of \code{\link{go_layout_selection}()} objects; the
+#' @return \code{select_selections()} returns a list of selection objects; the
 #'   others return the modified figure.
 #' @seealso \code{\link{add_selection}()}
 #' @name update_selections
@@ -1930,7 +6522,216 @@ for_each_selection <- function(fig, fn, selector = NULL, row = NULL, col = NULL,
   for_each_layout_array(fig, "selections", fn, selector, row, col, secondary_y)
 }
 
-#' @rdname go_layout_shape
+#' Add a layout shape
+#'
+#' \code{add_shape()} adds a shape to the figure's layout \code{shapes}.
+#' Nested objects are named lists, e.g. \code{font = list(size = 14)} or a
+#' \code{\link{go_font}()} object; each one's properties are described in a
+#' section of its own near the end of this page.
+#'
+#' @param arg Optional named list of properties to start from. Named
+#'   arguments take precedence.
+#' @param col Subplot grid column whose axes the object refers to (see
+#'   \code{row}).
+#' @param editable Determines whether the shape could be activated for edit
+#'   or not. Has no effect when the older editable shapes mode is enabled
+#'   via `config.editable` or `config.edits.shapePosition`. Logical.
+#' @param exclude_empty_subplots If \code{TRUE}, skip subplots that have no
+#'   traces or layout objects.
+#' @param fig A \code{go_figure} object.
+#' @param fillcolor Sets the color filling the shape's interior. Only
+#'   applies to closed shapes. Color: a CSS color string or R color name.
+#' @param fillrule Determines which regions of complex paths constitute the
+#'   interior. For more info please visit
+#'   https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule
+#'   One of \code{"evenodd"}, \code{"nonzero"}.
+#' @param label A \code{\link{go_label}()} object or named list, with
+#'   properties \code{font}, \code{padding}, \code{text}, \code{textangle},
+#'   \code{textposition}, \code{texttemplate}, \code{texttemplatefallback},
+#'   \code{xanchor} and \code{yanchor} (see \code{\link{go_label}()}).
+#' @param layer Specifies whether shapes are drawn below gridlines
+#'   ("below"), between gridlines and traces ("between") or above traces
+#'   ("above"). One of \code{"below"}, \code{"above"}, \code{"between"}.
+#' @param legend Sets the reference to a legend to show this shape in.
+#'   References to these legends are "legend", "legend2", "legend3", etc.
+#'   Settings for these legends are set in the layout, under
+#'   `layout.legend`, `layout.legend2`, etc. Subplot id: \code{"legend"},
+#'   \code{"legend2"}, \code{"legend3"}, ....
+#' @param legendgroup Sets the legend group for this shape. Traces and
+#'   shapes part of the same legend group hide/show at the same time when
+#'   toggling legend items. String.
+#' @param legendgrouptitle A \code{\link{go_legendgrouptitle}()} object or
+#'   named list, with properties \code{font} and \code{text} (see
+#'   \code{\link{go_legendgrouptitle}()}).
+#' @param legendrank Sets the legend rank for this shape. Items and groups
+#'   with smaller ranks are presented on top/left side while with
+#'   "reversed" `legend.traceorder` they are on bottom/right side. The
+#'   default legendrank is 1000, so that you can use ranks less than 1000
+#'   to place certain items before all unranked items, and ranks greater
+#'   than 1000 to go after all unranked items. When having unranked or
+#'   equal rank items shapes would be displayed after traces i.e. according
+#'   to their order in data and layout. Number.
+#' @param legendwidth Sets the width (in px or fraction) of the legend for
+#'   this shape. Number in the interval [0, Inf].
+#' @param line A named list with properties \code{color}, \code{dash} and
+#'   \code{width} (described in section "line properties" below).
+#' @param name When used in a template, named items are created in the
+#'   output figure in addition to any items the figure already has in this
+#'   array. You can modify these items in the output figure by making your
+#'   own item with `templateitemname` matching this `name` alongside your
+#'   modifications (including `visible: false` or `enabled: false` to hide
+#'   it). Has no effect outside of a template. String.
+#' @param opacity Sets the opacity of the shape. Number in the interval [0,
+#'   1].
+#' @param path For `type` "path" - a valid SVG path with the pixel values
+#'   replaced by data values in `xsizemode`/`ysizemode` being "scaled" and
+#'   taken unmodified as pixels relative to `xanchor` and `yanchor` in case
+#'   of "pixel" size mode. There are a few restrictions / quirks only
+#'   absolute instructions, not relative. So the allowed segments are: M,
+#'   L, H, V, Q, C, T, S, and Z arcs (A) are not allowed because radius rx
+#'   and ry are relative. In the future we could consider supporting
+#'   relative commands, but we would have to decide on how to handle date
+#'   and log axes. Note that even as is, Q and C Bezier paths that are
+#'   smooth on linear axes may not be smooth on log, and vice versa. no
+#'   chained "polybezier" commands - specify the segment type for each one.
+#'   On category axes, values are numbers scaled to the serial numbers of
+#'   categories because using the categories themselves there would be no
+#'   way to describe fractional positions On data axes: because space and T
+#'   are both normal components of path strings, we can't use either to
+#'   separate date from time parts. Therefore we'll use underscore for this
+#'   purpose: 2015-02-21_13:45:56.789 String.
+#' @param row Subplot grid row whose axes the object refers to (figures
+#'   created with \code{\link{make_subplots}()} only). May be \code{"all"}
+#'   or a vector to add the object to several cells.
+#' @param secondary_y If \code{TRUE}, refer to the secondary y axis of the
+#'   subplot.
+#' @param showlegend Determines whether or not this shape is shown in the
+#'   legend. Logical.
+#' @param templateitemname Used to refer to a named item in this array in
+#'   the template. Named items from the template will be created even
+#'   without a matching item in the input figure, but you can modify one by
+#'   making an item with `templateitemname` matching its `name`, alongside
+#'   your modifications (including `visible: false` or `enabled: false` to
+#'   hide it). If there is no template or no matching item, this item will
+#'   be hidden unless you explicitly show it with `visible: true`. String.
+#' @param type Specifies the shape type to be drawn. If "line", a line is
+#'   drawn from (`x0`,`y0`) to (`x1`,`y1`) with respect to the axes' sizing
+#'   mode. If "circle", a circle is drawn from ((`x0`+`x1`)/2,
+#'   (`y0`+`y1`)/2)) with radius (|(`x0`+`x1`)/2 - `x0`|, |(`y0`+`y1`)/2
+#'   -`y0`)|) with respect to the axes' sizing mode. If "rect", a rectangle
+#'   is drawn linking (`x0`,`y0`), (`x1`,`y0`), (`x1`,`y1`), (`x0`,`y1`),
+#'   (`x0`,`y0`) with respect to the axes' sizing mode. If "path", draw a
+#'   custom SVG path using `path`. with respect to the axes' sizing mode.
+#'   One of \code{"circle"}, \code{"rect"}, \code{"path"}, \code{"line"}.
+#' @param visible Determines whether or not this shape is visible. If
+#'   "legendonly", the shape is not drawn, but can appear as a legend item
+#'   (provided that the legend itself is visible). One of
+#'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
+#' @param x0 Sets the shape's starting x position. See `type` and
+#'   `xsizemode` for more info. Any value.
+#' @param x0shift Shifts `x0` away from the center of the category when
+#'   `xref` is a "category" or "multicategory" axis. -0.5 corresponds to
+#'   the start of the category and 0.5 corresponds to the end of the
+#'   category. Number in the interval [-1, 1].
+#' @param x1 Sets the shape's end x position. See `type` and `xsizemode`
+#'   for more info. Any value.
+#' @param x1shift Shifts `x1` away from the center of the category when
+#'   `xref` is a "category" or "multicategory" axis. -0.5 corresponds to
+#'   the start of the category and 0.5 corresponds to the end of the
+#'   category. Number in the interval [-1, 1].
+#' @param xanchor Only relevant in conjunction with `xsizemode` set to
+#'   "pixel". Specifies the anchor point on the x axis to which `x0`, `x1`
+#'   and x coordinates within `path` are relative to. E.g. useful to attach
+#'   a pixel sized shape to a certain data value. No effect when
+#'   `xsizemode` not set to "pixel". Any value.
+#' @param xref Sets the shape's x coordinate axis. If set to a x axis id
+#'   (e.g. "x" or "x2"), the `x` position refers to a x coordinate. If set
+#'   to "paper", the `x` position refers to the distance from the left of
+#'   the plotting area in normalized coordinates where 0 (1) corresponds to
+#'   the left (right). If set to a x axis ID followed by "domain"
+#'   (separated by a space), the position behaves like for "paper", but
+#'   refers to the distance in fractions of the domain length from the left
+#'   of the domain of that axis: e.g., "x2 domain" refers to the domain of
+#'   the second x axis and a x position of 0.5 refers to the point between
+#'   the left and the right of the domain of the second x axis. If an array
+#'   of axis IDs is provided, each `x` value will refer to the
+#'   corresponding axis, e.g., ['x', 'x2'] for a rectangle, line, or circle
+#'   means `x0` uses the `x` axis and `x1` uses the `x2` axis. Path shapes
+#'   using an array should have one entry for each x coordinate in the
+#'   string. One of \code{"paper"}, or a string matching
+#'   \code{"^x([2-9]|[1-9][0-9]+)?( domain)?$"}, or a vector of these.
+#' @param xsizemode Sets the shapes's sizing mode along the x axis. If set
+#'   to "scaled", `x0`, `x1` and x coordinates within `path` refer to data
+#'   values on the x axis or a fraction of the plot area's width (`xref`
+#'   set to "paper"). If set to "pixel", `xanchor` specifies the x position
+#'   in terms of data or plot fraction but `x0`, `x1` and x coordinates
+#'   within `path` are pixels relative to `xanchor`. This way, the shape
+#'   can have a fixed width while maintaining a position relative to data
+#'   or plot fraction. Note: `xsizemode` "pixel" is not supported when
+#'   `xref` is an array. One of \code{"scaled"}, \code{"pixel"}.
+#' @param y0 Sets the shape's starting y position. See `type` and
+#'   `ysizemode` for more info. Any value.
+#' @param y0shift Shifts `y0` away from the center of the category when
+#'   `yref` is a "category" or "multicategory" axis. -0.5 corresponds to
+#'   the start of the category and 0.5 corresponds to the end of the
+#'   category. Number in the interval [-1, 1].
+#' @param y1 Sets the shape's end y position. See `type` and `ysizemode`
+#'   for more info. Any value.
+#' @param y1shift Shifts `y1` away from the center of the category when
+#'   `yref` is a "category" or "multicategory" axis. -0.5 corresponds to
+#'   the start of the category and 0.5 corresponds to the end of the
+#'   category. Number in the interval [-1, 1].
+#' @param yanchor Only relevant in conjunction with `ysizemode` set to
+#'   "pixel". Specifies the anchor point on the y axis to which `y0`, `y1`
+#'   and y coordinates within `path` are relative to. E.g. useful to attach
+#'   a pixel sized shape to a certain data value. No effect when
+#'   `ysizemode` not set to "pixel". Any value.
+#' @param yref Sets the shape's y coordinate axis. If set to a y axis id
+#'   (e.g. "y" or "y2"), the `y` position refers to a y coordinate. If set
+#'   to "paper", the `y` position refers to the distance from the bottom of
+#'   the plotting area in normalized coordinates where 0 (1) corresponds to
+#'   the bottom (top). If set to a y axis ID followed by "domain"
+#'   (separated by a space), the position behaves like for "paper", but
+#'   refers to the distance in fractions of the domain length from the
+#'   bottom of the domain of that axis: e.g., "y2 domain" refers to the
+#'   domain of the second y axis and a y position of 0.5 refers to the
+#'   point between the bottom and the top of the domain of the second y
+#'   axis. If an array of axis IDs is provided, each `y` value will refer
+#'   to the corresponding axis, e.g., ['y', 'y2'] for a rectangle, line, or
+#'   circle means `y0` uses the `y` axis and `y1` uses the `y2` axis. Path
+#'   shapes using an array should have one entry for each y coordinate in
+#'   the string. One of \code{"paper"}, or a string matching
+#'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}, or a vector of these.
+#' @param ysizemode Sets the shapes's sizing mode along the y axis. If set
+#'   to "scaled", `y0`, `y1` and y coordinates within `path` refer to data
+#'   values on the y axis or a fraction of the plot area's height (`yref`
+#'   set to "paper"). If set to "pixel", `yanchor` specifies the y position
+#'   in terms of data or plot fraction but `y0`, `y1` and y coordinates
+#'   within `path` are pixels relative to `yanchor`. This way, the shape
+#'   can have a fixed height while maintaining a position relative to data
+#'   or plot fraction. Note: `ysizemode` "pixel" is not supported when
+#'   `yref` is an array. One of \code{"scaled"}, \code{"pixel"}.
+#' @param ... Further properties, by their full names.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return The modified figure.
+#' @seealso \code{\link{update_shapes}()}
+#'
+#' @section line properties:
+#' \describe{
+#' \item{\code{color}}{Sets the line color. Color: a CSS color string or R
+#' color name.}
+#' \item{\code{dash}}{Sets the dash style of lines. Set to a dash type
+#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
+#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
+#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
+#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
+#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
+#' \item{\code{width}}{Sets the line width (in px). Number in the interval
+#' [0, Inf].}
+#' }
+#'
+#' @noMd
 #' @export
 add_shape <- function(
     fig, arg = NULL, ..., editable = NULL, fillcolor = NULL,
@@ -1961,12 +6762,12 @@ add_shape <- function(
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects on this subplot grid row and/or column's axes.
 #' @param secondary_y Only objects on secondary (\code{TRUE}) or primary (\code{FALSE}) y axes.
-#' @param patch A named list of property updates (see \code{\link{go_layout_shape}()}).
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list of property updates (see \code{\link{add_shape}()}).
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_shapes()} returns a list of \code{\link{go_layout_shape}()} objects; the
+#' @return \code{select_shapes()} returns a list of shape objects; the
 #'   others return the modified figure.
 #' @seealso \code{\link{add_shape}()}
 #' @name update_shapes

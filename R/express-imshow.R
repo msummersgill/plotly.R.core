@@ -440,10 +440,10 @@ px_imshow <- function(
   }
   fig <- update_traces(fig, hovertemplate = hovertemplate)
   if (nzchar(labels$x)) {
-    fig <- update_xaxes(fig, title_text = labels$x, row = 1)
+    fig <- update_xaxes(fig, title = list(text = labels$x), row = 1)
   }
   if (nzchar(labels$y)) {
-    fig <- update_yaxes(fig, title_text = labels$y, col = 1)
+    fig <- update_yaxes(fig, title = list(text = labels$y), col = 1)
   }
   fig <- configure_animation_controls(args, "image", fig)
   update_layout(fig, template = args$template, overwrite = TRUE)

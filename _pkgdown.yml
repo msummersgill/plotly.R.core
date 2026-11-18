@@ -31,14 +31,69 @@ reference:
   - title: Updating figures
     contents:
       - starts_with("update_")
-  - title: Trace constructors
+  - title: Traces
     contents:
       - starts_with("go_")
       - -go_figure
-      - -starts_with("go_layout")
-  - title: Layout constructors
+      - -go_layout
+      - -go_font
+      - -go_colorbar
+      - -go_hoverlabel
+      - -go_legendgrouptitle
+      - -go_tickformatstop
+      - -go_domain
+      - -go_pattern
+      - -go_error_bar
+      - -go_autorangeoptions
+      - -go_bins
+      - -go_caps
+      - -go_domainpad
+      - -go_gradient
+      - -go_label
+      - -go_leaf
+      - -go_lightposition
+      - -go_minor
+      - -go_pathbar
+      - -go_project
+      - -go_rangebreak
+      - -go_root
+      - -go_slices
+      - -go_spaceframe
+      - -go_unifiedhovertitle
+  - title: Layout
     contents:
-      - starts_with("go_layout")
+      - go_layout
+      - add_annotation
+      - add_shape
+      - add_layout_image
+      - add_selection
+  - title: Shared object types
+    desc: Objects used in several places in traces and layouts.
+    contents:
+      - go_font
+      - go_colorbar
+      - go_hoverlabel
+      - go_legendgrouptitle
+      - go_tickformatstop
+      - go_domain
+      - go_pattern
+      - go_error_bar
+      - go_autorangeoptions
+      - go_bins
+      - go_caps
+      - go_domainpad
+      - go_gradient
+      - go_label
+      - go_leaf
+      - go_lightposition
+      - go_minor
+      - go_pathbar
+      - go_project
+      - go_rangebreak
+      - go_root
+      - go_slices
+      - go_spaceframe
+      - go_unifiedhovertitle
   - title: Plotly Express
     contents:
       - starts_with("px_")

@@ -4,21 +4,6 @@
 \alias{add_parcoords}
 \alias{add_parcoords.default}
 \alias{go_parcoords}
-\alias{go_parcoords_dimension}
-\alias{go_parcoords_domain}
-\alias{go_parcoords_labelfont}
-\alias{go_parcoords_legendgrouptitle}
-\alias{go_parcoords_legendgrouptitle_font}
-\alias{go_parcoords_line}
-\alias{go_parcoords_line_colorbar}
-\alias{go_parcoords_line_colorbar_tickfont}
-\alias{go_parcoords_line_colorbar_tickformatstop}
-\alias{go_parcoords_line_colorbar_title}
-\alias{go_parcoords_line_colorbar_title_font}
-\alias{go_parcoords_rangefont}
-\alias{go_parcoords_tickfont}
-\alias{go_parcoords_unselected}
-\alias{go_parcoords_unselected_line}
 \title{Parcoords traces}
 \usage{
 add_parcoords(fig, ...)
@@ -77,242 +62,17 @@ go_parcoords(
   visible = NULL,
   skip_invalid = FALSE
 )
-
-go_parcoords_dimension(
-  arg = NULL,
-  ...,
-  constraintrange = NULL,
-  label = NULL,
-  multiselect = NULL,
-  name = NULL,
-  range = NULL,
-  templateitemname = NULL,
-  tickformat = NULL,
-  ticktext = NULL,
-  tickvals = NULL,
-  values = NULL,
-  visible = NULL,
-  skip_invalid = FALSE
-)
-
-go_parcoords_domain(
-  arg = NULL,
-  ...,
-  column = NULL,
-  row = NULL,
-  x = NULL,
-  y = NULL,
-  skip_invalid = FALSE
-)
-
-go_parcoords_labelfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_parcoords_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_parcoords_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_parcoords_line(
-  arg = NULL,
-  ...,
-  autocolorscale = NULL,
-  cauto = NULL,
-  cmax = NULL,
-  cmid = NULL,
-  cmin = NULL,
-  color = NULL,
-  coloraxis = NULL,
-  colorbar = NULL,
-  colorscale = NULL,
-  reversescale = NULL,
-  showscale = NULL,
-  skip_invalid = FALSE
-)
-
-go_parcoords_line_colorbar(
-  arg = NULL,
-  ...,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  borderwidth = NULL,
-  dtick = NULL,
-  exponentformat = NULL,
-  labelalias = NULL,
-  len = NULL,
-  lenmode = NULL,
-  minexponent = NULL,
-  nticks = NULL,
-  orientation = NULL,
-  outlinecolor = NULL,
-  outlinewidth = NULL,
-  separatethousands = NULL,
-  showexponent = NULL,
-  showticklabels = NULL,
-  showtickprefix = NULL,
-  showticksuffix = NULL,
-  thickness = NULL,
-  thicknessmode = NULL,
-  tick0 = NULL,
-  tickangle = NULL,
-  tickcolor = NULL,
-  tickfont = NULL,
-  tickformat = NULL,
-  tickformatstops = NULL,
-  ticklabeloverflow = NULL,
-  ticklabelposition = NULL,
-  ticklabelstep = NULL,
-  ticklen = NULL,
-  tickmode = NULL,
-  tickprefix = NULL,
-  ticks = NULL,
-  ticksuffix = NULL,
-  ticktext = NULL,
-  tickvals = NULL,
-  tickwidth = NULL,
-  title = NULL,
-  x = NULL,
-  xanchor = NULL,
-  xpad = NULL,
-  xref = NULL,
-  y = NULL,
-  yanchor = NULL,
-  ypad = NULL,
-  yref = NULL,
-  skip_invalid = FALSE
-)
-
-go_parcoords_line_colorbar_tickfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_parcoords_line_colorbar_tickformatstop(
-  arg = NULL,
-  ...,
-  dtickrange = NULL,
-  enabled = NULL,
-  name = NULL,
-  templateitemname = NULL,
-  value = NULL,
-  skip_invalid = FALSE
-)
-
-go_parcoords_line_colorbar_title(
-  arg = NULL,
-  ...,
-  font = NULL,
-  side = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_parcoords_line_colorbar_title_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_parcoords_rangefont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_parcoords_tickfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_parcoords_unselected(arg = NULL, ..., line = NULL, skip_invalid = FALSE)
-
-go_parcoords_unselected_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  opacity = NULL,
-  skip_invalid = FALSE
-)
 }
 \arguments{
 \item{fig}{A \code{go_figure} object.}
 
-\item{...}{Further properties, including nested properties in
-"magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}. Property values may be one-sided
-formulas, evaluated in \code{data} for \code{add_*()} functions.}
+\item{...}{Further properties, by their full names (e.g. numbered subplots
+such as \code{xaxis2} in \code{go_layout()}). Nested properties are set
+with named lists: \code{marker = list(size = 10)}.}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
-~col}, \code{marker_size = ~col}) are evaluated. Default: the data
-given to \code{\link{go_figure}()}. Only the evaluated values are
+~col}, \code{marker = list(size = ~col)}) are evaluated. Default: the
+data given to \code{\link{go_figure}()}. Only the evaluated values are
 added to the trace. A \code{crosstalk::SharedData} works the same way,
 and links the trace to its crosstalk group (see
 \code{\link{highlight}()}).}
@@ -322,10 +82,15 @@ listening to hover, click and selection events. Note that, "scatter"
 traces also appends customdata items in the markers DOM elements Data
 array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
-\item{dimensions}{List of named lists or
-\code{\link{go_parcoords_dimension}()} objects.}
+\item{dimensions}{List, each element a named list with properties
+\code{constraintrange}, \code{label}, \code{multiselect}, \code{name},
+\code{range}, \code{templateitemname}, \code{tickformat},
+\code{ticktext}, \code{tickvals}, \code{values} and \code{visible}
+(described in section "dimension properties" below).}
 
-\item{domain}{Named list or \code{\link{go_parcoords_domain}()} object.}
+\item{domain}{A \code{\link{go_domain}()} object or named list, with
+properties \code{column}, \code{row}, \code{x} and \code{y} (see
+\code{\link{go_domain}()}).}
 
 \item{ids}{Assigns id labels to each datum. These ids for object
 constancy of data points during animation. Should be an array of
@@ -338,8 +103,11 @@ vertically. Tilted labels with "labelangle" may be positioned better
 inside margins when `labelposition` is set to "bottom". Angle in
 degrees.}
 
-\item{labelfont}{Sets the font for the `dimension` labels. Named list or
-\code{\link{go_parcoords_labelfont}()} object.}
+\item{labelfont}{Sets the font for the `dimension` labels. A
+\code{\link{go_font}()} object or named list, with properties
+\code{color}, \code{family}, \code{lineposition}, \code{shadow},
+\code{size}, \code{style}, \code{textcase}, \code{variant} and
+\code{weight} (see \code{\link{go_font}()}).}
 
 \item{labelside}{Specifies the location of the `label`. "top" positions
 labels above, next to the title "bottom" positions labels below the
@@ -353,8 +121,9 @@ Settings for these legends are set in the layout, under
 `layout.legend`, `layout.legend2`, etc. Subplot id: \code{"legend"},
 \code{"legend2"}, \code{"legend3"}, ....}
 
-\item{legendgrouptitle}{Named list or
-\code{\link{go_parcoords_legendgrouptitle}()} object.}
+\item{legendgrouptitle}{A \code{\link{go_legendgrouptitle}()} object or
+named list, with properties \code{font} and \code{text} (see
+\code{\link{go_legendgrouptitle}()}).}
 
 \item{legendrank}{Sets the legend rank for this trace. Items and groups
 with smaller ranks are presented on top/left side while with
@@ -368,11 +137,11 @@ to their order in data and layout. Number.}
 \item{legendwidth}{Sets the width (in px or fraction) of the legend for
 this trace. Number in the interval [0, Inf].}
 
-\item{line}{\strong{\code{go_parcoords()}}: Named list or
-  \code{\link{go_parcoords_line}()} object.
-
-  \strong{\code{go_parcoords_unselected()}}: Named list or
-  \code{\link{go_parcoords_unselected_line}()} object.}
+\item{line}{A named list with properties \code{autocolorscale},
+\code{cauto}, \code{cmax}, \code{cmid}, \code{cmin}, \code{color},
+\code{coloraxis}, \code{colorbar}, \code{colorscale},
+\code{reversescale} and \code{showscale} (described in section "line
+properties" below).}
 
 \item{meta}{Assigns extra meta information associated with this trace
 that can be used in various text attributes. Attributes such as trace
@@ -384,28 +153,20 @@ trace, simply use `\%\{meta[i]\}` where `i` is the index or key of the
 use `\%\{data[n[.meta[i]\}` where `i` is the index or key of the
 `meta` and `n` is the trace index. Any value.}
 
-\item{name}{\strong{\code{go_parcoords()}}: Sets the trace name. The
-  trace name appears as the legend item and on hover. String.
+\item{name}{Sets the trace name. The trace name appears as the legend
+item and on hover. String.}
 
-  \strong{\code{go_parcoords_dimension()},
-  \code{go_parcoords_line_colorbar_tickformatstop()}}: When used in a
-  template, named items are created in the output figure in addition to
-  any items the figure already has in this array. You can modify these
-  items in the output figure by making your own item with
-  `templateitemname` matching this `name` alongside your modifications
-  (including `visible: false` or `enabled: false` to hide it). Has no
-  effect outside of a template. String.}
+\item{rangefont}{Sets the font for the `dimension` range values. A
+\code{\link{go_font}()} object or named list, with properties
+\code{color}, \code{family}, \code{lineposition}, \code{shadow},
+\code{size}, \code{style}, \code{textcase}, \code{variant} and
+\code{weight} (see \code{\link{go_font}()}).}
 
-\item{rangefont}{Sets the font for the `dimension` range values. Named
-list or \code{\link{go_parcoords_rangefont}()} object.}
-
-\item{tickfont}{\strong{\code{go_parcoords()}}: Sets the font for the
-  `dimension` tick values. Named list or
-  \code{\link{go_parcoords_tickfont}()} object.
-
-  \strong{\code{go_parcoords_line_colorbar()}}: Sets the color bar's
-  tick label font Named list or
-  \code{\link{go_parcoords_line_colorbar_tickfont}()} object.}
+\item{tickfont}{Sets the font for the `dimension` tick values. A
+\code{\link{go_font}()} object or named list, with properties
+\code{color}, \code{family}, \code{lineposition}, \code{shadow},
+\code{size}, \code{style}, \code{textcase}, \code{variant} and
+\code{weight} (see \code{\link{go_font}()}).}
 
 \item{uid}{Assign an id to this trace, Use this to provide object
 constancy between traces during animations and transitions. String.}
@@ -425,24 +186,17 @@ array, such that the same trace has a different index, you can still
 preserve user-driven changes if you give each trace a `uid` that stays
 with it as it moves. Any value.}
 
-\item{unselected}{Named list or \code{\link{go_parcoords_unselected}()}
-object.}
+\item{unselected}{A named list with properties \code{line} (described in
+section "unselected properties" below).}
 
-\item{visible}{\strong{\code{go_parcoords()}}: Determines whether or not
-  this trace is visible. If "legendonly", the trace is not drawn, but
-  can appear as a legend item (provided that the legend itself is
-  visible). One of \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
+\item{visible}{Determines whether or not this trace is visible. If
+"legendonly", the trace is not drawn, but can appear as a legend item
+(provided that the legend itself is visible). One of
+\code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
 
-  \strong{\code{go_parcoords_dimension()}}: Shows the dimension when set
-  to `true` (the default). Hides the dimension for `false`. Logical.}
-
-\item{row}{\strong{\code{add_parcoords()}}: Subplot grid row (figures
-  created with \code{\link{make_subplots}()} only). May be \code{"all"}
-  or a vector to address several cells.
-
-  \strong{\code{go_parcoords_domain()}}: If there is a layout grid, use
-  the domain for this row in the grid for this parcoords trace. Integer
-  in the interval [0, Inf].}
+\item{row}{Subplot grid row (figures created with
+\code{\link{make_subplots}()} only). May be \code{"all"} or a vector
+to address several cells.}
 
 \item{col}{Subplot grid column (figures created with
 \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
@@ -453,429 +207,10 @@ instead of raising an error.}
 
 \item{arg}{Optional named list, or graph object of the same type, to
 initialise properties from (constructors). Named arguments take precedence.}
-
-\item{constraintrange}{The domain range to which the filter on the
-dimension is constrained. Must be an array of `[fromValue, toValue]`
-with `fromValue <= toValue`, or if `multiselect` is not disabled, you
-may give an array of arrays, where each inner array is `[fromValue,
-toValue]`. Vector or list of up to 2 element(s).}
-
-\item{label}{The shown name of the dimension. String.}
-
-\item{multiselect}{Do we allow multiple selection ranges or just a
-single range? Logical.}
-
-\item{range}{The domain range that represents the full, shown axis
-extent. Defaults to the `values` extent. Must be an array of
-`[fromValue, toValue]` with finite numbers as elements. Vector or list
-of 2 element(s).}
-
-\item{templateitemname}{Used to refer to a named item in this array in
-the template. Named items from the template will be created even
-without a matching item in the input figure, but you can modify one by
-making an item with `templateitemname` matching its `name`, alongside
-your modifications (including `visible: false` or `enabled: false` to
-hide it). If there is no template or no matching item, this item will
-be hidden unless you explicitly show it with `visible: true`. String.}
-
-\item{tickformat}{Sets the tick label formatting rule using d3
-formatting mini-languages which are very similar to those in Python.
-For numbers, see:
-https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-We add two items to d3's date formatter: "\%h" for half of the year as
-a decimal number as well as "\%\{n\}f" for fractional seconds with n
-digits. For example, "2016-10-13 09:15:23.456" with tickformat
-"\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.}
-
-\item{ticktext}{\strong{\code{go_parcoords_dimension()}}: Sets the text
-  displayed at the ticks position via `tickvals`. Data array: a vector,
-  factor, Date/POSIXct vector, matrix or list.
-
-  \strong{\code{go_parcoords_line_colorbar()}}: Sets the text displayed
-  at the ticks position via `tickvals`. Only has an effect if `tickmode`
-  is set to "array". Used with `tickvals`. Data array: a vector, factor,
-  Date/POSIXct vector, matrix or list.}
-
-\item{tickvals}{\strong{\code{go_parcoords_dimension()}}: Sets the
-  values at which ticks on this axis appear. Data array: a vector,
-  factor, Date/POSIXct vector, matrix or list.
-
-  \strong{\code{go_parcoords_line_colorbar()}}: Sets the values at which
-  ticks on this axis appear. Only has an effect if `tickmode` is set to
-  "array". Used with `ticktext`. Data array: a vector, factor,
-  Date/POSIXct vector, matrix or list.}
-
-\item{values}{Dimension values. `values[n]` represents the value of the
-`n`th point in the dataset, therefore the `values` vector for all
-dimensions must be the same (longer vectors will be truncated). Each
-value must be a finite number. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
-
-\item{column}{If there is a layout grid, use the domain for this column
-in the grid for this parcoords trace. Integer in the interval [0,
-Inf].}
-
-\item{x}{\strong{\code{go_parcoords_domain()}}: Sets the horizontal
-  domain of this parcoords trace (in plot fraction). Vector or list of 2
-  element(s).
-
-  \strong{\code{go_parcoords_line_colorbar()}}: Sets the x position with
-  respect to `xref` of the color bar (in plot fraction). When `xref` is
-  "paper", defaults to 1.02 when `orientation` is "v" and 0.5 when
-  `orientation` is "h". When `xref` is "container", defaults to 1 when
-  `orientation` is "v" and 0.5 when `orientation` is "h". Must be
-  between 0 and 1 if `xref` is "container" and between "-2" and 3 if
-  `xref` is "paper". Number.}
-
-\item{y}{\strong{\code{go_parcoords_domain()}}: Sets the vertical domain
-  of this parcoords trace (in plot fraction). Vector or list of 2
-  element(s).
-
-  \strong{\code{go_parcoords_line_colorbar()}}: Sets the y position with
-  respect to `yref` of the color bar (in plot fraction). When `yref` is
-  "paper", defaults to 0.5 when `orientation` is "v" and 1.02 when
-  `orientation` is "h". When `yref` is "container", defaults to 0.5 when
-  `orientation` is "v" and 1 when `orientation` is "h". Must be between
-  0 and 1 if `yref` is "container" and between "-2" and 3 if `yref` is
-  "paper". Number.}
-
-\item{color}{\strong{\code{go_parcoords_labelfont()},
-  \code{go_parcoords_legendgrouptitle_font()},
-  \code{go_parcoords_line_colorbar_tickfont()},
-  \code{go_parcoords_line_colorbar_title_font()},
-  \code{go_parcoords_rangefont()}, \code{go_parcoords_tickfont()}}:
-  Color: a CSS color string or R color name.
-
-  \strong{\code{go_parcoords_line()}}: Sets the line color. It accepts
-  either a specific color or an array of numbers that are mapped to the
-  colorscale relative to the max and min values of the array or relative
-  to `line.cmin` and `line.cmax` if set. Color: a CSS color string or R
-  color name, or a number mapped to a color by
-  \code{parcoords.line.colorscale}, or a vector of these.
-
-  \strong{\code{go_parcoords_unselected_line()}}: Sets the base color of
-  unselected lines. in connection with `unselected.line.opacity`. Color:
-  a CSS color string or R color name.}
-
-\item{family}{HTML font family - the typeface that will be applied by
-the web browser. The web browser can only apply a font if it is
-available on the system where it runs. Provide multiple font families,
-separated by commas, to indicate the order in which to apply fonts if
-they aren't available. String.}
-
-\item{lineposition}{Sets the kind of decoration line(s) with text, such
-as an "under", "over" or "through" as well as combinations e.g.
-"under+over", etc. Any combination of \code{"under"}, \code{"over"},
-\code{"through"} joined with \code{"+"}, or one of \code{"none"}.}
-
-\item{shadow}{Sets the shape and color of the shadow behind text. "auto"
-places minimal shadow and applies contrast text font color. See
-https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-additional options. String.}
-
-\item{size}{Number in the interval [1, Inf].}
-
-\item{style}{Sets whether a font should be styled with a normal or
-italic face from its family. One of \code{"normal"}, \code{"italic"}.}
-
-\item{textcase}{Sets capitalization of text. It can be used to make text
-appear in all-uppercase or all-lowercase, or with each word
-capitalized. One of \code{"normal"}, \code{"word caps"},
-\code{"upper"}, \code{"lower"}.}
-
-\item{variant}{Sets the variant of the font. One of \code{"normal"},
-\code{"small-caps"}, \code{"all-small-caps"},
-\code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.}
-
-\item{weight}{Sets the weight (or boldness) of the font. Integer in the
-interval [1, 1000].}
-
-\item{font}{\strong{\code{go_parcoords_legendgrouptitle()}}: Sets this
-  legend group's title font. Named list or
-  \code{\link{go_parcoords_legendgrouptitle_font}()} object.
-
-  \strong{\code{go_parcoords_line_colorbar_title()}}: Sets this color
-  bar's title font. Named list or
-  \code{\link{go_parcoords_line_colorbar_title_font}()} object.}
-
-\item{text}{\strong{\code{go_parcoords_legendgrouptitle()}}: Sets the
-  title of the legend group. String.
-
-  \strong{\code{go_parcoords_line_colorbar_title()}}: Sets the title of
-  the color bar. String.}
-
-\item{autocolorscale}{Determines whether the colorscale is a default
-palette (`autocolorscale: true`) or the palette determined by
-`line.colorscale`. Has an effect only if in `line.color` is set to a
-numerical array. In case `colorscale` is unspecified or
-`autocolorscale` is true, the default palette will be chosen according
-to whether numbers in the `color` array are all positive, all negative
-or mixed. Logical.}
-
-\item{cauto}{Determines whether or not the color domain is computed with
-respect to the input data (here in `line.color`) or the bounds set in
-`line.cmin` and `line.cmax` Has an effect only if in `line.color` is
-set to a numerical array. Defaults to `false` when `line.cmin` and
-`line.cmax` are set by the user. Logical.}
-
-\item{cmax}{Sets the upper bound of the color domain. Has an effect only
-if in `line.color` is set to a numerical array. Value should have the
-same units as in `line.color` and if set, `line.cmin` must be set as
-well. Number.}
-
-\item{cmid}{Sets the mid-point of the color domain by scaling
-`line.cmin` and/or `line.cmax` to be equidistant to this point. Has an
-effect only if in `line.color` is set to a numerical array. Value
-should have the same units as in `line.color`. Has no effect when
-`line.cauto` is `false`. Number.}
-
-\item{cmin}{Sets the lower bound of the color domain. Has an effect only
-if in `line.color` is set to a numerical array. Value should have the
-same units as in `line.color` and if set, `line.cmax` must be set as
-well. Number.}
-
-\item{coloraxis}{Sets a reference to a shared color axis. References to
-these shared color axes are "coloraxis", "coloraxis2", "coloraxis3",
-etc. Settings for these shared color axes are set in the layout, under
-`layout.coloraxis`, `layout.coloraxis2`, etc. Note that multiple color
-scales can be linked to the same color axis. Subplot id:
-\code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
-
-\item{colorbar}{Named list or \code{\link{go_parcoords_line_colorbar}()}
-object.}
-
-\item{colorscale}{Sets the colorscale. Has an effect only if in
-`line.color` is set to a numerical array. The colorscale must be an
-array containing arrays mapping a normalized value to an rgb, rgba,
-hex, hsl, hsla, hwb, or named color string. At minimum, a mapping for
-the lowest (0) and highest (1) values are required. For example, `[[0,
-'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
-colorscale in color space, use `line.cmin` and `line.cmax`.
-Alternatively, `colorscale` may be a palette name string of the
-following list:
-Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-Colorscale: a vector of colors, a two-column data.frame of (value,
-color), or the name of a sequential, diverging or cyclical scale in
-\code{\link{px_colors}()} (append \code{"_r"} to reverse).}
-
-\item{reversescale}{Reverses the color mapping if true. Has an effect
-only if in `line.color` is set to a numerical array. If true,
-`line.cmin` will correspond to the last color in the array and
-`line.cmax` will correspond to the first color. Logical.}
-
-\item{showscale}{Determines whether or not a colorbar is displayed for
-this trace. Has an effect only if in `line.color` is set to a
-numerical array. Logical.}
-
-\item{bgcolor}{Sets the color of padded area. Color: a CSS color string
-or R color name.}
-
-\item{bordercolor}{Sets the axis line color. Color: a CSS color string
-or R color name.}
-
-\item{borderwidth}{Sets the width (in px) or the border enclosing this
-color bar. Number in the interval [0, Inf].}
-
-\item{dtick}{Sets the step in-between ticks on this color bar. Use with
-`tick0`. Must be a positive number. Note: unlike on x/y axes, the
-special "log" and "date" string forms ("L<f>", "D1", "D2", "M<n>") are
-not supported here: this axis is always linear, so such strings are
-silently ignored and the step is set to 1. Any value.}
-
-\item{exponentformat}{Determines a formatting rule for the tick
-exponents. For example, consider the number 1,000,000,000. If "none",
-it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-the above ranges, the formatting rule will automatically be switched
-to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-\code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.}
-
-\item{labelalias}{Replacement text for specific tick or hover labels.
-For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-to Canada. The labels we would have shown must match the keys exactly,
-after adding any tickprefix or ticksuffix. For negative numbers the
-minus sign symbol used (U+2212) is wider than the regular ascii dash.
-That means you need to use -1 instead of -1. labelalias can be used
-with any axis type, and both keys (if needed) and values (if desired)
-can include html-like tags or MathJax. Any value.}
-
-\item{len}{Sets the length of the color bar This measure excludes the
-padding of both ends. That is, the color bar length is this length
-minus the padding on both ends. Number in the interval [0, Inf].}
-
-\item{lenmode}{Determines whether this color bar's length (i.e. the
-measure in the color variation direction) is set in units of plot
-"fraction" or in *pixels. Use `len` to set the value. One of
-\code{"fraction"}, \code{"pixels"}.}
-
-\item{minexponent}{Hide SI prefix for 10^n if |n| is below this number.
-This only has an effect when `tickformat` is "SI" or "B". Number in
-the interval [0, Inf].}
-
-\item{nticks}{Specifies the maximum number of ticks for the particular
-axis. The actual number of ticks will be chosen automatically to be
-less than or equal to `nticks`. Has an effect only if `tickmode` is
-set to "auto". Integer in the interval [0, Inf].}
-
-\item{orientation}{Sets the orientation of the colorbar. One of
-\code{"h"}, \code{"v"}.}
-
-\item{outlinecolor}{Sets the axis line color. Color: a CSS color string
-or R color name.}
-
-\item{outlinewidth}{Sets the width (in px) of the axis line. Number in
-the interval [0, Inf].}
-
-\item{separatethousands}{If "true", even 4-digit integers are separated
-Logical.}
-
-\item{showexponent}{If "all", all exponents are shown besides their
-significands. If "first", only the exponent of the first tick is
-shown. If "last", only the exponent of the last tick is shown. If
-"none", no exponents appear. One of \code{"all"}, \code{"first"},
-\code{"last"}, \code{"none"}.}
-
-\item{showticklabels}{Determines whether or not the tick labels are
-drawn. Logical.}
-
-\item{showtickprefix}{If "all", all tick labels are displayed with a
-prefix. If "first", only the first tick is displayed with a prefix. If
-"last", only the last tick is displayed with a suffix. If "none", tick
-prefixes are hidden. One of \code{"all"}, \code{"first"},
-\code{"last"}, \code{"none"}.}
-
-\item{showticksuffix}{Same as `showtickprefix` but for tick suffixes.
-One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.}
-
-\item{thickness}{Sets the thickness of the color bar This measure
-excludes the size of the padding, ticks and labels. Number in the
-interval [0, Inf].}
-
-\item{thicknessmode}{Determines whether this color bar's thickness (i.e.
-the measure in the constant color direction) is set in units of plot
-"fraction" or in "pixels". Use `thickness` to set the value. One of
-\code{"fraction"}, \code{"pixels"}.}
-
-\item{tick0}{Sets the placement of the first tick on this axis. Use with
-`dtick`. If the axis `type` is "log", then you must take the log of
-your starting tick (e.g. to set the starting tick to 100, set the
-`tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-If the axis `type` is "date", it should be a date string, like date
-data. If the axis `type` is "category", it should be a number, using
-the scale where each category is assigned a serial number from zero in
-the order it appears. Any value.}
-
-\item{tickangle}{Sets the angle of the tick labels with respect to the
-horizontal. For example, a `tickangle` of -90 draws the tick labels
-vertically. Angle in degrees.}
-
-\item{tickcolor}{Sets the tick color. Color: a CSS color string or R
-color name.}
-
-\item{tickformatstops}{List of named lists or
-\code{\link{go_parcoords_line_colorbar_tickformatstop}()} objects.}
-
-\item{ticklabeloverflow}{Determines how we handle tick labels that would
-overflow either the graph div or the domain of the axis. The default
-value for inside tick labels is "hide past domain". In other cases the
-default is "hide past div". One of \code{"allow"}, \code{"hide past
-div"}, \code{"hide past domain"}.}
-
-\item{ticklabelposition}{Determines where tick labels are drawn relative
-to the ticks. Left and right options are used when `orientation` is
-"h", top and bottom when `orientation` is "v". One of
-\code{"outside"}, \code{"inside"}, \code{"outside top"}, \code{"inside
-top"}, \code{"outside left"}, \code{"inside left"}, \code{"outside
-right"}, \code{"inside right"}, \code{"outside bottom"}, \code{"inside
-bottom"}.}
-
-\item{ticklabelstep}{Sets the spacing between tick labels as compared to
-the spacing between ticks. A value of 1 (default) means each tick gets
-a label. A value of 2 means shows every 2nd label. A larger value n
-means only every nth tick is labeled. `tick0` determines which labels
-are shown. Not implemented for axes with `type` "log" or
-"multicategory", or when `tickmode` is "array". Integer in the
-interval [1, Inf].}
-
-\item{ticklen}{Sets the tick length (in px). Number in the interval [0,
-Inf].}
-
-\item{tickmode}{Sets the tick mode for this axis. If "auto", the number
-of ticks is set via `nticks`. If "linear", the placement of the ticks
-is determined by a starting position `tick0` and a tick step `dtick`
-("linear" is the default value if `tick0` and `dtick` are provided).
-If "array", the placement of the ticks is set via `tickvals` and the
-tick text is `ticktext`. ("array" is the default value if `tickvals`
-is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.}
-
-\item{tickprefix}{Sets a tick label prefix. String.}
-
-\item{ticks}{Determines whether ticks are drawn or not. If **, this
-axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-drawn outside (inside) the axis lines. One of \code{"outside"},
-\code{"inside"}, \code{""}.}
-
-\item{ticksuffix}{Sets a tick label suffix. String.}
-
-\item{tickwidth}{Sets the tick width (in px). Number in the interval [0,
-Inf].}
-
-\item{title}{String (the title text), named list or
-\code{\link{go_parcoords_line_colorbar_title}()} object.}
-
-\item{xanchor}{Sets this color bar's horizontal position anchor. This
-anchor binds the `x` position to the "left", "center" or "right" of
-the color bar. Defaults to "left" when `orientation` is "v" and
-"center" when `orientation` is "h". One of \code{"left"},
-\code{"center"}, \code{"right"}.}
-
-\item{xpad}{Sets the amount of padding (in px) along the x direction.
-Number in the interval [0, Inf].}
-
-\item{xref}{Sets the container `x` refers to. "container" spans the
-entire `width` of the plot. "paper" refers to the width of the
-plotting area only. One of \code{"container"}, \code{"paper"}.}
-
-\item{yanchor}{Sets this color bar's vertical position anchor This
-anchor binds the `y` position to the "top", "middle" or "bottom" of
-the color bar. Defaults to "middle" when `orientation` is "v" and
-"bottom" when `orientation` is "h". One of \code{"top"},
-\code{"middle"}, \code{"bottom"}.}
-
-\item{ypad}{Sets the amount of padding (in px) along the y direction.
-Number in the interval [0, Inf].}
-
-\item{yref}{Sets the container `y` refers to. "container" spans the
-entire `height` of the plot. "paper" refers to the height of the
-plotting area only. One of \code{"container"}, \code{"paper"}.}
-
-\item{dtickrange}{range ["min", "max"], where "min", "max" - dtick
-values which describe some zoom level, it is possible to omit "min" or
-"max" value by passing "null" Vector or list of 2 element(s).}
-
-\item{enabled}{Determines whether or not this stop is used. If `false`,
-this stop is ignored even within its `dtickrange`. Logical.}
-
-\item{value}{string - dtickformat for described zoom level, the same as
-"tickformat" String.}
-
-\item{side}{Determines the location of color bar's title with respect to
-the color bar. Defaults to "top" when `orientation` is "v" and
-defaults to "right" when `orientation` is "h". One of \code{"right"},
-\code{"top"}, \code{"bottom"}.}
-
-\item{opacity}{Sets the opacity of unselected lines. The default "auto"
-decreases the opacity smoothly as the number of lines increases. Use 1
-to achieve exact `unselected.line.color`. Number in the interval [0,
-1].}
 }
 \value{
-Each \code{go_*()} function returns a graph object of the same
-  class as its name; \code{add_*()} functions return the modified figure.
+\code{go_*()} functions return a graph object;
+  \code{add_*()} functions return the modified figure.
 }
 \description{
 Parallel coordinates for multidimensional exploratory data analysis. The
@@ -883,39 +218,177 @@ samples are specified in `dimensions`. The colors are set in
 `line.color`.
 }
 \details{
-\code{go_parcoords()} and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-\code{\link{plotly_obj-modify}()}). \code{add_parcoords()} creates an
-object and adds it to a figure.
+\code{go_parcoords()} creates a validated graph object (a named list).
+\code{add_parcoords()} creates one and adds it to a figure.
 
-Nested objects documented here:
+
+Nested objects are named lists, e.g. \code{marker = list(size = 10, line
+= list(width = 2))}. Each nested object's properties are described in a
+section of its own near the end of this page (after \emph{Value}), titled
+with its path: \emph{marker properties}, \emph{marker.line properties},
+.... Objects that appear in several places in the schema can also be
+created with a constructor of their own, and are documented on its page:
+\code{\link{go_font}()}, \code{\link{go_colorbar}()},
+\code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
+\code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
+\code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
+\code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
+\code{\link{go_caps}()}, \code{\link{go_domainpad}()},
+\code{\link{go_gradient}()}, \code{\link{go_label}()},
+\code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
+\code{\link{go_minor}()}, \code{\link{go_pathbar}()},
+\code{\link{go_project}()}, \code{\link{go_rangebreak}()},
+\code{\link{go_root}()}, \code{\link{go_slices}()},
+\code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
+Every property is checked against the plotly.js schema when the object is
+created or modified (see \code{\link{plotly_obj-modify}}).
+}
+\section{dimension properties (each list element)}{
+
+The dimensions (variables) of the parallel coordinates chart. 2..60
+dimensions are supported.
+
 \describe{
-\item{\code{go_parcoords_dimension()}}{\code{parcoords.dimension}: The
-dimensions (variables) of the parallel coordinates chart. 2..60
-dimensions are supported.}
-\item{\code{go_parcoords_domain()}}{\code{parcoords.domain}}
-\item{\code{go_parcoords_labelfont()}}{\code{parcoords.labelfont}: Sets
-the font for the `dimension` labels.}
-\item{\code{go_parcoords_legendgrouptitle()}}{\code{parcoords.legendgrouptitle}}
-\item{\code{go_parcoords_legendgrouptitle_font()}}{\code{parcoords.legendgrouptitle.font}:
-Sets this legend group's title font.}
-\item{\code{go_parcoords_line()}}{\code{parcoords.line}}
-\item{\code{go_parcoords_line_colorbar()}}{\code{parcoords.line.colorbar}}
-\item{\code{go_parcoords_line_colorbar_tickfont()}}{\code{parcoords.line.colorbar.tickfont}:
-Sets the color bar's tick label font}
-\item{\code{go_parcoords_line_colorbar_tickformatstop()}}{\code{parcoords.line.colorbar.tickformatstop}}
-\item{\code{go_parcoords_line_colorbar_title()}}{\code{parcoords.line.colorbar.title}}
-\item{\code{go_parcoords_line_colorbar_title_font()}}{\code{parcoords.line.colorbar.title.font}:
-Sets this color bar's title font.}
-\item{\code{go_parcoords_rangefont()}}{\code{parcoords.rangefont}: Sets
-the font for the `dimension` range values.}
-\item{\code{go_parcoords_tickfont()}}{\code{parcoords.tickfont}: Sets the
-font for the `dimension` tick values.}
-\item{\code{go_parcoords_unselected()}}{\code{parcoords.unselected}}
-\item{\code{go_parcoords_unselected_line()}}{\code{parcoords.unselected.line}}
+\item{\code{constraintrange}}{The domain range to which the filter on the
+dimension is constrained. Must be an array of `[fromValue, toValue]` with
+`fromValue <= toValue`, or if `multiselect` is not disabled, you may give
+an array of arrays, where each inner array is `[fromValue, toValue]`.
+Vector or list of up to 2 element(s).}
+\item{\code{label}}{The shown name of the dimension. String.}
+\item{\code{multiselect}}{Do we allow multiple selection ranges or just a
+single range? Logical.}
+\item{\code{name}}{When used in a template, named items are created in
+the output figure in addition to any items the figure already has in this
+array. You can modify these items in the output figure by making your own
+item with `templateitemname` matching this `name` alongside your
+modifications (including `visible: false` or `enabled: false` to hide
+it). Has no effect outside of a template. String.}
+\item{\code{range}}{The domain range that represents the full, shown axis
+extent. Defaults to the `values` extent. Must be an array of `[fromValue,
+toValue]` with finite numbers as elements. Vector or list of 2
+element(s).}
+\item{\code{templateitemname}}{Used to refer to a named item in this
+array in the template. Named items from the template will be created even
+without a matching item in the input figure, but you can modify one by
+making an item with `templateitemname` matching its `name`, alongside
+your modifications (including `visible: false` or `enabled: false` to
+hide it). If there is no template or no matching item, this item will be
+hidden unless you explicitly show it with `visible: true`. String.}
+\item{\code{tickformat}}{Sets the tick label formatting rule using d3
+formatting mini-languages which are very similar to those in Python. For
+numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
+for dates see:
+https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
+two items to d3's date formatter: "\%h" for half of the year as a decimal
+number as well as "\%\{n\}f" for fractional seconds with n digits. For
+example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
+would display "09~15~23.46" String.}
+\item{\code{ticktext}}{Sets the text displayed at the ticks position via
+`tickvals`. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
+\item{\code{tickvals}}{Sets the values at which ticks on this axis
+appear. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
+\item{\code{values}}{Dimension values. `values[n]` represents the value
+of the `n`th point in the dataset, therefore the `values` vector for all
+dimensions must be the same (longer vectors will be truncated). Each
+value must be a finite number. Data array: a vector, factor, Date/POSIXct
+vector, matrix or list.}
+\item{\code{visible}}{Shows the dimension when set to `true` (the
+default). Hides the dimension for `false`. Logical.}
 }
 }
+
+\section{line properties}{
+
+\describe{
+\item{\code{autocolorscale}}{Determines whether the colorscale is a
+default palette (`autocolorscale: true`) or the palette determined by
+`line.colorscale`. Has an effect only if in `line.color` is set to a
+numerical array. In case `colorscale` is unspecified or `autocolorscale`
+is true, the default palette will be chosen according to whether numbers
+in the `color` array are all positive, all negative or mixed. Logical.}
+\item{\code{cauto}}{Determines whether or not the color domain is
+computed with respect to the input data (here in `line.color`) or the
+bounds set in `line.cmin` and `line.cmax` Has an effect only if in
+`line.color` is set to a numerical array. Defaults to `false` when
+`line.cmin` and `line.cmax` are set by the user. Logical.}
+\item{\code{cmax}}{Sets the upper bound of the color domain. Has an
+effect only if in `line.color` is set to a numerical array. Value should
+have the same units as in `line.color` and if set, `line.cmin` must be
+set as well. Number.}
+\item{\code{cmid}}{Sets the mid-point of the color domain by scaling
+`line.cmin` and/or `line.cmax` to be equidistant to this point. Has an
+effect only if in `line.color` is set to a numerical array. Value should
+have the same units as in `line.color`. Has no effect when `line.cauto`
+is `false`. Number.}
+\item{\code{cmin}}{Sets the lower bound of the color domain. Has an
+effect only if in `line.color` is set to a numerical array. Value should
+have the same units as in `line.color` and if set, `line.cmax` must be
+set as well. Number.}
+\item{\code{color}}{Sets the line color. It accepts either a specific
+color or an array of numbers that are mapped to the colorscale relative
+to the max and min values of the array or relative to `line.cmin` and
+`line.cmax` if set. Color: a CSS color string or R color name, or a
+number mapped to a color by \code{parcoords.line.colorscale}, or a vector
+of these.}
+\item{\code{coloraxis}}{Sets a reference to a shared color axis.
+References to these shared color axes are "coloraxis", "coloraxis2",
+"coloraxis3", etc. Settings for these shared color axes are set in the
+layout, under `layout.coloraxis`, `layout.coloraxis2`, etc. Note that
+multiple color scales can be linked to the same color axis. Subplot id:
+\code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
+\item{\code{colorbar}}{A \code{\link{go_colorbar}()} object or named
+list, with properties \code{bgcolor}, \code{bordercolor},
+\code{borderwidth}, \code{dtick}, \code{exponentformat},
+\code{labelalias}, \code{len}, \code{lenmode}, \code{minexponent},
+\code{nticks}, \code{orientation}, \code{outlinecolor} and 34 more (see
+\code{\link{go_colorbar}()}).}
+\item{\code{colorscale}}{Sets the colorscale. Has an effect only if in
+`line.color` is set to a numerical array. The colorscale must be an array
+containing arrays mapping a normalized value to an rgb, rgba, hex, hsl,
+hsla, hwb, or named color string. At minimum, a mapping for the lowest
+(0) and highest (1) values are required. For example, `[[0,
+'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
+colorscale in color space, use `line.cmin` and `line.cmax`.
+Alternatively, `colorscale` may be a palette name string of the following
+list:
+Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
+Colorscale: a vector of colors, a two-column data.frame of (value,
+color), or the name of a sequential, diverging or cyclical scale in
+\code{\link{px_colors}()} (append \code{"_r"} to reverse).}
+\item{\code{reversescale}}{Reverses the color mapping if true. Has an
+effect only if in `line.color` is set to a numerical array. If true,
+`line.cmin` will correspond to the last color in the array and
+`line.cmax` will correspond to the first color. Logical.}
+\item{\code{showscale}}{Determines whether or not a colorbar is displayed
+for this trace. Has an effect only if in `line.color` is set to a
+numerical array. Logical.}
+}
+}
+
+\section{unselected properties}{
+
+\describe{
+\item{\code{line}}{A named list with properties \code{color} and
+\code{opacity} (described in section "unselected.line properties"
+below).}
+}
+}
+
+\section{unselected.line properties}{
+
+\describe{
+\item{\code{color}}{Sets the base color of unselected lines. in
+connection with `unselected.line.opacity`. Color: a CSS color string or R
+color name.}
+\item{\code{opacity}}{Sets the opacity of unselected lines. The default
+"auto" decreases the opacity smoothly as the number of lines increases.
+Use 1 to achieve exact `unselected.line.color`. Number in the interval
+[0, 1].}
+}
+}
+
 \examples{
 go_parcoords()
 }
