@@ -35,8 +35,9 @@ arguments take precedence.}
 
 \item{...}{Further properties, by their full names.}
 
-\item{line}{A named list with properties \code{color}, \code{dash} and
-\code{width} (described in section "line properties" below).}
+\item{line}{A \code{\link{go_selection_line}()} object or named list,
+with properties \code{color}, \code{dash} and \code{width} (see
+\code{\link{go_selection_line}()}).}
 
 \item{name}{When used in a template, named items are created in the
 output figure in addition to any items the figure already has in this
@@ -121,26 +122,8 @@ The modified figure.
 \description{
 \code{add_selection()} adds a selection to the figure's layout
 \code{selections}. Nested objects are named lists, e.g. \code{font =
-list(size = 14)} or a \code{\link{go_font}()} object; each one's
-properties are described in a section of its own near the end of this
-page.
+list(size = 14)}, or objects of the constructors their arguments name.
 }
-\section{line properties}{
-
-\describe{
-\item{\code{color}}{Sets the line color. Color: a CSS color string or R
-color name.}
-\item{\code{dash}}{Sets the dash style of lines. Set to a dash type
-string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
-or a dash length list in px (eg "5px,10px,2px,2px"). One of
-\code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
-\code{"dashdot"}, \code{"longdashdot"}, or a string matching
-\code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
-\item{\code{width}}{Sets the line width (in px). Number in the interval
-[1, Inf].}
-}
-}
-
 \seealso{
-\code{\link{update_selections}()}
+\code{\link{update_selections}()}, \code{\link{go_selection}()}
 }

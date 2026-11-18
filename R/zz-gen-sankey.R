@@ -11,26 +11,26 @@
 #' \code{add_sankey()} creates one and adds it to a figure.
 #'
 #' @details
-#' Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-#' = list(width = 2))}. Each nested object's properties are described in a
-#' section of its own near the end of this page (after \emph{Value}), titled
-#' with its path: \emph{marker properties}, \emph{marker.line properties},
-#' .... Objects that appear in several places in the schema can also be
-#' created with a constructor of their own, and are documented on its page:
-#' \code{\link{go_font}()}, \code{\link{go_colorbar}()},
-#' \code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-#' \code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-#' \code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-#' \code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-#' \code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-#' \code{\link{go_gradient}()}, \code{\link{go_label}()},
-#' \code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-#' \code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-#' \code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-#' \code{\link{go_root}()}, \code{\link{go_slices}()},
-#' \code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-#' Every property is checked against the plotly.js schema when the object is
-#' created or modified (see \code{\link{plotly_obj-modify}}).
+#' Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+#' objects of their constructors: every object in the schema has one,
+#' documented on its own page, with exactly that object's properties. Most
+#' are named after their path: \code{go_scatter_marker()},
+#' \code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+#' Objects that appear in several places share one: \code{\link{go_font}()},
+#' \code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+#' \code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+#' \code{\link{go_domain}()}, \code{\link{go_pattern}()},
+#' \code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+#' \code{\link{go_bins}()}, \code{\link{go_caps}()},
+#' \code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+#' \code{\link{go_label}()}, \code{\link{go_leaf}()},
+#' \code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+#' \code{\link{go_pathbar}()}, \code{\link{go_project}()},
+#' \code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+#' \code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+#' \code{\link{go_unifiedhovertitle}()}. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}).
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
@@ -97,12 +97,13 @@
 #'   to their order in data and layout. Number.
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param link The links of the Sankey plot. A named list with properties
+#' @param link The links of the Sankey plot. A
+#'   \code{\link{go_sankey_link}()} object or named list, with properties
 #'   \code{arrowlen}, \code{color}, \code{colorscales}, \code{customdata},
 #'   \code{hovercolor}, \code{hoverinfo}, \code{hoverlabel},
 #'   \code{hovertemplate}, \code{hovertemplatefallback}, \code{label},
 #'   \code{line}, \code{sort}, \code{source}, \code{target} and
-#'   \code{value} (described in section "link properties" below).
+#'   \code{value} (see \code{\link{go_sankey_link}()}).
 #' @param meta Assigns extra meta information associated with this trace
 #'   that can be used in various text attributes. Attributes such as trace
 #'   `name`, graph, axis and colorbar `title.text`, annotation `text`
@@ -114,12 +115,13 @@
 #'   `meta` and `n` is the trace index. Any value.
 #' @param name Sets the trace name. The trace name appears as the legend
 #'   item and on hover. String.
-#' @param node The nodes of the Sankey plot. A named list with properties
+#' @param node The nodes of the Sankey plot. A
+#'   \code{\link{go_sankey_node}()} object or named list, with properties
 #'   \code{align}, \code{color}, \code{customdata}, \code{groups},
 #'   \code{hoverinfo}, \code{hoverlabel}, \code{hovertemplate},
 #'   \code{hovertemplatefallback}, \code{label}, \code{line}, \code{pad},
-#'   \code{sort}, \code{thickness}, \code{x} and \code{y} (described in
-#'   section "node properties" below).
+#'   \code{sort}, \code{thickness}, \code{x} and \code{y} (see
+#'   \code{\link{go_sankey_node}()}).
 #' @param orientation Sets the orientation of the Sankey diagram. With `h`
 #'   (the default), the flow runs horizontally. With `v`, the flow runs
 #'   vertically. Use `direction` to control which side the sources are
@@ -172,207 +174,6 @@
 #'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
 #'
-#' @section link properties:
-#' The links of the Sankey plot.
-#'
-#' \describe{
-#' \item{\code{arrowlen}}{Sets the length (in px) of the links arrow, if 0
-#' no arrow will be drawn. Number in the interval [0, Inf].}
-#' \item{\code{color}}{Sets the `link` color. It can be a single value, or
-#' an array for specifying color for each `link`. If `link.color` is
-#' omitted, then by default, a translucent grey link will be used. Color: a
-#' CSS color string or R color name, or a vector of these.}
-#' \item{\code{colorscales}}{List, each element a named list with properties
-#' \code{cmax}, \code{cmin}, \code{colorscale}, \code{label}, \code{name}
-#' and \code{templateitemname} (described in section
-#' "link.concentrationscales properties" below).}
-#' \item{\code{customdata}}{Assigns extra data to each link. Data array: a
-#' vector, factor, Date/POSIXct vector, matrix or list.}
-#' \item{\code{hovercolor}}{Sets the `link` hover color. It can be a single
-#' value, or an array for specifying hover colors for each `link`. If
-#' `link.hovercolor` is omitted, then by default, links will become slightly
-#' more opaque when hovered over. Color: a CSS color string or R color name,
-#' or a vector of these.}
-#' \item{\code{hoverinfo}}{Determines what trace information appears when
-#' hovering links. If `none` or `skip` are set, no information is displayed
-#' upon hovering. But, if `none` is set, click and hover events are still
-#' fired. One of \code{"all"}, \code{"none"}, \code{"skip"}.}
-#' \item{\code{hoverlabel}}{A \code{\link{go_hoverlabel}()} object or named
-#' list, with properties \code{align}, \code{bgcolor}, \code{bordercolor},
-#' \code{font}, \code{namelength} and \code{showarrow} (see
-#' \code{\link{go_hoverlabel}()}).}
-#' \item{\code{hovertemplate}}{Template string used for rendering the
-#' information that appear on hover box. Note that this will override
-#' `hoverinfo`. Variables are inserted using \%\{variable\}, for example "y:
-#' \%\{y\}" as well as \%\{xother\}, \{\%_xother\}, \{\%_xother_\},
-#' \{\%xother_\}. When showing info for several points, "xother" will be
-#' added to those with different x positions from the first point. An
-#' underscore before or after "(x|y)other" will add a space on that side,
-#' only when this field is shown. Numbers are formatted using d3-format's
-#' syntax \%\{variable:d3-format\}, for example "Price: \%\{y:$.2f\}".
-#' https://github.com/d3/d3-format/tree/v1.4.5#d3-format for details on the
-#' formatting syntax. Dates are formatted using d3-time-format's syntax
-#' \%\{variable|d3-time-format\}, for example "Day: \%\{2019-01-01|\%A\}".
-#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format for
-#' details on the date formatting syntax. Variables that can't be found will
-#' be replaced with the specifier. For example, a template of "data:
-#' \%\{x\}, \%\{y\}" will result in a value of "data: 1, \%\{y\}" if x is 1
-#' and y is missing. Variables with an undefined value will be replaced with
-#' the fallback value. The variables available in `hovertemplate` are the
-#' ones emitted as event data described at this link
-#' https://plotly.com/javascript/plotlyjs-events/#event-data. Additionally,
-#' all attributes that can be specified per-point (the ones that are
-#' `arrayOk: true`) are available.  Finally, the template string has access
-#' to variables `value` and `label`. Anything contained in tag `<extra>` is
-#' displayed in the secondary box, for example
-#' `<extra>\%\{fullData.name\}</extra>`. To hide the secondary box
-#' completely, use an empty tag `<extra></extra>`. String, or a vector of
-#' these.}
-#' \item{\code{hovertemplatefallback}}{Fallback string that's displayed when
-#' a variable referenced in a template is missing. If the boolean value
-#' 'false' is passed in, the specifier with the missing variable will be
-#' displayed. Any value.}
-#' \item{\code{label}}{The shown name of the link. Data array: a vector,
-#' factor, Date/POSIXct vector, matrix or list.}
-#' \item{\code{line}}{A named list with properties \code{color} and
-#' \code{width} (described in section "link.line properties" below).}
-#' \item{\code{sort}}{For `auto` (the default), the order of links attached
-#' to each node is determined automatically by the layout. For `input`, the
-#' order of links at each node is kept the same as the order in the input
-#' array. One of \code{"auto"}, \code{"input"}.}
-#' \item{\code{source}}{An integer number `[0..nodes.length - 1]` that
-#' represents the source node. Data array: a vector, factor, Date/POSIXct
-#' vector, matrix or list.}
-#' \item{\code{target}}{An integer number `[0..nodes.length - 1]` that
-#' represents the target node. Data array: a vector, factor, Date/POSIXct
-#' vector, matrix or list.}
-#' \item{\code{value}}{A numeric value representing the flow volume value.
-#' Data array: a vector, factor, Date/POSIXct vector, matrix or list.}
-#' }
-#'
-#' @section link.concentrationscales properties (each list element):
-#' \describe{
-#' \item{\code{cmax}}{Sets the upper bound of the color domain. Number.}
-#' \item{\code{cmin}}{Sets the lower bound of the color domain. Number.}
-#' \item{\code{colorscale}}{Sets the colorscale. The colorscale must be an
-#' array containing arrays mapping a normalized value to an rgb, rgba, hex,
-#' hsl, hsla, hwb, or named color string. At minimum, a mapping for the
-#' lowest (0) and highest (1) values are required. For example, `[[0,
-#' 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
-#' colorscale in color space, use `cmin` and `cmax`. Alternatively,
-#' `colorscale` may be a palette name string of the following list:
-#' Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-#' Colorscale: a vector of colors, a two-column data.frame of (value,
-#' color), or the name of a sequential, diverging or cyclical scale in
-#' \code{\link{px_colors}()} (append \code{"_r"} to reverse).}
-#' \item{\code{label}}{The label of the links to color based on their
-#' concentration within a flow. String.}
-#' \item{\code{name}}{When used in a template, named items are created in
-#' the output figure in addition to any items the figure already has in this
-#' array. You can modify these items in the output figure by making your own
-#' item with `templateitemname` matching this `name` alongside your
-#' modifications (including `visible: false` or `enabled: false` to hide
-#' it). Has no effect outside of a template. String.}
-#' \item{\code{templateitemname}}{Used to refer to a named item in this
-#' array in the template. Named items from the template will be created even
-#' without a matching item in the input figure, but you can modify one by
-#' making an item with `templateitemname` matching its `name`, alongside
-#' your modifications (including `visible: false` or `enabled: false` to
-#' hide it). If there is no template or no matching item, this item will be
-#' hidden unless you explicitly show it with `visible: true`. String.}
-#' }
-#'
-#' @section link.line properties:
-#' \describe{
-#' \item{\code{color}}{Sets the color of the `line` around each `link`.
-#' Color: a CSS color string or R color name, or a vector of these.}
-#' \item{\code{width}}{Sets the width (in px) of the `line` around each
-#' `link`. Number in the interval [0, Inf], or a vector of these.}
-#' }
-#'
-#' @section node properties:
-#' The nodes of the Sankey plot.
-#'
-#' \describe{
-#' \item{\code{align}}{Sets the alignment method used to position the nodes
-#' along the horizontal axis. One of \code{"justify"}, \code{"left"},
-#' \code{"right"}, \code{"center"}.}
-#' \item{\code{color}}{Sets the `node` color. It can be a single value, or
-#' an array for specifying color for each `node`. If `node.color` is
-#' omitted, then the default `Plotly` color palette will be cycled through
-#' to have a variety of colors. These defaults are not fully opaque, to
-#' allow some visibility of what is beneath the node. Color: a CSS color
-#' string or R color name, or a vector of these.}
-#' \item{\code{customdata}}{Assigns extra data to each node. Data array: a
-#' vector, factor, Date/POSIXct vector, matrix or list.}
-#' \item{\code{groups}}{Groups of nodes. Each group is defined by an array
-#' with the indices of the nodes it contains. Multiple groups can be
-#' specified. Vector or list of up to 1 element(s).}
-#' \item{\code{hoverinfo}}{Determines what trace information appears when
-#' hovering nodes. If `none` or `skip` are set, no information is displayed
-#' upon hovering. But, if `none` is set, click and hover events are still
-#' fired. One of \code{"all"}, \code{"none"}, \code{"skip"}.}
-#' \item{\code{hoverlabel}}{A \code{\link{go_hoverlabel}()} object or named
-#' list, with properties \code{align}, \code{bgcolor}, \code{bordercolor},
-#' \code{font}, \code{namelength} and \code{showarrow} (see
-#' \code{\link{go_hoverlabel}()}).}
-#' \item{\code{hovertemplate}}{Template string used for rendering the
-#' information that appear on hover box. Note that this will override
-#' `hoverinfo`. Variables are inserted using \%\{variable\}, for example "y:
-#' \%\{y\}" as well as \%\{xother\}, \{\%_xother\}, \{\%_xother_\},
-#' \{\%xother_\}. When showing info for several points, "xother" will be
-#' added to those with different x positions from the first point. An
-#' underscore before or after "(x|y)other" will add a space on that side,
-#' only when this field is shown. Numbers are formatted using d3-format's
-#' syntax \%\{variable:d3-format\}, for example "Price: \%\{y:$.2f\}".
-#' https://github.com/d3/d3-format/tree/v1.4.5#d3-format for details on the
-#' formatting syntax. Dates are formatted using d3-time-format's syntax
-#' \%\{variable|d3-time-format\}, for example "Day: \%\{2019-01-01|\%A\}".
-#' https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format for
-#' details on the date formatting syntax. Variables that can't be found will
-#' be replaced with the specifier. For example, a template of "data:
-#' \%\{x\}, \%\{y\}" will result in a value of "data: 1, \%\{y\}" if x is 1
-#' and y is missing. Variables with an undefined value will be replaced with
-#' the fallback value. The variables available in `hovertemplate` are the
-#' ones emitted as event data described at this link
-#' https://plotly.com/javascript/plotlyjs-events/#event-data. Additionally,
-#' all attributes that can be specified per-point (the ones that are
-#' `arrayOk: true`) are available.  Finally, the template string has access
-#' to variables `value` and `label`. Anything contained in tag `<extra>` is
-#' displayed in the secondary box, for example
-#' `<extra>\%\{fullData.name\}</extra>`. To hide the secondary box
-#' completely, use an empty tag `<extra></extra>`. String, or a vector of
-#' these.}
-#' \item{\code{hovertemplatefallback}}{Fallback string that's displayed when
-#' a variable referenced in a template is missing. If the boolean value
-#' 'false' is passed in, the specifier with the missing variable will be
-#' displayed. Any value.}
-#' \item{\code{label}}{The shown name of the node. Data array: a vector,
-#' factor, Date/POSIXct vector, matrix or list.}
-#' \item{\code{line}}{A named list with properties \code{color} and
-#' \code{width} (described in section "node.line properties" below).}
-#' \item{\code{pad}}{Sets the padding (in px) between the `nodes`. Number in
-#' the interval [0, Inf].}
-#' \item{\code{sort}}{For `auto` (the default), the vertical order of nodes
-#' will be determined automatically by the layout. For `input`, the vertical
-#' order of nodes is kept the same as the order in the input array. One of
-#' \code{"auto"}, \code{"input"}.}
-#' \item{\code{thickness}}{Sets the thickness (in px) of the `nodes`. Number
-#' in the interval [1, Inf].}
-#' \item{\code{x}}{The normalized horizontal position of the node. Data
-#' array: a vector, factor, Date/POSIXct vector, matrix or list.}
-#' \item{\code{y}}{The normalized vertical position of the node. Data array:
-#' a vector, factor, Date/POSIXct vector, matrix or list.}
-#' }
-#'
-#' @section node.line properties:
-#' \describe{
-#' \item{\code{color}}{Sets the color of the `line` around each `node`.
-#' Color: a CSS color string or R color name, or a vector of these.}
-#' \item{\code{width}}{Sets the width (in px) of the `line` around each
-#' `node`. Number in the interval [0, Inf], or a vector of these.}
-#' }
-#'
 #' @noMd
 #' @export
 #' @examples
@@ -387,5 +188,362 @@ go_sankey <- function(
     visible = NULL, skip_invalid = FALSE
 ) {
   plotly_object("sankey", arg, environment(), list(...), skip_invalid)
+}
+
+#' Sankey link objects
+#'
+#' The links of the Sankey plot. The object for the \code{link} of a sankey
+#' trace (\code{\link{go_sankey}()}). \code{go_sankey_link()} creates one,
+#' with exactly its properties; a named list with the same properties works
+#' too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param arrowlen Sets the length (in px) of the links arrow, if 0 no
+#'   arrow will be drawn. Number in the interval [0, Inf].
+#' @param color Sets the `link` color. It can be a single value, or an
+#'   array for specifying color for each `link`. If `link.color` is
+#'   omitted, then by default, a translucent grey link will be used. Color:
+#'   a CSS color string or R color name, or a vector of these.
+#' @param colorscales List, each element a
+#'   \code{\link{go_sankey_link_concentrationscales}()} object or named
+#'   list, with properties \code{cmax}, \code{cmin}, \code{colorscale},
+#'   \code{label}, \code{name} and \code{templateitemname} (see
+#'   \code{\link{go_sankey_link_concentrationscales}()}).
+#' @param customdata Assigns extra data to each link. Data array: a vector,
+#'   factor, Date/POSIXct vector, matrix or list.
+#' @param hovercolor Sets the `link` hover color. It can be a single value,
+#'   or an array for specifying hover colors for each `link`. If
+#'   `link.hovercolor` is omitted, then by default, links will become
+#'   slightly more opaque when hovered over. Color: a CSS color string or R
+#'   color name, or a vector of these.
+#' @param hoverinfo Determines what trace information appears when hovering
+#'   links. If `none` or `skip` are set, no information is displayed upon
+#'   hovering. But, if `none` is set, click and hover events are still
+#'   fired. One of \code{"all"}, \code{"none"}, \code{"skip"}.
+#' @param hoverlabel A \code{\link{go_hoverlabel}()} object or named list,
+#'   with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+#'   \code{font}, \code{namelength} and \code{showarrow} (see
+#'   \code{\link{go_hoverlabel}()}).
+#' @param hovertemplate Template string used for rendering the information
+#'   that appear on hover box. Note that this will override `hoverinfo`.
+#'   Variables are inserted using \%\{variable\}, for example "y: \%\{y\}"
+#'   as well as \%\{xother\}, \{\%_xother\}, \{\%_xother_\}, \{\%xother_\}.
+#'   When showing info for several points, "xother" will be added to those
+#'   with different x positions from the first point. An underscore before
+#'   or after "(x|y)other" will add a space on that side, only when this
+#'   field is shown. Numbers are formatted using d3-format's syntax
+#'   \%\{variable:d3-format\}, for example "Price: \%\{y:$.2f\}".
+#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format for details on
+#'   the formatting syntax. Dates are formatted using d3-time-format's
+#'   syntax \%\{variable|d3-time-format\}, for example "Day:
+#'   \%\{2019-01-01|\%A\}".
+#'   https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format for
+#'   details on the date formatting syntax. Variables that can't be found
+#'   will be replaced with the specifier. For example, a template of "data:
+#'   \%\{x\}, \%\{y\}" will result in a value of "data: 1, \%\{y\}" if x is
+#'   1 and y is missing. Variables with an undefined value will be replaced
+#'   with the fallback value. The variables available in `hovertemplate`
+#'   are the ones emitted as event data described at this link
+#'   https://plotly.com/javascript/plotlyjs-events/#event-data.
+#'   Additionally, all attributes that can be specified per-point (the ones
+#'   that are `arrayOk: true`) are available.  Finally, the template string
+#'   has access to variables `value` and `label`. Anything contained in tag
+#'   `<extra>` is displayed in the secondary box, for example
+#'   `<extra>\%\{fullData.name\}</extra>`. To hide the secondary box
+#'   completely, use an empty tag `<extra></extra>`. String, or a vector of
+#'   these.
+#' @param hovertemplatefallback Fallback string that's displayed when a
+#'   variable referenced in a template is missing. If the boolean value
+#'   'false' is passed in, the specifier with the missing variable will be
+#'   displayed. Any value.
+#' @param label The shown name of the link. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param line A \code{\link{go_sankey_link_line}()} object or named list,
+#'   with properties \code{color} and \code{width} (see
+#'   \code{\link{go_sankey_link_line}()}).
+#' @param sort For `auto` (the default), the order of links attached to
+#'   each node is determined automatically by the layout. For `input`, the
+#'   order of links at each node is kept the same as the order in the input
+#'   array. One of \code{"auto"}, \code{"input"}.
+#' @param source An integer number `[0..nodes.length - 1]` that represents
+#'   the source node. Data array: a vector, factor, Date/POSIXct vector,
+#'   matrix or list.
+#' @param target An integer number `[0..nodes.length - 1]` that represents
+#'   the target node. Data array: a vector, factor, Date/POSIXct vector,
+#'   matrix or list.
+#' @param value A numeric value representing the flow volume value. Data
+#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_sankey_link} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_sankey(
+#'     link = go_sankey_link(color = "red")
+#'   )
+go_sankey_link <- function(
+    arg = NULL, ..., arrowlen = NULL, color = NULL, colorscales = NULL,
+    customdata = NULL, hovercolor = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    label = NULL, line = NULL, sort = NULL, source = NULL, target = NULL,
+    value = NULL, skip_invalid = FALSE
+) {
+  plotly_object("sankey.link", arg, environment(), list(...), skip_invalid)
+}
+
+#' Sankey link concentrationscales objects
+#'
+#' The object for an element of the \code{colorscales} list of a sankey
+#' trace's \code{link} (\code{\link{go_sankey_link}()}).
+#' \code{go_sankey_link_concentrationscales()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param cmax Sets the upper bound of the color domain. Number.
+#' @param cmin Sets the lower bound of the color domain. Number.
+#' @param colorscale Sets the colorscale. The colorscale must be an array
+#'   containing arrays mapping a normalized value to an rgb, rgba, hex,
+#'   hsl, hsla, hwb, or named color string. At minimum, a mapping for the
+#'   lowest (0) and highest (1) values are required. For example, `[[0,
+#'   'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
+#'   colorscale in color space, use `cmin` and `cmax`. Alternatively,
+#'   `colorscale` may be a palette name string of the following list:
+#'   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
+#'   Colorscale: a vector of colors, a two-column data.frame of (value,
+#'   color), or the name of a sequential, diverging or cyclical scale in
+#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
+#' @param label The label of the links to color based on their
+#'   concentration within a flow. String.
+#' @param name When used in a template, named items are created in the
+#'   output figure in addition to any items the figure already has in this
+#'   array. You can modify these items in the output figure by making your
+#'   own item with `templateitemname` matching this `name` alongside your
+#'   modifications (including `visible: false` or `enabled: false` to hide
+#'   it). Has no effect outside of a template. String.
+#' @param templateitemname Used to refer to a named item in this array in
+#'   the template. Named items from the template will be created even
+#'   without a matching item in the input figure, but you can modify one by
+#'   making an item with `templateitemname` matching its `name`, alongside
+#'   your modifications (including `visible: false` or `enabled: false` to
+#'   hide it). If there is no template or no matching item, this item will
+#'   be hidden unless you explicitly show it with `visible: true`. String.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_sankey_link_concentrationscales} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_sankey(
+#'     link = go_sankey_link(
+#'       colorscales = list(go_sankey_link_concentrationscales())
+#'     )
+#'   )
+go_sankey_link_concentrationscales <- function(
+    arg = NULL, ..., cmax = NULL, cmin = NULL, colorscale = NULL,
+    label = NULL, name = NULL, templateitemname = NULL, skip_invalid = FALSE
+) {
+  plotly_object("sankey.link.concentrationscales", arg, environment(), list(...), skip_invalid)
+}
+
+#' Sankey link line objects
+#'
+#' The object for the \code{link.line} of a sankey trace
+#' (\code{\link{go_sankey_link}()}). \code{go_sankey_link_line()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the color of the `line` around each `link`. Color: a
+#'   CSS color string or R color name, or a vector of these.
+#' @param width Sets the width (in px) of the `line` around each `link`.
+#'   Number in the interval [0, Inf], or a vector of these.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_sankey_link_line} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_sankey(
+#'     link = go_sankey_link(
+#'       line = go_sankey_link_line(color = "red")
+#'     )
+#'   )
+go_sankey_link_line <- function(
+    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+) {
+  plotly_object("sankey.link.line", arg, environment(), list(...), skip_invalid)
+}
+
+#' Sankey node objects
+#'
+#' The nodes of the Sankey plot. The object for the \code{node} of a sankey
+#' trace (\code{\link{go_sankey}()}). \code{go_sankey_node()} creates one,
+#' with exactly its properties; a named list with the same properties works
+#' too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param align Sets the alignment method used to position the nodes along
+#'   the horizontal axis. One of \code{"justify"}, \code{"left"},
+#'   \code{"right"}, \code{"center"}.
+#' @param color Sets the `node` color. It can be a single value, or an
+#'   array for specifying color for each `node`. If `node.color` is
+#'   omitted, then the default `Plotly` color palette will be cycled
+#'   through to have a variety of colors. These defaults are not fully
+#'   opaque, to allow some visibility of what is beneath the node. Color: a
+#'   CSS color string or R color name, or a vector of these.
+#' @param customdata Assigns extra data to each node. Data array: a vector,
+#'   factor, Date/POSIXct vector, matrix or list.
+#' @param groups Groups of nodes. Each group is defined by an array with
+#'   the indices of the nodes it contains. Multiple groups can be
+#'   specified. Vector or list of up to 1 element(s).
+#' @param hoverinfo Determines what trace information appears when hovering
+#'   nodes. If `none` or `skip` are set, no information is displayed upon
+#'   hovering. But, if `none` is set, click and hover events are still
+#'   fired. One of \code{"all"}, \code{"none"}, \code{"skip"}.
+#' @param hoverlabel A \code{\link{go_hoverlabel}()} object or named list,
+#'   with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+#'   \code{font}, \code{namelength} and \code{showarrow} (see
+#'   \code{\link{go_hoverlabel}()}).
+#' @param hovertemplate Template string used for rendering the information
+#'   that appear on hover box. Note that this will override `hoverinfo`.
+#'   Variables are inserted using \%\{variable\}, for example "y: \%\{y\}"
+#'   as well as \%\{xother\}, \{\%_xother\}, \{\%_xother_\}, \{\%xother_\}.
+#'   When showing info for several points, "xother" will be added to those
+#'   with different x positions from the first point. An underscore before
+#'   or after "(x|y)other" will add a space on that side, only when this
+#'   field is shown. Numbers are formatted using d3-format's syntax
+#'   \%\{variable:d3-format\}, for example "Price: \%\{y:$.2f\}".
+#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format for details on
+#'   the formatting syntax. Dates are formatted using d3-time-format's
+#'   syntax \%\{variable|d3-time-format\}, for example "Day:
+#'   \%\{2019-01-01|\%A\}".
+#'   https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format for
+#'   details on the date formatting syntax. Variables that can't be found
+#'   will be replaced with the specifier. For example, a template of "data:
+#'   \%\{x\}, \%\{y\}" will result in a value of "data: 1, \%\{y\}" if x is
+#'   1 and y is missing. Variables with an undefined value will be replaced
+#'   with the fallback value. The variables available in `hovertemplate`
+#'   are the ones emitted as event data described at this link
+#'   https://plotly.com/javascript/plotlyjs-events/#event-data.
+#'   Additionally, all attributes that can be specified per-point (the ones
+#'   that are `arrayOk: true`) are available.  Finally, the template string
+#'   has access to variables `value` and `label`. Anything contained in tag
+#'   `<extra>` is displayed in the secondary box, for example
+#'   `<extra>\%\{fullData.name\}</extra>`. To hide the secondary box
+#'   completely, use an empty tag `<extra></extra>`. String, or a vector of
+#'   these.
+#' @param hovertemplatefallback Fallback string that's displayed when a
+#'   variable referenced in a template is missing. If the boolean value
+#'   'false' is passed in, the specifier with the missing variable will be
+#'   displayed. Any value.
+#' @param label The shown name of the node. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param line A \code{\link{go_sankey_node_line}()} object or named list,
+#'   with properties \code{color} and \code{width} (see
+#'   \code{\link{go_sankey_node_line}()}).
+#' @param pad Sets the padding (in px) between the `nodes`. Number in the
+#'   interval [0, Inf].
+#' @param sort For `auto` (the default), the vertical order of nodes will
+#'   be determined automatically by the layout. For `input`, the vertical
+#'   order of nodes is kept the same as the order in the input array. One
+#'   of \code{"auto"}, \code{"input"}.
+#' @param thickness Sets the thickness (in px) of the `nodes`. Number in
+#'   the interval [1, Inf].
+#' @param x The normalized horizontal position of the node. Data array: a
+#'   vector, factor, Date/POSIXct vector, matrix or list.
+#' @param y The normalized vertical position of the node. Data array: a
+#'   vector, factor, Date/POSIXct vector, matrix or list.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_sankey_node} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_sankey(
+#'     node = go_sankey_node(color = "red")
+#'   )
+go_sankey_node <- function(
+    arg = NULL, ..., align = NULL, color = NULL, customdata = NULL,
+    groups = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, label = NULL,
+    line = NULL, pad = NULL, sort = NULL, thickness = NULL, x = NULL,
+    y = NULL, skip_invalid = FALSE
+) {
+  plotly_object("sankey.node", arg, environment(), list(...), skip_invalid)
+}
+
+#' Sankey node line objects
+#'
+#' The object for the \code{node.line} of a sankey trace
+#' (\code{\link{go_sankey_node}()}). \code{go_sankey_node_line()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the color of the `line` around each `node`. Color: a
+#'   CSS color string or R color name, or a vector of these.
+#' @param width Sets the width (in px) of the `line` around each `node`.
+#'   Number in the interval [0, Inf], or a vector of these.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_sankey_node_line} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_sankey(
+#'     node = go_sankey_node(
+#'       line = go_sankey_node_line(color = "red")
+#'     )
+#'   )
+go_sankey_node_line <- function(
+    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+) {
+  plotly_object("sankey.node.line", arg, environment(), list(...), skip_invalid)
 }
 

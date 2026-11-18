@@ -105,6 +105,7 @@ add_trace_source <- function(trace, validators) {
 
 subplot_source <- function(singular, ctx) {
   validators <- ctx$validators
+  root <- paste0("layout.", singular)
   plural <- pluralize(singular)
   entry <- validators[[paste0("layout.", singular)]]
   sy <- singular == "yaxis"
@@ -147,11 +148,18 @@ subplot_source <- function(singular, ctx) {
     if (sy) {
       "#' @param secondary_y Only secondary (\\code{TRUE}) or primary (\\code{FALSE}) y axes."
     },
-    sprintf(
-      "#' @param patch A named list of %s property updates (see section \"%s properties\").",
-      singular,
-      singular
-    ),
+    if (root %in% ctx$object_roots) {
+      sprintf(
+        "#' @param patch A named list or %s object of property updates.",
+        rd_link(ctx$object_fn[[root]])
+      )
+    } else {
+      sprintf(
+        "#' @param patch A named list of %s property updates (see section \"%s properties\").",
+        singular,
+        singular
+      )
+    },
     "#' @param ... Further named updates, by their full names.",
     "#' @param overwrite If \\code{TRUE}, replace nested objects instead of merging.",
     "#' @param fn A function that takes an object and returns the modified object.",
@@ -163,9 +171,19 @@ subplot_source <- function(singular, ctx) {
     ),
     "#'   others return the modified figure.",
     "#'",
-    sprintf("#' @section %s properties:", singular),
-    property_describe(paste0("layout.", singular), paste0("layout.", singular), ctx),
-    nested_sections(paste0("layout.", singular), ctx),
+    if (root %in% ctx$object_roots) {
+      sprintf(
+        "#' @seealso %s for the properties of %s objects.",
+        rd_link(ctx$object_fn[[root]]),
+        singular
+      )
+    } else {
+      c(
+        sprintf("#' @section %s properties:", singular),
+        property_describe(root, root, ctx),
+        nested_sections(root, ctx)
+      )
+    },
     "#'",
     sprintf("#' @name update_%s", plural),
     "#' @noMd",
@@ -250,7 +268,13 @@ layout_array_source <- function(array_key, ctx) {
     "exclude_empty_subplots = FALSE",
     "skip_invalid = FALSE"
   )
-  fig_docs <- FIGURE_ARG_DOCS[c("fig", "row", "col", "secondary_y", "exclude_empty_subplots")]
+  fig_docs <- FIGURE_ARG_DOCS[c(
+    "fig",
+    "row",
+    "col",
+    "secondary_y",
+    "exclude_empty_subplots"
+  )]
   fig_docs$row <- "Subplot grid row whose axes the object refers to (figures created with \\code{\\link{make_subplots}()} only). May be \\code{\"all\"} or a vector to add the object to several cells."
   fig_docs$col <- "Subplot grid column whose axes the object refers to (see \\code{row})."
   fig_docs$secondary_y <- "If \\code{TRUE}, refer to the secondary y axis of the subplot."
@@ -265,18 +289,35 @@ layout_array_source <- function(array_key, ctx) {
       if (grepl("^[aeiou]", singular)) "an" else "a",
       singular,
       prop,
-      "Nested objects are named lists, e.g. \\code{font = list(size = 14)} or a \\code{\\link{go_font}()} object; each one's properties are described in a section of its own near the end of this page."
+      "Nested objects are named lists, e.g. \\code{font = list(size = 14)}, or objects of the constructors their arguments name."
     )),
     "#'",
     "#' @param arg Optional named list of properties to start from. Named",
     "#'   arguments take precedence.",
-    property_params(element_key, element_key, ctx, fig_docs),
+    # nested objects are documented on the element's constructor page
+    property_params(
+      element_key,
+      if (element_key %in% ctx$object_roots) "" else element_key,
+      ctx,
+      fig_docs
+    ),
     "#' @param ... Further properties, by their full names.",
     "#' @param skip_invalid If \\code{TRUE}, silently drop invalid properties",
     "#'   instead of raising an error.",
     "#' @return The modified figure.",
-    sprintf("#' @seealso %s", rd_link(paste0("update_", plur))),
-    nested_sections(element_key, ctx),
+    sprintf(
+      "#' @seealso %s",
+      paste(
+        c(
+          rd_link(paste0("update_", plur)),
+          if (element_key %in% ctx$object_roots) {
+            rd_link(ctx$object_fn[[element_key]])
+          }
+        ),
+        collapse = ", "
+      )
+    ),
+    if (!element_key %in% ctx$object_roots) nested_sections(element_key, ctx),
     "#'",
     "#' @noMd",
     "#' @export",

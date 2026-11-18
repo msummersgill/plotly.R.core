@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_slices}
 \alias{go_slices}
-\title{Isosurface slices}
+\title{Slices objects}
 \usage{
 go_slices(arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE)
 }
@@ -12,14 +12,17 @@ initialise properties from. Named arguments take precedence.}
 
 \item{...}{Not used: properties must be named in full.}
 
-\item{x}{A named list with properties \code{fill}, \code{locations} and
-\code{show} (described in section "x properties" below).}
+\item{x}{A \code{\link{go_slices_x}()} object or named list, with
+properties \code{fill}, \code{locations} and \code{show} (see
+\code{\link{go_slices_x}()}).}
 
-\item{y}{A named list with properties \code{fill}, \code{locations} and
-\code{show} (described in section "y properties" below).}
+\item{y}{A \code{\link{go_slices_y}()} object or named list, with
+properties \code{fill}, \code{locations} and \code{show} (see
+\code{\link{go_slices_y}()}).}
 
-\item{z}{A named list with properties \code{fill}, \code{locations} and
-\code{show} (described in section "z properties" below).}
+\item{z}{A \code{\link{go_slices_z}()} object or named list, with
+properties \code{fill}, \code{locations} and \code{show} (see
+\code{\link{go_slices_z}()}).}
 
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
@@ -28,67 +31,16 @@ instead of raising an error.}
 A \code{go_slices} object (a named list).
 }
 \description{
-Slices through an isosurface or volume trace along x, y and z.
-\code{go_slices()} creates one; a named list with the same properties
-works too.
+Used for \code{slices} in 2 places in the schema. \code{go_slices()}
+creates one; a named list with the same properties works too.
 }
 \details{
 These objects appear in 2 places in the plotly.js schema (properties
 named \code{slices}), all with the same properties and rules.
 }
-\section{x properties}{
-
-\describe{
-\item{\code{fill}}{Sets the fill ratio of the `slices`. The default fill
-value of the `slices` is 1 meaning that they are entirely shaded. On the
-other hand Applying a `fill` ratio less than one would allow the creation
-of openings parallel to the edges. Number in the interval [0, 1].}
-\item{\code{locations}}{Specifies the location(s) of slices on the axis.
-When not specified slices would be created for all points of the axis x
-except start and end. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.}
-\item{\code{show}}{Determines whether or not slice planes about the x
-dimension are drawn. Logical.}
-}
-}
-
-\section{y properties}{
-
-\describe{
-\item{\code{fill}}{Sets the fill ratio of the `slices`. The default fill
-value of the `slices` is 1 meaning that they are entirely shaded. On the
-other hand Applying a `fill` ratio less than one would allow the creation
-of openings parallel to the edges. Number in the interval [0, 1].}
-\item{\code{locations}}{Specifies the location(s) of slices on the axis.
-When not specified slices would be created for all points of the axis y
-except start and end. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.}
-\item{\code{show}}{Determines whether or not slice planes about the y
-dimension are drawn. Logical.}
-}
-}
-
-\section{z properties}{
-
-\describe{
-\item{\code{fill}}{Sets the fill ratio of the `slices`. The default fill
-value of the `slices` is 1 meaning that they are entirely shaded. On the
-other hand Applying a `fill` ratio less than one would allow the creation
-of openings parallel to the edges. Number in the interval [0, 1].}
-\item{\code{locations}}{Specifies the location(s) of slices on the axis.
-When not specified slices would be created for all points of the axis z
-except start and end. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.}
-\item{\code{show}}{Determines whether or not slice planes about the z
-dimension are drawn. Logical.}
-}
-}
-
 \examples{
-g <- expand.grid(x = 1:5, y = 1:5, z = 1:5)
 go_figure() |>
   add_isosurface(
-    x = g$x, y = g$y, z = g$z, value = g$x + g$y + g$z, isomin = 6, isomax = 12,
-    slices = go_slices(z = list(show = TRUE, locations = 3))
+    slices = go_slices()
   )
 }

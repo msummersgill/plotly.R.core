@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_domain}
 \alias{go_domain}
-\title{Domains}
+\title{Domain objects}
 \usage{
 go_domain(
   arg = NULL,
@@ -41,11 +41,8 @@ instead of raising an error.}
 A \code{go_domain} object (a named list).
 }
 \description{
-The area of the figure a trace (pie, sunburst, table, ...) or subplot
-(\code{geo}, \code{polar}, \code{scene}, ...) occupies, as fractions of
-the plotting area or a cell of the layout's \code{grid}.
-\code{go_domain()} creates one; a named list with the same properties
-works too.
+Used for \code{domain} in 17 places in the schema. \code{go_domain()}
+creates one; a named list with the same properties works too.
 }
 \details{
 These objects appear in 17 places in the plotly.js schema (properties
@@ -56,6 +53,7 @@ in a figure it is checked again against that context's rules.
 }
 \examples{
 go_figure() |>
-  add_pie(values = 1:3, domain = go_domain(x = c(0, 0.45))) |>
-  add_pie(values = 3:1, domain = go_domain(x = c(0.55, 1)))
+  add_funnelarea(
+    domain = go_domain()
+  )
 }

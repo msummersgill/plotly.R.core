@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_caps}
 \alias{go_caps}
-\title{Isosurface caps}
+\title{Caps objects}
 \usage{
 go_caps(arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE)
 }
@@ -12,14 +12,17 @@ initialise properties from. Named arguments take precedence.}
 
 \item{...}{Not used: properties must be named in full.}
 
-\item{x}{A named list with properties \code{fill} and \code{show}
-(described in section "x properties" below).}
+\item{x}{A \code{\link{go_caps_x}()} object or named list, with
+properties \code{fill} and \code{show} (see
+\code{\link{go_caps_x}()}).}
 
-\item{y}{A named list with properties \code{fill} and \code{show}
-(described in section "y properties" below).}
+\item{y}{A \code{\link{go_caps_y}()} object or named list, with
+properties \code{fill} and \code{show} (see
+\code{\link{go_caps_y}()}).}
 
-\item{z}{A named list with properties \code{fill} and \code{show}
-(described in section "z properties" below).}
+\item{z}{A \code{\link{go_caps_z}()} object or named list, with
+properties \code{fill} and \code{show} (see
+\code{\link{go_caps_z}()}).}
 
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
@@ -28,61 +31,16 @@ instead of raising an error.}
 A \code{go_caps} object (a named list).
 }
 \description{
-The end caps of an isosurface or volume trace, drawn where its surfaces
-meet the edges of the data along x, y and z. \code{go_caps()} creates
+Used for \code{caps} in 2 places in the schema. \code{go_caps()} creates
 one; a named list with the same properties works too.
 }
 \details{
 These objects appear in 2 places in the plotly.js schema (properties
 named \code{caps}), all with the same properties and rules.
 }
-\section{x properties}{
-
-\describe{
-\item{\code{fill}}{Sets the fill ratio of the `caps`. The default fill
-value of the `caps` is 1 meaning that they are entirely shaded. On the
-other hand Applying a `fill` ratio less than one would allow the creation
-of openings parallel to the edges. Number in the interval [0, 1].}
-\item{\code{show}}{Sets the fill ratio of the `slices`. The default fill
-value of the x `slices` is 1 meaning that they are entirely shaded. On
-the other hand Applying a `fill` ratio less than one would allow the
-creation of openings parallel to the edges. Logical.}
-}
-}
-
-\section{y properties}{
-
-\describe{
-\item{\code{fill}}{Sets the fill ratio of the `caps`. The default fill
-value of the `caps` is 1 meaning that they are entirely shaded. On the
-other hand Applying a `fill` ratio less than one would allow the creation
-of openings parallel to the edges. Number in the interval [0, 1].}
-\item{\code{show}}{Sets the fill ratio of the `slices`. The default fill
-value of the y `slices` is 1 meaning that they are entirely shaded. On
-the other hand Applying a `fill` ratio less than one would allow the
-creation of openings parallel to the edges. Logical.}
-}
-}
-
-\section{z properties}{
-
-\describe{
-\item{\code{fill}}{Sets the fill ratio of the `caps`. The default fill
-value of the `caps` is 1 meaning that they are entirely shaded. On the
-other hand Applying a `fill` ratio less than one would allow the creation
-of openings parallel to the edges. Number in the interval [0, 1].}
-\item{\code{show}}{Sets the fill ratio of the `slices`. The default fill
-value of the z `slices` is 1 meaning that they are entirely shaded. On
-the other hand Applying a `fill` ratio less than one would allow the
-creation of openings parallel to the edges. Logical.}
-}
-}
-
 \examples{
-g <- expand.grid(x = 1:5, y = 1:5, z = 1:5)
 go_figure() |>
   add_isosurface(
-    x = g$x, y = g$y, z = g$z, value = g$x + g$y + g$z, isomin = 6, isomax = 12,
-    caps = go_caps(x = list(show = FALSE), y = list(show = FALSE))
+    caps = go_caps()
   )
 }

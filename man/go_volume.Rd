@@ -190,8 +190,9 @@ Colorscale: a vector of colors, a two-column data.frame of (value,
 color), or the name of a sequential, diverging or cyclical scale in
 \code{\link{px_colors}()} (append \code{"_r"} to reverse).}
 
-\item{contour}{A named list with properties \code{color}, \code{show}
-and \code{width} (described in section "contour properties" below).}
+\item{contour}{A \code{\link{go_volume_contour}()} object or named list,
+with properties \code{color}, \code{show} and \code{width} (see
+\code{\link{go_volume_contour}()}).}
 
 \item{customdata}{Assigns extra data each datum. This may be useful when
 listening to hover, click and selection events. Note that, "scatter"
@@ -284,10 +285,11 @@ to their order in data and layout. Number.}
 \item{legendwidth}{Sets the width (in px or fraction) of the legend for
 this trace. Number in the interval [0, Inf].}
 
-\item{lighting}{A named list with properties \code{ambient},
-\code{diffuse}, \code{facenormalsepsilon}, \code{fresnel},
-\code{roughness}, \code{specular} and \code{vertexnormalsepsilon}
-(described in section "lighting properties" below).}
+\item{lighting}{A \code{\link{go_volume_lighting}()} object or named
+list, with properties \code{ambient}, \code{diffuse},
+\code{facenormalsepsilon}, \code{fresnel}, \code{roughness},
+\code{specular} and \code{vertexnormalsepsilon} (see
+\code{\link{go_volume_lighting}()}).}
 
 \item{lightposition}{A \code{\link{go_lightposition}()} object or named
 list, with properties \code{x}, \code{y} and \code{z} (see
@@ -346,9 +348,9 @@ properties \code{x}, \code{y} and \code{z} (see
 with properties \code{fill} and \code{show} (see
 \code{\link{go_spaceframe}()}).}
 
-\item{surface}{A named list with properties \code{count}, \code{fill},
-\code{pattern} and \code{show} (described in section "surface
-properties" below).}
+\item{surface}{A \code{\link{go_volume_surface}()} object or named list,
+with properties \code{count}, \code{fill}, \code{pattern} and
+\code{show} (see \code{\link{go_volume_surface}()}).}
 
 \item{text}{Sets the text elements associated with the vertices. If
 trace `hoverinfo` contains a "text" flag and "hovertext" is not set,
@@ -459,90 +461,27 @@ values could also be drawn using this trace.
 \code{add_volume()} creates one and adds it to a figure.
 
 
-Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-= list(width = 2))}. Each nested object's properties are described in a
-section of its own near the end of this page (after \emph{Value}), titled
-with its path: \emph{marker properties}, \emph{marker.line properties},
-.... Objects that appear in several places in the schema can also be
-created with a constructor of their own, and are documented on its page:
-\code{\link{go_font}()}, \code{\link{go_colorbar}()},
-\code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-\code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-\code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-\code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-\code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-\code{\link{go_gradient}()}, \code{\link{go_label}()},
-\code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-\code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-\code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-\code{\link{go_root}()}, \code{\link{go_slices}()},
-\code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-Every property is checked against the plotly.js schema when the object is
-created or modified (see \code{\link{plotly_obj-modify}}).
+Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+objects of their constructors: every object in the schema has one,
+documented on its own page, with exactly that object's properties. Most
+are named after their path: \code{go_scatter_marker()},
+\code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+Objects that appear in several places share one: \code{\link{go_font}()},
+\code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+\code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+\code{\link{go_domain}()}, \code{\link{go_pattern}()},
+\code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+\code{\link{go_bins}()}, \code{\link{go_caps}()},
+\code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+\code{\link{go_label}()}, \code{\link{go_leaf}()},
+\code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+\code{\link{go_pathbar}()}, \code{\link{go_project}()},
+\code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+\code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+\code{\link{go_unifiedhovertitle}()}. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+\code{\link{plotly_obj-modify}}).
 }
-\section{contour properties}{
-
-\describe{
-\item{\code{color}}{Sets the color of the contour lines. Color: a CSS
-color string or R color name.}
-\item{\code{show}}{Sets whether or not dynamic contours are shown on
-hover Logical.}
-\item{\code{width}}{Sets the width of the contour lines. Number in the
-interval [1, 16].}
-}
-}
-
-\section{lighting properties}{
-
-\describe{
-\item{\code{ambient}}{Ambient light increases overall color visibility
-but can wash out the image. Number in the interval [0, 1].}
-\item{\code{diffuse}}{Represents the extent that incident rays are
-reflected in a range of angles. Number in the interval [0, 1].}
-\item{\code{facenormalsepsilon}}{Epsilon for face normals calculation
-avoids math issues arising from degenerate geometry. Number in the
-interval [0, 1].}
-\item{\code{fresnel}}{Represents the reflectance as a dependency of the
-viewing angle; e.g. paper is reflective when viewing it from the edge of
-the paper (almost 90 degrees), causing shine. Number in the interval [0,
-5].}
-\item{\code{roughness}}{Alters specular reflection; the rougher the
-surface, the wider and less contrasty the shine. Number in the interval
-[0, 1].}
-\item{\code{specular}}{Represents the level that incident rays are
-reflected in a single direction, causing shine. Number in the interval
-[0, 2].}
-\item{\code{vertexnormalsepsilon}}{Epsilon for vertex normals calculation
-avoids math issues arising from degenerate geometry. Number in the
-interval [0, 1].}
-}
-}
-
-\section{surface properties}{
-
-\describe{
-\item{\code{count}}{Sets the number of iso-surfaces between minimum and
-maximum iso-values. By default this value is 2 meaning that only minimum
-and maximum surfaces would be drawn. Integer in the interval [1, Inf].}
-\item{\code{fill}}{Sets the fill ratio of the iso-surface. The default
-fill value of the surface is 1 meaning that they are entirely shaded. On
-the other hand Applying a `fill` ratio less than one would allow the
-creation of openings parallel to the edges. Number in the interval [0,
-1].}
-\item{\code{pattern}}{Sets the surface pattern of the iso-surface 3-D
-sections. The default pattern of the surface is `all` meaning that the
-rest of surface elements would be shaded. The check options (either 1 or
-2) could be used to draw half of the squares on the surface. Using
-various combinations of capital `A`, `B`, `C`, `D` and `E` may also be
-used to reduce the number of triangles on the iso-surfaces and creating
-other patterns of interest. Any combination of \code{"A"}, \code{"B"},
-\code{"C"}, \code{"D"}, \code{"E"} joined with \code{"+"}, or one of
-\code{"all"}, \code{"odd"}, \code{"even"}.}
-\item{\code{show}}{Hides/displays surfaces between minimum and maximum
-iso-values. Logical.}
-}
-}
-
 \examples{
 go_volume(x = 1:3, y = c(2, 1, 3))
 }

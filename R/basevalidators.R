@@ -893,6 +893,17 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
   if (inherits(v, entry$data_class)) {
     return(v)
   } # already validated
+  if (inherits(v, "plotly_obj") && !inherits(v, "plotly_shared")) {
+    # an object made for another place: only where the property has its name
+    # (a bar marker.line in a scatter marker.line, go_xaxis() in xaxis2)
+    from <- tryCatch(class_key(class(v)[[1L]]), error = function(e) NULL)
+    if (!is.null(from) && prop_name(from) != prop_name(key)) {
+      stop(
+        sprintf("A %s object can't be used for %s", from, key),
+        call. = FALSE
+      )
+    }
+  }
   if (inherits(v, "plotly_shared")) {
     # a go_font(), go_colorbar(), ... object: only where the schema has one
     type <- sub("^go_", "", class(v)[[1L]])
@@ -902,7 +913,11 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
           "A go_%s() object can't be used for %s, which is %s",
           type,
           key,
-          sub("^ *The '[^']*' property is ", "", describe_validator(entry, prop_name(key)))
+          sub(
+            "^ *The '[^']*' property is ",
+            "",
+            describe_validator(entry, prop_name(key))
+          )
         ),
         call. = FALSE
       )

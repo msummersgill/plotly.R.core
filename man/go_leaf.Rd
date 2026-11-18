@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_leaf}
 \alias{go_leaf}
-\title{Hierarchy leaves}
+\title{Leaf objects}
 \usage{
 go_leaf(arg = NULL, ..., opacity = NULL, skip_invalid = FALSE)
 }
@@ -23,9 +23,8 @@ instead of raising an error.}
 A \code{go_leaf} object (a named list).
 }
 \description{
-The appearance of the leaves (sectors with no children) of a sunburst or
-icicle trace. \code{go_leaf()} creates one; a named list with the same
-properties works too.
+Used for \code{leaf} in 2 places in the schema. \code{go_leaf()} creates
+one; a named list with the same properties works too.
 }
 \details{
 These objects appear in 2 places in the plotly.js schema (properties
@@ -33,8 +32,7 @@ named \code{leaf}), all with the same properties and rules.
 }
 \examples{
 go_figure() |>
-  add_sunburst(
-    labels = c("all", "a", "b"), parents = c("", "all", "all"),
-    leaf = go_leaf(opacity = 0.6)
+  add_icicle(
+    leaf = go_leaf(opacity = 0.5)
   )
 }

@@ -73,10 +73,10 @@ added to the trace. A \code{crosstalk::SharedData} works the same way,
 and links the trace to its crosstalk group (see
 \code{\link{highlight}()}).}
 
-\item{cells}{A named list with properties \code{align}, \code{fill},
-\code{font}, \code{format}, \code{height}, \code{line}, \code{prefix},
-\code{suffix} and \code{values} (described in section "cells
-properties" below).}
+\item{cells}{A \code{\link{go_table_cells}()} object or named list, with
+properties \code{align}, \code{fill}, \code{font}, \code{format},
+\code{height}, \code{line}, \code{prefix}, \code{suffix} and
+\code{values} (see \code{\link{go_table_cells}()}).}
 
 \item{columnorder}{Specifies the rendered order of the data columns; for
 example, a value `2` at position `0` means that column index `0` in
@@ -97,10 +97,10 @@ array: a vector, factor, Date/POSIXct vector, matrix or list.}
 properties \code{column}, \code{row}, \code{x} and \code{y} (see
 \code{\link{go_domain}()}).}
 
-\item{header}{A named list with properties \code{align}, \code{fill},
-\code{font}, \code{format}, \code{height}, \code{line}, \code{prefix},
-\code{suffix} and \code{values} (described in section "header
-properties" below).}
+\item{header}{A \code{\link{go_table_header}()} object or named list,
+with properties \code{align}, \code{fill}, \code{font}, \code{format},
+\code{height}, \code{line}, \code{prefix}, \code{suffix} and
+\code{values} (see \code{\link{go_table_header}()}).}
 
 \item{hoverinfo}{Determines what trace information appears on hover. If
 `none` or `skip` are set, no information is displayed upon hovering.
@@ -206,129 +206,27 @@ represented as a vector of column vectors.
 \code{add_table()} creates one and adds it to a figure.
 
 
-Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-= list(width = 2))}. Each nested object's properties are described in a
-section of its own near the end of this page (after \emph{Value}), titled
-with its path: \emph{marker properties}, \emph{marker.line properties},
-.... Objects that appear in several places in the schema can also be
-created with a constructor of their own, and are documented on its page:
-\code{\link{go_font}()}, \code{\link{go_colorbar}()},
-\code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-\code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-\code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-\code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-\code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-\code{\link{go_gradient}()}, \code{\link{go_label}()},
-\code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-\code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-\code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-\code{\link{go_root}()}, \code{\link{go_slices}()},
-\code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-Every property is checked against the plotly.js schema when the object is
-created or modified (see \code{\link{plotly_obj-modify}}).
+Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+objects of their constructors: every object in the schema has one,
+documented on its own page, with exactly that object's properties. Most
+are named after their path: \code{go_scatter_marker()},
+\code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+Objects that appear in several places share one: \code{\link{go_font}()},
+\code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+\code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+\code{\link{go_domain}()}, \code{\link{go_pattern}()},
+\code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+\code{\link{go_bins}()}, \code{\link{go_caps}()},
+\code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+\code{\link{go_label}()}, \code{\link{go_leaf}()},
+\code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+\code{\link{go_pathbar}()}, \code{\link{go_project}()},
+\code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+\code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+\code{\link{go_unifiedhovertitle}()}. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+\code{\link{plotly_obj-modify}}).
 }
-\section{cells properties}{
-
-\describe{
-\item{\code{align}}{Sets the horizontal alignment of the `text` within
-the box. Has an effect only if `text` spans two or more lines (i.e.
-`text` contains one or more <br> HTML tags) or if an explicit width is
-set to override the text width. One of \code{"left"}, \code{"center"},
-\code{"right"}, or a vector of these.}
-\item{\code{fill}}{A named list with properties \code{color} (described
-in section "cells.fill properties" below).}
-\item{\code{font}}{A \code{\link{go_font}()} object or named list, with
-properties \code{color}, \code{family}, \code{lineposition},
-\code{shadow}, \code{size}, \code{style}, \code{textcase}, \code{variant}
-and \code{weight} (see \code{\link{go_font}()}).}
-\item{\code{format}}{Sets the cell value formatting rule using d3
-formatting mini-languages which are very similar to those in Python. For
-numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. Data
-array: a vector, factor, Date/POSIXct vector, matrix or list.}
-\item{\code{height}}{The height of cells. Number.}
-\item{\code{line}}{A named list with properties \code{color} and
-\code{width} (described in section "cells.line properties" below).}
-\item{\code{prefix}}{Prefix for cell values. String, or a vector of
-these.}
-\item{\code{suffix}}{Suffix for cell values. String, or a vector of
-these.}
-\item{\code{values}}{Cell values. `values[m][n]` represents the value of
-the `n`th point in column `m`, therefore the `values[m]` vector length
-for all columns must be the same (longer vectors will be truncated). Each
-value must be a finite number or a string. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
-}
-}
-
-\section{cells.fill properties}{
-
-\describe{
-\item{\code{color}}{Sets the cell fill color. It accepts either a
-specific color or an array of colors or a 2D array of colors. Color: a
-CSS color string or R color name, or a vector of these.}
-}
-}
-
-\section{cells.line properties}{
-
-\describe{
-\item{\code{color}}{Color: a CSS color string or R color name, or a
-vector of these.}
-\item{\code{width}}{Number, or a vector of these.}
-}
-}
-
-\section{header properties}{
-
-\describe{
-\item{\code{align}}{Sets the horizontal alignment of the `text` within
-the box. Has an effect only if `text` spans two or more lines (i.e.
-`text` contains one or more <br> HTML tags) or if an explicit width is
-set to override the text width. One of \code{"left"}, \code{"center"},
-\code{"right"}, or a vector of these.}
-\item{\code{fill}}{A named list with properties \code{color} (described
-in section "header.fill properties" below).}
-\item{\code{font}}{A \code{\link{go_font}()} object or named list, with
-properties \code{color}, \code{family}, \code{lineposition},
-\code{shadow}, \code{size}, \code{style}, \code{textcase}, \code{variant}
-and \code{weight} (see \code{\link{go_font}()}).}
-\item{\code{format}}{Sets the cell value formatting rule using d3
-formatting mini-languages which are very similar to those in Python. For
-numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. Data
-array: a vector, factor, Date/POSIXct vector, matrix or list.}
-\item{\code{height}}{The height of cells. Number.}
-\item{\code{line}}{A named list with properties \code{color} and
-\code{width} (described in section "header.line properties" below).}
-\item{\code{prefix}}{Prefix for cell values. String, or a vector of
-these.}
-\item{\code{suffix}}{Suffix for cell values. String, or a vector of
-these.}
-\item{\code{values}}{Header cell values. `values[m][n]` represents the
-value of the `n`th point in column `m`, therefore the `values[m]` vector
-length for all columns must be the same (longer vectors will be
-truncated). Each value must be a finite number or a string. Data array: a
-vector, factor, Date/POSIXct vector, matrix or list.}
-}
-}
-
-\section{header.fill properties}{
-
-\describe{
-\item{\code{color}}{Sets the cell fill color. It accepts either a
-specific color or an array of colors or a 2D array of colors. Color: a
-CSS color string or R color name, or a vector of these.}
-}
-}
-
-\section{header.line properties}{
-
-\describe{
-\item{\code{color}}{Color: a CSS color string or R color name, or a
-vector of these.}
-\item{\code{width}}{Number, or a vector of these.}
-}
-}
-
 \examples{
 go_table()
 }

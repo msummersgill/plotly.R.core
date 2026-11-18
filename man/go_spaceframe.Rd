@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_spaceframe}
 \alias{go_spaceframe}
-\title{Isosurface space frames}
+\title{Spaceframe objects}
 \usage{
 go_spaceframe(arg = NULL, ..., fill = NULL, show = NULL, skip_invalid = FALSE)
 }
@@ -30,19 +30,17 @@ instead of raising an error.}
 A \code{go_spaceframe} object (a named list).
 }
 \description{
-The space frame of an isosurface or volume trace: the cells between its
-surfaces. \code{go_spaceframe()} creates one; a named list with the same
-properties works too.
+Used for \code{spaceframe} in 2 places in the schema.
+\code{go_spaceframe()} creates one; a named list with the same properties
+works too.
 }
 \details{
 These objects appear in 2 places in the plotly.js schema (properties
 named \code{spaceframe}), all with the same properties and rules.
 }
 \examples{
-g <- expand.grid(x = 1:5, y = 1:5, z = 1:5)
 go_figure() |>
   add_isosurface(
-    x = g$x, y = g$y, z = g$z, value = g$x + g$y + g$z, isomin = 6, isomax = 12,
-    spaceframe = go_spaceframe(show = TRUE, fill = 0.5)
+    spaceframe = go_spaceframe(show = TRUE)
   )
 }

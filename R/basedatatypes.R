@@ -22,6 +22,9 @@ plotly_object <- function(
   data = NULL
 ) {
   entry <- get_validator(key)
+  if (inherits(arg, "go_figure")) {
+    figure_as_arg(sys.call(-1L)[[1L]], key, entry)
+  }
   problems <- list()
   props <- if (is.null(arg)) {
     list()
@@ -94,6 +97,61 @@ plotly_object <- function(
     out <- add_trace_type(out, entry$trace_type)
   }
   out
+}
+
+# Figure functions for layout objects that have one.
+FIGURE_FUNCTIONS <- c(
+  "layout.annotation" = "add_annotation",
+  "layout.shape" = "add_shape",
+  "layout.image" = "add_layout_image",
+  "layout.selection" = "add_selection",
+  "layout.coloraxis" = "update_coloraxes",
+  "layout.geo" = "update_geos",
+  "layout.legend" = "update_legends",
+  "layout.map" = "update_maps",
+  "layout.polar" = "update_polars",
+  "layout.scene" = "update_scenes",
+  "layout.smith" = "update_smiths",
+  "layout.ternary" = "update_ternaries",
+  "layout.xaxis" = "update_xaxes",
+  "layout.yaxis" = "update_yaxes"
+)
+
+# A figure piped into a go_*() constructor (fig |> go_scatter(...)): the
+# constructor creates a standalone object, so point to what adds it to a figure.
+figure_as_arg <- function(fn, key, entry) {
+  fn <- if (is.character(fn)) fn else paste(deparse(fn), collapse = "")
+  fn <- sub("^.*::", "", fn)
+  how <- if (!is.null(entry$trace_type)) {
+    sprintf(
+      "To add a %s trace to a figure, use add_%s(fig, ...).",
+      entry$trace_type,
+      entry$trace_type
+    )
+  } else if (identical(key, "layout")) {
+    "To change a figure's layout, use update_layout(fig, ...)."
+  } else if (!is.null(key) && !is.na(FIGURE_FUNCTIONS[key])) {
+    sprintf("To add it to a figure, use %s(fig, ...).", FIGURE_FUNCTIONS[[key]])
+  } else if (!is.null(key) && grepl("^layout\\.[a-z]+$", key)) {
+    sprintf(
+      "To add it to a figure, use update_layout(fig, %s = %s(...)).",
+      prop_name(key),
+      fn
+    )
+  } else {
+    sprintf(
+      "Use it as a property of a trace or the layout instead, e.g. update_layout(fig, <property> = %s(...)).",
+      fn
+    )
+  }
+  stop(
+    sprintf(
+      "%s() creates an object, not a figure, and can't take a figure as its first argument. %s",
+      fn,
+      how
+    ),
+    call. = FALSE
+  )
 }
 
 # Evaluate one-sided formulas (also inside plain nested lists) in `data`.
@@ -190,6 +248,9 @@ shared_object <- function(
 ) {
   info <- shared_types()[[type]]
   fn <- paste0("go_", type)
+  if (inherits(arg, "go_figure")) {
+    figure_as_arg(fn, NULL, NULL)
+  }
   props <- if (is.null(arg)) {
     list()
   } else {
@@ -260,7 +321,12 @@ validate_shared <- function(props, type, skip_invalid = FALSE) {
   }
   # name the constructor rather than the schema key it was checked against
   e <- best$error
-  e$message <- gsub(best$key, paste0(fn, "()"), conditionMessage(e), fixed = TRUE)
+  e$message <- gsub(
+    best$key,
+    paste0(fn, "()"),
+    conditionMessage(e),
+    fixed = TRUE
+  )
   stop(e)
 }
 

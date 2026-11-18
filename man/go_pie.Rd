@@ -255,8 +255,9 @@ these.}
 \item{legendwidth}{Sets the width (in px or fraction) of the legend for
 this trace. Number in the interval [0, Inf].}
 
-\item{marker}{A named list with properties \code{colors}, \code{line}
-and \code{pattern} (described in section "marker properties" below).}
+\item{marker}{A \code{\link{go_pie_marker}()} object or named list, with
+properties \code{colors}, \code{line} and \code{pattern} (see
+\code{\link{go_pie_marker}()}).}
 
 \item{meta}{Assigns extra meta information associated with this trace
 that can be used in various text attributes. Attributes such as trace
@@ -347,9 +348,9 @@ variable referenced in a template is missing. If the boolean value
 'false' is passed in, the specifier with the missing variable will be
 displayed. Any value.}
 
-\item{title}{String (the title text), or a named list with properties
-\code{font}, \code{position} and \code{text} (described in section
-"title properties" below).}
+\item{title}{String (the title text), or a \code{\link{go_pie_title}()}
+object or named list, with properties \code{font}, \code{position} and
+\code{text} (see \code{\link{go_pie_title}()}).}
 
 \item{uid}{Assign an id to this trace, Use this to provide object
 constancy between traces during animations and transitions. String.}
@@ -406,70 +407,27 @@ sector labels are set in `labels`. The sector colors are set in
 \code{add_pie()} creates one and adds it to a figure.
 
 
-Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-= list(width = 2))}. Each nested object's properties are described in a
-section of its own near the end of this page (after \emph{Value}), titled
-with its path: \emph{marker properties}, \emph{marker.line properties},
-.... Objects that appear in several places in the schema can also be
-created with a constructor of their own, and are documented on its page:
-\code{\link{go_font}()}, \code{\link{go_colorbar}()},
-\code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-\code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-\code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-\code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-\code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-\code{\link{go_gradient}()}, \code{\link{go_label}()},
-\code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-\code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-\code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-\code{\link{go_root}()}, \code{\link{go_slices}()},
-\code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-Every property is checked against the plotly.js schema when the object is
-created or modified (see \code{\link{plotly_obj-modify}}).
+Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+objects of their constructors: every object in the schema has one,
+documented on its own page, with exactly that object's properties. Most
+are named after their path: \code{go_scatter_marker()},
+\code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+Objects that appear in several places share one: \code{\link{go_font}()},
+\code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+\code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+\code{\link{go_domain}()}, \code{\link{go_pattern}()},
+\code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+\code{\link{go_bins}()}, \code{\link{go_caps}()},
+\code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+\code{\link{go_label}()}, \code{\link{go_leaf}()},
+\code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+\code{\link{go_pathbar}()}, \code{\link{go_project}()},
+\code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+\code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+\code{\link{go_unifiedhovertitle}()}. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+\code{\link{plotly_obj-modify}}).
 }
-\section{marker properties}{
-
-\describe{
-\item{\code{colors}}{Sets the color of each sector. If not specified, the
-default trace color set is used to pick the sector colors. Data array: a
-vector, factor, Date/POSIXct vector, matrix or list.}
-\item{\code{line}}{A named list with properties \code{color} and
-\code{width} (described in section "marker.line properties" below).}
-\item{\code{pattern}}{Sets the pattern within the marker. A
-\code{\link{go_pattern}()} object or named list, with properties
-\code{bgcolor}, \code{fgcolor}, \code{fgopacity}, \code{fillmode},
-\code{path}, \code{shape}, \code{size} and \code{solidity} (see
-\code{\link{go_pattern}()}).}
-}
-}
-
-\section{marker.line properties}{
-
-\describe{
-\item{\code{color}}{Sets the color of the line enclosing each sector.
-Color: a CSS color string or R color name, or a vector of these.}
-\item{\code{width}}{Sets the width (in px) of the line enclosing each
-sector. Number in the interval [0, Inf], or a vector of these.}
-}
-}
-
-\section{title properties}{
-
-\describe{
-\item{\code{font}}{Sets the font used for `title`. A
-\code{\link{go_font}()} object or named list, with properties
-\code{color}, \code{family}, \code{lineposition}, \code{shadow},
-\code{size}, \code{style}, \code{textcase}, \code{variant} and
-\code{weight} (see \code{\link{go_font}()}).}
-\item{\code{position}}{Specifies the location of the `title`. One of
-\code{"top left"}, \code{"top center"}, \code{"top right"}, \code{"middle
-center"}, \code{"bottom left"}, \code{"bottom center"}, \code{"bottom
-right"}.}
-\item{\code{text}}{Sets the title of the chart. If it is empty, no title
-is displayed. String.}
-}
-}
-
 \examples{
 go_pie()
 }

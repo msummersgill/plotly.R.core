@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_gradient}
 \alias{go_gradient}
-\title{Marker gradients}
+\title{Gradient objects}
 \usage{
 go_gradient(arg = NULL, ..., color = NULL, type = NULL, skip_invalid = FALSE)
 }
@@ -27,9 +27,8 @@ instead of raising an error.}
 A \code{go_gradient} object (a named list).
 }
 \description{
-A color gradient filling scatter-type markers (\code{marker =
-list(gradient = ...)}). \code{go_gradient()} creates one; a named list
-with the same properties works too.
+Used for \code{gradient} in 6 places in the schema. \code{go_gradient()}
+creates one; a named list with the same properties works too.
 }
 \details{
 These objects appear in 6 places in the plotly.js schema (properties
@@ -38,7 +37,8 @@ named \code{gradient}), all with the same properties and rules.
 \examples{
 go_figure() |>
   add_scatter(
-    x = 1:3, y = c(2, 1, 3), mode = "markers",
-    marker = list(size = 30, gradient = go_gradient(type = "radial", color = "white"))
+    marker = go_scatter_marker(
+      gradient = go_gradient(color = "red")
+    )
   )
 }

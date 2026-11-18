@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_bins}
 \alias{go_bins}
-\title{Histogram bins}
+\title{Bins objects}
 \usage{
 go_bins(
   arg = NULL,
@@ -57,9 +57,9 @@ instead of raising an error.}
 A \code{go_bins} object (a named list).
 }
 \description{
-The bins of a histogram trace along x (\code{xbins}) or y (\code{ybins}):
-where they start and end, and their size. \code{go_bins()} creates one; a
-named list with the same properties works too.
+Used for \code{xbins}, \code{ybins} in 6 places in the schema.
+\code{go_bins()} creates one; a named list with the same properties works
+too.
 }
 \details{
 These objects appear in 6 places in the plotly.js schema (properties
@@ -68,5 +68,7 @@ rules.
 }
 \examples{
 go_figure() |>
-  add_histogram(x = rnorm(200), xbins = go_bins(start = -3, end = 3, size = 0.25))
+  add_histogram(
+    xbins = go_bins(size = 10)
+  )
 }

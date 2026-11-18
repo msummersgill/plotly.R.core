@@ -12,26 +12,26 @@
 #' \code{add_quiver()} creates one and adds it to a figure.
 #'
 #' @details
-#' Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-#' = list(width = 2))}. Each nested object's properties are described in a
-#' section of its own near the end of this page (after \emph{Value}), titled
-#' with its path: \emph{marker properties}, \emph{marker.line properties},
-#' .... Objects that appear in several places in the schema can also be
-#' created with a constructor of their own, and are documented on its page:
-#' \code{\link{go_font}()}, \code{\link{go_colorbar}()},
-#' \code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-#' \code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-#' \code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-#' \code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-#' \code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-#' \code{\link{go_gradient}()}, \code{\link{go_label}()},
-#' \code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-#' \code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-#' \code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-#' \code{\link{go_root}()}, \code{\link{go_slices}()},
-#' \code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-#' Every property is checked against the plotly.js schema when the object is
-#' created or modified (see \code{\link{plotly_obj-modify}}).
+#' Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+#' objects of their constructors: every object in the schema has one,
+#' documented on its own page, with exactly that object's properties. Most
+#' are named after their path: \code{go_scatter_marker()},
+#' \code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+#' Objects that appear in several places share one: \code{\link{go_font}()},
+#' \code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+#' \code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+#' \code{\link{go_domain}()}, \code{\link{go_pattern}()},
+#' \code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+#' \code{\link{go_bins}()}, \code{\link{go_caps}()},
+#' \code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+#' \code{\link{go_label}()}, \code{\link{go_leaf}()},
+#' \code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+#' \code{\link{go_pathbar}()}, \code{\link{go_project}()},
+#' \code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+#' \code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+#' \code{\link{go_unifiedhovertitle}()}. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}).
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
@@ -133,11 +133,11 @@
 #'   point density. Note: When `arrowref` is "paper" vectors are always
 #'   scaled and `lengthmode` "raw" is ignored. One of \code{"scaled"},
 #'   \code{"raw"}.
-#' @param marker A named list with properties \code{arrowsize},
-#'   \code{autocolorscale}, \code{cauto}, \code{cmax}, \code{cmid},
-#'   \code{cmin}, \code{color}, \code{coloraxis}, \code{colorbar},
-#'   \code{colorscale}, \code{line}, \code{reversescale} and
-#'   \code{showscale} (described in section "marker properties" below).
+#' @param marker A \code{\link{go_quiver_marker}()} object or named list,
+#'   with properties \code{arrowsize}, \code{autocolorscale}, \code{cauto},
+#'   \code{cmax}, \code{cmid}, \code{cmin}, \code{color}, \code{coloraxis},
+#'   \code{colorbar}, \code{colorscale}, \code{line}, \code{reversescale}
+#'   and \code{showscale} (see \code{\link{go_quiver_marker}()}).
 #' @param meta Assigns extra meta information associated with this trace
 #'   that can be used in various text attributes. Attributes such as trace
 #'   `name`, graph, axis and colorbar `title.text`, annotation `text`
@@ -156,8 +156,9 @@
 #'   to address several cells.
 #' @param secondary_y If \code{TRUE}, use the secondary y axis of the
 #'   subplot.
-#' @param selected A named list with properties \code{marker} and
-#'   \code{textfont} (described in section "selected properties" below).
+#' @param selected A \code{\link{go_quiver_selected}()} object or named
+#'   list, with properties \code{marker} and \code{textfont} (see
+#'   \code{\link{go_quiver_selected}()}).
 #' @param selectedpoints Array containing integer indices of selected
 #'   points. Has an effect only for traces that support selections. Note
 #'   that an empty array means an empty selection where the `unselected`
@@ -205,8 +206,9 @@
 #'   array, such that the same trace has a different index, you can still
 #'   preserve user-driven changes if you give each trace a `uid` that stays
 #'   with it as it moves. Any value.
-#' @param unselected A named list with properties \code{marker} and
-#'   \code{textfont} (described in section "unselected properties" below).
+#' @param unselected A \code{\link{go_quiver_unselected}()} object or named
+#'   list, with properties \code{marker} and \code{textfont} (see
+#'   \code{\link{go_quiver_unselected}()}).
 #' @param v Sets the y components of the vector arrows. Data array: a
 #'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param vhoverformat Sets the hover text formatting rule for `v` using d3
@@ -267,133 +269,6 @@
 #'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
 #'
-#' @section marker properties:
-#' \describe{
-#' \item{\code{arrowsize}}{Sets the size of the vector arrowhead relative to
-#' `marker.line.width`. A value of 1 (default) gives a head about 3x as wide
-#' as the line. Number in the interval [0.3, Inf].}
-#' \item{\code{autocolorscale}}{Determines whether the colorscale is a
-#' default palette (`autocolorscale: true`) or the palette determined by
-#' `marker.colorscale`. Has an effect only if in `marker.color` is set to a
-#' numerical array. In case `colorscale` is unspecified or `autocolorscale`
-#' is true, the default palette will be chosen according to whether numbers
-#' in the `color` array are all positive, all negative or mixed. Logical.}
-#' \item{\code{cauto}}{Determines whether or not the color domain is
-#' computed with respect to the input data (here in `marker.color`) or the
-#' bounds set in `marker.cmin` and `marker.cmax` Has an effect only if in
-#' `marker.color` is set to a numerical array. Defaults to `false` when
-#' `marker.cmin` and `marker.cmax` are set by the user. Logical.}
-#' \item{\code{cmax}}{Sets the upper bound of the color domain. Has an
-#' effect only if in `marker.color` is set to a numerical array. Value
-#' should have the same units as in `marker.color` and if set, `marker.cmin`
-#' must be set as well. Number.}
-#' \item{\code{cmid}}{Sets the mid-point of the color domain by scaling
-#' `marker.cmin` and/or `marker.cmax` to be equidistant to this point. Has
-#' an effect only if in `marker.color` is set to a numerical array. Value
-#' should have the same units as in `marker.color`. Has no effect when
-#' `marker.cauto` is `false`. Number.}
-#' \item{\code{cmin}}{Sets the lower bound of the color domain. Has an
-#' effect only if in `marker.color` is set to a numerical array. Value
-#' should have the same units as in `marker.color` and if set, `marker.cmax`
-#' must be set as well. Number.}
-#' \item{\code{color}}{Sets the marker color. It accepts either a specific
-#' color or an array of numbers that are mapped to the colorscale relative
-#' to the max and min values of the array or relative to `marker.cmin` and
-#' `marker.cmax` if set. Color: a CSS color string or R color name, or a
-#' number mapped to a color by \code{quiver.marker.colorscale}, or a vector
-#' of these.}
-#' \item{\code{coloraxis}}{Sets a reference to a shared color axis.
-#' References to these shared color axes are "coloraxis", "coloraxis2",
-#' "coloraxis3", etc. Settings for these shared color axes are set in the
-#' layout, under `layout.coloraxis`, `layout.coloraxis2`, etc. Note that
-#' multiple color scales can be linked to the same color axis. Subplot id:
-#' \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
-#' \item{\code{colorbar}}{A \code{\link{go_colorbar}()} object or named
-#' list, with properties \code{bgcolor}, \code{bordercolor},
-#' \code{borderwidth}, \code{dtick}, \code{exponentformat},
-#' \code{labelalias}, \code{len}, \code{lenmode}, \code{minexponent},
-#' \code{nticks}, \code{orientation}, \code{outlinecolor} and 34 more (see
-#' \code{\link{go_colorbar}()}).}
-#' \item{\code{colorscale}}{Sets the colorscale. Has an effect only if in
-#' `marker.color` is set to a numerical array. The colorscale must be an
-#' array containing arrays mapping a normalized value to an rgb, rgba, hex,
-#' hsl, hsla, hwb, or named color string. At minimum, a mapping for the
-#' lowest (0) and highest (1) values are required. For example, `[[0,
-#' 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
-#' colorscale in color space, use `marker.cmin` and `marker.cmax`.
-#' Alternatively, `colorscale` may be a palette name string of the following
-#' list:
-#' Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-#' Colorscale: a vector of colors, a two-column data.frame of (value,
-#' color), or the name of a sequential, diverging or cyclical scale in
-#' \code{\link{px_colors}()} (append \code{"_r"} to reverse).}
-#' \item{\code{line}}{A named list with properties \code{dash} and
-#' \code{width} (described in section "marker.line properties" below).}
-#' \item{\code{reversescale}}{Reverses the color mapping if true. Has an
-#' effect only if in `marker.color` is set to a numerical array. If true,
-#' `marker.cmin` will correspond to the last color in the array and
-#' `marker.cmax` will correspond to the first color. Logical.}
-#' \item{\code{showscale}}{Determines whether or not a colorbar is displayed
-#' for this trace. Has an effect only if in `marker.color` is set to a
-#' numerical array. Logical.}
-#' }
-#'
-#' @section marker.line properties:
-#' \describe{
-#' \item{\code{dash}}{Sets the dash style of lines. Set to a dash type
-#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
-#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
-#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
-#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
-#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
-#' \item{\code{width}}{Sets the width (in px) of the vector arrow lines.
-#' Number in the interval [0, Inf].}
-#' }
-#'
-#' @section selected properties:
-#' \describe{
-#' \item{\code{marker}}{A named list with properties \code{color} and
-#' \code{line} (described in section "selected.marker properties" below).}
-#' \item{\code{textfont}}{A \code{\link{go_font}()} object or named list,
-#' with properties \code{color} (see \code{\link{go_font}()}).}
-#' }
-#'
-#' @section selected.marker properties:
-#' \describe{
-#' \item{\code{color}}{Sets the marker color of selected points. Color: a
-#' CSS color string or R color name.}
-#' \item{\code{line}}{A named list with properties \code{width} (described
-#' in section "selected.marker.line properties" below).}
-#' }
-#'
-#' @section selected.marker.line properties:
-#' \describe{
-#' \item{\code{width}}{Sets the line width of selected points. Number in the
-#' interval [0, Inf].}
-#' }
-#'
-#' @section unselected properties:
-#' \describe{
-#' \item{\code{marker}}{A named list with properties \code{color} and
-#' \code{line} (described in section "unselected.marker properties" below).}
-#' \item{\code{textfont}}{A \code{\link{go_font}()} object or named list,
-#' with properties \code{color} (see \code{\link{go_font}()}).}
-#' }
-#'
-#' @section unselected.marker properties:
-#' \describe{
-#' \item{\code{color}}{Sets the marker color of unselected points, applied
-#' only when a selection exists. Color: a CSS color string or R color name.}
-#' \item{\code{line}}{A named list with properties \code{width} (described
-#' in section "unselected.marker.line properties" below).}
-#' }
-#'
-#' @section unselected.marker.line properties:
-#' \describe{
-#' \item{\code{width}}{Sets the line width of unselected points, applied
-#' only when a selection exists. Number in the interval [0, Inf].}
-#' }
-#'
 #' @noMd
 #' @export
 #' @examples
@@ -412,5 +287,377 @@ go_quiver <- function(
     y0 = NULL, yaxis = NULL, yhoverformat = NULL, skip_invalid = FALSE
 ) {
   plotly_object("quiver", arg, environment(), list(...), skip_invalid)
+}
+
+#' Quiver marker objects
+#'
+#' The object for the \code{marker} of a quiver trace
+#' (\code{\link{go_quiver}()}). \code{go_quiver_marker()} creates one, with
+#' exactly its properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param arrowsize Sets the size of the vector arrowhead relative to
+#'   `marker.line.width`. A value of 1 (default) gives a head about 3x as
+#'   wide as the line. Number in the interval [0.3, Inf].
+#' @param autocolorscale Determines whether the colorscale is a default
+#'   palette (`autocolorscale: true`) or the palette determined by
+#'   `marker.colorscale`. Has an effect only if in `marker.color` is set to
+#'   a numerical array. In case `colorscale` is unspecified or
+#'   `autocolorscale` is true, the default palette will be chosen according
+#'   to whether numbers in the `color` array are all positive, all negative
+#'   or mixed. Logical.
+#' @param cauto Determines whether or not the color domain is computed with
+#'   respect to the input data (here in `marker.color`) or the bounds set
+#'   in `marker.cmin` and `marker.cmax` Has an effect only if in
+#'   `marker.color` is set to a numerical array. Defaults to `false` when
+#'   `marker.cmin` and `marker.cmax` are set by the user. Logical.
+#' @param cmax Sets the upper bound of the color domain. Has an effect only
+#'   if in `marker.color` is set to a numerical array. Value should have
+#'   the same units as in `marker.color` and if set, `marker.cmin` must be
+#'   set as well. Number.
+#' @param cmid Sets the mid-point of the color domain by scaling
+#'   `marker.cmin` and/or `marker.cmax` to be equidistant to this point.
+#'   Has an effect only if in `marker.color` is set to a numerical array.
+#'   Value should have the same units as in `marker.color`. Has no effect
+#'   when `marker.cauto` is `false`. Number.
+#' @param cmin Sets the lower bound of the color domain. Has an effect only
+#'   if in `marker.color` is set to a numerical array. Value should have
+#'   the same units as in `marker.color` and if set, `marker.cmax` must be
+#'   set as well. Number.
+#' @param color Sets the marker color. It accepts either a specific color
+#'   or an array of numbers that are mapped to the colorscale relative to
+#'   the max and min values of the array or relative to `marker.cmin` and
+#'   `marker.cmax` if set. Color: a CSS color string or R color name, or a
+#'   number mapped to a color by \code{quiver.marker.colorscale}, or a
+#'   vector of these.
+#' @param coloraxis Sets a reference to a shared color axis. References to
+#'   these shared color axes are "coloraxis", "coloraxis2", "coloraxis3",
+#'   etc. Settings for these shared color axes are set in the layout, under
+#'   `layout.coloraxis`, `layout.coloraxis2`, etc. Note that multiple color
+#'   scales can be linked to the same color axis. Subplot id:
+#'   \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....
+#' @param colorbar A \code{\link{go_colorbar}()} object or named list, with
+#'   properties \code{bgcolor}, \code{bordercolor}, \code{borderwidth},
+#'   \code{dtick}, \code{exponentformat}, \code{labelalias}, \code{len},
+#'   \code{lenmode}, \code{minexponent}, \code{nticks}, \code{orientation},
+#'   \code{outlinecolor} and 34 more (see \code{\link{go_colorbar}()}).
+#' @param colorscale Sets the colorscale. Has an effect only if in
+#'   `marker.color` is set to a numerical array. The colorscale must be an
+#'   array containing arrays mapping a normalized value to an rgb, rgba,
+#'   hex, hsl, hsla, hwb, or named color string. At minimum, a mapping for
+#'   the lowest (0) and highest (1) values are required. For example, `[[0,
+#'   'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
+#'   colorscale in color space, use `marker.cmin` and `marker.cmax`.
+#'   Alternatively, `colorscale` may be a palette name string of the
+#'   following list:
+#'   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
+#'   Colorscale: a vector of colors, a two-column data.frame of (value,
+#'   color), or the name of a sequential, diverging or cyclical scale in
+#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
+#' @param line A \code{\link{go_quiver_marker_line}()} object or named
+#'   list, with properties \code{dash} and \code{width} (see
+#'   \code{\link{go_quiver_marker_line}()}).
+#' @param reversescale Reverses the color mapping if true. Has an effect
+#'   only if in `marker.color` is set to a numerical array. If true,
+#'   `marker.cmin` will correspond to the last color in the array and
+#'   `marker.cmax` will correspond to the first color. Logical.
+#' @param showscale Determines whether or not a colorbar is displayed for
+#'   this trace. Has an effect only if in `marker.color` is set to a
+#'   numerical array. Logical.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_quiver_marker} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_quiver(
+#'     marker = go_quiver_marker(color = "red")
+#'   )
+go_quiver_marker <- function(
+    arg = NULL, ..., arrowsize = NULL, autocolorscale = NULL, cauto = NULL,
+    cmax = NULL, cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
+    colorbar = NULL, colorscale = NULL, line = NULL, reversescale = NULL,
+    showscale = NULL, skip_invalid = FALSE
+) {
+  plotly_object("quiver.marker", arg, environment(), list(...), skip_invalid)
+}
+
+#' Quiver marker line objects
+#'
+#' The object for the \code{marker.line} of a quiver trace
+#' (\code{\link{go_quiver_marker}()}). \code{go_quiver_marker_line()}
+#' creates one, with exactly its properties; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param dash Sets the dash style of lines. Set to a dash type string
+#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
+#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
+#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
+#'   \code{"longdashdot"}, or a string matching
+#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
+#' @param width Sets the width (in px) of the vector arrow lines. Number in
+#'   the interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_quiver_marker_line} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_quiver(
+#'     marker = go_quiver_marker(
+#'       line = go_quiver_marker_line(width = 2)
+#'     )
+#'   )
+go_quiver_marker_line <- function(
+    arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE
+) {
+  plotly_object("quiver.marker.line", arg, environment(), list(...), skip_invalid)
+}
+
+#' Quiver selected objects
+#'
+#' The object for the \code{selected} of a quiver trace
+#' (\code{\link{go_quiver}()}). \code{go_quiver_selected()} creates one,
+#' with exactly its properties; a named list with the same properties works
+#' too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param marker A \code{\link{go_quiver_selected_marker}()} object or
+#'   named list, with properties \code{color} and \code{line} (see
+#'   \code{\link{go_quiver_selected_marker}()}).
+#' @param textfont A \code{\link{go_font}()} object or named list, with
+#'   properties \code{color} (see \code{\link{go_font}()}).
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_quiver_selected} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_quiver(
+#'     selected = go_quiver_selected()
+#'   )
+go_quiver_selected <- function(
+    arg = NULL, ..., marker = NULL, textfont = NULL, skip_invalid = FALSE
+) {
+  plotly_object("quiver.selected", arg, environment(), list(...), skip_invalid)
+}
+
+#' Quiver selected marker objects
+#'
+#' The object for the \code{selected.marker} of a quiver trace
+#' (\code{\link{go_quiver_selected}()}). \code{go_quiver_selected_marker()}
+#' creates one, with exactly its properties; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the marker color of selected points. Color: a CSS
+#'   color string or R color name.
+#' @param line A \code{\link{go_quiver_selected_marker_line}()} object or
+#'   named list, with properties \code{width} (see
+#'   \code{\link{go_quiver_selected_marker_line}()}).
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_quiver_selected_marker} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_quiver(
+#'     selected = go_quiver_selected(
+#'       marker = go_quiver_selected_marker(color = "red")
+#'     )
+#'   )
+go_quiver_selected_marker <- function(
+    arg = NULL, ..., color = NULL, line = NULL, skip_invalid = FALSE
+) {
+  plotly_object("quiver.selected.marker", arg, environment(), list(...), skip_invalid)
+}
+
+#' Quiver selected marker line objects
+#'
+#' The object for the \code{selected.marker.line} of a quiver trace
+#' (\code{\link{go_quiver_selected_marker}()}).
+#' \code{go_quiver_selected_marker_line()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param width Sets the line width of selected points. Number in the
+#'   interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_quiver_selected_marker_line} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_quiver(
+#'     selected = go_quiver_selected(
+#'       marker = go_quiver_selected_marker(
+#'         line = go_quiver_selected_marker_line(width = 2)
+#'       )
+#'     )
+#'   )
+go_quiver_selected_marker_line <- function(
+    arg = NULL, ..., width = NULL, skip_invalid = FALSE
+) {
+  plotly_object("quiver.selected.marker.line", arg, environment(), list(...), skip_invalid)
+}
+
+#' Quiver unselected objects
+#'
+#' The object for the \code{unselected} of a quiver trace
+#' (\code{\link{go_quiver}()}). \code{go_quiver_unselected()} creates one,
+#' with exactly its properties; a named list with the same properties works
+#' too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param marker A \code{\link{go_quiver_unselected_marker}()} object or
+#'   named list, with properties \code{color} and \code{line} (see
+#'   \code{\link{go_quiver_unselected_marker}()}).
+#' @param textfont A \code{\link{go_font}()} object or named list, with
+#'   properties \code{color} (see \code{\link{go_font}()}).
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_quiver_unselected} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_quiver(
+#'     unselected = go_quiver_unselected()
+#'   )
+go_quiver_unselected <- function(
+    arg = NULL, ..., marker = NULL, textfont = NULL, skip_invalid = FALSE
+) {
+  plotly_object("quiver.unselected", arg, environment(), list(...), skip_invalid)
+}
+
+#' Quiver unselected marker objects
+#'
+#' The object for the \code{unselected.marker} of a quiver trace
+#' (\code{\link{go_quiver_unselected}()}).
+#' \code{go_quiver_unselected_marker()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the marker color of unselected points, applied only
+#'   when a selection exists. Color: a CSS color string or R color name.
+#' @param line A \code{\link{go_quiver_unselected_marker_line}()} object or
+#'   named list, with properties \code{width} (see
+#'   \code{\link{go_quiver_unselected_marker_line}()}).
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_quiver_unselected_marker} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_quiver(
+#'     unselected = go_quiver_unselected(
+#'       marker = go_quiver_unselected_marker(color = "red")
+#'     )
+#'   )
+go_quiver_unselected_marker <- function(
+    arg = NULL, ..., color = NULL, line = NULL, skip_invalid = FALSE
+) {
+  plotly_object("quiver.unselected.marker", arg, environment(), list(...), skip_invalid)
+}
+
+#' Quiver unselected marker line objects
+#'
+#' The object for the \code{unselected.marker.line} of a quiver trace
+#' (\code{\link{go_quiver_unselected_marker}()}).
+#' \code{go_quiver_unselected_marker_line()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param width Sets the line width of unselected points, applied only when
+#'   a selection exists. Number in the interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_quiver_unselected_marker_line} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_quiver(
+#'     unselected = go_quiver_unselected(
+#'       marker = go_quiver_unselected_marker(
+#'         line = go_quiver_unselected_marker_line(width = 2)
+#'       )
+#'     )
+#'   )
+go_quiver_unselected_marker_line <- function(
+    arg = NULL, ..., width = NULL, skip_invalid = FALSE
+) {
+  plotly_object("quiver.unselected.marker.line", arg, environment(), list(...), skip_invalid)
 }
 

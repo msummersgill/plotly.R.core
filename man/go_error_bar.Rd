@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_error_bar}
 \alias{go_error_bar}
-\title{Error bars}
+\title{Error bar objects}
 \usage{
 go_error_bar(
   arg = NULL,
@@ -89,9 +89,9 @@ instead of raising an error.}
 A \code{go_error_bar} object (a named list).
 }
 \description{
-Error bars of a trace's points, for its \code{error_x}, \code{error_y} or
-(3D traces) \code{error_z}. \code{go_error_bar()} creates one; a named
-list with the same properties works too.
+Used for \code{error_x}, \code{error_y}, \code{error_z} in 11 places in
+the schema. \code{go_error_bar()} creates one; a named list with the same
+properties works too.
 }
 \details{
 These objects appear in 11 places in the plotly.js schema (properties
@@ -103,8 +103,7 @@ checked again against that context's rules.
 }
 \examples{
 go_figure() |>
-  add_scatter(
-    x = 1:3, y = c(2, 1, 3), mode = "markers",
-    error_y = go_error_bar(type = "data", array = c(0.2, 0.1, 0.3), color = "gray")
+  add_bar(
+    error_y = go_error_bar(color = "red")
   )
 }

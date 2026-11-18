@@ -243,11 +243,12 @@ Set `level` to `''` to start from the root node in the hierarchy. Must
 be an "id" if `ids` is filled in, otherwise plotly attempts to find a
 matching item in `labels`. Any value.}
 
-\item{marker}{A named list with properties \code{autocolorscale},
-\code{cauto}, \code{cmax}, \code{cmid}, \code{cmin}, \code{coloraxis},
-\code{colorbar}, \code{colors}, \code{colorscale}, \code{line},
-\code{pattern}, \code{reversescale} and \code{showscale} (described in
-section "marker properties" below).}
+\item{marker}{A \code{\link{go_sunburst_marker}()} object or named list,
+with properties \code{autocolorscale}, \code{cauto}, \code{cmax},
+\code{cmid}, \code{cmin}, \code{coloraxis}, \code{colorbar},
+\code{colors}, \code{colorscale}, \code{line}, \code{pattern},
+\code{reversescale} and \code{showscale} (see
+\code{\link{go_sunburst_marker}()}).}
 
 \item{maxdepth}{Sets the number of rendered sectors from any given
 `level`. Set `maxdepth` to "-1" to render all the levels in the
@@ -396,110 +397,27 @@ and in "parents".
 \code{add_sunburst()} creates one and adds it to a figure.
 
 
-Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-= list(width = 2))}. Each nested object's properties are described in a
-section of its own near the end of this page (after \emph{Value}), titled
-with its path: \emph{marker properties}, \emph{marker.line properties},
-.... Objects that appear in several places in the schema can also be
-created with a constructor of their own, and are documented on its page:
-\code{\link{go_font}()}, \code{\link{go_colorbar}()},
-\code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-\code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-\code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-\code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-\code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-\code{\link{go_gradient}()}, \code{\link{go_label}()},
-\code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-\code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-\code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-\code{\link{go_root}()}, \code{\link{go_slices}()},
-\code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-Every property is checked against the plotly.js schema when the object is
-created or modified (see \code{\link{plotly_obj-modify}}).
+Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+objects of their constructors: every object in the schema has one,
+documented on its own page, with exactly that object's properties. Most
+are named after their path: \code{go_scatter_marker()},
+\code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+Objects that appear in several places share one: \code{\link{go_font}()},
+\code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+\code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+\code{\link{go_domain}()}, \code{\link{go_pattern}()},
+\code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+\code{\link{go_bins}()}, \code{\link{go_caps}()},
+\code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+\code{\link{go_label}()}, \code{\link{go_leaf}()},
+\code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+\code{\link{go_pathbar}()}, \code{\link{go_project}()},
+\code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+\code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+\code{\link{go_unifiedhovertitle}()}. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+\code{\link{plotly_obj-modify}}).
 }
-\section{marker properties}{
-
-\describe{
-\item{\code{autocolorscale}}{Determines whether the colorscale is a
-default palette (`autocolorscale: true`) or the palette determined by
-`marker.colorscale`. Has an effect only if colors is set to a numerical
-array. In case `colorscale` is unspecified or `autocolorscale` is true,
-the default palette will be chosen according to whether numbers in the
-`color` array are all positive, all negative or mixed. Logical.}
-\item{\code{cauto}}{Determines whether or not the color domain is
-computed with respect to the input data (here colors) or the bounds set
-in `marker.cmin` and `marker.cmax` Has an effect only if colors is set to
-a numerical array. Defaults to `false` when `marker.cmin` and
-`marker.cmax` are set by the user. Logical.}
-\item{\code{cmax}}{Sets the upper bound of the color domain. Has an
-effect only if colors is set to a numerical array. Value should have the
-same units as colors and if set, `marker.cmin` must be set as well.
-Number.}
-\item{\code{cmid}}{Sets the mid-point of the color domain by scaling
-`marker.cmin` and/or `marker.cmax` to be equidistant to this point. Has
-an effect only if colors is set to a numerical array. Value should have
-the same units as colors. Has no effect when `marker.cauto` is `false`.
-Number.}
-\item{\code{cmin}}{Sets the lower bound of the color domain. Has an
-effect only if colors is set to a numerical array. Value should have the
-same units as colors and if set, `marker.cmax` must be set as well.
-Number.}
-\item{\code{coloraxis}}{Sets a reference to a shared color axis.
-References to these shared color axes are "coloraxis", "coloraxis2",
-"coloraxis3", etc. Settings for these shared color axes are set in the
-layout, under `layout.coloraxis`, `layout.coloraxis2`, etc. Note that
-multiple color scales can be linked to the same color axis. Subplot id:
-\code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
-\item{\code{colorbar}}{A \code{\link{go_colorbar}()} object or named
-list, with properties \code{bgcolor}, \code{bordercolor},
-\code{borderwidth}, \code{dtick}, \code{exponentformat},
-\code{labelalias}, \code{len}, \code{lenmode}, \code{minexponent},
-\code{nticks}, \code{orientation}, \code{outlinecolor} and 34 more (see
-\code{\link{go_colorbar}()}).}
-\item{\code{colors}}{Sets the color of each sector of this trace. If not
-specified, the default trace color set is used to pick the sector colors.
-Data array: a vector, factor, Date/POSIXct vector, matrix or list.}
-\item{\code{colorscale}}{Sets the colorscale. Has an effect only if
-colors is set to a numerical array. The colorscale must be an array
-containing arrays mapping a normalized value to an rgb, rgba, hex, hsl,
-hsla, hwb, or named color string. At minimum, a mapping for the lowest
-(0) and highest (1) values are required. For example, `[[0,
-'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
-colorscale in color space, use `marker.cmin` and `marker.cmax`.
-Alternatively, `colorscale` may be a palette name string of the following
-list:
-Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-Colorscale: a vector of colors, a two-column data.frame of (value,
-color), or the name of a sequential, diverging or cyclical scale in
-\code{\link{px_colors}()} (append \code{"_r"} to reverse).}
-\item{\code{line}}{A named list with properties \code{color} and
-\code{width} (described in section "marker.line properties" below).}
-\item{\code{pattern}}{Sets the pattern within the marker. A
-\code{\link{go_pattern}()} object or named list, with properties
-\code{bgcolor}, \code{fgcolor}, \code{fgopacity}, \code{fillmode},
-\code{path}, \code{shape}, \code{size} and \code{solidity} (see
-\code{\link{go_pattern}()}).}
-\item{\code{reversescale}}{Reverses the color mapping if true. Has an
-effect only if colors is set to a numerical array. If true, `marker.cmin`
-will correspond to the last color in the array and `marker.cmax` will
-correspond to the first color. Logical.}
-\item{\code{showscale}}{Determines whether or not a colorbar is displayed
-for this trace. Has an effect only if colors is set to a numerical array.
-Logical.}
-}
-}
-
-\section{marker.line properties}{
-
-\describe{
-\item{\code{color}}{Sets the color of the line enclosing each sector.
-Defaults to the `paper_bgcolor` value. Color: a CSS color string or R
-color name, or a vector of these.}
-\item{\code{width}}{Sets the width (in px) of the line enclosing each
-sector. Number in the interval [0, Inf], or a vector of these.}
-}
-}
-
 \examples{
 go_sunburst()
 }

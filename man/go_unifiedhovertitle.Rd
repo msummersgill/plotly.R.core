@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_unifiedhovertitle}
 \alias{go_unifiedhovertitle}
-\title{Unified hover titles}
+\title{Unifiedhovertitle objects}
 \usage{
 go_unifiedhovertitle(arg = NULL, ..., text = NULL, skip_invalid = FALSE)
 }
@@ -34,9 +34,9 @@ instead of raising an error.}
 A \code{go_unifiedhovertitle} object (a named list).
 }
 \description{
-The title of the unified hover label of an x or y axis (\code{hovermode =
-"x unified"}). \code{go_unifiedhovertitle()} creates one; a named list
-with the same properties works too.
+Used for \code{unifiedhovertitle} in 2 places in the schema.
+\code{go_unifiedhovertitle()} creates one; a named list with the same
+properties works too.
 }
 \details{
 These objects appear in 2 places in the plotly.js schema (properties
@@ -44,8 +44,9 @@ named \code{unifiedhovertitle}), all with the same properties and rules.
 }
 \examples{
 go_figure() |>
-  add_scatter(x = 1:3, y = c(2, 1, 3)) |>
-  add_scatter(x = 1:3, y = c(1, 3, 2)) |>
-  update_layout(hovermode = "x unified") |>
-  update_xaxes(unifiedhovertitle = go_unifiedhovertitle(text = "x = \%{x}"))
+  update_layout(
+    xaxis = go_xaxis(
+      unifiedhovertitle = go_unifiedhovertitle(text = "title")
+    )
+  )
 }

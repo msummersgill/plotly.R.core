@@ -15,26 +15,26 @@
 #' \code{add_streamtube()} creates one and adds it to a figure.
 #'
 #' @details
-#' Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-#' = list(width = 2))}. Each nested object's properties are described in a
-#' section of its own near the end of this page (after \emph{Value}), titled
-#' with its path: \emph{marker properties}, \emph{marker.line properties},
-#' .... Objects that appear in several places in the schema can also be
-#' created with a constructor of their own, and are documented on its page:
-#' \code{\link{go_font}()}, \code{\link{go_colorbar}()},
-#' \code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-#' \code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-#' \code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-#' \code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-#' \code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-#' \code{\link{go_gradient}()}, \code{\link{go_label}()},
-#' \code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-#' \code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-#' \code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-#' \code{\link{go_root}()}, \code{\link{go_slices}()},
-#' \code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-#' Every property is checked against the plotly.js schema when the object is
-#' created or modified (see \code{\link{plotly_obj-modify}}).
+#' Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+#' objects of their constructors: every object in the schema has one,
+#' documented on its own page, with exactly that object's properties. Most
+#' are named after their path: \code{go_scatter_marker()},
+#' \code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+#' Objects that appear in several places share one: \code{\link{go_font}()},
+#' \code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+#' \code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+#' \code{\link{go_domain}()}, \code{\link{go_pattern}()},
+#' \code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+#' \code{\link{go_bins}()}, \code{\link{go_caps}()},
+#' \code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+#' \code{\link{go_label}()}, \code{\link{go_leaf}()},
+#' \code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+#' \code{\link{go_pathbar}()}, \code{\link{go_project}()},
+#' \code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+#' \code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+#' \code{\link{go_unifiedhovertitle}()}. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}).
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
@@ -164,10 +164,11 @@
 #'   to their order in data and layout. Number.
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param lighting A named list with properties \code{ambient},
-#'   \code{diffuse}, \code{facenormalsepsilon}, \code{fresnel},
-#'   \code{roughness}, \code{specular} and \code{vertexnormalsepsilon}
-#'   (described in section "lighting properties" below).
+#' @param lighting A \code{\link{go_streamtube_lighting}()} object or named
+#'   list, with properties \code{ambient}, \code{diffuse},
+#'   \code{facenormalsepsilon}, \code{fresnel}, \code{roughness},
+#'   \code{specular} and \code{vertexnormalsepsilon} (see
+#'   \code{\link{go_streamtube_lighting}()}).
 #' @param lightposition A \code{\link{go_lightposition}()} object or named
 #'   list, with properties \code{x}, \code{y} and \code{z} (see
 #'   \code{\link{go_lightposition}()}).
@@ -208,8 +209,9 @@
 #' @param sizeref The scaling factor for the streamtubes. The default is 1,
 #'   which avoids two max divergence tubes from touching at adjacent
 #'   starting positions. Number in the interval [0, Inf].
-#' @param starts A named list with properties \code{x}, \code{y} and
-#'   \code{z} (described in section "starts properties" below).
+#' @param starts A \code{\link{go_streamtube_starts}()} object or named
+#'   list, with properties \code{x}, \code{y} and \code{z} (see
+#'   \code{\link{go_streamtube_starts}()}).
 #' @param text Sets a text element associated with this trace. If trace
 #'   `hoverinfo` contains a "text" flag, this text element will be seen in
 #'   all hover labels. Note that streamtube traces do not support array
@@ -300,43 +302,6 @@
 #'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
 #'
-#' @section lighting properties:
-#' \describe{
-#' \item{\code{ambient}}{Ambient light increases overall color visibility
-#' but can wash out the image. Number in the interval [0, 1].}
-#' \item{\code{diffuse}}{Represents the extent that incident rays are
-#' reflected in a range of angles. Number in the interval [0, 1].}
-#' \item{\code{facenormalsepsilon}}{Epsilon for face normals calculation
-#' avoids math issues arising from degenerate geometry. Number in the
-#' interval [0, 1].}
-#' \item{\code{fresnel}}{Represents the reflectance as a dependency of the
-#' viewing angle; e.g. paper is reflective when viewing it from the edge of
-#' the paper (almost 90 degrees), causing shine. Number in the interval [0,
-#' 5].}
-#' \item{\code{roughness}}{Alters specular reflection; the rougher the
-#' surface, the wider and less contrasty the shine. Number in the interval
-#' [0, 1].}
-#' \item{\code{specular}}{Represents the level that incident rays are
-#' reflected in a single direction, causing shine. Number in the interval
-#' [0, 2].}
-#' \item{\code{vertexnormalsepsilon}}{Epsilon for vertex normals calculation
-#' avoids math issues arising from degenerate geometry. Number in the
-#' interval [0, 1].}
-#' }
-#'
-#' @section starts properties:
-#' \describe{
-#' \item{\code{x}}{Sets the x components of the starting position of the
-#' streamtubes Data array: a vector, factor, Date/POSIXct vector, matrix or
-#' list.}
-#' \item{\code{y}}{Sets the y components of the starting position of the
-#' streamtubes Data array: a vector, factor, Date/POSIXct vector, matrix or
-#' list.}
-#' \item{\code{z}}{Sets the z components of the starting position of the
-#' streamtubes Data array: a vector, factor, Date/POSIXct vector, matrix or
-#' list.}
-#' }
-#'
 #' @noMd
 #' @export
 #' @examples
@@ -357,5 +322,98 @@ go_streamtube <- function(
     yhoverformat = NULL, z = NULL, zhoverformat = NULL, skip_invalid = FALSE
 ) {
   plotly_object("streamtube", arg, environment(), list(...), skip_invalid)
+}
+
+#' Streamtube lighting objects
+#'
+#' The object for the \code{lighting} of a streamtube trace
+#' (\code{\link{go_streamtube}()}). \code{go_streamtube_lighting()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param ambient Ambient light increases overall color visibility but can
+#'   wash out the image. Number in the interval [0, 1].
+#' @param diffuse Represents the extent that incident rays are reflected in
+#'   a range of angles. Number in the interval [0, 1].
+#' @param facenormalsepsilon Epsilon for face normals calculation avoids
+#'   math issues arising from degenerate geometry. Number in the interval
+#'   [0, 1].
+#' @param fresnel Represents the reflectance as a dependency of the viewing
+#'   angle; e.g. paper is reflective when viewing it from the edge of the
+#'   paper (almost 90 degrees), causing shine. Number in the interval [0,
+#'   5].
+#' @param roughness Alters specular reflection; the rougher the surface,
+#'   the wider and less contrasty the shine. Number in the interval [0, 1].
+#' @param specular Represents the level that incident rays are reflected in
+#'   a single direction, causing shine. Number in the interval [0, 2].
+#' @param vertexnormalsepsilon Epsilon for vertex normals calculation
+#'   avoids math issues arising from degenerate geometry. Number in the
+#'   interval [0, 1].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_streamtube_lighting} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_streamtube(
+#'     lighting = go_streamtube_lighting()
+#'   )
+go_streamtube_lighting <- function(
+    arg = NULL, ..., ambient = NULL, diffuse = NULL,
+    facenormalsepsilon = NULL, fresnel = NULL, roughness = NULL,
+    specular = NULL, vertexnormalsepsilon = NULL, skip_invalid = FALSE
+) {
+  plotly_object("streamtube.lighting", arg, environment(), list(...), skip_invalid)
+}
+
+#' Streamtube starts objects
+#'
+#' The object for the \code{starts} of a streamtube trace
+#' (\code{\link{go_streamtube}()}). \code{go_streamtube_starts()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param x Sets the x components of the starting position of the
+#'   streamtubes Data array: a vector, factor, Date/POSIXct vector, matrix
+#'   or list.
+#' @param y Sets the y components of the starting position of the
+#'   streamtubes Data array: a vector, factor, Date/POSIXct vector, matrix
+#'   or list.
+#' @param z Sets the z components of the starting position of the
+#'   streamtubes Data array: a vector, factor, Date/POSIXct vector, matrix
+#'   or list.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_streamtube_starts} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_streamtube(
+#'     starts = go_streamtube_starts()
+#'   )
+go_streamtube_starts <- function(
+    arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
+) {
+  plotly_object("streamtube.starts", arg, environment(), list(...), skip_invalid)
 }
 

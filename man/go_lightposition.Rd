@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_lightposition}
 \alias{go_lightposition}
-\title{3D light position}
+\title{Lightposition objects}
 \usage{
 go_lightposition(
   arg = NULL,
@@ -35,9 +35,9 @@ instead of raising an error.}
 A \code{go_lightposition} object (a named list).
 }
 \description{
-The position of the light source of a 3D surface-type trace (surface,
-mesh3d, isosurface, volume, cone, streamtube). \code{go_lightposition()}
-creates one; a named list with the same properties works too.
+Used for \code{lightposition} in 6 places in the schema.
+\code{go_lightposition()} creates one; a named list with the same
+properties works too.
 }
 \details{
 These objects appear in 6 places in the plotly.js schema (properties
@@ -45,5 +45,7 @@ named \code{lightposition}), all with the same properties and rules.
 }
 \examples{
 go_figure() |>
-  add_surface(z = volcano, lightposition = go_lightposition(x = 1000, y = 1000, z = 0))
+  add_cone(
+    lightposition = go_lightposition()
+  )
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_autorangeoptions}
 \alias{go_autorangeoptions}
-\title{Autorange options}
+\title{Autorangeoptions objects}
 \usage{
 go_autorangeoptions(
   arg = NULL,
@@ -46,8 +46,7 @@ instead of raising an error.}
 A \code{go_autorangeoptions} object (a named list).
 }
 \description{
-Limits on the range an axis chooses when autoranging (\code{autorange =
-TRUE}): values to include, and bounds the range is clipped to.
+Used for \code{autorangeoptions} in 6 places in the schema.
 \code{go_autorangeoptions()} creates one; a named list with the same
 properties works too.
 }
@@ -57,6 +56,11 @@ named \code{autorangeoptions}), all with the same properties and rules.
 }
 \examples{
 go_figure() |>
-  add_scatter(x = 1:10, y = (1:10)^2) |>
-  update_yaxes(autorangeoptions = go_autorangeoptions(minallowed = 0, maxallowed = 50))
+  update_layout(
+    polar = go_polar(
+      radialaxis = go_polar_radialaxis(
+        autorangeoptions = go_autorangeoptions()
+      )
+    )
+  )
 }

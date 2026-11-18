@@ -12,26 +12,26 @@
 #' \code{add_histogram2d()} creates one and adds it to a figure.
 #'
 #' @details
-#' Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-#' = list(width = 2))}. Each nested object's properties are described in a
-#' section of its own near the end of this page (after \emph{Value}), titled
-#' with its path: \emph{marker properties}, \emph{marker.line properties},
-#' .... Objects that appear in several places in the schema can also be
-#' created with a constructor of their own, and are documented on its page:
-#' \code{\link{go_font}()}, \code{\link{go_colorbar}()},
-#' \code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-#' \code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-#' \code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-#' \code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-#' \code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-#' \code{\link{go_gradient}()}, \code{\link{go_label}()},
-#' \code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-#' \code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-#' \code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-#' \code{\link{go_root}()}, \code{\link{go_slices}()},
-#' \code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-#' Every property is checked against the plotly.js schema when the object is
-#' created or modified (see \code{\link{plotly_obj-modify}}).
+#' Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+#' objects of their constructors: every object in the schema has one,
+#' documented on its own page, with exactly that object's properties. Most
+#' are named after their path: \code{go_scatter_marker()},
+#' \code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+#' Objects that appear in several places share one: \code{\link{go_font}()},
+#' \code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+#' \code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+#' \code{\link{go_domain}()}, \code{\link{go_pattern}()},
+#' \code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+#' \code{\link{go_bins}()}, \code{\link{go_caps}()},
+#' \code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+#' \code{\link{go_label}()}, \code{\link{go_leaf}()},
+#' \code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+#' \code{\link{go_pathbar}()}, \code{\link{go_project}()},
+#' \code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+#' \code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+#' \code{\link{go_unifiedhovertitle}()}. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}).
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
@@ -176,8 +176,9 @@
 #'   to their order in data and layout. Number.
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param marker A named list with properties \code{color} (described in
-#'   section "marker properties" below).
+#' @param marker A \code{\link{go_histogram2d_marker}()} object or named
+#'   list, with properties \code{color} (see
+#'   \code{\link{go_histogram2d_marker}()}).
 #' @param meta Assigns extra meta information associated with this trace
 #'   that can be used in various text attributes. Attributes such as trace
 #'   `name`, graph, axis and colorbar `title.text`, annotation `text`
@@ -354,12 +355,6 @@
 #'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
 #'
-#' @section marker properties:
-#' \describe{
-#' \item{\code{color}}{Sets the aggregation data. Data array: a vector,
-#' factor, Date/POSIXct vector, matrix or list.}
-#' }
-#'
 #' @noMd
 #' @export
 #' @examples
@@ -383,5 +378,39 @@ go_histogram2d <- function(
     zmin = NULL, zsmooth = NULL, skip_invalid = FALSE
 ) {
   plotly_object("histogram2d", arg, environment(), list(...), skip_invalid)
+}
+
+#' Histogram2d marker objects
+#'
+#' The object for the \code{marker} of a histogram2d trace
+#' (\code{\link{go_histogram2d}()}). \code{go_histogram2d_marker()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the aggregation data. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_histogram2d_marker} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_histogram2d(
+#'     marker = go_histogram2d_marker(color = "red")
+#'   )
+go_histogram2d_marker <- function(
+    arg = NULL, ..., color = NULL, skip_invalid = FALSE
+) {
+  plotly_object("histogram2d.marker", arg, environment(), list(...), skip_invalid)
 }
 

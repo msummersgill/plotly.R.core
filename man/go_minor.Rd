@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_minor}
 \alias{go_minor}
-\title{Minor ticks and grid lines}
+\title{Minor objects}
 \usage{
 go_minor(
   arg = NULL,
@@ -112,8 +112,8 @@ instead of raising an error.}
 A \code{go_minor} object (a named list).
 }
 \description{
-Minor ticks and grid lines of an x or y axis. \code{go_minor()} creates
-one; a named list with the same properties works too.
+Used for \code{minor} in 2 places in the schema. \code{go_minor()}
+creates one; a named list with the same properties works too.
 }
 \details{
 These objects appear in 2 places in the plotly.js schema (properties
@@ -121,6 +121,9 @@ named \code{minor}), all with the same properties and rules.
 }
 \examples{
 go_figure() |>
-  add_scatter(x = 1:10, y = 1:10) |>
-  update_xaxes(minor = go_minor(ticks = "outside", showgrid = TRUE))
+  update_layout(
+    xaxis = go_xaxis(
+      minor = go_minor()
+    )
+  )
 }

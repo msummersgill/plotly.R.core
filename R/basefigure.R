@@ -564,7 +564,10 @@ props_match <- function(obj, selector) {
     val <- get_prop(obj, name)
     want <- selector[[name]]
     ok <- if (
-      is.list(want) && !is.null(names(want)) && is.list(val) && !is.null(names(val))
+      is.list(want) &&
+        !is.null(names(want)) &&
+        is.list(val) &&
+        !is.null(names(val))
     ) {
       props_match(val, want)
     } else {

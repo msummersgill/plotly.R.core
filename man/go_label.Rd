@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_label}
 \alias{go_label}
-\title{Shape labels}
+\title{Label objects}
 \usage{
 go_label(
   arg = NULL,
@@ -104,9 +104,8 @@ instead of raising an error.}
 A \code{go_label} object (a named list).
 }
 \description{
-A text label on a layout shape (\code{add_shape()}), or on shapes drawn
-by the user (\code{layout.newshape}). \code{go_label()} creates one; a
-named list with the same properties works too.
+Used for \code{label} in 2 places in the schema. \code{go_label()}
+creates one; a named list with the same properties works too.
 }
 \details{
 These objects appear in 2 places in the plotly.js schema (properties
@@ -114,9 +113,9 @@ named \code{label}), all with the same properties and rules.
 }
 \examples{
 go_figure() |>
-  add_scatter(x = 1:3, y = 1:3) |>
-  add_shape(
-    type = "rect", x0 = 1, x1 = 2, y0 = 1, y1 = 2,
-    label = go_label(text = "box", font = go_font(size = 14))
+  update_layout(
+    newshape = go_newshape(
+      label = go_label(text = "title")
+    )
   )
 }

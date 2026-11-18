@@ -60,7 +60,12 @@ stopifnot(
 
 # Adding traces ---------------------------------------------------------------------
 fig <- go_figure() |>
-  add_scatter(x = 1:3, y = c(2, 1, 3), name = "a", marker = list(color = "red")) |>
+  add_scatter(
+    x = 1:3,
+    y = c(2, 1, 3),
+    name = "a",
+    marker = list(color = "red")
+  ) |>
   add_trace(go_scatter(y = 3:1, name = "b", mode = "markers")) |>
   add_traces(list(list(y = c(1, 1, 1), name = "c")))
 stopifnot(
@@ -94,8 +99,14 @@ fig2 <- update_layout(fig, xaxis = list(type = "linear"), overwrite = TRUE)
 stopifnot(identical(names(fig2$layout$xaxis), "type"))
 fig2 <- update_layout(fig, width = NULL)
 stopifnot(is.null(fig2$layout$width))
-expect_error(update_layout(fig, xaxis = list(rnage = c(0, 1))), "Invalid property")
-expect_error(update_layout(fig, xaxis_title = "x"), "xaxis = list\\(title = ...\\)")
+expect_error(
+  update_layout(fig, xaxis = list(rnage = c(0, 1))),
+  "Invalid property"
+)
+expect_error(
+  update_layout(fig, xaxis_title = "x"),
+  "xaxis = list\\(title = ...\\)"
+)
 expect_error(update_layout(fig, width = 1), "interval \\[10, Inf\\]")
 
 # Selecting and updating traces ---------------------------------------------------------
@@ -103,14 +114,21 @@ stopifnot(
   length(select_traces(fig)) == 3L,
   length(select_traces(fig, "scatter")) == 3L,
   identical(select_traces(fig, list(name = "b"))[[1L]]$name, "b"),
-  identical(select_traces(fig, list(marker = list(color = "red")))[[1L]]$name, "a"),
+  identical(
+    select_traces(fig, list(marker = list(color = "red")))[[1L]]$name,
+    "a"
+  ),
   length(select_traces(fig, function(tr) identical(tr$mode, "markers"))) == 1L,
   identical(select_traces(fig, 2:3)[[2L]]$name, "c"),
   length(select_traces(fig, list(name = "zzz"))) == 0L
 )
 expect_error(select_traces(fig, 4), "out of range")
 
-fig3 <- update_traces(fig, marker = list(size = 12), selector = list(mode = "markers"))
+fig3 <- update_traces(
+  fig,
+  marker = list(size = 12),
+  selector = list(mode = "markers")
+)
 stopifnot(
   identical(fig3$data[[2L]]$marker$size, 12),
   is.null(fig3$data[[1L]]$marker$size)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_colorbar}
 \alias{go_colorbar}
-\title{Color bars}
+\title{Colorbar objects}
 \usage{
 go_colorbar(
   arg = NULL,
@@ -246,9 +246,10 @@ Data array: a vector, factor, Date/POSIXct vector, matrix or list.}
 \item{tickwidth}{Sets the tick width (in px). Number in the interval [0,
 Inf].}
 
-\item{title}{String (the title text), or a named list with properties
-\code{font}, \code{side} and \code{text} (described in section "title
-properties" below).}
+\item{title}{String (the title text), or a
+\code{\link{go_colorbar_title}()} object or named list, with
+properties \code{font}, \code{side} and \code{text} (see
+\code{\link{go_colorbar_title}()}).}
 
 \item{x}{Sets the x position with respect to `xref` of the color bar (in
 plot fraction). When `xref` is "paper", defaults to 1.02 when
@@ -297,36 +298,18 @@ instead of raising an error.}
 A \code{go_colorbar} object (a named list).
 }
 \description{
-The color bar of a trace with a colorscale (heatmaps, contours, surfaces,
-...), or of markers and lines colored by a colorscale (\code{marker =
-list(colorbar = ...)}), or of a layout \code{coloraxis}.
-\code{go_colorbar()} creates one; a named list with the same properties
-works too.
+Used for \code{colorbar} in 37 places in the schema. \code{go_colorbar()}
+creates one; a named list with the same properties works too.
 }
 \details{
 These objects appear in 37 places in the plotly.js schema (properties
 named \code{colorbar}), all with the same properties and rules.
 }
-\section{title properties}{
-
-\describe{
-\item{\code{font}}{Sets this color bar's title font. A
-\code{\link{go_font}()} object or named list, with properties
-\code{color}, \code{family}, \code{lineposition}, \code{shadow},
-\code{size}, \code{style}, \code{textcase}, \code{variant} and
-\code{weight} (see \code{\link{go_font}()}).}
-\item{\code{side}}{Determines the location of color bar's title with
-respect to the color bar. Defaults to "top" when `orientation` is "v" and
-defaults to "right" when `orientation` is "h". One of \code{"right"},
-\code{"top"}, \code{"bottom"}.}
-\item{\code{text}}{Sets the title of the color bar. String.}
-}
-}
-
 \examples{
 go_figure() |>
-  add_heatmap(
-    z = volcano,
-    colorbar = go_colorbar(title = list(text = "Height"), thickness = 15, len = 0.6)
+  add_bar(
+    marker = go_bar_marker(
+      colorbar = go_colorbar()
+    )
   )
 }

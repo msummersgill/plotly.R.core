@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_domainpad}
 \alias{go_domainpad}
-\title{Axis domain padding}
+\title{Domainpad objects}
 \usage{
 go_domainpad(
   arg = NULL,
@@ -39,17 +39,28 @@ instead of raising an error.}
 A \code{go_domainpad} object (a named list).
 }
 \description{
-Space in pixels to reserve inside the edges of an x or y axis
-\code{domain}. \code{go_domainpad()} creates one; a named list with the
-same properties works too.
+Sets the space in pixels to reserve inside the edges of `domain`. Because
+`domain` is a fraction of the plot area, the gap between subplots changes
+with the figure size. `domainpad` keeps the same size in pixels at all
+figure sizes, so it can hold content with a fixed size, such as a subplot
+title. x axes use `left` and `right`. y axes use `top` and `bottom`. If
+the padding needs more room than the domain has, the two pads shrink by
+the same factor, and the plot area keeps a length of at least 2 pixels.
+An axis that sets `overlaying` ignores its own `domainpad` and uses the
+`domainpad` of the axis it overlays, so that both axes share the same
+plot area. Used for \code{domainpad} in 2 places in the schema.
+\code{go_domainpad()} creates one; a named list with the same properties
+works too.
 }
 \details{
 These objects appear in 2 places in the plotly.js schema (properties
 named \code{domainpad}), all with the same properties and rules.
 }
 \examples{
-make_subplots(rows = 1, cols = 2) |>
-  add_scatter(y = 1:3, row = 1, col = 1) |>
-  add_scatter(y = 3:1, row = 1, col = 2) |>
-  update_xaxes(domainpad = go_domainpad(left = 20, right = 20))
+go_figure() |>
+  update_layout(
+    xaxis = go_xaxis(
+      domainpad = go_domainpad()
+    )
+  )
 }

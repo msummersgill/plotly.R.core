@@ -352,26 +352,26 @@ Draws a bivariate kernel density estimation with a Gaussian kernel from
 \code{add_densitymap()} creates one and adds it to a figure.
 
 
-Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-= list(width = 2))}. Each nested object's properties are described in a
-section of its own near the end of this page (after \emph{Value}), titled
-with its path: \emph{marker properties}, \emph{marker.line properties},
-.... Objects that appear in several places in the schema can also be
-created with a constructor of their own, and are documented on its page:
-\code{\link{go_font}()}, \code{\link{go_colorbar}()},
-\code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-\code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-\code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-\code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-\code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-\code{\link{go_gradient}()}, \code{\link{go_label}()},
-\code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-\code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-\code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-\code{\link{go_root}()}, \code{\link{go_slices}()},
-\code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-Every property is checked against the plotly.js schema when the object is
-created or modified (see \code{\link{plotly_obj-modify}}).
+Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+objects of their constructors: every object in the schema has one,
+documented on its own page, with exactly that object's properties. Most
+are named after their path: \code{go_scatter_marker()},
+\code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+Objects that appear in several places share one: \code{\link{go_font}()},
+\code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+\code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+\code{\link{go_domain}()}, \code{\link{go_pattern}()},
+\code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+\code{\link{go_bins}()}, \code{\link{go_caps}()},
+\code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+\code{\link{go_label}()}, \code{\link{go_leaf}()},
+\code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+\code{\link{go_pathbar}()}, \code{\link{go_project}()},
+\code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+\code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+\code{\link{go_unifiedhovertitle}()}. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+\code{\link{plotly_obj-modify}}).
 }
 \examples{
 go_densitymap()

@@ -82,11 +82,12 @@ listening to hover, click and selection events. Note that, "scatter"
 traces also appends customdata items in the markers DOM elements Data
 array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
-\item{dimensions}{List, each element a named list with properties
-\code{constraintrange}, \code{label}, \code{multiselect}, \code{name},
-\code{range}, \code{templateitemname}, \code{tickformat},
+\item{dimensions}{List, each element a
+\code{\link{go_parcoords_dimension}()} object or named list, with
+properties \code{constraintrange}, \code{label}, \code{multiselect},
+\code{name}, \code{range}, \code{templateitemname}, \code{tickformat},
 \code{ticktext}, \code{tickvals}, \code{values} and \code{visible}
-(described in section "dimension properties" below).}
+(see \code{\link{go_parcoords_dimension}()}).}
 
 \item{domain}{A \code{\link{go_domain}()} object or named list, with
 properties \code{column}, \code{row}, \code{x} and \code{y} (see
@@ -137,11 +138,11 @@ to their order in data and layout. Number.}
 \item{legendwidth}{Sets the width (in px or fraction) of the legend for
 this trace. Number in the interval [0, Inf].}
 
-\item{line}{A named list with properties \code{autocolorscale},
-\code{cauto}, \code{cmax}, \code{cmid}, \code{cmin}, \code{color},
-\code{coloraxis}, \code{colorbar}, \code{colorscale},
-\code{reversescale} and \code{showscale} (described in section "line
-properties" below).}
+\item{line}{A \code{\link{go_parcoords_line}()} object or named list,
+with properties \code{autocolorscale}, \code{cauto}, \code{cmax},
+\code{cmid}, \code{cmin}, \code{color}, \code{coloraxis},
+\code{colorbar}, \code{colorscale}, \code{reversescale} and
+\code{showscale} (see \code{\link{go_parcoords_line}()}).}
 
 \item{meta}{Assigns extra meta information associated with this trace
 that can be used in various text attributes. Attributes such as trace
@@ -186,8 +187,9 @@ array, such that the same trace has a different index, you can still
 preserve user-driven changes if you give each trace a `uid` that stays
 with it as it moves. Any value.}
 
-\item{unselected}{A named list with properties \code{line} (described in
-section "unselected properties" below).}
+\item{unselected}{A \code{\link{go_parcoords_unselected}()} object or
+named list, with properties \code{line} (see
+\code{\link{go_parcoords_unselected}()}).}
 
 \item{visible}{Determines whether or not this trace is visible. If
 "legendonly", the trace is not drawn, but can appear as a legend item
@@ -222,173 +224,27 @@ samples are specified in `dimensions`. The colors are set in
 \code{add_parcoords()} creates one and adds it to a figure.
 
 
-Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-= list(width = 2))}. Each nested object's properties are described in a
-section of its own near the end of this page (after \emph{Value}), titled
-with its path: \emph{marker properties}, \emph{marker.line properties},
-.... Objects that appear in several places in the schema can also be
-created with a constructor of their own, and are documented on its page:
-\code{\link{go_font}()}, \code{\link{go_colorbar}()},
-\code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-\code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-\code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-\code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-\code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-\code{\link{go_gradient}()}, \code{\link{go_label}()},
-\code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-\code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-\code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-\code{\link{go_root}()}, \code{\link{go_slices}()},
-\code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-Every property is checked against the plotly.js schema when the object is
-created or modified (see \code{\link{plotly_obj-modify}}).
+Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+objects of their constructors: every object in the schema has one,
+documented on its own page, with exactly that object's properties. Most
+are named after their path: \code{go_scatter_marker()},
+\code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+Objects that appear in several places share one: \code{\link{go_font}()},
+\code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+\code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+\code{\link{go_domain}()}, \code{\link{go_pattern}()},
+\code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+\code{\link{go_bins}()}, \code{\link{go_caps}()},
+\code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+\code{\link{go_label}()}, \code{\link{go_leaf}()},
+\code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+\code{\link{go_pathbar}()}, \code{\link{go_project}()},
+\code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+\code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+\code{\link{go_unifiedhovertitle}()}. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+\code{\link{plotly_obj-modify}}).
 }
-\section{dimension properties (each list element)}{
-
-The dimensions (variables) of the parallel coordinates chart. 2..60
-dimensions are supported.
-
-\describe{
-\item{\code{constraintrange}}{The domain range to which the filter on the
-dimension is constrained. Must be an array of `[fromValue, toValue]` with
-`fromValue <= toValue`, or if `multiselect` is not disabled, you may give
-an array of arrays, where each inner array is `[fromValue, toValue]`.
-Vector or list of up to 2 element(s).}
-\item{\code{label}}{The shown name of the dimension. String.}
-\item{\code{multiselect}}{Do we allow multiple selection ranges or just a
-single range? Logical.}
-\item{\code{name}}{When used in a template, named items are created in
-the output figure in addition to any items the figure already has in this
-array. You can modify these items in the output figure by making your own
-item with `templateitemname` matching this `name` alongside your
-modifications (including `visible: false` or `enabled: false` to hide
-it). Has no effect outside of a template. String.}
-\item{\code{range}}{The domain range that represents the full, shown axis
-extent. Defaults to the `values` extent. Must be an array of `[fromValue,
-toValue]` with finite numbers as elements. Vector or list of 2
-element(s).}
-\item{\code{templateitemname}}{Used to refer to a named item in this
-array in the template. Named items from the template will be created even
-without a matching item in the input figure, but you can modify one by
-making an item with `templateitemname` matching its `name`, alongside
-your modifications (including `visible: false` or `enabled: false` to
-hide it). If there is no template or no matching item, this item will be
-hidden unless you explicitly show it with `visible: true`. String.}
-\item{\code{tickformat}}{Sets the tick label formatting rule using d3
-formatting mini-languages which are very similar to those in Python. For
-numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And
-for dates see:
-https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format. We add
-two items to d3's date formatter: "\%h" for half of the year as a decimal
-number as well as "\%\{n\}f" for fractional seconds with n digits. For
-example, "2016-10-13 09:15:23.456" with tickformat "\%H~\%M~\%S.\%2f"
-would display "09~15~23.46" String.}
-\item{\code{ticktext}}{Sets the text displayed at the ticks position via
-`tickvals`. Data array: a vector, factor, Date/POSIXct vector, matrix or
-list.}
-\item{\code{tickvals}}{Sets the values at which ticks on this axis
-appear. Data array: a vector, factor, Date/POSIXct vector, matrix or
-list.}
-\item{\code{values}}{Dimension values. `values[n]` represents the value
-of the `n`th point in the dataset, therefore the `values` vector for all
-dimensions must be the same (longer vectors will be truncated). Each
-value must be a finite number. Data array: a vector, factor, Date/POSIXct
-vector, matrix or list.}
-\item{\code{visible}}{Shows the dimension when set to `true` (the
-default). Hides the dimension for `false`. Logical.}
-}
-}
-
-\section{line properties}{
-
-\describe{
-\item{\code{autocolorscale}}{Determines whether the colorscale is a
-default palette (`autocolorscale: true`) or the palette determined by
-`line.colorscale`. Has an effect only if in `line.color` is set to a
-numerical array. In case `colorscale` is unspecified or `autocolorscale`
-is true, the default palette will be chosen according to whether numbers
-in the `color` array are all positive, all negative or mixed. Logical.}
-\item{\code{cauto}}{Determines whether or not the color domain is
-computed with respect to the input data (here in `line.color`) or the
-bounds set in `line.cmin` and `line.cmax` Has an effect only if in
-`line.color` is set to a numerical array. Defaults to `false` when
-`line.cmin` and `line.cmax` are set by the user. Logical.}
-\item{\code{cmax}}{Sets the upper bound of the color domain. Has an
-effect only if in `line.color` is set to a numerical array. Value should
-have the same units as in `line.color` and if set, `line.cmin` must be
-set as well. Number.}
-\item{\code{cmid}}{Sets the mid-point of the color domain by scaling
-`line.cmin` and/or `line.cmax` to be equidistant to this point. Has an
-effect only if in `line.color` is set to a numerical array. Value should
-have the same units as in `line.color`. Has no effect when `line.cauto`
-is `false`. Number.}
-\item{\code{cmin}}{Sets the lower bound of the color domain. Has an
-effect only if in `line.color` is set to a numerical array. Value should
-have the same units as in `line.color` and if set, `line.cmax` must be
-set as well. Number.}
-\item{\code{color}}{Sets the line color. It accepts either a specific
-color or an array of numbers that are mapped to the colorscale relative
-to the max and min values of the array or relative to `line.cmin` and
-`line.cmax` if set. Color: a CSS color string or R color name, or a
-number mapped to a color by \code{parcoords.line.colorscale}, or a vector
-of these.}
-\item{\code{coloraxis}}{Sets a reference to a shared color axis.
-References to these shared color axes are "coloraxis", "coloraxis2",
-"coloraxis3", etc. Settings for these shared color axes are set in the
-layout, under `layout.coloraxis`, `layout.coloraxis2`, etc. Note that
-multiple color scales can be linked to the same color axis. Subplot id:
-\code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
-\item{\code{colorbar}}{A \code{\link{go_colorbar}()} object or named
-list, with properties \code{bgcolor}, \code{bordercolor},
-\code{borderwidth}, \code{dtick}, \code{exponentformat},
-\code{labelalias}, \code{len}, \code{lenmode}, \code{minexponent},
-\code{nticks}, \code{orientation}, \code{outlinecolor} and 34 more (see
-\code{\link{go_colorbar}()}).}
-\item{\code{colorscale}}{Sets the colorscale. Has an effect only if in
-`line.color` is set to a numerical array. The colorscale must be an array
-containing arrays mapping a normalized value to an rgb, rgba, hex, hsl,
-hsla, hwb, or named color string. At minimum, a mapping for the lowest
-(0) and highest (1) values are required. For example, `[[0,
-'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
-colorscale in color space, use `line.cmin` and `line.cmax`.
-Alternatively, `colorscale` may be a palette name string of the following
-list:
-Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-Colorscale: a vector of colors, a two-column data.frame of (value,
-color), or the name of a sequential, diverging or cyclical scale in
-\code{\link{px_colors}()} (append \code{"_r"} to reverse).}
-\item{\code{reversescale}}{Reverses the color mapping if true. Has an
-effect only if in `line.color` is set to a numerical array. If true,
-`line.cmin` will correspond to the last color in the array and
-`line.cmax` will correspond to the first color. Logical.}
-\item{\code{showscale}}{Determines whether or not a colorbar is displayed
-for this trace. Has an effect only if in `line.color` is set to a
-numerical array. Logical.}
-}
-}
-
-\section{unselected properties}{
-
-\describe{
-\item{\code{line}}{A named list with properties \code{color} and
-\code{opacity} (described in section "unselected.line properties"
-below).}
-}
-}
-
-\section{unselected.line properties}{
-
-\describe{
-\item{\code{color}}{Sets the base color of unselected lines. in
-connection with `unselected.line.opacity`. Color: a CSS color string or R
-color name.}
-\item{\code{opacity}}{Sets the opacity of unselected lines. The default
-"auto" decreases the opacity smoothly as the number of lines increases.
-Use 1 to achieve exact `unselected.line.color`. Number in the interval
-[0, 1].}
-}
-}
-
 \examples{
 go_parcoords()
 }

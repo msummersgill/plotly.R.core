@@ -50,24 +50,47 @@ stopifnot(identical(
   c("go_scatter_marker_line", "plotly_obj")
 ))
 
-# Every exported constructor builds an empty object: one per trace type, the
-# layout and the shared types. Nested objects have no constructors.
+# Every object in the schema has a constructor: traces, the layout, shared
+# types (go_font(), go_colorbar_title(), ...) and one per other object, named
+# after its path (go_scatter_marker(), go_xaxis(), go_scene_camera_eye(), ...).
 ns <- asNamespace("plotly.core")
 ctors <- setdiff(
   grep("^go_", getNamespaceExports("plotly.core"), value = TRUE),
   "go_figure"
 )
 shared <- paste0("go_", names(plotly.core:::shared_types()))
-stopifnot(length(shared) == 24L)
-stopifnot(
-  all(shared %in% ctors),
-  length(setdiff(ctors, shared)) == length(available_trace_types()) + 1L,
-  !any(c("go_scatter_marker", "go_layout_xaxis") %in% ls(ns))
-)
+stopifnot(all(shared %in% ctors), length(shared) == 31L)
+made <- character()
 for (fn in ctors) {
   obj <- get(fn, ns)()
-  stopifnot(inherits(obj, fn), inherits(obj, "plotly_obj"))
+  stopifnot(inherits(obj, "plotly_obj"))
+  if (!fn %in% shared) made <- c(made, class(obj)[[1L]])
 }
+env <- plotly.core:::validators_env()
+compound <- Filter(
+  function(k) env[[k]]$superclass %in% c("CompoundValidator", "TitleValidator"),
+  ls(env)
+)
+need <- compound[is.na(vapply(compound, plotly.core:::shared_type_of, ""))]
+stopifnot(
+  setequal(made, vapply(need, function(k) env[[k]]$data_class, "")), # one constructor per object
+  length(ctors) == 395L,
+  all(
+    c(
+      "go_scatter_marker",
+      "go_scatter_marker_line",
+      "go_scatter_selected_marker",
+      "go_sankey_link",
+      "go_scene_camera_eye",
+      "go_xaxis",
+      "go_slider_step",
+      "go_layout_title",
+      "go_colorbar_title",
+      "go_caps_x"
+    ) %in%
+      ctors
+  )
+)
 stopifnot(json(go_layout()) == "{}", json(go_scatter()) == '{"type":"scatter"}')
 
 # arg and named arguments ----------------------------------------------------------
@@ -151,7 +174,10 @@ stopifnot(
 # checked against the type's variants on creation: arrays are valid for some fonts
 stopifnot(identical(go_font(color = c("red", "blue"))$color, c("red", "blue")))
 expect_error(go_font(size = -1), "'size' property of go_font\\(\\)")
-expect_error(go_font(colour = "red"), "go_font\\(\\): 'colour'.*Did you mean \"color\"")
+expect_error(
+  go_font(colour = "red"),
+  "go_font\\(\\): 'colour'.*Did you mean \"color\""
+)
 f$size <- 20
 stopifnot(identical(f$size, 20), inherits(f, "go_font"))
 expect_error(f$size <- -1, "go_font")
@@ -168,16 +194,39 @@ expect_error(
   "'color' property of layout.font"
 )
 stopifnot(identical(go_hoverlabel(split = TRUE)$split, TRUE))
-expect_error(go_layout(hoverlabel = go_hoverlabel(split = TRUE)), "layout.hoverlabel: 'split'")
-expect_error(go_scatter(marker = go_font(size = 3)), "go_font\\(\\) object can't be used for scatter.marker")
-tfs <- go_layout(xaxis = list(tickformatstops = list(
-  go_tickformatstop(dtickrange = list(NULL, 1000), value = "%H:%M")
-)))
+expect_error(
+  go_layout(hoverlabel = go_hoverlabel(split = TRUE)),
+  "layout.hoverlabel: 'split'"
+)
+expect_error(
+  go_scatter(marker = go_font(size = 3)),
+  "go_font\\(\\) object can't be used for scatter.marker"
+)
+tfs <- go_layout(
+  xaxis = list(
+    tickformatstops = list(
+      go_tickformatstop(dtickrange = list(NULL, 1000), value = "%H:%M")
+    )
+  )
+)
 stopifnot(identical(tfs$xaxis$tickformatstops[[1L]]$value, "%H:%M"))
 stopifnot(
-  identical(unlist(go_pie(domain = go_domain(x = c(0, 0.5)))$domain$x), c(0, 0.5)),
-  identical(go_bar(marker = list(pattern = go_pattern(shape = "/")))$marker$pattern$shape, "/"),
-  identical(go_scatter(legendgrouptitle = go_legendgrouptitle(text = "g"))$legendgrouptitle$text, "g")
+  identical(
+    unlist(go_pie(domain = go_domain(x = c(0, 0.5)))$domain$x),
+    c(0, 0.5)
+  ),
+  identical(
+    go_bar(
+      marker = list(pattern = go_pattern(shape = "/"))
+    )$marker$pattern$shape,
+    "/"
+  ),
+  identical(
+    go_scatter(
+      legendgrouptitle = go_legendgrouptitle(text = "g")
+    )$legendgrouptitle$text,
+    "g"
+  )
 )
 
 e <- go_error_bar(type = "data", array = c(0.2, 0.1), copy_ystyle = TRUE)
@@ -188,9 +237,111 @@ expect_error(go_scatter(error_y = e), "scatter.error_y: 'copy_ystyle'")
 stopifnot(
   identical(go_histogram(xbins = go_bins(size = 1))$xbins$size, 1),
   identical(go_histogram(ybins = go_bins(size = 1))$ybins$size, 1),
-  identical(go_layout(xaxis = list(minor = go_minor(ticks = "outside")))$xaxis$minor$ticks, "outside")
+  identical(
+    go_layout(
+      xaxis = list(minor = go_minor(ticks = "outside"))
+    )$xaxis$minor$ticks,
+    "outside"
+  )
 )
-expect_error(go_histogram(xbins = go_minor()), "go_minor\\(\\) object can't be used for histogram.xbins")
+expect_error(
+  go_histogram(xbins = go_minor()),
+  "go_minor\\(\\) object can't be used for histogram.xbins"
+)
+
+# per-trace constructors have exactly their trace's properties
+m <- go_scatter_marker(size = 12, line = go_scatter_marker_line(width = 2))
+stopifnot(
+  identical(class(m), c("go_scatter_marker", "plotly_obj")),
+  identical(class(m$line), c("go_scatter_marker_line", "plotly_obj")),
+  identical(go_scatter(marker = m)$marker, m),
+  identical(
+    go_scatter(line = go_scatter_line(width = 3, shape = "spline"))$line$shape,
+    "spline"
+  )
+)
+expect_error(go_scatter_marker(sise = 1), "scatter.marker: 'sise'")
+expect_error(go_bar_marker(size = 1), "bar.marker: 'size'")
+expect_error(go_bar_marker_line(shape = "spline"), "bar.marker.line: 'shape'")
+# a bar marker line placed in a scatter marker is checked again there
+stopifnot(inherits(
+  go_scatter(marker = list(line = go_bar_marker_line(width = 1)))$marker$line,
+  "go_scatter_marker_line"
+))
+
+# axis constructors
+xa <- go_xaxis(title = "x", rangeslider = list(visible = TRUE))
+stopifnot(
+  identical(class(xa), c("go_layout_xaxis", "plotly_obj")),
+  identical(go_layout(xaxis2 = xa)$xaxis2, xa),
+  identical(
+    go_layout(
+      scene = list(zaxis = go_scene_zaxis(title = "z"))
+    )$scene$zaxis$title$text,
+    "z"
+  )
+)
+expect_error(
+  go_yaxis(rangeslider = list(visible = TRUE)),
+  "layout.yaxis: 'rangeslider'"
+)
+expect_error(
+  go_scene_xaxis(rangeslider = list()),
+  "layout.scene.xaxis: 'rangeslider'"
+)
+fig <- go_figure() |>
+  add_scatter(y = 1:3) |>
+  update_xaxes(go_xaxis(showgrid = FALSE))
+stopifnot(identical(fig$layout$xaxis$showgrid, FALSE))
+
+# layout object constructors
+steps <- lapply(1:2, function(i) {
+  go_slider_step(
+    label = as.character(i),
+    method = "restyle",
+    args = list("marker.size", 5 * i)
+  )
+})
+l <- go_layout(
+  sliders = list(go_slider(steps = steps)),
+  annotations = list(go_annotation(text = "a", x = 1, y = 1)),
+  title = go_layout_title(text = "T", x = 0),
+  scene2 = go_scene(aspectmode = "cube")
+)
+stopifnot(
+  inherits(l$sliders[[1L]]$steps[[2L]], "go_layout_slider_step"),
+  identical(l$annotations[[1L]]$text, "a"),
+  identical(l$title$x, 0),
+  inherits(l$scene2, "go_layout_scene")
+)
+expect_error(go_slider_step(lable = "x"), "Did you mean \"label\"")
+expect_error(
+  go_updatemenu(buttons = list(go_slider_step())),
+  "A layout.slider.step object can't be used for layout.updatemenu.button"
+)
+expect_error(
+  go_scatter(line = go_scatter_marker()),
+  "A scatter.marker object can't be used for scatter.line"
+)
+fig <- go_figure() |>
+  add_scatter(y = 1:3) |>
+  add_annotation(go_annotation(text = "hi", x = 2, y = 2))
+stopifnot(identical(fig$layout$annotations[[1L]]$text, "hi"))
+
+# piping a figure into a constructor points to the add_*() function
+expect_error(
+  go_figure(mtcars) |> go_scatter(x = ~mpg),
+  "To add a scatter trace to a figure, use add_scatter"
+)
+expect_error(go_figure() |> go_layout(title = "t"), "use update_layout")
+expect_error(
+  go_figure() |> go_xaxis(title = "x"),
+  "go_xaxis\\(\\) creates an object, not a figure"
+)
+expect_error(
+  go_figure() |> go_font(size = 3),
+  "go_font\\(\\) creates an object, not a figure"
+)
 
 # Figure data validation accepts graph objects and plain lists -----------------------
 d <- plotly.core:::validate_data(list(tr, list(type = "scatter", y = 1:3)))

@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_root}
 \alias{go_root}
-\title{Hierarchy roots}
+\title{Root objects}
 \usage{
 go_root(arg = NULL, ..., color = NULL, skip_invalid = FALSE)
 }
@@ -23,9 +23,8 @@ instead of raising an error.}
 A \code{go_root} object (a named list).
 }
 \description{
-The appearance of the root sector of a sunburst, treemap or icicle trace.
-\code{go_root()} creates one; a named list with the same properties works
-too.
+Used for \code{root} in 3 places in the schema. \code{go_root()} creates
+one; a named list with the same properties works too.
 }
 \details{
 These objects appear in 3 places in the plotly.js schema (properties
@@ -33,8 +32,7 @@ named \code{root}), all with the same properties and rules.
 }
 \examples{
 go_figure() |>
-  add_sunburst(
-    labels = c("all", "a", "b"), parents = c("", "all", "all"),
-    root = go_root(color = "lightgray")
+  add_icicle(
+    root = go_root(color = "red")
   )
 }

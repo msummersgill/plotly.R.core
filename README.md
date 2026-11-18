@@ -10,12 +10,13 @@ plotly.core is a rendering engine for the [plotly R package](https://github.com/
   for single precision floats allows up to 2x reduction of browser memory. _(See
   the render-performance vignette for more details)_
 - **Machine-generated code and documentation from the plotly.js schema.** 
-  All 47 trace types and the layout have a machine-generated `go_*()`
-  constructor, with comprehensive R documentation of every property, including
-  nested objects, and thorough validation generated from the schema. Objects
-  shared across the schema have their own constructors (`go_font()`,
-  `go_colorbar()`, `go_hoverlabel()`, ...). Future changes to the plotly.js
-  schema can be ported to the R implementation without hand-writing any R code or documentation.
+  Every object in the schema has a machine-generated `go_*()` constructor with
+  exactly its properties: traces (`go_scatter()`), the layout, objects shared
+  across the schema (`go_font()`, `go_colorbar()`, ...) and every other nested
+  object (`go_scatter_marker()`, `go_xaxis()`, `go_sankey_link()`, ...), with
+  comprehensive R documentation and thorough validation generated from the
+  schema. Future changes to the plotly.js schema can be ported to the R
+  implementation without hand-writing any R code or documentation.
 - **Full backwards compatibility with the plotly R package.** plotly's `plot_ly()`
   and `ggplotly()` plots are rendered by plotly.core, so existing plotly R
   code gets the same performance work and plotly.js version.

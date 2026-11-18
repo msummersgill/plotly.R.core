@@ -11,33 +11,33 @@
 #' \code{add_table()} creates one and adds it to a figure.
 #'
 #' @details
-#' Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-#' = list(width = 2))}. Each nested object's properties are described in a
-#' section of its own near the end of this page (after \emph{Value}), titled
-#' with its path: \emph{marker properties}, \emph{marker.line properties},
-#' .... Objects that appear in several places in the schema can also be
-#' created with a constructor of their own, and are documented on its page:
-#' \code{\link{go_font}()}, \code{\link{go_colorbar}()},
-#' \code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-#' \code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-#' \code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-#' \code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-#' \code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-#' \code{\link{go_gradient}()}, \code{\link{go_label}()},
-#' \code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-#' \code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-#' \code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-#' \code{\link{go_root}()}, \code{\link{go_slices}()},
-#' \code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-#' Every property is checked against the plotly.js schema when the object is
-#' created or modified (see \code{\link{plotly_obj-modify}}).
+#' Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+#' objects of their constructors: every object in the schema has one,
+#' documented on its own page, with exactly that object's properties. Most
+#' are named after their path: \code{go_scatter_marker()},
+#' \code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+#' Objects that appear in several places share one: \code{\link{go_font}()},
+#' \code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+#' \code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+#' \code{\link{go_domain}()}, \code{\link{go_pattern}()},
+#' \code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+#' \code{\link{go_bins}()}, \code{\link{go_caps}()},
+#' \code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+#' \code{\link{go_label}()}, \code{\link{go_leaf}()},
+#' \code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+#' \code{\link{go_pathbar}()}, \code{\link{go_project}()},
+#' \code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+#' \code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+#' \code{\link{go_unifiedhovertitle}()}. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}).
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
-#' @param cells A named list with properties \code{align}, \code{fill},
-#'   \code{font}, \code{format}, \code{height}, \code{line}, \code{prefix},
-#'   \code{suffix} and \code{values} (described in section "cells
-#'   properties" below).
+#' @param cells A \code{\link{go_table_cells}()} object or named list, with
+#'   properties \code{align}, \code{fill}, \code{font}, \code{format},
+#'   \code{height}, \code{line}, \code{prefix}, \code{suffix} and
+#'   \code{values} (see \code{\link{go_table_cells}()}).
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -63,10 +63,10 @@
 #'   properties \code{column}, \code{row}, \code{x} and \code{y} (see
 #'   \code{\link{go_domain}()}).
 #' @param fig A \code{go_figure} object.
-#' @param header A named list with properties \code{align}, \code{fill},
-#'   \code{font}, \code{format}, \code{height}, \code{line}, \code{prefix},
-#'   \code{suffix} and \code{values} (described in section "header
-#'   properties" below).
+#' @param header A \code{\link{go_table_header}()} object or named list,
+#'   with properties \code{align}, \code{fill}, \code{font}, \code{format},
+#'   \code{height}, \code{line}, \code{prefix}, \code{suffix} and
+#'   \code{values} (see \code{\link{go_table_header}()}).
 #' @param hoverinfo Determines what trace information appears on hover. If
 #'   `none` or `skip` are set, no information is displayed upon hovering.
 #'   But, if `none` is set, click and hover events are still fired. Any
@@ -142,96 +142,6 @@
 #'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
 #'
-#' @section cells properties:
-#' \describe{
-#' \item{\code{align}}{Sets the horizontal alignment of the `text` within
-#' the box. Has an effect only if `text` spans two or more lines (i.e.
-#' `text` contains one or more <br> HTML tags) or if an explicit width is
-#' set to override the text width. One of \code{"left"}, \code{"center"},
-#' \code{"right"}, or a vector of these.}
-#' \item{\code{fill}}{A named list with properties \code{color} (described
-#' in section "cells.fill properties" below).}
-#' \item{\code{font}}{A \code{\link{go_font}()} object or named list, with
-#' properties \code{color}, \code{family}, \code{lineposition},
-#' \code{shadow}, \code{size}, \code{style}, \code{textcase}, \code{variant}
-#' and \code{weight} (see \code{\link{go_font}()}).}
-#' \item{\code{format}}{Sets the cell value formatting rule using d3
-#' formatting mini-languages which are very similar to those in Python. For
-#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. Data
-#' array: a vector, factor, Date/POSIXct vector, matrix or list.}
-#' \item{\code{height}}{The height of cells. Number.}
-#' \item{\code{line}}{A named list with properties \code{color} and
-#' \code{width} (described in section "cells.line properties" below).}
-#' \item{\code{prefix}}{Prefix for cell values. String, or a vector of
-#' these.}
-#' \item{\code{suffix}}{Suffix for cell values. String, or a vector of
-#' these.}
-#' \item{\code{values}}{Cell values. `values[m][n]` represents the value of
-#' the `n`th point in column `m`, therefore the `values[m]` vector length
-#' for all columns must be the same (longer vectors will be truncated). Each
-#' value must be a finite number or a string. Data array: a vector, factor,
-#' Date/POSIXct vector, matrix or list.}
-#' }
-#'
-#' @section cells.fill properties:
-#' \describe{
-#' \item{\code{color}}{Sets the cell fill color. It accepts either a
-#' specific color or an array of colors or a 2D array of colors. Color: a
-#' CSS color string or R color name, or a vector of these.}
-#' }
-#'
-#' @section cells.line properties:
-#' \describe{
-#' \item{\code{color}}{Color: a CSS color string or R color name, or a
-#' vector of these.}
-#' \item{\code{width}}{Number, or a vector of these.}
-#' }
-#'
-#' @section header properties:
-#' \describe{
-#' \item{\code{align}}{Sets the horizontal alignment of the `text` within
-#' the box. Has an effect only if `text` spans two or more lines (i.e.
-#' `text` contains one or more <br> HTML tags) or if an explicit width is
-#' set to override the text width. One of \code{"left"}, \code{"center"},
-#' \code{"right"}, or a vector of these.}
-#' \item{\code{fill}}{A named list with properties \code{color} (described
-#' in section "header.fill properties" below).}
-#' \item{\code{font}}{A \code{\link{go_font}()} object or named list, with
-#' properties \code{color}, \code{family}, \code{lineposition},
-#' \code{shadow}, \code{size}, \code{style}, \code{textcase}, \code{variant}
-#' and \code{weight} (see \code{\link{go_font}()}).}
-#' \item{\code{format}}{Sets the cell value formatting rule using d3
-#' formatting mini-languages which are very similar to those in Python. For
-#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. Data
-#' array: a vector, factor, Date/POSIXct vector, matrix or list.}
-#' \item{\code{height}}{The height of cells. Number.}
-#' \item{\code{line}}{A named list with properties \code{color} and
-#' \code{width} (described in section "header.line properties" below).}
-#' \item{\code{prefix}}{Prefix for cell values. String, or a vector of
-#' these.}
-#' \item{\code{suffix}}{Suffix for cell values. String, or a vector of
-#' these.}
-#' \item{\code{values}}{Header cell values. `values[m][n]` represents the
-#' value of the `n`th point in column `m`, therefore the `values[m]` vector
-#' length for all columns must be the same (longer vectors will be
-#' truncated). Each value must be a finite number or a string. Data array: a
-#' vector, factor, Date/POSIXct vector, matrix or list.}
-#' }
-#'
-#' @section header.fill properties:
-#' \describe{
-#' \item{\code{color}}{Sets the cell fill color. It accepts either a
-#' specific color or an array of colors or a 2D array of colors. Color: a
-#' CSS color string or R color name, or a vector of these.}
-#' }
-#'
-#' @section header.line properties:
-#' \describe{
-#' \item{\code{color}}{Color: a CSS color string or R color name, or a
-#' vector of these.}
-#' \item{\code{width}}{Number, or a vector of these.}
-#' }
-#'
 #' @noMd
 #' @export
 #' @examples
@@ -244,5 +154,273 @@ go_table <- function(
     uid = NULL, uirevision = NULL, visible = NULL, skip_invalid = FALSE
 ) {
   plotly_object("table", arg, environment(), list(...), skip_invalid)
+}
+
+#' Table cells objects
+#'
+#' The object for the \code{cells} of a table trace
+#' (\code{\link{go_table}()}). \code{go_table_cells()} creates one, with
+#' exactly its properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param align Sets the horizontal alignment of the `text` within the box.
+#'   Has an effect only if `text` spans two or more lines (i.e. `text`
+#'   contains one or more <br> HTML tags) or if an explicit width is set to
+#'   override the text width. One of \code{"left"}, \code{"center"},
+#'   \code{"right"}, or a vector of these.
+#' @param fill A \code{\link{go_table_cells_fill}()} object or named list,
+#'   with properties \code{color} (see
+#'   \code{\link{go_table_cells_fill}()}).
+#' @param font A \code{\link{go_font}()} object or named list, with
+#'   properties \code{color}, \code{family}, \code{lineposition},
+#'   \code{shadow}, \code{size}, \code{style}, \code{textcase},
+#'   \code{variant} and \code{weight} (see \code{\link{go_font}()}).
+#' @param format Sets the cell value formatting rule using d3 formatting
+#'   mini-languages which are very similar to those in Python. For numbers,
+#'   see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. Data
+#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param height The height of cells. Number.
+#' @param line A \code{\link{go_table_cells_line}()} object or named list,
+#'   with properties \code{color} and \code{width} (see
+#'   \code{\link{go_table_cells_line}()}).
+#' @param prefix Prefix for cell values. String, or a vector of these.
+#' @param suffix Suffix for cell values. String, or a vector of these.
+#' @param values Cell values. `values[m][n]` represents the value of the
+#'   `n`th point in column `m`, therefore the `values[m]` vector length for
+#'   all columns must be the same (longer vectors will be truncated). Each
+#'   value must be a finite number or a string. Data array: a vector,
+#'   factor, Date/POSIXct vector, matrix or list.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_table_cells} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_table(
+#'     cells = go_table_cells()
+#'   )
+go_table_cells <- function(
+    arg = NULL, ..., align = NULL, fill = NULL, font = NULL, format = NULL,
+    height = NULL, line = NULL, prefix = NULL, suffix = NULL, values = NULL,
+    skip_invalid = FALSE
+) {
+  plotly_object("table.cells", arg, environment(), list(...), skip_invalid)
+}
+
+#' Table cells fill objects
+#'
+#' The object for the \code{cells.fill} of a table trace
+#' (\code{\link{go_table_cells}()}). \code{go_table_cells_fill()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the cell fill color. It accepts either a specific
+#'   color or an array of colors or a 2D array of colors. Color: a CSS
+#'   color string or R color name, or a vector of these.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_table_cells_fill} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_table(
+#'     cells = go_table_cells(
+#'       fill = go_table_cells_fill(color = "red")
+#'     )
+#'   )
+go_table_cells_fill <- function(
+    arg = NULL, ..., color = NULL, skip_invalid = FALSE
+) {
+  plotly_object("table.cells.fill", arg, environment(), list(...), skip_invalid)
+}
+
+#' Table cells line objects
+#'
+#' The object for the \code{cells.line} of a table trace
+#' (\code{\link{go_table_cells}()}). \code{go_table_cells_line()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Color: a CSS color string or R color name, or a vector of
+#'   these.
+#' @param width Number, or a vector of these.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_table_cells_line} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_table(
+#'     cells = go_table_cells(
+#'       line = go_table_cells_line(color = "red")
+#'     )
+#'   )
+go_table_cells_line <- function(
+    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+) {
+  plotly_object("table.cells.line", arg, environment(), list(...), skip_invalid)
+}
+
+#' Table header objects
+#'
+#' The object for the \code{header} of a table trace
+#' (\code{\link{go_table}()}). \code{go_table_header()} creates one, with
+#' exactly its properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param align Sets the horizontal alignment of the `text` within the box.
+#'   Has an effect only if `text` spans two or more lines (i.e. `text`
+#'   contains one or more <br> HTML tags) or if an explicit width is set to
+#'   override the text width. One of \code{"left"}, \code{"center"},
+#'   \code{"right"}, or a vector of these.
+#' @param fill A \code{\link{go_table_header_fill}()} object or named list,
+#'   with properties \code{color} (see
+#'   \code{\link{go_table_header_fill}()}).
+#' @param font A \code{\link{go_font}()} object or named list, with
+#'   properties \code{color}, \code{family}, \code{lineposition},
+#'   \code{shadow}, \code{size}, \code{style}, \code{textcase},
+#'   \code{variant} and \code{weight} (see \code{\link{go_font}()}).
+#' @param format Sets the cell value formatting rule using d3 formatting
+#'   mini-languages which are very similar to those in Python. For numbers,
+#'   see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. Data
+#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param height The height of cells. Number.
+#' @param line A \code{\link{go_table_header_line}()} object or named list,
+#'   with properties \code{color} and \code{width} (see
+#'   \code{\link{go_table_header_line}()}).
+#' @param prefix Prefix for cell values. String, or a vector of these.
+#' @param suffix Suffix for cell values. String, or a vector of these.
+#' @param values Header cell values. `values[m][n]` represents the value of
+#'   the `n`th point in column `m`, therefore the `values[m]` vector length
+#'   for all columns must be the same (longer vectors will be truncated).
+#'   Each value must be a finite number or a string. Data array: a vector,
+#'   factor, Date/POSIXct vector, matrix or list.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_table_header} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_table(
+#'     header = go_table_header()
+#'   )
+go_table_header <- function(
+    arg = NULL, ..., align = NULL, fill = NULL, font = NULL, format = NULL,
+    height = NULL, line = NULL, prefix = NULL, suffix = NULL, values = NULL,
+    skip_invalid = FALSE
+) {
+  plotly_object("table.header", arg, environment(), list(...), skip_invalid)
+}
+
+#' Table header fill objects
+#'
+#' The object for the \code{header.fill} of a table trace
+#' (\code{\link{go_table_header}()}). \code{go_table_header_fill()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the cell fill color. It accepts either a specific
+#'   color or an array of colors or a 2D array of colors. Color: a CSS
+#'   color string or R color name, or a vector of these.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_table_header_fill} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_table(
+#'     header = go_table_header(
+#'       fill = go_table_header_fill(color = "red")
+#'     )
+#'   )
+go_table_header_fill <- function(
+    arg = NULL, ..., color = NULL, skip_invalid = FALSE
+) {
+  plotly_object("table.header.fill", arg, environment(), list(...), skip_invalid)
+}
+
+#' Table header line objects
+#'
+#' The object for the \code{header.line} of a table trace
+#' (\code{\link{go_table_header}()}). \code{go_table_header_line()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Color: a CSS color string or R color name, or a vector of
+#'   these.
+#' @param width Number, or a vector of these.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_table_header_line} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_table(
+#'     header = go_table_header(
+#'       line = go_table_header_line(color = "red")
+#'     )
+#'   )
+go_table_header_line <- function(
+    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+) {
+  plotly_object("table.header.line", arg, environment(), list(...), skip_invalid)
 }
 

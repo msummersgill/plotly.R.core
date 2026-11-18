@@ -14,26 +14,26 @@
 #' \code{add_surface()} creates one and adds it to a figure.
 #'
 #' @details
-#' Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-#' = list(width = 2))}. Each nested object's properties are described in a
-#' section of its own near the end of this page (after \emph{Value}), titled
-#' with its path: \emph{marker properties}, \emph{marker.line properties},
-#' .... Objects that appear in several places in the schema can also be
-#' created with a constructor of their own, and are documented on its page:
-#' \code{\link{go_font}()}, \code{\link{go_colorbar}()},
-#' \code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-#' \code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-#' \code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-#' \code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-#' \code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-#' \code{\link{go_gradient}()}, \code{\link{go_label}()},
-#' \code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-#' \code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-#' \code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-#' \code{\link{go_root}()}, \code{\link{go_slices}()},
-#' \code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-#' Every property is checked against the plotly.js schema when the object is
-#' created or modified (see \code{\link{plotly_obj-modify}}).
+#' Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+#' objects of their constructors: every object in the schema has one,
+#' documented on its own page, with exactly that object's properties. Most
+#' are named after their path: \code{go_scatter_marker()},
+#' \code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+#' Objects that appear in several places share one: \code{\link{go_font}()},
+#' \code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+#' \code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+#' \code{\link{go_domain}()}, \code{\link{go_pattern}()},
+#' \code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+#' \code{\link{go_bins}()}, \code{\link{go_caps}()},
+#' \code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+#' \code{\link{go_label}()}, \code{\link{go_leaf}()},
+#' \code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+#' \code{\link{go_pathbar}()}, \code{\link{go_project}()},
+#' \code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+#' \code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+#' \code{\link{go_unifiedhovertitle}()}. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}).
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
@@ -84,8 +84,9 @@
 #'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
 #' @param connectgaps Determines whether or not gaps (i.e. \{nan\} or
 #'   missing values) in the `z` data are filled in. Logical.
-#' @param contours A named list with properties \code{x}, \code{y} and
-#'   \code{z} (described in section "contours properties" below).
+#' @param contours A \code{\link{go_surface_contours}()} object or named
+#'   list, with properties \code{x}, \code{y} and \code{z} (see
+#'   \code{\link{go_surface_contours}()}).
 #' @param customdata Assigns extra data each datum. This may be useful when
 #'   listening to hover, click and selection events. Note that, "scatter"
 #'   traces also appends customdata items in the markers DOM elements Data
@@ -167,9 +168,10 @@
 #'   to their order in data and layout. Number.
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param lighting A named list with properties \code{ambient},
-#'   \code{diffuse}, \code{fresnel}, \code{roughness} and \code{specular}
-#'   (described in section "lighting properties" below).
+#' @param lighting A \code{\link{go_surface_lighting}()} object or named
+#'   list, with properties \code{ambient}, \code{diffuse}, \code{fresnel},
+#'   \code{roughness} and \code{specular} (see
+#'   \code{\link{go_surface_lighting}()}).
 #' @param lightposition A \code{\link{go_lightposition}()} object or named
 #'   list, with properties \code{x}, \code{y} and \code{z} (see
 #'   \code{\link{go_lightposition}()}).
@@ -303,124 +305,6 @@
 #'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
 #'
-#' @section contours properties:
-#' \describe{
-#' \item{\code{x}}{A named list with properties \code{color}, \code{end},
-#' \code{highlight}, \code{highlightcolor}, \code{highlightwidth},
-#' \code{project}, \code{show}, \code{size}, \code{start},
-#' \code{usecolormap} and \code{width} (described in section "contours.x
-#' properties" below).}
-#' \item{\code{y}}{A named list with properties \code{color}, \code{end},
-#' \code{highlight}, \code{highlightcolor}, \code{highlightwidth},
-#' \code{project}, \code{show}, \code{size}, \code{start},
-#' \code{usecolormap} and \code{width} (described in section "contours.y
-#' properties" below).}
-#' \item{\code{z}}{A named list with properties \code{color}, \code{end},
-#' \code{highlight}, \code{highlightcolor}, \code{highlightwidth},
-#' \code{project}, \code{show}, \code{size}, \code{start},
-#' \code{usecolormap} and \code{width} (described in section "contours.z
-#' properties" below).}
-#' }
-#'
-#' @section contours.x properties:
-#' \describe{
-#' \item{\code{color}}{Sets the color of the contour lines. Color: a CSS
-#' color string or R color name.}
-#' \item{\code{end}}{Sets the end contour level value. Must be more than
-#' `contours.start` Number.}
-#' \item{\code{highlight}}{Determines whether or not contour lines about the
-#' x dimension are highlighted on hover. Logical.}
-#' \item{\code{highlightcolor}}{Sets the color of the highlighted contour
-#' lines. Color: a CSS color string or R color name.}
-#' \item{\code{highlightwidth}}{Sets the width of the highlighted contour
-#' lines. Number in the interval [1, 16].}
-#' \item{\code{project}}{A \code{\link{go_project}()} object or named list,
-#' with properties \code{x}, \code{y} and \code{z} (see
-#' \code{\link{go_project}()}).}
-#' \item{\code{show}}{Determines whether or not contour lines about the x
-#' dimension are drawn. Logical.}
-#' \item{\code{size}}{Sets the step between each contour level. Must be
-#' positive. Number in the interval [0, Inf].}
-#' \item{\code{start}}{Sets the starting contour level value. Must be less
-#' than `contours.end` Number.}
-#' \item{\code{usecolormap}}{An alternate to "color". Determines whether or
-#' not the contour lines are colored using the trace "colorscale". Logical.}
-#' \item{\code{width}}{Sets the width of the contour lines. Number in the
-#' interval [1, 16].}
-#' }
-#'
-#' @section contours.y properties:
-#' \describe{
-#' \item{\code{color}}{Sets the color of the contour lines. Color: a CSS
-#' color string or R color name.}
-#' \item{\code{end}}{Sets the end contour level value. Must be more than
-#' `contours.start` Number.}
-#' \item{\code{highlight}}{Determines whether or not contour lines about the
-#' y dimension are highlighted on hover. Logical.}
-#' \item{\code{highlightcolor}}{Sets the color of the highlighted contour
-#' lines. Color: a CSS color string or R color name.}
-#' \item{\code{highlightwidth}}{Sets the width of the highlighted contour
-#' lines. Number in the interval [1, 16].}
-#' \item{\code{project}}{A \code{\link{go_project}()} object or named list,
-#' with properties \code{x}, \code{y} and \code{z} (see
-#' \code{\link{go_project}()}).}
-#' \item{\code{show}}{Determines whether or not contour lines about the y
-#' dimension are drawn. Logical.}
-#' \item{\code{size}}{Sets the step between each contour level. Must be
-#' positive. Number in the interval [0, Inf].}
-#' \item{\code{start}}{Sets the starting contour level value. Must be less
-#' than `contours.end` Number.}
-#' \item{\code{usecolormap}}{An alternate to "color". Determines whether or
-#' not the contour lines are colored using the trace "colorscale". Logical.}
-#' \item{\code{width}}{Sets the width of the contour lines. Number in the
-#' interval [1, 16].}
-#' }
-#'
-#' @section contours.z properties:
-#' \describe{
-#' \item{\code{color}}{Sets the color of the contour lines. Color: a CSS
-#' color string or R color name.}
-#' \item{\code{end}}{Sets the end contour level value. Must be more than
-#' `contours.start` Number.}
-#' \item{\code{highlight}}{Determines whether or not contour lines about the
-#' z dimension are highlighted on hover. Logical.}
-#' \item{\code{highlightcolor}}{Sets the color of the highlighted contour
-#' lines. Color: a CSS color string or R color name.}
-#' \item{\code{highlightwidth}}{Sets the width of the highlighted contour
-#' lines. Number in the interval [1, 16].}
-#' \item{\code{project}}{A \code{\link{go_project}()} object or named list,
-#' with properties \code{x}, \code{y} and \code{z} (see
-#' \code{\link{go_project}()}).}
-#' \item{\code{show}}{Determines whether or not contour lines about the z
-#' dimension are drawn. Logical.}
-#' \item{\code{size}}{Sets the step between each contour level. Must be
-#' positive. Number in the interval [0, Inf].}
-#' \item{\code{start}}{Sets the starting contour level value. Must be less
-#' than `contours.end` Number.}
-#' \item{\code{usecolormap}}{An alternate to "color". Determines whether or
-#' not the contour lines are colored using the trace "colorscale". Logical.}
-#' \item{\code{width}}{Sets the width of the contour lines. Number in the
-#' interval [1, 16].}
-#' }
-#'
-#' @section lighting properties:
-#' \describe{
-#' \item{\code{ambient}}{Ambient light increases overall color visibility
-#' but can wash out the image. Number in the interval [0, 1].}
-#' \item{\code{diffuse}}{Represents the extent that incident rays are
-#' reflected in a range of angles. Number in the interval [0, 1].}
-#' \item{\code{fresnel}}{Represents the reflectance as a dependency of the
-#' viewing angle; e.g. paper is reflective when viewing it from the edge of
-#' the paper (almost 90 degrees), causing shine. Number in the interval [0,
-#' 5].}
-#' \item{\code{roughness}}{Alters specular reflection; the rougher the
-#' surface, the wider and less contrasty the shine. Number in the interval
-#' [0, 1].}
-#' \item{\code{specular}}{Represents the level that incident rays are
-#' reflected in a single direction, causing shine. Number in the interval
-#' [0, 2].}
-#' }
-#'
 #' @noMd
 #' @export
 #' @examples
@@ -442,5 +326,277 @@ go_surface <- function(
     skip_invalid = FALSE
 ) {
   plotly_object("surface", arg, environment(), list(...), skip_invalid)
+}
+
+#' Surface contours objects
+#'
+#' The object for the \code{contours} of a surface trace
+#' (\code{\link{go_surface}()}). \code{go_surface_contours()} creates one,
+#' with exactly its properties; a named list with the same properties works
+#' too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param x A \code{\link{go_surface_contours_x}()} object or named list,
+#'   with properties \code{color}, \code{end}, \code{highlight},
+#'   \code{highlightcolor}, \code{highlightwidth}, \code{project},
+#'   \code{show}, \code{size}, \code{start}, \code{usecolormap} and
+#'   \code{width} (see \code{\link{go_surface_contours_x}()}).
+#' @param y A \code{\link{go_surface_contours_y}()} object or named list,
+#'   with properties \code{color}, \code{end}, \code{highlight},
+#'   \code{highlightcolor}, \code{highlightwidth}, \code{project},
+#'   \code{show}, \code{size}, \code{start}, \code{usecolormap} and
+#'   \code{width} (see \code{\link{go_surface_contours_y}()}).
+#' @param z A \code{\link{go_surface_contours_z}()} object or named list,
+#'   with properties \code{color}, \code{end}, \code{highlight},
+#'   \code{highlightcolor}, \code{highlightwidth}, \code{project},
+#'   \code{show}, \code{size}, \code{start}, \code{usecolormap} and
+#'   \code{width} (see \code{\link{go_surface_contours_z}()}).
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_surface_contours} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_surface(
+#'     contours = go_surface_contours()
+#'   )
+go_surface_contours <- function(
+    arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
+) {
+  plotly_object("surface.contours", arg, environment(), list(...), skip_invalid)
+}
+
+#' Surface contours x objects
+#'
+#' The object for the \code{contours.x} of a surface trace
+#' (\code{\link{go_surface_contours}()}). \code{go_surface_contours_x()}
+#' creates one, with exactly its properties; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the color of the contour lines. Color: a CSS color
+#'   string or R color name.
+#' @param end Sets the end contour level value. Must be more than
+#'   `contours.start` Number.
+#' @param highlight Determines whether or not contour lines about the x
+#'   dimension are highlighted on hover. Logical.
+#' @param highlightcolor Sets the color of the highlighted contour lines.
+#'   Color: a CSS color string or R color name.
+#' @param highlightwidth Sets the width of the highlighted contour lines.
+#'   Number in the interval [1, 16].
+#' @param project A \code{\link{go_project}()} object or named list, with
+#'   properties \code{x}, \code{y} and \code{z} (see
+#'   \code{\link{go_project}()}).
+#' @param show Determines whether or not contour lines about the x
+#'   dimension are drawn. Logical.
+#' @param size Sets the step between each contour level. Must be positive.
+#'   Number in the interval [0, Inf].
+#' @param start Sets the starting contour level value. Must be less than
+#'   `contours.end` Number.
+#' @param usecolormap An alternate to "color". Determines whether or not
+#'   the contour lines are colored using the trace "colorscale". Logical.
+#' @param width Sets the width of the contour lines. Number in the interval
+#'   [1, 16].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_surface_contours_x} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_surface(
+#'     contours = go_surface_contours(
+#'       x = go_surface_contours_x(color = "red")
+#'     )
+#'   )
+go_surface_contours_x <- function(
+    arg = NULL, ..., color = NULL, end = NULL, highlight = NULL,
+    highlightcolor = NULL, highlightwidth = NULL, project = NULL,
+    show = NULL, size = NULL, start = NULL, usecolormap = NULL,
+    width = NULL, skip_invalid = FALSE
+) {
+  plotly_object("surface.contours.x", arg, environment(), list(...), skip_invalid)
+}
+
+#' Surface contours y objects
+#'
+#' The object for the \code{contours.y} of a surface trace
+#' (\code{\link{go_surface_contours}()}). \code{go_surface_contours_y()}
+#' creates one, with exactly its properties; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the color of the contour lines. Color: a CSS color
+#'   string or R color name.
+#' @param end Sets the end contour level value. Must be more than
+#'   `contours.start` Number.
+#' @param highlight Determines whether or not contour lines about the y
+#'   dimension are highlighted on hover. Logical.
+#' @param highlightcolor Sets the color of the highlighted contour lines.
+#'   Color: a CSS color string or R color name.
+#' @param highlightwidth Sets the width of the highlighted contour lines.
+#'   Number in the interval [1, 16].
+#' @param project A \code{\link{go_project}()} object or named list, with
+#'   properties \code{x}, \code{y} and \code{z} (see
+#'   \code{\link{go_project}()}).
+#' @param show Determines whether or not contour lines about the y
+#'   dimension are drawn. Logical.
+#' @param size Sets the step between each contour level. Must be positive.
+#'   Number in the interval [0, Inf].
+#' @param start Sets the starting contour level value. Must be less than
+#'   `contours.end` Number.
+#' @param usecolormap An alternate to "color". Determines whether or not
+#'   the contour lines are colored using the trace "colorscale". Logical.
+#' @param width Sets the width of the contour lines. Number in the interval
+#'   [1, 16].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_surface_contours_y} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_surface(
+#'     contours = go_surface_contours(
+#'       y = go_surface_contours_y(color = "red")
+#'     )
+#'   )
+go_surface_contours_y <- function(
+    arg = NULL, ..., color = NULL, end = NULL, highlight = NULL,
+    highlightcolor = NULL, highlightwidth = NULL, project = NULL,
+    show = NULL, size = NULL, start = NULL, usecolormap = NULL,
+    width = NULL, skip_invalid = FALSE
+) {
+  plotly_object("surface.contours.y", arg, environment(), list(...), skip_invalid)
+}
+
+#' Surface contours z objects
+#'
+#' The object for the \code{contours.z} of a surface trace
+#' (\code{\link{go_surface_contours}()}). \code{go_surface_contours_z()}
+#' creates one, with exactly its properties; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the color of the contour lines. Color: a CSS color
+#'   string or R color name.
+#' @param end Sets the end contour level value. Must be more than
+#'   `contours.start` Number.
+#' @param highlight Determines whether or not contour lines about the z
+#'   dimension are highlighted on hover. Logical.
+#' @param highlightcolor Sets the color of the highlighted contour lines.
+#'   Color: a CSS color string or R color name.
+#' @param highlightwidth Sets the width of the highlighted contour lines.
+#'   Number in the interval [1, 16].
+#' @param project A \code{\link{go_project}()} object or named list, with
+#'   properties \code{x}, \code{y} and \code{z} (see
+#'   \code{\link{go_project}()}).
+#' @param show Determines whether or not contour lines about the z
+#'   dimension are drawn. Logical.
+#' @param size Sets the step between each contour level. Must be positive.
+#'   Number in the interval [0, Inf].
+#' @param start Sets the starting contour level value. Must be less than
+#'   `contours.end` Number.
+#' @param usecolormap An alternate to "color". Determines whether or not
+#'   the contour lines are colored using the trace "colorscale". Logical.
+#' @param width Sets the width of the contour lines. Number in the interval
+#'   [1, 16].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_surface_contours_z} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_surface(
+#'     contours = go_surface_contours(
+#'       z = go_surface_contours_z(color = "red")
+#'     )
+#'   )
+go_surface_contours_z <- function(
+    arg = NULL, ..., color = NULL, end = NULL, highlight = NULL,
+    highlightcolor = NULL, highlightwidth = NULL, project = NULL,
+    show = NULL, size = NULL, start = NULL, usecolormap = NULL,
+    width = NULL, skip_invalid = FALSE
+) {
+  plotly_object("surface.contours.z", arg, environment(), list(...), skip_invalid)
+}
+
+#' Surface lighting objects
+#'
+#' The object for the \code{lighting} of a surface trace
+#' (\code{\link{go_surface}()}). \code{go_surface_lighting()} creates one,
+#' with exactly its properties; a named list with the same properties works
+#' too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param ambient Ambient light increases overall color visibility but can
+#'   wash out the image. Number in the interval [0, 1].
+#' @param diffuse Represents the extent that incident rays are reflected in
+#'   a range of angles. Number in the interval [0, 1].
+#' @param fresnel Represents the reflectance as a dependency of the viewing
+#'   angle; e.g. paper is reflective when viewing it from the edge of the
+#'   paper (almost 90 degrees), causing shine. Number in the interval [0,
+#'   5].
+#' @param roughness Alters specular reflection; the rougher the surface,
+#'   the wider and less contrasty the shine. Number in the interval [0, 1].
+#' @param specular Represents the level that incident rays are reflected in
+#'   a single direction, causing shine. Number in the interval [0, 2].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_surface_lighting} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_surface(
+#'     lighting = go_surface_lighting()
+#'   )
+go_surface_lighting <- function(
+    arg = NULL, ..., ambient = NULL, diffuse = NULL, fresnel = NULL,
+    roughness = NULL, specular = NULL, skip_invalid = FALSE
+) {
+  plotly_object("surface.lighting", arg, environment(), list(...), skip_invalid)
 }
 

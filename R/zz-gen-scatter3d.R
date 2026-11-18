@@ -12,26 +12,26 @@
 #' \code{add_scatter3d()} creates one and adds it to a figure.
 #'
 #' @details
-#' Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-#' = list(width = 2))}. Each nested object's properties are described in a
-#' section of its own near the end of this page (after \emph{Value}), titled
-#' with its path: \emph{marker properties}, \emph{marker.line properties},
-#' .... Objects that appear in several places in the schema can also be
-#' created with a constructor of their own, and are documented on its page:
-#' \code{\link{go_font}()}, \code{\link{go_colorbar}()},
-#' \code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-#' \code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-#' \code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-#' \code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-#' \code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-#' \code{\link{go_gradient}()}, \code{\link{go_label}()},
-#' \code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-#' \code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-#' \code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-#' \code{\link{go_root}()}, \code{\link{go_slices}()},
-#' \code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-#' Every property is checked against the plotly.js schema when the object is
-#' created or modified (see \code{\link{plotly_obj-modify}}).
+#' Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+#' objects of their constructors: every object in the schema has one,
+#' documented on its own page, with exactly that object's properties. Most
+#' are named after their path: \code{go_scatter_marker()},
+#' \code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+#' Objects that appear in several places share one: \code{\link{go_font}()},
+#' \code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+#' \code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+#' \code{\link{go_domain}()}, \code{\link{go_pattern}()},
+#' \code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+#' \code{\link{go_bins}()}, \code{\link{go_caps}()},
+#' \code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+#' \code{\link{go_label}()}, \code{\link{go_leaf}()},
+#' \code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+#' \code{\link{go_pathbar}()}, \code{\link{go_project}()},
+#' \code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+#' \code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+#' \code{\link{go_unifiedhovertitle}()}. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}).
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
@@ -139,16 +139,18 @@
 #'   to their order in data and layout. Number.
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param line A named list with properties \code{autocolorscale},
-#'   \code{cauto}, \code{cmax}, \code{cmid}, \code{cmin}, \code{color},
-#'   \code{coloraxis}, \code{colorbar}, \code{colorscale}, \code{dash},
-#'   \code{reversescale}, \code{showscale} and \code{width} (described in
-#'   section "line properties" below).
-#' @param marker A named list with properties \code{autocolorscale},
-#'   \code{cauto}, \code{cmax}, \code{cmid}, \code{cmin}, \code{color},
-#'   \code{coloraxis}, \code{colorbar}, \code{colorscale}, \code{line},
-#'   \code{opacity}, \code{reversescale} and 6 more (described in section
-#'   "marker properties" below).
+#' @param line A \code{\link{go_scatter3d_line}()} object or named list,
+#'   with properties \code{autocolorscale}, \code{cauto}, \code{cmax},
+#'   \code{cmid}, \code{cmin}, \code{color}, \code{coloraxis},
+#'   \code{colorbar}, \code{colorscale}, \code{dash}, \code{reversescale},
+#'   \code{showscale} and \code{width} (see
+#'   \code{\link{go_scatter3d_line}()}).
+#' @param marker A \code{\link{go_scatter3d_marker}()} object or named
+#'   list, with properties \code{autocolorscale}, \code{cauto},
+#'   \code{cmax}, \code{cmid}, \code{cmin}, \code{color}, \code{coloraxis},
+#'   \code{colorbar}, \code{colorscale}, \code{line}, \code{opacity},
+#'   \code{reversescale} and 6 more (see
+#'   \code{\link{go_scatter3d_marker}()}).
 #' @param meta Assigns extra meta information associated with this trace
 #'   that can be used in various text attributes. Attributes such as trace
 #'   `name`, graph, axis and colorbar `title.text`, annotation `text`
@@ -169,8 +171,9 @@
 #'   item and on hover. String.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
-#' @param projection A named list with properties \code{x}, \code{y} and
-#'   \code{z} (described in section "projection properties" below).
+#' @param projection A \code{\link{go_scatter3d_projection}()} object or
+#'   named list, with properties \code{x}, \code{y} and \code{z} (see
+#'   \code{\link{go_scatter3d_projection}()}).
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -306,268 +309,6 @@
 #'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
 #'
-#' @section line properties:
-#' \describe{
-#' \item{\code{autocolorscale}}{Determines whether the colorscale is a
-#' default palette (`autocolorscale: true`) or the palette determined by
-#' `line.colorscale`. Has an effect only if in `line.color` is set to a
-#' numerical array. In case `colorscale` is unspecified or `autocolorscale`
-#' is true, the default palette will be chosen according to whether numbers
-#' in the `color` array are all positive, all negative or mixed. Logical.}
-#' \item{\code{cauto}}{Determines whether or not the color domain is
-#' computed with respect to the input data (here in `line.color`) or the
-#' bounds set in `line.cmin` and `line.cmax` Has an effect only if in
-#' `line.color` is set to a numerical array. Defaults to `false` when
-#' `line.cmin` and `line.cmax` are set by the user. Logical.}
-#' \item{\code{cmax}}{Sets the upper bound of the color domain. Has an
-#' effect only if in `line.color` is set to a numerical array. Value should
-#' have the same units as in `line.color` and if set, `line.cmin` must be
-#' set as well. Number.}
-#' \item{\code{cmid}}{Sets the mid-point of the color domain by scaling
-#' `line.cmin` and/or `line.cmax` to be equidistant to this point. Has an
-#' effect only if in `line.color` is set to a numerical array. Value should
-#' have the same units as in `line.color`. Has no effect when `line.cauto`
-#' is `false`. Number.}
-#' \item{\code{cmin}}{Sets the lower bound of the color domain. Has an
-#' effect only if in `line.color` is set to a numerical array. Value should
-#' have the same units as in `line.color` and if set, `line.cmax` must be
-#' set as well. Number.}
-#' \item{\code{color}}{Sets the line color. It accepts either a specific
-#' color or an array of numbers that are mapped to the colorscale relative
-#' to the max and min values of the array or relative to `line.cmin` and
-#' `line.cmax` if set. Color: a CSS color string or R color name, or a
-#' number mapped to a color by \code{scatter3d.line.colorscale}, or a vector
-#' of these.}
-#' \item{\code{coloraxis}}{Sets a reference to a shared color axis.
-#' References to these shared color axes are "coloraxis", "coloraxis2",
-#' "coloraxis3", etc. Settings for these shared color axes are set in the
-#' layout, under `layout.coloraxis`, `layout.coloraxis2`, etc. Note that
-#' multiple color scales can be linked to the same color axis. Subplot id:
-#' \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
-#' \item{\code{colorbar}}{A \code{\link{go_colorbar}()} object or named
-#' list, with properties \code{bgcolor}, \code{bordercolor},
-#' \code{borderwidth}, \code{dtick}, \code{exponentformat},
-#' \code{labelalias}, \code{len}, \code{lenmode}, \code{minexponent},
-#' \code{nticks}, \code{orientation}, \code{outlinecolor} and 34 more (see
-#' \code{\link{go_colorbar}()}).}
-#' \item{\code{colorscale}}{Sets the colorscale. Has an effect only if in
-#' `line.color` is set to a numerical array. The colorscale must be an array
-#' containing arrays mapping a normalized value to an rgb, rgba, hex, hsl,
-#' hsla, hwb, or named color string. At minimum, a mapping for the lowest
-#' (0) and highest (1) values are required. For example, `[[0,
-#' 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
-#' colorscale in color space, use `line.cmin` and `line.cmax`.
-#' Alternatively, `colorscale` may be a palette name string of the following
-#' list:
-#' Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-#' Colorscale: a vector of colors, a two-column data.frame of (value,
-#' color), or the name of a sequential, diverging or cyclical scale in
-#' \code{\link{px_colors}()} (append \code{"_r"} to reverse).}
-#' \item{\code{dash}}{Sets the dash style of the lines. One of
-#' \code{"dash"}, \code{"dashdot"}, \code{"dot"}, \code{"longdash"},
-#' \code{"longdashdot"}, \code{"solid"}.}
-#' \item{\code{reversescale}}{Reverses the color mapping if true. Has an
-#' effect only if in `line.color` is set to a numerical array. If true,
-#' `line.cmin` will correspond to the last color in the array and
-#' `line.cmax` will correspond to the first color. Logical.}
-#' \item{\code{showscale}}{Determines whether or not a colorbar is displayed
-#' for this trace. Has an effect only if in `line.color` is set to a
-#' numerical array. Logical.}
-#' \item{\code{width}}{Sets the line width (in px). Number in the interval
-#' [0, Inf].}
-#' }
-#'
-#' @section marker properties:
-#' \describe{
-#' \item{\code{autocolorscale}}{Determines whether the colorscale is a
-#' default palette (`autocolorscale: true`) or the palette determined by
-#' `marker.colorscale`. Has an effect only if in `marker.color` is set to a
-#' numerical array. In case `colorscale` is unspecified or `autocolorscale`
-#' is true, the default palette will be chosen according to whether numbers
-#' in the `color` array are all positive, all negative or mixed. Logical.}
-#' \item{\code{cauto}}{Determines whether or not the color domain is
-#' computed with respect to the input data (here in `marker.color`) or the
-#' bounds set in `marker.cmin` and `marker.cmax` Has an effect only if in
-#' `marker.color` is set to a numerical array. Defaults to `false` when
-#' `marker.cmin` and `marker.cmax` are set by the user. Logical.}
-#' \item{\code{cmax}}{Sets the upper bound of the color domain. Has an
-#' effect only if in `marker.color` is set to a numerical array. Value
-#' should have the same units as in `marker.color` and if set, `marker.cmin`
-#' must be set as well. Number.}
-#' \item{\code{cmid}}{Sets the mid-point of the color domain by scaling
-#' `marker.cmin` and/or `marker.cmax` to be equidistant to this point. Has
-#' an effect only if in `marker.color` is set to a numerical array. Value
-#' should have the same units as in `marker.color`. Has no effect when
-#' `marker.cauto` is `false`. Number.}
-#' \item{\code{cmin}}{Sets the lower bound of the color domain. Has an
-#' effect only if in `marker.color` is set to a numerical array. Value
-#' should have the same units as in `marker.color` and if set, `marker.cmax`
-#' must be set as well. Number.}
-#' \item{\code{color}}{Sets the marker color. It accepts either a specific
-#' color or an array of numbers that are mapped to the colorscale relative
-#' to the max and min values of the array or relative to `marker.cmin` and
-#' `marker.cmax` if set. Color: a CSS color string or R color name, or a
-#' number mapped to a color by \code{scatter3d.marker.colorscale}, or a
-#' vector of these.}
-#' \item{\code{coloraxis}}{Sets a reference to a shared color axis.
-#' References to these shared color axes are "coloraxis", "coloraxis2",
-#' "coloraxis3", etc. Settings for these shared color axes are set in the
-#' layout, under `layout.coloraxis`, `layout.coloraxis2`, etc. Note that
-#' multiple color scales can be linked to the same color axis. Subplot id:
-#' \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
-#' \item{\code{colorbar}}{A \code{\link{go_colorbar}()} object or named
-#' list, with properties \code{bgcolor}, \code{bordercolor},
-#' \code{borderwidth}, \code{dtick}, \code{exponentformat},
-#' \code{labelalias}, \code{len}, \code{lenmode}, \code{minexponent},
-#' \code{nticks}, \code{orientation}, \code{outlinecolor} and 34 more (see
-#' \code{\link{go_colorbar}()}).}
-#' \item{\code{colorscale}}{Sets the colorscale. Has an effect only if in
-#' `marker.color` is set to a numerical array. The colorscale must be an
-#' array containing arrays mapping a normalized value to an rgb, rgba, hex,
-#' hsl, hsla, hwb, or named color string. At minimum, a mapping for the
-#' lowest (0) and highest (1) values are required. For example, `[[0,
-#' 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
-#' colorscale in color space, use `marker.cmin` and `marker.cmax`.
-#' Alternatively, `colorscale` may be a palette name string of the following
-#' list:
-#' Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-#' Colorscale: a vector of colors, a two-column data.frame of (value,
-#' color), or the name of a sequential, diverging or cyclical scale in
-#' \code{\link{px_colors}()} (append \code{"_r"} to reverse).}
-#' \item{\code{line}}{A named list with properties \code{autocolorscale},
-#' \code{cauto}, \code{cmax}, \code{cmid}, \code{cmin}, \code{color},
-#' \code{coloraxis}, \code{colorscale}, \code{reversescale} and \code{width}
-#' (described in section "marker.line properties" below).}
-#' \item{\code{opacity}}{Sets the marker opacity. Note that the marker
-#' opacity for scatter3d traces must be a scalar value for performance
-#' reasons. To set a blending opacity value (i.e. which is not transparent),
-#' set "marker.color" to an rgba color and use its alpha channel. Number in
-#' the interval [0, 1].}
-#' \item{\code{reversescale}}{Reverses the color mapping if true. Has an
-#' effect only if in `marker.color` is set to a numerical array. If true,
-#' `marker.cmin` will correspond to the last color in the array and
-#' `marker.cmax` will correspond to the first color. Logical.}
-#' \item{\code{showscale}}{Determines whether or not a colorbar is displayed
-#' for this trace. Has an effect only if in `marker.color` is set to a
-#' numerical array. Logical.}
-#' \item{\code{size}}{Sets the marker size (in px). Number in the interval
-#' [0, Inf], or a vector of these.}
-#' \item{\code{sizemin}}{Has an effect only if `marker.size` is set to a
-#' numerical array. Sets the minimum size (in px) of the rendered marker
-#' points. Number in the interval [0, Inf].}
-#' \item{\code{sizemode}}{Has an effect only if `marker.size` is set to a
-#' numerical array. Sets the rule for which the data in `size` is converted
-#' to pixels. One of \code{"diameter"}, \code{"area"}.}
-#' \item{\code{sizeref}}{Has an effect only if `marker.size` is set to a
-#' numerical array. Sets the scale factor used to determine the rendered
-#' size of marker points. Use with `sizemin` and `sizemode`. Number.}
-#' \item{\code{symbol}}{Sets the marker symbol type. One of \code{"circle"},
-#' \code{"circle-open"}, \code{"cross"}, \code{"diamond"},
-#' \code{"diamond-open"}, \code{"square"}, \code{"square-open"}, \code{"x"},
-#' or a vector of these.}
-#' }
-#'
-#' @section marker.line properties:
-#' \describe{
-#' \item{\code{autocolorscale}}{Determines whether the colorscale is a
-#' default palette (`autocolorscale: true`) or the palette determined by
-#' `marker.line.colorscale`. Has an effect only if in `marker.line.color` is
-#' set to a numerical array. In case `colorscale` is unspecified or
-#' `autocolorscale` is true, the default palette will be chosen according to
-#' whether numbers in the `color` array are all positive, all negative or
-#' mixed. Logical.}
-#' \item{\code{cauto}}{Determines whether or not the color domain is
-#' computed with respect to the input data (here in `marker.line.color`) or
-#' the bounds set in `marker.line.cmin` and `marker.line.cmax` Has an effect
-#' only if in `marker.line.color` is set to a numerical array. Defaults to
-#' `false` when `marker.line.cmin` and `marker.line.cmax` are set by the
-#' user. Logical.}
-#' \item{\code{cmax}}{Sets the upper bound of the color domain. Has an
-#' effect only if in `marker.line.color` is set to a numerical array. Value
-#' should have the same units as in `marker.line.color` and if set,
-#' `marker.line.cmin` must be set as well. Number.}
-#' \item{\code{cmid}}{Sets the mid-point of the color domain by scaling
-#' `marker.line.cmin` and/or `marker.line.cmax` to be equidistant to this
-#' point. Has an effect only if in `marker.line.color` is set to a numerical
-#' array. Value should have the same units as in `marker.line.color`. Has no
-#' effect when `marker.line.cauto` is `false`. Number.}
-#' \item{\code{cmin}}{Sets the lower bound of the color domain. Has an
-#' effect only if in `marker.line.color` is set to a numerical array. Value
-#' should have the same units as in `marker.line.color` and if set,
-#' `marker.line.cmax` must be set as well. Number.}
-#' \item{\code{color}}{Sets the marker.line color. It accepts either a
-#' specific color or an array of numbers that are mapped to the colorscale
-#' relative to the max and min values of the array or relative to
-#' `marker.line.cmin` and `marker.line.cmax` if set. Color: a CSS color
-#' string or R color name, or a number mapped to a color by
-#' \code{scatter3d.marker.line.colorscale}, or a vector of these.}
-#' \item{\code{coloraxis}}{Sets a reference to a shared color axis.
-#' References to these shared color axes are "coloraxis", "coloraxis2",
-#' "coloraxis3", etc. Settings for these shared color axes are set in the
-#' layout, under `layout.coloraxis`, `layout.coloraxis2`, etc. Note that
-#' multiple color scales can be linked to the same color axis. Subplot id:
-#' \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
-#' \item{\code{colorscale}}{Sets the colorscale. Has an effect only if in
-#' `marker.line.color` is set to a numerical array. The colorscale must be
-#' an array containing arrays mapping a normalized value to an rgb, rgba,
-#' hex, hsl, hsla, hwb, or named color string. At minimum, a mapping for the
-#' lowest (0) and highest (1) values are required. For example, `[[0,
-#' 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
-#' colorscale in color space, use `marker.line.cmin` and `marker.line.cmax`.
-#' Alternatively, `colorscale` may be a palette name string of the following
-#' list:
-#' Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-#' Colorscale: a vector of colors, a two-column data.frame of (value,
-#' color), or the name of a sequential, diverging or cyclical scale in
-#' \code{\link{px_colors}()} (append \code{"_r"} to reverse).}
-#' \item{\code{reversescale}}{Reverses the color mapping if true. Has an
-#' effect only if in `marker.line.color` is set to a numerical array. If
-#' true, `marker.line.cmin` will correspond to the last color in the array
-#' and `marker.line.cmax` will correspond to the first color. Logical.}
-#' \item{\code{width}}{Sets the width (in px) of the lines bounding the
-#' marker points. Number in the interval [0, Inf].}
-#' }
-#'
-#' @section projection properties:
-#' \describe{
-#' \item{\code{x}}{A named list with properties \code{opacity}, \code{scale}
-#' and \code{show} (described in section "projection.x properties" below).}
-#' \item{\code{y}}{A named list with properties \code{opacity}, \code{scale}
-#' and \code{show} (described in section "projection.y properties" below).}
-#' \item{\code{z}}{A named list with properties \code{opacity}, \code{scale}
-#' and \code{show} (described in section "projection.z properties" below).}
-#' }
-#'
-#' @section projection.x properties:
-#' \describe{
-#' \item{\code{opacity}}{Sets the projection color. Number in the interval
-#' [0, 1].}
-#' \item{\code{scale}}{Sets the scale factor determining the size of the
-#' projection marker points. Number in the interval [0, 10].}
-#' \item{\code{show}}{Sets whether or not projections are shown along the x
-#' axis. Logical.}
-#' }
-#'
-#' @section projection.y properties:
-#' \describe{
-#' \item{\code{opacity}}{Sets the projection color. Number in the interval
-#' [0, 1].}
-#' \item{\code{scale}}{Sets the scale factor determining the size of the
-#' projection marker points. Number in the interval [0, 10].}
-#' \item{\code{show}}{Sets whether or not projections are shown along the y
-#' axis. Logical.}
-#' }
-#'
-#' @section projection.z properties:
-#' \describe{
-#' \item{\code{opacity}}{Sets the projection color. Number in the interval
-#' [0, 1].}
-#' \item{\code{scale}}{Sets the scale factor determining the size of the
-#' projection marker points. Number in the interval [0, 10].}
-#' \item{\code{show}}{Sets whether or not projections are shown along the z
-#' axis. Logical.}
-#' }
-#'
 #' @noMd
 #' @export
 #' @examples
@@ -587,5 +328,486 @@ go_scatter3d <- function(
     z = NULL, zcalendar = NULL, zhoverformat = NULL, skip_invalid = FALSE
 ) {
   plotly_object("scatter3d", arg, environment(), list(...), skip_invalid)
+}
+
+#' Scatter3d line objects
+#'
+#' The object for the \code{line} of a scatter3d trace
+#' (\code{\link{go_scatter3d}()}). \code{go_scatter3d_line()} creates one,
+#' with exactly its properties; a named list with the same properties works
+#' too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param autocolorscale Determines whether the colorscale is a default
+#'   palette (`autocolorscale: true`) or the palette determined by
+#'   `line.colorscale`. Has an effect only if in `line.color` is set to a
+#'   numerical array. In case `colorscale` is unspecified or
+#'   `autocolorscale` is true, the default palette will be chosen according
+#'   to whether numbers in the `color` array are all positive, all negative
+#'   or mixed. Logical.
+#' @param cauto Determines whether or not the color domain is computed with
+#'   respect to the input data (here in `line.color`) or the bounds set in
+#'   `line.cmin` and `line.cmax` Has an effect only if in `line.color` is
+#'   set to a numerical array. Defaults to `false` when `line.cmin` and
+#'   `line.cmax` are set by the user. Logical.
+#' @param cmax Sets the upper bound of the color domain. Has an effect only
+#'   if in `line.color` is set to a numerical array. Value should have the
+#'   same units as in `line.color` and if set, `line.cmin` must be set as
+#'   well. Number.
+#' @param cmid Sets the mid-point of the color domain by scaling
+#'   `line.cmin` and/or `line.cmax` to be equidistant to this point. Has an
+#'   effect only if in `line.color` is set to a numerical array. Value
+#'   should have the same units as in `line.color`. Has no effect when
+#'   `line.cauto` is `false`. Number.
+#' @param cmin Sets the lower bound of the color domain. Has an effect only
+#'   if in `line.color` is set to a numerical array. Value should have the
+#'   same units as in `line.color` and if set, `line.cmax` must be set as
+#'   well. Number.
+#' @param color Sets the line color. It accepts either a specific color or
+#'   an array of numbers that are mapped to the colorscale relative to the
+#'   max and min values of the array or relative to `line.cmin` and
+#'   `line.cmax` if set. Color: a CSS color string or R color name, or a
+#'   number mapped to a color by \code{scatter3d.line.colorscale}, or a
+#'   vector of these.
+#' @param coloraxis Sets a reference to a shared color axis. References to
+#'   these shared color axes are "coloraxis", "coloraxis2", "coloraxis3",
+#'   etc. Settings for these shared color axes are set in the layout, under
+#'   `layout.coloraxis`, `layout.coloraxis2`, etc. Note that multiple color
+#'   scales can be linked to the same color axis. Subplot id:
+#'   \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....
+#' @param colorbar A \code{\link{go_colorbar}()} object or named list, with
+#'   properties \code{bgcolor}, \code{bordercolor}, \code{borderwidth},
+#'   \code{dtick}, \code{exponentformat}, \code{labelalias}, \code{len},
+#'   \code{lenmode}, \code{minexponent}, \code{nticks}, \code{orientation},
+#'   \code{outlinecolor} and 34 more (see \code{\link{go_colorbar}()}).
+#' @param colorscale Sets the colorscale. Has an effect only if in
+#'   `line.color` is set to a numerical array. The colorscale must be an
+#'   array containing arrays mapping a normalized value to an rgb, rgba,
+#'   hex, hsl, hsla, hwb, or named color string. At minimum, a mapping for
+#'   the lowest (0) and highest (1) values are required. For example, `[[0,
+#'   'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
+#'   colorscale in color space, use `line.cmin` and `line.cmax`.
+#'   Alternatively, `colorscale` may be a palette name string of the
+#'   following list:
+#'   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
+#'   Colorscale: a vector of colors, a two-column data.frame of (value,
+#'   color), or the name of a sequential, diverging or cyclical scale in
+#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
+#' @param dash Sets the dash style of the lines. One of \code{"dash"},
+#'   \code{"dashdot"}, \code{"dot"}, \code{"longdash"},
+#'   \code{"longdashdot"}, \code{"solid"}.
+#' @param reversescale Reverses the color mapping if true. Has an effect
+#'   only if in `line.color` is set to a numerical array. If true,
+#'   `line.cmin` will correspond to the last color in the array and
+#'   `line.cmax` will correspond to the first color. Logical.
+#' @param showscale Determines whether or not a colorbar is displayed for
+#'   this trace. Has an effect only if in `line.color` is set to a
+#'   numerical array. Logical.
+#' @param width Sets the line width (in px). Number in the interval [0,
+#'   Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_scatter3d_line} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_scatter3d(
+#'     line = go_scatter3d_line(color = "red")
+#'   )
+go_scatter3d_line <- function(
+    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
+    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
+    colorbar = NULL, colorscale = NULL, dash = NULL, reversescale = NULL,
+    showscale = NULL, width = NULL, skip_invalid = FALSE
+) {
+  plotly_object("scatter3d.line", arg, environment(), list(...), skip_invalid)
+}
+
+#' Scatter3d marker objects
+#'
+#' The object for the \code{marker} of a scatter3d trace
+#' (\code{\link{go_scatter3d}()}). \code{go_scatter3d_marker()} creates one,
+#' with exactly its properties; a named list with the same properties works
+#' too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param autocolorscale Determines whether the colorscale is a default
+#'   palette (`autocolorscale: true`) or the palette determined by
+#'   `marker.colorscale`. Has an effect only if in `marker.color` is set to
+#'   a numerical array. In case `colorscale` is unspecified or
+#'   `autocolorscale` is true, the default palette will be chosen according
+#'   to whether numbers in the `color` array are all positive, all negative
+#'   or mixed. Logical.
+#' @param cauto Determines whether or not the color domain is computed with
+#'   respect to the input data (here in `marker.color`) or the bounds set
+#'   in `marker.cmin` and `marker.cmax` Has an effect only if in
+#'   `marker.color` is set to a numerical array. Defaults to `false` when
+#'   `marker.cmin` and `marker.cmax` are set by the user. Logical.
+#' @param cmax Sets the upper bound of the color domain. Has an effect only
+#'   if in `marker.color` is set to a numerical array. Value should have
+#'   the same units as in `marker.color` and if set, `marker.cmin` must be
+#'   set as well. Number.
+#' @param cmid Sets the mid-point of the color domain by scaling
+#'   `marker.cmin` and/or `marker.cmax` to be equidistant to this point.
+#'   Has an effect only if in `marker.color` is set to a numerical array.
+#'   Value should have the same units as in `marker.color`. Has no effect
+#'   when `marker.cauto` is `false`. Number.
+#' @param cmin Sets the lower bound of the color domain. Has an effect only
+#'   if in `marker.color` is set to a numerical array. Value should have
+#'   the same units as in `marker.color` and if set, `marker.cmax` must be
+#'   set as well. Number.
+#' @param color Sets the marker color. It accepts either a specific color
+#'   or an array of numbers that are mapped to the colorscale relative to
+#'   the max and min values of the array or relative to `marker.cmin` and
+#'   `marker.cmax` if set. Color: a CSS color string or R color name, or a
+#'   number mapped to a color by \code{scatter3d.marker.colorscale}, or a
+#'   vector of these.
+#' @param coloraxis Sets a reference to a shared color axis. References to
+#'   these shared color axes are "coloraxis", "coloraxis2", "coloraxis3",
+#'   etc. Settings for these shared color axes are set in the layout, under
+#'   `layout.coloraxis`, `layout.coloraxis2`, etc. Note that multiple color
+#'   scales can be linked to the same color axis. Subplot id:
+#'   \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....
+#' @param colorbar A \code{\link{go_colorbar}()} object or named list, with
+#'   properties \code{bgcolor}, \code{bordercolor}, \code{borderwidth},
+#'   \code{dtick}, \code{exponentformat}, \code{labelalias}, \code{len},
+#'   \code{lenmode}, \code{minexponent}, \code{nticks}, \code{orientation},
+#'   \code{outlinecolor} and 34 more (see \code{\link{go_colorbar}()}).
+#' @param colorscale Sets the colorscale. Has an effect only if in
+#'   `marker.color` is set to a numerical array. The colorscale must be an
+#'   array containing arrays mapping a normalized value to an rgb, rgba,
+#'   hex, hsl, hsla, hwb, or named color string. At minimum, a mapping for
+#'   the lowest (0) and highest (1) values are required. For example, `[[0,
+#'   'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
+#'   colorscale in color space, use `marker.cmin` and `marker.cmax`.
+#'   Alternatively, `colorscale` may be a palette name string of the
+#'   following list:
+#'   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
+#'   Colorscale: a vector of colors, a two-column data.frame of (value,
+#'   color), or the name of a sequential, diverging or cyclical scale in
+#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
+#' @param line A \code{\link{go_scatter3d_marker_line}()} object or named
+#'   list, with properties \code{autocolorscale}, \code{cauto},
+#'   \code{cmax}, \code{cmid}, \code{cmin}, \code{color}, \code{coloraxis},
+#'   \code{colorscale}, \code{reversescale} and \code{width} (see
+#'   \code{\link{go_scatter3d_marker_line}()}).
+#' @param opacity Sets the marker opacity. Note that the marker opacity for
+#'   scatter3d traces must be a scalar value for performance reasons. To
+#'   set a blending opacity value (i.e. which is not transparent), set
+#'   "marker.color" to an rgba color and use its alpha channel. Number in
+#'   the interval [0, 1].
+#' @param reversescale Reverses the color mapping if true. Has an effect
+#'   only if in `marker.color` is set to a numerical array. If true,
+#'   `marker.cmin` will correspond to the last color in the array and
+#'   `marker.cmax` will correspond to the first color. Logical.
+#' @param showscale Determines whether or not a colorbar is displayed for
+#'   this trace. Has an effect only if in `marker.color` is set to a
+#'   numerical array. Logical.
+#' @param size Sets the marker size (in px). Number in the interval [0,
+#'   Inf], or a vector of these.
+#' @param sizemin Has an effect only if `marker.size` is set to a numerical
+#'   array. Sets the minimum size (in px) of the rendered marker points.
+#'   Number in the interval [0, Inf].
+#' @param sizemode Has an effect only if `marker.size` is set to a
+#'   numerical array. Sets the rule for which the data in `size` is
+#'   converted to pixels. One of \code{"diameter"}, \code{"area"}.
+#' @param sizeref Has an effect only if `marker.size` is set to a numerical
+#'   array. Sets the scale factor used to determine the rendered size of
+#'   marker points. Use with `sizemin` and `sizemode`. Number.
+#' @param symbol Sets the marker symbol type. One of \code{"circle"},
+#'   \code{"circle-open"}, \code{"cross"}, \code{"diamond"},
+#'   \code{"diamond-open"}, \code{"square"}, \code{"square-open"},
+#'   \code{"x"}, or a vector of these.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_scatter3d_marker} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_scatter3d(
+#'     marker = go_scatter3d_marker(color = "red")
+#'   )
+go_scatter3d_marker <- function(
+    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
+    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
+    colorbar = NULL, colorscale = NULL, line = NULL, opacity = NULL,
+    reversescale = NULL, showscale = NULL, size = NULL, sizemin = NULL,
+    sizemode = NULL, sizeref = NULL, symbol = NULL, skip_invalid = FALSE
+) {
+  plotly_object("scatter3d.marker", arg, environment(), list(...), skip_invalid)
+}
+
+#' Scatter3d marker line objects
+#'
+#' The object for the \code{marker.line} of a scatter3d trace
+#' (\code{\link{go_scatter3d_marker}()}). \code{go_scatter3d_marker_line()}
+#' creates one, with exactly its properties; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param autocolorscale Determines whether the colorscale is a default
+#'   palette (`autocolorscale: true`) or the palette determined by
+#'   `marker.line.colorscale`. Has an effect only if in `marker.line.color`
+#'   is set to a numerical array. In case `colorscale` is unspecified or
+#'   `autocolorscale` is true, the default palette will be chosen according
+#'   to whether numbers in the `color` array are all positive, all negative
+#'   or mixed. Logical.
+#' @param cauto Determines whether or not the color domain is computed with
+#'   respect to the input data (here in `marker.line.color`) or the bounds
+#'   set in `marker.line.cmin` and `marker.line.cmax` Has an effect only if
+#'   in `marker.line.color` is set to a numerical array. Defaults to
+#'   `false` when `marker.line.cmin` and `marker.line.cmax` are set by the
+#'   user. Logical.
+#' @param cmax Sets the upper bound of the color domain. Has an effect only
+#'   if in `marker.line.color` is set to a numerical array. Value should
+#'   have the same units as in `marker.line.color` and if set,
+#'   `marker.line.cmin` must be set as well. Number.
+#' @param cmid Sets the mid-point of the color domain by scaling
+#'   `marker.line.cmin` and/or `marker.line.cmax` to be equidistant to this
+#'   point. Has an effect only if in `marker.line.color` is set to a
+#'   numerical array. Value should have the same units as in
+#'   `marker.line.color`. Has no effect when `marker.line.cauto` is
+#'   `false`. Number.
+#' @param cmin Sets the lower bound of the color domain. Has an effect only
+#'   if in `marker.line.color` is set to a numerical array. Value should
+#'   have the same units as in `marker.line.color` and if set,
+#'   `marker.line.cmax` must be set as well. Number.
+#' @param color Sets the marker.line color. It accepts either a specific
+#'   color or an array of numbers that are mapped to the colorscale
+#'   relative to the max and min values of the array or relative to
+#'   `marker.line.cmin` and `marker.line.cmax` if set. Color: a CSS color
+#'   string or R color name, or a number mapped to a color by
+#'   \code{scatter3d.marker.line.colorscale}, or a vector of these.
+#' @param coloraxis Sets a reference to a shared color axis. References to
+#'   these shared color axes are "coloraxis", "coloraxis2", "coloraxis3",
+#'   etc. Settings for these shared color axes are set in the layout, under
+#'   `layout.coloraxis`, `layout.coloraxis2`, etc. Note that multiple color
+#'   scales can be linked to the same color axis. Subplot id:
+#'   \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....
+#' @param colorscale Sets the colorscale. Has an effect only if in
+#'   `marker.line.color` is set to a numerical array. The colorscale must
+#'   be an array containing arrays mapping a normalized value to an rgb,
+#'   rgba, hex, hsl, hsla, hwb, or named color string. At minimum, a
+#'   mapping for the lowest (0) and highest (1) values are required. For
+#'   example, `[[0, 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the
+#'   bounds of the colorscale in color space, use `marker.line.cmin` and
+#'   `marker.line.cmax`. Alternatively, `colorscale` may be a palette name
+#'   string of the following list:
+#'   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
+#'   Colorscale: a vector of colors, a two-column data.frame of (value,
+#'   color), or the name of a sequential, diverging or cyclical scale in
+#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
+#' @param reversescale Reverses the color mapping if true. Has an effect
+#'   only if in `marker.line.color` is set to a numerical array. If true,
+#'   `marker.line.cmin` will correspond to the last color in the array and
+#'   `marker.line.cmax` will correspond to the first color. Logical.
+#' @param width Sets the width (in px) of the lines bounding the marker
+#'   points. Number in the interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_scatter3d_marker_line} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_scatter3d(
+#'     marker = go_scatter3d_marker(
+#'       line = go_scatter3d_marker_line(color = "red")
+#'     )
+#'   )
+go_scatter3d_marker_line <- function(
+    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
+    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
+    colorscale = NULL, reversescale = NULL, width = NULL,
+    skip_invalid = FALSE
+) {
+  plotly_object("scatter3d.marker.line", arg, environment(), list(...), skip_invalid)
+}
+
+#' Scatter3d projection objects
+#'
+#' The object for the \code{projection} of a scatter3d trace
+#' (\code{\link{go_scatter3d}()}). \code{go_scatter3d_projection()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param x A \code{\link{go_scatter3d_projection_x}()} object or named
+#'   list, with properties \code{opacity}, \code{scale} and \code{show}
+#'   (see \code{\link{go_scatter3d_projection_x}()}).
+#' @param y A \code{\link{go_scatter3d_projection_y}()} object or named
+#'   list, with properties \code{opacity}, \code{scale} and \code{show}
+#'   (see \code{\link{go_scatter3d_projection_y}()}).
+#' @param z A \code{\link{go_scatter3d_projection_z}()} object or named
+#'   list, with properties \code{opacity}, \code{scale} and \code{show}
+#'   (see \code{\link{go_scatter3d_projection_z}()}).
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_scatter3d_projection} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_scatter3d(
+#'     projection = go_scatter3d_projection()
+#'   )
+go_scatter3d_projection <- function(
+    arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
+) {
+  plotly_object("scatter3d.projection", arg, environment(), list(...), skip_invalid)
+}
+
+#' Scatter3d projection x objects
+#'
+#' The object for the \code{projection.x} of a scatter3d trace
+#' (\code{\link{go_scatter3d_projection}()}).
+#' \code{go_scatter3d_projection_x()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param opacity Sets the projection color. Number in the interval [0, 1].
+#' @param scale Sets the scale factor determining the size of the
+#'   projection marker points. Number in the interval [0, 10].
+#' @param show Sets whether or not projections are shown along the x axis.
+#'   Logical.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_scatter3d_projection_x} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_scatter3d(
+#'     projection = go_scatter3d_projection(
+#'       x = go_scatter3d_projection_x(opacity = 0.5)
+#'     )
+#'   )
+go_scatter3d_projection_x <- function(
+    arg = NULL, ..., opacity = NULL, scale = NULL, show = NULL,
+    skip_invalid = FALSE
+) {
+  plotly_object("scatter3d.projection.x", arg, environment(), list(...), skip_invalid)
+}
+
+#' Scatter3d projection y objects
+#'
+#' The object for the \code{projection.y} of a scatter3d trace
+#' (\code{\link{go_scatter3d_projection}()}).
+#' \code{go_scatter3d_projection_y()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param opacity Sets the projection color. Number in the interval [0, 1].
+#' @param scale Sets the scale factor determining the size of the
+#'   projection marker points. Number in the interval [0, 10].
+#' @param show Sets whether or not projections are shown along the y axis.
+#'   Logical.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_scatter3d_projection_y} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_scatter3d(
+#'     projection = go_scatter3d_projection(
+#'       y = go_scatter3d_projection_y(opacity = 0.5)
+#'     )
+#'   )
+go_scatter3d_projection_y <- function(
+    arg = NULL, ..., opacity = NULL, scale = NULL, show = NULL,
+    skip_invalid = FALSE
+) {
+  plotly_object("scatter3d.projection.y", arg, environment(), list(...), skip_invalid)
+}
+
+#' Scatter3d projection z objects
+#'
+#' The object for the \code{projection.z} of a scatter3d trace
+#' (\code{\link{go_scatter3d_projection}()}).
+#' \code{go_scatter3d_projection_z()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param opacity Sets the projection color. Number in the interval [0, 1].
+#' @param scale Sets the scale factor determining the size of the
+#'   projection marker points. Number in the interval [0, 10].
+#' @param show Sets whether or not projections are shown along the z axis.
+#'   Logical.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_scatter3d_projection_z} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_scatter3d(
+#'     projection = go_scatter3d_projection(
+#'       z = go_scatter3d_projection_z(opacity = 0.5)
+#'     )
+#'   )
+go_scatter3d_projection_z <- function(
+    arg = NULL, ..., opacity = NULL, scale = NULL, show = NULL,
+    skip_invalid = FALSE
+) {
+  plotly_object("scatter3d.projection.z", arg, environment(), list(...), skip_invalid)
 }
 

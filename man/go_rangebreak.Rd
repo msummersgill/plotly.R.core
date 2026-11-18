@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_rangebreak}
 \alias{go_rangebreak}
-\title{Axis range breaks}
+\title{Rangebreak objects}
 \usage{
 go_rangebreak(
   arg = NULL,
@@ -70,9 +70,9 @@ instead of raising an error.}
 A \code{go_rangebreak} object (a named list).
 }
 \description{
-A gap in a date axis, such as weekends or nights. Axes take a list of
-them as \code{rangebreaks}. \code{go_rangebreak()} creates one; a named
-list with the same properties works too.
+Used for \code{rangebreak} in 2 places in the schema.
+\code{go_rangebreak()} creates one; a named list with the same properties
+works too.
 }
 \details{
 These objects appear in 2 places in the plotly.js schema (properties
@@ -80,6 +80,9 @@ named \code{rangebreak}), all with the same properties and rules.
 }
 \examples{
 go_figure() |>
-  add_scatter(x = as.Date("2024-01-01") + 0:29, y = cumsum(rnorm(30))) |>
-  update_xaxes(rangebreaks = list(go_rangebreak(bounds = c("sat", "mon"))))
+  update_layout(
+    xaxis = go_xaxis(
+      rangebreaks = list(go_rangebreak())
+    )
+  )
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_pattern}
 \alias{go_pattern}
-\title{Fill patterns}
+\title{Pattern objects}
 \usage{
 go_pattern(
   arg = NULL,
@@ -69,8 +69,8 @@ instead of raising an error.}
 A \code{go_pattern} object (a named list).
 }
 \description{
-A fill pattern for bars, areas and other filled marks (\code{marker =
-list(pattern = ...)}, \code{fillpattern}). \code{go_pattern()} creates
+Sets the pattern within the marker. Used for \code{pattern},
+\code{fillpattern} in 9 places in the schema. \code{go_pattern()} creates
 one; a named list with the same properties works too.
 }
 \details{
@@ -80,5 +80,9 @@ and rules.
 }
 \examples{
 go_figure() |>
-  add_bar(x = c("a", "b"), y = c(2, 3), marker = list(pattern = go_pattern(shape = "/")))
+  add_bar(
+    marker = go_bar_marker(
+      pattern = go_pattern(size = 10)
+    )
+  )
 }

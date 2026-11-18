@@ -14,26 +14,26 @@
 #' \code{add_ohlc()} creates one and adds it to a figure.
 #'
 #' @details
-#' Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-#' = list(width = 2))}. Each nested object's properties are described in a
-#' section of its own near the end of this page (after \emph{Value}), titled
-#' with its path: \emph{marker properties}, \emph{marker.line properties},
-#' .... Objects that appear in several places in the schema can also be
-#' created with a constructor of their own, and are documented on its page:
-#' \code{\link{go_font}()}, \code{\link{go_colorbar}()},
-#' \code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-#' \code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-#' \code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-#' \code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-#' \code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-#' \code{\link{go_gradient}()}, \code{\link{go_label}()},
-#' \code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-#' \code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-#' \code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-#' \code{\link{go_root}()}, \code{\link{go_slices}()},
-#' \code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-#' Every property is checked against the plotly.js schema when the object is
-#' created or modified (see \code{\link{plotly_obj-modify}}).
+#' Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+#' objects of their constructors: every object in the schema has one,
+#' documented on its own page, with exactly that object's properties. Most
+#' are named after their path: \code{go_scatter_marker()},
+#' \code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+#' Objects that appear in several places share one: \code{\link{go_font}()},
+#' \code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+#' \code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+#' \code{\link{go_domain}()}, \code{\link{go_pattern}()},
+#' \code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+#' \code{\link{go_bins}()}, \code{\link{go_caps}()},
+#' \code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+#' \code{\link{go_label}()}, \code{\link{go_leaf}()},
+#' \code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+#' \code{\link{go_pathbar}()}, \code{\link{go_project}()},
+#' \code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+#' \code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+#' \code{\link{go_unifiedhovertitle}()}. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}).
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
@@ -52,8 +52,9 @@
 #'   added to the trace. A \code{crosstalk::SharedData} works the same way,
 #'   and links the trace to its crosstalk group (see
 #'   \code{\link{highlight}()}).
-#' @param decreasing A named list with properties \code{line} (described in
-#'   section "decreasing properties" below).
+#' @param decreasing A \code{\link{go_ohlc_decreasing}()} object or named
+#'   list, with properties \code{line} (see
+#'   \code{\link{go_ohlc_decreasing}()}).
 #' @param fig A \code{go_figure} object.
 #' @param high Sets the high values. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
@@ -104,8 +105,9 @@
 #'   constancy of data points during animation. Should be an array of
 #'   strings, not numbers or any other type. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
-#' @param increasing A named list with properties \code{line} (described in
-#'   section "increasing properties" below).
+#' @param increasing A \code{\link{go_ohlc_increasing}()} object or named
+#'   list, with properties \code{line} (see
+#'   \code{\link{go_ohlc_increasing}()}).
 #' @param legend Sets the reference to a legend to show this trace in.
 #'   References to these legends are "legend", "legend2", "legend3", etc.
 #'   Settings for these legends are set in the layout, under
@@ -127,8 +129,9 @@
 #'   to their order in data and layout. Number.
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param line A named list with properties \code{dash} and \code{width}
-#'   (described in section "line properties" below).
+#' @param line A \code{\link{go_ohlc_line}()} object or named list, with
+#'   properties \code{dash} and \code{width} (see
+#'   \code{\link{go_ohlc_line}()}).
 #' @param low Sets the low values. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
 #' @param meta Assigns extra meta information associated with this trace
@@ -248,63 +251,6 @@
 #'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
 #'
-#' @section decreasing properties:
-#' \describe{
-#' \item{\code{line}}{A named list with properties \code{color}, \code{dash}
-#' and \code{width} (described in section "decreasing.line properties"
-#' below).}
-#' }
-#'
-#' @section decreasing.line properties:
-#' \describe{
-#' \item{\code{color}}{Sets the line color. Color: a CSS color string or R
-#' color name.}
-#' \item{\code{dash}}{Sets the dash style of lines. Set to a dash type
-#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
-#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
-#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
-#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
-#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
-#' \item{\code{width}}{Sets the line width (in px). Number in the interval
-#' [0, Inf].}
-#' }
-#'
-#' @section increasing properties:
-#' \describe{
-#' \item{\code{line}}{A named list with properties \code{color}, \code{dash}
-#' and \code{width} (described in section "increasing.line properties"
-#' below).}
-#' }
-#'
-#' @section increasing.line properties:
-#' \describe{
-#' \item{\code{color}}{Sets the line color. Color: a CSS color string or R
-#' color name.}
-#' \item{\code{dash}}{Sets the dash style of lines. Set to a dash type
-#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
-#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
-#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
-#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
-#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
-#' \item{\code{width}}{Sets the line width (in px). Number in the interval
-#' [0, Inf].}
-#' }
-#'
-#' @section line properties:
-#' \describe{
-#' \item{\code{dash}}{Sets the dash style of lines. Set to a dash type
-#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
-#' or a dash length list in px (eg "5px,10px,2px,2px"). Note that this style
-#' setting can also be set per direction via `increasing.line.dash` and
-#' `decreasing.line.dash`. One of \code{"solid"}, \code{"dot"},
-#' \code{"dash"}, \code{"longdash"}, \code{"dashdot"}, \code{"longdashdot"},
-#' or a string matching
-#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
-#' \item{\code{width}}{Sets the line width (in px). Note that this style
-#' setting can also be set per direction via `increasing.line.width` and
-#' `decreasing.line.width`. Number in the interval [0, Inf].}
-#' }
-#'
 #' @noMd
 #' @export
 #' @examples
@@ -323,5 +269,205 @@ go_ohlc <- function(
     yhoverformat = NULL, zorder = NULL, skip_invalid = FALSE
 ) {
   plotly_object("ohlc", arg, environment(), list(...), skip_invalid)
+}
+
+#' Ohlc decreasing objects
+#'
+#' The object for the \code{decreasing} of an ohlc trace
+#' (\code{\link{go_ohlc}()}). \code{go_ohlc_decreasing()} creates one, with
+#' exactly its properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param line A \code{\link{go_ohlc_decreasing_line}()} object or named
+#'   list, with properties \code{color}, \code{dash} and \code{width} (see
+#'   \code{\link{go_ohlc_decreasing_line}()}).
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_ohlc_decreasing} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_ohlc(
+#'     decreasing = go_ohlc_decreasing()
+#'   )
+go_ohlc_decreasing <- function(
+    arg = NULL, ..., line = NULL, skip_invalid = FALSE
+) {
+  plotly_object("ohlc.decreasing", arg, environment(), list(...), skip_invalid)
+}
+
+#' Ohlc decreasing line objects
+#'
+#' The object for the \code{decreasing.line} of an ohlc trace
+#' (\code{\link{go_ohlc_decreasing}()}). \code{go_ohlc_decreasing_line()}
+#' creates one, with exactly its properties; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the line color. Color: a CSS color string or R color
+#'   name.
+#' @param dash Sets the dash style of lines. Set to a dash type string
+#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
+#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
+#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
+#'   \code{"longdashdot"}, or a string matching
+#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
+#' @param width Sets the line width (in px). Number in the interval [0,
+#'   Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_ohlc_decreasing_line} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_ohlc(
+#'     decreasing = go_ohlc_decreasing(
+#'       line = go_ohlc_decreasing_line(color = "red")
+#'     )
+#'   )
+go_ohlc_decreasing_line <- function(
+    arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
+    skip_invalid = FALSE
+) {
+  plotly_object("ohlc.decreasing.line", arg, environment(), list(...), skip_invalid)
+}
+
+#' Ohlc increasing objects
+#'
+#' The object for the \code{increasing} of an ohlc trace
+#' (\code{\link{go_ohlc}()}). \code{go_ohlc_increasing()} creates one, with
+#' exactly its properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param line A \code{\link{go_ohlc_increasing_line}()} object or named
+#'   list, with properties \code{color}, \code{dash} and \code{width} (see
+#'   \code{\link{go_ohlc_increasing_line}()}).
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_ohlc_increasing} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_ohlc(
+#'     increasing = go_ohlc_increasing()
+#'   )
+go_ohlc_increasing <- function(
+    arg = NULL, ..., line = NULL, skip_invalid = FALSE
+) {
+  plotly_object("ohlc.increasing", arg, environment(), list(...), skip_invalid)
+}
+
+#' Ohlc increasing line objects
+#'
+#' The object for the \code{increasing.line} of an ohlc trace
+#' (\code{\link{go_ohlc_increasing}()}). \code{go_ohlc_increasing_line()}
+#' creates one, with exactly its properties; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the line color. Color: a CSS color string or R color
+#'   name.
+#' @param dash Sets the dash style of lines. Set to a dash type string
+#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
+#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
+#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
+#'   \code{"longdashdot"}, or a string matching
+#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
+#' @param width Sets the line width (in px). Number in the interval [0,
+#'   Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_ohlc_increasing_line} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_ohlc(
+#'     increasing = go_ohlc_increasing(
+#'       line = go_ohlc_increasing_line(color = "red")
+#'     )
+#'   )
+go_ohlc_increasing_line <- function(
+    arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
+    skip_invalid = FALSE
+) {
+  plotly_object("ohlc.increasing.line", arg, environment(), list(...), skip_invalid)
+}
+
+#' Ohlc line objects
+#'
+#' The object for the \code{line} of an ohlc trace
+#' (\code{\link{go_ohlc}()}). \code{go_ohlc_line()} creates one, with
+#' exactly its properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param dash Sets the dash style of lines. Set to a dash type string
+#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
+#'   dash length list in px (eg "5px,10px,2px,2px"). Note that this style
+#'   setting can also be set per direction via `increasing.line.dash` and
+#'   `decreasing.line.dash`. One of \code{"solid"}, \code{"dot"},
+#'   \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
+#'   \code{"longdashdot"}, or a string matching
+#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
+#' @param width Sets the line width (in px). Note that this style setting
+#'   can also be set per direction via `increasing.line.width` and
+#'   `decreasing.line.width`. Number in the interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_ohlc_line} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_ohlc(
+#'     line = go_ohlc_line(width = 2)
+#'   )
+go_ohlc_line <- function(
+    arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE
+) {
+  plotly_object("ohlc.line", arg, environment(), list(...), skip_invalid)
 }
 

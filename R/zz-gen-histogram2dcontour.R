@@ -13,26 +13,26 @@
 #' figure.
 #'
 #' @details
-#' Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-#' = list(width = 2))}. Each nested object's properties are described in a
-#' section of its own near the end of this page (after \emph{Value}), titled
-#' with its path: \emph{marker properties}, \emph{marker.line properties},
-#' .... Objects that appear in several places in the schema can also be
-#' created with a constructor of their own, and are documented on its page:
-#' \code{\link{go_font}()}, \code{\link{go_colorbar}()},
-#' \code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-#' \code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-#' \code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-#' \code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-#' \code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-#' \code{\link{go_gradient}()}, \code{\link{go_label}()},
-#' \code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-#' \code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-#' \code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-#' \code{\link{go_root}()}, \code{\link{go_slices}()},
-#' \code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-#' Every property is checked against the plotly.js schema when the object is
-#' created or modified (see \code{\link{plotly_obj-modify}}).
+#' Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+#' objects of their constructors: every object in the schema has one,
+#' documented on its own page, with exactly that object's properties. Most
+#' are named after their path: \code{go_scatter_marker()},
+#' \code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+#' Objects that appear in several places share one: \code{\link{go_font}()},
+#' \code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+#' \code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+#' \code{\link{go_domain}()}, \code{\link{go_pattern}()},
+#' \code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+#' \code{\link{go_bins}()}, \code{\link{go_caps}()},
+#' \code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+#' \code{\link{go_label}()}, \code{\link{go_leaf}()},
+#' \code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+#' \code{\link{go_pathbar}()}, \code{\link{go_project}()},
+#' \code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+#' \code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+#' \code{\link{go_unifiedhovertitle}()}. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}).
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
@@ -82,11 +82,12 @@
 #'   Colorscale: a vector of colors, a two-column data.frame of (value,
 #'   color), or the name of a sequential, diverging or cyclical scale in
 #'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
-#' @param contours A named list with properties \code{coloring},
-#'   \code{end}, \code{labelfont}, \code{labelformat}, \code{operation},
+#' @param contours A \code{\link{go_histogram2dcontour_contours}()} object
+#'   or named list, with properties \code{coloring}, \code{end},
+#'   \code{labelfont}, \code{labelformat}, \code{operation},
 #'   \code{showlabels}, \code{showlines}, \code{size}, \code{start},
-#'   \code{type} and \code{value} (described in section "contours
-#'   properties" below).
+#'   \code{type} and \code{value} (see
+#'   \code{\link{go_histogram2dcontour_contours}()}).
 #' @param customdata Assigns extra data each datum. This may be useful when
 #'   listening to hover, click and selection events. Note that, "scatter"
 #'   traces also appends customdata items in the markers DOM elements Data
@@ -186,11 +187,12 @@
 #'   to their order in data and layout. Number.
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param line A named list with properties \code{color}, \code{dash},
-#'   \code{smoothing} and \code{width} (described in section "line
-#'   properties" below).
-#' @param marker A named list with properties \code{color} (described in
-#'   section "marker properties" below).
+#' @param line A \code{\link{go_histogram2dcontour_line}()} object or named
+#'   list, with properties \code{color}, \code{dash}, \code{smoothing} and
+#'   \code{width} (see \code{\link{go_histogram2dcontour_line}()}).
+#' @param marker A \code{\link{go_histogram2dcontour_marker}()} object or
+#'   named list, with properties \code{color} (see
+#'   \code{\link{go_histogram2dcontour_marker}()}).
 #' @param meta Assigns extra meta information associated with this trace
 #'   that can be used in various text attributes. Attributes such as trace
 #'   `name`, graph, axis and colorbar `title.text`, annotation `text`
@@ -369,82 +371,6 @@
 #'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
 #'
-#' @section contours properties:
-#' \describe{
-#' \item{\code{coloring}}{Determines the coloring method showing the contour
-#' values. If "fill", coloring is done evenly between each contour level If
-#' "heatmap", a heatmap gradient coloring is applied between each contour
-#' level. If "lines", coloring is done on the contour lines. If "none", no
-#' coloring is applied on this trace. One of \code{"fill"},
-#' \code{"heatmap"}, \code{"lines"}, \code{"none"}.}
-#' \item{\code{end}}{Sets the end contour level value. Must be more than
-#' `contours.start` Number.}
-#' \item{\code{labelfont}}{Sets the font used for labeling the contour
-#' levels. The default color comes from the lines, if shown. The default
-#' family and size come from `layout.font`. A \code{\link{go_font}()} object
-#' or named list, with properties \code{color}, \code{family},
-#' \code{lineposition}, \code{shadow}, \code{size}, \code{style},
-#' \code{textcase}, \code{variant} and \code{weight} (see
-#' \code{\link{go_font}()}).}
-#' \item{\code{labelformat}}{Sets the contour label formatting rule using d3
-#' formatting mini-languages which are very similar to those in Python. For
-#' numbers, see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format.
-#' String.}
-#' \item{\code{operation}}{Sets the constraint operation. "=" keeps regions
-#' equal to `value` "<" and "<=" keep regions less than `value` ">" and ">="
-#' keep regions greater than `value` "[]", "()", "[)", and "(]" keep regions
-#' inside `value[0]` to `value[1]` "][", ")(", "](", ")[" keep regions
-#' outside `value[0]` to `value[1]` Open vs. closed intervals make no
-#' difference to constraint display, but all versions are allowed. One of
-#' \code{"="}, \code{"<"}, \code{">="}, \code{">"}, \code{"<="},
-#' \code{"[]"}, \code{"()"}, \code{"[)"}, \code{"(]"}, \code{"]["},
-#' \code{")("}, \code{"]("}, \code{")["}.}
-#' \item{\code{showlabels}}{Determines whether to label the contour lines
-#' with their values. Logical.}
-#' \item{\code{showlines}}{Determines whether or not the contour lines are
-#' drawn. Has an effect only if `contours.coloring` is set to "fill".
-#' Logical.}
-#' \item{\code{size}}{Sets the step between each contour level. Must be
-#' positive. Number in the interval [0, Inf].}
-#' \item{\code{start}}{Sets the starting contour level value. Must be less
-#' than `contours.end` Number.}
-#' \item{\code{type}}{If `levels`, the data is represented as a contour plot
-#' with multiple levels displayed. If `constraint`, the data is represented
-#' as constraints with the invalid region shaded as specified by the
-#' `operation` and `value` parameters. One of \code{"levels"},
-#' \code{"constraint"}.}
-#' \item{\code{value}}{Sets the value or values of the constraint boundary.
-#' When `operation` is set to one of the comparison values (`=,<,>=,>,<=`)
-#' "value" is expected to be a number. When `operation` is set to one of the
-#' interval values (`[],(),[),(],][,)(,](,)[`) "value" is expected to be an
-#' array of two numbers where the first is the lower bound and the second is
-#' the upper bound. Any value.}
-#' }
-#'
-#' @section line properties:
-#' \describe{
-#' \item{\code{color}}{Sets the color of the contour level. Has no effect if
-#' `contours.coloring` is set to "lines". Color: a CSS color string or R
-#' color name.}
-#' \item{\code{dash}}{Sets the dash style of lines. Set to a dash type
-#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
-#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
-#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
-#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
-#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
-#' \item{\code{smoothing}}{Sets the amount of smoothing for the contour
-#' lines, where 0 corresponds to no smoothing. Number in the interval [0,
-#' 1.3].}
-#' \item{\code{width}}{Sets the contour line width in (in px) Number in the
-#' interval [0, Inf].}
-#' }
-#'
-#' @section marker properties:
-#' \describe{
-#' \item{\code{color}}{Sets the aggregation data. Data array: a vector,
-#' factor, Date/POSIXct vector, matrix or list.}
-#' }
-#'
 #' @noMd
 #' @export
 #' @examples
@@ -469,5 +395,167 @@ go_histogram2dcontour <- function(
     skip_invalid = FALSE
 ) {
   plotly_object("histogram2dcontour", arg, environment(), list(...), skip_invalid)
+}
+
+#' Histogram2dcontour contours objects
+#'
+#' The object for the \code{contours} of a histogram2dcontour trace
+#' (\code{\link{go_histogram2dcontour}()}).
+#' \code{go_histogram2dcontour_contours()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param coloring Determines the coloring method showing the contour
+#'   values. If "fill", coloring is done evenly between each contour level
+#'   If "heatmap", a heatmap gradient coloring is applied between each
+#'   contour level. If "lines", coloring is done on the contour lines. If
+#'   "none", no coloring is applied on this trace. One of \code{"fill"},
+#'   \code{"heatmap"}, \code{"lines"}, \code{"none"}.
+#' @param end Sets the end contour level value. Must be more than
+#'   `contours.start` Number.
+#' @param labelfont Sets the font used for labeling the contour levels. The
+#'   default color comes from the lines, if shown. The default family and
+#'   size come from `layout.font`. A \code{\link{go_font}()} object or
+#'   named list, with properties \code{color}, \code{family},
+#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#'   \code{textcase}, \code{variant} and \code{weight} (see
+#'   \code{\link{go_font}()}).
+#' @param labelformat Sets the contour label formatting rule using d3
+#'   formatting mini-languages which are very similar to those in Python.
+#'   For numbers, see:
+#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. String.
+#' @param operation Sets the constraint operation. "=" keeps regions equal
+#'   to `value` "<" and "<=" keep regions less than `value` ">" and ">="
+#'   keep regions greater than `value` "[]", "()", "[)", and "(]" keep
+#'   regions inside `value[0]` to `value[1]` "][", ")(", "](", ")[" keep
+#'   regions outside `value[0]` to `value[1]` Open vs. closed intervals
+#'   make no difference to constraint display, but all versions are
+#'   allowed. One of \code{"="}, \code{"<"}, \code{">="}, \code{">"},
+#'   \code{"<="}, \code{"[]"}, \code{"()"}, \code{"[)"}, \code{"(]"},
+#'   \code{"]["}, \code{")("}, \code{"]("}, \code{")["}.
+#' @param showlabels Determines whether to label the contour lines with
+#'   their values. Logical.
+#' @param showlines Determines whether or not the contour lines are drawn.
+#'   Has an effect only if `contours.coloring` is set to "fill". Logical.
+#' @param size Sets the step between each contour level. Must be positive.
+#'   Number in the interval [0, Inf].
+#' @param start Sets the starting contour level value. Must be less than
+#'   `contours.end` Number.
+#' @param type If `levels`, the data is represented as a contour plot with
+#'   multiple levels displayed. If `constraint`, the data is represented as
+#'   constraints with the invalid region shaded as specified by the
+#'   `operation` and `value` parameters. One of \code{"levels"},
+#'   \code{"constraint"}.
+#' @param value Sets the value or values of the constraint boundary. When
+#'   `operation` is set to one of the comparison values (`=,<,>=,>,<=`)
+#'   "value" is expected to be a number. When `operation` is set to one of
+#'   the interval values (`[],(),[),(],][,)(,](,)[`) "value" is expected to
+#'   be an array of two numbers where the first is the lower bound and the
+#'   second is the upper bound. Any value.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_histogram2dcontour_contours} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_histogram2dcontour(
+#'     contours = go_histogram2dcontour_contours(size = 10)
+#'   )
+go_histogram2dcontour_contours <- function(
+    arg = NULL, ..., coloring = NULL, end = NULL, labelfont = NULL,
+    labelformat = NULL, operation = NULL, showlabels = NULL,
+    showlines = NULL, size = NULL, start = NULL, type = NULL, value = NULL,
+    skip_invalid = FALSE
+) {
+  plotly_object("histogram2dcontour.contours", arg, environment(), list(...), skip_invalid)
+}
+
+#' Histogram2dcontour line objects
+#'
+#' The object for the \code{line} of a histogram2dcontour trace
+#' (\code{\link{go_histogram2dcontour}()}).
+#' \code{go_histogram2dcontour_line()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the color of the contour level. Has no effect if
+#'   `contours.coloring` is set to "lines". Color: a CSS color string or R
+#'   color name.
+#' @param dash Sets the dash style of lines. Set to a dash type string
+#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
+#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
+#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
+#'   \code{"longdashdot"}, or a string matching
+#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
+#' @param smoothing Sets the amount of smoothing for the contour lines,
+#'   where 0 corresponds to no smoothing. Number in the interval [0, 1.3].
+#' @param width Sets the contour line width in (in px) Number in the
+#'   interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_histogram2dcontour_line} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_histogram2dcontour(
+#'     line = go_histogram2dcontour_line(color = "red")
+#'   )
+go_histogram2dcontour_line <- function(
+    arg = NULL, ..., color = NULL, dash = NULL, smoothing = NULL,
+    width = NULL, skip_invalid = FALSE
+) {
+  plotly_object("histogram2dcontour.line", arg, environment(), list(...), skip_invalid)
+}
+
+#' Histogram2dcontour marker objects
+#'
+#' The object for the \code{marker} of a histogram2dcontour trace
+#' (\code{\link{go_histogram2dcontour}()}).
+#' \code{go_histogram2dcontour_marker()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the aggregation data. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_histogram2dcontour_marker} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_histogram2dcontour(
+#'     marker = go_histogram2dcontour_marker(color = "red")
+#'   )
+go_histogram2dcontour_marker <- function(
+    arg = NULL, ..., color = NULL, skip_invalid = FALSE
+) {
+  plotly_object("histogram2dcontour.marker", arg, environment(), list(...), skip_invalid)
 }
 

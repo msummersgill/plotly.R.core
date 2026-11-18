@@ -9,26 +9,26 @@
 #' list). \code{add_scattercarpet()} creates one and adds it to a figure.
 #'
 #' @details
-#' Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-#' = list(width = 2))}. Each nested object's properties are described in a
-#' section of its own near the end of this page (after \emph{Value}), titled
-#' with its path: \emph{marker properties}, \emph{marker.line properties},
-#' .... Objects that appear in several places in the schema can also be
-#' created with a constructor of their own, and are documented on its page:
-#' \code{\link{go_font}()}, \code{\link{go_colorbar}()},
-#' \code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-#' \code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-#' \code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-#' \code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-#' \code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-#' \code{\link{go_gradient}()}, \code{\link{go_label}()},
-#' \code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-#' \code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-#' \code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-#' \code{\link{go_root}()}, \code{\link{go_slices}()},
-#' \code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-#' Every property is checked against the plotly.js schema when the object is
-#' created or modified (see \code{\link{plotly_obj-modify}}).
+#' Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+#' objects of their constructors: every object in the schema has one,
+#' documented on its own page, with exactly that object's properties. Most
+#' are named after their path: \code{go_scatter_marker()},
+#' \code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+#' Objects that appear in several places share one: \code{\link{go_font}()},
+#' \code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+#' \code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+#' \code{\link{go_domain}()}, \code{\link{go_pattern}()},
+#' \code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+#' \code{\link{go_bins}()}, \code{\link{go_caps}()},
+#' \code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+#' \code{\link{go_label}()}, \code{\link{go_leaf}()},
+#' \code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+#' \code{\link{go_pathbar}()}, \code{\link{go_project}()},
+#' \code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+#' \code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+#' \code{\link{go_unifiedhovertitle}()}. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}).
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
@@ -143,14 +143,16 @@
 #'   to their order in data and layout. Number.
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param line A named list with properties \code{backoff}, \code{color},
-#'   \code{dash}, \code{shape}, \code{smoothing} and \code{width}
-#'   (described in section "line properties" below).
-#' @param marker A named list with properties \code{angle},
-#'   \code{angleref}, \code{autocolorscale}, \code{cauto}, \code{cmax},
-#'   \code{cmid}, \code{cmin}, \code{color}, \code{coloraxis},
-#'   \code{colorbar}, \code{colorscale}, \code{gradient} and 11 more
-#'   (described in section "marker properties" below).
+#' @param line A \code{\link{go_scattercarpet_line}()} object or named
+#'   list, with properties \code{backoff}, \code{color}, \code{dash},
+#'   \code{shape}, \code{smoothing} and \code{width} (see
+#'   \code{\link{go_scattercarpet_line}()}).
+#' @param marker A \code{\link{go_scattercarpet_marker}()} object or named
+#'   list, with properties \code{angle}, \code{angleref},
+#'   \code{autocolorscale}, \code{cauto}, \code{cmax}, \code{cmid},
+#'   \code{cmin}, \code{color}, \code{coloraxis}, \code{colorbar},
+#'   \code{colorscale}, \code{gradient} and 11 more (see
+#'   \code{\link{go_scattercarpet_marker}()}).
 #' @param meta Assigns extra meta information associated with this trace
 #'   that can be used in various text attributes. Attributes such as trace
 #'   `name`, graph, axis and colorbar `title.text`, annotation `text`
@@ -176,8 +178,9 @@
 #'   to address several cells.
 #' @param secondary_y If \code{TRUE}, use the secondary y axis of the
 #'   subplot.
-#' @param selected A named list with properties \code{marker} and
-#'   \code{textfont} (described in section "selected properties" below).
+#' @param selected A \code{\link{go_scattercarpet_selected}()} object or
+#'   named list, with properties \code{marker} and \code{textfont} (see
+#'   \code{\link{go_scattercarpet_selected}()}).
 #' @param selectedpoints Array containing integer indices of selected
 #'   points. Has an effect only for traces that support selections. Note
 #'   that an empty array means an empty selection where the `unselected`
@@ -240,8 +243,9 @@
 #'   array, such that the same trace has a different index, you can still
 #'   preserve user-driven changes if you give each trace a `uid` that stays
 #'   with it as it moves. Any value.
-#' @param unselected A named list with properties \code{marker} and
-#'   \code{textfont} (described in section "unselected properties" below).
+#' @param unselected A \code{\link{go_scattercarpet_unselected}()} object
+#'   or named list, with properties \code{marker} and \code{textfont} (see
+#'   \code{\link{go_scattercarpet_unselected}()}).
 #' @param visible Determines whether or not this trace is visible. If
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
@@ -268,364 +272,6 @@
 #'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
 #'
-#' @section line properties:
-#' \describe{
-#' \item{\code{backoff}}{Sets the line back off from the end point of the
-#' nth line segment (in px). This option is useful e.g. to avoid overlap
-#' with arrowhead markers. With "auto" the lines would trim before markers
-#' if `marker.angleref` is set to "previous". Number in the interval [0,
-#' Inf], or a vector of these.}
-#' \item{\code{color}}{Sets the line color. Color: a CSS color string or R
-#' color name.}
-#' \item{\code{dash}}{Sets the dash style of lines. Set to a dash type
-#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
-#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
-#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
-#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
-#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
-#' \item{\code{shape}}{Determines the line shape. With "spline" the lines
-#' are drawn using spline interpolation. The other available values
-#' correspond to step-wise line shapes. One of \code{"linear"},
-#' \code{"spline"}.}
-#' \item{\code{smoothing}}{Has an effect only if `shape` is set to "spline"
-#' Sets the amount of smoothing. 0 corresponds to no smoothing (equivalent
-#' to a "linear" shape). Number in the interval [0, 1.3].}
-#' \item{\code{width}}{Sets the line width (in px). Number in the interval
-#' [0, Inf].}
-#' }
-#'
-#' @section marker properties:
-#' \describe{
-#' \item{\code{angle}}{Sets the marker angle in respect to `angleref`. Angle
-#' in degrees, or a vector of these.}
-#' \item{\code{angleref}}{Sets the reference for marker angle. With
-#' "previous", angle 0 points along the line from the previous point to this
-#' one. With "up", angle 0 points toward the top of the screen. One of
-#' \code{"previous"}, \code{"up"}.}
-#' \item{\code{autocolorscale}}{Determines whether the colorscale is a
-#' default palette (`autocolorscale: true`) or the palette determined by
-#' `marker.colorscale`. Has an effect only if in `marker.color` is set to a
-#' numerical array. In case `colorscale` is unspecified or `autocolorscale`
-#' is true, the default palette will be chosen according to whether numbers
-#' in the `color` array are all positive, all negative or mixed. Logical.}
-#' \item{\code{cauto}}{Determines whether or not the color domain is
-#' computed with respect to the input data (here in `marker.color`) or the
-#' bounds set in `marker.cmin` and `marker.cmax` Has an effect only if in
-#' `marker.color` is set to a numerical array. Defaults to `false` when
-#' `marker.cmin` and `marker.cmax` are set by the user. Logical.}
-#' \item{\code{cmax}}{Sets the upper bound of the color domain. Has an
-#' effect only if in `marker.color` is set to a numerical array. Value
-#' should have the same units as in `marker.color` and if set, `marker.cmin`
-#' must be set as well. Number.}
-#' \item{\code{cmid}}{Sets the mid-point of the color domain by scaling
-#' `marker.cmin` and/or `marker.cmax` to be equidistant to this point. Has
-#' an effect only if in `marker.color` is set to a numerical array. Value
-#' should have the same units as in `marker.color`. Has no effect when
-#' `marker.cauto` is `false`. Number.}
-#' \item{\code{cmin}}{Sets the lower bound of the color domain. Has an
-#' effect only if in `marker.color` is set to a numerical array. Value
-#' should have the same units as in `marker.color` and if set, `marker.cmax`
-#' must be set as well. Number.}
-#' \item{\code{color}}{Sets the marker color. It accepts either a specific
-#' color or an array of numbers that are mapped to the colorscale relative
-#' to the max and min values of the array or relative to `marker.cmin` and
-#' `marker.cmax` if set. Color: a CSS color string or R color name, or a
-#' number mapped to a color by \code{scattercarpet.marker.colorscale}, or a
-#' vector of these.}
-#' \item{\code{coloraxis}}{Sets a reference to a shared color axis.
-#' References to these shared color axes are "coloraxis", "coloraxis2",
-#' "coloraxis3", etc. Settings for these shared color axes are set in the
-#' layout, under `layout.coloraxis`, `layout.coloraxis2`, etc. Note that
-#' multiple color scales can be linked to the same color axis. Subplot id:
-#' \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
-#' \item{\code{colorbar}}{A \code{\link{go_colorbar}()} object or named
-#' list, with properties \code{bgcolor}, \code{bordercolor},
-#' \code{borderwidth}, \code{dtick}, \code{exponentformat},
-#' \code{labelalias}, \code{len}, \code{lenmode}, \code{minexponent},
-#' \code{nticks}, \code{orientation}, \code{outlinecolor} and 34 more (see
-#' \code{\link{go_colorbar}()}).}
-#' \item{\code{colorscale}}{Sets the colorscale. Has an effect only if in
-#' `marker.color` is set to a numerical array. The colorscale must be an
-#' array containing arrays mapping a normalized value to an rgb, rgba, hex,
-#' hsl, hsla, hwb, or named color string. At minimum, a mapping for the
-#' lowest (0) and highest (1) values are required. For example, `[[0,
-#' 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
-#' colorscale in color space, use `marker.cmin` and `marker.cmax`.
-#' Alternatively, `colorscale` may be a palette name string of the following
-#' list:
-#' Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-#' Colorscale: a vector of colors, a two-column data.frame of (value,
-#' color), or the name of a sequential, diverging or cyclical scale in
-#' \code{\link{px_colors}()} (append \code{"_r"} to reverse).}
-#' \item{\code{gradient}}{A \code{\link{go_gradient}()} object or named
-#' list, with properties \code{color} and \code{type} (see
-#' \code{\link{go_gradient}()}).}
-#' \item{\code{line}}{A named list with properties \code{autocolorscale},
-#' \code{cauto}, \code{cmax}, \code{cmid}, \code{cmin}, \code{color},
-#' \code{coloraxis}, \code{colorscale}, \code{dash}, \code{reversescale} and
-#' \code{width} (described in section "marker.line properties" below).}
-#' \item{\code{maxdisplayed}}{Sets a maximum number of points to be drawn on
-#' the graph. 0 corresponds to no limit. Number in the interval [0, Inf].}
-#' \item{\code{opacity}}{Sets the marker opacity. Number in the interval [0,
-#' 1], or a vector of these.}
-#' \item{\code{reversescale}}{Reverses the color mapping if true. Has an
-#' effect only if in `marker.color` is set to a numerical array. If true,
-#' `marker.cmin` will correspond to the last color in the array and
-#' `marker.cmax` will correspond to the first color. Logical.}
-#' \item{\code{showscale}}{Determines whether or not a colorbar is displayed
-#' for this trace. Has an effect only if in `marker.color` is set to a
-#' numerical array. Logical.}
-#' \item{\code{size}}{Sets the marker size (in px). Number in the interval
-#' [0, Inf], or a vector of these.}
-#' \item{\code{sizemin}}{Has an effect only if `marker.size` is set to a
-#' numerical array. Sets the minimum size (in px) of the rendered marker
-#' points. Number in the interval [0, Inf].}
-#' \item{\code{sizemode}}{Has an effect only if `marker.size` is set to a
-#' numerical array. Sets the rule for which the data in `size` is converted
-#' to pixels. One of \code{"diameter"}, \code{"area"}.}
-#' \item{\code{sizeref}}{Has an effect only if `marker.size` is set to a
-#' numerical array. Sets the scale factor used to determine the rendered
-#' size of marker points. Use with `sizemin` and `sizemode`. Number.}
-#' \item{\code{standoff}}{Moves the marker away from the data point in the
-#' direction of `angle` (in px). This can be useful for example if you have
-#' another marker at this location and you want to point an arrowhead marker
-#' at it. Number in the interval [0, Inf], or a vector of these.}
-#' \item{\code{symbol}}{Sets the marker symbol type. Adding 100 is
-#' equivalent to appending "-open" to a symbol name. Adding 200 is
-#' equivalent to appending "-dot" to a symbol name. Adding 300 is equivalent
-#' to appending "-open-dot" or "dot-open" to a symbol name. One of
-#' \code{"0"}, \code{"circle"}, \code{"100"}, \code{"circle-open"},
-#' \code{"200"}, \code{"circle-dot"}, \code{"300"},
-#' \code{"circle-open-dot"}, \code{"1"}, \code{"square"}, \code{"101"},
-#' \code{"square-open"}, \code{"201"}, \code{"square-dot"}, \code{"301"},
-#' \code{"square-open-dot"}, \code{"2"}, \code{"diamond"}, \code{"102"},
-#' \code{"diamond-open"}, \code{"202"}, \code{"diamond-dot"}, \code{"302"},
-#' \code{"diamond-open-dot"}, \code{"3"}, \code{"cross"}, \code{"103"},
-#' \code{"cross-open"}, \code{"203"}, \code{"cross-dot"}, \code{"303"},
-#' \code{"cross-open-dot"}, \code{"4"}, \code{"x"}, \code{"104"},
-#' \code{"x-open"}, \code{"204"}, \code{"x-dot"}, \code{"304"},
-#' \code{"x-open-dot"}, \code{"5"}, \code{"triangle-up"}, \code{"105"},
-#' \code{"triangle-up-open"}, \code{"205"}, \code{"triangle-up-dot"},
-#' \code{"305"}, \code{"triangle-up-open-dot"}, \code{"6"},
-#' \code{"triangle-down"}, \code{"106"}, \code{"triangle-down-open"},
-#' \code{"206"}, \code{"triangle-down-dot"}, \code{"306"},
-#' \code{"triangle-down-open-dot"}, \code{"7"}, \code{"triangle-left"},
-#' \code{"107"}, \code{"triangle-left-open"}, \code{"207"},
-#' \code{"triangle-left-dot"}, \code{"307"},
-#' \code{"triangle-left-open-dot"}, \code{"8"}, \code{"triangle-right"},
-#' \code{"108"}, \code{"triangle-right-open"}, \code{"208"},
-#' \code{"triangle-right-dot"}, \code{"308"},
-#' \code{"triangle-right-open-dot"}, \code{"9"}, \code{"triangle-ne"},
-#' \code{"109"}, \code{"triangle-ne-open"}, \code{"209"},
-#' \code{"triangle-ne-dot"}, \code{"309"}, \code{"triangle-ne-open-dot"},
-#' \code{"10"}, \code{"triangle-se"}, \code{"110"},
-#' \code{"triangle-se-open"}, \code{"210"}, \code{"triangle-se-dot"},
-#' \code{"310"}, \code{"triangle-se-open-dot"}, \code{"11"},
-#' \code{"triangle-sw"}, \code{"111"}, \code{"triangle-sw-open"},
-#' \code{"211"}, \code{"triangle-sw-dot"}, \code{"311"},
-#' \code{"triangle-sw-open-dot"}, \code{"12"}, \code{"triangle-nw"},
-#' \code{"112"}, \code{"triangle-nw-open"}, \code{"212"},
-#' \code{"triangle-nw-dot"}, \code{"312"}, \code{"triangle-nw-open-dot"},
-#' \code{"13"}, \code{"pentagon"}, \code{"113"}, \code{"pentagon-open"},
-#' \code{"213"}, \code{"pentagon-dot"}, \code{"313"},
-#' \code{"pentagon-open-dot"}, \code{"14"}, \code{"hexagon"}, \code{"114"},
-#' \code{"hexagon-open"}, \code{"214"}, \code{"hexagon-dot"}, \code{"314"},
-#' \code{"hexagon-open-dot"}, \code{"15"}, \code{"hexagon2"}, \code{"115"},
-#' \code{"hexagon2-open"}, \code{"215"}, \code{"hexagon2-dot"},
-#' \code{"315"}, \code{"hexagon2-open-dot"}, \code{"16"}, \code{"octagon"},
-#' \code{"116"}, \code{"octagon-open"}, \code{"216"}, \code{"octagon-dot"},
-#' \code{"316"}, \code{"octagon-open-dot"}, \code{"17"}, \code{"star"},
-#' \code{"117"}, \code{"star-open"}, \code{"217"}, \code{"star-dot"},
-#' \code{"317"}, \code{"star-open-dot"}, \code{"18"}, \code{"hexagram"},
-#' \code{"118"}, \code{"hexagram-open"}, \code{"218"},
-#' \code{"hexagram-dot"}, \code{"318"}, \code{"hexagram-open-dot"},
-#' \code{"19"}, \code{"star-triangle-up"}, \code{"119"},
-#' \code{"star-triangle-up-open"}, \code{"219"},
-#' \code{"star-triangle-up-dot"}, \code{"319"},
-#' \code{"star-triangle-up-open-dot"}, \code{"20"},
-#' \code{"star-triangle-down"}, \code{"120"},
-#' \code{"star-triangle-down-open"}, \code{"220"},
-#' \code{"star-triangle-down-dot"}, \code{"320"},
-#' \code{"star-triangle-down-open-dot"}, \code{"21"}, \code{"star-square"},
-#' \code{"121"}, \code{"star-square-open"}, \code{"221"},
-#' \code{"star-square-dot"}, \code{"321"}, \code{"star-square-open-dot"},
-#' \code{"22"}, \code{"star-diamond"}, \code{"122"},
-#' \code{"star-diamond-open"}, \code{"222"}, \code{"star-diamond-dot"},
-#' \code{"322"}, \code{"star-diamond-open-dot"}, \code{"23"},
-#' \code{"diamond-tall"}, \code{"123"}, \code{"diamond-tall-open"},
-#' \code{"223"}, \code{"diamond-tall-dot"}, \code{"323"},
-#' \code{"diamond-tall-open-dot"}, \code{"24"}, \code{"diamond-wide"},
-#' \code{"124"}, \code{"diamond-wide-open"}, \code{"224"},
-#' \code{"diamond-wide-dot"}, \code{"324"}, \code{"diamond-wide-open-dot"},
-#' \code{"25"}, \code{"hourglass"}, \code{"125"}, \code{"hourglass-open"},
-#' \code{"26"}, \code{"bowtie"}, \code{"126"}, \code{"bowtie-open"},
-#' \code{"27"}, \code{"circle-cross"}, \code{"127"},
-#' \code{"circle-cross-open"}, \code{"28"}, \code{"circle-x"}, \code{"128"},
-#' \code{"circle-x-open"}, \code{"29"}, \code{"square-cross"}, \code{"129"},
-#' \code{"square-cross-open"}, \code{"30"}, \code{"square-x"}, \code{"130"},
-#' \code{"square-x-open"}, \code{"31"}, \code{"diamond-cross"},
-#' \code{"131"}, \code{"diamond-cross-open"}, \code{"32"},
-#' \code{"diamond-x"}, \code{"132"}, \code{"diamond-x-open"}, \code{"33"},
-#' \code{"cross-thin"}, \code{"133"}, \code{"cross-thin-open"}, \code{"34"},
-#' \code{"x-thin"}, \code{"134"}, \code{"x-thin-open"}, \code{"35"},
-#' \code{"asterisk"}, \code{"135"}, \code{"asterisk-open"}, \code{"36"},
-#' \code{"hash"}, \code{"136"}, \code{"hash-open"}, \code{"236"},
-#' \code{"hash-dot"}, \code{"336"}, \code{"hash-open-dot"}, \code{"37"},
-#' \code{"y-up"}, \code{"137"}, \code{"y-up-open"}, \code{"38"},
-#' \code{"y-down"}, \code{"138"}, \code{"y-down-open"}, \code{"39"},
-#' \code{"y-left"}, \code{"139"}, \code{"y-left-open"}, \code{"40"},
-#' \code{"y-right"}, \code{"140"}, \code{"y-right-open"}, \code{"41"},
-#' \code{"line-ew"}, \code{"141"}, \code{"line-ew-open"}, \code{"42"},
-#' \code{"line-ns"}, \code{"142"}, \code{"line-ns-open"}, \code{"43"},
-#' \code{"line-ne"}, \code{"143"}, \code{"line-ne-open"}, \code{"44"},
-#' \code{"line-nw"}, \code{"144"}, \code{"line-nw-open"}, \code{"45"},
-#' \code{"arrow-up"}, \code{"145"}, \code{"arrow-up-open"}, \code{"46"},
-#' \code{"arrow-down"}, \code{"146"}, \code{"arrow-down-open"}, \code{"47"},
-#' \code{"arrow-left"}, \code{"147"}, \code{"arrow-left-open"}, \code{"48"},
-#' \code{"arrow-right"}, \code{"148"}, \code{"arrow-right-open"},
-#' \code{"49"}, \code{"arrow-bar-up"}, \code{"149"},
-#' \code{"arrow-bar-up-open"}, \code{"50"}, \code{"arrow-bar-down"},
-#' \code{"150"}, \code{"arrow-bar-down-open"}, \code{"51"},
-#' \code{"arrow-bar-left"}, \code{"151"}, \code{"arrow-bar-left-open"},
-#' \code{"52"}, \code{"arrow-bar-right"}, \code{"152"},
-#' \code{"arrow-bar-right-open"}, \code{"53"}, \code{"arrow"}, \code{"153"},
-#' \code{"arrow-open"}, \code{"54"}, \code{"arrow-wide"}, \code{"154"},
-#' \code{"arrow-wide-open"}, \code{0}, \code{100}, \code{200}, \code{300},
-#' \code{1}, \code{101}, \code{201}, \code{301}, \code{2}, \code{102},
-#' \code{202}, \code{302}, \code{3}, \code{103}, \code{203}, \code{303},
-#' \code{4}, \code{104}, \code{204}, \code{304}, \code{5}, \code{105},
-#' \code{205}, \code{305}, \code{6}, \code{106}, \code{206}, \code{306},
-#' \code{7}, \code{107}, \code{207}, \code{307}, \code{8}, \code{108},
-#' \code{208}, \code{308}, \code{9}, \code{109}, \code{209}, \code{309},
-#' \code{10}, \code{110}, \code{210}, \code{310}, \code{11}, \code{111},
-#' \code{211}, \code{311}, \code{12}, \code{112}, \code{212}, \code{312},
-#' \code{13}, \code{113}, \code{213}, \code{313}, \code{14}, \code{114},
-#' \code{214}, \code{314}, \code{15}, \code{115}, \code{215}, \code{315},
-#' \code{16}, \code{116}, \code{216}, \code{316}, \code{17}, \code{117},
-#' \code{217}, \code{317}, \code{18}, \code{118}, \code{218}, \code{318},
-#' \code{19}, \code{119}, \code{219}, \code{319}, \code{20}, \code{120},
-#' \code{220}, \code{320}, \code{21}, \code{121}, \code{221}, \code{321},
-#' \code{22}, \code{122}, \code{222}, \code{322}, \code{23}, \code{123},
-#' \code{223}, \code{323}, \code{24}, \code{124}, \code{224}, \code{324},
-#' \code{25}, \code{125}, \code{26}, \code{126}, \code{27}, \code{127},
-#' \code{28}, \code{128}, \code{29}, \code{129}, \code{30}, \code{130},
-#' \code{31}, \code{131}, \code{32}, \code{132}, \code{33}, \code{133},
-#' \code{34}, \code{134}, \code{35}, \code{135}, \code{36}, \code{136},
-#' \code{236}, \code{336}, \code{37}, \code{137}, \code{38}, \code{138},
-#' \code{39}, \code{139}, \code{40}, \code{140}, \code{41}, \code{141},
-#' \code{42}, \code{142}, \code{43}, \code{143}, \code{44}, \code{144},
-#' \code{45}, \code{145}, \code{46}, \code{146}, \code{47}, \code{147},
-#' \code{48}, \code{148}, \code{49}, \code{149}, \code{50}, \code{150},
-#' \code{51}, \code{151}, \code{52}, \code{152}, \code{53}, \code{153},
-#' \code{54}, \code{154}, or a vector of these.}
-#' }
-#'
-#' @section marker.line properties:
-#' \describe{
-#' \item{\code{autocolorscale}}{Determines whether the colorscale is a
-#' default palette (`autocolorscale: true`) or the palette determined by
-#' `marker.line.colorscale`. Has an effect only if in `marker.line.color` is
-#' set to a numerical array. In case `colorscale` is unspecified or
-#' `autocolorscale` is true, the default palette will be chosen according to
-#' whether numbers in the `color` array are all positive, all negative or
-#' mixed. Logical.}
-#' \item{\code{cauto}}{Determines whether or not the color domain is
-#' computed with respect to the input data (here in `marker.line.color`) or
-#' the bounds set in `marker.line.cmin` and `marker.line.cmax` Has an effect
-#' only if in `marker.line.color` is set to a numerical array. Defaults to
-#' `false` when `marker.line.cmin` and `marker.line.cmax` are set by the
-#' user. Logical.}
-#' \item{\code{cmax}}{Sets the upper bound of the color domain. Has an
-#' effect only if in `marker.line.color` is set to a numerical array. Value
-#' should have the same units as in `marker.line.color` and if set,
-#' `marker.line.cmin` must be set as well. Number.}
-#' \item{\code{cmid}}{Sets the mid-point of the color domain by scaling
-#' `marker.line.cmin` and/or `marker.line.cmax` to be equidistant to this
-#' point. Has an effect only if in `marker.line.color` is set to a numerical
-#' array. Value should have the same units as in `marker.line.color`. Has no
-#' effect when `marker.line.cauto` is `false`. Number.}
-#' \item{\code{cmin}}{Sets the lower bound of the color domain. Has an
-#' effect only if in `marker.line.color` is set to a numerical array. Value
-#' should have the same units as in `marker.line.color` and if set,
-#' `marker.line.cmax` must be set as well. Number.}
-#' \item{\code{color}}{Sets the marker.line color. It accepts either a
-#' specific color or an array of numbers that are mapped to the colorscale
-#' relative to the max and min values of the array or relative to
-#' `marker.line.cmin` and `marker.line.cmax` if set. Color: a CSS color
-#' string or R color name, or a number mapped to a color by
-#' \code{scattercarpet.marker.line.colorscale}, or a vector of these.}
-#' \item{\code{coloraxis}}{Sets a reference to a shared color axis.
-#' References to these shared color axes are "coloraxis", "coloraxis2",
-#' "coloraxis3", etc. Settings for these shared color axes are set in the
-#' layout, under `layout.coloraxis`, `layout.coloraxis2`, etc. Note that
-#' multiple color scales can be linked to the same color axis. Subplot id:
-#' \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
-#' \item{\code{colorscale}}{Sets the colorscale. Has an effect only if in
-#' `marker.line.color` is set to a numerical array. The colorscale must be
-#' an array containing arrays mapping a normalized value to an rgb, rgba,
-#' hex, hsl, hsla, hwb, or named color string. At minimum, a mapping for the
-#' lowest (0) and highest (1) values are required. For example, `[[0,
-#' 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
-#' colorscale in color space, use `marker.line.cmin` and `marker.line.cmax`.
-#' Alternatively, `colorscale` may be a palette name string of the following
-#' list:
-#' Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-#' Colorscale: a vector of colors, a two-column data.frame of (value,
-#' color), or the name of a sequential, diverging or cyclical scale in
-#' \code{\link{px_colors}()} (append \code{"_r"} to reverse).}
-#' \item{\code{dash}}{Sets the dash style of lines. Set to a dash type
-#' string ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot")
-#' or a dash length list in px (eg "5px,10px,2px,2px"). One of
-#' \code{"solid"}, \code{"dot"}, \code{"dash"}, \code{"longdash"},
-#' \code{"dashdot"}, \code{"longdashdot"}, or a string matching
-#' \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"},
-#' or a vector of these.}
-#' \item{\code{reversescale}}{Reverses the color mapping if true. Has an
-#' effect only if in `marker.line.color` is set to a numerical array. If
-#' true, `marker.line.cmin` will correspond to the last color in the array
-#' and `marker.line.cmax` will correspond to the first color. Logical.}
-#' \item{\code{width}}{Sets the width (in px) of the lines bounding the
-#' marker points. Number in the interval [0, Inf], or a vector of these.}
-#' }
-#'
-#' @section selected properties:
-#' \describe{
-#' \item{\code{marker}}{A named list with properties \code{color},
-#' \code{opacity} and \code{size} (described in section "selected.marker
-#' properties" below).}
-#' \item{\code{textfont}}{A \code{\link{go_font}()} object or named list,
-#' with properties \code{color} (see \code{\link{go_font}()}).}
-#' }
-#'
-#' @section selected.marker properties:
-#' \describe{
-#' \item{\code{color}}{Sets the marker color of selected points. Color: a
-#' CSS color string or R color name.}
-#' \item{\code{opacity}}{Sets the marker opacity of selected points. Number
-#' in the interval [0, 1].}
-#' \item{\code{size}}{Sets the marker size of selected points. Number in the
-#' interval [0, Inf].}
-#' }
-#'
-#' @section unselected properties:
-#' \describe{
-#' \item{\code{marker}}{A named list with properties \code{color},
-#' \code{opacity} and \code{size} (described in section "unselected.marker
-#' properties" below).}
-#' \item{\code{textfont}}{A \code{\link{go_font}()} object or named list,
-#' with properties \code{color} (see \code{\link{go_font}()}).}
-#' }
-#'
-#' @section unselected.marker properties:
-#' \describe{
-#' \item{\code{color}}{Sets the marker color of unselected points, applied
-#' only when a selection exists. Color: a CSS color string or R color name.}
-#' \item{\code{opacity}}{Sets the marker opacity of unselected points,
-#' applied only when a selection exists. Number in the interval [0, 1].}
-#' \item{\code{size}}{Sets the marker size of unselected points, applied
-#' only when a selection exists. Number in the interval [0, Inf].}
-#' }
-#'
 #' @noMd
 #' @export
 #' @examples
@@ -644,5 +290,584 @@ go_scattercarpet <- function(
     xaxis = NULL, yaxis = NULL, zorder = NULL, skip_invalid = FALSE
 ) {
   plotly_object("scattercarpet", arg, environment(), list(...), skip_invalid)
+}
+
+#' Scattercarpet line objects
+#'
+#' The object for the \code{line} of a scattercarpet trace
+#' (\code{\link{go_scattercarpet}()}). \code{go_scattercarpet_line()}
+#' creates one, with exactly its properties; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param backoff Sets the line back off from the end point of the nth line
+#'   segment (in px). This option is useful e.g. to avoid overlap with
+#'   arrowhead markers. With "auto" the lines would trim before markers if
+#'   `marker.angleref` is set to "previous". Number in the interval [0,
+#'   Inf], or a vector of these.
+#' @param color Sets the line color. Color: a CSS color string or R color
+#'   name.
+#' @param dash Sets the dash style of lines. Set to a dash type string
+#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
+#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
+#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
+#'   \code{"longdashdot"}, or a string matching
+#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
+#' @param shape Determines the line shape. With "spline" the lines are
+#'   drawn using spline interpolation. The other available values
+#'   correspond to step-wise line shapes. One of \code{"linear"},
+#'   \code{"spline"}.
+#' @param smoothing Has an effect only if `shape` is set to "spline" Sets
+#'   the amount of smoothing. 0 corresponds to no smoothing (equivalent to
+#'   a "linear" shape). Number in the interval [0, 1.3].
+#' @param width Sets the line width (in px). Number in the interval [0,
+#'   Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_scattercarpet_line} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_scattercarpet(
+#'     line = go_scattercarpet_line(color = "red")
+#'   )
+go_scattercarpet_line <- function(
+    arg = NULL, ..., backoff = NULL, color = NULL, dash = NULL,
+    shape = NULL, smoothing = NULL, width = NULL, skip_invalid = FALSE
+) {
+  plotly_object("scattercarpet.line", arg, environment(), list(...), skip_invalid)
+}
+
+#' Scattercarpet marker objects
+#'
+#' The object for the \code{marker} of a scattercarpet trace
+#' (\code{\link{go_scattercarpet}()}). \code{go_scattercarpet_marker()}
+#' creates one, with exactly its properties; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param angle Sets the marker angle in respect to `angleref`. Angle in
+#'   degrees, or a vector of these.
+#' @param angleref Sets the reference for marker angle. With "previous",
+#'   angle 0 points along the line from the previous point to this one.
+#'   With "up", angle 0 points toward the top of the screen. One of
+#'   \code{"previous"}, \code{"up"}.
+#' @param autocolorscale Determines whether the colorscale is a default
+#'   palette (`autocolorscale: true`) or the palette determined by
+#'   `marker.colorscale`. Has an effect only if in `marker.color` is set to
+#'   a numerical array. In case `colorscale` is unspecified or
+#'   `autocolorscale` is true, the default palette will be chosen according
+#'   to whether numbers in the `color` array are all positive, all negative
+#'   or mixed. Logical.
+#' @param cauto Determines whether or not the color domain is computed with
+#'   respect to the input data (here in `marker.color`) or the bounds set
+#'   in `marker.cmin` and `marker.cmax` Has an effect only if in
+#'   `marker.color` is set to a numerical array. Defaults to `false` when
+#'   `marker.cmin` and `marker.cmax` are set by the user. Logical.
+#' @param cmax Sets the upper bound of the color domain. Has an effect only
+#'   if in `marker.color` is set to a numerical array. Value should have
+#'   the same units as in `marker.color` and if set, `marker.cmin` must be
+#'   set as well. Number.
+#' @param cmid Sets the mid-point of the color domain by scaling
+#'   `marker.cmin` and/or `marker.cmax` to be equidistant to this point.
+#'   Has an effect only if in `marker.color` is set to a numerical array.
+#'   Value should have the same units as in `marker.color`. Has no effect
+#'   when `marker.cauto` is `false`. Number.
+#' @param cmin Sets the lower bound of the color domain. Has an effect only
+#'   if in `marker.color` is set to a numerical array. Value should have
+#'   the same units as in `marker.color` and if set, `marker.cmax` must be
+#'   set as well. Number.
+#' @param color Sets the marker color. It accepts either a specific color
+#'   or an array of numbers that are mapped to the colorscale relative to
+#'   the max and min values of the array or relative to `marker.cmin` and
+#'   `marker.cmax` if set. Color: a CSS color string or R color name, or a
+#'   number mapped to a color by \code{scattercarpet.marker.colorscale}, or
+#'   a vector of these.
+#' @param coloraxis Sets a reference to a shared color axis. References to
+#'   these shared color axes are "coloraxis", "coloraxis2", "coloraxis3",
+#'   etc. Settings for these shared color axes are set in the layout, under
+#'   `layout.coloraxis`, `layout.coloraxis2`, etc. Note that multiple color
+#'   scales can be linked to the same color axis. Subplot id:
+#'   \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....
+#' @param colorbar A \code{\link{go_colorbar}()} object or named list, with
+#'   properties \code{bgcolor}, \code{bordercolor}, \code{borderwidth},
+#'   \code{dtick}, \code{exponentformat}, \code{labelalias}, \code{len},
+#'   \code{lenmode}, \code{minexponent}, \code{nticks}, \code{orientation},
+#'   \code{outlinecolor} and 34 more (see \code{\link{go_colorbar}()}).
+#' @param colorscale Sets the colorscale. Has an effect only if in
+#'   `marker.color` is set to a numerical array. The colorscale must be an
+#'   array containing arrays mapping a normalized value to an rgb, rgba,
+#'   hex, hsl, hsla, hwb, or named color string. At minimum, a mapping for
+#'   the lowest (0) and highest (1) values are required. For example, `[[0,
+#'   'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
+#'   colorscale in color space, use `marker.cmin` and `marker.cmax`.
+#'   Alternatively, `colorscale` may be a palette name string of the
+#'   following list:
+#'   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
+#'   Colorscale: a vector of colors, a two-column data.frame of (value,
+#'   color), or the name of a sequential, diverging or cyclical scale in
+#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
+#' @param gradient A \code{\link{go_gradient}()} object or named list, with
+#'   properties \code{color} and \code{type} (see
+#'   \code{\link{go_gradient}()}).
+#' @param line A \code{\link{go_scattercarpet_marker_line}()} object or
+#'   named list, with properties \code{autocolorscale}, \code{cauto},
+#'   \code{cmax}, \code{cmid}, \code{cmin}, \code{color}, \code{coloraxis},
+#'   \code{colorscale}, \code{dash}, \code{reversescale} and \code{width}
+#'   (see \code{\link{go_scattercarpet_marker_line}()}).
+#' @param maxdisplayed Sets a maximum number of points to be drawn on the
+#'   graph. 0 corresponds to no limit. Number in the interval [0, Inf].
+#' @param opacity Sets the marker opacity. Number in the interval [0, 1],
+#'   or a vector of these.
+#' @param reversescale Reverses the color mapping if true. Has an effect
+#'   only if in `marker.color` is set to a numerical array. If true,
+#'   `marker.cmin` will correspond to the last color in the array and
+#'   `marker.cmax` will correspond to the first color. Logical.
+#' @param showscale Determines whether or not a colorbar is displayed for
+#'   this trace. Has an effect only if in `marker.color` is set to a
+#'   numerical array. Logical.
+#' @param size Sets the marker size (in px). Number in the interval [0,
+#'   Inf], or a vector of these.
+#' @param sizemin Has an effect only if `marker.size` is set to a numerical
+#'   array. Sets the minimum size (in px) of the rendered marker points.
+#'   Number in the interval [0, Inf].
+#' @param sizemode Has an effect only if `marker.size` is set to a
+#'   numerical array. Sets the rule for which the data in `size` is
+#'   converted to pixels. One of \code{"diameter"}, \code{"area"}.
+#' @param sizeref Has an effect only if `marker.size` is set to a numerical
+#'   array. Sets the scale factor used to determine the rendered size of
+#'   marker points. Use with `sizemin` and `sizemode`. Number.
+#' @param standoff Moves the marker away from the data point in the
+#'   direction of `angle` (in px). This can be useful for example if you
+#'   have another marker at this location and you want to point an
+#'   arrowhead marker at it. Number in the interval [0, Inf], or a vector
+#'   of these.
+#' @param symbol Sets the marker symbol type. Adding 100 is equivalent to
+#'   appending "-open" to a symbol name. Adding 200 is equivalent to
+#'   appending "-dot" to a symbol name. Adding 300 is equivalent to
+#'   appending "-open-dot" or "dot-open" to a symbol name. One of
+#'   \code{"0"}, \code{"circle"}, \code{"100"}, \code{"circle-open"},
+#'   \code{"200"}, \code{"circle-dot"}, \code{"300"},
+#'   \code{"circle-open-dot"}, \code{"1"}, \code{"square"}, \code{"101"},
+#'   \code{"square-open"}, \code{"201"}, \code{"square-dot"}, \code{"301"},
+#'   \code{"square-open-dot"}, \code{"2"}, \code{"diamond"}, \code{"102"},
+#'   \code{"diamond-open"}, \code{"202"}, \code{"diamond-dot"},
+#'   \code{"302"}, \code{"diamond-open-dot"}, \code{"3"}, \code{"cross"},
+#'   \code{"103"}, \code{"cross-open"}, \code{"203"}, \code{"cross-dot"},
+#'   \code{"303"}, \code{"cross-open-dot"}, \code{"4"}, \code{"x"},
+#'   \code{"104"}, \code{"x-open"}, \code{"204"}, \code{"x-dot"},
+#'   \code{"304"}, \code{"x-open-dot"}, \code{"5"}, \code{"triangle-up"},
+#'   \code{"105"}, \code{"triangle-up-open"}, \code{"205"},
+#'   \code{"triangle-up-dot"}, \code{"305"}, \code{"triangle-up-open-dot"},
+#'   \code{"6"}, \code{"triangle-down"}, \code{"106"},
+#'   \code{"triangle-down-open"}, \code{"206"}, \code{"triangle-down-dot"},
+#'   \code{"306"}, \code{"triangle-down-open-dot"}, \code{"7"},
+#'   \code{"triangle-left"}, \code{"107"}, \code{"triangle-left-open"},
+#'   \code{"207"}, \code{"triangle-left-dot"}, \code{"307"},
+#'   \code{"triangle-left-open-dot"}, \code{"8"}, \code{"triangle-right"},
+#'   \code{"108"}, \code{"triangle-right-open"}, \code{"208"},
+#'   \code{"triangle-right-dot"}, \code{"308"},
+#'   \code{"triangle-right-open-dot"}, \code{"9"}, \code{"triangle-ne"},
+#'   \code{"109"}, \code{"triangle-ne-open"}, \code{"209"},
+#'   \code{"triangle-ne-dot"}, \code{"309"}, \code{"triangle-ne-open-dot"},
+#'   \code{"10"}, \code{"triangle-se"}, \code{"110"},
+#'   \code{"triangle-se-open"}, \code{"210"}, \code{"triangle-se-dot"},
+#'   \code{"310"}, \code{"triangle-se-open-dot"}, \code{"11"},
+#'   \code{"triangle-sw"}, \code{"111"}, \code{"triangle-sw-open"},
+#'   \code{"211"}, \code{"triangle-sw-dot"}, \code{"311"},
+#'   \code{"triangle-sw-open-dot"}, \code{"12"}, \code{"triangle-nw"},
+#'   \code{"112"}, \code{"triangle-nw-open"}, \code{"212"},
+#'   \code{"triangle-nw-dot"}, \code{"312"}, \code{"triangle-nw-open-dot"},
+#'   \code{"13"}, \code{"pentagon"}, \code{"113"}, \code{"pentagon-open"},
+#'   \code{"213"}, \code{"pentagon-dot"}, \code{"313"},
+#'   \code{"pentagon-open-dot"}, \code{"14"}, \code{"hexagon"},
+#'   \code{"114"}, \code{"hexagon-open"}, \code{"214"},
+#'   \code{"hexagon-dot"}, \code{"314"}, \code{"hexagon-open-dot"},
+#'   \code{"15"}, \code{"hexagon2"}, \code{"115"}, \code{"hexagon2-open"},
+#'   \code{"215"}, \code{"hexagon2-dot"}, \code{"315"},
+#'   \code{"hexagon2-open-dot"}, \code{"16"}, \code{"octagon"},
+#'   \code{"116"}, \code{"octagon-open"}, \code{"216"},
+#'   \code{"octagon-dot"}, \code{"316"}, \code{"octagon-open-dot"},
+#'   \code{"17"}, \code{"star"}, \code{"117"}, \code{"star-open"},
+#'   \code{"217"}, \code{"star-dot"}, \code{"317"}, \code{"star-open-dot"},
+#'   \code{"18"}, \code{"hexagram"}, \code{"118"}, \code{"hexagram-open"},
+#'   \code{"218"}, \code{"hexagram-dot"}, \code{"318"},
+#'   \code{"hexagram-open-dot"}, \code{"19"}, \code{"star-triangle-up"},
+#'   \code{"119"}, \code{"star-triangle-up-open"}, \code{"219"},
+#'   \code{"star-triangle-up-dot"}, \code{"319"},
+#'   \code{"star-triangle-up-open-dot"}, \code{"20"},
+#'   \code{"star-triangle-down"}, \code{"120"},
+#'   \code{"star-triangle-down-open"}, \code{"220"},
+#'   \code{"star-triangle-down-dot"}, \code{"320"},
+#'   \code{"star-triangle-down-open-dot"}, \code{"21"},
+#'   \code{"star-square"}, \code{"121"}, \code{"star-square-open"},
+#'   \code{"221"}, \code{"star-square-dot"}, \code{"321"},
+#'   \code{"star-square-open-dot"}, \code{"22"}, \code{"star-diamond"},
+#'   \code{"122"}, \code{"star-diamond-open"}, \code{"222"},
+#'   \code{"star-diamond-dot"}, \code{"322"},
+#'   \code{"star-diamond-open-dot"}, \code{"23"}, \code{"diamond-tall"},
+#'   \code{"123"}, \code{"diamond-tall-open"}, \code{"223"},
+#'   \code{"diamond-tall-dot"}, \code{"323"},
+#'   \code{"diamond-tall-open-dot"}, \code{"24"}, \code{"diamond-wide"},
+#'   \code{"124"}, \code{"diamond-wide-open"}, \code{"224"},
+#'   \code{"diamond-wide-dot"}, \code{"324"},
+#'   \code{"diamond-wide-open-dot"}, \code{"25"}, \code{"hourglass"},
+#'   \code{"125"}, \code{"hourglass-open"}, \code{"26"}, \code{"bowtie"},
+#'   \code{"126"}, \code{"bowtie-open"}, \code{"27"},
+#'   \code{"circle-cross"}, \code{"127"}, \code{"circle-cross-open"},
+#'   \code{"28"}, \code{"circle-x"}, \code{"128"}, \code{"circle-x-open"},
+#'   \code{"29"}, \code{"square-cross"}, \code{"129"},
+#'   \code{"square-cross-open"}, \code{"30"}, \code{"square-x"},
+#'   \code{"130"}, \code{"square-x-open"}, \code{"31"},
+#'   \code{"diamond-cross"}, \code{"131"}, \code{"diamond-cross-open"},
+#'   \code{"32"}, \code{"diamond-x"}, \code{"132"},
+#'   \code{"diamond-x-open"}, \code{"33"}, \code{"cross-thin"},
+#'   \code{"133"}, \code{"cross-thin-open"}, \code{"34"}, \code{"x-thin"},
+#'   \code{"134"}, \code{"x-thin-open"}, \code{"35"}, \code{"asterisk"},
+#'   \code{"135"}, \code{"asterisk-open"}, \code{"36"}, \code{"hash"},
+#'   \code{"136"}, \code{"hash-open"}, \code{"236"}, \code{"hash-dot"},
+#'   \code{"336"}, \code{"hash-open-dot"}, \code{"37"}, \code{"y-up"},
+#'   \code{"137"}, \code{"y-up-open"}, \code{"38"}, \code{"y-down"},
+#'   \code{"138"}, \code{"y-down-open"}, \code{"39"}, \code{"y-left"},
+#'   \code{"139"}, \code{"y-left-open"}, \code{"40"}, \code{"y-right"},
+#'   \code{"140"}, \code{"y-right-open"}, \code{"41"}, \code{"line-ew"},
+#'   \code{"141"}, \code{"line-ew-open"}, \code{"42"}, \code{"line-ns"},
+#'   \code{"142"}, \code{"line-ns-open"}, \code{"43"}, \code{"line-ne"},
+#'   \code{"143"}, \code{"line-ne-open"}, \code{"44"}, \code{"line-nw"},
+#'   \code{"144"}, \code{"line-nw-open"}, \code{"45"}, \code{"arrow-up"},
+#'   \code{"145"}, \code{"arrow-up-open"}, \code{"46"},
+#'   \code{"arrow-down"}, \code{"146"}, \code{"arrow-down-open"},
+#'   \code{"47"}, \code{"arrow-left"}, \code{"147"},
+#'   \code{"arrow-left-open"}, \code{"48"}, \code{"arrow-right"},
+#'   \code{"148"}, \code{"arrow-right-open"}, \code{"49"},
+#'   \code{"arrow-bar-up"}, \code{"149"}, \code{"arrow-bar-up-open"},
+#'   \code{"50"}, \code{"arrow-bar-down"}, \code{"150"},
+#'   \code{"arrow-bar-down-open"}, \code{"51"}, \code{"arrow-bar-left"},
+#'   \code{"151"}, \code{"arrow-bar-left-open"}, \code{"52"},
+#'   \code{"arrow-bar-right"}, \code{"152"}, \code{"arrow-bar-right-open"},
+#'   \code{"53"}, \code{"arrow"}, \code{"153"}, \code{"arrow-open"},
+#'   \code{"54"}, \code{"arrow-wide"}, \code{"154"},
+#'   \code{"arrow-wide-open"}, \code{0}, \code{100}, \code{200},
+#'   \code{300}, \code{1}, \code{101}, \code{201}, \code{301}, \code{2},
+#'   \code{102}, \code{202}, \code{302}, \code{3}, \code{103}, \code{203},
+#'   \code{303}, \code{4}, \code{104}, \code{204}, \code{304}, \code{5},
+#'   \code{105}, \code{205}, \code{305}, \code{6}, \code{106}, \code{206},
+#'   \code{306}, \code{7}, \code{107}, \code{207}, \code{307}, \code{8},
+#'   \code{108}, \code{208}, \code{308}, \code{9}, \code{109}, \code{209},
+#'   \code{309}, \code{10}, \code{110}, \code{210}, \code{310}, \code{11},
+#'   \code{111}, \code{211}, \code{311}, \code{12}, \code{112}, \code{212},
+#'   \code{312}, \code{13}, \code{113}, \code{213}, \code{313}, \code{14},
+#'   \code{114}, \code{214}, \code{314}, \code{15}, \code{115}, \code{215},
+#'   \code{315}, \code{16}, \code{116}, \code{216}, \code{316}, \code{17},
+#'   \code{117}, \code{217}, \code{317}, \code{18}, \code{118}, \code{218},
+#'   \code{318}, \code{19}, \code{119}, \code{219}, \code{319}, \code{20},
+#'   \code{120}, \code{220}, \code{320}, \code{21}, \code{121}, \code{221},
+#'   \code{321}, \code{22}, \code{122}, \code{222}, \code{322}, \code{23},
+#'   \code{123}, \code{223}, \code{323}, \code{24}, \code{124}, \code{224},
+#'   \code{324}, \code{25}, \code{125}, \code{26}, \code{126}, \code{27},
+#'   \code{127}, \code{28}, \code{128}, \code{29}, \code{129}, \code{30},
+#'   \code{130}, \code{31}, \code{131}, \code{32}, \code{132}, \code{33},
+#'   \code{133}, \code{34}, \code{134}, \code{35}, \code{135}, \code{36},
+#'   \code{136}, \code{236}, \code{336}, \code{37}, \code{137}, \code{38},
+#'   \code{138}, \code{39}, \code{139}, \code{40}, \code{140}, \code{41},
+#'   \code{141}, \code{42}, \code{142}, \code{43}, \code{143}, \code{44},
+#'   \code{144}, \code{45}, \code{145}, \code{46}, \code{146}, \code{47},
+#'   \code{147}, \code{48}, \code{148}, \code{49}, \code{149}, \code{50},
+#'   \code{150}, \code{51}, \code{151}, \code{52}, \code{152}, \code{53},
+#'   \code{153}, \code{54}, \code{154}, or a vector of these.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_scattercarpet_marker} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_scattercarpet(
+#'     marker = go_scattercarpet_marker(color = "red")
+#'   )
+go_scattercarpet_marker <- function(
+    arg = NULL, ..., angle = NULL, angleref = NULL, autocolorscale = NULL,
+    cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL, color = NULL,
+    coloraxis = NULL, colorbar = NULL, colorscale = NULL, gradient = NULL,
+    line = NULL, maxdisplayed = NULL, opacity = NULL, reversescale = NULL,
+    showscale = NULL, size = NULL, sizemin = NULL, sizemode = NULL,
+    sizeref = NULL, standoff = NULL, symbol = NULL, skip_invalid = FALSE
+) {
+  plotly_object("scattercarpet.marker", arg, environment(), list(...), skip_invalid)
+}
+
+#' Scattercarpet marker line objects
+#'
+#' The object for the \code{marker.line} of a scattercarpet trace
+#' (\code{\link{go_scattercarpet_marker}()}).
+#' \code{go_scattercarpet_marker_line()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param autocolorscale Determines whether the colorscale is a default
+#'   palette (`autocolorscale: true`) or the palette determined by
+#'   `marker.line.colorscale`. Has an effect only if in `marker.line.color`
+#'   is set to a numerical array. In case `colorscale` is unspecified or
+#'   `autocolorscale` is true, the default palette will be chosen according
+#'   to whether numbers in the `color` array are all positive, all negative
+#'   or mixed. Logical.
+#' @param cauto Determines whether or not the color domain is computed with
+#'   respect to the input data (here in `marker.line.color`) or the bounds
+#'   set in `marker.line.cmin` and `marker.line.cmax` Has an effect only if
+#'   in `marker.line.color` is set to a numerical array. Defaults to
+#'   `false` when `marker.line.cmin` and `marker.line.cmax` are set by the
+#'   user. Logical.
+#' @param cmax Sets the upper bound of the color domain. Has an effect only
+#'   if in `marker.line.color` is set to a numerical array. Value should
+#'   have the same units as in `marker.line.color` and if set,
+#'   `marker.line.cmin` must be set as well. Number.
+#' @param cmid Sets the mid-point of the color domain by scaling
+#'   `marker.line.cmin` and/or `marker.line.cmax` to be equidistant to this
+#'   point. Has an effect only if in `marker.line.color` is set to a
+#'   numerical array. Value should have the same units as in
+#'   `marker.line.color`. Has no effect when `marker.line.cauto` is
+#'   `false`. Number.
+#' @param cmin Sets the lower bound of the color domain. Has an effect only
+#'   if in `marker.line.color` is set to a numerical array. Value should
+#'   have the same units as in `marker.line.color` and if set,
+#'   `marker.line.cmax` must be set as well. Number.
+#' @param color Sets the marker.line color. It accepts either a specific
+#'   color or an array of numbers that are mapped to the colorscale
+#'   relative to the max and min values of the array or relative to
+#'   `marker.line.cmin` and `marker.line.cmax` if set. Color: a CSS color
+#'   string or R color name, or a number mapped to a color by
+#'   \code{scattercarpet.marker.line.colorscale}, or a vector of these.
+#' @param coloraxis Sets a reference to a shared color axis. References to
+#'   these shared color axes are "coloraxis", "coloraxis2", "coloraxis3",
+#'   etc. Settings for these shared color axes are set in the layout, under
+#'   `layout.coloraxis`, `layout.coloraxis2`, etc. Note that multiple color
+#'   scales can be linked to the same color axis. Subplot id:
+#'   \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....
+#' @param colorscale Sets the colorscale. Has an effect only if in
+#'   `marker.line.color` is set to a numerical array. The colorscale must
+#'   be an array containing arrays mapping a normalized value to an rgb,
+#'   rgba, hex, hsl, hsla, hwb, or named color string. At minimum, a
+#'   mapping for the lowest (0) and highest (1) values are required. For
+#'   example, `[[0, 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the
+#'   bounds of the colorscale in color space, use `marker.line.cmin` and
+#'   `marker.line.cmax`. Alternatively, `colorscale` may be a palette name
+#'   string of the following list:
+#'   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
+#'   Colorscale: a vector of colors, a two-column data.frame of (value,
+#'   color), or the name of a sequential, diverging or cyclical scale in
+#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
+#' @param dash Sets the dash style of lines. Set to a dash type string
+#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
+#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
+#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
+#'   \code{"longdashdot"}, or a string matching
+#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"},
+#'   or a vector of these.
+#' @param reversescale Reverses the color mapping if true. Has an effect
+#'   only if in `marker.line.color` is set to a numerical array. If true,
+#'   `marker.line.cmin` will correspond to the last color in the array and
+#'   `marker.line.cmax` will correspond to the first color. Logical.
+#' @param width Sets the width (in px) of the lines bounding the marker
+#'   points. Number in the interval [0, Inf], or a vector of these.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_scattercarpet_marker_line} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_scattercarpet(
+#'     marker = go_scattercarpet_marker(
+#'       line = go_scattercarpet_marker_line(color = "red")
+#'     )
+#'   )
+go_scattercarpet_marker_line <- function(
+    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
+    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
+    colorscale = NULL, dash = NULL, reversescale = NULL, width = NULL,
+    skip_invalid = FALSE
+) {
+  plotly_object("scattercarpet.marker.line", arg, environment(), list(...), skip_invalid)
+}
+
+#' Scattercarpet selected objects
+#'
+#' The object for the \code{selected} of a scattercarpet trace
+#' (\code{\link{go_scattercarpet}()}). \code{go_scattercarpet_selected()}
+#' creates one, with exactly its properties; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param marker A \code{\link{go_scattercarpet_selected_marker}()} object
+#'   or named list, with properties \code{color}, \code{opacity} and
+#'   \code{size} (see \code{\link{go_scattercarpet_selected_marker}()}).
+#' @param textfont A \code{\link{go_font}()} object or named list, with
+#'   properties \code{color} (see \code{\link{go_font}()}).
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_scattercarpet_selected} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_scattercarpet(
+#'     selected = go_scattercarpet_selected()
+#'   )
+go_scattercarpet_selected <- function(
+    arg = NULL, ..., marker = NULL, textfont = NULL, skip_invalid = FALSE
+) {
+  plotly_object("scattercarpet.selected", arg, environment(), list(...), skip_invalid)
+}
+
+#' Scattercarpet selected marker objects
+#'
+#' The object for the \code{selected.marker} of a scattercarpet trace
+#' (\code{\link{go_scattercarpet_selected}()}).
+#' \code{go_scattercarpet_selected_marker()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the marker color of selected points. Color: a CSS
+#'   color string or R color name.
+#' @param opacity Sets the marker opacity of selected points. Number in the
+#'   interval [0, 1].
+#' @param size Sets the marker size of selected points. Number in the
+#'   interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_scattercarpet_selected_marker} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_scattercarpet(
+#'     selected = go_scattercarpet_selected(
+#'       marker = go_scattercarpet_selected_marker(color = "red")
+#'     )
+#'   )
+go_scattercarpet_selected_marker <- function(
+    arg = NULL, ..., color = NULL, opacity = NULL, size = NULL,
+    skip_invalid = FALSE
+) {
+  plotly_object("scattercarpet.selected.marker", arg, environment(), list(...), skip_invalid)
+}
+
+#' Scattercarpet unselected objects
+#'
+#' The object for the \code{unselected} of a scattercarpet trace
+#' (\code{\link{go_scattercarpet}()}). \code{go_scattercarpet_unselected()}
+#' creates one, with exactly its properties; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param marker A \code{\link{go_scattercarpet_unselected_marker}()}
+#'   object or named list, with properties \code{color}, \code{opacity} and
+#'   \code{size} (see \code{\link{go_scattercarpet_unselected_marker}()}).
+#' @param textfont A \code{\link{go_font}()} object or named list, with
+#'   properties \code{color} (see \code{\link{go_font}()}).
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_scattercarpet_unselected} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_scattercarpet(
+#'     unselected = go_scattercarpet_unselected()
+#'   )
+go_scattercarpet_unselected <- function(
+    arg = NULL, ..., marker = NULL, textfont = NULL, skip_invalid = FALSE
+) {
+  plotly_object("scattercarpet.unselected", arg, environment(), list(...), skip_invalid)
+}
+
+#' Scattercarpet unselected marker objects
+#'
+#' The object for the \code{unselected.marker} of a scattercarpet trace
+#' (\code{\link{go_scattercarpet_unselected}()}).
+#' \code{go_scattercarpet_unselected_marker()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the marker color of unselected points, applied only
+#'   when a selection exists. Color: a CSS color string or R color name.
+#' @param opacity Sets the marker opacity of unselected points, applied
+#'   only when a selection exists. Number in the interval [0, 1].
+#' @param size Sets the marker size of unselected points, applied only when
+#'   a selection exists. Number in the interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_scattercarpet_unselected_marker} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_scattercarpet(
+#'     unselected = go_scattercarpet_unselected(
+#'       marker = go_scattercarpet_unselected_marker(color = "red")
+#'     )
+#'   )
+go_scattercarpet_unselected_marker <- function(
+    arg = NULL, ..., color = NULL, opacity = NULL, size = NULL,
+    skip_invalid = FALSE
+) {
+  plotly_object("scattercarpet.unselected.marker", arg, environment(), list(...), skip_invalid)
 }
 

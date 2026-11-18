@@ -91,10 +91,11 @@ within each category. Logical.}
 Defaults to 1 so that each state represents one observation Number in
 the interval [0, Inf], or a vector of these.}
 
-\item{dimensions}{List, each element a named list with properties
-\code{categoryarray}, \code{categoryorder}, \code{displayindex},
-\code{label}, \code{ticktext}, \code{values} and \code{visible}
-(described in section "dimension properties" below).}
+\item{dimensions}{List, each element a
+\code{\link{go_parcats_dimension}()} object or named list, with
+properties \code{categoryarray}, \code{categoryorder},
+\code{displayindex}, \code{label}, \code{ticktext}, \code{values} and
+\code{visible} (see \code{\link{go_parcats_dimension}()}).}
 
 \item{domain}{A \code{\link{go_domain}()} object or named list, with
 properties \code{column}, \code{row}, \code{x} and \code{y} (see
@@ -159,12 +160,12 @@ named list, with properties \code{font} and \code{text} (see
 \item{legendwidth}{Sets the width (in px or fraction) of the legend for
 this trace. Number in the interval [0, Inf].}
 
-\item{line}{A named list with properties \code{autocolorscale},
-\code{cauto}, \code{cmax}, \code{cmid}, \code{cmin}, \code{color},
-\code{coloraxis}, \code{colorbar}, \code{colorscale},
-\code{hovertemplate}, \code{hovertemplatefallback},
-\code{reversescale}, \code{shape} and \code{showscale} (described in
-section "line properties" below).}
+\item{line}{A \code{\link{go_parcats_line}()} object or named list, with
+properties \code{autocolorscale}, \code{cauto}, \code{cmax},
+\code{cmid}, \code{cmin}, \code{color}, \code{coloraxis},
+\code{colorbar}, \code{colorscale}, \code{hovertemplate},
+\code{hovertemplatefallback}, \code{reversescale}, \code{shape} and
+\code{showscale} (see \code{\link{go_parcats_line}()}).}
 
 \item{meta}{Assigns extra meta information associated with this trace
 that can be used in various text attributes. Attributes such as trace
@@ -239,166 +240,27 @@ Parallel categories diagram for multidimensional categorical data.
 \code{add_parcats()} creates one and adds it to a figure.
 
 
-Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-= list(width = 2))}. Each nested object's properties are described in a
-section of its own near the end of this page (after \emph{Value}), titled
-with its path: \emph{marker properties}, \emph{marker.line properties},
-.... Objects that appear in several places in the schema can also be
-created with a constructor of their own, and are documented on its page:
-\code{\link{go_font}()}, \code{\link{go_colorbar}()},
-\code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-\code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-\code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-\code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-\code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-\code{\link{go_gradient}()}, \code{\link{go_label}()},
-\code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-\code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-\code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-\code{\link{go_root}()}, \code{\link{go_slices}()},
-\code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-Every property is checked against the plotly.js schema when the object is
-created or modified (see \code{\link{plotly_obj-modify}}).
+Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+objects of their constructors: every object in the schema has one,
+documented on its own page, with exactly that object's properties. Most
+are named after their path: \code{go_scatter_marker()},
+\code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+Objects that appear in several places share one: \code{\link{go_font}()},
+\code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+\code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+\code{\link{go_domain}()}, \code{\link{go_pattern}()},
+\code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+\code{\link{go_bins}()}, \code{\link{go_caps}()},
+\code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+\code{\link{go_label}()}, \code{\link{go_leaf}()},
+\code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+\code{\link{go_pathbar}()}, \code{\link{go_project}()},
+\code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+\code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+\code{\link{go_unifiedhovertitle}()}. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+\code{\link{plotly_obj-modify}}).
 }
-\section{dimension properties (each list element)}{
-
-The dimensions (variables) of the parallel categories diagram.
-
-\describe{
-\item{\code{categoryarray}}{Sets the order in which categories in this
-dimension appear. Only has an effect if `categoryorder` is set to
-"array". Used with `categoryorder`. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
-\item{\code{categoryorder}}{Specifies the ordering logic for the
-categories in the dimension. By default, plotly uses "trace", which
-specifies the order that is present in the data supplied. Set
-`categoryorder` to "category ascending" or "category descending" if order
-should be determined by the alphanumerical order of the category names.
-Set `categoryorder` to "array" to derive the ordering from the attribute
-`categoryarray`. If a category is not found in the `categoryarray` array,
-the sorting behavior for that attribute will be identical to the "trace"
-mode. The unspecified categories will follow the categories in
-`categoryarray`. One of \code{"trace"}, \code{"category ascending"},
-\code{"category descending"}, \code{"array"}.}
-\item{\code{displayindex}}{The display index of dimension, from left to
-right, zero indexed, defaults to dimension index. Integer.}
-\item{\code{label}}{The shown name of the dimension. String.}
-\item{\code{ticktext}}{Sets alternative tick labels for the categories in
-this dimension. Only has an effect if `categoryorder` is set to "array".
-Should be an array the same length as `categoryarray` Used with
-`categoryorder`. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.}
-\item{\code{values}}{Dimension values. `values[n]` represents the
-category value of the `n`th point in the dataset, therefore the `values`
-vector for all dimensions must be the same (longer vectors will be
-truncated). Data array: a vector, factor, Date/POSIXct vector, matrix or
-list.}
-\item{\code{visible}}{Shows the dimension when set to `true` (the
-default). Hides the dimension for `false`. Logical.}
-}
-}
-
-\section{line properties}{
-
-\describe{
-\item{\code{autocolorscale}}{Determines whether the colorscale is a
-default palette (`autocolorscale: true`) or the palette determined by
-`line.colorscale`. Has an effect only if in `line.color` is set to a
-numerical array. In case `colorscale` is unspecified or `autocolorscale`
-is true, the default palette will be chosen according to whether numbers
-in the `color` array are all positive, all negative or mixed. Logical.}
-\item{\code{cauto}}{Determines whether or not the color domain is
-computed with respect to the input data (here in `line.color`) or the
-bounds set in `line.cmin` and `line.cmax` Has an effect only if in
-`line.color` is set to a numerical array. Defaults to `false` when
-`line.cmin` and `line.cmax` are set by the user. Logical.}
-\item{\code{cmax}}{Sets the upper bound of the color domain. Has an
-effect only if in `line.color` is set to a numerical array. Value should
-have the same units as in `line.color` and if set, `line.cmin` must be
-set as well. Number.}
-\item{\code{cmid}}{Sets the mid-point of the color domain by scaling
-`line.cmin` and/or `line.cmax` to be equidistant to this point. Has an
-effect only if in `line.color` is set to a numerical array. Value should
-have the same units as in `line.color`. Has no effect when `line.cauto`
-is `false`. Number.}
-\item{\code{cmin}}{Sets the lower bound of the color domain. Has an
-effect only if in `line.color` is set to a numerical array. Value should
-have the same units as in `line.color` and if set, `line.cmax` must be
-set as well. Number.}
-\item{\code{color}}{Sets the line color. It accepts either a specific
-color or an array of numbers that are mapped to the colorscale relative
-to the max and min values of the array or relative to `line.cmin` and
-`line.cmax` if set. Color: a CSS color string or R color name, or a
-number mapped to a color by \code{parcats.line.colorscale}, or a vector
-of these.}
-\item{\code{coloraxis}}{Sets a reference to a shared color axis.
-References to these shared color axes are "coloraxis", "coloraxis2",
-"coloraxis3", etc. Settings for these shared color axes are set in the
-layout, under `layout.coloraxis`, `layout.coloraxis2`, etc. Note that
-multiple color scales can be linked to the same color axis. Subplot id:
-\code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
-\item{\code{colorbar}}{A \code{\link{go_colorbar}()} object or named
-list, with properties \code{bgcolor}, \code{bordercolor},
-\code{borderwidth}, \code{dtick}, \code{exponentformat},
-\code{labelalias}, \code{len}, \code{lenmode}, \code{minexponent},
-\code{nticks}, \code{orientation}, \code{outlinecolor} and 34 more (see
-\code{\link{go_colorbar}()}).}
-\item{\code{colorscale}}{Sets the colorscale. Has an effect only if in
-`line.color` is set to a numerical array. The colorscale must be an array
-containing arrays mapping a normalized value to an rgb, rgba, hex, hsl,
-hsla, hwb, or named color string. At minimum, a mapping for the lowest
-(0) and highest (1) values are required. For example, `[[0,
-'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
-colorscale in color space, use `line.cmin` and `line.cmax`.
-Alternatively, `colorscale` may be a palette name string of the following
-list:
-Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-Colorscale: a vector of colors, a two-column data.frame of (value,
-color), or the name of a sequential, diverging or cyclical scale in
-\code{\link{px_colors}()} (append \code{"_r"} to reverse).}
-\item{\code{hovertemplate}}{Template string used for rendering the
-information that appear on hover box. Note that this will override
-`hoverinfo`. Variables are inserted using \%\{variable\}, for example "y:
-\%\{y\}" as well as \%\{xother\}, \{\%_xother\}, \{\%_xother_\},
-\{\%xother_\}. When showing info for several points, "xother" will be
-added to those with different x positions from the first point. An
-underscore before or after "(x|y)other" will add a space on that side,
-only when this field is shown. Numbers are formatted using d3-format's
-syntax \%\{variable:d3-format\}, for example "Price: \%\{y:$.2f\}".
-https://github.com/d3/d3-format/tree/v1.4.5#d3-format for details on the
-formatting syntax. Dates are formatted using d3-time-format's syntax
-\%\{variable|d3-time-format\}, for example "Day: \%\{2019-01-01|\%A\}".
-https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format for
-details on the date formatting syntax. Variables that can't be found will
-be replaced with the specifier. For example, a template of "data:
-\%\{x\}, \%\{y\}" will result in a value of "data: 1, \%\{y\}" if x is 1
-and y is missing. Variables with an undefined value will be replaced with
-the fallback value. The variables available in `hovertemplate` are the
-ones emitted as event data described at this link
-https://plotly.com/javascript/plotlyjs-events/#event-data. Additionally,
-all attributes that can be specified per-point (the ones that are
-`arrayOk: true`) are available.  Finally, the template string has access
-to variables `count` and `probability`. Anything contained in tag
-`<extra>` is displayed in the secondary box, for example
-`<extra>\%\{fullData.name\}</extra>`. To hide the secondary box
-completely, use an empty tag `<extra></extra>`. String.}
-\item{\code{hovertemplatefallback}}{Fallback string that's displayed when
-a variable referenced in a template is missing. If the boolean value
-'false' is passed in, the specifier with the missing variable will be
-displayed. Any value.}
-\item{\code{reversescale}}{Reverses the color mapping if true. Has an
-effect only if in `line.color` is set to a numerical array. If true,
-`line.cmin` will correspond to the last color in the array and
-`line.cmax` will correspond to the first color. Logical.}
-\item{\code{shape}}{Sets the shape of the paths. If `linear`, paths are
-composed of straight lines. If `hspline`, paths are composed of
-horizontal curved splines One of \code{"linear"}, \code{"hspline"}.}
-\item{\code{showscale}}{Determines whether or not a colorbar is displayed
-for this trace. Has an effect only if in `line.color` is set to a
-numerical array. Logical.}
-}
-}
-
 \examples{
 go_parcats()
 }

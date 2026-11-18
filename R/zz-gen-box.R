@@ -27,26 +27,26 @@
 #' \code{add_box()} creates one and adds it to a figure.
 #'
 #' @details
-#' Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-#' = list(width = 2))}. Each nested object's properties are described in a
-#' section of its own near the end of this page (after \emph{Value}), titled
-#' with its path: \emph{marker properties}, \emph{marker.line properties},
-#' .... Objects that appear in several places in the schema can also be
-#' created with a constructor of their own, and are documented on its page:
-#' \code{\link{go_font}()}, \code{\link{go_colorbar}()},
-#' \code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-#' \code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-#' \code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-#' \code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-#' \code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-#' \code{\link{go_gradient}()}, \code{\link{go_label}()},
-#' \code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-#' \code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-#' \code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-#' \code{\link{go_root}()}, \code{\link{go_slices}()},
-#' \code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-#' Every property is checked against the plotly.js schema when the object is
-#' created or modified (see \code{\link{plotly_obj-modify}}).
+#' Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+#' objects of their constructors: every object in the schema has one,
+#' documented on its own page, with exactly that object's properties. Most
+#' are named after their path: \code{go_scatter_marker()},
+#' \code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+#' Objects that appear in several places share one: \code{\link{go_font}()},
+#' \code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+#' \code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+#' \code{\link{go_domain}()}, \code{\link{go_pattern}()},
+#' \code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+#' \code{\link{go_bins}()}, \code{\link{go_caps}()},
+#' \code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+#' \code{\link{go_label}()}, \code{\link{go_leaf}()},
+#' \code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+#' \code{\link{go_pathbar}()}, \code{\link{go_project}()},
+#' \code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+#' \code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+#' \code{\link{go_unifiedhovertitle}()}. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}).
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
@@ -164,17 +164,19 @@
 #'   to their order in data and layout. Number.
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param line A named list with properties \code{color} and \code{width}
-#'   (described in section "line properties" below).
+#' @param line A \code{\link{go_box_line}()} object or named list, with
+#'   properties \code{color} and \code{width} (see
+#'   \code{\link{go_box_line}()}).
 #' @param lowerfence Sets the lower fence values. There should be as many
 #'   items as the number of boxes desired. This attribute has effect only
 #'   under the q1/median/q3 signature. If `lowerfence` is not provided but
 #'   a sample (in `y` or `x`) is set, we compute the lower as the last
 #'   sample point below 1.5 times the IQR. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
-#' @param marker A named list with properties \code{angle}, \code{color},
-#'   \code{line}, \code{opacity}, \code{outliercolor}, \code{size} and
-#'   \code{symbol} (described in section "marker properties" below).
+#' @param marker A \code{\link{go_box_marker}()} object or named list, with
+#'   properties \code{angle}, \code{color}, \code{line}, \code{opacity},
+#'   \code{outliercolor}, \code{size} and \code{symbol} (see
+#'   \code{\link{go_box_marker}()}).
 #' @param mean Sets the mean values. There should be as many items as the
 #'   number of boxes desired. This attribute has effect only under the
 #'   q1/median/q3 signature. If `mean` is not provided but a sample (in `y`
@@ -260,8 +262,8 @@
 #'   5-stddev Number in the interval [0, Inf].
 #' @param secondary_y If \code{TRUE}, use the secondary y axis of the
 #'   subplot.
-#' @param selected A named list with properties \code{marker} (described in
-#'   section "selected properties" below).
+#' @param selected A \code{\link{go_box_selected}()} object or named list,
+#'   with properties \code{marker} (see \code{\link{go_box_selected}()}).
 #' @param selectedpoints Array containing integer indices of selected
 #'   points. Has an effect only for traces that support selections. Note
 #'   that an empty array means an empty selection where the `unselected`
@@ -298,8 +300,9 @@
 #'   array, such that the same trace has a different index, you can still
 #'   preserve user-driven changes if you give each trace a `uid` that stays
 #'   with it as it moves. Any value.
-#' @param unselected A named list with properties \code{marker} (described
-#'   in section "unselected properties" below).
+#' @param unselected A \code{\link{go_box_unselected}()} object or named
+#'   list, with properties \code{marker} (see
+#'   \code{\link{go_box_unselected}()}).
 #' @param upperfence Sets the upper fence values. There should be as many
 #'   items as the number of boxes desired. This attribute has effect only
 #'   under the q1/median/q3 signature. If `upperfence` is not provided but
@@ -406,211 +409,6 @@
 #'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
 #'
-#' @section line properties:
-#' \describe{
-#' \item{\code{color}}{Sets the color of line bounding the box(es). Color: a
-#' CSS color string or R color name.}
-#' \item{\code{width}}{Sets the width (in px) of line bounding the box(es).
-#' Number in the interval [0, Inf].}
-#' }
-#'
-#' @section marker properties:
-#' \describe{
-#' \item{\code{angle}}{Sets the marker angle in respect to `angleref`. Angle
-#' in degrees.}
-#' \item{\code{color}}{Sets the marker color. It accepts either a specific
-#' color or an array of numbers that are mapped to the colorscale relative
-#' to the max and min values of the array or relative to `marker.cmin` and
-#' `marker.cmax` if set. Color: a CSS color string or R color name.}
-#' \item{\code{line}}{A named list with properties \code{color},
-#' \code{outliercolor}, \code{outlierwidth} and \code{width} (described in
-#' section "marker.line properties" below).}
-#' \item{\code{opacity}}{Sets the marker opacity. Number in the interval [0,
-#' 1].}
-#' \item{\code{outliercolor}}{Sets the color of the outlier sample points.
-#' Color: a CSS color string or R color name.}
-#' \item{\code{size}}{Sets the marker size (in px). Number in the interval
-#' [0, Inf].}
-#' \item{\code{symbol}}{Sets the marker symbol type. Adding 100 is
-#' equivalent to appending "-open" to a symbol name. Adding 200 is
-#' equivalent to appending "-dot" to a symbol name. Adding 300 is equivalent
-#' to appending "-open-dot" or "dot-open" to a symbol name. One of
-#' \code{"0"}, \code{"circle"}, \code{"100"}, \code{"circle-open"},
-#' \code{"200"}, \code{"circle-dot"}, \code{"300"},
-#' \code{"circle-open-dot"}, \code{"1"}, \code{"square"}, \code{"101"},
-#' \code{"square-open"}, \code{"201"}, \code{"square-dot"}, \code{"301"},
-#' \code{"square-open-dot"}, \code{"2"}, \code{"diamond"}, \code{"102"},
-#' \code{"diamond-open"}, \code{"202"}, \code{"diamond-dot"}, \code{"302"},
-#' \code{"diamond-open-dot"}, \code{"3"}, \code{"cross"}, \code{"103"},
-#' \code{"cross-open"}, \code{"203"}, \code{"cross-dot"}, \code{"303"},
-#' \code{"cross-open-dot"}, \code{"4"}, \code{"x"}, \code{"104"},
-#' \code{"x-open"}, \code{"204"}, \code{"x-dot"}, \code{"304"},
-#' \code{"x-open-dot"}, \code{"5"}, \code{"triangle-up"}, \code{"105"},
-#' \code{"triangle-up-open"}, \code{"205"}, \code{"triangle-up-dot"},
-#' \code{"305"}, \code{"triangle-up-open-dot"}, \code{"6"},
-#' \code{"triangle-down"}, \code{"106"}, \code{"triangle-down-open"},
-#' \code{"206"}, \code{"triangle-down-dot"}, \code{"306"},
-#' \code{"triangle-down-open-dot"}, \code{"7"}, \code{"triangle-left"},
-#' \code{"107"}, \code{"triangle-left-open"}, \code{"207"},
-#' \code{"triangle-left-dot"}, \code{"307"},
-#' \code{"triangle-left-open-dot"}, \code{"8"}, \code{"triangle-right"},
-#' \code{"108"}, \code{"triangle-right-open"}, \code{"208"},
-#' \code{"triangle-right-dot"}, \code{"308"},
-#' \code{"triangle-right-open-dot"}, \code{"9"}, \code{"triangle-ne"},
-#' \code{"109"}, \code{"triangle-ne-open"}, \code{"209"},
-#' \code{"triangle-ne-dot"}, \code{"309"}, \code{"triangle-ne-open-dot"},
-#' \code{"10"}, \code{"triangle-se"}, \code{"110"},
-#' \code{"triangle-se-open"}, \code{"210"}, \code{"triangle-se-dot"},
-#' \code{"310"}, \code{"triangle-se-open-dot"}, \code{"11"},
-#' \code{"triangle-sw"}, \code{"111"}, \code{"triangle-sw-open"},
-#' \code{"211"}, \code{"triangle-sw-dot"}, \code{"311"},
-#' \code{"triangle-sw-open-dot"}, \code{"12"}, \code{"triangle-nw"},
-#' \code{"112"}, \code{"triangle-nw-open"}, \code{"212"},
-#' \code{"triangle-nw-dot"}, \code{"312"}, \code{"triangle-nw-open-dot"},
-#' \code{"13"}, \code{"pentagon"}, \code{"113"}, \code{"pentagon-open"},
-#' \code{"213"}, \code{"pentagon-dot"}, \code{"313"},
-#' \code{"pentagon-open-dot"}, \code{"14"}, \code{"hexagon"}, \code{"114"},
-#' \code{"hexagon-open"}, \code{"214"}, \code{"hexagon-dot"}, \code{"314"},
-#' \code{"hexagon-open-dot"}, \code{"15"}, \code{"hexagon2"}, \code{"115"},
-#' \code{"hexagon2-open"}, \code{"215"}, \code{"hexagon2-dot"},
-#' \code{"315"}, \code{"hexagon2-open-dot"}, \code{"16"}, \code{"octagon"},
-#' \code{"116"}, \code{"octagon-open"}, \code{"216"}, \code{"octagon-dot"},
-#' \code{"316"}, \code{"octagon-open-dot"}, \code{"17"}, \code{"star"},
-#' \code{"117"}, \code{"star-open"}, \code{"217"}, \code{"star-dot"},
-#' \code{"317"}, \code{"star-open-dot"}, \code{"18"}, \code{"hexagram"},
-#' \code{"118"}, \code{"hexagram-open"}, \code{"218"},
-#' \code{"hexagram-dot"}, \code{"318"}, \code{"hexagram-open-dot"},
-#' \code{"19"}, \code{"star-triangle-up"}, \code{"119"},
-#' \code{"star-triangle-up-open"}, \code{"219"},
-#' \code{"star-triangle-up-dot"}, \code{"319"},
-#' \code{"star-triangle-up-open-dot"}, \code{"20"},
-#' \code{"star-triangle-down"}, \code{"120"},
-#' \code{"star-triangle-down-open"}, \code{"220"},
-#' \code{"star-triangle-down-dot"}, \code{"320"},
-#' \code{"star-triangle-down-open-dot"}, \code{"21"}, \code{"star-square"},
-#' \code{"121"}, \code{"star-square-open"}, \code{"221"},
-#' \code{"star-square-dot"}, \code{"321"}, \code{"star-square-open-dot"},
-#' \code{"22"}, \code{"star-diamond"}, \code{"122"},
-#' \code{"star-diamond-open"}, \code{"222"}, \code{"star-diamond-dot"},
-#' \code{"322"}, \code{"star-diamond-open-dot"}, \code{"23"},
-#' \code{"diamond-tall"}, \code{"123"}, \code{"diamond-tall-open"},
-#' \code{"223"}, \code{"diamond-tall-dot"}, \code{"323"},
-#' \code{"diamond-tall-open-dot"}, \code{"24"}, \code{"diamond-wide"},
-#' \code{"124"}, \code{"diamond-wide-open"}, \code{"224"},
-#' \code{"diamond-wide-dot"}, \code{"324"}, \code{"diamond-wide-open-dot"},
-#' \code{"25"}, \code{"hourglass"}, \code{"125"}, \code{"hourglass-open"},
-#' \code{"26"}, \code{"bowtie"}, \code{"126"}, \code{"bowtie-open"},
-#' \code{"27"}, \code{"circle-cross"}, \code{"127"},
-#' \code{"circle-cross-open"}, \code{"28"}, \code{"circle-x"}, \code{"128"},
-#' \code{"circle-x-open"}, \code{"29"}, \code{"square-cross"}, \code{"129"},
-#' \code{"square-cross-open"}, \code{"30"}, \code{"square-x"}, \code{"130"},
-#' \code{"square-x-open"}, \code{"31"}, \code{"diamond-cross"},
-#' \code{"131"}, \code{"diamond-cross-open"}, \code{"32"},
-#' \code{"diamond-x"}, \code{"132"}, \code{"diamond-x-open"}, \code{"33"},
-#' \code{"cross-thin"}, \code{"133"}, \code{"cross-thin-open"}, \code{"34"},
-#' \code{"x-thin"}, \code{"134"}, \code{"x-thin-open"}, \code{"35"},
-#' \code{"asterisk"}, \code{"135"}, \code{"asterisk-open"}, \code{"36"},
-#' \code{"hash"}, \code{"136"}, \code{"hash-open"}, \code{"236"},
-#' \code{"hash-dot"}, \code{"336"}, \code{"hash-open-dot"}, \code{"37"},
-#' \code{"y-up"}, \code{"137"}, \code{"y-up-open"}, \code{"38"},
-#' \code{"y-down"}, \code{"138"}, \code{"y-down-open"}, \code{"39"},
-#' \code{"y-left"}, \code{"139"}, \code{"y-left-open"}, \code{"40"},
-#' \code{"y-right"}, \code{"140"}, \code{"y-right-open"}, \code{"41"},
-#' \code{"line-ew"}, \code{"141"}, \code{"line-ew-open"}, \code{"42"},
-#' \code{"line-ns"}, \code{"142"}, \code{"line-ns-open"}, \code{"43"},
-#' \code{"line-ne"}, \code{"143"}, \code{"line-ne-open"}, \code{"44"},
-#' \code{"line-nw"}, \code{"144"}, \code{"line-nw-open"}, \code{"45"},
-#' \code{"arrow-up"}, \code{"145"}, \code{"arrow-up-open"}, \code{"46"},
-#' \code{"arrow-down"}, \code{"146"}, \code{"arrow-down-open"}, \code{"47"},
-#' \code{"arrow-left"}, \code{"147"}, \code{"arrow-left-open"}, \code{"48"},
-#' \code{"arrow-right"}, \code{"148"}, \code{"arrow-right-open"},
-#' \code{"49"}, \code{"arrow-bar-up"}, \code{"149"},
-#' \code{"arrow-bar-up-open"}, \code{"50"}, \code{"arrow-bar-down"},
-#' \code{"150"}, \code{"arrow-bar-down-open"}, \code{"51"},
-#' \code{"arrow-bar-left"}, \code{"151"}, \code{"arrow-bar-left-open"},
-#' \code{"52"}, \code{"arrow-bar-right"}, \code{"152"},
-#' \code{"arrow-bar-right-open"}, \code{"53"}, \code{"arrow"}, \code{"153"},
-#' \code{"arrow-open"}, \code{"54"}, \code{"arrow-wide"}, \code{"154"},
-#' \code{"arrow-wide-open"}, \code{0}, \code{100}, \code{200}, \code{300},
-#' \code{1}, \code{101}, \code{201}, \code{301}, \code{2}, \code{102},
-#' \code{202}, \code{302}, \code{3}, \code{103}, \code{203}, \code{303},
-#' \code{4}, \code{104}, \code{204}, \code{304}, \code{5}, \code{105},
-#' \code{205}, \code{305}, \code{6}, \code{106}, \code{206}, \code{306},
-#' \code{7}, \code{107}, \code{207}, \code{307}, \code{8}, \code{108},
-#' \code{208}, \code{308}, \code{9}, \code{109}, \code{209}, \code{309},
-#' \code{10}, \code{110}, \code{210}, \code{310}, \code{11}, \code{111},
-#' \code{211}, \code{311}, \code{12}, \code{112}, \code{212}, \code{312},
-#' \code{13}, \code{113}, \code{213}, \code{313}, \code{14}, \code{114},
-#' \code{214}, \code{314}, \code{15}, \code{115}, \code{215}, \code{315},
-#' \code{16}, \code{116}, \code{216}, \code{316}, \code{17}, \code{117},
-#' \code{217}, \code{317}, \code{18}, \code{118}, \code{218}, \code{318},
-#' \code{19}, \code{119}, \code{219}, \code{319}, \code{20}, \code{120},
-#' \code{220}, \code{320}, \code{21}, \code{121}, \code{221}, \code{321},
-#' \code{22}, \code{122}, \code{222}, \code{322}, \code{23}, \code{123},
-#' \code{223}, \code{323}, \code{24}, \code{124}, \code{224}, \code{324},
-#' \code{25}, \code{125}, \code{26}, \code{126}, \code{27}, \code{127},
-#' \code{28}, \code{128}, \code{29}, \code{129}, \code{30}, \code{130},
-#' \code{31}, \code{131}, \code{32}, \code{132}, \code{33}, \code{133},
-#' \code{34}, \code{134}, \code{35}, \code{135}, \code{36}, \code{136},
-#' \code{236}, \code{336}, \code{37}, \code{137}, \code{38}, \code{138},
-#' \code{39}, \code{139}, \code{40}, \code{140}, \code{41}, \code{141},
-#' \code{42}, \code{142}, \code{43}, \code{143}, \code{44}, \code{144},
-#' \code{45}, \code{145}, \code{46}, \code{146}, \code{47}, \code{147},
-#' \code{48}, \code{148}, \code{49}, \code{149}, \code{50}, \code{150},
-#' \code{51}, \code{151}, \code{52}, \code{152}, \code{53}, \code{153},
-#' \code{54}, \code{154}.}
-#' }
-#'
-#' @section marker.line properties:
-#' \describe{
-#' \item{\code{color}}{Sets the marker.line color. It accepts either a
-#' specific color or an array of numbers that are mapped to the colorscale
-#' relative to the max and min values of the array or relative to
-#' `marker.line.cmin` and `marker.line.cmax` if set. Color: a CSS color
-#' string or R color name.}
-#' \item{\code{outliercolor}}{Sets the border line color of the outlier
-#' sample points. Defaults to marker.color Color: a CSS color string or R
-#' color name.}
-#' \item{\code{outlierwidth}}{Sets the border line width (in px) of the
-#' outlier sample points. Number in the interval [0, Inf].}
-#' \item{\code{width}}{Sets the width (in px) of the lines bounding the
-#' marker points. Number in the interval [0, Inf].}
-#' }
-#'
-#' @section selected properties:
-#' \describe{
-#' \item{\code{marker}}{A named list with properties \code{color},
-#' \code{opacity} and \code{size} (described in section "selected.marker
-#' properties" below).}
-#' }
-#'
-#' @section selected.marker properties:
-#' \describe{
-#' \item{\code{color}}{Sets the marker color of selected points. Color: a
-#' CSS color string or R color name.}
-#' \item{\code{opacity}}{Sets the marker opacity of selected points. Number
-#' in the interval [0, 1].}
-#' \item{\code{size}}{Sets the marker size of selected points. Number in the
-#' interval [0, Inf].}
-#' }
-#'
-#' @section unselected properties:
-#' \describe{
-#' \item{\code{marker}}{A named list with properties \code{color},
-#' \code{opacity} and \code{size} (described in section "unselected.marker
-#' properties" below).}
-#' }
-#'
-#' @section unselected.marker properties:
-#' \describe{
-#' \item{\code{color}}{Sets the marker color of unselected points, applied
-#' only when a selection exists. Color: a CSS color string or R color name.}
-#' \item{\code{opacity}}{Sets the marker opacity of unselected points,
-#' applied only when a selection exists. Number in the interval [0, 1].}
-#' \item{\code{size}}{Sets the marker size of unselected points, applied
-#' only when a selection exists. Number in the interval [0, Inf].}
-#' }
-#'
 #' @noMd
 #' @export
 #' @examples
@@ -637,5 +435,417 @@ go_box <- function(
     yperiodalignment = NULL, zorder = NULL, skip_invalid = FALSE
 ) {
   plotly_object("box", arg, environment(), list(...), skip_invalid)
+}
+
+#' Box line objects
+#'
+#' The object for the \code{line} of a box trace (\code{\link{go_box}()}).
+#' \code{go_box_line()} creates one, with exactly its properties; a named
+#' list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the color of line bounding the box(es). Color: a CSS
+#'   color string or R color name.
+#' @param width Sets the width (in px) of line bounding the box(es). Number
+#'   in the interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_box_line} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_box(
+#'     line = go_box_line(color = "red")
+#'   )
+go_box_line <- function(
+    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+) {
+  plotly_object("box.line", arg, environment(), list(...), skip_invalid)
+}
+
+#' Box marker objects
+#'
+#' The object for the \code{marker} of a box trace (\code{\link{go_box}()}).
+#' \code{go_box_marker()} creates one, with exactly its properties; a named
+#' list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param angle Sets the marker angle in respect to `angleref`. Angle in
+#'   degrees.
+#' @param color Sets the marker color. It accepts either a specific color
+#'   or an array of numbers that are mapped to the colorscale relative to
+#'   the max and min values of the array or relative to `marker.cmin` and
+#'   `marker.cmax` if set. Color: a CSS color string or R color name.
+#' @param line A \code{\link{go_box_marker_line}()} object or named list,
+#'   with properties \code{color}, \code{outliercolor}, \code{outlierwidth}
+#'   and \code{width} (see \code{\link{go_box_marker_line}()}).
+#' @param opacity Sets the marker opacity. Number in the interval [0, 1].
+#' @param outliercolor Sets the color of the outlier sample points. Color:
+#'   a CSS color string or R color name.
+#' @param size Sets the marker size (in px). Number in the interval [0,
+#'   Inf].
+#' @param symbol Sets the marker symbol type. Adding 100 is equivalent to
+#'   appending "-open" to a symbol name. Adding 200 is equivalent to
+#'   appending "-dot" to a symbol name. Adding 300 is equivalent to
+#'   appending "-open-dot" or "dot-open" to a symbol name. One of
+#'   \code{"0"}, \code{"circle"}, \code{"100"}, \code{"circle-open"},
+#'   \code{"200"}, \code{"circle-dot"}, \code{"300"},
+#'   \code{"circle-open-dot"}, \code{"1"}, \code{"square"}, \code{"101"},
+#'   \code{"square-open"}, \code{"201"}, \code{"square-dot"}, \code{"301"},
+#'   \code{"square-open-dot"}, \code{"2"}, \code{"diamond"}, \code{"102"},
+#'   \code{"diamond-open"}, \code{"202"}, \code{"diamond-dot"},
+#'   \code{"302"}, \code{"diamond-open-dot"}, \code{"3"}, \code{"cross"},
+#'   \code{"103"}, \code{"cross-open"}, \code{"203"}, \code{"cross-dot"},
+#'   \code{"303"}, \code{"cross-open-dot"}, \code{"4"}, \code{"x"},
+#'   \code{"104"}, \code{"x-open"}, \code{"204"}, \code{"x-dot"},
+#'   \code{"304"}, \code{"x-open-dot"}, \code{"5"}, \code{"triangle-up"},
+#'   \code{"105"}, \code{"triangle-up-open"}, \code{"205"},
+#'   \code{"triangle-up-dot"}, \code{"305"}, \code{"triangle-up-open-dot"},
+#'   \code{"6"}, \code{"triangle-down"}, \code{"106"},
+#'   \code{"triangle-down-open"}, \code{"206"}, \code{"triangle-down-dot"},
+#'   \code{"306"}, \code{"triangle-down-open-dot"}, \code{"7"},
+#'   \code{"triangle-left"}, \code{"107"}, \code{"triangle-left-open"},
+#'   \code{"207"}, \code{"triangle-left-dot"}, \code{"307"},
+#'   \code{"triangle-left-open-dot"}, \code{"8"}, \code{"triangle-right"},
+#'   \code{"108"}, \code{"triangle-right-open"}, \code{"208"},
+#'   \code{"triangle-right-dot"}, \code{"308"},
+#'   \code{"triangle-right-open-dot"}, \code{"9"}, \code{"triangle-ne"},
+#'   \code{"109"}, \code{"triangle-ne-open"}, \code{"209"},
+#'   \code{"triangle-ne-dot"}, \code{"309"}, \code{"triangle-ne-open-dot"},
+#'   \code{"10"}, \code{"triangle-se"}, \code{"110"},
+#'   \code{"triangle-se-open"}, \code{"210"}, \code{"triangle-se-dot"},
+#'   \code{"310"}, \code{"triangle-se-open-dot"}, \code{"11"},
+#'   \code{"triangle-sw"}, \code{"111"}, \code{"triangle-sw-open"},
+#'   \code{"211"}, \code{"triangle-sw-dot"}, \code{"311"},
+#'   \code{"triangle-sw-open-dot"}, \code{"12"}, \code{"triangle-nw"},
+#'   \code{"112"}, \code{"triangle-nw-open"}, \code{"212"},
+#'   \code{"triangle-nw-dot"}, \code{"312"}, \code{"triangle-nw-open-dot"},
+#'   \code{"13"}, \code{"pentagon"}, \code{"113"}, \code{"pentagon-open"},
+#'   \code{"213"}, \code{"pentagon-dot"}, \code{"313"},
+#'   \code{"pentagon-open-dot"}, \code{"14"}, \code{"hexagon"},
+#'   \code{"114"}, \code{"hexagon-open"}, \code{"214"},
+#'   \code{"hexagon-dot"}, \code{"314"}, \code{"hexagon-open-dot"},
+#'   \code{"15"}, \code{"hexagon2"}, \code{"115"}, \code{"hexagon2-open"},
+#'   \code{"215"}, \code{"hexagon2-dot"}, \code{"315"},
+#'   \code{"hexagon2-open-dot"}, \code{"16"}, \code{"octagon"},
+#'   \code{"116"}, \code{"octagon-open"}, \code{"216"},
+#'   \code{"octagon-dot"}, \code{"316"}, \code{"octagon-open-dot"},
+#'   \code{"17"}, \code{"star"}, \code{"117"}, \code{"star-open"},
+#'   \code{"217"}, \code{"star-dot"}, \code{"317"}, \code{"star-open-dot"},
+#'   \code{"18"}, \code{"hexagram"}, \code{"118"}, \code{"hexagram-open"},
+#'   \code{"218"}, \code{"hexagram-dot"}, \code{"318"},
+#'   \code{"hexagram-open-dot"}, \code{"19"}, \code{"star-triangle-up"},
+#'   \code{"119"}, \code{"star-triangle-up-open"}, \code{"219"},
+#'   \code{"star-triangle-up-dot"}, \code{"319"},
+#'   \code{"star-triangle-up-open-dot"}, \code{"20"},
+#'   \code{"star-triangle-down"}, \code{"120"},
+#'   \code{"star-triangle-down-open"}, \code{"220"},
+#'   \code{"star-triangle-down-dot"}, \code{"320"},
+#'   \code{"star-triangle-down-open-dot"}, \code{"21"},
+#'   \code{"star-square"}, \code{"121"}, \code{"star-square-open"},
+#'   \code{"221"}, \code{"star-square-dot"}, \code{"321"},
+#'   \code{"star-square-open-dot"}, \code{"22"}, \code{"star-diamond"},
+#'   \code{"122"}, \code{"star-diamond-open"}, \code{"222"},
+#'   \code{"star-diamond-dot"}, \code{"322"},
+#'   \code{"star-diamond-open-dot"}, \code{"23"}, \code{"diamond-tall"},
+#'   \code{"123"}, \code{"diamond-tall-open"}, \code{"223"},
+#'   \code{"diamond-tall-dot"}, \code{"323"},
+#'   \code{"diamond-tall-open-dot"}, \code{"24"}, \code{"diamond-wide"},
+#'   \code{"124"}, \code{"diamond-wide-open"}, \code{"224"},
+#'   \code{"diamond-wide-dot"}, \code{"324"},
+#'   \code{"diamond-wide-open-dot"}, \code{"25"}, \code{"hourglass"},
+#'   \code{"125"}, \code{"hourglass-open"}, \code{"26"}, \code{"bowtie"},
+#'   \code{"126"}, \code{"bowtie-open"}, \code{"27"},
+#'   \code{"circle-cross"}, \code{"127"}, \code{"circle-cross-open"},
+#'   \code{"28"}, \code{"circle-x"}, \code{"128"}, \code{"circle-x-open"},
+#'   \code{"29"}, \code{"square-cross"}, \code{"129"},
+#'   \code{"square-cross-open"}, \code{"30"}, \code{"square-x"},
+#'   \code{"130"}, \code{"square-x-open"}, \code{"31"},
+#'   \code{"diamond-cross"}, \code{"131"}, \code{"diamond-cross-open"},
+#'   \code{"32"}, \code{"diamond-x"}, \code{"132"},
+#'   \code{"diamond-x-open"}, \code{"33"}, \code{"cross-thin"},
+#'   \code{"133"}, \code{"cross-thin-open"}, \code{"34"}, \code{"x-thin"},
+#'   \code{"134"}, \code{"x-thin-open"}, \code{"35"}, \code{"asterisk"},
+#'   \code{"135"}, \code{"asterisk-open"}, \code{"36"}, \code{"hash"},
+#'   \code{"136"}, \code{"hash-open"}, \code{"236"}, \code{"hash-dot"},
+#'   \code{"336"}, \code{"hash-open-dot"}, \code{"37"}, \code{"y-up"},
+#'   \code{"137"}, \code{"y-up-open"}, \code{"38"}, \code{"y-down"},
+#'   \code{"138"}, \code{"y-down-open"}, \code{"39"}, \code{"y-left"},
+#'   \code{"139"}, \code{"y-left-open"}, \code{"40"}, \code{"y-right"},
+#'   \code{"140"}, \code{"y-right-open"}, \code{"41"}, \code{"line-ew"},
+#'   \code{"141"}, \code{"line-ew-open"}, \code{"42"}, \code{"line-ns"},
+#'   \code{"142"}, \code{"line-ns-open"}, \code{"43"}, \code{"line-ne"},
+#'   \code{"143"}, \code{"line-ne-open"}, \code{"44"}, \code{"line-nw"},
+#'   \code{"144"}, \code{"line-nw-open"}, \code{"45"}, \code{"arrow-up"},
+#'   \code{"145"}, \code{"arrow-up-open"}, \code{"46"},
+#'   \code{"arrow-down"}, \code{"146"}, \code{"arrow-down-open"},
+#'   \code{"47"}, \code{"arrow-left"}, \code{"147"},
+#'   \code{"arrow-left-open"}, \code{"48"}, \code{"arrow-right"},
+#'   \code{"148"}, \code{"arrow-right-open"}, \code{"49"},
+#'   \code{"arrow-bar-up"}, \code{"149"}, \code{"arrow-bar-up-open"},
+#'   \code{"50"}, \code{"arrow-bar-down"}, \code{"150"},
+#'   \code{"arrow-bar-down-open"}, \code{"51"}, \code{"arrow-bar-left"},
+#'   \code{"151"}, \code{"arrow-bar-left-open"}, \code{"52"},
+#'   \code{"arrow-bar-right"}, \code{"152"}, \code{"arrow-bar-right-open"},
+#'   \code{"53"}, \code{"arrow"}, \code{"153"}, \code{"arrow-open"},
+#'   \code{"54"}, \code{"arrow-wide"}, \code{"154"},
+#'   \code{"arrow-wide-open"}, \code{0}, \code{100}, \code{200},
+#'   \code{300}, \code{1}, \code{101}, \code{201}, \code{301}, \code{2},
+#'   \code{102}, \code{202}, \code{302}, \code{3}, \code{103}, \code{203},
+#'   \code{303}, \code{4}, \code{104}, \code{204}, \code{304}, \code{5},
+#'   \code{105}, \code{205}, \code{305}, \code{6}, \code{106}, \code{206},
+#'   \code{306}, \code{7}, \code{107}, \code{207}, \code{307}, \code{8},
+#'   \code{108}, \code{208}, \code{308}, \code{9}, \code{109}, \code{209},
+#'   \code{309}, \code{10}, \code{110}, \code{210}, \code{310}, \code{11},
+#'   \code{111}, \code{211}, \code{311}, \code{12}, \code{112}, \code{212},
+#'   \code{312}, \code{13}, \code{113}, \code{213}, \code{313}, \code{14},
+#'   \code{114}, \code{214}, \code{314}, \code{15}, \code{115}, \code{215},
+#'   \code{315}, \code{16}, \code{116}, \code{216}, \code{316}, \code{17},
+#'   \code{117}, \code{217}, \code{317}, \code{18}, \code{118}, \code{218},
+#'   \code{318}, \code{19}, \code{119}, \code{219}, \code{319}, \code{20},
+#'   \code{120}, \code{220}, \code{320}, \code{21}, \code{121}, \code{221},
+#'   \code{321}, \code{22}, \code{122}, \code{222}, \code{322}, \code{23},
+#'   \code{123}, \code{223}, \code{323}, \code{24}, \code{124}, \code{224},
+#'   \code{324}, \code{25}, \code{125}, \code{26}, \code{126}, \code{27},
+#'   \code{127}, \code{28}, \code{128}, \code{29}, \code{129}, \code{30},
+#'   \code{130}, \code{31}, \code{131}, \code{32}, \code{132}, \code{33},
+#'   \code{133}, \code{34}, \code{134}, \code{35}, \code{135}, \code{36},
+#'   \code{136}, \code{236}, \code{336}, \code{37}, \code{137}, \code{38},
+#'   \code{138}, \code{39}, \code{139}, \code{40}, \code{140}, \code{41},
+#'   \code{141}, \code{42}, \code{142}, \code{43}, \code{143}, \code{44},
+#'   \code{144}, \code{45}, \code{145}, \code{46}, \code{146}, \code{47},
+#'   \code{147}, \code{48}, \code{148}, \code{49}, \code{149}, \code{50},
+#'   \code{150}, \code{51}, \code{151}, \code{52}, \code{152}, \code{53},
+#'   \code{153}, \code{54}, \code{154}.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_box_marker} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_box(
+#'     marker = go_box_marker(color = "red")
+#'   )
+go_box_marker <- function(
+    arg = NULL, ..., angle = NULL, color = NULL, line = NULL,
+    opacity = NULL, outliercolor = NULL, size = NULL, symbol = NULL,
+    skip_invalid = FALSE
+) {
+  plotly_object("box.marker", arg, environment(), list(...), skip_invalid)
+}
+
+#' Box marker line objects
+#'
+#' The object for the \code{marker.line} of a box trace
+#' (\code{\link{go_box_marker}()}). \code{go_box_marker_line()} creates one,
+#' with exactly its properties; a named list with the same properties works
+#' too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the marker.line color. It accepts either a specific
+#'   color or an array of numbers that are mapped to the colorscale
+#'   relative to the max and min values of the array or relative to
+#'   `marker.line.cmin` and `marker.line.cmax` if set. Color: a CSS color
+#'   string or R color name.
+#' @param outliercolor Sets the border line color of the outlier sample
+#'   points. Defaults to marker.color Color: a CSS color string or R color
+#'   name.
+#' @param outlierwidth Sets the border line width (in px) of the outlier
+#'   sample points. Number in the interval [0, Inf].
+#' @param width Sets the width (in px) of the lines bounding the marker
+#'   points. Number in the interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_box_marker_line} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_box(
+#'     marker = go_box_marker(
+#'       line = go_box_marker_line(color = "red")
+#'     )
+#'   )
+go_box_marker_line <- function(
+    arg = NULL, ..., color = NULL, outliercolor = NULL, outlierwidth = NULL,
+    width = NULL, skip_invalid = FALSE
+) {
+  plotly_object("box.marker.line", arg, environment(), list(...), skip_invalid)
+}
+
+#' Box selected objects
+#'
+#' The object for the \code{selected} of a box trace
+#' (\code{\link{go_box}()}). \code{go_box_selected()} creates one, with
+#' exactly its properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param marker A \code{\link{go_box_selected_marker}()} object or named
+#'   list, with properties \code{color}, \code{opacity} and \code{size}
+#'   (see \code{\link{go_box_selected_marker}()}).
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_box_selected} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_box(
+#'     selected = go_box_selected()
+#'   )
+go_box_selected <- function(
+    arg = NULL, ..., marker = NULL, skip_invalid = FALSE
+) {
+  plotly_object("box.selected", arg, environment(), list(...), skip_invalid)
+}
+
+#' Box selected marker objects
+#'
+#' The object for the \code{selected.marker} of a box trace
+#' (\code{\link{go_box_selected}()}). \code{go_box_selected_marker()}
+#' creates one, with exactly its properties; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the marker color of selected points. Color: a CSS
+#'   color string or R color name.
+#' @param opacity Sets the marker opacity of selected points. Number in the
+#'   interval [0, 1].
+#' @param size Sets the marker size of selected points. Number in the
+#'   interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_box_selected_marker} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_box(
+#'     selected = go_box_selected(
+#'       marker = go_box_selected_marker(color = "red")
+#'     )
+#'   )
+go_box_selected_marker <- function(
+    arg = NULL, ..., color = NULL, opacity = NULL, size = NULL,
+    skip_invalid = FALSE
+) {
+  plotly_object("box.selected.marker", arg, environment(), list(...), skip_invalid)
+}
+
+#' Box unselected objects
+#'
+#' The object for the \code{unselected} of a box trace
+#' (\code{\link{go_box}()}). \code{go_box_unselected()} creates one, with
+#' exactly its properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param marker A \code{\link{go_box_unselected_marker}()} object or named
+#'   list, with properties \code{color}, \code{opacity} and \code{size}
+#'   (see \code{\link{go_box_unselected_marker}()}).
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_box_unselected} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_box(
+#'     unselected = go_box_unselected()
+#'   )
+go_box_unselected <- function(
+    arg = NULL, ..., marker = NULL, skip_invalid = FALSE
+) {
+  plotly_object("box.unselected", arg, environment(), list(...), skip_invalid)
+}
+
+#' Box unselected marker objects
+#'
+#' The object for the \code{unselected.marker} of a box trace
+#' (\code{\link{go_box_unselected}()}). \code{go_box_unselected_marker()}
+#' creates one, with exactly its properties; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the marker color of unselected points, applied only
+#'   when a selection exists. Color: a CSS color string or R color name.
+#' @param opacity Sets the marker opacity of unselected points, applied
+#'   only when a selection exists. Number in the interval [0, 1].
+#' @param size Sets the marker size of unselected points, applied only when
+#'   a selection exists. Number in the interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_box_unselected_marker} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_box(
+#'     unselected = go_box_unselected(
+#'       marker = go_box_unselected_marker(color = "red")
+#'     )
+#'   )
+go_box_unselected_marker <- function(
+    arg = NULL, ..., color = NULL, opacity = NULL, size = NULL,
+    skip_invalid = FALSE
+) {
+  plotly_object("box.unselected.marker", arg, environment(), list(...), skip_invalid)
 }
 

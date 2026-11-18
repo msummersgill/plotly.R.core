@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_font}
 \alias{go_font}
-\title{Fonts}
+\title{Font objects}
 \usage{
 go_font(
   arg = NULL,
@@ -87,11 +87,11 @@ instead of raising an error.}
 A \code{go_font} object (a named list).
 }
 \description{
-Text font settings, used for every font property of traces and layout
-objects: \code{font}, \code{tickfont}, \code{textfont},
-\code{insidetextfont}, \code{outsidetextfont}, \code{labelfont},
-\code{rangefont} and \code{grouptitlefont}. \code{go_font()} creates one;
-a named list with the same properties works too.
+Used for \code{font}, \code{insidetextfont}, \code{tickfont},
+\code{outsidetextfont}, \code{textfont}, \code{labelfont},
+\code{grouptitlefont}, \code{rangefont} in 296 places in the schema.
+\code{go_font()} creates one; a named list with the same properties works
+too.
 }
 \details{
 These objects appear in 296 places in the plotly.js schema (properties
@@ -105,9 +105,9 @@ that context's rules.
 }
 \examples{
 go_figure() |>
-  add_scatter(
-    x = 1:3, y = c(2, 1, 3), mode = "markers+text", text = c("a", "b", "c"),
-    textposition = "top center", textfont = go_font(size = 18, color = "firebrick")
-  ) |>
-  update_layout(font = go_font(family = "Georgia"))
+  add_bar(
+    legendgrouptitle = go_legendgrouptitle(
+      font = go_font(color = "red")
+    )
+  )
 }

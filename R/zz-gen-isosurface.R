@@ -12,26 +12,26 @@
 #' \code{add_isosurface()} creates one and adds it to a figure.
 #'
 #' @details
-#' Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-#' = list(width = 2))}. Each nested object's properties are described in a
-#' section of its own near the end of this page (after \emph{Value}), titled
-#' with its path: \emph{marker properties}, \emph{marker.line properties},
-#' .... Objects that appear in several places in the schema can also be
-#' created with a constructor of their own, and are documented on its page:
-#' \code{\link{go_font}()}, \code{\link{go_colorbar}()},
-#' \code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-#' \code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-#' \code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-#' \code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-#' \code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-#' \code{\link{go_gradient}()}, \code{\link{go_label}()},
-#' \code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-#' \code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-#' \code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-#' \code{\link{go_root}()}, \code{\link{go_slices}()},
-#' \code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-#' Every property is checked against the plotly.js schema when the object is
-#' created or modified (see \code{\link{plotly_obj-modify}}).
+#' Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+#' objects of their constructors: every object in the schema has one,
+#' documented on its own page, with exactly that object's properties. Most
+#' are named after their path: \code{go_scatter_marker()},
+#' \code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+#' Objects that appear in several places share one: \code{\link{go_font}()},
+#' \code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+#' \code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+#' \code{\link{go_domain}()}, \code{\link{go_pattern}()},
+#' \code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+#' \code{\link{go_bins}()}, \code{\link{go_caps}()},
+#' \code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+#' \code{\link{go_label}()}, \code{\link{go_leaf}()},
+#' \code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+#' \code{\link{go_pathbar}()}, \code{\link{go_project}()},
+#' \code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+#' \code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+#' \code{\link{go_unifiedhovertitle}()}. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}).
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
@@ -82,8 +82,9 @@
 #'   Colorscale: a vector of colors, a two-column data.frame of (value,
 #'   color), or the name of a sequential, diverging or cyclical scale in
 #'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
-#' @param contour A named list with properties \code{color}, \code{show}
-#'   and \code{width} (described in section "contour properties" below).
+#' @param contour A \code{\link{go_isosurface_contour}()} object or named
+#'   list, with properties \code{color}, \code{show} and \code{width} (see
+#'   \code{\link{go_isosurface_contour}()}).
 #' @param customdata Assigns extra data each datum. This may be useful when
 #'   listening to hover, click and selection events. Note that, "scatter"
 #'   traces also appends customdata items in the markers DOM elements Data
@@ -167,10 +168,11 @@
 #'   to their order in data and layout. Number.
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param lighting A named list with properties \code{ambient},
-#'   \code{diffuse}, \code{facenormalsepsilon}, \code{fresnel},
-#'   \code{roughness}, \code{specular} and \code{vertexnormalsepsilon}
-#'   (described in section "lighting properties" below).
+#' @param lighting A \code{\link{go_isosurface_lighting}()} object or named
+#'   list, with properties \code{ambient}, \code{diffuse},
+#'   \code{facenormalsepsilon}, \code{fresnel}, \code{roughness},
+#'   \code{specular} and \code{vertexnormalsepsilon} (see
+#'   \code{\link{go_isosurface_lighting}()}).
 #' @param lightposition A \code{\link{go_lightposition}()} object or named
 #'   list, with properties \code{x}, \code{y} and \code{z} (see
 #'   \code{\link{go_lightposition}()}).
@@ -212,9 +214,9 @@
 #' @param spaceframe A \code{\link{go_spaceframe}()} object or named list,
 #'   with properties \code{fill} and \code{show} (see
 #'   \code{\link{go_spaceframe}()}).
-#' @param surface A named list with properties \code{count}, \code{fill},
-#'   \code{pattern} and \code{show} (described in section "surface
-#'   properties" below).
+#' @param surface A \code{\link{go_isosurface_surface}()} object or named
+#'   list, with properties \code{count}, \code{fill}, \code{pattern} and
+#'   \code{show} (see \code{\link{go_isosurface_surface}()}).
 #' @param text Sets the text elements associated with the vertices. If
 #'   trace `hoverinfo` contains a "text" flag and "hovertext" is not set,
 #'   these elements will be seen in the hover labels. String, or a vector
@@ -291,63 +293,6 @@
 #'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
 #'
-#' @section contour properties:
-#' \describe{
-#' \item{\code{color}}{Sets the color of the contour lines. Color: a CSS
-#' color string or R color name.}
-#' \item{\code{show}}{Sets whether or not dynamic contours are shown on
-#' hover Logical.}
-#' \item{\code{width}}{Sets the width of the contour lines. Number in the
-#' interval [1, 16].}
-#' }
-#'
-#' @section lighting properties:
-#' \describe{
-#' \item{\code{ambient}}{Ambient light increases overall color visibility
-#' but can wash out the image. Number in the interval [0, 1].}
-#' \item{\code{diffuse}}{Represents the extent that incident rays are
-#' reflected in a range of angles. Number in the interval [0, 1].}
-#' \item{\code{facenormalsepsilon}}{Epsilon for face normals calculation
-#' avoids math issues arising from degenerate geometry. Number in the
-#' interval [0, 1].}
-#' \item{\code{fresnel}}{Represents the reflectance as a dependency of the
-#' viewing angle; e.g. paper is reflective when viewing it from the edge of
-#' the paper (almost 90 degrees), causing shine. Number in the interval [0,
-#' 5].}
-#' \item{\code{roughness}}{Alters specular reflection; the rougher the
-#' surface, the wider and less contrasty the shine. Number in the interval
-#' [0, 1].}
-#' \item{\code{specular}}{Represents the level that incident rays are
-#' reflected in a single direction, causing shine. Number in the interval
-#' [0, 2].}
-#' \item{\code{vertexnormalsepsilon}}{Epsilon for vertex normals calculation
-#' avoids math issues arising from degenerate geometry. Number in the
-#' interval [0, 1].}
-#' }
-#'
-#' @section surface properties:
-#' \describe{
-#' \item{\code{count}}{Sets the number of iso-surfaces between minimum and
-#' maximum iso-values. By default this value is 2 meaning that only minimum
-#' and maximum surfaces would be drawn. Integer in the interval [1, Inf].}
-#' \item{\code{fill}}{Sets the fill ratio of the iso-surface. The default
-#' fill value of the surface is 1 meaning that they are entirely shaded. On
-#' the other hand Applying a `fill` ratio less than one would allow the
-#' creation of openings parallel to the edges. Number in the interval [0,
-#' 1].}
-#' \item{\code{pattern}}{Sets the surface pattern of the iso-surface 3-D
-#' sections. The default pattern of the surface is `all` meaning that the
-#' rest of surface elements would be shaded. The check options (either 1 or
-#' 2) could be used to draw half of the squares on the surface. Using
-#' various combinations of capital `A`, `B`, `C`, `D` and `E` may also be
-#' used to reduce the number of triangles on the iso-surfaces and creating
-#' other patterns of interest. Any combination of \code{"A"}, \code{"B"},
-#' \code{"C"}, \code{"D"}, \code{"E"} joined with \code{"+"}, or one of
-#' \code{"all"}, \code{"odd"}, \code{"even"}.}
-#' \item{\code{show}}{Hides/displays surfaces between minimum and maximum
-#' iso-values. Logical.}
-#' }
-#'
 #' @noMd
 #' @export
 #' @examples
@@ -369,5 +314,148 @@ go_isosurface <- function(
     zhoverformat = NULL, skip_invalid = FALSE
 ) {
   plotly_object("isosurface", arg, environment(), list(...), skip_invalid)
+}
+
+#' Isosurface contour objects
+#'
+#' The object for the \code{contour} of an isosurface trace
+#' (\code{\link{go_isosurface}()}). \code{go_isosurface_contour()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the color of the contour lines. Color: a CSS color
+#'   string or R color name.
+#' @param show Sets whether or not dynamic contours are shown on hover
+#'   Logical.
+#' @param width Sets the width of the contour lines. Number in the interval
+#'   [1, 16].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_isosurface_contour} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_isosurface(
+#'     contour = go_isosurface_contour(color = "red")
+#'   )
+go_isosurface_contour <- function(
+    arg = NULL, ..., color = NULL, show = NULL, width = NULL,
+    skip_invalid = FALSE
+) {
+  plotly_object("isosurface.contour", arg, environment(), list(...), skip_invalid)
+}
+
+#' Isosurface lighting objects
+#'
+#' The object for the \code{lighting} of an isosurface trace
+#' (\code{\link{go_isosurface}()}). \code{go_isosurface_lighting()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param ambient Ambient light increases overall color visibility but can
+#'   wash out the image. Number in the interval [0, 1].
+#' @param diffuse Represents the extent that incident rays are reflected in
+#'   a range of angles. Number in the interval [0, 1].
+#' @param facenormalsepsilon Epsilon for face normals calculation avoids
+#'   math issues arising from degenerate geometry. Number in the interval
+#'   [0, 1].
+#' @param fresnel Represents the reflectance as a dependency of the viewing
+#'   angle; e.g. paper is reflective when viewing it from the edge of the
+#'   paper (almost 90 degrees), causing shine. Number in the interval [0,
+#'   5].
+#' @param roughness Alters specular reflection; the rougher the surface,
+#'   the wider and less contrasty the shine. Number in the interval [0, 1].
+#' @param specular Represents the level that incident rays are reflected in
+#'   a single direction, causing shine. Number in the interval [0, 2].
+#' @param vertexnormalsepsilon Epsilon for vertex normals calculation
+#'   avoids math issues arising from degenerate geometry. Number in the
+#'   interval [0, 1].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_isosurface_lighting} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_isosurface(
+#'     lighting = go_isosurface_lighting()
+#'   )
+go_isosurface_lighting <- function(
+    arg = NULL, ..., ambient = NULL, diffuse = NULL,
+    facenormalsepsilon = NULL, fresnel = NULL, roughness = NULL,
+    specular = NULL, vertexnormalsepsilon = NULL, skip_invalid = FALSE
+) {
+  plotly_object("isosurface.lighting", arg, environment(), list(...), skip_invalid)
+}
+
+#' Isosurface surface objects
+#'
+#' The object for the \code{surface} of an isosurface trace
+#' (\code{\link{go_isosurface}()}). \code{go_isosurface_surface()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param count Sets the number of iso-surfaces between minimum and maximum
+#'   iso-values. By default this value is 2 meaning that only minimum and
+#'   maximum surfaces would be drawn. Integer in the interval [1, Inf].
+#' @param fill Sets the fill ratio of the iso-surface. The default fill
+#'   value of the surface is 1 meaning that they are entirely shaded. On
+#'   the other hand Applying a `fill` ratio less than one would allow the
+#'   creation of openings parallel to the edges. Number in the interval [0,
+#'   1].
+#' @param pattern Sets the surface pattern of the iso-surface 3-D sections.
+#'   The default pattern of the surface is `all` meaning that the rest of
+#'   surface elements would be shaded. The check options (either 1 or 2)
+#'   could be used to draw half of the squares on the surface. Using
+#'   various combinations of capital `A`, `B`, `C`, `D` and `E` may also be
+#'   used to reduce the number of triangles on the iso-surfaces and
+#'   creating other patterns of interest. Any combination of \code{"A"},
+#'   \code{"B"}, \code{"C"}, \code{"D"}, \code{"E"} joined with \code{"+"},
+#'   or one of \code{"all"}, \code{"odd"}, \code{"even"}.
+#' @param show Hides/displays surfaces between minimum and maximum
+#'   iso-values. Logical.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_isosurface_surface} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_isosurface(
+#'     surface = go_isosurface_surface(show = TRUE)
+#'   )
+go_isosurface_surface <- function(
+    arg = NULL, ..., count = NULL, fill = NULL, pattern = NULL, show = NULL,
+    skip_invalid = FALSE
+) {
+  plotly_object("isosurface.surface", arg, environment(), list(...), skip_invalid)
 }
 

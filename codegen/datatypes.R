@@ -259,298 +259,157 @@ SHARED_TYPES <- c(
   unifiedhovertitle = "^unifiedhovertitle$"
 )
 
-SHARED_DOCS <- list(
-  autorangeoptions = list(
-    title = "Autorange options",
-    desc = "Limits on the range an axis chooses when autoranging (\\code{autorange = TRUE}): values to include, and bounds the range is clipped to.",
-    example = c(
-      "go_figure() |>",
-      "  add_scatter(x = 1:10, y = (1:10)^2) |>",
-      "  update_yaxes(autorangeoptions = go_autorangeoptions(minallowed = 0, maxallowed = 50))"
-    )
-  ),
-  bins = list(
-    title = "Histogram bins",
-    desc = "The bins of a histogram trace along x (\\code{xbins}) or y (\\code{ybins}): where they start and end, and their size.",
-    example = c(
-      "go_figure() |>",
-      "  add_histogram(x = rnorm(200), xbins = go_bins(start = -3, end = 3, size = 0.25))"
-    )
-  ),
-  caps = list(
-    title = "Isosurface caps",
-    desc = "The end caps of an isosurface or volume trace, drawn where its surfaces meet the edges of the data along x, y and z.",
-    example = c(
-      "g <- expand.grid(x = 1:5, y = 1:5, z = 1:5)",
-      "go_figure() |>",
-      "  add_isosurface(",
-      "    x = g$x, y = g$y, z = g$z, value = g$x + g$y + g$z, isomin = 6, isomax = 12,",
-      "    caps = go_caps(x = list(show = FALSE), y = list(show = FALSE))",
-      "  )"
-    )
-  ),
-  domainpad = list(
-    title = "Axis domain padding",
-    desc = "Space in pixels to reserve inside the edges of an x or y axis \\code{domain}.",
-    example = c(
-      "make_subplots(rows = 1, cols = 2) |>",
-      "  add_scatter(y = 1:3, row = 1, col = 1) |>",
-      "  add_scatter(y = 3:1, row = 1, col = 2) |>",
-      "  update_xaxes(domainpad = go_domainpad(left = 20, right = 20))"
-    )
-  ),
-  gradient = list(
-    title = "Marker gradients",
-    desc = "A color gradient filling scatter-type markers (\\code{marker = list(gradient = ...)}).",
-    example = c(
-      "go_figure() |>",
-      "  add_scatter(",
-      "    x = 1:3, y = c(2, 1, 3), mode = \"markers\",",
-      "    marker = list(size = 30, gradient = go_gradient(type = \"radial\", color = \"white\"))",
-      "  )"
-    )
-  ),
-  label = list(
-    title = "Shape labels",
-    desc = "A text label on a layout shape (\\code{add_shape()}), or on shapes drawn by the user (\\code{layout.newshape}).",
-    example = c(
-      "go_figure() |>",
-      "  add_scatter(x = 1:3, y = 1:3) |>",
-      "  add_shape(",
-      "    type = \"rect\", x0 = 1, x1 = 2, y0 = 1, y1 = 2,",
-      "    label = go_label(text = \"box\", font = go_font(size = 14))",
-      "  )"
-    )
-  ),
-  leaf = list(
-    title = "Hierarchy leaves",
-    desc = "The appearance of the leaves (sectors with no children) of a sunburst or icicle trace.",
-    example = c(
-      "go_figure() |>",
-      "  add_sunburst(",
-      "    labels = c(\"all\", \"a\", \"b\"), parents = c(\"\", \"all\", \"all\"),",
-      "    leaf = go_leaf(opacity = 0.6)",
-      "  )"
-    )
-  ),
-  lightposition = list(
-    title = "3D light position",
-    desc = "The position of the light source of a 3D surface-type trace (surface, mesh3d, isosurface, volume, cone, streamtube).",
-    example = c(
-      "go_figure() |>",
-      "  add_surface(z = volcano, lightposition = go_lightposition(x = 1000, y = 1000, z = 0))"
-    )
-  ),
-  minor = list(
-    title = "Minor ticks and grid lines",
-    desc = "Minor ticks and grid lines of an x or y axis.",
-    example = c(
-      "go_figure() |>",
-      "  add_scatter(x = 1:10, y = 1:10) |>",
-      "  update_xaxes(minor = go_minor(ticks = \"outside\", showgrid = TRUE))"
-    )
-  ),
-  pathbar = list(
-    title = "Path bars",
-    desc = "The path bar of a treemap or icicle trace, showing the path to the sector at the root of the view.",
-    example = c(
-      "go_figure() |>",
-      "  add_treemap(",
-      "    labels = c(\"all\", \"a\", \"b\"), parents = c(\"\", \"all\", \"all\"),",
-      "    pathbar = go_pathbar(visible = TRUE, side = \"bottom\")",
-      "  )"
-    )
-  ),
-  project = list(
-    title = "Contour projections",
-    desc = "Projections of a surface trace's contour lines onto the walls of the 3D scene (\\code{contours = list(z = list(project = ...))}).",
-    example = c(
-      "go_figure() |>",
-      "  add_surface(",
-      "    z = volcano,",
-      "    contours = list(z = list(show = TRUE, project = go_project(z = TRUE)))",
-      "  )"
-    )
-  ),
-  rangebreak = list(
-    title = "Axis range breaks",
-    desc = "A gap in a date axis, such as weekends or nights. Axes take a list of them as \\code{rangebreaks}.",
-    example = c(
-      "go_figure() |>",
-      "  add_scatter(x = as.Date(\"2024-01-01\") + 0:29, y = cumsum(rnorm(30))) |>",
-      "  update_xaxes(rangebreaks = list(go_rangebreak(bounds = c(\"sat\", \"mon\"))))"
-    )
-  ),
-  root = list(
-    title = "Hierarchy roots",
-    desc = "The appearance of the root sector of a sunburst, treemap or icicle trace.",
-    example = c(
-      "go_figure() |>",
-      "  add_sunburst(",
-      "    labels = c(\"all\", \"a\", \"b\"), parents = c(\"\", \"all\", \"all\"),",
-      "    root = go_root(color = \"lightgray\")",
-      "  )"
-    )
-  ),
-  slices = list(
-    title = "Isosurface slices",
-    desc = "Slices through an isosurface or volume trace along x, y and z.",
-    example = c(
-      "g <- expand.grid(x = 1:5, y = 1:5, z = 1:5)",
-      "go_figure() |>",
-      "  add_isosurface(",
-      "    x = g$x, y = g$y, z = g$z, value = g$x + g$y + g$z, isomin = 6, isomax = 12,",
-      "    slices = go_slices(z = list(show = TRUE, locations = 3))",
-      "  )"
-    )
-  ),
-  spaceframe = list(
-    title = "Isosurface space frames",
-    desc = "The space frame of an isosurface or volume trace: the cells between its surfaces.",
-    example = c(
-      "g <- expand.grid(x = 1:5, y = 1:5, z = 1:5)",
-      "go_figure() |>",
-      "  add_isosurface(",
-      "    x = g$x, y = g$y, z = g$z, value = g$x + g$y + g$z, isomin = 6, isomax = 12,",
-      "    spaceframe = go_spaceframe(show = TRUE, fill = 0.5)",
-      "  )"
-    )
-  ),
-  unifiedhovertitle = list(
-    title = "Unified hover titles",
-    desc = "The title of the unified hover label of an x or y axis (\\code{hovermode = \"x unified\"}).",
-    example = c(
-      "go_figure() |>",
-      "  add_scatter(x = 1:3, y = c(2, 1, 3)) |>",
-      "  add_scatter(x = 1:3, y = c(1, 3, 2)) |>",
-      "  update_layout(hovermode = \"x unified\") |>",
-      "  update_xaxes(unifiedhovertitle = go_unifiedhovertitle(text = \"x = %{x}\"))"
-    )
-  ),
-  error_bar = list(
-    title = "Error bars",
-    desc = "Error bars of a trace's points, for its \\code{error_x}, \\code{error_y} or (3D traces) \\code{error_z}.",
-    example = c(
-      "go_figure() |>",
-      "  add_scatter(",
-      "    x = 1:3, y = c(2, 1, 3), mode = \"markers\",",
-      "    error_y = go_error_bar(type = \"data\", array = c(0.2, 0.1, 0.3), color = \"gray\")",
-      "  )"
-    )
-  ),
-  font = list(
-    title = "Fonts",
-    desc = "Text font settings, used for every font property of traces and layout objects: \\code{font}, \\code{tickfont}, \\code{textfont}, \\code{insidetextfont}, \\code{outsidetextfont}, \\code{labelfont}, \\code{rangefont} and \\code{grouptitlefont}.",
-    example = c(
-      "go_figure() |>",
-      "  add_scatter(",
-      "    x = 1:3, y = c(2, 1, 3), mode = \"markers+text\", text = c(\"a\", \"b\", \"c\"),",
-      "    textposition = \"top center\", textfont = go_font(size = 18, color = \"firebrick\")",
-      "  ) |>",
-      "  update_layout(font = go_font(family = \"Georgia\"))"
-    )
-  ),
-  colorbar = list(
-    title = "Color bars",
-    desc = "The color bar of a trace with a colorscale (heatmaps, contours, surfaces, ...), or of markers and lines colored by a colorscale (\\code{marker = list(colorbar = ...)}), or of a layout \\code{coloraxis}.",
-    example = c(
-      "go_figure() |>",
-      "  add_heatmap(",
-      "    z = volcano,",
-      "    colorbar = go_colorbar(title = list(text = \"Height\"), thickness = 15, len = 0.6)",
-      "  )"
-    )
-  ),
-  hoverlabel = list(
-    title = "Hover labels",
-    desc = "Hover label appearance, for a trace or (as defaults) for the figure's layout.",
-    example = c(
-      "go_figure() |>",
-      "  add_scatter(",
-      "    x = 1:3, y = c(2, 1, 3),",
-      "    hoverlabel = go_hoverlabel(bgcolor = \"white\", font = go_font(size = 14))",
-      "  )"
-    )
-  ),
-  legendgrouptitle = list(
-    title = "Legend group titles",
-    desc = "The title shown above a trace's legend group.",
-    example = c(
-      "go_figure() |>",
-      "  add_scatter(",
-      "    x = 1:3, y = c(2, 1, 3), legendgroup = \"g\",",
-      "    legendgrouptitle = go_legendgrouptitle(text = \"Group\")",
-      "  ) |>",
-      "  add_scatter(x = 1:3, y = c(1, 3, 2), legendgroup = \"g\")"
-    )
-  ),
-  tickformatstop = list(
-    title = "Tick format stops",
-    desc = "A tick label format that applies over a range of zoom levels. Axes and color bars take a list of them as \\code{tickformatstops}.",
-    example = c(
-      "day <- 24 * 60 * 60 * 1000",
-      "go_figure() |>",
-      "  add_scatter(x = Sys.Date() + 0:99, y = cumsum(rnorm(100))) |>",
-      "  update_xaxes(tickformatstops = list(",
-      "    go_tickformatstop(dtickrange = list(NULL, day), value = \"%H:%M\"),",
-      "    go_tickformatstop(dtickrange = list(day, NULL), value = \"%e %b\")",
-      "  ))"
-    )
-  ),
-  domain = list(
-    title = "Domains",
-    desc = "The area of the figure a trace (pie, sunburst, table, ...) or subplot (\\code{geo}, \\code{polar}, \\code{scene}, ...) occupies, as fractions of the plotting area or a cell of the layout's \\code{grid}.",
-    example = c(
-      "go_figure() |>",
-      "  add_pie(values = 1:3, domain = go_domain(x = c(0, 0.45))) |>",
-      "  add_pie(values = 3:1, domain = go_domain(x = c(0.55, 1)))"
-    )
-  ),
-  pattern = list(
-    title = "Fill patterns",
-    desc = "A fill pattern for bars, areas and other filled marks (\\code{marker = list(pattern = ...)}, \\code{fillpattern}).",
-    example = c(
-      "go_figure() |>",
-      "  add_bar(x = c(\"a\", \"b\"), y = c(2, 3), marker = list(pattern = go_pattern(shape = \"/\")))"
-    )
+# A family of schema keys that share one constructor: its keys, the keys
+# standing for each distinct variant (most common first) and the union of
+# its properties.
+family_from_keys <- function(keys, validators) {
+  keys <- sort(keys)
+  sig <- vapply(
+    keys,
+    function(k) {
+      sub_keys <- grep(
+        paste0("^", gsub(".", "\\.", k, fixed = TRUE), "\\."),
+        names(validators),
+        value = TRUE
+      )
+      rel <- substring(sub_keys, nchar(k) + 2L)
+      # compare relative to `k`: drop names and paths that include it
+      entries <- lapply(unname(validators[sub_keys]), function(e) {
+        e$data_class <- NULL
+        for (p in c("element_key", "colorscale_path")) {
+          if (!is.null(e[[p]])) e[[p]] <- substring(e[[p]], nchar(k) + 2L)
+        }
+        e
+      })
+      paste(deparse(list(rel, entries)), collapse = "")
+    },
+    ""
   )
-)
+  groups <- split(keys, sig)
+  groups <- groups[order(-lengths(groups), vapply(groups, `[[`, "", 1L))]
+  list(
+    keys = keys,
+    variants = unname(vapply(groups, `[[`, "", 1L)),
+    fields = sort(unique(unlist(lapply(keys, function(k) {
+      validators[[k]]$children
+    }))))
+  )
+}
 
-# Shared type families: for each type, its member keys, the keys standing for
-# each distinct variant (most common first) and the union of its properties.
+# Shared types: the SHARED_TYPES families, plus a family for each object nested
+# in them that is not itself of a shared type, named after the type and its
+# path within it: colorbar.title -> "colorbar_title" (go_colorbar_title()).
 shared_families <- function(nodes, validators) {
   cmp <- nodes[nodes$kind %in% c("compound", "compound_element"), ]
-  hits <- vapply(SHARED_TYPES, function(p) grepl(p, cmp$name), logical(nrow(cmp)))
+  hits <- vapply(
+    SHARED_TYPES,
+    function(p) grepl(p, cmp$name),
+    logical(nrow(cmp))
+  )
   if (any(rowSums(hits) > 1L)) {
-    stop("Schema keys match several shared types: ", paste(cmp$key[rowSums(hits) > 1L], collapse = ", "))
+    stop(
+      "Schema keys match several shared types: ",
+      paste(cmp$key[rowSums(hits) > 1L], collapse = ", ")
+    )
   }
-  lapply(SHARED_TYPES, function(pattern) {
-    keys <- sort(cmp$key[grepl(pattern, cmp$name)])
-    sig <- vapply(
-      keys,
-      function(k) {
-        sub_keys <- grep(paste0("^", gsub(".", "\\.", k, fixed = TRUE), "\\."), names(validators), value = TRUE)
-        rel <- substring(sub_keys, nchar(k) + 2L)
-        # compare relative to `k`: drop names and paths that include it
-        entries <- lapply(unname(validators[sub_keys]), function(e) {
-          e$data_class <- NULL
-          for (p in c("element_key", "colorscale_path")) {
-            if (!is.null(e[[p]])) e[[p]] <- substring(e[[p]], nchar(k) + 2L)
-          }
-          e
-        })
-        paste(deparse(list(rel, entries)), collapse = "")
-      },
-      ""
-    )
-    groups <- split(keys, sig)
-    groups <- groups[order(-lengths(groups), vapply(groups, `[[`, "", 1L))]
-    list(
-      keys = keys,
-      variants = unname(vapply(groups, `[[`, "", 1L)),
-      fields = sort(unique(unlist(lapply(keys, function(k) validators[[k]]$children))))
-    )
+  base <- lapply(SHARED_TYPES, function(pattern) {
+    cmp$key[grepl(pattern, cmp$name)]
   })
+  members <- unlist(base)
+  derived <- list()
+  for (type in names(base)) {
+    for (k in base[[type]]) {
+      inner <- cmp$key[startsWith(cmp$key, paste0(k, "."))]
+      inner <- inner[!inner %in% members]
+      # skip objects nested in another shared type inside this one
+      inner <- inner[
+        !vapply(
+          inner,
+          function(i) {
+            mid <- members[
+              startsWith(i, paste0(members, ".")) & nchar(members) > nchar(k)
+            ]
+            length(mid) > 0L
+          },
+          logical(1)
+        )
+      ]
+      for (i in inner) {
+        name <- paste(
+          type,
+          gsub(".", "_", substring(i, nchar(k) + 2L), fixed = TRUE),
+          sep = "_"
+        )
+        derived[[name]] <- c(derived[[name]], i)
+      }
+    }
+  }
+  if (length(intersect(names(derived), names(base)))) {
+    stop(
+      "Derived shared type names clash: ",
+      paste(intersect(names(derived), names(base)), collapse = ", ")
+    )
+  }
+  lapply(
+    c(base, derived[sort(names(derived))]),
+    family_from_keys,
+    validators = validators
+  )
+}
+
+# Generated title, description and example for a shared type's help page.
+shared_info <- function(type, ctx) {
+  fam <- ctx$families[[type]]
+  rep_key <- fam$variants[[1L]]
+  names_used <- unique(sub("^.*\\.", "", fam$keys))
+  # the schema's description, if every place it is used has the same one
+  descs <- unique(vapply(fam$keys, object_description, "", ctx = ctx))
+  desc <- if (length(descs) == 1L) descs else ""
+  title <- gsub("_", " ", type)
+  list(
+    title = paste0(
+      toupper(substr(title, 1L, 1L)),
+      substring(title, 2L),
+      " objects"
+    ),
+    desc = paste0(
+      if (nzchar(desc)) paste0(desc, " ") else "",
+      sprintf(
+        "Used for %s in %d places in the schema.",
+        paste0("\\code{", names_used, "}", collapse = ", "),
+        length(fam$keys)
+      )
+    ),
+    example = object_example(rep_key, ctx)
+  )
+}
+
+# Constructors for every other object --------------------------------------------
+#
+# Every object in the schema has a constructor. Objects of a shared type use its
+# constructor (go_font(), go_colorbar_title(), ...); every other one has its own,
+# named after its schema path without "layout." (go_scatter_marker(),
+# go_sankey_link(), go_xaxis(), go_scene_camera_eye(), go_slider_step(), ...),
+# with exactly its properties, except where NAME_OVERRIDES gives another name.
+# Their help pages (titles, descriptions, examples) are generated too.
+NAME_OVERRIDES <- c(
+  "layout.title" = "go_layout_title", # not titles elsewhere
+  "layout.image" = "go_layout_image", # go_image() is the image trace
+  "layout.colorscale" = "go_layout_colorscale", # not the colorscale property
+  "layout.transition" = "go_layout_transition" # not slider transitions
+)
+
+object_fn_for <- function(key, validators) {
+  if (!is.na(NAME_OVERRIDES[key])) {
+    return(NAME_OVERRIDES[[key]])
+  }
+  sub("^go_layout_", "go_", validators[[key]]$data_class)
+}
+
+# Every compound object that is not a trace, the layout or of a shared type.
+object_roots_for <- function(nodes, shared_of) {
+  keys <- nodes$key[nodes$kind %in% c("compound", "compound_element")]
+  sort(keys[!keys %in% names(shared_of)])
 }
 
 # Help pages ---------------------------------------------------------------------
@@ -600,7 +459,11 @@ child_nodes <- function(key, nodes) {
 
 # Layout array elements positioned with xref/yref get add_<element>() pages.
 positioned_elements <- function(validators) {
-  vapply(layout_array_props(validators), function(k) validators[[k]]$element_key, "")
+  vapply(
+    layout_array_props(validators),
+    function(k) validators[[k]]$element_key,
+    ""
+  )
 }
 
 figure_fn_for_element <- function(element_key) {
@@ -617,6 +480,26 @@ doc_context <- function(nodes, validators, schema) {
   }))
   subplot_roots <- paste0("layout.", SUBPLOT_TYPES)
   element_roots <- positioned_elements(validators)
+  object_roots <- object_roots_for(nodes, shared_of)
+  object_fn <- stats::setNames(
+    vapply(object_roots, object_fn_for, "", validators = validators),
+    object_roots
+  )
+  # every name must be unique and not taken by a trace, the layout or a shared type
+  taken <- c(
+    paste0("go_", nodes$key[nodes$kind == "trace"]),
+    "go_layout",
+    "go_figure",
+    paste0("go_", names(families))
+  )
+  clash <- c(object_fn[duplicated(object_fn)], intersect(object_fn, taken))
+  if (length(clash)) {
+    stop(
+      "Constructor names clash: ",
+      paste(unique(clash), collapse = ", "),
+      "; add them to NAME_OVERRIDES"
+    )
+  }
   parent_of <- stats::setNames(nodes$parent, nodes$key)
   ancestors <- function(key) {
     out <- character()
@@ -638,7 +521,12 @@ doc_context <- function(nodes, validators, schema) {
     anc <- ancestors(key)
     root <- anc[[length(anc)]]
     if (root != "layout") {
-      return(root)
+      hit <- anc[anc %in% object_roots]
+      return(if (length(hit)) hit[[1L]] else root)
+    }
+    obj <- anc[anc %in% object_roots]
+    if (length(obj)) {
+      return(obj[[1L]])
     }
     hit <- anc[anc %in% c(subplot_roots, element_roots)]
     if (length(hit)) hit[[length(hit)]] else "layout"
@@ -651,12 +539,17 @@ doc_context <- function(nodes, validators, schema) {
     shared_of = shared_of,
     subplot_roots = subplot_roots,
     element_roots = element_roots,
+    object_roots = object_roots,
+    object_fn = object_fn,
     page_root = page_root
   )
 }
 
 # Documentation link for a page root.
 page_link <- function(root, ctx) {
+  if (root %in% ctx$object_roots) {
+    return(rd_link(ctx$object_fn[[root]]))
+  }
   if (root %in% ctx$subplot_roots) {
     return(rd_link(paste0("update_", pluralize(sub("^layout\\.", "", root)))))
   }
@@ -673,9 +566,21 @@ section_label <- function(key, root) substring(key, nchar(root) + 2L)
 property_names <- function(key, ctx, max = 12L) {
   ch <- paste0("\\code{", sort(ctx$validators[[key]]$children), "}")
   if (length(ch) > max + 4L) {
-    return(sprintf("%s and %d more", paste(ch[seq_len(max)], collapse = ", "), length(ch) - max))
+    return(sprintf(
+      "%s and %d more",
+      paste(ch[seq_len(max)], collapse = ", "),
+      length(ch) - max
+    ))
   }
-  if (length(ch) == 1L) ch else paste(paste(utils::head(ch, -1L), collapse = ", "), "and", utils::tail(ch, 1L))
+  if (length(ch) == 1L) {
+    ch
+  } else {
+    paste(
+      paste(utils::head(ch, -1L), collapse = ", "),
+      "and",
+      utils::tail(ch, 1L)
+    )
+  }
 }
 
 # Section title of a nested object documented on page `root`.
@@ -690,7 +595,11 @@ compound_type_doc <- function(ck, root, ctx) {
   target <- if (e$superclass == "CompoundArrayValidator") e$element_key else ck
   shared <- ctx$shared_of[target]
   props <- property_names(target, ctx)
-  ctor <- if (!is.na(shared)) paste0("go_", shared)
+  ctor <- if (!is.na(shared)) {
+    paste0("go_", shared)
+  } else if (target %in% ctx$object_roots) {
+    ctx$object_fn[[target]]
+  }
   what <- if (!is.null(ctor)) {
     sprintf(
       "a %s object or named list, with properties %s (see %s)",
@@ -707,12 +616,19 @@ compound_type_doc <- function(ck, root, ctx) {
         section_title(target, root)
       )
     } else {
-      sprintf("a named list with properties %s (see %s)", props, page_link(pr, ctx))
+      sprintf(
+        "a named list with properties %s (see %s)",
+        props,
+        page_link(pr, ctx)
+      )
     }
   }
   switch(
     e$superclass,
-    CompoundValidator = paste0(toupper(substr(what, 1L, 1L)), substring(what, 2L)),
+    CompoundValidator = paste0(
+      toupper(substr(what, 1L, 1L)),
+      substring(what, 2L)
+    ),
     TitleValidator = paste0("String (the title text), or ", what),
     CompoundArrayValidator = paste0("List, each element ", what)
   )
@@ -724,7 +640,10 @@ property_text <- function(ck, root, ctx) {
   desc <- ctx$nodes$description[[i]]
   desc <- if (is.na(desc)) "" else rd_escape(format_description(desc))
   e <- ctx$validators[[ck]]
-  type <- if (e$superclass %in% c("CompoundValidator", "TitleValidator", "CompoundArrayValidator")) {
+  type <- if (
+    e$superclass %in%
+      c("CompoundValidator", "TitleValidator", "CompoundArrayValidator")
+  ) {
     compound_type_doc(ck, root, ctx)
   } else {
     type_doc(e)
@@ -762,7 +681,11 @@ property_describe <- function(key, root, ctx) {
   items <- vapply(
     seq_len(nrow(ch)),
     function(i) {
-      sprintf("\\item{\\code{%s}}{%s}", ch$name[[i]], property_text(ch$key[[i]], root, ctx))
+      sprintf(
+        "\\item{\\code{%s}}{%s}",
+        ch$name[[i]],
+        property_text(ch$key[[i]], root, ctx)
+      )
     },
     ""
   )
@@ -787,13 +710,22 @@ nested_sections <- function(root, ctx) {
   cmp <- ctx$nodes$key[ctx$nodes$kind %in% c("compound", "compound_element")]
   keys <- cmp[startsWith(cmp, paste0(root, "."))]
   keys <- keys[!keys %in% names(ctx$shared_of)]
-  keys <- keys[vapply(keys, function(k) identical(ctx$page_root(k), root), logical(1))]
+  keys <- keys[vapply(
+    keys,
+    function(k) identical(ctx$page_root(k), root),
+    logical(1)
+  )]
   unlist(lapply(sort(keys), function(k) {
     desc <- object_description(k, ctx)
-    is_element <- ctx$nodes$kind[[match(k, ctx$nodes$key)]] == "compound_element"
+    is_element <- ctx$nodes$kind[[match(k, ctx$nodes$key)]] ==
+      "compound_element"
     c(
       "#'",
-      sprintf("#' @section %s%s:", section_title(k, root), if (is_element) " (each list element)" else ""),
+      sprintf(
+        "#' @section %s%s:",
+        section_title(k, root),
+        if (is_element) " (each list element)" else ""
+      ),
       if (nzchar(desc)) c(roxygen_lines(desc), "#'"),
       property_describe(k, root, ctx)
     )
@@ -804,13 +736,17 @@ nested_sections <- function(root, ctx) {
 nested_details <- function() {
   links <- paste0("\\code{\\link{go_", names(SHARED_TYPES), "}()}")
   paste(
-    "Nested objects are named lists, e.g. \\code{marker = list(size = 10, line = list(width = 2))}.",
-    "Each nested object's properties are described in a section of its own near the end of",
-    "this page (after \\emph{Value}), titled with its path: \\emph{marker properties},",
-    "\\emph{marker.line properties}, ....",
-    "Objects that appear in several places in the schema can also be created with a",
-    "constructor of their own, and are documented on its page:",
-    paste0(paste(utils::head(links, -1L), collapse = ", "), " and ", utils::tail(links, 1L), "."),
+    "Nested objects are named lists, e.g. \\code{marker = list(size = 10)}, or objects of",
+    "their constructors: every object in the schema has one, documented on its own page,",
+    "with exactly that object's properties. Most are named after their path:",
+    "\\code{go_scatter_marker()}, \\code{go_scatter_selected_marker()},",
+    "\\code{go_sankey_link()}, .... Objects that appear in several places share one:",
+    paste0(
+      paste(utils::head(links, -1L), collapse = ", "),
+      " and ",
+      utils::tail(links, 1L),
+      "."
+    ),
     "Every property is checked against the plotly.js schema when the object is created",
     "or modified (see \\code{\\link{plotly_obj-modify}})."
   )
@@ -858,7 +794,9 @@ page_doc <- function(page, ctx, figure_fns) {
   }
   fig_docs <- list()
   for (f in figure_fns) {
-    for (a in f$args) fig_docs[[a]] <- FIGURE_ARG_DOCS[[a]]
+    for (a in f$args) {
+      fig_docs[[a]] <- FIGURE_ARG_DOCS[[a]]
+    }
   }
   lines <- c(
     paste0("#' ", page_title(page, kind)),
@@ -871,7 +809,10 @@ page_doc <- function(page, ctx, figure_fns) {
       if (length(figure_fns)) {
         paste0(
           " ",
-          paste(vapply(figure_fns, function(f) rd_code(paste0(f$fn, "()")), ""), collapse = ", "),
+          paste(
+            vapply(figure_fns, function(f) rd_code(paste0(f$fn, "()")), ""),
+            collapse = ", "
+          ),
           " creates one and adds it to a figure."
         )
       } else {
@@ -919,17 +860,28 @@ page_doc <- function(page, ctx, figure_fns) {
 # most common first), noting where other variants differ.
 shared_param_text <- function(type, field, ctx) {
   fam <- ctx$families[[type]]
-  has <- fam$variants[vapply(fam$variants, function(v) field %in% ctx$validators[[v]]$children, logical(1))]
+  has <- fam$variants[vapply(
+    fam$variants,
+    function(v) field %in% ctx$validators[[v]]$children,
+    logical(1)
+  )]
   root <- fam$variants[[1L]]
-  texts <- vapply(has, function(v) {
-    i <- match(paste(v, field, sep = "."), ctx$nodes$key)
-    e <- ctx$validators[[ctx$nodes$key[[i]]]]
-    if (e$superclass %in% c("CompoundValidator", "TitleValidator", "CompoundArrayValidator")) {
-      compound_type_doc(ctx$nodes$key[[i]], v, ctx)
-    } else {
-      type_doc(e)
-    }
-  }, "")
+  texts <- vapply(
+    has,
+    function(v) {
+      i <- match(paste(v, field, sep = "."), ctx$nodes$key)
+      e <- ctx$validators[[ctx$nodes$key[[i]]]]
+      if (
+        e$superclass %in%
+          c("CompoundValidator", "TitleValidator", "CompoundArrayValidator")
+      ) {
+        compound_type_doc(ctx$nodes$key[[i]], v, ctx)
+      } else {
+        type_doc(e)
+      }
+    },
+    ""
+  )
   i <- match(paste(has[[1L]], field, sep = "."), ctx$nodes$key)
   desc <- ctx$nodes$description[[i]]
   desc <- if (is.na(desc)) "" else rd_escape(format_description(desc))
@@ -939,11 +891,19 @@ shared_param_text <- function(type, field, ctx) {
   vec <- ", or a vector of these"
   scalar_only <- others == sub(vec, "", texts[[1L]], fixed = TRUE)
   if (any(scalar_only) && endsWith(texts[[1L]], vec)) {
-    out <- paste0(out, " Vectors are accepted only in some contexts (e.g. trace text fonts).")
+    out <- paste0(
+      out,
+      " Vectors are accepted only in some contexts (e.g. trace text fonts)."
+    )
     others <- others[!scalar_only]
   }
   if (length(others)) {
-    out <- paste0(out, " In some contexts: ", paste(others, collapse = "; or "), ".")
+    out <- paste0(
+      out,
+      " In some contexts: ",
+      paste(others, collapse = "; or "),
+      "."
+    )
   }
   if (length(has) < length(fam$variants)) {
     out <- paste0(out, " Not available in every context.")
@@ -953,7 +913,7 @@ shared_param_text <- function(type, field, ctx) {
 
 shared_doc <- function(type, ctx) {
   fam <- ctx$families[[type]]
-  info <- SHARED_DOCS[[type]]
+  info <- shared_info(type, ctx)
   fn <- paste0("go_", type)
   names_used <- unique(sub("^.*\\.", "", fam$keys))
   c(
@@ -961,34 +921,40 @@ shared_doc <- function(type, ctx) {
     "#'",
     roxygen_lines(paste0(
       info$desc,
-      " \\code{", fn, "()} creates one; a named list with the same properties works too."
+      " \\code{",
+      fn,
+      "()} creates one; a named list with the same properties works too."
     )),
     "#'",
     "#' @details",
-    roxygen_lines(if (length(fam$variants) == 1L) {
-      sprintf(
-        "These objects appear in %d places in the plotly.js schema (properties named %s), all with the same properties and rules.",
-        length(fam$keys),
-        paste0("\\code{", names_used, "}", collapse = ", ")
-      )
-    } else {
-      sprintf(
-        paste(
-          "These objects appear in %d places in the plotly.js schema (properties named %s),",
-          "with small differences between them: for example, not every context",
-          "has every property below. \\code{%s()} checks the values against the",
-          "contexts it can be used in; when the object is placed in a figure it is",
-          "checked again against that context's rules."
-        ),
-        length(fam$keys),
-        paste0("\\code{", names_used, "}", collapse = ", "),
-        fn
-      )
-    }),
+    roxygen_lines(
+      if (length(fam$variants) == 1L) {
+        sprintf(
+          "These objects appear in %d places in the plotly.js schema (properties named %s), all with the same properties and rules.",
+          length(fam$keys),
+          paste0("\\code{", names_used, "}", collapse = ", ")
+        )
+      } else {
+        sprintf(
+          paste(
+            "These objects appear in %d places in the plotly.js schema (properties named %s),",
+            "with small differences between them: for example, not every context",
+            "has every property below. \\code{%s()} checks the values against the",
+            "contexts it can be used in; when the object is placed in a figure it is",
+            "checked again against that context's rules."
+          ),
+          length(fam$keys),
+          paste0("\\code{", names_used, "}", collapse = ", "),
+          fn
+        )
+      }
+    ),
     "#'",
     "#' @param arg Optional named list, or graph object of the same type, to",
     "#'   initialise properties from. Named arguments take precedence.",
-    unlist(lapply(fam$fields, function(f) param_block(f, shared_param_text(type, f, ctx)))),
+    unlist(lapply(fam$fields, function(f) {
+      param_block(f, shared_param_text(type, f, ctx))
+    })),
     "#' @param ... Not used: properties must be named in full.",
     "#' @param skip_invalid If \\code{TRUE}, silently drop invalid properties",
     "#'   instead of raising an error.",
@@ -1002,20 +968,263 @@ shared_doc <- function(type, ctx) {
   )
 }
 
+# Constructor of the object at `key`, for examples and links.
+ctor_of <- function(key, ctx) {
+  kind <- ctx$nodes$kind[[match(key, ctx$nodes$key)]]
+  if (kind %in% c("trace", "layout")) {
+    return(ctx$validators[[key]]$data_class)
+  }
+  if (key %in% names(ctx$shared_of)) {
+    return(paste0("go_", ctx$shared_of[[key]]))
+  }
+  ctx$object_fn[[key]]
+}
+
+# Where the object at `key` goes, for its help page.
+object_where <- function(key, ctx) {
+  nodes <- ctx$nodes
+  i <- match(key, nodes$key)
+  owner <- nodes$parent[[i]]
+  root <- sub("\\..*$", "", key)
+  article <- function(x) if (grepl("^[aeiou]", x)) "an" else "a"
+  owner_link <- function() sprintf("(%s)", rd_link(ctor_of(owner, ctx)))
+  if (nodes$kind[[i]] == "compound_element") {
+    arr <- nodes$name[which(nodes$element_key == key)[[1L]]]
+    if (owner == "layout") {
+      helper <- if (key %in% ctx$element_roots) {
+        paste0(" (or use ", rd_link(figure_fn_for_element(key)), ")")
+      } else {
+        ""
+      }
+      return(sprintf(
+        "an element of the figure layout's \\code{%s} list%s",
+        arr,
+        helper
+      ))
+    }
+    if (owner == root) {
+      return(sprintf(
+        "an element of the \\code{%s} list of %s %s trace %s",
+        arr,
+        article(root),
+        root,
+        owner_link()
+      ))
+    }
+    rel <- if (root == "layout") {
+      sub("^layout\\.", "", owner)
+    } else {
+      substring(owner, nchar(root) + 2L)
+    }
+    return(sprintf(
+      "an element of the \\code{%s} list of %s's \\code{%s} %s",
+      arr,
+      if (root == "layout") {
+        "the layout"
+      } else {
+        paste(article(root), root, "trace")
+      },
+      rel,
+      owner_link()
+    ))
+  }
+  name <- nodes$name[[i]]
+  if (owner == "layout") {
+    if (key %in% ctx$subplot_roots) {
+      return(sprintf(
+        "the figure layout's \\code{%s} (and \\code{%s2}, \\code{%s3}, ...: see %s)",
+        name,
+        name,
+        name,
+        rd_link(paste0("update_", pluralize(name)))
+      ))
+    }
+    return(sprintf("the figure layout's \\code{%s}", name))
+  }
+  rel <- if (root == "layout") {
+    sub("^layout\\.", "", key)
+  } else {
+    substring(key, nchar(root) + 2L)
+  }
+  if (root == "layout") {
+    return(sprintf("the layout's \\code{%s} %s", rel, owner_link()))
+  }
+  sprintf(
+    "the \\code{%s} of %s %s trace %s",
+    rel,
+    article(root),
+    root,
+    owner_link()
+  )
+}
+
+# Example argument for an object constructor.
+object_example_arg <- function(key, validators) {
+  ch <- validators[[key]]$children
+  cand <- c(
+    color = 'color = "red"',
+    colors = 'colors = c("red", "blue")',
+    text = 'text = "title"',
+    width = "width = 2",
+    size = "size = 10",
+    opacity = "opacity = 0.5",
+    show = "show = TRUE",
+    visible = "visible = TRUE"
+  )
+  nums <- c(width = 2, size = 10, opacity = 0.5)
+  for (n in names(cand)) {
+    if (!n %in% ch) {
+      next
+    }
+    e <- validators[[paste(key, n, sep = ".")]]
+    if (
+      e$superclass %in%
+        c("CompoundValidator", "TitleValidator", "CompoundArrayValidator")
+    ) {
+      next
+    }
+    if (n %in% names(nums)) {
+      # keep generated numbers within the property's range
+      val <- nums[[n]]
+      lo <- e$min %||% -Inf
+      hi <- e$max %||% Inf
+      if (val < lo || val > hi) {
+        val <- if (is.finite(lo) && is.finite(hi)) {
+          (lo + hi) / 2
+        } else if (is.finite(lo)) {
+          lo
+        } else {
+          hi
+        }
+      }
+      return(sprintf("%s = %s", n, format(val)))
+    }
+    return(cand[[n]])
+  }
+  ""
+}
+
+# Generated example: a figure with the object, placed in its trace (added
+# with add_<trace>()) or the layout (update_layout()) through the constructors
+# of the objects around it.
+object_example <- function(key, ctx) {
+  nodes <- ctx$nodes
+  lines <- sprintf(
+    "%s(%s)",
+    ctor_of(key, ctx),
+    object_example_arg(key, ctx$validators)
+  )
+  cur <- key
+  repeat {
+    i <- match(cur, nodes$key)
+    parent <- nodes$parent[[i]]
+    if (nodes$kind[[i]] == "compound_element") {
+      prop <- nodes$name[which(nodes$element_key == cur)[[1L]]]
+      lines[[1L]] <- paste0("list(", lines[[1L]])
+      lines[[length(lines)]] <- paste0(lines[[length(lines)]], ")")
+    } else {
+      prop <- nodes$name[[i]]
+    }
+    kind <- nodes$kind[[match(parent, nodes$key)]]
+    fn <- if (kind == "trace") {
+      paste0("add_", parent)
+    } else if (kind == "layout") {
+      "update_layout"
+    } else {
+      ctor_of(parent, ctx)
+    }
+    lines <- c(
+      paste0(fn, "("),
+      paste0("  ", c(paste0(prop, " = ", lines[[1L]]), lines[-1L])),
+      ")"
+    )
+    if (kind %in% c("trace", "layout")) {
+      return(c("go_figure() |>", paste0("  ", lines)))
+    }
+    cur <- parent
+  }
+}
+
+# Generated title: "Scatter selected marker objects", "Layout scene camera objects".
+object_title <- function(key, ctx) {
+  root <- sub("\\..*$", "", key)
+  rel <- gsub(".", " ", substring(key, nchar(root) + 2L), fixed = TRUE)
+  paste(
+    if (root == "layout") "Layout" else tools::toTitleCase(root),
+    rel,
+    "objects"
+  )
+}
+
+# Help page of an object constructor (go_scatter_marker(), go_xaxis(), ...).
+object_doc <- function(key, ctx) {
+  fn <- ctx$object_fn[[key]]
+  desc <- object_description(key, ctx)
+  c(
+    paste0("#' ", object_title(key, ctx)),
+    "#'",
+    roxygen_lines(paste0(
+      if (nzchar(desc)) paste0(desc, " ") else "",
+      sprintf(
+        "The object for %s. \\code{%s()} creates one, with exactly its properties; a named list with the same properties works too.",
+        object_where(key, ctx),
+        fn
+      )
+    )),
+    "#'",
+    "#' @details",
+    roxygen_lines(paste(
+      "Nested objects are named lists, or objects of the constructors their arguments name.",
+      "Every property is checked against the plotly.js schema when the object is created",
+      "or modified."
+    )),
+    "#'",
+    "#' @param arg Optional named list, or graph object of the same type, to",
+    "#'   initialise properties from. Named arguments take precedence.",
+    property_params(key, key, ctx),
+    "#' @param ... Not used: properties must be named in full.",
+    "#' @param skip_invalid If \\code{TRUE}, silently drop invalid properties",
+    "#'   instead of raising an error.",
+    sprintf(
+      "#' @return A \\code{%s} object (a named list).",
+      ctx$validators[[key]]$data_class
+    ),
+    nested_sections(key, ctx),
+    "#'",
+    "#' @noMd",
+    "#' @export",
+    "#' @examples",
+    paste0("#' ", object_example(key, ctx))
+  )
+}
+
 shared_constructor_code <- function(type, ctx) {
   fields <- ctx$families[[type]]$fields
-  args <- c("arg = NULL", "...", paste0(fields, " = NULL"), "skip_invalid = FALSE")
+  args <- c(
+    "arg = NULL",
+    "...",
+    paste0(fields, " = NULL"),
+    "skip_invalid = FALSE"
+  )
   c(
     sprintf("go_%s <- function(", type),
     wrap_args(args),
     ") {",
-    sprintf('  shared_object("%s", arg, environment(), list(...), skip_invalid)', type),
+    sprintf(
+      '  shared_object("%s", arg, environment(), list(...), skip_invalid)',
+      type
+    ),
     "}",
     ""
   )
 }
 
-constructor_code <- function(key, nodes, validators) {
+constructor_code <- function(
+  key,
+  nodes,
+  validators,
+  fn = validators[[key]]$data_class
+) {
   ch <- child_nodes(key, nodes)
   # Properties come after `...` so they must be named in full (no partial matching).
   args <- c(
@@ -1025,7 +1234,7 @@ constructor_code <- function(key, nodes, validators) {
     "skip_invalid = FALSE"
   )
   c(
-    sprintf("%s <- function(", validators[[key]]$data_class),
+    sprintf("%s <- function(", fn),
     wrap_args(args),
     ") {",
     sprintf(
@@ -1063,7 +1272,11 @@ check_ascii <- function(src) {
 write_datatypes <- function(ctx, outdir = ".") {
   validators <- ctx$validators
   roots <- c(
-    sort(names(validators)[vapply(validators, function(v) !is.null(v$trace_type), logical(1))]),
+    sort(names(validators)[vapply(
+      validators,
+      function(v) !is.null(v$trace_type),
+      logical(1)
+    )]),
     "layout"
   )
   version <- schema_version(outdir)
@@ -1075,7 +1288,11 @@ write_datatypes <- function(ctx, outdir = ".") {
     ""
   )
   # Remove stale generated files before writing.
-  stale <- list.files(file.path(outdir, "R"), "^zz-gen-.*\\.R$", full.names = TRUE)
+  stale <- list.files(
+    file.path(outdir, "R"),
+    "^zz-gen-.*\\.R$",
+    full.names = TRUE
+  )
   unlink(stale[!basename(stale) %in% c("zz-gen-version.R", "zz-gen-figure.R")])
   files <- character()
   for (page in roots) {
@@ -1084,13 +1301,23 @@ write_datatypes <- function(ctx, outdir = ".") {
       page_doc(page, ctx, page_figure_fns(page, validators)),
       constructor_code(page, ctx$nodes, validators)
     )
+    for (key in ctx$object_roots[startsWith(
+      ctx$object_roots,
+      paste0(page, ".")
+    )]) {
+      src <- c(
+        src,
+        object_doc(key, ctx),
+        constructor_code(key, ctx$nodes, validators, ctx$object_fn[[key]])
+      )
+    }
     check_ascii(src)
     path <- file.path(outdir, "R", sprintf("zz-gen-%s.R", page))
     writeLines(src, path)
     files <- c(files, path)
   }
   src <- header
-  for (type in names(SHARED_TYPES)) {
+  for (type in names(ctx$families)) {
     src <- c(src, shared_doc(type, ctx), shared_constructor_code(type, ctx))
   }
   check_ascii(src)
@@ -1098,9 +1325,10 @@ write_datatypes <- function(ctx, outdir = ".") {
   writeLines(src, path)
   files <- c(files, path)
   message(sprintf(
-    "Wrote %d trace/layout constructors and %d shared type constructors to %d files",
+    "Wrote %d trace/layout, %d object and %d shared type constructors to %d files",
     length(roots),
-    length(SHARED_TYPES),
+    length(ctx$object_roots),
+    length(ctx$families),
     length(files)
   ))
   invisible(files)

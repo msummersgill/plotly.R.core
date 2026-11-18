@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_project}
 \alias{go_project}
-\title{Contour projections}
+\title{Project objects}
 \usage{
 go_project(arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE)
 }
@@ -34,10 +34,8 @@ instead of raising an error.}
 A \code{go_project} object (a named list).
 }
 \description{
-Projections of a surface trace's contour lines onto the walls of the 3D
-scene (\code{contours = list(z = list(project = ...))}).
-\code{go_project()} creates one; a named list with the same properties
-works too.
+Used for \code{project} in 3 places in the schema. \code{go_project()}
+creates one; a named list with the same properties works too.
 }
 \details{
 These objects appear in 3 places in the plotly.js schema (properties
@@ -46,7 +44,10 @@ named \code{project}), all with the same properties and rules.
 \examples{
 go_figure() |>
   add_surface(
-    z = volcano,
-    contours = list(z = list(show = TRUE, project = go_project(z = TRUE)))
+    contours = go_surface_contours(
+      x = go_surface_contours_x(
+        project = go_project()
+      )
+    )
   )
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_pathbar}
 \alias{go_pathbar}
-\title{Path bars}
+\title{Pathbar objects}
 \usage{
 go_pathbar(
   arg = NULL,
@@ -48,9 +48,8 @@ instead of raising an error.}
 A \code{go_pathbar} object (a named list).
 }
 \description{
-The path bar of a treemap or icicle trace, showing the path to the sector
-at the root of the view. \code{go_pathbar()} creates one; a named list
-with the same properties works too.
+Used for \code{pathbar} in 2 places in the schema. \code{go_pathbar()}
+creates one; a named list with the same properties works too.
 }
 \details{
 These objects appear in 2 places in the plotly.js schema (properties
@@ -58,8 +57,7 @@ named \code{pathbar}), all with the same properties and rules.
 }
 \examples{
 go_figure() |>
-  add_treemap(
-    labels = c("all", "a", "b"), parents = c("", "all", "all"),
-    pathbar = go_pathbar(visible = TRUE, side = "bottom")
+  add_icicle(
+    pathbar = go_pathbar(visible = TRUE)
   )
 }

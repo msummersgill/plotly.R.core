@@ -118,8 +118,9 @@ listening to hover, click and selection events. Note that, "scatter"
 traces also appends customdata items in the markers DOM elements Data
 array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
-\item{decreasing}{A named list with properties \code{fillcolor} and
-\code{line} (described in section "decreasing properties" below).}
+\item{decreasing}{A \code{\link{go_candlestick_decreasing}()} object or
+named list, with properties \code{fillcolor} and \code{line} (see
+\code{\link{go_candlestick_decreasing}()}).}
 
 \item{high}{Sets the high values. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.}
@@ -177,8 +178,9 @@ constancy of data points during animation. Should be an array of
 strings, not numbers or any other type. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.}
 
-\item{increasing}{A named list with properties \code{fillcolor} and
-\code{line} (described in section "increasing properties" below).}
+\item{increasing}{A \code{\link{go_candlestick_increasing}()} object or
+named list, with properties \code{fillcolor} and \code{line} (see
+\code{\link{go_candlestick_increasing}()}).}
 
 \item{legend}{Sets the reference to a legend to show this trace in.
 References to these legends are "legend", "legend2", "legend3", etc.
@@ -206,8 +208,9 @@ to their order in data and layout. Number.}
 \item{legendwidth}{Sets the width (in px or fraction) of the legend for
 this trace. Number in the interval [0, Inf].}
 
-\item{line}{A named list with properties \code{width} (described in
-section "line properties" below).}
+\item{line}{A \code{\link{go_candlestick_line}()} object or named list,
+with properties \code{width} (see
+\code{\link{go_candlestick_line}()}).}
 
 \item{low}{Sets the low values. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.}
@@ -378,81 +381,27 @@ green whereas decreasing are drawn in red.
 \code{add_candlestick()} creates one and adds it to a figure.
 
 
-Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-= list(width = 2))}. Each nested object's properties are described in a
-section of its own near the end of this page (after \emph{Value}), titled
-with its path: \emph{marker properties}, \emph{marker.line properties},
-.... Objects that appear in several places in the schema can also be
-created with a constructor of their own, and are documented on its page:
-\code{\link{go_font}()}, \code{\link{go_colorbar}()},
-\code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-\code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-\code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-\code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-\code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-\code{\link{go_gradient}()}, \code{\link{go_label}()},
-\code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-\code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-\code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-\code{\link{go_root}()}, \code{\link{go_slices}()},
-\code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-Every property is checked against the plotly.js schema when the object is
-created or modified (see \code{\link{plotly_obj-modify}}).
+Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+objects of their constructors: every object in the schema has one,
+documented on its own page, with exactly that object's properties. Most
+are named after their path: \code{go_scatter_marker()},
+\code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+Objects that appear in several places share one: \code{\link{go_font}()},
+\code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+\code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+\code{\link{go_domain}()}, \code{\link{go_pattern}()},
+\code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+\code{\link{go_bins}()}, \code{\link{go_caps}()},
+\code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+\code{\link{go_label}()}, \code{\link{go_leaf}()},
+\code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+\code{\link{go_pathbar}()}, \code{\link{go_project}()},
+\code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+\code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+\code{\link{go_unifiedhovertitle}()}. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+\code{\link{plotly_obj-modify}}).
 }
-\section{decreasing properties}{
-
-\describe{
-\item{\code{fillcolor}}{Sets the fill color. Defaults to a
-half-transparent variant of the line color, marker color, or marker line
-color, whichever is available. Color: a CSS color string or R color
-name.}
-\item{\code{line}}{A named list with properties \code{color} and
-\code{width} (described in section "decreasing.line properties" below).}
-}
-}
-
-\section{decreasing.line properties}{
-
-\describe{
-\item{\code{color}}{Sets the color of line bounding the box(es). Color: a
-CSS color string or R color name.}
-\item{\code{width}}{Sets the width (in px) of line bounding the box(es).
-Number in the interval [0, Inf].}
-}
-}
-
-\section{increasing properties}{
-
-\describe{
-\item{\code{fillcolor}}{Sets the fill color. Defaults to a
-half-transparent variant of the line color, marker color, or marker line
-color, whichever is available. Color: a CSS color string or R color
-name.}
-\item{\code{line}}{A named list with properties \code{color} and
-\code{width} (described in section "increasing.line properties" below).}
-}
-}
-
-\section{increasing.line properties}{
-
-\describe{
-\item{\code{color}}{Sets the color of line bounding the box(es). Color: a
-CSS color string or R color name.}
-\item{\code{width}}{Sets the width (in px) of line bounding the box(es).
-Number in the interval [0, Inf].}
-}
-}
-
-\section{line properties}{
-
-\describe{
-\item{\code{width}}{Sets the width (in px) of line bounding the box(es).
-Note that this style setting can also be set per direction via
-`increasing.line.width` and `decreasing.line.width`. Number in the
-interval [0, Inf].}
-}
-}
-
 \examples{
 go_candlestick()
 }

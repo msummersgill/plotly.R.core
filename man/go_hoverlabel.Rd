@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_hoverlabel}
 \alias{go_hoverlabel}
-\title{Hover labels}
+\title{Hoverlabel objects}
 \usage{
 go_hoverlabel(
   arg = NULL,
@@ -77,9 +77,9 @@ instead of raising an error.}
 A \code{go_hoverlabel} object (a named list).
 }
 \description{
-Hover label appearance, for a trace or (as defaults) for the figure's
-layout. \code{go_hoverlabel()} creates one; a named list with the same
-properties works too.
+Used for \code{hoverlabel} in 47 places in the schema.
+\code{go_hoverlabel()} creates one; a named list with the same properties
+works too.
 }
 \details{
 These objects appear in 47 places in the plotly.js schema (properties
@@ -91,8 +91,7 @@ against that context's rules.
 }
 \examples{
 go_figure() |>
-  add_scatter(
-    x = 1:3, y = c(2, 1, 3),
-    hoverlabel = go_hoverlabel(bgcolor = "white", font = go_font(size = 14))
+  add_bar(
+    hoverlabel = go_hoverlabel()
   )
 }

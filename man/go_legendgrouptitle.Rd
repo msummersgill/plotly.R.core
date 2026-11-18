@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_legendgrouptitle}
 \alias{go_legendgrouptitle}
-\title{Legend group titles}
+\title{Legendgrouptitle objects}
 \usage{
 go_legendgrouptitle(
   arg = NULL,
@@ -33,7 +33,7 @@ instead of raising an error.}
 A \code{go_legendgrouptitle} object (a named list).
 }
 \description{
-The title shown above a trace's legend group.
+Used for \code{legendgrouptitle} in 49 places in the schema.
 \code{go_legendgrouptitle()} creates one; a named list with the same
 properties works too.
 }
@@ -43,9 +43,7 @@ named \code{legendgrouptitle}), all with the same properties and rules.
 }
 \examples{
 go_figure() |>
-  add_scatter(
-    x = 1:3, y = c(2, 1, 3), legendgroup = "g",
-    legendgrouptitle = go_legendgrouptitle(text = "Group")
-  ) |>
-  add_scatter(x = 1:3, y = c(1, 3, 2), legendgroup = "g")
+  add_bar(
+    legendgrouptitle = go_legendgrouptitle(text = "title")
+  )
 }

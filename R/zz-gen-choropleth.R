@@ -10,26 +10,26 @@
 #' \code{add_choropleth()} creates one and adds it to a figure.
 #'
 #' @details
-#' Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-#' = list(width = 2))}. Each nested object's properties are described in a
-#' section of its own near the end of this page (after \emph{Value}), titled
-#' with its path: \emph{marker properties}, \emph{marker.line properties},
-#' .... Objects that appear in several places in the schema can also be
-#' created with a constructor of their own, and are documented on its page:
-#' \code{\link{go_font}()}, \code{\link{go_colorbar}()},
-#' \code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-#' \code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-#' \code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-#' \code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-#' \code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-#' \code{\link{go_gradient}()}, \code{\link{go_label}()},
-#' \code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-#' \code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-#' \code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-#' \code{\link{go_root}()}, \code{\link{go_slices}()},
-#' \code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-#' Every property is checked against the plotly.js schema when the object is
-#' created or modified (see \code{\link{plotly_obj-modify}}).
+#' Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+#' objects of their constructors: every object in the schema has one,
+#' documented on its own page, with exactly that object's properties. Most
+#' are named after their path: \code{go_scatter_marker()},
+#' \code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+#' Objects that appear in several places share one: \code{\link{go_font}()},
+#' \code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+#' \code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+#' \code{\link{go_domain}()}, \code{\link{go_pattern}()},
+#' \code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+#' \code{\link{go_bins}()}, \code{\link{go_caps}()},
+#' \code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+#' \code{\link{go_label}()}, \code{\link{go_leaf}()},
+#' \code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+#' \code{\link{go_pathbar}()}, \code{\link{go_project}()},
+#' \code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+#' \code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+#' \code{\link{go_unifiedhovertitle}()}. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}).
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
@@ -167,8 +167,9 @@
 #' @param locations Sets the coordinates via location IDs or names. See
 #'   `locationmode` for more info. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
-#' @param marker A named list with properties \code{line} and
-#'   \code{opacity} (described in section "marker properties" below).
+#' @param marker A \code{\link{go_choropleth_marker}()} object or named
+#'   list, with properties \code{line} and \code{opacity} (see
+#'   \code{\link{go_choropleth_marker}()}).
 #' @param meta Assigns extra meta information associated with this trace
 #'   that can be used in various text attributes. Attributes such as trace
 #'   `name`, graph, axis and colorbar `title.text`, annotation `text`
@@ -186,8 +187,9 @@
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
-#' @param selected A named list with properties \code{marker} (described in
-#'   section "selected properties" below).
+#' @param selected A \code{\link{go_choropleth_selected}()} object or named
+#'   list, with properties \code{marker} (see
+#'   \code{\link{go_choropleth_selected}()}).
 #' @param selectedpoints Array containing integer indices of selected
 #'   points. Has an effect only for traces that support selections. Note
 #'   that an empty array means an empty selection where the `unselected`
@@ -216,8 +218,9 @@
 #'   array, such that the same trace has a different index, you can still
 #'   preserve user-driven changes if you give each trace a `uid` that stays
 #'   with it as it moves. Any value.
-#' @param unselected A named list with properties \code{marker} (described
-#'   in section "unselected properties" below).
+#' @param unselected A \code{\link{go_choropleth_unselected}()} object or
+#'   named list, with properties \code{marker} (see
+#'   \code{\link{go_choropleth_unselected}()}).
 #' @param visible Determines whether or not this trace is visible. If
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
@@ -246,49 +249,6 @@
 #'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
 #'
-#' @section marker properties:
-#' \describe{
-#' \item{\code{line}}{A named list with properties \code{color} and
-#' \code{width} (described in section "marker.line properties" below).}
-#' \item{\code{opacity}}{Sets the opacity of the locations. Number in the
-#' interval [0, 1], or a vector of these.}
-#' }
-#'
-#' @section marker.line properties:
-#' \describe{
-#' \item{\code{color}}{Sets the marker.line color. It accepts either a
-#' specific color or an array of numbers that are mapped to the colorscale
-#' relative to the max and min values of the array or relative to
-#' `marker.line.cmin` and `marker.line.cmax` if set. Color: a CSS color
-#' string or R color name, or a vector of these.}
-#' \item{\code{width}}{Sets the width (in px) of the lines bounding the
-#' marker points. Number in the interval [0, Inf], or a vector of these.}
-#' }
-#'
-#' @section selected properties:
-#' \describe{
-#' \item{\code{marker}}{A named list with properties \code{opacity}
-#' (described in section "selected.marker properties" below).}
-#' }
-#'
-#' @section selected.marker properties:
-#' \describe{
-#' \item{\code{opacity}}{Sets the marker opacity of selected points. Number
-#' in the interval [0, 1].}
-#' }
-#'
-#' @section unselected properties:
-#' \describe{
-#' \item{\code{marker}}{A named list with properties \code{opacity}
-#' (described in section "unselected.marker properties" below).}
-#' }
-#'
-#' @section unselected.marker properties:
-#' \describe{
-#' \item{\code{opacity}}{Sets the marker opacity of unselected points,
-#' applied only when a selection exists. Number in the interval [0, 1].}
-#' }
-#'
 #' @noMd
 #' @export
 #' @examples
@@ -308,5 +268,225 @@ go_choropleth <- function(
     skip_invalid = FALSE
 ) {
   plotly_object("choropleth", arg, environment(), list(...), skip_invalid)
+}
+
+#' Choropleth marker objects
+#'
+#' The object for the \code{marker} of a choropleth trace
+#' (\code{\link{go_choropleth}()}). \code{go_choropleth_marker()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param line A \code{\link{go_choropleth_marker_line}()} object or named
+#'   list, with properties \code{color} and \code{width} (see
+#'   \code{\link{go_choropleth_marker_line}()}).
+#' @param opacity Sets the opacity of the locations. Number in the interval
+#'   [0, 1], or a vector of these.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_choropleth_marker} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_choropleth(
+#'     marker = go_choropleth_marker(opacity = 0.5)
+#'   )
+go_choropleth_marker <- function(
+    arg = NULL, ..., line = NULL, opacity = NULL, skip_invalid = FALSE
+) {
+  plotly_object("choropleth.marker", arg, environment(), list(...), skip_invalid)
+}
+
+#' Choropleth marker line objects
+#'
+#' The object for the \code{marker.line} of a choropleth trace
+#' (\code{\link{go_choropleth_marker}()}).
+#' \code{go_choropleth_marker_line()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the marker.line color. It accepts either a specific
+#'   color or an array of numbers that are mapped to the colorscale
+#'   relative to the max and min values of the array or relative to
+#'   `marker.line.cmin` and `marker.line.cmax` if set. Color: a CSS color
+#'   string or R color name, or a vector of these.
+#' @param width Sets the width (in px) of the lines bounding the marker
+#'   points. Number in the interval [0, Inf], or a vector of these.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_choropleth_marker_line} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_choropleth(
+#'     marker = go_choropleth_marker(
+#'       line = go_choropleth_marker_line(color = "red")
+#'     )
+#'   )
+go_choropleth_marker_line <- function(
+    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+) {
+  plotly_object("choropleth.marker.line", arg, environment(), list(...), skip_invalid)
+}
+
+#' Choropleth selected objects
+#'
+#' The object for the \code{selected} of a choropleth trace
+#' (\code{\link{go_choropleth}()}). \code{go_choropleth_selected()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param marker A \code{\link{go_choropleth_selected_marker}()} object or
+#'   named list, with properties \code{opacity} (see
+#'   \code{\link{go_choropleth_selected_marker}()}).
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_choropleth_selected} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_choropleth(
+#'     selected = go_choropleth_selected()
+#'   )
+go_choropleth_selected <- function(
+    arg = NULL, ..., marker = NULL, skip_invalid = FALSE
+) {
+  plotly_object("choropleth.selected", arg, environment(), list(...), skip_invalid)
+}
+
+#' Choropleth selected marker objects
+#'
+#' The object for the \code{selected.marker} of a choropleth trace
+#' (\code{\link{go_choropleth_selected}()}).
+#' \code{go_choropleth_selected_marker()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param opacity Sets the marker opacity of selected points. Number in the
+#'   interval [0, 1].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_choropleth_selected_marker} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_choropleth(
+#'     selected = go_choropleth_selected(
+#'       marker = go_choropleth_selected_marker(opacity = 0.5)
+#'     )
+#'   )
+go_choropleth_selected_marker <- function(
+    arg = NULL, ..., opacity = NULL, skip_invalid = FALSE
+) {
+  plotly_object("choropleth.selected.marker", arg, environment(), list(...), skip_invalid)
+}
+
+#' Choropleth unselected objects
+#'
+#' The object for the \code{unselected} of a choropleth trace
+#' (\code{\link{go_choropleth}()}). \code{go_choropleth_unselected()}
+#' creates one, with exactly its properties; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param marker A \code{\link{go_choropleth_unselected_marker}()} object
+#'   or named list, with properties \code{opacity} (see
+#'   \code{\link{go_choropleth_unselected_marker}()}).
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_choropleth_unselected} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_choropleth(
+#'     unselected = go_choropleth_unselected()
+#'   )
+go_choropleth_unselected <- function(
+    arg = NULL, ..., marker = NULL, skip_invalid = FALSE
+) {
+  plotly_object("choropleth.unselected", arg, environment(), list(...), skip_invalid)
+}
+
+#' Choropleth unselected marker objects
+#'
+#' The object for the \code{unselected.marker} of a choropleth trace
+#' (\code{\link{go_choropleth_unselected}()}).
+#' \code{go_choropleth_unselected_marker()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param opacity Sets the marker opacity of unselected points, applied
+#'   only when a selection exists. Number in the interval [0, 1].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_choropleth_unselected_marker} object (a named list).
+#'
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_choropleth(
+#'     unselected = go_choropleth_unselected(
+#'       marker = go_choropleth_unselected_marker(opacity = 0.5)
+#'     )
+#'   )
+go_choropleth_unselected_marker <- function(
+    arg = NULL, ..., opacity = NULL, skip_invalid = FALSE
+) {
+  plotly_object("choropleth.unselected.marker", arg, environment(), list(...), skip_invalid)
 }
 

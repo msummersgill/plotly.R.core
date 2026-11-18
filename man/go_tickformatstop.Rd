@@ -2,7 +2,7 @@
 % Please edit documentation in R/zz-gen-shared.R
 \name{go_tickformatstop}
 \alias{go_tickformatstop}
-\title{Tick format stops}
+\title{Tickformatstop objects}
 \usage{
 go_tickformatstop(
   arg = NULL,
@@ -53,8 +53,7 @@ instead of raising an error.}
 A \code{go_tickformatstop} object (a named list).
 }
 \description{
-A tick label format that applies over a range of zoom levels. Axes and
-color bars take a list of them as \code{tickformatstops}.
+Used for \code{tickformatstop} in 50 places in the schema.
 \code{go_tickformatstop()} creates one; a named list with the same
 properties works too.
 }
@@ -63,11 +62,12 @@ These objects appear in 50 places in the plotly.js schema (properties
 named \code{tickformatstop}), all with the same properties and rules.
 }
 \examples{
-day <- 24 * 60 * 60 * 1000
 go_figure() |>
-  add_scatter(x = Sys.Date() + 0:99, y = cumsum(rnorm(100))) |>
-  update_xaxes(tickformatstops = list(
-    go_tickformatstop(dtickrange = list(NULL, day), value = "\%H:\%M"),
-    go_tickformatstop(dtickrange = list(day, NULL), value = "\%e \%b")
-  ))
+  add_bar(
+    marker = go_bar_marker(
+      colorbar = go_colorbar(
+        tickformatstops = list(go_tickformatstop())
+      )
+    )
+  )
 }

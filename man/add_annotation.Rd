@@ -356,10 +356,8 @@ The modified figure.
 \description{
 \code{add_annotation()} adds an annotation to the figure's layout
 \code{annotations}. Nested objects are named lists, e.g. \code{font =
-list(size = 14)} or a \code{\link{go_font}()} object; each one's
-properties are described in a section of its own near the end of this
-page.
+list(size = 14)}, or objects of the constructors their arguments name.
 }
 \seealso{
-\code{\link{update_annotations}()}
+\code{\link{update_annotations}()}, \code{\link{go_annotation}()}
 }

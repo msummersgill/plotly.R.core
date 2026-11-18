@@ -186,9 +186,9 @@ traces". Logical.}
 to be no larger than the bar itself. One of \code{"inside"},
 \code{"outside"}, \code{"both"}, \code{"none"}.}
 
-\item{cumulative}{A named list with properties \code{currentbin},
-\code{direction} and \code{enabled} (described in section "cumulative
-properties" below).}
+\item{cumulative}{A \code{\link{go_histogram_cumulative}()} object or
+named list, with properties \code{currentbin}, \code{direction} and
+\code{enabled} (see \code{\link{go_histogram_cumulative}()}).}
 
 \item{customdata}{Assigns extra data each datum. This may be useful when
 listening to hover, click and selection events. Note that, "scatter"
@@ -320,12 +320,12 @@ to their order in data and layout. Number.}
 \item{legendwidth}{Sets the width (in px or fraction) of the legend for
 this trace. Number in the interval [0, Inf].}
 
-\item{marker}{A named list with properties \code{autocolorscale},
-\code{cauto}, \code{cmax}, \code{cmid}, \code{cmin}, \code{color},
-\code{coloraxis}, \code{colorbar}, \code{colorscale},
-\code{cornerradius}, \code{line}, \code{opacity}, \code{pattern},
-\code{reversescale} and \code{showscale} (described in section "marker
-properties" below).}
+\item{marker}{A \code{\link{go_histogram_marker}()} object or named
+list, with properties \code{autocolorscale}, \code{cauto},
+\code{cmax}, \code{cmid}, \code{cmin}, \code{color}, \code{coloraxis},
+\code{colorbar}, \code{colorscale}, \code{cornerradius}, \code{line},
+\code{opacity}, \code{pattern}, \code{reversescale} and
+\code{showscale} (see \code{\link{go_histogram_marker}()}).}
 
 \item{meta}{Assigns extra meta information associated with this trace
 that can be used in various text attributes. Attributes such as trace
@@ -367,8 +367,9 @@ bar. A \code{\link{go_font}()} object or named list, with properties
 \code{size}, \code{style}, \code{textcase}, \code{variant} and
 \code{weight} (see \code{\link{go_font}()}).}
 
-\item{selected}{A named list with properties \code{marker} and
-\code{textfont} (described in section "selected properties" below).}
+\item{selected}{A \code{\link{go_histogram_selected}()} object or named
+list, with properties \code{marker} and \code{textfont} (see
+\code{\link{go_histogram_selected}()}).}
 
 \item{selectedpoints}{Array containing integer indices of selected
 points. Has an effect only for traces that support selections. Note
@@ -447,8 +448,9 @@ array, such that the same trace has a different index, you can still
 preserve user-driven changes if you give each trace a `uid` that stays
 with it as it moves. Any value.}
 
-\item{unselected}{A named list with properties \code{marker} and
-\code{textfont} (described in section "unselected properties" below).}
+\item{unselected}{A \code{\link{go_histogram_unselected}()} object or
+named list, with properties \code{marker} and \code{textfont} (see
+\code{\link{go_histogram_unselected}()}).}
 
 \item{visible}{Determines whether or not this trace is visible. If
 "legendonly", the trace is not drawn, but can appear as a legend item
@@ -553,241 +555,27 @@ no aggregation data is provided.
 \code{add_histogram()} creates one and adds it to a figure.
 
 
-Nested objects are named lists, e.g. \code{marker = list(size = 10, line
-= list(width = 2))}. Each nested object's properties are described in a
-section of its own near the end of this page (after \emph{Value}), titled
-with its path: \emph{marker properties}, \emph{marker.line properties},
-.... Objects that appear in several places in the schema can also be
-created with a constructor of their own, and are documented on its page:
-\code{\link{go_font}()}, \code{\link{go_colorbar}()},
-\code{\link{go_hoverlabel}()}, \code{\link{go_legendgrouptitle}()},
-\code{\link{go_tickformatstop}()}, \code{\link{go_domain}()},
-\code{\link{go_pattern}()}, \code{\link{go_error_bar}()},
-\code{\link{go_autorangeoptions}()}, \code{\link{go_bins}()},
-\code{\link{go_caps}()}, \code{\link{go_domainpad}()},
-\code{\link{go_gradient}()}, \code{\link{go_label}()},
-\code{\link{go_leaf}()}, \code{\link{go_lightposition}()},
-\code{\link{go_minor}()}, \code{\link{go_pathbar}()},
-\code{\link{go_project}()}, \code{\link{go_rangebreak}()},
-\code{\link{go_root}()}, \code{\link{go_slices}()},
-\code{\link{go_spaceframe}()} and \code{\link{go_unifiedhovertitle}()}.
-Every property is checked against the plotly.js schema when the object is
-created or modified (see \code{\link{plotly_obj-modify}}).
+Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
+objects of their constructors: every object in the schema has one,
+documented on its own page, with exactly that object's properties. Most
+are named after their path: \code{go_scatter_marker()},
+\code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
+Objects that appear in several places share one: \code{\link{go_font}()},
+\code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
+\code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
+\code{\link{go_domain}()}, \code{\link{go_pattern}()},
+\code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
+\code{\link{go_bins}()}, \code{\link{go_caps}()},
+\code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
+\code{\link{go_label}()}, \code{\link{go_leaf}()},
+\code{\link{go_lightposition}()}, \code{\link{go_minor}()},
+\code{\link{go_pathbar}()}, \code{\link{go_project}()},
+\code{\link{go_rangebreak}()}, \code{\link{go_root}()},
+\code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
+\code{\link{go_unifiedhovertitle}()}. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+\code{\link{plotly_obj-modify}}).
 }
-\section{cumulative properties}{
-
-\describe{
-\item{\code{currentbin}}{Only applies if cumulative is enabled. Sets
-whether the current bin is included, excluded, or has half of its value
-included in the current cumulative value. "include" is the default for
-compatibility with various other tools, however it introduces a half-bin
-bias to the results. "exclude" makes the opposite half-bin bias, and
-"half" removes it. One of \code{"include"}, \code{"exclude"},
-\code{"half"}.}
-\item{\code{direction}}{Only applies if cumulative is enabled. If
-"increasing" (default) we sum all prior bins, so the result increases
-from left to right. If "decreasing" we sum later bins so the result
-decreases from left to right. One of \code{"increasing"},
-\code{"decreasing"}.}
-\item{\code{enabled}}{If true, display the cumulative distribution by
-summing the binned values. Use the `direction` and `centralbin`
-attributes to tune the accumulation method. Note: in this mode, the
-"density" `histnorm` settings behave the same as their equivalents
-without "density": *" and "density" both rise to the number of data
-points, and "probability" and "probability density* both rise to the
-number of sample points. Logical.}
-}
-}
-
-\section{marker properties}{
-
-\describe{
-\item{\code{autocolorscale}}{Determines whether the colorscale is a
-default palette (`autocolorscale: true`) or the palette determined by
-`marker.colorscale`. Has an effect only if in `marker.color` is set to a
-numerical array. In case `colorscale` is unspecified or `autocolorscale`
-is true, the default palette will be chosen according to whether numbers
-in the `color` array are all positive, all negative or mixed. Logical.}
-\item{\code{cauto}}{Determines whether or not the color domain is
-computed with respect to the input data (here in `marker.color`) or the
-bounds set in `marker.cmin` and `marker.cmax` Has an effect only if in
-`marker.color` is set to a numerical array. Defaults to `false` when
-`marker.cmin` and `marker.cmax` are set by the user. Logical.}
-\item{\code{cmax}}{Sets the upper bound of the color domain. Has an
-effect only if in `marker.color` is set to a numerical array. Value
-should have the same units as in `marker.color` and if set, `marker.cmin`
-must be set as well. Number.}
-\item{\code{cmid}}{Sets the mid-point of the color domain by scaling
-`marker.cmin` and/or `marker.cmax` to be equidistant to this point. Has
-an effect only if in `marker.color` is set to a numerical array. Value
-should have the same units as in `marker.color`. Has no effect when
-`marker.cauto` is `false`. Number.}
-\item{\code{cmin}}{Sets the lower bound of the color domain. Has an
-effect only if in `marker.color` is set to a numerical array. Value
-should have the same units as in `marker.color` and if set, `marker.cmax`
-must be set as well. Number.}
-\item{\code{color}}{Sets the marker color. It accepts either a specific
-color or an array of numbers that are mapped to the colorscale relative
-to the max and min values of the array or relative to `marker.cmin` and
-`marker.cmax` if set. Color: a CSS color string or R color name, or a
-number mapped to a color by \code{histogram.marker.colorscale}, or a
-vector of these.}
-\item{\code{coloraxis}}{Sets a reference to a shared color axis.
-References to these shared color axes are "coloraxis", "coloraxis2",
-"coloraxis3", etc. Settings for these shared color axes are set in the
-layout, under `layout.coloraxis`, `layout.coloraxis2`, etc. Note that
-multiple color scales can be linked to the same color axis. Subplot id:
-\code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
-\item{\code{colorbar}}{A \code{\link{go_colorbar}()} object or named
-list, with properties \code{bgcolor}, \code{bordercolor},
-\code{borderwidth}, \code{dtick}, \code{exponentformat},
-\code{labelalias}, \code{len}, \code{lenmode}, \code{minexponent},
-\code{nticks}, \code{orientation}, \code{outlinecolor} and 34 more (see
-\code{\link{go_colorbar}()}).}
-\item{\code{colorscale}}{Sets the colorscale. Has an effect only if in
-`marker.color` is set to a numerical array. The colorscale must be an
-array containing arrays mapping a normalized value to an rgb, rgba, hex,
-hsl, hsla, hwb, or named color string. At minimum, a mapping for the
-lowest (0) and highest (1) values are required. For example, `[[0,
-'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
-colorscale in color space, use `marker.cmin` and `marker.cmax`.
-Alternatively, `colorscale` may be a palette name string of the following
-list:
-Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-Colorscale: a vector of colors, a two-column data.frame of (value,
-color), or the name of a sequential, diverging or cyclical scale in
-\code{\link{px_colors}()} (append \code{"_r"} to reverse).}
-\item{\code{cornerradius}}{Sets the rounding of corners. May be an
-integer number of pixels, or a percentage of bar width (as a string
-ending in \%). Defaults to `layout.barcornerradius`. In stack or relative
-barmode, the first trace to set cornerradius is used for the whole stack.
-Any value.}
-\item{\code{line}}{A named list with properties \code{autocolorscale},
-\code{cauto}, \code{cmax}, \code{cmid}, \code{cmin}, \code{color},
-\code{coloraxis}, \code{colorscale}, \code{reversescale} and \code{width}
-(described in section "marker.line properties" below).}
-\item{\code{opacity}}{Sets the opacity of the bars. Number in the
-interval [0, 1], or a vector of these.}
-\item{\code{pattern}}{Sets the pattern within the marker. A
-\code{\link{go_pattern}()} object or named list, with properties
-\code{bgcolor}, \code{fgcolor}, \code{fgopacity}, \code{fillmode},
-\code{path}, \code{shape}, \code{size} and \code{solidity} (see
-\code{\link{go_pattern}()}).}
-\item{\code{reversescale}}{Reverses the color mapping if true. Has an
-effect only if in `marker.color` is set to a numerical array. If true,
-`marker.cmin` will correspond to the last color in the array and
-`marker.cmax` will correspond to the first color. Logical.}
-\item{\code{showscale}}{Determines whether or not a colorbar is displayed
-for this trace. Has an effect only if in `marker.color` is set to a
-numerical array. Logical.}
-}
-}
-
-\section{marker.line properties}{
-
-\describe{
-\item{\code{autocolorscale}}{Determines whether the colorscale is a
-default palette (`autocolorscale: true`) or the palette determined by
-`marker.line.colorscale`. Has an effect only if in `marker.line.color` is
-set to a numerical array. In case `colorscale` is unspecified or
-`autocolorscale` is true, the default palette will be chosen according to
-whether numbers in the `color` array are all positive, all negative or
-mixed. Logical.}
-\item{\code{cauto}}{Determines whether or not the color domain is
-computed with respect to the input data (here in `marker.line.color`) or
-the bounds set in `marker.line.cmin` and `marker.line.cmax` Has an effect
-only if in `marker.line.color` is set to a numerical array. Defaults to
-`false` when `marker.line.cmin` and `marker.line.cmax` are set by the
-user. Logical.}
-\item{\code{cmax}}{Sets the upper bound of the color domain. Has an
-effect only if in `marker.line.color` is set to a numerical array. Value
-should have the same units as in `marker.line.color` and if set,
-`marker.line.cmin` must be set as well. Number.}
-\item{\code{cmid}}{Sets the mid-point of the color domain by scaling
-`marker.line.cmin` and/or `marker.line.cmax` to be equidistant to this
-point. Has an effect only if in `marker.line.color` is set to a numerical
-array. Value should have the same units as in `marker.line.color`. Has no
-effect when `marker.line.cauto` is `false`. Number.}
-\item{\code{cmin}}{Sets the lower bound of the color domain. Has an
-effect only if in `marker.line.color` is set to a numerical array. Value
-should have the same units as in `marker.line.color` and if set,
-`marker.line.cmax` must be set as well. Number.}
-\item{\code{color}}{Sets the marker.line color. It accepts either a
-specific color or an array of numbers that are mapped to the colorscale
-relative to the max and min values of the array or relative to
-`marker.line.cmin` and `marker.line.cmax` if set. Color: a CSS color
-string or R color name, or a number mapped to a color by
-\code{histogram.marker.line.colorscale}, or a vector of these.}
-\item{\code{coloraxis}}{Sets a reference to a shared color axis.
-References to these shared color axes are "coloraxis", "coloraxis2",
-"coloraxis3", etc. Settings for these shared color axes are set in the
-layout, under `layout.coloraxis`, `layout.coloraxis2`, etc. Note that
-multiple color scales can be linked to the same color axis. Subplot id:
-\code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
-\item{\code{colorscale}}{Sets the colorscale. Has an effect only if in
-`marker.line.color` is set to a numerical array. The colorscale must be
-an array containing arrays mapping a normalized value to an rgb, rgba,
-hex, hsl, hsla, hwb, or named color string. At minimum, a mapping for the
-lowest (0) and highest (1) values are required. For example, `[[0,
-'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`. To control the bounds of the
-colorscale in color space, use `marker.line.cmin` and `marker.line.cmax`.
-Alternatively, `colorscale` may be a palette name string of the following
-list:
-Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-Colorscale: a vector of colors, a two-column data.frame of (value,
-color), or the name of a sequential, diverging or cyclical scale in
-\code{\link{px_colors}()} (append \code{"_r"} to reverse).}
-\item{\code{reversescale}}{Reverses the color mapping if true. Has an
-effect only if in `marker.line.color` is set to a numerical array. If
-true, `marker.line.cmin` will correspond to the last color in the array
-and `marker.line.cmax` will correspond to the first color. Logical.}
-\item{\code{width}}{Sets the width (in px) of the lines bounding the
-marker points. Number in the interval [0, Inf], or a vector of these.}
-}
-}
-
-\section{selected properties}{
-
-\describe{
-\item{\code{marker}}{A named list with properties \code{color} and
-\code{opacity} (described in section "selected.marker properties"
-below).}
-\item{\code{textfont}}{A \code{\link{go_font}()} object or named list,
-with properties \code{color} (see \code{\link{go_font}()}).}
-}
-}
-
-\section{selected.marker properties}{
-
-\describe{
-\item{\code{color}}{Sets the marker color of selected points. Color: a
-CSS color string or R color name.}
-\item{\code{opacity}}{Sets the marker opacity of selected points. Number
-in the interval [0, 1].}
-}
-}
-
-\section{unselected properties}{
-
-\describe{
-\item{\code{marker}}{A named list with properties \code{color} and
-\code{opacity} (described in section "unselected.marker properties"
-below).}
-\item{\code{textfont}}{A \code{\link{go_font}()} object or named list,
-with properties \code{color} (see \code{\link{go_font}()}).}
-}
-}
-
-\section{unselected.marker properties}{
-
-\describe{
-\item{\code{color}}{Sets the marker color of unselected points, applied
-only when a selection exists. Color: a CSS color string or R color name.}
-\item{\code{opacity}}{Sets the marker opacity of unselected points,
-applied only when a selection exists. Number in the interval [0, 1].}
-}
-}
-
 \examples{
 go_histogram(x = 1:3, y = c(2, 1, 3), marker = list(color = "red"))
 }
