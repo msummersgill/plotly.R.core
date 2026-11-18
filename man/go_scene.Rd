@@ -71,26 +71,26 @@ scene. One of \code{"closest"}, \code{FALSE}.}
 \item{uirevision}{Controls persistence of user-driven changes in camera
 attributes. Defaults to `layout.uirevision`. Any value.}
 
-\item{xaxis}{A \code{\link{go_scene_xaxis}()} object or named list, with
+\item{xaxis}{A \code{\link{go_scene_axis}()} object or named list, with
 properties \code{autorange}, \code{autorangeoptions},
 \code{autotypenumbers}, \code{backgroundcolor}, \code{calendar},
 \code{categoryarray}, \code{categoryorder}, \code{color},
 \code{dtick}, \code{exponentformat}, \code{gridcolor},
-\code{gridwidth} and 44 more (see \code{\link{go_scene_xaxis}()}).}
+\code{gridwidth} and 44 more (see \code{\link{go_scene_axis}()}).}
 
-\item{yaxis}{A \code{\link{go_scene_yaxis}()} object or named list, with
+\item{yaxis}{A \code{\link{go_scene_axis}()} object or named list, with
 properties \code{autorange}, \code{autorangeoptions},
 \code{autotypenumbers}, \code{backgroundcolor}, \code{calendar},
 \code{categoryarray}, \code{categoryorder}, \code{color},
 \code{dtick}, \code{exponentformat}, \code{gridcolor},
-\code{gridwidth} and 44 more (see \code{\link{go_scene_yaxis}()}).}
+\code{gridwidth} and 44 more (see \code{\link{go_scene_axis}()}).}
 
-\item{zaxis}{A \code{\link{go_scene_zaxis}()} object or named list, with
+\item{zaxis}{A \code{\link{go_scene_axis}()} object or named list, with
 properties \code{autorange}, \code{autorangeoptions},
 \code{autotypenumbers}, \code{backgroundcolor}, \code{calendar},
 \code{categoryarray}, \code{categoryorder}, \code{color},
 \code{dtick}, \code{exponentformat}, \code{gridcolor},
-\code{gridwidth} and 44 more (see \code{\link{go_scene_zaxis}()}).}
+\code{gridwidth} and 44 more (see \code{\link{go_scene_axis}()}).}
 
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
@@ -107,7 +107,10 @@ properties works too.
 \details{
 Nested objects are named lists, or objects of the constructors their
 arguments name. Every property is checked against the plotly.js schema
-when the object is created or modified.
+when the object is created or modified. A property may be a one-sided
+formula (\code{color = ~col}): it is kept, and evaluated in the data
+(then checked) when its trace is added to a figure with
+\code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
 go_figure() |>
@@ -115,3 +118,4 @@ go_figure() |>
     scene = go_scene()
   )
 }
+\concept{layout objects}

@@ -43,7 +43,7 @@
 #' )
 #' fig <- fig |>
 #'   add_scatter(x = 1:3, y = c(3, 2, 1), mode = "markers") |>
-#'   update_layout(xaxis = list(title = "x"))
+#'   update_layout(xaxis = go_xaxis(title = "x"))
 #' if (interactive()) print(fig)
 #'
 #' # pipe in a data frame and refer to its columns with formulas
@@ -390,6 +390,14 @@ add_traces <- function(
   exclude_empty_subplots = FALSE
 ) {
   check_figure(fig)
+  # formulas kept by constructors (go_scatter(x = ~col)) use the figure's data
+  if (is.list(data) && !inherits(data, "plotly_obj") && is.null(names(data))) {
+    data <- lapply(data, function(tr) {
+      if (has_formula(tr)) eval_formulas(tr, trace_data(fig), "trace") else tr
+    })
+  } else if (has_formula(data)) {
+    data <- eval_formulas(data, trace_data(fig), "trace")
+  }
   data <- validate_data(data)
   n <- length(data)
   expand <- function(x, name) {
@@ -493,7 +501,9 @@ update_object <- function(obj, key, patch, overwrite = FALSE) {
   out
 }
 
-combine_patch <- function(patch, dots) {
+# `patch` and `...` of an update_*() function, with formulas (~col) evaluated
+# in the figure's data (that of go_figure(<data frame>)).
+combine_patch <- function(patch, dots, fig = NULL) {
   if (
     !is.null(patch) &&
       (!is.list(patch) || (length(patch) && is.null(names(patch))))
@@ -503,7 +513,14 @@ combine_patch <- function(patch, dots) {
   if (length(dots) && (is.null(names(dots)) || any(!nzchar(names(dots))))) {
     stop("All properties in `...` must be named", call. = FALSE)
   }
-  c(unclass(patch), dots)
+  out <- c(unclass(patch), dots)
+  if (has_formula(out)) {
+    data <- trace_data(fig)
+    out[] <- lapply(seq_along(out), function(i) {
+      eval_formulas(out[[i]], data, names(out)[[i]])
+    })
+  }
+  out
 }
 
 #' Update a figure's layout
@@ -523,14 +540,14 @@ combine_patch <- function(patch, dots) {
 #' @export
 #' @examples
 #' go_figure() |>
-#'   update_layout(title = "Title", xaxis = list(range = c(0, 10))) |>
-#'   update_layout(xaxis = list(title = "x"), yaxis = list(type = "log"))
+#'   update_layout(title = "Title", xaxis = go_xaxis(range = c(0, 10))) |>
+#'   update_layout(xaxis = go_xaxis(title = "x"), yaxis = go_yaxis(type = "log"))
 update_layout <- function(fig, patch = NULL, ..., overwrite = FALSE) {
   check_figure(fig)
   layout <- update_object(
     fig$layout,
     "layout",
-    combine_patch(patch, list(...)),
+    combine_patch(patch, list(...), fig),
     overwrite
   )
   modify_figure(fig, layout = layout)
@@ -699,7 +716,11 @@ trace_indices <- function(
 #'   add_scatter(y = 1:3, name = "a") |>
 #'   add_scatter(y = 3:1, name = "b", mode = "markers")
 #' select_traces(fig, list(name = "b"))
-#' fig <- update_traces(fig, marker = list(size = 12), selector = list(mode = "markers"))
+#' fig <- update_traces(
+#'   fig,
+#'   marker = go_scatter_marker(size = 12),
+#'   selector = list(mode = "markers")
+#' )
 #' fig <- for_each_trace(fig, function(tr) {
 #'   tr$name <- toupper(tr$name)
 #'   tr
@@ -728,7 +749,7 @@ update_traces <- function(
   overwrite = FALSE
 ) {
   check_figure(fig)
-  patch <- combine_patch(patch, list(...))
+  patch <- combine_patch(patch, list(...), fig)
   data <- fig$data
   for (i in trace_indices(fig, selector, row, col, secondary_y)) {
     data[[i]] <- update_object(data[[i]], data[[i]]$type, patch, overwrite)
@@ -847,7 +868,7 @@ update_layout_subplots <- function(
   col = NULL,
   secondary_y = NULL
 ) {
-  patch <- combine_patch(patch, dots)
+  patch <- combine_patch(patch, dots, fig)
   key <- paste0("layout.", prefix)
   layout <- unclass(fig$layout)
   for (n in layout_subplot_keys(fig, prefix, selector, row, col, secondary_y)) {
@@ -953,7 +974,7 @@ update_layout_array <- function(
   col = NULL,
   secondary_y = NULL
 ) {
-  patch <- combine_patch(patch, dots)
+  patch <- combine_patch(patch, dots, fig)
   element_key <- get_validator(paste0("layout.", prop))$element_key
   arr <- fig$layout[[prop]] %||% list()
   for (i in layout_array_indices(fig, prop, selector, row, col, secondary_y)) {

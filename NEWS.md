@@ -12,16 +12,23 @@
     `go_legendgrouptitle()`, `go_tickformatstop()`, `go_domain()`,
     `go_pattern()` and `go_error_bar()` (plotly.js's shared TypeScript types),
     `go_bins()`, `go_minor()`, `go_rangebreak()`, ... (objects that are the
-    same everywhere they appear) and the objects in them (`go_colorbar_title()`);
+    same everywhere they appear), x/y/z axes that are the same
+    (`go_scene_axis()`, `go_ternary_axis()`, `go_caps_axis()`, ...), the
+    selected/unselected point styles of all traces (`go_selected()`,
+    `go_unselected()`) and the objects in them (`go_colorbar_title()`,
+    `go_selected_marker()`, ...);
   * every other object, named after its path without `layout.`:
     `go_scatter_marker()`, `go_scatter_marker_line()`,
-    `go_scatter_selected_marker()`, `go_sankey_link()`, `go_xaxis()`,
+    `go_sankey_link()`, `go_xaxis()`,
     `go_scene()`, `go_scene_camera_eye()`, `go_annotation()`,
     `go_slider_step()`, ..., with `go_layout_title()`, `go_layout_image()`,
     `go_layout_colorscale()` and `go_layout_transition()` where the path name
     would be ambiguous or is a trace's.
 
-  Named lists work wherever an object does. plotly.py's "magic underscore"
+  Named lists work wherever an object does. One-sided formulas
+  (`go_scatter_marker(color = ~cyl)`) are kept by constructors and evaluated
+  in the data, then checked, when the trace is added with `add_<trace>()` or
+  `add_trace()`. plotly.py's "magic underscore"
   property names (`marker_size = 10`) are not supported.
 * Plotly Express: all of plotly.py's `px.*` functions as `px_scatter()`,
   `px_line()`, `px_bar()`, ... plus `px_imshow()`, with faceting, marginals,

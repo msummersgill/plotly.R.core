@@ -12,26 +12,12 @@
 #' \code{add_indicator()} creates one and adds it to a figure.
 #'
 #' @details
-#' Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
-#' objects of their constructors: every object in the schema has one,
-#' documented on its own page, with exactly that object's properties. Most
-#' are named after their path: \code{go_scatter_marker()},
-#' \code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
-#' Objects that appear in several places share one: \code{\link{go_font}()},
-#' \code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
-#' \code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
-#' \code{\link{go_domain}()}, \code{\link{go_pattern}()},
-#' \code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
-#' \code{\link{go_bins}()}, \code{\link{go_caps}()},
-#' \code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
-#' \code{\link{go_label}()}, \code{\link{go_leaf}()},
-#' \code{\link{go_lightposition}()}, \code{\link{go_minor}()},
-#' \code{\link{go_pathbar}()}, \code{\link{go_project}()},
-#' \code{\link{go_rangebreak}()}, \code{\link{go_root}()},
-#' \code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
-#' \code{\link{go_unifiedhovertitle}()}. Every property is checked against
+#' Nested objects are given as named lists or with their constructors, which
+#' are linked from the arguments below. Every property is checked against
 #' the plotly.js schema when the object is created or modified (see
-#' \code{\link{plotly_obj-modify}}).
+#' \code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+#' evaluated in the data, and then checked, when the trace is added with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
@@ -47,8 +33,9 @@
 #'   traces also appends customdata items in the markers DOM elements Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param data A data frame in which formula properties (e.g. \code{x =
-#'   ~col}, \code{marker = list(size = ~col)}) are evaluated. Default: the
-#'   data given to \code{\link{go_figure}()}. Only the evaluated values are
+#'   ~col}, \code{marker = list(size = ~col)}, \code{marker =
+#'   go_scatter_marker(size = ~col)}) are evaluated. Default: the data
+#'   given to \code{\link{go_figure}()}. Only the evaluated values are
 #'   added to the trace. A \code{crosstalk::SharedData} works the same way,
 #'   and links the trace to its crosstalk group (see
 #'   \code{\link{highlight}()}).
@@ -135,15 +122,14 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param ... Further properties, by their full names (e.g. numbered subplots
-#'   such as \code{xaxis2} in \code{go_layout()}). Nested properties are set
-#'   with named lists: \code{marker = list(size = 10)}.
+#' @param ... Not used: properties must be named in full.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
 #'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
 #'
+#' @concept traces
 #' @noMd
 #' @export
 #' @examples
@@ -169,7 +155,10 @@ go_indicator <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -199,6 +188,7 @@ go_indicator <- function(
 #'   instead of raising an error.
 #' @return A \code{go_indicator_delta} object (a named list).
 #'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
@@ -224,7 +214,10 @@ go_indicator_delta <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -236,6 +229,7 @@ go_indicator_delta <- function(
 #'   instead of raising an error.
 #' @return A \code{go_indicator_delta_decreasing} object (a named list).
 #'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
@@ -261,7 +255,10 @@ go_indicator_delta_decreasing <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -273,6 +270,7 @@ go_indicator_delta_decreasing <- function(
 #'   instead of raising an error.
 #' @return A \code{go_indicator_delta_increasing} object (a named list).
 #'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
@@ -298,7 +296,10 @@ go_indicator_delta_increasing <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -333,6 +334,7 @@ go_indicator_delta_increasing <- function(
 #'   instead of raising an error.
 #' @return A \code{go_indicator_gauge} object (a named list).
 #'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
@@ -358,7 +360,10 @@ go_indicator_gauge <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -495,6 +500,7 @@ go_indicator_gauge <- function(
 #'   instead of raising an error.
 #' @return A \code{go_indicator_gauge_axis} object (a named list).
 #'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
@@ -529,7 +535,10 @@ go_indicator_gauge_axis <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -545,6 +554,7 @@ go_indicator_gauge_axis <- function(
 #'   instead of raising an error.
 #' @return A \code{go_indicator_gauge_bar} object (a named list).
 #'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
@@ -571,7 +581,10 @@ go_indicator_gauge_bar <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -584,6 +597,7 @@ go_indicator_gauge_bar <- function(
 #'   instead of raising an error.
 #' @return A \code{go_indicator_gauge_bar_line} object (a named list).
 #'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
@@ -611,7 +625,10 @@ go_indicator_gauge_bar_line <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -642,6 +659,7 @@ go_indicator_gauge_bar_line <- function(
 #'   instead of raising an error.
 #' @return A \code{go_indicator_gauge_step} object (a named list).
 #'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
@@ -668,7 +686,10 @@ go_indicator_gauge_step <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -681,6 +702,7 @@ go_indicator_gauge_step <- function(
 #'   instead of raising an error.
 #' @return A \code{go_indicator_gauge_step_line} object (a named list).
 #'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
@@ -708,7 +730,10 @@ go_indicator_gauge_step_line <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -723,6 +748,7 @@ go_indicator_gauge_step_line <- function(
 #'   instead of raising an error.
 #' @return A \code{go_indicator_gauge_threshold} object (a named list).
 #'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
@@ -749,7 +775,10 @@ go_indicator_gauge_threshold <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -762,6 +791,7 @@ go_indicator_gauge_threshold <- function(
 #'   instead of raising an error.
 #' @return A \code{go_indicator_gauge_threshold_line} object (a named list).
 #'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
@@ -789,7 +819,10 @@ go_indicator_gauge_threshold_line <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -808,6 +841,7 @@ go_indicator_gauge_threshold_line <- function(
 #'   instead of raising an error.
 #' @return A \code{go_indicator_number} object (a named list).
 #'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
@@ -832,7 +866,10 @@ go_indicator_number <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -850,6 +887,7 @@ go_indicator_number <- function(
 #'   instead of raising an error.
 #' @return A \code{go_indicator_title} object (a named list).
 #'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples

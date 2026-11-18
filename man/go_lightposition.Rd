@@ -49,3 +49,4 @@ go_figure() |>
     lightposition = go_lightposition()
   )
 }
+\concept{shared object types}

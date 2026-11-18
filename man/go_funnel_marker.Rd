@@ -125,7 +125,10 @@ exactly its properties; a named list with the same properties works too.
 \details{
 Nested objects are named lists, or objects of the constructors their
 arguments name. Every property is checked against the plotly.js schema
-when the object is created or modified.
+when the object is created or modified. A property may be a one-sided
+formula (\code{color = ~col}): it is kept, and evaluated in the data
+(then checked) when its trace is added to a figure with
+\code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
 go_figure() |>
@@ -133,3 +136,4 @@ go_figure() |>
     marker = go_funnel_marker(color = "red")
   )
 }
+\concept{trace objects}

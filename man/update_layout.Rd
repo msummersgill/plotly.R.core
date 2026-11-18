@@ -28,6 +28,6 @@ its other properties.
 }
 \examples{
 go_figure() |>
-  update_layout(title = "Title", xaxis = list(range = c(0, 10))) |>
-  update_layout(xaxis = list(title = "x"), yaxis = list(type = "log"))
+  update_layout(title = "Title", xaxis = go_xaxis(range = c(0, 10))) |>
+  update_layout(xaxis = go_xaxis(title = "x"), yaxis = go_yaxis(type = "log"))
 }

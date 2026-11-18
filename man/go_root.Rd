@@ -36,3 +36,4 @@ go_figure() |>
     root = go_root(color = "red")
   )
 }
+\concept{shared object types}

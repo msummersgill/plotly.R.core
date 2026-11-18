@@ -107,3 +107,4 @@ go_figure() |>
     error_y = go_error_bar(color = "red")
   )
 }
+\concept{shared object types}

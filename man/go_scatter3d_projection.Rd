@@ -19,17 +19,17 @@ initialise properties from. Named arguments take precedence.}
 
 \item{...}{Not used: properties must be named in full.}
 
-\item{x}{A \code{\link{go_scatter3d_projection_x}()} object or named
+\item{x}{A \code{\link{go_scatter3d_projection_axis}()} object or named
 list, with properties \code{opacity}, \code{scale} and \code{show}
-(see \code{\link{go_scatter3d_projection_x}()}).}
+(see \code{\link{go_scatter3d_projection_axis}()}).}
 
-\item{y}{A \code{\link{go_scatter3d_projection_y}()} object or named
+\item{y}{A \code{\link{go_scatter3d_projection_axis}()} object or named
 list, with properties \code{opacity}, \code{scale} and \code{show}
-(see \code{\link{go_scatter3d_projection_y}()}).}
+(see \code{\link{go_scatter3d_projection_axis}()}).}
 
-\item{z}{A \code{\link{go_scatter3d_projection_z}()} object or named
+\item{z}{A \code{\link{go_scatter3d_projection_axis}()} object or named
 list, with properties \code{opacity}, \code{scale} and \code{show}
-(see \code{\link{go_scatter3d_projection_z}()}).}
+(see \code{\link{go_scatter3d_projection_axis}()}).}
 
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
@@ -46,7 +46,10 @@ works too.
 \details{
 Nested objects are named lists, or objects of the constructors their
 arguments name. Every property is checked against the plotly.js schema
-when the object is created or modified.
+when the object is created or modified. A property may be a one-sided
+formula (\code{color = ~col}): it is kept, and evaluated in the data
+(then checked) when its trace is added to a figure with
+\code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
 go_figure() |>
@@ -54,3 +57,4 @@ go_figure() |>
     projection = go_scatter3d_projection()
   )
 }
+\concept{trace objects}

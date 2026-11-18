@@ -59,7 +59,7 @@ ctors <- setdiff(
   "go_figure"
 )
 shared <- paste0("go_", names(plotly.core:::shared_types()))
-stopifnot(all(shared %in% ctors), length(shared) == 31L)
+stopifnot(all(shared %in% ctors), length(shared) == 40L)
 made <- character()
 for (fn in ctors) {
   obj <- get(fn, ns)()
@@ -74,19 +74,19 @@ compound <- Filter(
 need <- compound[is.na(vapply(compound, plotly.core:::shared_type_of, ""))]
 stopifnot(
   setequal(made, vapply(need, function(k) env[[k]]$data_class, "")), # one constructor per object
-  length(ctors) == 395L,
+  length(ctors) == 310L,
   all(
     c(
       "go_scatter_marker",
       "go_scatter_marker_line",
-      "go_scatter_selected_marker",
+      "go_selected_marker",
       "go_sankey_link",
       "go_scene_camera_eye",
       "go_xaxis",
       "go_slider_step",
       "go_layout_title",
       "go_colorbar_title",
-      "go_caps_x"
+      "go_caps_axis"
     ) %in%
       ctors
   )
@@ -125,9 +125,9 @@ expect_error(
 # plotly.py's "magic underscore" names are not supported
 expect_error(
   go_scatter(marker_size = 3),
-  "Nested properties are set with named lists: marker = list\\(size = ...\\)"
+  "Nested properties are set with their objects: marker = go_scatter_marker\\(size = ...\\)"
 )
-expect_error(go_layout(xaxis_title = "x"), "xaxis = list\\(title = ...\\)")
+expect_error(go_layout(xaxis_title = "x"), "xaxis = go_xaxis\\(title = ...\\)")
 expect_error(go_scatter(marker = list(sise = 3)), "Did you mean \"size\"")
 expect_error(
   go_scatter(marker = list(size = -1)),
@@ -276,7 +276,7 @@ stopifnot(
   identical(go_layout(xaxis2 = xa)$xaxis2, xa),
   identical(
     go_layout(
-      scene = list(zaxis = go_scene_zaxis(title = "z"))
+      scene = list(zaxis = go_scene_axis(title = "z"))
     )$scene$zaxis$title$text,
     "z"
   )
@@ -286,9 +286,39 @@ expect_error(
   "layout.yaxis: 'rangeslider'"
 )
 expect_error(
-  go_scene_xaxis(rangeslider = list()),
-  "layout.scene.xaxis: 'rangeslider'"
+  go_scene_axis(rangeslider = list()),
+  "go_scene_axis\\(\\): 'rangeslider'"
 )
+# x, y and z (a, b and c) axes share a constructor; placed objects move between them
+sx <- go_layout(
+  scene = list(xaxis = go_scene_axis(range = c(0, 1)))
+)$scene$xaxis
+stopifnot(
+  inherits(
+    go_layout(scene = list(zaxis = sx))$scene$zaxis,
+    "go_layout_scene_zaxis"
+  ),
+  identical(
+    go_layout(
+      ternary = list(caxis = go_ternary_axis(min = 0.1))
+    )$ternary$caxis$min,
+    0.1
+  ),
+  inherits(
+    go_isosurface(caps = list(y = go_caps_axis(show = FALSE)))$caps$y,
+    "go_isosurface_caps_y"
+  )
+)
+# selected/unselected are checked against the trace's own when placed
+sel <- go_selected(marker = go_selected_marker(size = 12, color = "red"))
+stopifnot(identical(go_scatter(selected = sel)$selected$marker$size, 12))
+expect_error(go_bar(selected = sel), "bar.selected.marker: 'size'")
+stopifnot(identical(
+  go_bar(
+    unselected = go_unselected(marker = go_unselected_marker(opacity = 0.2))
+  )$unselected$marker$opacity,
+  0.2
+))
 fig <- go_figure() |>
   add_scatter(y = 1:3) |>
   update_xaxes(go_xaxis(showgrid = FALSE))

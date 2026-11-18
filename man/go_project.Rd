@@ -45,9 +45,10 @@ named \code{project}), all with the same properties and rules.
 go_figure() |>
   add_surface(
     contours = go_surface_contours(
-      x = go_surface_contours_x(
+      x = go_surface_contours_axis(
         project = go_project()
       )
     )
   )
 }
+\concept{shared object types}

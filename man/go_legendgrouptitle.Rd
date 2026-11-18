@@ -47,3 +47,4 @@ go_figure() |>
     legendgrouptitle = go_legendgrouptitle(text = "title")
   )
 }
+\concept{shared object types}

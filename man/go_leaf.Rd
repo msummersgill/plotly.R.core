@@ -36,3 +36,4 @@ go_figure() |>
     leaf = go_leaf(opacity = 0.5)
   )
 }
+\concept{shared object types}

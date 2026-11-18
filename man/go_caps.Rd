@@ -12,17 +12,17 @@ initialise properties from. Named arguments take precedence.}
 
 \item{...}{Not used: properties must be named in full.}
 
-\item{x}{A \code{\link{go_caps_x}()} object or named list, with
+\item{x}{A \code{\link{go_caps_axis}()} object or named list, with
 properties \code{fill} and \code{show} (see
-\code{\link{go_caps_x}()}).}
+\code{\link{go_caps_axis}()}).}
 
-\item{y}{A \code{\link{go_caps_y}()} object or named list, with
+\item{y}{A \code{\link{go_caps_axis}()} object or named list, with
 properties \code{fill} and \code{show} (see
-\code{\link{go_caps_y}()}).}
+\code{\link{go_caps_axis}()}).}
 
-\item{z}{A \code{\link{go_caps_z}()} object or named list, with
+\item{z}{A \code{\link{go_caps_axis}()} object or named list, with
 properties \code{fill} and \code{show} (see
-\code{\link{go_caps_z}()}).}
+\code{\link{go_caps_axis}()}).}
 
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
@@ -44,3 +44,4 @@ go_figure() |>
     caps = go_caps()
   )
 }
+\concept{shared object types}

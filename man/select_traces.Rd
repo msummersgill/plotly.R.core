@@ -67,7 +67,11 @@ fig <- go_figure() |>
   add_scatter(y = 1:3, name = "a") |>
   add_scatter(y = 3:1, name = "b", mode = "markers")
 select_traces(fig, list(name = "b"))
-fig <- update_traces(fig, marker = list(size = 12), selector = list(mode = "markers"))
+fig <- update_traces(
+  fig,
+  marker = go_scatter_marker(size = 12),
+  selector = list(mode = "markers")
+)
 fig <- for_each_trace(fig, function(tr) {
   tr$name <- toupper(tr$name)
   tr

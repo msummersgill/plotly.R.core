@@ -105,7 +105,7 @@ expect_error(
 )
 expect_error(
   update_layout(fig, xaxis_title = "x"),
-  "xaxis = list\\(title = ...\\)"
+  "xaxis = go_xaxis\\(title = ...\\)"
 )
 expect_error(update_layout(fig, width = 1), "interval \\[10, Inf\\]")
 
@@ -256,3 +256,54 @@ err <- tryCatch(
   error = conditionMessage
 )
 stopifnot(grepl("must be a data frame", err))
+
+# Formulas in constructors are kept and evaluated when the trace is added ---------
+m <- go_scatter_marker(size = 12, color = ~cyl)
+stopifnot(inherits(m$color, "formula"))
+fig <- mtcars |> go_figure() |> add_scatter(x = ~wt, y = ~mpg, marker = m)
+stopifnot(
+  identical(fig$data[[1L]]$marker$color, mtcars$cyl),
+  inherits(fig$data[[1L]]$marker, "go_scatter_marker")
+)
+fig <- mtcars |>
+  go_figure() |>
+  add_trace(go_scatter(x = ~wt, marker = go_scatter_marker(size = ~ hp / 20)))
+stopifnot(
+  identical(fig$data[[1L]]$x, mtcars$wt),
+  identical(fig$data[[1L]]$marker$size, mtcars$hp / 20)
+)
+# evaluated values are checked
+expect_error(
+  mtcars |>
+    go_figure() |>
+    add_scatter(x = ~wt, marker = go_scatter_marker(size = ~ -hp)),
+  "'size' property of scatter.marker"
+)
+expect_error(
+  go_figure() |> add_scatter(x = 1:3, marker = go_scatter_marker(color = ~cyl)),
+  "Couldn't evaluate `~cyl` for property 'marker.color'"
+)
+# a figure can't be drawn with a formula left in it
+expect_error(
+  as_widget(go_figure(list(go_scatter(x = ~wt)))),
+  "unevaluated formula \\(data\\[\\[1\\]\\]\\$x = ~wt\\)"
+)
+
+# update_*() functions evaluate formulas in the figure's data
+fig <- mtcars |>
+  go_figure() |>
+  add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
+  update_traces(marker = go_scatter_marker(color = ~cyl, size = ~ hp / 20)) |>
+  update_layout(title = list(text = "mtcars"))
+stopifnot(
+  identical(fig$data[[1L]]$marker$color, mtcars$cyl),
+  identical(fig$data[[1L]]$marker$size, mtcars$hp / 20)
+)
+fig <- update_traces(fig, text = ~ rownames(mtcars))
+stopifnot(identical(fig$data[[1L]]$text, rownames(mtcars)))
+expect_error(
+  go_figure() |>
+    add_scatter(y = 1:3) |>
+    update_traces(marker = list(color = ~cyl)),
+  "Couldn't evaluate `~cyl` for property 'marker.color'"
+)

@@ -12,17 +12,17 @@ initialise properties from. Named arguments take precedence.}
 
 \item{...}{Not used: properties must be named in full.}
 
-\item{x}{A \code{\link{go_slices_x}()} object or named list, with
+\item{x}{A \code{\link{go_slices_axis}()} object or named list, with
 properties \code{fill}, \code{locations} and \code{show} (see
-\code{\link{go_slices_x}()}).}
+\code{\link{go_slices_axis}()}).}
 
-\item{y}{A \code{\link{go_slices_y}()} object or named list, with
+\item{y}{A \code{\link{go_slices_axis}()} object or named list, with
 properties \code{fill}, \code{locations} and \code{show} (see
-\code{\link{go_slices_y}()}).}
+\code{\link{go_slices_axis}()}).}
 
-\item{z}{A \code{\link{go_slices_z}()} object or named list, with
+\item{z}{A \code{\link{go_slices_axis}()} object or named list, with
 properties \code{fill}, \code{locations} and \code{show} (see
-\code{\link{go_slices_z}()}).}
+\code{\link{go_slices_axis}()}).}
 
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
@@ -44,3 +44,4 @@ go_figure() |>
     slices = go_slices()
   )
 }
+\concept{shared object types}

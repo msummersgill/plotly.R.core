@@ -352,6 +352,47 @@ shared_hint <- function(key) {
   if (is.na(type)) "" else sprintf(", or a go_%s() object", type)
 }
 
+# Constructor of the object at schema key `key` (go_scatter_marker(),
+# go_font(), ...), or NA.
+constructor_of <- function(key) unname(.constructors[key])
+
+# The nested call that sets a magic-underscore name: for "scatter" and
+# c("marker", "line", "width"), "marker = go_scatter_marker(line =
+# go_scatter_marker_line(width = ...))". NULL if the parts name no property.
+nested_call <- function(key, parts) {
+  for (p in seq_along(parts)) {
+    name <- paste(parts[seq_len(p)], collapse = "_")
+    ck <- child_key(key, name)
+    if (is.na(ck)) {
+      next
+    }
+    if (p == length(parts)) {
+      return(paste(name, "= ..."))
+    }
+    entry <- get_validator(ck)
+    is_array <- entry$superclass == "CompoundArrayValidator"
+    obj <- if (is_array) entry$element_key else ck
+    if (
+      !get_validator(obj)$superclass %in%
+        c("CompoundValidator", "TitleValidator")
+    ) {
+      next
+    }
+    inner <- nested_call(obj, parts[-seq_len(p)])
+    if (is.null(inner)) {
+      next
+    }
+    ctor <- constructor_of(obj)
+    call <- sprintf("%s(%s)", if (is.na(ctor)) "list" else ctor, inner)
+    return(sprintf(
+      "%s = %s",
+      name,
+      if (is_array) sprintf("list(%s)", call) else call
+    ))
+  }
+  NULL
+}
+
 # How errors name the object at schema key `key`: its constructor for traces
 # and the layout ("go_scatter()"), its path for nested objects ("scatter.marker").
 object_label <- function(key, entry) {
@@ -851,14 +892,14 @@ raise_invalid_prop <- function(name, key, entry) {
   } else {
     ""
   }
-  # plotly.py's "magic underscore" names (marker_size) are not supported
-  if (!nzchar(hint) && grepl("_", name, fixed = TRUE)) {
-    head <- sub("_.*$", "", name)
-    if (head %in% valid) {
-      hint <- sprintf(
-        "\n\nNested properties are set with named lists: %s = list(%s = ...)",
-        head,
-        sub("^[^_]*_", "", name)
+  # plotly.py's "magic underscore" names (marker_size) are not supported:
+  # suggest the nested call, e.g. marker = go_scatter_marker(size = ...)
+  if (grepl("_", name, fixed = TRUE)) {
+    nested <- nested_call(key, strsplit(name, "_", fixed = TRUE)[[1L]])
+    if (!is.null(nested)) {
+      hint <- paste0(
+        "\n\nNested properties are set with their objects: ",
+        nested
       )
     }
   }
@@ -897,7 +938,11 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
     # an object made for another place: only where the property has its name
     # (a bar marker.line in a scatter marker.line, go_xaxis() in xaxis2)
     from <- tryCatch(class_key(class(v)[[1L]]), error = function(e) NULL)
-    if (!is.null(from) && prop_name(from) != prop_name(key)) {
+    # (or of the same shared type: a scene xaxis in zaxis)
+    same_type <- !is.null(from) &&
+      !is.na(shared_type_of(key)) &&
+      identical(shared_type_of(from), shared_type_of(key))
+    if (!is.null(from) && prop_name(from) != prop_name(key) && !same_type) {
       stop(
         sprintf("A %s object can't be used for %s", from, key),
         call. = FALSE
@@ -983,6 +1028,12 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
       next
     }
     ck <- child_key(key, name)
+    if (!is.na(ck) && inherits(v[[i]], "formula")) {
+      # deferred: a constructor keeps x = ~col for add_<trace>() or add_trace()
+      # to evaluate in the figure's data; plotly_widget() refuses any left
+      out[i] <- list(v[[i]])
+      next
+    }
     if (is.na(ck)) {
       if (skip_invalid) {
         next

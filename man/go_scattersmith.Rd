@@ -102,13 +102,12 @@ go_scattersmith(
 \arguments{
 \item{fig}{A \code{go_figure} object.}
 
-\item{...}{Further properties, by their full names (e.g. numbered subplots
-such as \code{xaxis2} in \code{go_layout()}). Nested properties are set
-with named lists: \code{marker = list(size = 10)}.}
+\item{...}{Not used: properties must be named in full.}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
-~col}, \code{marker = list(size = ~col)}) are evaluated. Default: the
-data given to \code{\link{go_figure}()}. Only the evaluated values are
+~col}, \code{marker = list(size = ~col)}, \code{marker =
+go_scatter_marker(size = ~col)}) are evaluated. Default: the data
+given to \code{\link{go_figure}()}. Only the evaluated values are
 added to the trace. A \code{crosstalk::SharedData} works the same way,
 and links the trace to its crosstalk group (see
 \code{\link{highlight}()}).}
@@ -273,9 +272,9 @@ item and on hover. String.}
 impedance such that real=1, imag=0 is the center of the chart. Data
 array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
-\item{selected}{A \code{\link{go_scattersmith_selected}()} object or
-named list, with properties \code{marker} and \code{textfont} (see
-\code{\link{go_scattersmith_selected}()}).}
+\item{selected}{A \code{\link{go_selected}()} object or named list, with
+properties \code{marker} and \code{textfont} (see
+\code{\link{go_selected}()}).}
 
 \item{selectedpoints}{Array containing integer indices of selected
 points. Has an effect only for traces that support selections. Note
@@ -353,9 +352,9 @@ array, such that the same trace has a different index, you can still
 preserve user-driven changes if you give each trace a `uid` that stays
 with it as it moves. Any value.}
 
-\item{unselected}{A \code{\link{go_scattersmith_unselected}()} object or
-named list, with properties \code{marker} and \code{textfont} (see
-\code{\link{go_scattersmith_unselected}()}).}
+\item{unselected}{A \code{\link{go_unselected}()} object or named list,
+with properties \code{marker} and \code{textfont} (see
+\code{\link{go_unselected}()}).}
 
 \item{visible}{Determines whether or not this trace is visible. If
 "legendonly", the trace is not drawn, but can appear as a legend item
@@ -393,30 +392,17 @@ coordinates Text (appearing either on the chart or on hover only) is via
 \code{add_scattersmith()} creates one and adds it to a figure.
 
 
-Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
-objects of their constructors: every object in the schema has one,
-documented on its own page, with exactly that object's properties. Most
-are named after their path: \code{go_scatter_marker()},
-\code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
-Objects that appear in several places share one: \code{\link{go_font}()},
-\code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
-\code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
-\code{\link{go_domain}()}, \code{\link{go_pattern}()},
-\code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
-\code{\link{go_bins}()}, \code{\link{go_caps}()},
-\code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
-\code{\link{go_label}()}, \code{\link{go_leaf}()},
-\code{\link{go_lightposition}()}, \code{\link{go_minor}()},
-\code{\link{go_pathbar}()}, \code{\link{go_project}()},
-\code{\link{go_rangebreak}()}, \code{\link{go_root}()},
-\code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
-\code{\link{go_unifiedhovertitle}()}. Every property is checked against
+Nested objects are given as named lists or with their constructors, which
+are linked from the arguments below. Every property is checked against
 the plotly.js schema when the object is created or modified (see
-\code{\link{plotly_obj-modify}}).
+\code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+evaluated in the data, and then checked, when the trace is added with
+\code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_scattersmith(mode = "markers", marker = list(color = "red"))
+go_scattersmith(mode = "markers", marker = go_scattersmith_marker(color = "red"))
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}
 }
+\concept{traces}

@@ -12,26 +12,12 @@
 #' \code{add_scatter3d()} creates one and adds it to a figure.
 #'
 #' @details
-#' Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
-#' objects of their constructors: every object in the schema has one,
-#' documented on its own page, with exactly that object's properties. Most
-#' are named after their path: \code{go_scatter_marker()},
-#' \code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
-#' Objects that appear in several places share one: \code{\link{go_font}()},
-#' \code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
-#' \code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
-#' \code{\link{go_domain}()}, \code{\link{go_pattern}()},
-#' \code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
-#' \code{\link{go_bins}()}, \code{\link{go_caps}()},
-#' \code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
-#' \code{\link{go_label}()}, \code{\link{go_leaf}()},
-#' \code{\link{go_lightposition}()}, \code{\link{go_minor}()},
-#' \code{\link{go_pathbar}()}, \code{\link{go_project}()},
-#' \code{\link{go_rangebreak}()}, \code{\link{go_root}()},
-#' \code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
-#' \code{\link{go_unifiedhovertitle}()}. Every property is checked against
+#' Nested objects are given as named lists or with their constructors, which
+#' are linked from the arguments below. Every property is checked against
 #' the plotly.js schema when the object is created or modified (see
-#' \code{\link{plotly_obj-modify}}).
+#' \code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+#' evaluated in the data, and then checked, when the trace is added with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
@@ -45,8 +31,9 @@
 #'   traces also appends customdata items in the markers DOM elements Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param data A data frame in which formula properties (e.g. \code{x =
-#'   ~col}, \code{marker = list(size = ~col)}) are evaluated. Default: the
-#'   data given to \code{\link{go_figure}()}. Only the evaluated values are
+#'   ~col}, \code{marker = list(size = ~col)}, \code{marker =
+#'   go_scatter_marker(size = ~col)}) are evaluated. Default: the data
+#'   given to \code{\link{go_figure}()}. Only the evaluated values are
 #'   added to the trace. A \code{crosstalk::SharedData} works the same way,
 #'   and links the trace to its crosstalk group (see
 #'   \code{\link{highlight}()}).
@@ -300,19 +287,18 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `zaxis.hoverformat`. String.
-#' @param ... Further properties, by their full names (e.g. numbered subplots
-#'   such as \code{xaxis2} in \code{go_layout()}). Nested properties are set
-#'   with named lists: \code{marker = list(size = 10)}.
+#' @param ... Not used: properties must be named in full.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
 #'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
 #'
+#' @concept traces
 #' @noMd
 #' @export
 #' @examples
-#' go_scatter3d(x = 1:3, y = c(2, 1, 3), mode = "markers", marker = list(color = "red"))
+#' go_scatter3d(x = 1:3, y = c(2, 1, 3), mode = "markers", marker = go_scatter3d_marker(color = "red"))
 go_scatter3d <- function(
     arg = NULL, ..., connectgaps = NULL, customdata = NULL, error_x = NULL,
     error_y = NULL, error_z = NULL, hoverinfo = NULL, hoverlabel = NULL,
@@ -340,7 +326,10 @@ go_scatter3d <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -416,6 +405,7 @@ go_scatter3d <- function(
 #'   instead of raising an error.
 #' @return A \code{go_scatter3d_line} object (a named list).
 #'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
@@ -442,7 +432,10 @@ go_scatter3d_line <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -538,6 +531,7 @@ go_scatter3d_line <- function(
 #'   instead of raising an error.
 #' @return A \code{go_scatter3d_marker} object (a named list).
 #'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
@@ -565,7 +559,10 @@ go_scatter3d_marker <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -632,6 +629,7 @@ go_scatter3d_marker <- function(
 #'   instead of raising an error.
 #' @return A \code{go_scatter3d_marker_line} object (a named list).
 #'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
@@ -660,24 +658,28 @@ go_scatter3d_marker_line <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
-#' @param x A \code{\link{go_scatter3d_projection_x}()} object or named
+#' @param x A \code{\link{go_scatter3d_projection_axis}()} object or named
 #'   list, with properties \code{opacity}, \code{scale} and \code{show}
-#'   (see \code{\link{go_scatter3d_projection_x}()}).
-#' @param y A \code{\link{go_scatter3d_projection_y}()} object or named
+#'   (see \code{\link{go_scatter3d_projection_axis}()}).
+#' @param y A \code{\link{go_scatter3d_projection_axis}()} object or named
 #'   list, with properties \code{opacity}, \code{scale} and \code{show}
-#'   (see \code{\link{go_scatter3d_projection_y}()}).
-#' @param z A \code{\link{go_scatter3d_projection_z}()} object or named
+#'   (see \code{\link{go_scatter3d_projection_axis}()}).
+#' @param z A \code{\link{go_scatter3d_projection_axis}()} object or named
 #'   list, with properties \code{opacity}, \code{scale} and \code{show}
-#'   (see \code{\link{go_scatter3d_projection_z}()}).
+#'   (see \code{\link{go_scatter3d_projection_axis}()}).
 #' @param ... Not used: properties must be named in full.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_scatter3d_projection} object (a named list).
 #'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
@@ -689,125 +691,5 @@ go_scatter3d_projection <- function(
     arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
   plotly_object("scatter3d.projection", arg, environment(), list(...), skip_invalid)
-}
-
-#' Scatter3d projection x objects
-#'
-#' The object for the \code{projection.x} of a scatter3d trace
-#' (\code{\link{go_scatter3d_projection}()}).
-#' \code{go_scatter3d_projection_x()} creates one, with exactly its
-#' properties; a named list with the same properties works too.
-#'
-#' @details
-#' Nested objects are named lists, or objects of the constructors their
-#' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
-#' @param opacity Sets the projection color. Number in the interval [0, 1].
-#' @param scale Sets the scale factor determining the size of the
-#'   projection marker points. Number in the interval [0, 10].
-#' @param show Sets whether or not projections are shown along the x axis.
-#'   Logical.
-#' @param ... Not used: properties must be named in full.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return A \code{go_scatter3d_projection_x} object (a named list).
-#'
-#' @noMd
-#' @export
-#' @examples
-#' go_figure() |>
-#'   add_scatter3d(
-#'     projection = go_scatter3d_projection(
-#'       x = go_scatter3d_projection_x(opacity = 0.5)
-#'     )
-#'   )
-go_scatter3d_projection_x <- function(
-    arg = NULL, ..., opacity = NULL, scale = NULL, show = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("scatter3d.projection.x", arg, environment(), list(...), skip_invalid)
-}
-
-#' Scatter3d projection y objects
-#'
-#' The object for the \code{projection.y} of a scatter3d trace
-#' (\code{\link{go_scatter3d_projection}()}).
-#' \code{go_scatter3d_projection_y()} creates one, with exactly its
-#' properties; a named list with the same properties works too.
-#'
-#' @details
-#' Nested objects are named lists, or objects of the constructors their
-#' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
-#' @param opacity Sets the projection color. Number in the interval [0, 1].
-#' @param scale Sets the scale factor determining the size of the
-#'   projection marker points. Number in the interval [0, 10].
-#' @param show Sets whether or not projections are shown along the y axis.
-#'   Logical.
-#' @param ... Not used: properties must be named in full.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return A \code{go_scatter3d_projection_y} object (a named list).
-#'
-#' @noMd
-#' @export
-#' @examples
-#' go_figure() |>
-#'   add_scatter3d(
-#'     projection = go_scatter3d_projection(
-#'       y = go_scatter3d_projection_y(opacity = 0.5)
-#'     )
-#'   )
-go_scatter3d_projection_y <- function(
-    arg = NULL, ..., opacity = NULL, scale = NULL, show = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("scatter3d.projection.y", arg, environment(), list(...), skip_invalid)
-}
-
-#' Scatter3d projection z objects
-#'
-#' The object for the \code{projection.z} of a scatter3d trace
-#' (\code{\link{go_scatter3d_projection}()}).
-#' \code{go_scatter3d_projection_z()} creates one, with exactly its
-#' properties; a named list with the same properties works too.
-#'
-#' @details
-#' Nested objects are named lists, or objects of the constructors their
-#' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
-#' @param opacity Sets the projection color. Number in the interval [0, 1].
-#' @param scale Sets the scale factor determining the size of the
-#'   projection marker points. Number in the interval [0, 10].
-#' @param show Sets whether or not projections are shown along the z axis.
-#'   Logical.
-#' @param ... Not used: properties must be named in full.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return A \code{go_scatter3d_projection_z} object (a named list).
-#'
-#' @noMd
-#' @export
-#' @examples
-#' go_figure() |>
-#'   add_scatter3d(
-#'     projection = go_scatter3d_projection(
-#'       z = go_scatter3d_projection_z(opacity = 0.5)
-#'     )
-#'   )
-go_scatter3d_projection_z <- function(
-    arg = NULL, ..., opacity = NULL, scale = NULL, show = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("scatter3d.projection.z", arg, environment(), list(...), skip_invalid)
 }
 

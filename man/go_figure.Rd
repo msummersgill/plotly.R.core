@@ -43,7 +43,7 @@ fig <- go_figure(
 )
 fig <- fig |>
   add_scatter(x = 1:3, y = c(3, 2, 1), mode = "markers") |>
-  update_layout(xaxis = list(title = "x"))
+  update_layout(xaxis = go_xaxis(title = "x"))
 if (interactive()) print(fig)
 
 # pipe in a data frame and refer to its columns with formulas

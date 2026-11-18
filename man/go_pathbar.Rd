@@ -61,3 +61,4 @@ go_figure() |>
     pathbar = go_pathbar(visible = TRUE)
   )
 }
+\concept{shared object types}

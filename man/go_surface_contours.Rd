@@ -19,23 +19,23 @@ initialise properties from. Named arguments take precedence.}
 
 \item{...}{Not used: properties must be named in full.}
 
-\item{x}{A \code{\link{go_surface_contours_x}()} object or named list,
-with properties \code{color}, \code{end}, \code{highlight},
+\item{x}{A \code{\link{go_surface_contours_axis}()} object or named
+list, with properties \code{color}, \code{end}, \code{highlight},
 \code{highlightcolor}, \code{highlightwidth}, \code{project},
 \code{show}, \code{size}, \code{start}, \code{usecolormap} and
-\code{width} (see \code{\link{go_surface_contours_x}()}).}
+\code{width} (see \code{\link{go_surface_contours_axis}()}).}
 
-\item{y}{A \code{\link{go_surface_contours_y}()} object or named list,
-with properties \code{color}, \code{end}, \code{highlight},
+\item{y}{A \code{\link{go_surface_contours_axis}()} object or named
+list, with properties \code{color}, \code{end}, \code{highlight},
 \code{highlightcolor}, \code{highlightwidth}, \code{project},
 \code{show}, \code{size}, \code{start}, \code{usecolormap} and
-\code{width} (see \code{\link{go_surface_contours_y}()}).}
+\code{width} (see \code{\link{go_surface_contours_axis}()}).}
 
-\item{z}{A \code{\link{go_surface_contours_z}()} object or named list,
-with properties \code{color}, \code{end}, \code{highlight},
+\item{z}{A \code{\link{go_surface_contours_axis}()} object or named
+list, with properties \code{color}, \code{end}, \code{highlight},
 \code{highlightcolor}, \code{highlightwidth}, \code{project},
 \code{show}, \code{size}, \code{start}, \code{usecolormap} and
-\code{width} (see \code{\link{go_surface_contours_z}()}).}
+\code{width} (see \code{\link{go_surface_contours_axis}()}).}
 
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
@@ -52,7 +52,10 @@ too.
 \details{
 Nested objects are named lists, or objects of the constructors their
 arguments name. Every property is checked against the plotly.js schema
-when the object is created or modified.
+when the object is created or modified. A property may be a one-sided
+formula (\code{color = ~col}): it is kept, and evaluated in the data
+(then checked) when its trace is added to a figure with
+\code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
 go_figure() |>
@@ -60,3 +63,4 @@ go_figure() |>
     contours = go_surface_contours()
   )
 }
+\concept{trace objects}

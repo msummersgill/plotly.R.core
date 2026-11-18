@@ -44,3 +44,4 @@ go_figure() |>
     spaceframe = go_spaceframe(show = TRUE)
   )
 }
+\concept{shared object types}

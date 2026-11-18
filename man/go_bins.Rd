@@ -72,3 +72,4 @@ go_figure() |>
     xbins = go_bins(size = 10)
   )
 }
+\concept{shared object types}

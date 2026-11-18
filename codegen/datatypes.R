@@ -256,7 +256,17 @@ SHARED_TYPES <- c(
   root = "^root$",
   slices = "^slices$",
   spaceframe = "^spaceframe$",
-  unifiedhovertitle = "^unifiedhovertitle$"
+  unifiedhovertitle = "^unifiedhovertitle$",
+  # x, y and z (or a, b and c) objects that are the same; patterns starting
+  # "key:" match the schema key rather than the property name
+  scene_axis = "key:^layout\\.scene\\.[xyz]axis$",
+  ternary_axis = "key:^layout\\.ternary\\.[abc]axis$",
+  scatter3d_projection_axis = "key:^scatter3d\\.projection\\.[xyz]$",
+  surface_contours_axis = "key:^surface\\.contours\\.[xyz]$",
+  # a trace's selected/unselected point styles, checked against the trace's
+  # own when placed
+  selected = "^selected$",
+  unselected = "^unselected$"
 )
 
 # A family of schema keys that share one constructor: its keys, the keys
@@ -301,20 +311,21 @@ family_from_keys <- function(keys, validators) {
 # path within it: colorbar.title -> "colorbar_title" (go_colorbar_title()).
 shared_families <- function(nodes, validators) {
   cmp <- nodes[nodes$kind %in% c("compound", "compound_element"), ]
-  hits <- vapply(
-    SHARED_TYPES,
-    function(p) grepl(p, cmp$name),
-    logical(nrow(cmp))
-  )
+  matches <- function(p) {
+    if (startsWith(p, "key:")) {
+      grepl(substring(p, 5L), cmp$key)
+    } else {
+      grepl(p, cmp$name)
+    }
+  }
+  hits <- vapply(SHARED_TYPES, matches, logical(nrow(cmp)))
   if (any(rowSums(hits) > 1L)) {
     stop(
       "Schema keys match several shared types: ",
       paste(cmp$key[rowSums(hits) > 1L], collapse = ", ")
     )
   }
-  base <- lapply(SHARED_TYPES, function(pattern) {
-    cmp$key[grepl(pattern, cmp$name)]
-  })
+  base <- lapply(SHARED_TYPES, function(pattern) cmp$key[matches(pattern)])
   members <- unlist(base)
   derived <- list()
   for (type in names(base)) {
@@ -335,11 +346,10 @@ shared_families <- function(nodes, validators) {
         )
       ]
       for (i in inner) {
-        name <- paste(
-          type,
-          gsub(".", "_", substring(i, nchar(k) + 2L), fixed = TRUE),
-          sep = "_"
-        )
+        rel <- gsub(".", "_", substring(i, nchar(k) + 2L), fixed = TRUE)
+        # caps.x, caps.y and caps.z are one type: "caps_axis"
+        rel <- sub("(^|_)[xyz]$", "\\1axis", rel)
+        name <- paste(type, rel, sep = "_")
         derived[[name]] <- c(derived[[name]], i)
       }
     }
@@ -426,7 +436,8 @@ FIGURE_ARG_DOCS <- list(
   fig = "A \\code{go_figure} object.",
   data = paste(
     "A data frame in which formula properties (e.g. \\code{x = ~col},",
-    "\\code{marker = list(size = ~col)}) are evaluated. Default: the data given to",
+    "\\code{marker = list(size = ~col)}, \\code{marker = go_scatter_marker(size = ~col)})",
+    "are evaluated. Default: the data given to",
     "\\code{\\link{go_figure}()}. Only the evaluated values are added to the trace.",
     "A \\code{crosstalk::SharedData} works the same way, and links the trace",
     "to its crosstalk group (see \\code{\\link{highlight}()})."
@@ -734,28 +745,18 @@ nested_sections <- function(root, ctx) {
 
 # Details text on trace, layout and layout object pages.
 nested_details <- function() {
-  links <- paste0("\\code{\\link{go_", names(SHARED_TYPES), "}()}")
   paste(
-    "Nested objects are named lists, e.g. \\code{marker = list(size = 10)}, or objects of",
-    "their constructors: every object in the schema has one, documented on its own page,",
-    "with exactly that object's properties. Most are named after their path:",
-    "\\code{go_scatter_marker()}, \\code{go_scatter_selected_marker()},",
-    "\\code{go_sankey_link()}, .... Objects that appear in several places share one:",
-    paste0(
-      paste(utils::head(links, -1L), collapse = ", "),
-      " and ",
-      utils::tail(links, 1L),
-      "."
-    ),
-    "Every property is checked against the plotly.js schema when the object is created",
-    "or modified (see \\code{\\link{plotly_obj-modify}})."
+    "Nested objects are given as named lists or with their constructors, which are",
+    "linked from the arguments below. Every property is checked against the plotly.js",
+    "schema when the object is created or modified (see \\code{\\link{plotly_obj-modify}}).",
+    "One-sided formulas (\\code{~col}) are evaluated in the data, and then checked, when",
+    "the trace is added with \\code{add_<trace>()} or \\code{add_trace()}."
   )
 }
 
 DOTS_DOC <- c(
   "#' @param ... Further properties, by their full names (e.g. numbered subplots",
-  "#'   such as \\code{xaxis2} in \\code{go_layout()}). Nested properties are set",
-  "#'   with named lists: \\code{marker = list(size = 10)}."
+  "#'   such as \\code{xaxis2} in \\code{go_layout()})."
 )
 
 page_title <- function(page, kind) {
@@ -777,7 +778,10 @@ trace_example <- function(fn, key, validators) {
       !is.null(validators[[paste0(key, ".marker.color")]]) &&
         !"values" %in% props
     ) {
-      "marker = list(color = \"red\")"
+      sprintf(
+        "marker = %s(color = \"red\")",
+        validators[[paste0(key, ".marker")]]$data_class
+      )
     }
   )
   sprintf("%s(%s)", fn, paste(args, collapse = ", "))
@@ -826,7 +830,11 @@ page_doc <- function(page, ctx, figure_fns) {
     "#' @param arg Optional named list, or graph object of the same type, to",
     "#'   initialise properties from (constructors). Named arguments take precedence.",
     property_params(page, page, ctx, fig_docs),
-    DOTS_DOC,
+    if (kind == "trace") {
+      "#' @param ... Not used: properties must be named in full."
+    } else {
+      DOTS_DOC
+    },
     "#' @param skip_invalid If \\code{TRUE}, silently drop invalid properties",
     "#'   instead of raising an error.",
     "#' @return \\code{go_*()} functions return a graph object;",
@@ -841,6 +849,10 @@ page_doc <- function(page, ctx, figure_fns) {
     ),
     nested_sections(page, ctx),
     "#'",
+    sprintf(
+      "#' @concept %s",
+      if (kind == "trace") "traces" else "layout objects"
+    ),
     "#' @noMd",
     "#' @export",
     "#' @examples",
@@ -848,7 +860,7 @@ page_doc <- function(page, ctx, figure_fns) {
       paste0("#' ", trace_example(root_fn, page, validators))
     } else {
       sprintf(
-        "#' %s(title = \"My plot\", xaxis = list(title = \"x\", range = c(0, 10)))",
+        "#' %s(title = \"My plot\", xaxis = go_xaxis(title = \"x\", range = c(0, 10)))",
         root_fn
       )
     }
@@ -961,6 +973,7 @@ shared_doc <- function(type, ctx) {
     sprintf("#' @return A \\code{%s} object (a named list).", fn),
     nested_sections(fam$variants[[1L]], ctx),
     "#'",
+    "#' @concept shared object types",
     "#' @noMd",
     "#' @export",
     "#' @examples",
@@ -1176,7 +1189,9 @@ object_doc <- function(key, ctx) {
     roxygen_lines(paste(
       "Nested objects are named lists, or objects of the constructors their arguments name.",
       "Every property is checked against the plotly.js schema when the object is created",
-      "or modified."
+      "or modified. A property may be a one-sided formula (\\code{color = ~col}): it is kept,",
+      "and evaluated in the data (then checked) when its trace is added to a figure with",
+      "\\code{add_<trace>()} or \\code{add_trace()}."
     )),
     "#'",
     "#' @param arg Optional named list, or graph object of the same type, to",
@@ -1191,6 +1206,10 @@ object_doc <- function(key, ctx) {
     ),
     nested_sections(key, ctx),
     "#'",
+    sprintf(
+      "#' @concept %s",
+      if (startsWith(key, "layout.")) "layout objects" else "trace objects"
+    ),
     "#' @noMd",
     "#' @export",
     "#' @examples",

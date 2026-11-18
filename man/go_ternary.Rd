@@ -23,29 +23,29 @@ initialise properties from. Named arguments take precedence.}
 
 \item{...}{Not used: properties must be named in full.}
 
-\item{aaxis}{A \code{\link{go_ternary_aaxis}()} object or named list,
+\item{aaxis}{A \code{\link{go_ternary_axis}()} object or named list,
 with properties \code{color}, \code{dtick}, \code{exponentformat},
 \code{gridcolor}, \code{griddash}, \code{gridwidth},
 \code{hoverformat}, \code{labelalias}, \code{layer}, \code{linecolor},
 \code{linewidth}, \code{min} and 32 more (see
-\code{\link{go_ternary_aaxis}()}).}
+\code{\link{go_ternary_axis}()}).}
 
-\item{baxis}{A \code{\link{go_ternary_baxis}()} object or named list,
+\item{baxis}{A \code{\link{go_ternary_axis}()} object or named list,
 with properties \code{color}, \code{dtick}, \code{exponentformat},
 \code{gridcolor}, \code{griddash}, \code{gridwidth},
 \code{hoverformat}, \code{labelalias}, \code{layer}, \code{linecolor},
 \code{linewidth}, \code{min} and 32 more (see
-\code{\link{go_ternary_baxis}()}).}
+\code{\link{go_ternary_axis}()}).}
 
 \item{bgcolor}{Set the background color of the subplot Color: a CSS
 color string or R color name.}
 
-\item{caxis}{A \code{\link{go_ternary_caxis}()} object or named list,
+\item{caxis}{A \code{\link{go_ternary_axis}()} object or named list,
 with properties \code{color}, \code{dtick}, \code{exponentformat},
 \code{gridcolor}, \code{griddash}, \code{gridwidth},
 \code{hoverformat}, \code{labelalias}, \code{layer}, \code{linecolor},
 \code{linewidth}, \code{min} and 32 more (see
-\code{\link{go_ternary_caxis}()}).}
+\code{\link{go_ternary_axis}()}).}
 
 \item{domain}{A \code{\link{go_domain}()} object or named list, with
 properties \code{column}, \code{row}, \code{x} and \code{y} (see
@@ -73,7 +73,10 @@ list with the same properties works too.
 \details{
 Nested objects are named lists, or objects of the constructors their
 arguments name. Every property is checked against the plotly.js schema
-when the object is created or modified.
+when the object is created or modified. A property may be a one-sided
+formula (\code{color = ~col}): it is kept, and evaluated in the data
+(then checked) when its trace is added to a figure with
+\code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
 go_figure() |>
@@ -81,3 +84,4 @@ go_figure() |>
     ternary = go_ternary()
   )
 }
+\concept{layout objects}

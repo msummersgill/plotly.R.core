@@ -103,8 +103,7 @@ go_layout(
 initialise properties from (constructors). Named arguments take precedence.}
 
 \item{...}{Further properties, by their full names (e.g. numbered subplots
-such as \code{xaxis2} in \code{go_layout()}). Nested properties are set
-with named lists: \code{marker = list(size = 10)}.}
+such as \code{xaxis2} in \code{go_layout()}).}
 
 \item{activeselection}{A \code{\link{go_activeselection}()} object or
 named list, with properties \code{fillcolor} and \code{opacity} (see
@@ -651,30 +650,17 @@ other settings that are not specific to a trace.
 \code{go_layout()} creates a validated graph object (a named list).
 
 
-Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
-objects of their constructors: every object in the schema has one,
-documented on its own page, with exactly that object's properties. Most
-are named after their path: \code{go_scatter_marker()},
-\code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
-Objects that appear in several places share one: \code{\link{go_font}()},
-\code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
-\code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
-\code{\link{go_domain}()}, \code{\link{go_pattern}()},
-\code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
-\code{\link{go_bins}()}, \code{\link{go_caps}()},
-\code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
-\code{\link{go_label}()}, \code{\link{go_leaf}()},
-\code{\link{go_lightposition}()}, \code{\link{go_minor}()},
-\code{\link{go_pathbar}()}, \code{\link{go_project}()},
-\code{\link{go_rangebreak}()}, \code{\link{go_root}()},
-\code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
-\code{\link{go_unifiedhovertitle}()}. Every property is checked against
+Nested objects are given as named lists or with their constructors, which
+are linked from the arguments below. Every property is checked against
 the plotly.js schema when the object is created or modified (see
-\code{\link{plotly_obj-modify}}).
+\code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+evaluated in the data, and then checked, when the trace is added with
+\code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_layout(title = "My plot", xaxis = list(title = "x", range = c(0, 10)))
+go_layout(title = "My plot", xaxis = go_xaxis(title = "x", range = c(0, 10)))
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{update_layout}()}
 }
+\concept{layout objects}

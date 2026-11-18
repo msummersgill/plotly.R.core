@@ -57,3 +57,4 @@ go_figure() |>
     )
   )
 }
+\concept{shared object types}

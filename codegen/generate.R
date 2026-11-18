@@ -48,11 +48,17 @@ perform_codegen <- function(outdir = ".", scope = CODEGEN_SCOPE) {
   .config_options <- sort(names(schema$config))
   ctx <- doc_context(nodes, validators, schema)
   .shared_types <- shared_types_data(ctx)
+  # constructor of each object, for messages
+  .constructors <- c(
+    ctx$object_fn,
+    stats::setNames(paste0("go_", ctx$shared_of), names(ctx$shared_of))
+  )
   save(
     .validators,
     .named_colors,
     .config_options,
     .shared_types,
+    .constructors,
     file = file.path(outdir, "R", "sysdata.rda"),
     compress = "xz"
   )

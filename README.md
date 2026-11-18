@@ -69,12 +69,12 @@ mtcars |>
     y = ~mpg,
     mode = "markers",
     text = rownames(mtcars),
-    marker = list(
+    marker = go_scatter_marker(
       size = 12,
       color = ~cyl,
       colorscale = "Viridis",
       showscale = TRUE,
-      colorbar = list(title = "Cylinders")
+      colorbar = go_colorbar(title = "Cylinders")
     ),
     hovertemplate = "%{text}<br>Weight: %{x} (1000 lbs)<br>MPG: %{y}<extra></extra>"
   ) |>
@@ -110,7 +110,9 @@ fig <- make_subplots(
 ## Graph objects and validation
 
 Nested objects are named lists, such as `marker = list(size = 12)`, or objects
-from the shared type constructors: `textfont = go_font(size = 14)`. Every
+from their constructors: `marker = go_scatter_marker(size = 12)`,
+`textfont = go_font(size = 14)`. Formulas such as `color = ~cyl` work in both,
+and are evaluated in the data when the trace is added. Every
 property is checked against the plotly.js schema, so invalid values are caught
 immediately:
 

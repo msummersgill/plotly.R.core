@@ -12,7 +12,9 @@
 # sources take precedence.
 #
 # Values may be one-sided formulas (x = ~col): they are evaluated in `data`
-# (add_<trace>()'s data or the figure's), or in their environment.
+# (add_<trace>()'s data or the figure's), or in their environment. Constructors
+# (go_scatter(), go_scatter_marker(), ...) don't pass `data`: they keep formulas
+# as they are, for add_<trace>() or add_trace() to evaluate (see vc_compound()).
 plotly_object <- function(
   key,
   arg = NULL,
@@ -22,6 +24,7 @@ plotly_object <- function(
   data = NULL
 ) {
   entry <- get_validator(key)
+  defer <- missing(data)
   if (inherits(arg, "go_figure")) {
     figure_as_arg(sys.call(-1L)[[1L]], key, entry)
   }
@@ -48,7 +51,9 @@ plotly_object <- function(
   if (!is.null(env)) {
     for (name in entry$children) {
       val <- get(name, envir = env, inherits = FALSE)
-      if (!is.null(val)) props[[name]] <- eval_formulas(val, data, name)
+      if (!is.null(val)) {
+        props[[name]] <- if (defer) val else eval_formulas(val, data, name)
+      }
     }
   }
   if (length(dots)) {
@@ -59,7 +64,11 @@ plotly_object <- function(
       )
     }
     for (i in seq_along(dots)) {
-      val <- eval_formulas(dots[[i]], data, names(dots)[[i]])
+      val <- if (defer) {
+        dots[[i]]
+      } else {
+        eval_formulas(dots[[i]], data, names(dots)[[i]])
+      }
       props <- tryCatch(
         set_named_property(
           props,
@@ -154,8 +163,19 @@ figure_as_arg <- function(fn, key, entry) {
   )
 }
 
-# Evaluate one-sided formulas (also inside plain nested lists) in `data`.
+# Does `x` hold a one-sided formula, at any depth?
+has_formula <- function(x) {
+  inherits(x, "formula") ||
+    (is.list(x) && !is.data.frame(x) && any(vapply(x, has_formula, logical(1))))
+}
+
+# Evaluate one-sided formulas (also inside nested lists and graph objects that
+# kept them: go_scatter_marker(color = ~col)) in `data`. Graph objects with
+# formulas become plain lists again, to be validated with the values.
 eval_formulas <- function(x, data, name) {
+  if (inherits(x, "plotly_obj") && has_formula(x)) {
+    x <- unclass(x)
+  }
   if (inherits(x, "formula")) {
     rhs <- x[[length(x)]]
     return(tryCatch(
@@ -180,7 +200,7 @@ eval_formulas <- function(x, data, name) {
   }
   if (is.list(x) && !is.data.frame(x) && is.null(oldClass(x))) {
     x[] <- lapply(names(x) %||% seq_along(x), function(n) {
-      eval_formulas(x[[n]], data, paste(name, n, sep = "_"))
+      eval_formulas(x[[n]], data, paste(name, n, sep = "."))
     })
   }
   x
@@ -381,7 +401,10 @@ set_property <- function(x, name, value) {
     if (is.na(ck)) {
       raise_invalid_prop(name, key, entry)
     }
-    x[name] <- list(validate_coerce(value, ck))
+    # a formula is kept for add_<trace>() to evaluate (see vc_compound())
+    x[name] <- list(
+      if (inherits(value, "formula")) value else validate_coerce(value, ck)
+    )
     if (is.null(value)) x[[name]] <- NULL
   }
   class(x) <- cls

@@ -95,3 +95,4 @@ go_figure() |>
     hoverlabel = go_hoverlabel()
   )
 }
+\concept{shared object types}

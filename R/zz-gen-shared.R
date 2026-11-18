@@ -71,6 +71,7 @@
 #'   instead of raising an error.
 #' @return A \code{go_font} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -287,6 +288,7 @@ go_font <- function(
 #'   instead of raising an error.
 #' @return A \code{go_colorbar} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -373,6 +375,7 @@ go_colorbar <- function(
 #'   instead of raising an error.
 #' @return A \code{go_hoverlabel} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -411,6 +414,7 @@ go_hoverlabel <- function(
 #'   instead of raising an error.
 #' @return A \code{go_legendgrouptitle} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -461,6 +465,7 @@ go_legendgrouptitle <- function(
 #'   instead of raising an error.
 #' @return A \code{go_tickformatstop} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -508,6 +513,7 @@ go_tickformatstop <- function(
 #'   instead of raising an error.
 #' @return A \code{go_domain} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -570,6 +576,7 @@ go_domain <- function(
 #'   instead of raising an error.
 #' @return A \code{go_pattern} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -646,6 +653,7 @@ go_pattern <- function(
 #'   instead of raising an error.
 #' @return A \code{go_error_bar} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -693,6 +701,7 @@ go_error_bar <- function(
 #'   instead of raising an error.
 #' @return A \code{go_autorangeoptions} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -757,6 +766,7 @@ go_autorangeoptions <- function(
 #'   instead of raising an error.
 #' @return A \code{go_bins} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -782,20 +792,21 @@ go_bins <- function(
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
-#' @param x A \code{\link{go_caps_x}()} object or named list, with
+#' @param x A \code{\link{go_caps_axis}()} object or named list, with
 #'   properties \code{fill} and \code{show} (see
-#'   \code{\link{go_caps_x}()}).
-#' @param y A \code{\link{go_caps_y}()} object or named list, with
+#'   \code{\link{go_caps_axis}()}).
+#' @param y A \code{\link{go_caps_axis}()} object or named list, with
 #'   properties \code{fill} and \code{show} (see
-#'   \code{\link{go_caps_y}()}).
-#' @param z A \code{\link{go_caps_z}()} object or named list, with
+#'   \code{\link{go_caps_axis}()}).
+#' @param z A \code{\link{go_caps_axis}()} object or named list, with
 #'   properties \code{fill} and \code{show} (see
-#'   \code{\link{go_caps_z}()}).
+#'   \code{\link{go_caps_axis}()}).
 #' @param ... Not used: properties must be named in full.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_caps} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -843,6 +854,7 @@ go_caps <- function(
 #'   instead of raising an error.
 #' @return A \code{go_domainpad} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -881,6 +893,7 @@ go_domainpad <- function(
 #'   instead of raising an error.
 #' @return A \code{go_gradient} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -975,6 +988,7 @@ go_gradient <- function(
 #'   instead of raising an error.
 #' @return A \code{go_label} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -1012,6 +1026,7 @@ go_label <- function(
 #'   instead of raising an error.
 #' @return A \code{go_leaf} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -1048,6 +1063,7 @@ go_leaf <- function(
 #'   instead of raising an error.
 #' @return A \code{go_lightposition} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -1140,6 +1156,7 @@ go_lightposition <- function(
 #'   instead of raising an error.
 #' @return A \code{go_minor} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -1189,6 +1206,7 @@ go_minor <- function(
 #'   instead of raising an error.
 #' @return A \code{go_pathbar} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -1231,13 +1249,14 @@ go_pathbar <- function(
 #'   instead of raising an error.
 #' @return A \code{go_project} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
 #' go_figure() |>
 #'   add_surface(
 #'     contours = go_surface_contours(
-#'       x = go_surface_contours_x(
+#'       x = go_surface_contours_axis(
 #'         project = go_project()
 #'       )
 #'     )
@@ -1298,6 +1317,7 @@ go_project <- function(
 #'   instead of raising an error.
 #' @return A \code{go_rangebreak} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -1334,6 +1354,7 @@ go_rangebreak <- function(
 #'   instead of raising an error.
 #' @return A \code{go_root} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -1358,20 +1379,21 @@ go_root <- function(
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
-#' @param x A \code{\link{go_slices_x}()} object or named list, with
+#' @param x A \code{\link{go_slices_axis}()} object or named list, with
 #'   properties \code{fill}, \code{locations} and \code{show} (see
-#'   \code{\link{go_slices_x}()}).
-#' @param y A \code{\link{go_slices_y}()} object or named list, with
+#'   \code{\link{go_slices_axis}()}).
+#' @param y A \code{\link{go_slices_axis}()} object or named list, with
 #'   properties \code{fill}, \code{locations} and \code{show} (see
-#'   \code{\link{go_slices_y}()}).
-#' @param z A \code{\link{go_slices_z}()} object or named list, with
+#'   \code{\link{go_slices_axis}()}).
+#' @param z A \code{\link{go_slices_axis}()} object or named list, with
 #'   properties \code{fill}, \code{locations} and \code{show} (see
-#'   \code{\link{go_slices_z}()}).
+#'   \code{\link{go_slices_axis}()}).
 #' @param ... Not used: properties must be named in full.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_slices} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -1411,6 +1433,7 @@ go_slices <- function(
 #'   instead of raising an error.
 #' @return A \code{go_spaceframe} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -1455,6 +1478,7 @@ go_spaceframe <- function(
 #'   instead of raising an error.
 #' @return A \code{go_unifiedhovertitle} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -1470,14 +1494,755 @@ go_unifiedhovertitle <- function(
   shared_object("unifiedhovertitle", arg, environment(), list(...), skip_invalid)
 }
 
-#' Caps x objects
+#' Scene axis objects
 #'
-#' Used for \code{x} in 2 places in the schema. \code{go_caps_x()} creates
-#' one; a named list with the same properties works too.
+#' Used for \code{xaxis}, \code{yaxis}, \code{zaxis} in 3 places in the
+#' schema. \code{go_scene_axis()} creates one; a named list with the same
+#' properties works too.
 #'
 #' @details
-#' These objects appear in 2 places in the plotly.js schema (properties
-#' named \code{x}), all with the same properties and rules.
+#' These objects appear in 3 places in the plotly.js schema (properties
+#' named \code{xaxis}, \code{yaxis}, \code{zaxis}), all with the same
+#' properties and rules.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param autorange Determines whether or not the range of this axis is
+#'   computed in relation to the input data. See `rangemode` for more info.
+#'   If `range` is provided and it has a value for both the lower and upper
+#'   bound, `autorange` is set to FALSE. Using "min" applies autorange only
+#'   to set the minimum. Using "max" applies autorange only to set the
+#'   maximum. Using "min reversed" applies autorange only to set the
+#'   minimum on a reversed axis. Using "max reversed" applies autorange
+#'   only to set the maximum on a reversed axis. Using "reversed" applies
+#'   autorange on both ends and reverses the axis direction. One of
+#'   \code{"reversed"}, \code{"min reversed"}, \code{"max reversed"},
+#'   \code{"min"}, \code{"max"}, \code{TRUE}, \code{FALSE}.
+#' @param autorangeoptions A \code{\link{go_autorangeoptions}()} object or
+#'   named list, with properties \code{clipmax}, \code{clipmin},
+#'   \code{include}, \code{maxallowed} and \code{minallowed} (see
+#'   \code{\link{go_autorangeoptions}()}).
+#' @param autotypenumbers Using "strict" a numeric string in trace data is
+#'   not converted to a number. Using "convert types" a numeric string in
+#'   trace data may be treated as a number during automatic axis `type`
+#'   detection. Defaults to layout.autotypenumbers. One of \code{"convert
+#'   types"}, \code{"strict"}.
+#' @param backgroundcolor Sets the background color of this axis' wall.
+#'   Color: a CSS color string or R color name.
+#' @param calendar Sets the calendar system to use for `range` and `tick0`
+#'   if this is a date axis. This does not set the calendar for
+#'   interpreting data on this axis, that's specified in the trace or via
+#'   the global `layout.calendar` One of \code{"chinese"}, \code{"coptic"},
+#'   \code{"discworld"}, \code{"ethiopian"}, \code{"gregorian"},
+#'   \code{"hebrew"}, \code{"islamic"}, \code{"jalali"}, \code{"julian"},
+#'   \code{"mayan"}, \code{"nanakshahi"}, \code{"nepali"},
+#'   \code{"persian"}, \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.
+#' @param categoryarray Sets the order in which categories on this axis
+#'   appear. Only has an effect if `categoryorder` is set to "array". Used
+#'   with `categoryorder`. Data array: a vector, factor, Date/POSIXct
+#'   vector, matrix or list.
+#' @param categoryorder Specifies the ordering logic for the case of
+#'   categorical variables. By default, plotly uses "trace", which
+#'   specifies the order that is present in the data supplied. Set
+#'   `categoryorder` to "category ascending" or "category descending" if
+#'   order should be determined by the alphanumerical order of the category
+#'   names. Set `categoryorder` to "array" to derive the ordering from the
+#'   attribute `categoryarray`. If a category is not found in the
+#'   `categoryarray` array, the sorting behavior for that attribute will be
+#'   identical to the "trace" mode. The unspecified categories will follow
+#'   the categories in `categoryarray`. Set `categoryorder` to "total
+#'   ascending" or "total descending" if order should be determined by the
+#'   numerical order of the values. Similarly, the order can be determined
+#'   by the min, max, sum, mean, geometric mean or median of all the
+#'   values. One of \code{"trace"}, \code{"category ascending"},
+#'   \code{"category descending"}, \code{"array"}, \code{"total
+#'   ascending"}, \code{"total descending"}, \code{"min ascending"},
+#'   \code{"min descending"}, \code{"max ascending"}, \code{"max
+#'   descending"}, \code{"sum ascending"}, \code{"sum descending"},
+#'   \code{"mean ascending"}, \code{"mean descending"}, \code{"geometric
+#'   mean ascending"}, \code{"geometric mean descending"}, \code{"median
+#'   ascending"}, \code{"median descending"}.
+#' @param color Sets default for all colors associated with this axis all
+#'   at once: line, font, tick, and grid colors. Grid color is lightened by
+#'   blending this with the plot background Individual pieces can override
+#'   this. Color: a CSS color string or R color name.
+#' @param dtick Sets the step in-between ticks on this axis. Use with
+#'   `tick0`. Must be a positive number, or special strings available to
+#'   "log" and "date" axes. If the axis `type` is "log", then ticks are set
+#'   every 10^(n*dtick) where n is the tick number. For example, to set a
+#'   tick mark at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks
+#'   at 1, 100, 10000, ... set dtick to 2. To set tick marks at 1, 5, 25,
+#'   125, 625, 3125, ... set dtick to log_10(5), or 0.69897000433. "log"
+#'   has several special values; "L<f>", where `f` is a positive number,
+#'   gives ticks linearly spaced in value (but not position). For example
+#'   `tick0` = 0.1, `dtick` = "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6
+#'   etc. To show powers of 10 plus small digits between, use "D1" (all
+#'   digits) or "D2" (only 2 and 5). `tick0` is ignored for "D1" and "D2".
+#'   If the axis `type` is "date", then you must convert the time to
+#'   milliseconds. For example, to set the interval between ticks to one
+#'   day, set `dtick` to 86400000.0. "date" also has special values "M<n>"
+#'   gives ticks spaced by a number of months. `n` must be a positive
+#'   integer. To set ticks on the 15th of every third month, set `tick0` to
+#'   "2000-01-15" and `dtick` to "M3". To set ticks every 4 years, set
+#'   `dtick` to "M48" Any value.
+#' @param exponentformat Determines a formatting rule for the tick
+#'   exponents. For example, consider the number 1,000,000,000. If "none",
+#'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
+#'   1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
+#'   prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
+#'   covers instead the full SI range from "quecto" q (10^-30) to "quetta"
+#'   Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
+#'   the above ranges, the formatting rule will automatically be switched
+#'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
+#'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
+#' @param gridcolor Sets the color of the grid lines. Color: a CSS color
+#'   string or R color name.
+#' @param gridwidth Sets the width (in px) of the grid lines. Number in the
+#'   interval [0, Inf].
+#' @param hoverformat Sets the hover text formatting rule using d3
+#'   formatting mini-languages which are very similar to those in Python.
+#'   For numbers, see:
+#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
+#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
+#'   We add two items to d3's date formatter: "\%h" for half of the year as
+#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
+#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
+#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
+#' @param labelalias Replacement text for specific tick or hover labels.
+#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
+#'   to Canada. The labels we would have shown must match the keys exactly,
+#'   after adding any tickprefix or ticksuffix. For negative numbers the
+#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
+#'   That means you need to use -1 instead of -1. labelalias can be used
+#'   with any axis type, and both keys (if needed) and values (if desired)
+#'   can include html-like tags or MathJax. Any value.
+#' @param linecolor Sets the axis line color. Color: a CSS color string or
+#'   R color name.
+#' @param linewidth Sets the width (in px) of the axis line. Number in the
+#'   interval [0, Inf].
+#' @param maxallowed Determines the maximum range of this axis. Any value.
+#' @param minallowed Determines the minimum range of this axis. Any value.
+#' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
+#'   This only has an effect when `tickformat` is "SI" or "B". Number in
+#'   the interval [0, Inf].
+#' @param mirror Determines if the axis lines or/and ticks are mirrored to
+#'   the opposite side of the plotting area. If TRUE, the axis lines are
+#'   mirrored. If "ticks", the axis lines and ticks are mirrored. If FALSE,
+#'   mirroring is disable. If "all", axis lines are mirrored on all
+#'   shared-axes subplots. If "allticks", axis lines and ticks are mirrored
+#'   on all shared-axes subplots. One of \code{"ticks"}, \code{"all"},
+#'   \code{"allticks"}, \code{TRUE}, \code{FALSE}.
+#' @param nticks Specifies the maximum number of ticks for the particular
+#'   axis. The actual number of ticks will be chosen automatically to be
+#'   less than or equal to `nticks`. Has an effect only if `tickmode` is
+#'   set to "auto". Integer in the interval [0, Inf].
+#' @param range Sets the range of this axis. If the axis `type` is "log",
+#'   then you must take the log of your desired range (e.g. to set the
+#'   range from 1 to 100, set the range from 0 to 2). If the axis `type` is
+#'   "date", it should be date strings, like date data, though Date objects
+#'   and unix milliseconds will be accepted and converted to strings. If
+#'   the axis `type` is "category", it should be numbers, using the scale
+#'   where each category is assigned a serial number from zero in the order
+#'   it appears. Leaving either or both elements `null` impacts the default
+#'   `autorange`. Vector or list of 2 element(s).
+#' @param rangemode If "normal", the range is computed in relation to the
+#'   extrema of the input data. If "tozero", the range extends to 0,
+#'   regardless of the input data If "nonnegative", the range is
+#'   non-negative, regardless of the input data. Applies only to linear
+#'   axes. One of \code{"normal"}, \code{"tozero"}, \code{"nonnegative"}.
+#' @param separatethousands If "true", even 4-digit integers are separated
+#'   Logical.
+#' @param showaxeslabels Sets whether or not this axis is labeled Logical.
+#' @param showbackground Sets whether or not this axis' wall has a
+#'   background color. Logical.
+#' @param showexponent If "all", all exponents are shown besides their
+#'   significands. If "first", only the exponent of the first tick is
+#'   shown. If "last", only the exponent of the last tick is shown. If
+#'   "none", no exponents appear. One of \code{"all"}, \code{"first"},
+#'   \code{"last"}, \code{"none"}.
+#' @param showgrid Determines whether or not grid lines are drawn. If TRUE,
+#'   the grid lines are drawn at every tick mark. Logical.
+#' @param showline Determines whether or not a line bounding this axis is
+#'   drawn. Logical.
+#' @param showspikes Sets whether or not spikes starting from data points
+#'   to this axis' wall are shown on hover. Logical.
+#' @param showticklabels Determines whether or not the tick labels are
+#'   drawn. Logical.
+#' @param showtickprefix If "all", all tick labels are displayed with a
+#'   prefix. If "first", only the first tick is displayed with a prefix. If
+#'   "last", only the last tick is displayed with a suffix. If "none", tick
+#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
+#'   \code{"last"}, \code{"none"}.
+#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
+#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
+#' @param spikecolor Sets the color of the spikes. Color: a CSS color
+#'   string or R color name.
+#' @param spikesides Sets whether or not spikes extending from the
+#'   projection data points to this axis' wall boundaries are shown on
+#'   hover. Logical.
+#' @param spikethickness Sets the thickness (in px) of the spikes. Number
+#'   in the interval [0, Inf].
+#' @param tick0 Sets the placement of the first tick on this axis. Use with
+#'   `dtick`. If the axis `type` is "log", then you must take the log of
+#'   your starting tick (e.g. to set the starting tick to 100, set the
+#'   `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
+#'   If the axis `type` is "date", it should be a date string, like date
+#'   data. If the axis `type` is "category", it should be a number, using
+#'   the scale where each category is assigned a serial number from zero in
+#'   the order it appears. Any value.
+#' @param tickangle Sets the angle of the tick labels with respect to the
+#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
+#'   vertically. Angle in degrees.
+#' @param tickcolor Sets the tick color. Color: a CSS color string or R
+#'   color name.
+#' @param tickfont Sets the tick font. A \code{\link{go_font}()} object or
+#'   named list, with properties \code{color}, \code{family},
+#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#'   \code{textcase}, \code{variant} and \code{weight} (see
+#'   \code{\link{go_font}()}).
+#' @param tickformat Sets the tick label formatting rule using d3
+#'   formatting mini-languages which are very similar to those in Python.
+#'   For numbers, see:
+#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
+#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
+#'   We add two items to d3's date formatter: "\%h" for half of the year as
+#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
+#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
+#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
+#' @param tickformatstops List, each element a
+#'   \code{\link{go_tickformatstop}()} object or named list, with
+#'   properties \code{dtickrange}, \code{enabled}, \code{name},
+#'   \code{templateitemname} and \code{value} (see
+#'   \code{\link{go_tickformatstop}()}).
+#' @param ticklen Sets the tick length (in px). Number in the interval [0,
+#'   Inf].
+#' @param tickmode Sets the tick mode for this axis. If "auto", the number
+#'   of ticks is set via `nticks`. If "linear", the placement of the ticks
+#'   is determined by a starting position `tick0` and a tick step `dtick`
+#'   ("linear" is the default value if `tick0` and `dtick` are provided).
+#'   If "array", the placement of the ticks is set via `tickvals` and the
+#'   tick text is `ticktext`. ("array" is the default value if `tickvals`
+#'   is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.
+#' @param tickprefix Sets a tick label prefix. String.
+#' @param ticks Determines whether ticks are drawn or not. If **, this
+#'   axis' ticks are not drawn. If "outside" ("inside"), this axis' are
+#'   drawn outside (inside) the axis lines. One of \code{"outside"},
+#'   \code{"inside"}, \code{""}.
+#' @param ticksuffix Sets a tick label suffix. String.
+#' @param ticktext Sets the text displayed at the ticks position via
+#'   `tickvals`. Only has an effect if `tickmode` is set to "array". Used
+#'   with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
+#'   matrix or list.
+#' @param tickvals Sets the values at which ticks on this axis appear. Only
+#'   has an effect if `tickmode` is set to "array". Used with `ticktext`.
+#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
+#'   Inf].
+#' @param title String (the title text), or a
+#'   \code{\link{go_scene_axis_title}()} object or named list, with
+#'   properties \code{font} and \code{text} (see
+#'   \code{\link{go_scene_axis_title}()}).
+#' @param type Sets the axis type. By default, plotly attempts to
+#'   determined the axis type by looking into the data of the traces that
+#'   referenced the axis in question. One of \code{"-"}, \code{"linear"},
+#'   \code{"log"}, \code{"date"}, \code{"category"}.
+#' @param visible A single toggle to hide the axis while preserving
+#'   interaction like dragging. Default is true when a cheater plot is
+#'   present on the axis, otherwise false Logical.
+#' @param zeroline Determines whether or not a line is drawn at along the 0
+#'   value of this axis. If TRUE, the zero line is drawn on top of the grid
+#'   lines. Logical.
+#' @param zerolinecolor Sets the line color of the zero line. Color: a CSS
+#'   color string or R color name.
+#' @param zerolinewidth Sets the width (in px) of the zero line. Number.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_scene_axis} object (a named list).
+#'
+#' @concept shared object types
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   update_layout(
+#'     scene = go_scene(
+#'       xaxis = go_scene_axis(color = "red")
+#'     )
+#'   )
+go_scene_axis <- function(
+    arg = NULL, ..., autorange = NULL, autorangeoptions = NULL,
+    autotypenumbers = NULL, backgroundcolor = NULL, calendar = NULL,
+    categoryarray = NULL, categoryorder = NULL, color = NULL, dtick = NULL,
+    exponentformat = NULL, gridcolor = NULL, gridwidth = NULL,
+    hoverformat = NULL, labelalias = NULL, linecolor = NULL,
+    linewidth = NULL, maxallowed = NULL, minallowed = NULL,
+    minexponent = NULL, mirror = NULL, nticks = NULL, range = NULL,
+    rangemode = NULL, separatethousands = NULL, showaxeslabels = NULL,
+    showbackground = NULL, showexponent = NULL, showgrid = NULL,
+    showline = NULL, showspikes = NULL, showticklabels = NULL,
+    showtickprefix = NULL, showticksuffix = NULL, spikecolor = NULL,
+    spikesides = NULL, spikethickness = NULL, tick0 = NULL,
+    tickangle = NULL, tickcolor = NULL, tickfont = NULL, tickformat = NULL,
+    tickformatstops = NULL, ticklen = NULL, tickmode = NULL,
+    tickprefix = NULL, ticks = NULL, ticksuffix = NULL, ticktext = NULL,
+    tickvals = NULL, tickwidth = NULL, title = NULL, type = NULL,
+    visible = NULL, zeroline = NULL, zerolinecolor = NULL,
+    zerolinewidth = NULL, skip_invalid = FALSE
+) {
+  shared_object("scene_axis", arg, environment(), list(...), skip_invalid)
+}
+
+#' Ternary axis objects
+#'
+#' Used for \code{aaxis}, \code{baxis}, \code{caxis} in 3 places in the
+#' schema. \code{go_ternary_axis()} creates one; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' These objects appear in 3 places in the plotly.js schema (properties
+#' named \code{aaxis}, \code{baxis}, \code{caxis}), all with the same
+#' properties and rules.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets default for all colors associated with this axis all
+#'   at once: line, font, tick, and grid colors. Grid color is lightened by
+#'   blending this with the plot background Individual pieces can override
+#'   this. Color: a CSS color string or R color name.
+#' @param dtick Sets the step in-between ticks on this axis. Use with
+#'   `tick0`. Must be a positive number, or special strings available to
+#'   "log" and "date" axes. If the axis `type` is "log", then ticks are set
+#'   every 10^(n*dtick) where n is the tick number. For example, to set a
+#'   tick mark at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks
+#'   at 1, 100, 10000, ... set dtick to 2. To set tick marks at 1, 5, 25,
+#'   125, 625, 3125, ... set dtick to log_10(5), or 0.69897000433. "log"
+#'   has several special values; "L<f>", where `f` is a positive number,
+#'   gives ticks linearly spaced in value (but not position). For example
+#'   `tick0` = 0.1, `dtick` = "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6
+#'   etc. To show powers of 10 plus small digits between, use "D1" (all
+#'   digits) or "D2" (only 2 and 5). `tick0` is ignored for "D1" and "D2".
+#'   If the axis `type` is "date", then you must convert the time to
+#'   milliseconds. For example, to set the interval between ticks to one
+#'   day, set `dtick` to 86400000.0. "date" also has special values "M<n>"
+#'   gives ticks spaced by a number of months. `n` must be a positive
+#'   integer. To set ticks on the 15th of every third month, set `tick0` to
+#'   "2000-01-15" and `dtick` to "M3". To set ticks every 4 years, set
+#'   `dtick` to "M48" Any value.
+#' @param exponentformat Determines a formatting rule for the tick
+#'   exponents. For example, consider the number 1,000,000,000. If "none",
+#'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
+#'   1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
+#'   prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
+#'   covers instead the full SI range from "quecto" q (10^-30) to "quetta"
+#'   Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
+#'   the above ranges, the formatting rule will automatically be switched
+#'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
+#'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
+#' @param gridcolor Sets the color of the grid lines. Color: a CSS color
+#'   string or R color name.
+#' @param griddash Sets the dash style of lines. Set to a dash type string
+#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
+#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
+#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
+#'   \code{"longdashdot"}, or a string matching
+#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
+#' @param gridwidth Sets the width (in px) of the grid lines. Number in the
+#'   interval [0, Inf].
+#' @param hoverformat Sets the hover text formatting rule using d3
+#'   formatting mini-languages which are very similar to those in Python.
+#'   For numbers, see:
+#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
+#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
+#'   We add two items to d3's date formatter: "\%h" for half of the year as
+#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
+#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
+#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
+#' @param labelalias Replacement text for specific tick or hover labels.
+#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
+#'   to Canada. The labels we would have shown must match the keys exactly,
+#'   after adding any tickprefix or ticksuffix. For negative numbers the
+#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
+#'   That means you need to use -1 instead of -1. labelalias can be used
+#'   with any axis type, and both keys (if needed) and values (if desired)
+#'   can include html-like tags or MathJax. Any value.
+#' @param layer Sets the layer on which this axis is displayed. If "above
+#'   traces", this axis is displayed above all the subplot's traces If
+#'   "below traces", this axis is displayed below all the subplot's traces,
+#'   but above the grid lines. Useful when used together with scatter-like
+#'   traces with `cliponaxis` set to FALSE to show markers and/or text
+#'   nodes above this axis. One of \code{"above traces"}, \code{"below
+#'   traces"}.
+#' @param linecolor Sets the axis line color. Color: a CSS color string or
+#'   R color name.
+#' @param linewidth Sets the width (in px) of the axis line. Number in the
+#'   interval [0, Inf].
+#' @param min The minimum value visible on this axis. The maximum is
+#'   determined by the sum minus the minimum values of the other two axes.
+#'   The full view corresponds to all the minima set to zero. Number in the
+#'   interval [0, Inf].
+#' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
+#'   This only has an effect when `tickformat` is "SI" or "B". Number in
+#'   the interval [0, Inf].
+#' @param nticks Specifies the maximum number of ticks for the particular
+#'   axis. The actual number of ticks will be chosen automatically to be
+#'   less than or equal to `nticks`. Has an effect only if `tickmode` is
+#'   set to "auto". Integer in the interval [1, Inf].
+#' @param separatethousands If "true", even 4-digit integers are separated
+#'   Logical.
+#' @param showexponent If "all", all exponents are shown besides their
+#'   significands. If "first", only the exponent of the first tick is
+#'   shown. If "last", only the exponent of the last tick is shown. If
+#'   "none", no exponents appear. One of \code{"all"}, \code{"first"},
+#'   \code{"last"}, \code{"none"}.
+#' @param showgrid Determines whether or not grid lines are drawn. If TRUE,
+#'   the grid lines are drawn at every tick mark. Logical.
+#' @param showline Determines whether or not a line bounding this axis is
+#'   drawn. Logical.
+#' @param showspikes Determines whether or not spikes (aka droplines) are
+#'   drawn for this axis. Ternary spikes are accompanied by axis value
+#'   labels formatted according to `hoverformat`. Logical.
+#' @param showticklabels Determines whether or not the tick labels are
+#'   drawn. Logical.
+#' @param showtickprefix If "all", all tick labels are displayed with a
+#'   prefix. If "first", only the first tick is displayed with a prefix. If
+#'   "last", only the last tick is displayed with a suffix. If "none", tick
+#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
+#'   \code{"last"}, \code{"none"}.
+#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
+#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
+#' @param spikecolor Sets the spike color. If undefined, will use the
+#'   series color Color: a CSS color string or R color name.
+#' @param spikedash Sets the dash style of lines. Set to a dash type string
+#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
+#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
+#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
+#'   \code{"longdashdot"}, or a string matching
+#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
+#' @param spikemode Determines the drawing mode for the spike line If
+#'   "toaxis", the line is drawn from the data point to the axis the series
+#'   is plotted on. If "across", the line is drawn across the entire plot
+#'   area, and supercedes "toaxis". If "marker", then a marker dot is drawn
+#'   on the axis the series is plotted on Any combination of
+#'   \code{"toaxis"}, \code{"across"}, \code{"marker"} joined with
+#'   \code{"+"}.
+#' @param spikesnap Determines whether spikelines are stuck to the cursor
+#'   or to the closest datapoints. One of \code{"data"}, \code{"cursor"},
+#'   \code{"hovered data"}.
+#' @param spikethickness Sets the spike line width in pixels. Number.
+#' @param tick0 Sets the placement of the first tick on this axis. Use with
+#'   `dtick`. If the axis `type` is "log", then you must take the log of
+#'   your starting tick (e.g. to set the starting tick to 100, set the
+#'   `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
+#'   If the axis `type` is "date", it should be a date string, like date
+#'   data. If the axis `type` is "category", it should be a number, using
+#'   the scale where each category is assigned a serial number from zero in
+#'   the order it appears. Any value.
+#' @param tickangle Sets the angle of the tick labels with respect to the
+#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
+#'   vertically. Angle in degrees.
+#' @param tickcolor Sets the tick color. Color: a CSS color string or R
+#'   color name.
+#' @param tickfont Sets the tick font. A \code{\link{go_font}()} object or
+#'   named list, with properties \code{color}, \code{family},
+#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#'   \code{textcase}, \code{variant} and \code{weight} (see
+#'   \code{\link{go_font}()}).
+#' @param tickformat Sets the tick label formatting rule using d3
+#'   formatting mini-languages which are very similar to those in Python.
+#'   For numbers, see:
+#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
+#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
+#'   We add two items to d3's date formatter: "\%h" for half of the year as
+#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
+#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
+#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
+#' @param tickformatstops List, each element a
+#'   \code{\link{go_tickformatstop}()} object or named list, with
+#'   properties \code{dtickrange}, \code{enabled}, \code{name},
+#'   \code{templateitemname} and \code{value} (see
+#'   \code{\link{go_tickformatstop}()}).
+#' @param ticklabelstep Sets the spacing between tick labels as compared to
+#'   the spacing between ticks. A value of 1 (default) means each tick gets
+#'   a label. A value of 2 means shows every 2nd label. A larger value n
+#'   means only every nth tick is labeled. `tick0` determines which labels
+#'   are shown. Not implemented for axes with `type` "log" or
+#'   "multicategory", or when `tickmode` is "array". Integer in the
+#'   interval [1, Inf].
+#' @param ticklen Sets the tick length (in px). Number in the interval [0,
+#'   Inf].
+#' @param tickmode Sets the tick mode for this axis. If "auto", the number
+#'   of ticks is set via `nticks`. If "linear", the placement of the ticks
+#'   is determined by a starting position `tick0` and a tick step `dtick`
+#'   ("linear" is the default value if `tick0` and `dtick` are provided).
+#'   If "array", the placement of the ticks is set via `tickvals` and the
+#'   tick text is `ticktext`. ("array" is the default value if `tickvals`
+#'   is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.
+#' @param tickprefix Sets a tick label prefix. String.
+#' @param ticks Determines whether ticks are drawn or not. If **, this
+#'   axis' ticks are not drawn. If "outside" ("inside"), this axis' are
+#'   drawn outside (inside) the axis lines. One of \code{"outside"},
+#'   \code{"inside"}, \code{""}.
+#' @param ticksuffix Sets a tick label suffix. String.
+#' @param ticktext Sets the text displayed at the ticks position via
+#'   `tickvals`. Only has an effect if `tickmode` is set to "array". Used
+#'   with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
+#'   matrix or list.
+#' @param tickvals Sets the values at which ticks on this axis appear. Only
+#'   has an effect if `tickmode` is set to "array". Used with `ticktext`.
+#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
+#'   Inf].
+#' @param title String (the title text), or a
+#'   \code{\link{go_ternary_axis_title}()} object or named list, with
+#'   properties \code{font} and \code{text} (see
+#'   \code{\link{go_ternary_axis_title}()}).
+#' @param uirevision Controls persistence of user-driven changes in axis
+#'   `min`, and `title` if in `editable: true` configuration. Defaults to
+#'   `ternary<N>.uirevision`. Any value.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_ternary_axis} object (a named list).
+#'
+#' @concept shared object types
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   update_layout(
+#'     ternary = go_ternary(
+#'       aaxis = go_ternary_axis(color = "red")
+#'     )
+#'   )
+go_ternary_axis <- function(
+    arg = NULL, ..., color = NULL, dtick = NULL, exponentformat = NULL,
+    gridcolor = NULL, griddash = NULL, gridwidth = NULL, hoverformat = NULL,
+    labelalias = NULL, layer = NULL, linecolor = NULL, linewidth = NULL,
+    min = NULL, minexponent = NULL, nticks = NULL, separatethousands = NULL,
+    showexponent = NULL, showgrid = NULL, showline = NULL,
+    showspikes = NULL, showticklabels = NULL, showtickprefix = NULL,
+    showticksuffix = NULL, spikecolor = NULL, spikedash = NULL,
+    spikemode = NULL, spikesnap = NULL, spikethickness = NULL, tick0 = NULL,
+    tickangle = NULL, tickcolor = NULL, tickfont = NULL, tickformat = NULL,
+    tickformatstops = NULL, ticklabelstep = NULL, ticklen = NULL,
+    tickmode = NULL, tickprefix = NULL, ticks = NULL, ticksuffix = NULL,
+    ticktext = NULL, tickvals = NULL, tickwidth = NULL, title = NULL,
+    uirevision = NULL, skip_invalid = FALSE
+) {
+  shared_object("ternary_axis", arg, environment(), list(...), skip_invalid)
+}
+
+#' Scatter3d projection axis objects
+#'
+#' Used for \code{x}, \code{y}, \code{z} in 3 places in the schema.
+#' \code{go_scatter3d_projection_axis()} creates one; a named list with the
+#' same properties works too.
+#'
+#' @details
+#' These objects appear in 3 places in the plotly.js schema (properties
+#' named \code{x}, \code{y}, \code{z}), all with the same properties and
+#' rules.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param opacity Sets the projection color. Number in the interval [0, 1].
+#' @param scale Sets the scale factor determining the size of the
+#'   projection marker points. Number in the interval [0, 10].
+#' @param show Sets whether or not projections are shown along the x axis.
+#'   Logical.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_scatter3d_projection_axis} object (a named list).
+#'
+#' @concept shared object types
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_scatter3d(
+#'     projection = go_scatter3d_projection(
+#'       x = go_scatter3d_projection_axis(opacity = 0.5)
+#'     )
+#'   )
+go_scatter3d_projection_axis <- function(
+    arg = NULL, ..., opacity = NULL, scale = NULL, show = NULL,
+    skip_invalid = FALSE
+) {
+  shared_object("scatter3d_projection_axis", arg, environment(), list(...), skip_invalid)
+}
+
+#' Surface contours axis objects
+#'
+#' Used for \code{x}, \code{y}, \code{z} in 3 places in the schema.
+#' \code{go_surface_contours_axis()} creates one; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' These objects appear in 3 places in the plotly.js schema (properties
+#' named \code{x}, \code{y}, \code{z}), all with the same properties and
+#' rules.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the color of the contour lines. Color: a CSS color
+#'   string or R color name.
+#' @param end Sets the end contour level value. Must be more than
+#'   `contours.start` Number.
+#' @param highlight Determines whether or not contour lines about the x
+#'   dimension are highlighted on hover. Logical.
+#' @param highlightcolor Sets the color of the highlighted contour lines.
+#'   Color: a CSS color string or R color name.
+#' @param highlightwidth Sets the width of the highlighted contour lines.
+#'   Number in the interval [1, 16].
+#' @param project A \code{\link{go_project}()} object or named list, with
+#'   properties \code{x}, \code{y} and \code{z} (see
+#'   \code{\link{go_project}()}).
+#' @param show Determines whether or not contour lines about the x
+#'   dimension are drawn. Logical.
+#' @param size Sets the step between each contour level. Must be positive.
+#'   Number in the interval [0, Inf].
+#' @param start Sets the starting contour level value. Must be less than
+#'   `contours.end` Number.
+#' @param usecolormap An alternate to "color". Determines whether or not
+#'   the contour lines are colored using the trace "colorscale". Logical.
+#' @param width Sets the width of the contour lines. Number in the interval
+#'   [1, 16].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_surface_contours_axis} object (a named list).
+#'
+#' @concept shared object types
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_surface(
+#'     contours = go_surface_contours(
+#'       x = go_surface_contours_axis(color = "red")
+#'     )
+#'   )
+go_surface_contours_axis <- function(
+    arg = NULL, ..., color = NULL, end = NULL, highlight = NULL,
+    highlightcolor = NULL, highlightwidth = NULL, project = NULL,
+    show = NULL, size = NULL, start = NULL, usecolormap = NULL,
+    width = NULL, skip_invalid = FALSE
+) {
+  shared_object("surface_contours_axis", arg, environment(), list(...), skip_invalid)
+}
+
+#' Selected objects
+#'
+#' Used for \code{selected} in 18 places in the schema. \code{go_selected()}
+#' creates one; a named list with the same properties works too.
+#'
+#' @details
+#' These objects appear in 18 places in the plotly.js schema (properties
+#' named \code{selected}), with small differences between them: for example,
+#' not every context has every property below. \code{go_selected()} checks
+#' the values against the contexts it can be used in; when the object is
+#' placed in a figure it is checked again against that context's rules.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param marker A \code{\link{go_selected_marker}()} object or named list,
+#'   with properties \code{color}, \code{opacity} and \code{size} (see
+#'   \code{\link{go_selected_marker}()}). In some contexts: A
+#'   \code{\link{go_selected_marker}()} object or named list, with
+#'   properties \code{color} and \code{opacity} (see
+#'   \code{\link{go_selected_marker}()}); or A
+#'   \code{\link{go_selected_marker}()} object or named list, with
+#'   properties \code{opacity} (see \code{\link{go_selected_marker}()}); or
+#'   A \code{\link{go_selected_marker}()} object or named list, with
+#'   properties \code{color} and \code{line} (see
+#'   \code{\link{go_selected_marker}()}).
+#' @param textfont A \code{\link{go_font}()} object or named list, with
+#'   properties \code{color} (see \code{\link{go_font}()}). Not available
+#'   in every context.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_selected} object (a named list).
+#'
+#' @concept shared object types
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_scatter(
+#'     selected = go_selected()
+#'   )
+go_selected <- function(
+    arg = NULL, ..., marker = NULL, textfont = NULL, skip_invalid = FALSE
+) {
+  shared_object("selected", arg, environment(), list(...), skip_invalid)
+}
+
+#' Unselected objects
+#'
+#' Used for \code{unselected} in 19 places in the schema.
+#' \code{go_unselected()} creates one; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' These objects appear in 19 places in the plotly.js schema (properties
+#' named \code{unselected}), with small differences between them: for
+#' example, not every context has every property below.
+#' \code{go_unselected()} checks the values against the contexts it can be
+#' used in; when the object is placed in a figure it is checked again
+#' against that context's rules.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param line A \code{\link{go_unselected_line}()} object or named list,
+#'   with properties \code{color} and \code{opacity} (see
+#'   \code{\link{go_unselected_line}()}). Not available in every context.
+#' @param marker A \code{\link{go_unselected_marker}()} object or named
+#'   list, with properties \code{color}, \code{opacity} and \code{size}
+#'   (see \code{\link{go_unselected_marker}()}). In some contexts: A
+#'   \code{\link{go_unselected_marker}()} object or named list, with
+#'   properties \code{color} and \code{opacity} (see
+#'   \code{\link{go_unselected_marker}()}); or A
+#'   \code{\link{go_unselected_marker}()} object or named list, with
+#'   properties \code{opacity} (see \code{\link{go_unselected_marker}()});
+#'   or A \code{\link{go_unselected_marker}()} object or named list, with
+#'   properties \code{color} and \code{line} (see
+#'   \code{\link{go_unselected_marker}()}). Not available in every context.
+#' @param textfont A \code{\link{go_font}()} object or named list, with
+#'   properties \code{color} (see \code{\link{go_font}()}). Not available
+#'   in every context.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_unselected} object (a named list).
+#'
+#' @concept shared object types
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_scatter(
+#'     unselected = go_unselected()
+#'   )
+go_unselected <- function(
+    arg = NULL, ..., line = NULL, marker = NULL, textfont = NULL,
+    skip_invalid = FALSE
+) {
+  shared_object("unselected", arg, environment(), list(...), skip_invalid)
+}
+
+#' Caps axis objects
+#'
+#' Used for \code{x}, \code{y}, \code{z} in 6 places in the schema.
+#' \code{go_caps_axis()} creates one; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' These objects appear in 6 places in the plotly.js schema (properties
+#' named \code{x}, \code{y}, \code{z}), all with the same properties and
+#' rules.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -1492,99 +2257,22 @@ go_unifiedhovertitle <- function(
 #' @param ... Not used: properties must be named in full.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
-#' @return A \code{go_caps_x} object (a named list).
+#' @return A \code{go_caps_axis} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
 #' go_figure() |>
 #'   add_isosurface(
 #'     caps = go_caps(
-#'       x = go_caps_x(show = TRUE)
+#'       x = go_caps_axis(show = TRUE)
 #'     )
 #'   )
-go_caps_x <- function(
+go_caps_axis <- function(
     arg = NULL, ..., fill = NULL, show = NULL, skip_invalid = FALSE
 ) {
-  shared_object("caps_x", arg, environment(), list(...), skip_invalid)
-}
-
-#' Caps y objects
-#'
-#' Used for \code{y} in 2 places in the schema. \code{go_caps_y()} creates
-#' one; a named list with the same properties works too.
-#'
-#' @details
-#' These objects appear in 2 places in the plotly.js schema (properties
-#' named \code{y}), all with the same properties and rules.
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
-#' @param fill Sets the fill ratio of the `caps`. The default fill value of
-#'   the `caps` is 1 meaning that they are entirely shaded. On the other
-#'   hand Applying a `fill` ratio less than one would allow the creation of
-#'   openings parallel to the edges. Number in the interval [0, 1].
-#' @param show Sets the fill ratio of the `slices`. The default fill value
-#'   of the y `slices` is 1 meaning that they are entirely shaded. On the
-#'   other hand Applying a `fill` ratio less than one would allow the
-#'   creation of openings parallel to the edges. Logical.
-#' @param ... Not used: properties must be named in full.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return A \code{go_caps_y} object (a named list).
-#'
-#' @noMd
-#' @export
-#' @examples
-#' go_figure() |>
-#'   add_isosurface(
-#'     caps = go_caps(
-#'       y = go_caps_y(show = TRUE)
-#'     )
-#'   )
-go_caps_y <- function(
-    arg = NULL, ..., fill = NULL, show = NULL, skip_invalid = FALSE
-) {
-  shared_object("caps_y", arg, environment(), list(...), skip_invalid)
-}
-
-#' Caps z objects
-#'
-#' Used for \code{z} in 2 places in the schema. \code{go_caps_z()} creates
-#' one; a named list with the same properties works too.
-#'
-#' @details
-#' These objects appear in 2 places in the plotly.js schema (properties
-#' named \code{z}), all with the same properties and rules.
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
-#' @param fill Sets the fill ratio of the `caps`. The default fill value of
-#'   the `caps` is 1 meaning that they are entirely shaded. On the other
-#'   hand Applying a `fill` ratio less than one would allow the creation of
-#'   openings parallel to the edges. Number in the interval [0, 1].
-#' @param show Sets the fill ratio of the `slices`. The default fill value
-#'   of the z `slices` is 1 meaning that they are entirely shaded. On the
-#'   other hand Applying a `fill` ratio less than one would allow the
-#'   creation of openings parallel to the edges. Logical.
-#' @param ... Not used: properties must be named in full.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return A \code{go_caps_z} object (a named list).
-#'
-#' @noMd
-#' @export
-#' @examples
-#' go_figure() |>
-#'   add_isosurface(
-#'     caps = go_caps(
-#'       z = go_caps_z(show = TRUE)
-#'     )
-#'   )
-go_caps_z <- function(
-    arg = NULL, ..., fill = NULL, show = NULL, skip_invalid = FALSE
-) {
-  shared_object("caps_z", arg, environment(), list(...), skip_invalid)
+  shared_object("caps_axis", arg, environment(), list(...), skip_invalid)
 }
 
 #' Colorbar title objects
@@ -1614,6 +2302,7 @@ go_caps_z <- function(
 #'   instead of raising an error.
 #' @return A \code{go_colorbar_title} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
@@ -1632,14 +2321,141 @@ go_colorbar_title <- function(
   shared_object("colorbar_title", arg, environment(), list(...), skip_invalid)
 }
 
-#' Slices x objects
+#' Scene axis title objects
 #'
-#' Used for \code{x} in 2 places in the schema. \code{go_slices_x()} creates
-#' one; a named list with the same properties works too.
+#' Used for \code{title} in 3 places in the schema.
+#' \code{go_scene_axis_title()} creates one; a named list with the same
+#' properties works too.
 #'
 #' @details
-#' These objects appear in 2 places in the plotly.js schema (properties
-#' named \code{x}), all with the same properties and rules.
+#' These objects appear in 3 places in the plotly.js schema (properties
+#' named \code{title}), all with the same properties and rules.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param font Sets this axis' title font. A \code{\link{go_font}()} object
+#'   or named list, with properties \code{color}, \code{family},
+#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#'   \code{textcase}, \code{variant} and \code{weight} (see
+#'   \code{\link{go_font}()}).
+#' @param text Sets the title of this axis. String.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_scene_axis_title} object (a named list).
+#'
+#' @concept shared object types
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   update_layout(
+#'     scene = go_scene(
+#'       xaxis = go_scene_axis(
+#'         title = go_scene_axis_title(text = "title")
+#'       )
+#'     )
+#'   )
+go_scene_axis_title <- function(
+    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
+) {
+  shared_object("scene_axis_title", arg, environment(), list(...), skip_invalid)
+}
+
+#' Selected marker objects
+#'
+#' Used for \code{marker} in 18 places in the schema.
+#' \code{go_selected_marker()} creates one; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' These objects appear in 18 places in the plotly.js schema (properties
+#' named \code{marker}), with small differences between them: for example,
+#' not every context has every property below. \code{go_selected_marker()}
+#' checks the values against the contexts it can be used in; when the object
+#' is placed in a figure it is checked again against that context's rules.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the marker color of selected points. Color: a CSS
+#'   color string or R color name. Not available in every context.
+#' @param line A \code{\link{go_selected_marker_line}()} object or named
+#'   list, with properties \code{width} (see
+#'   \code{\link{go_selected_marker_line}()}). Not available in every
+#'   context.
+#' @param opacity Sets the marker opacity of selected points. Number in the
+#'   interval [0, 1]. Not available in every context.
+#' @param size Sets the marker size of selected points. Number in the
+#'   interval [0, Inf]. Not available in every context.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_selected_marker} object (a named list).
+#'
+#' @concept shared object types
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_box(
+#'     selected = go_selected(
+#'       marker = go_selected_marker(color = "red")
+#'     )
+#'   )
+go_selected_marker <- function(
+    arg = NULL, ..., color = NULL, line = NULL, opacity = NULL, size = NULL,
+    skip_invalid = FALSE
+) {
+  shared_object("selected_marker", arg, environment(), list(...), skip_invalid)
+}
+
+#' Selected marker line objects
+#'
+#' Used for \code{line} in 1 places in the schema.
+#' \code{go_selected_marker_line()} creates one; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' These objects appear in 1 places in the plotly.js schema (properties
+#' named \code{line}), all with the same properties and rules.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param width Sets the line width of selected points. Number in the
+#'   interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_selected_marker_line} object (a named list).
+#'
+#' @concept shared object types
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_quiver(
+#'     selected = go_selected(
+#'       marker = go_selected_marker(
+#'         line = go_selected_marker_line(width = 2)
+#'       )
+#'     )
+#'   )
+go_selected_marker_line <- function(
+    arg = NULL, ..., width = NULL, skip_invalid = FALSE
+) {
+  shared_object("selected_marker_line", arg, environment(), list(...), skip_invalid)
+}
+
+#' Slices axis objects
+#'
+#' Used for \code{x}, \code{y}, \code{z} in 6 places in the schema.
+#' \code{go_slices_axis()} creates one; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' These objects appear in 6 places in the plotly.js schema (properties
+#' named \code{x}, \code{y}, \code{z}), all with the same properties and
+#' rules.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -1657,107 +2473,189 @@ go_colorbar_title <- function(
 #' @param ... Not used: properties must be named in full.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
-#' @return A \code{go_slices_x} object (a named list).
+#' @return A \code{go_slices_axis} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
 #' go_figure() |>
 #'   add_isosurface(
 #'     slices = go_slices(
-#'       x = go_slices_x(show = TRUE)
+#'       x = go_slices_axis(show = TRUE)
 #'     )
 #'   )
-go_slices_x <- function(
+go_slices_axis <- function(
     arg = NULL, ..., fill = NULL, locations = NULL, show = NULL,
     skip_invalid = FALSE
 ) {
-  shared_object("slices_x", arg, environment(), list(...), skip_invalid)
+  shared_object("slices_axis", arg, environment(), list(...), skip_invalid)
 }
 
-#' Slices y objects
+#' Ternary axis title objects
 #'
-#' Used for \code{y} in 2 places in the schema. \code{go_slices_y()} creates
-#' one; a named list with the same properties works too.
+#' Used for \code{title} in 3 places in the schema.
+#' \code{go_ternary_axis_title()} creates one; a named list with the same
+#' properties works too.
 #'
 #' @details
-#' These objects appear in 2 places in the plotly.js schema (properties
-#' named \code{y}), all with the same properties and rules.
+#' These objects appear in 3 places in the plotly.js schema (properties
+#' named \code{title}), all with the same properties and rules.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
-#' @param fill Sets the fill ratio of the `slices`. The default fill value
-#'   of the `slices` is 1 meaning that they are entirely shaded. On the
-#'   other hand Applying a `fill` ratio less than one would allow the
-#'   creation of openings parallel to the edges. Number in the interval [0,
-#'   1].
-#' @param locations Specifies the location(s) of slices on the axis. When
-#'   not specified slices would be created for all points of the axis y
-#'   except start and end. Data array: a vector, factor, Date/POSIXct
-#'   vector, matrix or list.
-#' @param show Determines whether or not slice planes about the y dimension
-#'   are drawn. Logical.
+#' @param font Sets this axis' title font. A \code{\link{go_font}()} object
+#'   or named list, with properties \code{color}, \code{family},
+#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#'   \code{textcase}, \code{variant} and \code{weight} (see
+#'   \code{\link{go_font}()}).
+#' @param text Sets the title of this axis. String.
 #' @param ... Not used: properties must be named in full.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
-#' @return A \code{go_slices_y} object (a named list).
+#' @return A \code{go_ternary_axis_title} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
 #' go_figure() |>
-#'   add_isosurface(
-#'     slices = go_slices(
-#'       y = go_slices_y(show = TRUE)
+#'   update_layout(
+#'     ternary = go_ternary(
+#'       aaxis = go_ternary_axis(
+#'         title = go_ternary_axis_title(text = "title")
+#'       )
 #'     )
 #'   )
-go_slices_y <- function(
-    arg = NULL, ..., fill = NULL, locations = NULL, show = NULL,
-    skip_invalid = FALSE
+go_ternary_axis_title <- function(
+    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
 ) {
-  shared_object("slices_y", arg, environment(), list(...), skip_invalid)
+  shared_object("ternary_axis_title", arg, environment(), list(...), skip_invalid)
 }
 
-#' Slices z objects
+#' Unselected line objects
 #'
-#' Used for \code{z} in 2 places in the schema. \code{go_slices_z()} creates
-#' one; a named list with the same properties works too.
+#' Used for \code{line} in 1 places in the schema.
+#' \code{go_unselected_line()} creates one; a named list with the same
+#' properties works too.
 #'
 #' @details
-#' These objects appear in 2 places in the plotly.js schema (properties
-#' named \code{z}), all with the same properties and rules.
+#' These objects appear in 1 places in the plotly.js schema (properties
+#' named \code{line}), all with the same properties and rules.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
-#' @param fill Sets the fill ratio of the `slices`. The default fill value
-#'   of the `slices` is 1 meaning that they are entirely shaded. On the
-#'   other hand Applying a `fill` ratio less than one would allow the
-#'   creation of openings parallel to the edges. Number in the interval [0,
+#' @param color Sets the base color of unselected lines. in connection with
+#'   `unselected.line.opacity`. Color: a CSS color string or R color name.
+#' @param opacity Sets the opacity of unselected lines. The default "auto"
+#'   decreases the opacity smoothly as the number of lines increases. Use 1
+#'   to achieve exact `unselected.line.color`. Number in the interval [0,
 #'   1].
-#' @param locations Specifies the location(s) of slices on the axis. When
-#'   not specified slices would be created for all points of the axis z
-#'   except start and end. Data array: a vector, factor, Date/POSIXct
-#'   vector, matrix or list.
-#' @param show Determines whether or not slice planes about the z dimension
-#'   are drawn. Logical.
 #' @param ... Not used: properties must be named in full.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
-#' @return A \code{go_slices_z} object (a named list).
+#' @return A \code{go_unselected_line} object (a named list).
 #'
+#' @concept shared object types
 #' @noMd
 #' @export
 #' @examples
 #' go_figure() |>
-#'   add_isosurface(
-#'     slices = go_slices(
-#'       z = go_slices_z(show = TRUE)
+#'   add_parcoords(
+#'     unselected = go_unselected(
+#'       line = go_unselected_line(color = "red")
 #'     )
 #'   )
-go_slices_z <- function(
-    arg = NULL, ..., fill = NULL, locations = NULL, show = NULL,
+go_unselected_line <- function(
+    arg = NULL, ..., color = NULL, opacity = NULL, skip_invalid = FALSE
+) {
+  shared_object("unselected_line", arg, environment(), list(...), skip_invalid)
+}
+
+#' Unselected marker objects
+#'
+#' Used for \code{marker} in 18 places in the schema.
+#' \code{go_unselected_marker()} creates one; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' These objects appear in 18 places in the plotly.js schema (properties
+#' named \code{marker}), with small differences between them: for example,
+#' not every context has every property below. \code{go_unselected_marker()}
+#' checks the values against the contexts it can be used in; when the object
+#' is placed in a figure it is checked again against that context's rules.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the marker color of unselected points, applied only
+#'   when a selection exists. Color: a CSS color string or R color name.
+#'   Not available in every context.
+#' @param line A \code{\link{go_unselected_marker_line}()} object or named
+#'   list, with properties \code{width} (see
+#'   \code{\link{go_unselected_marker_line}()}). Not available in every
+#'   context.
+#' @param opacity Sets the marker opacity of unselected points, applied
+#'   only when a selection exists. Number in the interval [0, 1]. Not
+#'   available in every context.
+#' @param size Sets the marker size of unselected points, applied only when
+#'   a selection exists. Number in the interval [0, Inf]. Not available in
+#'   every context.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_unselected_marker} object (a named list).
+#'
+#' @concept shared object types
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_box(
+#'     unselected = go_unselected(
+#'       marker = go_unselected_marker(color = "red")
+#'     )
+#'   )
+go_unselected_marker <- function(
+    arg = NULL, ..., color = NULL, line = NULL, opacity = NULL, size = NULL,
     skip_invalid = FALSE
 ) {
-  shared_object("slices_z", arg, environment(), list(...), skip_invalid)
+  shared_object("unselected_marker", arg, environment(), list(...), skip_invalid)
+}
+
+#' Unselected marker line objects
+#'
+#' Used for \code{line} in 1 places in the schema.
+#' \code{go_unselected_marker_line()} creates one; a named list with the
+#' same properties works too.
+#'
+#' @details
+#' These objects appear in 1 places in the plotly.js schema (properties
+#' named \code{line}), all with the same properties and rules.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param width Sets the line width of unselected points, applied only when
+#'   a selection exists. Number in the interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_unselected_marker_line} object (a named list).
+#'
+#' @concept shared object types
+#' @noMd
+#' @export
+#' @examples
+#' go_figure() |>
+#'   add_quiver(
+#'     unselected = go_unselected(
+#'       marker = go_unselected_marker(
+#'         line = go_unselected_marker_line(width = 2)
+#'       )
+#'     )
+#'   )
+go_unselected_marker_line <- function(
+    arg = NULL, ..., width = NULL, skip_invalid = FALSE
+) {
+  shared_object("unselected_marker_line", arg, environment(), list(...), skip_invalid)
 }
 

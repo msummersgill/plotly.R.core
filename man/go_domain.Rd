@@ -57,3 +57,4 @@ go_figure() |>
     domain = go_domain()
   )
 }
+\concept{shared object types}

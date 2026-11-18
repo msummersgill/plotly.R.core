@@ -8,26 +8,12 @@
 #' \code{go_layout()} creates a validated graph object (a named list).
 #'
 #' @details
-#' Nested objects are named lists, e.g. \code{marker = list(size = 10)}, or
-#' objects of their constructors: every object in the schema has one,
-#' documented on its own page, with exactly that object's properties. Most
-#' are named after their path: \code{go_scatter_marker()},
-#' \code{go_scatter_selected_marker()}, \code{go_sankey_link()}, ....
-#' Objects that appear in several places share one: \code{\link{go_font}()},
-#' \code{\link{go_colorbar}()}, \code{\link{go_hoverlabel}()},
-#' \code{\link{go_legendgrouptitle}()}, \code{\link{go_tickformatstop}()},
-#' \code{\link{go_domain}()}, \code{\link{go_pattern}()},
-#' \code{\link{go_error_bar}()}, \code{\link{go_autorangeoptions}()},
-#' \code{\link{go_bins}()}, \code{\link{go_caps}()},
-#' \code{\link{go_domainpad}()}, \code{\link{go_gradient}()},
-#' \code{\link{go_label}()}, \code{\link{go_leaf}()},
-#' \code{\link{go_lightposition}()}, \code{\link{go_minor}()},
-#' \code{\link{go_pathbar}()}, \code{\link{go_project}()},
-#' \code{\link{go_rangebreak}()}, \code{\link{go_root}()},
-#' \code{\link{go_slices}()}, \code{\link{go_spaceframe}()} and
-#' \code{\link{go_unifiedhovertitle}()}. Every property is checked against
+#' Nested objects are given as named lists or with their constructors, which
+#' are linked from the arguments below. Every property is checked against
 #' the plotly.js schema when the object is created or modified (see
-#' \code{\link{plotly_obj-modify}}).
+#' \code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+#' evaluated in the data, and then checked, when the trace is added with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
@@ -474,18 +460,18 @@
 #'   \code{categoryorder}, \code{color}, \code{constrain} and 80 more (see
 #'   \code{\link{go_yaxis}()}).
 #' @param ... Further properties, by their full names (e.g. numbered subplots
-#'   such as \code{xaxis2} in \code{go_layout()}). Nested properties are set
-#'   with named lists: \code{marker = list(size = 10)}.
+#'   such as \code{xaxis2} in \code{go_layout()}).
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
 #'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{update_layout}()}
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
-#' go_layout(title = "My plot", xaxis = list(title = "x", range = c(0, 10)))
+#' go_layout(title = "My plot", xaxis = go_xaxis(title = "x", range = c(0, 10)))
 go_layout <- function(
     arg = NULL, ..., activeselection = NULL, activeshape = NULL,
     annotations = NULL, autosize = NULL, autotypenumbers = NULL,
@@ -528,7 +514,10 @@ go_layout <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -541,6 +530,7 @@ go_layout <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_activeselection} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -563,7 +553,10 @@ go_activeselection <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -576,6 +569,7 @@ go_activeselection <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_activeshape} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -599,7 +593,10 @@ go_activeshape <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -833,6 +830,7 @@ go_activeshape <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_annotation} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -868,7 +866,10 @@ go_annotation <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -918,6 +919,7 @@ go_annotation <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_coloraxis} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -942,7 +944,10 @@ go_coloraxis <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -967,6 +972,7 @@ go_coloraxis <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_colorscale} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -991,7 +997,10 @@ go_layout_colorscale <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -1085,6 +1094,7 @@ go_layout_colorscale <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_geo} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -1116,7 +1126,10 @@ go_geo <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -1131,6 +1144,7 @@ go_geo <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_geo_center} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -1155,7 +1169,10 @@ go_geo_center <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -1181,6 +1198,7 @@ go_geo_center <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_geo_lataxis} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -1207,7 +1225,10 @@ go_geo_lataxis <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -1233,6 +1254,7 @@ go_geo_lataxis <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_geo_lonaxis} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -1259,7 +1281,10 @@ go_geo_lonaxis <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -1322,6 +1347,7 @@ go_geo_lonaxis <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_geo_projection} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -1349,7 +1375,10 @@ go_geo_projection <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -1363,6 +1392,7 @@ go_geo_projection <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_geo_projection_rotation} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -1390,7 +1420,10 @@ go_geo_projection_rotation <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -1458,6 +1491,7 @@ go_geo_projection_rotation <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_grid} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -1484,7 +1518,10 @@ go_grid <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -1559,6 +1596,7 @@ go_grid <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_image} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -1585,7 +1623,10 @@ go_layout_image <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -1729,6 +1770,7 @@ go_layout_image <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_legend} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -1760,7 +1802,10 @@ go_legend <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -1783,6 +1828,7 @@ go_legend <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_legend_title} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -1809,7 +1855,10 @@ go_legend_title <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -1862,6 +1911,7 @@ go_legend_title <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_map} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -1886,7 +1936,10 @@ go_map <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -1903,6 +1956,7 @@ go_map <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_map_bounds} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -1928,7 +1982,10 @@ go_map_bounds <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -1941,6 +1998,7 @@ go_map_bounds <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_map_center} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -1966,7 +2024,10 @@ go_map_center <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -2052,6 +2113,7 @@ go_map_center <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_map_layer} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -2082,7 +2144,10 @@ go_map_layer <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -2093,6 +2158,7 @@ go_map_layer <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_map_layer_circle} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -2120,7 +2186,10 @@ go_map_layer_circle <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -2132,6 +2201,7 @@ go_map_layer_circle <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_map_layer_fill} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -2159,7 +2229,10 @@ go_map_layer_fill <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -2174,6 +2247,7 @@ go_map_layer_fill <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_map_layer_line} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -2201,7 +2275,10 @@ go_map_layer_line <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -2232,6 +2309,7 @@ go_map_layer_line <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_map_layer_symbol} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -2259,7 +2337,10 @@ go_map_layer_symbol <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -2278,6 +2359,7 @@ go_map_layer_symbol <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_margin} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -2301,7 +2383,10 @@ go_margin <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -2344,6 +2429,7 @@ go_margin <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_modebar} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -2368,7 +2454,10 @@ go_modebar <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -2386,6 +2475,7 @@ go_modebar <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_newselection} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -2409,7 +2499,10 @@ go_newselection <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -2429,6 +2522,7 @@ go_newselection <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_newselection_line} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -2454,7 +2548,10 @@ go_newselection_line <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -2518,6 +2615,7 @@ go_newselection_line <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_newshape} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -2545,7 +2643,10 @@ go_newshape <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -2565,6 +2666,7 @@ go_newshape <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_newshape_line} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -2591,7 +2693,10 @@ go_newshape_line <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -2644,6 +2749,7 @@ go_newshape_line <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_polar} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -2670,7 +2776,10 @@ go_polar <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -2896,6 +3005,7 @@ go_polar <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_polar_angularaxis} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -2934,7 +3044,10 @@ go_polar_angularaxis <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -3201,6 +3314,7 @@ go_polar_angularaxis <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_polar_radialaxis} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -3241,7 +3355,10 @@ go_polar_radialaxis <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -3256,6 +3373,7 @@ go_polar_radialaxis <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_polar_radialaxis_title} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -3283,7 +3401,10 @@ go_polar_radialaxis_title <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -3321,29 +3442,30 @@ go_polar_radialaxis_title <- function(
 #'   scene. One of \code{"closest"}, \code{FALSE}.
 #' @param uirevision Controls persistence of user-driven changes in camera
 #'   attributes. Defaults to `layout.uirevision`. Any value.
-#' @param xaxis A \code{\link{go_scene_xaxis}()} object or named list, with
+#' @param xaxis A \code{\link{go_scene_axis}()} object or named list, with
 #'   properties \code{autorange}, \code{autorangeoptions},
 #'   \code{autotypenumbers}, \code{backgroundcolor}, \code{calendar},
 #'   \code{categoryarray}, \code{categoryorder}, \code{color},
 #'   \code{dtick}, \code{exponentformat}, \code{gridcolor},
-#'   \code{gridwidth} and 44 more (see \code{\link{go_scene_xaxis}()}).
-#' @param yaxis A \code{\link{go_scene_yaxis}()} object or named list, with
+#'   \code{gridwidth} and 44 more (see \code{\link{go_scene_axis}()}).
+#' @param yaxis A \code{\link{go_scene_axis}()} object or named list, with
 #'   properties \code{autorange}, \code{autorangeoptions},
 #'   \code{autotypenumbers}, \code{backgroundcolor}, \code{calendar},
 #'   \code{categoryarray}, \code{categoryorder}, \code{color},
 #'   \code{dtick}, \code{exponentformat}, \code{gridcolor},
-#'   \code{gridwidth} and 44 more (see \code{\link{go_scene_yaxis}()}).
-#' @param zaxis A \code{\link{go_scene_zaxis}()} object or named list, with
+#'   \code{gridwidth} and 44 more (see \code{\link{go_scene_axis}()}).
+#' @param zaxis A \code{\link{go_scene_axis}()} object or named list, with
 #'   properties \code{autorange}, \code{autorangeoptions},
 #'   \code{autotypenumbers}, \code{backgroundcolor}, \code{calendar},
 #'   \code{categoryarray}, \code{categoryorder}, \code{color},
 #'   \code{dtick}, \code{exponentformat}, \code{gridcolor},
-#'   \code{gridwidth} and 44 more (see \code{\link{go_scene_zaxis}()}).
+#'   \code{gridwidth} and 44 more (see \code{\link{go_scene_axis}()}).
 #' @param ... Not used: properties must be named in full.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_scene} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -3370,7 +3492,10 @@ go_scene <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -3503,6 +3628,7 @@ go_scene <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_scene_annotation} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -3537,7 +3663,10 @@ go_scene_annotation <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -3549,6 +3678,7 @@ go_scene_annotation <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_scene_aspectratio} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -3573,7 +3703,10 @@ go_scene_aspectratio <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -3602,6 +3735,7 @@ go_scene_aspectratio <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_scene_camera} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -3630,7 +3764,10 @@ go_scene_camera <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -3642,6 +3779,7 @@ go_scene_camera <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_scene_camera_center} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -3670,7 +3808,10 @@ go_scene_camera_center <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -3682,6 +3823,7 @@ go_scene_camera_center <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_scene_camera_eye} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -3709,7 +3851,10 @@ go_scene_camera_eye <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -3721,6 +3866,7 @@ go_scene_camera_eye <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_scene_camera_projection} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -3751,7 +3897,10 @@ go_scene_camera_projection <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -3763,6 +3912,7 @@ go_scene_camera_projection <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_scene_camera_up} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -3780,1026 +3930,6 @@ go_scene_camera_up <- function(
   plotly_object("layout.scene.camera.up", arg, environment(), list(...), skip_invalid)
 }
 
-#' Layout scene xaxis objects
-#'
-#' The object for the layout's \code{scene.xaxis}
-#' (\code{\link{go_scene}()}). \code{go_scene_xaxis()} creates one, with
-#' exactly its properties; a named list with the same properties works too.
-#'
-#' @details
-#' Nested objects are named lists, or objects of the constructors their
-#' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
-#' @param autorange Determines whether or not the range of this axis is
-#'   computed in relation to the input data. See `rangemode` for more info.
-#'   If `range` is provided and it has a value for both the lower and upper
-#'   bound, `autorange` is set to FALSE. Using "min" applies autorange only
-#'   to set the minimum. Using "max" applies autorange only to set the
-#'   maximum. Using "min reversed" applies autorange only to set the
-#'   minimum on a reversed axis. Using "max reversed" applies autorange
-#'   only to set the maximum on a reversed axis. Using "reversed" applies
-#'   autorange on both ends and reverses the axis direction. One of
-#'   \code{"reversed"}, \code{"min reversed"}, \code{"max reversed"},
-#'   \code{"min"}, \code{"max"}, \code{TRUE}, \code{FALSE}.
-#' @param autorangeoptions A \code{\link{go_autorangeoptions}()} object or
-#'   named list, with properties \code{clipmax}, \code{clipmin},
-#'   \code{include}, \code{maxallowed} and \code{minallowed} (see
-#'   \code{\link{go_autorangeoptions}()}).
-#' @param autotypenumbers Using "strict" a numeric string in trace data is
-#'   not converted to a number. Using "convert types" a numeric string in
-#'   trace data may be treated as a number during automatic axis `type`
-#'   detection. Defaults to layout.autotypenumbers. One of \code{"convert
-#'   types"}, \code{"strict"}.
-#' @param backgroundcolor Sets the background color of this axis' wall.
-#'   Color: a CSS color string or R color name.
-#' @param calendar Sets the calendar system to use for `range` and `tick0`
-#'   if this is a date axis. This does not set the calendar for
-#'   interpreting data on this axis, that's specified in the trace or via
-#'   the global `layout.calendar` One of \code{"chinese"}, \code{"coptic"},
-#'   \code{"discworld"}, \code{"ethiopian"}, \code{"gregorian"},
-#'   \code{"hebrew"}, \code{"islamic"}, \code{"jalali"}, \code{"julian"},
-#'   \code{"mayan"}, \code{"nanakshahi"}, \code{"nepali"},
-#'   \code{"persian"}, \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.
-#' @param categoryarray Sets the order in which categories on this axis
-#'   appear. Only has an effect if `categoryorder` is set to "array". Used
-#'   with `categoryorder`. Data array: a vector, factor, Date/POSIXct
-#'   vector, matrix or list.
-#' @param categoryorder Specifies the ordering logic for the case of
-#'   categorical variables. By default, plotly uses "trace", which
-#'   specifies the order that is present in the data supplied. Set
-#'   `categoryorder` to "category ascending" or "category descending" if
-#'   order should be determined by the alphanumerical order of the category
-#'   names. Set `categoryorder` to "array" to derive the ordering from the
-#'   attribute `categoryarray`. If a category is not found in the
-#'   `categoryarray` array, the sorting behavior for that attribute will be
-#'   identical to the "trace" mode. The unspecified categories will follow
-#'   the categories in `categoryarray`. Set `categoryorder` to "total
-#'   ascending" or "total descending" if order should be determined by the
-#'   numerical order of the values. Similarly, the order can be determined
-#'   by the min, max, sum, mean, geometric mean or median of all the
-#'   values. One of \code{"trace"}, \code{"category ascending"},
-#'   \code{"category descending"}, \code{"array"}, \code{"total
-#'   ascending"}, \code{"total descending"}, \code{"min ascending"},
-#'   \code{"min descending"}, \code{"max ascending"}, \code{"max
-#'   descending"}, \code{"sum ascending"}, \code{"sum descending"},
-#'   \code{"mean ascending"}, \code{"mean descending"}, \code{"geometric
-#'   mean ascending"}, \code{"geometric mean descending"}, \code{"median
-#'   ascending"}, \code{"median descending"}.
-#' @param color Sets default for all colors associated with this axis all
-#'   at once: line, font, tick, and grid colors. Grid color is lightened by
-#'   blending this with the plot background Individual pieces can override
-#'   this. Color: a CSS color string or R color name.
-#' @param dtick Sets the step in-between ticks on this axis. Use with
-#'   `tick0`. Must be a positive number, or special strings available to
-#'   "log" and "date" axes. If the axis `type` is "log", then ticks are set
-#'   every 10^(n*dtick) where n is the tick number. For example, to set a
-#'   tick mark at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks
-#'   at 1, 100, 10000, ... set dtick to 2. To set tick marks at 1, 5, 25,
-#'   125, 625, 3125, ... set dtick to log_10(5), or 0.69897000433. "log"
-#'   has several special values; "L<f>", where `f` is a positive number,
-#'   gives ticks linearly spaced in value (but not position). For example
-#'   `tick0` = 0.1, `dtick` = "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6
-#'   etc. To show powers of 10 plus small digits between, use "D1" (all
-#'   digits) or "D2" (only 2 and 5). `tick0` is ignored for "D1" and "D2".
-#'   If the axis `type` is "date", then you must convert the time to
-#'   milliseconds. For example, to set the interval between ticks to one
-#'   day, set `dtick` to 86400000.0. "date" also has special values "M<n>"
-#'   gives ticks spaced by a number of months. `n` must be a positive
-#'   integer. To set ticks on the 15th of every third month, set `tick0` to
-#'   "2000-01-15" and `dtick` to "M3". To set ticks every 4 years, set
-#'   `dtick` to "M48" Any value.
-#' @param exponentformat Determines a formatting rule for the tick
-#'   exponents. For example, consider the number 1,000,000,000. If "none",
-#'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-#'   1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-#'   prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-#'   covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-#'   Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-#'   the above ranges, the formatting rule will automatically be switched
-#'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-#'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
-#' @param gridcolor Sets the color of the grid lines. Color: a CSS color
-#'   string or R color name.
-#' @param gridwidth Sets the width (in px) of the grid lines. Number in the
-#'   interval [0, Inf].
-#' @param hoverformat Sets the hover text formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param labelalias Replacement text for specific tick or hover labels.
-#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-#'   to Canada. The labels we would have shown must match the keys exactly,
-#'   after adding any tickprefix or ticksuffix. For negative numbers the
-#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
-#'   That means you need to use -1 instead of -1. labelalias can be used
-#'   with any axis type, and both keys (if needed) and values (if desired)
-#'   can include html-like tags or MathJax. Any value.
-#' @param linecolor Sets the axis line color. Color: a CSS color string or
-#'   R color name.
-#' @param linewidth Sets the width (in px) of the axis line. Number in the
-#'   interval [0, Inf].
-#' @param maxallowed Determines the maximum range of this axis. Any value.
-#' @param minallowed Determines the minimum range of this axis. Any value.
-#' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
-#'   This only has an effect when `tickformat` is "SI" or "B". Number in
-#'   the interval [0, Inf].
-#' @param mirror Determines if the axis lines or/and ticks are mirrored to
-#'   the opposite side of the plotting area. If TRUE, the axis lines are
-#'   mirrored. If "ticks", the axis lines and ticks are mirrored. If FALSE,
-#'   mirroring is disable. If "all", axis lines are mirrored on all
-#'   shared-axes subplots. If "allticks", axis lines and ticks are mirrored
-#'   on all shared-axes subplots. One of \code{"ticks"}, \code{"all"},
-#'   \code{"allticks"}, \code{TRUE}, \code{FALSE}.
-#' @param nticks Specifies the maximum number of ticks for the particular
-#'   axis. The actual number of ticks will be chosen automatically to be
-#'   less than or equal to `nticks`. Has an effect only if `tickmode` is
-#'   set to "auto". Integer in the interval [0, Inf].
-#' @param range Sets the range of this axis. If the axis `type` is "log",
-#'   then you must take the log of your desired range (e.g. to set the
-#'   range from 1 to 100, set the range from 0 to 2). If the axis `type` is
-#'   "date", it should be date strings, like date data, though Date objects
-#'   and unix milliseconds will be accepted and converted to strings. If
-#'   the axis `type` is "category", it should be numbers, using the scale
-#'   where each category is assigned a serial number from zero in the order
-#'   it appears. Leaving either or both elements `null` impacts the default
-#'   `autorange`. Vector or list of 2 element(s).
-#' @param rangemode If "normal", the range is computed in relation to the
-#'   extrema of the input data. If "tozero", the range extends to 0,
-#'   regardless of the input data If "nonnegative", the range is
-#'   non-negative, regardless of the input data. Applies only to linear
-#'   axes. One of \code{"normal"}, \code{"tozero"}, \code{"nonnegative"}.
-#' @param separatethousands If "true", even 4-digit integers are separated
-#'   Logical.
-#' @param showaxeslabels Sets whether or not this axis is labeled Logical.
-#' @param showbackground Sets whether or not this axis' wall has a
-#'   background color. Logical.
-#' @param showexponent If "all", all exponents are shown besides their
-#'   significands. If "first", only the exponent of the first tick is
-#'   shown. If "last", only the exponent of the last tick is shown. If
-#'   "none", no exponents appear. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showgrid Determines whether or not grid lines are drawn. If TRUE,
-#'   the grid lines are drawn at every tick mark. Logical.
-#' @param showline Determines whether or not a line bounding this axis is
-#'   drawn. Logical.
-#' @param showspikes Sets whether or not spikes starting from data points
-#'   to this axis' wall are shown on hover. Logical.
-#' @param showticklabels Determines whether or not the tick labels are
-#'   drawn. Logical.
-#' @param showtickprefix If "all", all tick labels are displayed with a
-#'   prefix. If "first", only the first tick is displayed with a prefix. If
-#'   "last", only the last tick is displayed with a suffix. If "none", tick
-#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
-#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
-#' @param spikecolor Sets the color of the spikes. Color: a CSS color
-#'   string or R color name.
-#' @param spikesides Sets whether or not spikes extending from the
-#'   projection data points to this axis' wall boundaries are shown on
-#'   hover. Logical.
-#' @param spikethickness Sets the thickness (in px) of the spikes. Number
-#'   in the interval [0, Inf].
-#' @param tick0 Sets the placement of the first tick on this axis. Use with
-#'   `dtick`. If the axis `type` is "log", then you must take the log of
-#'   your starting tick (e.g. to set the starting tick to 100, set the
-#'   `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-#'   If the axis `type` is "date", it should be a date string, like date
-#'   data. If the axis `type` is "category", it should be a number, using
-#'   the scale where each category is assigned a serial number from zero in
-#'   the order it appears. Any value.
-#' @param tickangle Sets the angle of the tick labels with respect to the
-#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
-#'   vertically. Angle in degrees.
-#' @param tickcolor Sets the tick color. Color: a CSS color string or R
-#'   color name.
-#' @param tickfont Sets the tick font. A \code{\link{go_font}()} object or
-#'   named list, with properties \code{color}, \code{family},
-#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
-#'   \code{textcase}, \code{variant} and \code{weight} (see
-#'   \code{\link{go_font}()}).
-#' @param tickformat Sets the tick label formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param tickformatstops List, each element a
-#'   \code{\link{go_tickformatstop}()} object or named list, with
-#'   properties \code{dtickrange}, \code{enabled}, \code{name},
-#'   \code{templateitemname} and \code{value} (see
-#'   \code{\link{go_tickformatstop}()}).
-#' @param ticklen Sets the tick length (in px). Number in the interval [0,
-#'   Inf].
-#' @param tickmode Sets the tick mode for this axis. If "auto", the number
-#'   of ticks is set via `nticks`. If "linear", the placement of the ticks
-#'   is determined by a starting position `tick0` and a tick step `dtick`
-#'   ("linear" is the default value if `tick0` and `dtick` are provided).
-#'   If "array", the placement of the ticks is set via `tickvals` and the
-#'   tick text is `ticktext`. ("array" is the default value if `tickvals`
-#'   is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.
-#' @param tickprefix Sets a tick label prefix. String.
-#' @param ticks Determines whether ticks are drawn or not. If **, this
-#'   axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-#'   drawn outside (inside) the axis lines. One of \code{"outside"},
-#'   \code{"inside"}, \code{""}.
-#' @param ticksuffix Sets a tick label suffix. String.
-#' @param ticktext Sets the text displayed at the ticks position via
-#'   `tickvals`. Only has an effect if `tickmode` is set to "array". Used
-#'   with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#' @param tickvals Sets the values at which ticks on this axis appear. Only
-#'   has an effect if `tickmode` is set to "array". Used with `ticktext`.
-#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
-#'   Inf].
-#' @param title String (the title text), or a
-#'   \code{\link{go_scene_xaxis_title}()} object or named list, with
-#'   properties \code{font} and \code{text} (see
-#'   \code{\link{go_scene_xaxis_title}()}).
-#' @param type Sets the axis type. By default, plotly attempts to
-#'   determined the axis type by looking into the data of the traces that
-#'   referenced the axis in question. One of \code{"-"}, \code{"linear"},
-#'   \code{"log"}, \code{"date"}, \code{"category"}.
-#' @param visible A single toggle to hide the axis while preserving
-#'   interaction like dragging. Default is true when a cheater plot is
-#'   present on the axis, otherwise false Logical.
-#' @param zeroline Determines whether or not a line is drawn at along the 0
-#'   value of this axis. If TRUE, the zero line is drawn on top of the grid
-#'   lines. Logical.
-#' @param zerolinecolor Sets the line color of the zero line. Color: a CSS
-#'   color string or R color name.
-#' @param zerolinewidth Sets the width (in px) of the zero line. Number.
-#' @param ... Not used: properties must be named in full.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return A \code{go_layout_scene_xaxis} object (a named list).
-#'
-#' @noMd
-#' @export
-#' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     scene = go_scene(
-#'       xaxis = go_scene_xaxis(color = "red")
-#'     )
-#'   )
-go_scene_xaxis <- function(
-    arg = NULL, ..., autorange = NULL, autorangeoptions = NULL,
-    autotypenumbers = NULL, backgroundcolor = NULL, calendar = NULL,
-    categoryarray = NULL, categoryorder = NULL, color = NULL, dtick = NULL,
-    exponentformat = NULL, gridcolor = NULL, gridwidth = NULL,
-    hoverformat = NULL, labelalias = NULL, linecolor = NULL,
-    linewidth = NULL, maxallowed = NULL, minallowed = NULL,
-    minexponent = NULL, mirror = NULL, nticks = NULL, range = NULL,
-    rangemode = NULL, separatethousands = NULL, showaxeslabels = NULL,
-    showbackground = NULL, showexponent = NULL, showgrid = NULL,
-    showline = NULL, showspikes = NULL, showticklabels = NULL,
-    showtickprefix = NULL, showticksuffix = NULL, spikecolor = NULL,
-    spikesides = NULL, spikethickness = NULL, tick0 = NULL,
-    tickangle = NULL, tickcolor = NULL, tickfont = NULL, tickformat = NULL,
-    tickformatstops = NULL, ticklen = NULL, tickmode = NULL,
-    tickprefix = NULL, ticks = NULL, ticksuffix = NULL, ticktext = NULL,
-    tickvals = NULL, tickwidth = NULL, title = NULL, type = NULL,
-    visible = NULL, zeroline = NULL, zerolinecolor = NULL,
-    zerolinewidth = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.xaxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout scene xaxis title objects
-#'
-#' The object for the layout's \code{scene.xaxis.title}
-#' (\code{\link{go_scene_xaxis}()}). \code{go_scene_xaxis_title()} creates
-#' one, with exactly its properties; a named list with the same properties
-#' works too.
-#'
-#' @details
-#' Nested objects are named lists, or objects of the constructors their
-#' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
-#' @param font Sets this axis' title font. A \code{\link{go_font}()} object
-#'   or named list, with properties \code{color}, \code{family},
-#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
-#'   \code{textcase}, \code{variant} and \code{weight} (see
-#'   \code{\link{go_font}()}).
-#' @param text Sets the title of this axis. String.
-#' @param ... Not used: properties must be named in full.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return A \code{go_layout_scene_xaxis_title} object (a named list).
-#'
-#' @noMd
-#' @export
-#' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     scene = go_scene(
-#'       xaxis = go_scene_xaxis(
-#'         title = go_scene_xaxis_title(text = "title")
-#'       )
-#'     )
-#'   )
-go_scene_xaxis_title <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.xaxis.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout scene yaxis objects
-#'
-#' The object for the layout's \code{scene.yaxis}
-#' (\code{\link{go_scene}()}). \code{go_scene_yaxis()} creates one, with
-#' exactly its properties; a named list with the same properties works too.
-#'
-#' @details
-#' Nested objects are named lists, or objects of the constructors their
-#' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
-#' @param autorange Determines whether or not the range of this axis is
-#'   computed in relation to the input data. See `rangemode` for more info.
-#'   If `range` is provided and it has a value for both the lower and upper
-#'   bound, `autorange` is set to FALSE. Using "min" applies autorange only
-#'   to set the minimum. Using "max" applies autorange only to set the
-#'   maximum. Using "min reversed" applies autorange only to set the
-#'   minimum on a reversed axis. Using "max reversed" applies autorange
-#'   only to set the maximum on a reversed axis. Using "reversed" applies
-#'   autorange on both ends and reverses the axis direction. One of
-#'   \code{"reversed"}, \code{"min reversed"}, \code{"max reversed"},
-#'   \code{"min"}, \code{"max"}, \code{TRUE}, \code{FALSE}.
-#' @param autorangeoptions A \code{\link{go_autorangeoptions}()} object or
-#'   named list, with properties \code{clipmax}, \code{clipmin},
-#'   \code{include}, \code{maxallowed} and \code{minallowed} (see
-#'   \code{\link{go_autorangeoptions}()}).
-#' @param autotypenumbers Using "strict" a numeric string in trace data is
-#'   not converted to a number. Using "convert types" a numeric string in
-#'   trace data may be treated as a number during automatic axis `type`
-#'   detection. Defaults to layout.autotypenumbers. One of \code{"convert
-#'   types"}, \code{"strict"}.
-#' @param backgroundcolor Sets the background color of this axis' wall.
-#'   Color: a CSS color string or R color name.
-#' @param calendar Sets the calendar system to use for `range` and `tick0`
-#'   if this is a date axis. This does not set the calendar for
-#'   interpreting data on this axis, that's specified in the trace or via
-#'   the global `layout.calendar` One of \code{"chinese"}, \code{"coptic"},
-#'   \code{"discworld"}, \code{"ethiopian"}, \code{"gregorian"},
-#'   \code{"hebrew"}, \code{"islamic"}, \code{"jalali"}, \code{"julian"},
-#'   \code{"mayan"}, \code{"nanakshahi"}, \code{"nepali"},
-#'   \code{"persian"}, \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.
-#' @param categoryarray Sets the order in which categories on this axis
-#'   appear. Only has an effect if `categoryorder` is set to "array". Used
-#'   with `categoryorder`. Data array: a vector, factor, Date/POSIXct
-#'   vector, matrix or list.
-#' @param categoryorder Specifies the ordering logic for the case of
-#'   categorical variables. By default, plotly uses "trace", which
-#'   specifies the order that is present in the data supplied. Set
-#'   `categoryorder` to "category ascending" or "category descending" if
-#'   order should be determined by the alphanumerical order of the category
-#'   names. Set `categoryorder` to "array" to derive the ordering from the
-#'   attribute `categoryarray`. If a category is not found in the
-#'   `categoryarray` array, the sorting behavior for that attribute will be
-#'   identical to the "trace" mode. The unspecified categories will follow
-#'   the categories in `categoryarray`. Set `categoryorder` to "total
-#'   ascending" or "total descending" if order should be determined by the
-#'   numerical order of the values. Similarly, the order can be determined
-#'   by the min, max, sum, mean, geometric mean or median of all the
-#'   values. One of \code{"trace"}, \code{"category ascending"},
-#'   \code{"category descending"}, \code{"array"}, \code{"total
-#'   ascending"}, \code{"total descending"}, \code{"min ascending"},
-#'   \code{"min descending"}, \code{"max ascending"}, \code{"max
-#'   descending"}, \code{"sum ascending"}, \code{"sum descending"},
-#'   \code{"mean ascending"}, \code{"mean descending"}, \code{"geometric
-#'   mean ascending"}, \code{"geometric mean descending"}, \code{"median
-#'   ascending"}, \code{"median descending"}.
-#' @param color Sets default for all colors associated with this axis all
-#'   at once: line, font, tick, and grid colors. Grid color is lightened by
-#'   blending this with the plot background Individual pieces can override
-#'   this. Color: a CSS color string or R color name.
-#' @param dtick Sets the step in-between ticks on this axis. Use with
-#'   `tick0`. Must be a positive number, or special strings available to
-#'   "log" and "date" axes. If the axis `type` is "log", then ticks are set
-#'   every 10^(n*dtick) where n is the tick number. For example, to set a
-#'   tick mark at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks
-#'   at 1, 100, 10000, ... set dtick to 2. To set tick marks at 1, 5, 25,
-#'   125, 625, 3125, ... set dtick to log_10(5), or 0.69897000433. "log"
-#'   has several special values; "L<f>", where `f` is a positive number,
-#'   gives ticks linearly spaced in value (but not position). For example
-#'   `tick0` = 0.1, `dtick` = "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6
-#'   etc. To show powers of 10 plus small digits between, use "D1" (all
-#'   digits) or "D2" (only 2 and 5). `tick0` is ignored for "D1" and "D2".
-#'   If the axis `type` is "date", then you must convert the time to
-#'   milliseconds. For example, to set the interval between ticks to one
-#'   day, set `dtick` to 86400000.0. "date" also has special values "M<n>"
-#'   gives ticks spaced by a number of months. `n` must be a positive
-#'   integer. To set ticks on the 15th of every third month, set `tick0` to
-#'   "2000-01-15" and `dtick` to "M3". To set ticks every 4 years, set
-#'   `dtick` to "M48" Any value.
-#' @param exponentformat Determines a formatting rule for the tick
-#'   exponents. For example, consider the number 1,000,000,000. If "none",
-#'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-#'   1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-#'   prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-#'   covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-#'   Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-#'   the above ranges, the formatting rule will automatically be switched
-#'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-#'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
-#' @param gridcolor Sets the color of the grid lines. Color: a CSS color
-#'   string or R color name.
-#' @param gridwidth Sets the width (in px) of the grid lines. Number in the
-#'   interval [0, Inf].
-#' @param hoverformat Sets the hover text formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param labelalias Replacement text for specific tick or hover labels.
-#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-#'   to Canada. The labels we would have shown must match the keys exactly,
-#'   after adding any tickprefix or ticksuffix. For negative numbers the
-#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
-#'   That means you need to use -1 instead of -1. labelalias can be used
-#'   with any axis type, and both keys (if needed) and values (if desired)
-#'   can include html-like tags or MathJax. Any value.
-#' @param linecolor Sets the axis line color. Color: a CSS color string or
-#'   R color name.
-#' @param linewidth Sets the width (in px) of the axis line. Number in the
-#'   interval [0, Inf].
-#' @param maxallowed Determines the maximum range of this axis. Any value.
-#' @param minallowed Determines the minimum range of this axis. Any value.
-#' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
-#'   This only has an effect when `tickformat` is "SI" or "B". Number in
-#'   the interval [0, Inf].
-#' @param mirror Determines if the axis lines or/and ticks are mirrored to
-#'   the opposite side of the plotting area. If TRUE, the axis lines are
-#'   mirrored. If "ticks", the axis lines and ticks are mirrored. If FALSE,
-#'   mirroring is disable. If "all", axis lines are mirrored on all
-#'   shared-axes subplots. If "allticks", axis lines and ticks are mirrored
-#'   on all shared-axes subplots. One of \code{"ticks"}, \code{"all"},
-#'   \code{"allticks"}, \code{TRUE}, \code{FALSE}.
-#' @param nticks Specifies the maximum number of ticks for the particular
-#'   axis. The actual number of ticks will be chosen automatically to be
-#'   less than or equal to `nticks`. Has an effect only if `tickmode` is
-#'   set to "auto". Integer in the interval [0, Inf].
-#' @param range Sets the range of this axis. If the axis `type` is "log",
-#'   then you must take the log of your desired range (e.g. to set the
-#'   range from 1 to 100, set the range from 0 to 2). If the axis `type` is
-#'   "date", it should be date strings, like date data, though Date objects
-#'   and unix milliseconds will be accepted and converted to strings. If
-#'   the axis `type` is "category", it should be numbers, using the scale
-#'   where each category is assigned a serial number from zero in the order
-#'   it appears. Leaving either or both elements `null` impacts the default
-#'   `autorange`. Vector or list of 2 element(s).
-#' @param rangemode If "normal", the range is computed in relation to the
-#'   extrema of the input data. If "tozero", the range extends to 0,
-#'   regardless of the input data If "nonnegative", the range is
-#'   non-negative, regardless of the input data. Applies only to linear
-#'   axes. One of \code{"normal"}, \code{"tozero"}, \code{"nonnegative"}.
-#' @param separatethousands If "true", even 4-digit integers are separated
-#'   Logical.
-#' @param showaxeslabels Sets whether or not this axis is labeled Logical.
-#' @param showbackground Sets whether or not this axis' wall has a
-#'   background color. Logical.
-#' @param showexponent If "all", all exponents are shown besides their
-#'   significands. If "first", only the exponent of the first tick is
-#'   shown. If "last", only the exponent of the last tick is shown. If
-#'   "none", no exponents appear. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showgrid Determines whether or not grid lines are drawn. If TRUE,
-#'   the grid lines are drawn at every tick mark. Logical.
-#' @param showline Determines whether or not a line bounding this axis is
-#'   drawn. Logical.
-#' @param showspikes Sets whether or not spikes starting from data points
-#'   to this axis' wall are shown on hover. Logical.
-#' @param showticklabels Determines whether or not the tick labels are
-#'   drawn. Logical.
-#' @param showtickprefix If "all", all tick labels are displayed with a
-#'   prefix. If "first", only the first tick is displayed with a prefix. If
-#'   "last", only the last tick is displayed with a suffix. If "none", tick
-#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
-#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
-#' @param spikecolor Sets the color of the spikes. Color: a CSS color
-#'   string or R color name.
-#' @param spikesides Sets whether or not spikes extending from the
-#'   projection data points to this axis' wall boundaries are shown on
-#'   hover. Logical.
-#' @param spikethickness Sets the thickness (in px) of the spikes. Number
-#'   in the interval [0, Inf].
-#' @param tick0 Sets the placement of the first tick on this axis. Use with
-#'   `dtick`. If the axis `type` is "log", then you must take the log of
-#'   your starting tick (e.g. to set the starting tick to 100, set the
-#'   `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-#'   If the axis `type` is "date", it should be a date string, like date
-#'   data. If the axis `type` is "category", it should be a number, using
-#'   the scale where each category is assigned a serial number from zero in
-#'   the order it appears. Any value.
-#' @param tickangle Sets the angle of the tick labels with respect to the
-#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
-#'   vertically. Angle in degrees.
-#' @param tickcolor Sets the tick color. Color: a CSS color string or R
-#'   color name.
-#' @param tickfont Sets the tick font. A \code{\link{go_font}()} object or
-#'   named list, with properties \code{color}, \code{family},
-#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
-#'   \code{textcase}, \code{variant} and \code{weight} (see
-#'   \code{\link{go_font}()}).
-#' @param tickformat Sets the tick label formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param tickformatstops List, each element a
-#'   \code{\link{go_tickformatstop}()} object or named list, with
-#'   properties \code{dtickrange}, \code{enabled}, \code{name},
-#'   \code{templateitemname} and \code{value} (see
-#'   \code{\link{go_tickformatstop}()}).
-#' @param ticklen Sets the tick length (in px). Number in the interval [0,
-#'   Inf].
-#' @param tickmode Sets the tick mode for this axis. If "auto", the number
-#'   of ticks is set via `nticks`. If "linear", the placement of the ticks
-#'   is determined by a starting position `tick0` and a tick step `dtick`
-#'   ("linear" is the default value if `tick0` and `dtick` are provided).
-#'   If "array", the placement of the ticks is set via `tickvals` and the
-#'   tick text is `ticktext`. ("array" is the default value if `tickvals`
-#'   is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.
-#' @param tickprefix Sets a tick label prefix. String.
-#' @param ticks Determines whether ticks are drawn or not. If **, this
-#'   axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-#'   drawn outside (inside) the axis lines. One of \code{"outside"},
-#'   \code{"inside"}, \code{""}.
-#' @param ticksuffix Sets a tick label suffix. String.
-#' @param ticktext Sets the text displayed at the ticks position via
-#'   `tickvals`. Only has an effect if `tickmode` is set to "array". Used
-#'   with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#' @param tickvals Sets the values at which ticks on this axis appear. Only
-#'   has an effect if `tickmode` is set to "array". Used with `ticktext`.
-#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
-#'   Inf].
-#' @param title String (the title text), or a
-#'   \code{\link{go_scene_yaxis_title}()} object or named list, with
-#'   properties \code{font} and \code{text} (see
-#'   \code{\link{go_scene_yaxis_title}()}).
-#' @param type Sets the axis type. By default, plotly attempts to
-#'   determined the axis type by looking into the data of the traces that
-#'   referenced the axis in question. One of \code{"-"}, \code{"linear"},
-#'   \code{"log"}, \code{"date"}, \code{"category"}.
-#' @param visible A single toggle to hide the axis while preserving
-#'   interaction like dragging. Default is true when a cheater plot is
-#'   present on the axis, otherwise false Logical.
-#' @param zeroline Determines whether or not a line is drawn at along the 0
-#'   value of this axis. If TRUE, the zero line is drawn on top of the grid
-#'   lines. Logical.
-#' @param zerolinecolor Sets the line color of the zero line. Color: a CSS
-#'   color string or R color name.
-#' @param zerolinewidth Sets the width (in px) of the zero line. Number.
-#' @param ... Not used: properties must be named in full.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return A \code{go_layout_scene_yaxis} object (a named list).
-#'
-#' @noMd
-#' @export
-#' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     scene = go_scene(
-#'       yaxis = go_scene_yaxis(color = "red")
-#'     )
-#'   )
-go_scene_yaxis <- function(
-    arg = NULL, ..., autorange = NULL, autorangeoptions = NULL,
-    autotypenumbers = NULL, backgroundcolor = NULL, calendar = NULL,
-    categoryarray = NULL, categoryorder = NULL, color = NULL, dtick = NULL,
-    exponentformat = NULL, gridcolor = NULL, gridwidth = NULL,
-    hoverformat = NULL, labelalias = NULL, linecolor = NULL,
-    linewidth = NULL, maxallowed = NULL, minallowed = NULL,
-    minexponent = NULL, mirror = NULL, nticks = NULL, range = NULL,
-    rangemode = NULL, separatethousands = NULL, showaxeslabels = NULL,
-    showbackground = NULL, showexponent = NULL, showgrid = NULL,
-    showline = NULL, showspikes = NULL, showticklabels = NULL,
-    showtickprefix = NULL, showticksuffix = NULL, spikecolor = NULL,
-    spikesides = NULL, spikethickness = NULL, tick0 = NULL,
-    tickangle = NULL, tickcolor = NULL, tickfont = NULL, tickformat = NULL,
-    tickformatstops = NULL, ticklen = NULL, tickmode = NULL,
-    tickprefix = NULL, ticks = NULL, ticksuffix = NULL, ticktext = NULL,
-    tickvals = NULL, tickwidth = NULL, title = NULL, type = NULL,
-    visible = NULL, zeroline = NULL, zerolinecolor = NULL,
-    zerolinewidth = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.yaxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout scene yaxis title objects
-#'
-#' The object for the layout's \code{scene.yaxis.title}
-#' (\code{\link{go_scene_yaxis}()}). \code{go_scene_yaxis_title()} creates
-#' one, with exactly its properties; a named list with the same properties
-#' works too.
-#'
-#' @details
-#' Nested objects are named lists, or objects of the constructors their
-#' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
-#' @param font Sets this axis' title font. A \code{\link{go_font}()} object
-#'   or named list, with properties \code{color}, \code{family},
-#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
-#'   \code{textcase}, \code{variant} and \code{weight} (see
-#'   \code{\link{go_font}()}).
-#' @param text Sets the title of this axis. String.
-#' @param ... Not used: properties must be named in full.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return A \code{go_layout_scene_yaxis_title} object (a named list).
-#'
-#' @noMd
-#' @export
-#' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     scene = go_scene(
-#'       yaxis = go_scene_yaxis(
-#'         title = go_scene_yaxis_title(text = "title")
-#'       )
-#'     )
-#'   )
-go_scene_yaxis_title <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.yaxis.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout scene zaxis objects
-#'
-#' The object for the layout's \code{scene.zaxis}
-#' (\code{\link{go_scene}()}). \code{go_scene_zaxis()} creates one, with
-#' exactly its properties; a named list with the same properties works too.
-#'
-#' @details
-#' Nested objects are named lists, or objects of the constructors their
-#' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
-#' @param autorange Determines whether or not the range of this axis is
-#'   computed in relation to the input data. See `rangemode` for more info.
-#'   If `range` is provided and it has a value for both the lower and upper
-#'   bound, `autorange` is set to FALSE. Using "min" applies autorange only
-#'   to set the minimum. Using "max" applies autorange only to set the
-#'   maximum. Using "min reversed" applies autorange only to set the
-#'   minimum on a reversed axis. Using "max reversed" applies autorange
-#'   only to set the maximum on a reversed axis. Using "reversed" applies
-#'   autorange on both ends and reverses the axis direction. One of
-#'   \code{"reversed"}, \code{"min reversed"}, \code{"max reversed"},
-#'   \code{"min"}, \code{"max"}, \code{TRUE}, \code{FALSE}.
-#' @param autorangeoptions A \code{\link{go_autorangeoptions}()} object or
-#'   named list, with properties \code{clipmax}, \code{clipmin},
-#'   \code{include}, \code{maxallowed} and \code{minallowed} (see
-#'   \code{\link{go_autorangeoptions}()}).
-#' @param autotypenumbers Using "strict" a numeric string in trace data is
-#'   not converted to a number. Using "convert types" a numeric string in
-#'   trace data may be treated as a number during automatic axis `type`
-#'   detection. Defaults to layout.autotypenumbers. One of \code{"convert
-#'   types"}, \code{"strict"}.
-#' @param backgroundcolor Sets the background color of this axis' wall.
-#'   Color: a CSS color string or R color name.
-#' @param calendar Sets the calendar system to use for `range` and `tick0`
-#'   if this is a date axis. This does not set the calendar for
-#'   interpreting data on this axis, that's specified in the trace or via
-#'   the global `layout.calendar` One of \code{"chinese"}, \code{"coptic"},
-#'   \code{"discworld"}, \code{"ethiopian"}, \code{"gregorian"},
-#'   \code{"hebrew"}, \code{"islamic"}, \code{"jalali"}, \code{"julian"},
-#'   \code{"mayan"}, \code{"nanakshahi"}, \code{"nepali"},
-#'   \code{"persian"}, \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.
-#' @param categoryarray Sets the order in which categories on this axis
-#'   appear. Only has an effect if `categoryorder` is set to "array". Used
-#'   with `categoryorder`. Data array: a vector, factor, Date/POSIXct
-#'   vector, matrix or list.
-#' @param categoryorder Specifies the ordering logic for the case of
-#'   categorical variables. By default, plotly uses "trace", which
-#'   specifies the order that is present in the data supplied. Set
-#'   `categoryorder` to "category ascending" or "category descending" if
-#'   order should be determined by the alphanumerical order of the category
-#'   names. Set `categoryorder` to "array" to derive the ordering from the
-#'   attribute `categoryarray`. If a category is not found in the
-#'   `categoryarray` array, the sorting behavior for that attribute will be
-#'   identical to the "trace" mode. The unspecified categories will follow
-#'   the categories in `categoryarray`. Set `categoryorder` to "total
-#'   ascending" or "total descending" if order should be determined by the
-#'   numerical order of the values. Similarly, the order can be determined
-#'   by the min, max, sum, mean, geometric mean or median of all the
-#'   values. One of \code{"trace"}, \code{"category ascending"},
-#'   \code{"category descending"}, \code{"array"}, \code{"total
-#'   ascending"}, \code{"total descending"}, \code{"min ascending"},
-#'   \code{"min descending"}, \code{"max ascending"}, \code{"max
-#'   descending"}, \code{"sum ascending"}, \code{"sum descending"},
-#'   \code{"mean ascending"}, \code{"mean descending"}, \code{"geometric
-#'   mean ascending"}, \code{"geometric mean descending"}, \code{"median
-#'   ascending"}, \code{"median descending"}.
-#' @param color Sets default for all colors associated with this axis all
-#'   at once: line, font, tick, and grid colors. Grid color is lightened by
-#'   blending this with the plot background Individual pieces can override
-#'   this. Color: a CSS color string or R color name.
-#' @param dtick Sets the step in-between ticks on this axis. Use with
-#'   `tick0`. Must be a positive number, or special strings available to
-#'   "log" and "date" axes. If the axis `type` is "log", then ticks are set
-#'   every 10^(n*dtick) where n is the tick number. For example, to set a
-#'   tick mark at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks
-#'   at 1, 100, 10000, ... set dtick to 2. To set tick marks at 1, 5, 25,
-#'   125, 625, 3125, ... set dtick to log_10(5), or 0.69897000433. "log"
-#'   has several special values; "L<f>", where `f` is a positive number,
-#'   gives ticks linearly spaced in value (but not position). For example
-#'   `tick0` = 0.1, `dtick` = "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6
-#'   etc. To show powers of 10 plus small digits between, use "D1" (all
-#'   digits) or "D2" (only 2 and 5). `tick0` is ignored for "D1" and "D2".
-#'   If the axis `type` is "date", then you must convert the time to
-#'   milliseconds. For example, to set the interval between ticks to one
-#'   day, set `dtick` to 86400000.0. "date" also has special values "M<n>"
-#'   gives ticks spaced by a number of months. `n` must be a positive
-#'   integer. To set ticks on the 15th of every third month, set `tick0` to
-#'   "2000-01-15" and `dtick` to "M3". To set ticks every 4 years, set
-#'   `dtick` to "M48" Any value.
-#' @param exponentformat Determines a formatting rule for the tick
-#'   exponents. For example, consider the number 1,000,000,000. If "none",
-#'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-#'   1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-#'   prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-#'   covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-#'   Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-#'   the above ranges, the formatting rule will automatically be switched
-#'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-#'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
-#' @param gridcolor Sets the color of the grid lines. Color: a CSS color
-#'   string or R color name.
-#' @param gridwidth Sets the width (in px) of the grid lines. Number in the
-#'   interval [0, Inf].
-#' @param hoverformat Sets the hover text formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param labelalias Replacement text for specific tick or hover labels.
-#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-#'   to Canada. The labels we would have shown must match the keys exactly,
-#'   after adding any tickprefix or ticksuffix. For negative numbers the
-#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
-#'   That means you need to use -1 instead of -1. labelalias can be used
-#'   with any axis type, and both keys (if needed) and values (if desired)
-#'   can include html-like tags or MathJax. Any value.
-#' @param linecolor Sets the axis line color. Color: a CSS color string or
-#'   R color name.
-#' @param linewidth Sets the width (in px) of the axis line. Number in the
-#'   interval [0, Inf].
-#' @param maxallowed Determines the maximum range of this axis. Any value.
-#' @param minallowed Determines the minimum range of this axis. Any value.
-#' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
-#'   This only has an effect when `tickformat` is "SI" or "B". Number in
-#'   the interval [0, Inf].
-#' @param mirror Determines if the axis lines or/and ticks are mirrored to
-#'   the opposite side of the plotting area. If TRUE, the axis lines are
-#'   mirrored. If "ticks", the axis lines and ticks are mirrored. If FALSE,
-#'   mirroring is disable. If "all", axis lines are mirrored on all
-#'   shared-axes subplots. If "allticks", axis lines and ticks are mirrored
-#'   on all shared-axes subplots. One of \code{"ticks"}, \code{"all"},
-#'   \code{"allticks"}, \code{TRUE}, \code{FALSE}.
-#' @param nticks Specifies the maximum number of ticks for the particular
-#'   axis. The actual number of ticks will be chosen automatically to be
-#'   less than or equal to `nticks`. Has an effect only if `tickmode` is
-#'   set to "auto". Integer in the interval [0, Inf].
-#' @param range Sets the range of this axis. If the axis `type` is "log",
-#'   then you must take the log of your desired range (e.g. to set the
-#'   range from 1 to 100, set the range from 0 to 2). If the axis `type` is
-#'   "date", it should be date strings, like date data, though Date objects
-#'   and unix milliseconds will be accepted and converted to strings. If
-#'   the axis `type` is "category", it should be numbers, using the scale
-#'   where each category is assigned a serial number from zero in the order
-#'   it appears. Leaving either or both elements `null` impacts the default
-#'   `autorange`. Vector or list of 2 element(s).
-#' @param rangemode If "normal", the range is computed in relation to the
-#'   extrema of the input data. If "tozero", the range extends to 0,
-#'   regardless of the input data If "nonnegative", the range is
-#'   non-negative, regardless of the input data. Applies only to linear
-#'   axes. One of \code{"normal"}, \code{"tozero"}, \code{"nonnegative"}.
-#' @param separatethousands If "true", even 4-digit integers are separated
-#'   Logical.
-#' @param showaxeslabels Sets whether or not this axis is labeled Logical.
-#' @param showbackground Sets whether or not this axis' wall has a
-#'   background color. Logical.
-#' @param showexponent If "all", all exponents are shown besides their
-#'   significands. If "first", only the exponent of the first tick is
-#'   shown. If "last", only the exponent of the last tick is shown. If
-#'   "none", no exponents appear. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showgrid Determines whether or not grid lines are drawn. If TRUE,
-#'   the grid lines are drawn at every tick mark. Logical.
-#' @param showline Determines whether or not a line bounding this axis is
-#'   drawn. Logical.
-#' @param showspikes Sets whether or not spikes starting from data points
-#'   to this axis' wall are shown on hover. Logical.
-#' @param showticklabels Determines whether or not the tick labels are
-#'   drawn. Logical.
-#' @param showtickprefix If "all", all tick labels are displayed with a
-#'   prefix. If "first", only the first tick is displayed with a prefix. If
-#'   "last", only the last tick is displayed with a suffix. If "none", tick
-#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
-#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
-#' @param spikecolor Sets the color of the spikes. Color: a CSS color
-#'   string or R color name.
-#' @param spikesides Sets whether or not spikes extending from the
-#'   projection data points to this axis' wall boundaries are shown on
-#'   hover. Logical.
-#' @param spikethickness Sets the thickness (in px) of the spikes. Number
-#'   in the interval [0, Inf].
-#' @param tick0 Sets the placement of the first tick on this axis. Use with
-#'   `dtick`. If the axis `type` is "log", then you must take the log of
-#'   your starting tick (e.g. to set the starting tick to 100, set the
-#'   `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-#'   If the axis `type` is "date", it should be a date string, like date
-#'   data. If the axis `type` is "category", it should be a number, using
-#'   the scale where each category is assigned a serial number from zero in
-#'   the order it appears. Any value.
-#' @param tickangle Sets the angle of the tick labels with respect to the
-#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
-#'   vertically. Angle in degrees.
-#' @param tickcolor Sets the tick color. Color: a CSS color string or R
-#'   color name.
-#' @param tickfont Sets the tick font. A \code{\link{go_font}()} object or
-#'   named list, with properties \code{color}, \code{family},
-#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
-#'   \code{textcase}, \code{variant} and \code{weight} (see
-#'   \code{\link{go_font}()}).
-#' @param tickformat Sets the tick label formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param tickformatstops List, each element a
-#'   \code{\link{go_tickformatstop}()} object or named list, with
-#'   properties \code{dtickrange}, \code{enabled}, \code{name},
-#'   \code{templateitemname} and \code{value} (see
-#'   \code{\link{go_tickformatstop}()}).
-#' @param ticklen Sets the tick length (in px). Number in the interval [0,
-#'   Inf].
-#' @param tickmode Sets the tick mode for this axis. If "auto", the number
-#'   of ticks is set via `nticks`. If "linear", the placement of the ticks
-#'   is determined by a starting position `tick0` and a tick step `dtick`
-#'   ("linear" is the default value if `tick0` and `dtick` are provided).
-#'   If "array", the placement of the ticks is set via `tickvals` and the
-#'   tick text is `ticktext`. ("array" is the default value if `tickvals`
-#'   is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.
-#' @param tickprefix Sets a tick label prefix. String.
-#' @param ticks Determines whether ticks are drawn or not. If **, this
-#'   axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-#'   drawn outside (inside) the axis lines. One of \code{"outside"},
-#'   \code{"inside"}, \code{""}.
-#' @param ticksuffix Sets a tick label suffix. String.
-#' @param ticktext Sets the text displayed at the ticks position via
-#'   `tickvals`. Only has an effect if `tickmode` is set to "array". Used
-#'   with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#' @param tickvals Sets the values at which ticks on this axis appear. Only
-#'   has an effect if `tickmode` is set to "array". Used with `ticktext`.
-#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
-#'   Inf].
-#' @param title String (the title text), or a
-#'   \code{\link{go_scene_zaxis_title}()} object or named list, with
-#'   properties \code{font} and \code{text} (see
-#'   \code{\link{go_scene_zaxis_title}()}).
-#' @param type Sets the axis type. By default, plotly attempts to
-#'   determined the axis type by looking into the data of the traces that
-#'   referenced the axis in question. One of \code{"-"}, \code{"linear"},
-#'   \code{"log"}, \code{"date"}, \code{"category"}.
-#' @param visible A single toggle to hide the axis while preserving
-#'   interaction like dragging. Default is true when a cheater plot is
-#'   present on the axis, otherwise false Logical.
-#' @param zeroline Determines whether or not a line is drawn at along the 0
-#'   value of this axis. If TRUE, the zero line is drawn on top of the grid
-#'   lines. Logical.
-#' @param zerolinecolor Sets the line color of the zero line. Color: a CSS
-#'   color string or R color name.
-#' @param zerolinewidth Sets the width (in px) of the zero line. Number.
-#' @param ... Not used: properties must be named in full.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return A \code{go_layout_scene_zaxis} object (a named list).
-#'
-#' @noMd
-#' @export
-#' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     scene = go_scene(
-#'       zaxis = go_scene_zaxis(color = "red")
-#'     )
-#'   )
-go_scene_zaxis <- function(
-    arg = NULL, ..., autorange = NULL, autorangeoptions = NULL,
-    autotypenumbers = NULL, backgroundcolor = NULL, calendar = NULL,
-    categoryarray = NULL, categoryorder = NULL, color = NULL, dtick = NULL,
-    exponentformat = NULL, gridcolor = NULL, gridwidth = NULL,
-    hoverformat = NULL, labelalias = NULL, linecolor = NULL,
-    linewidth = NULL, maxallowed = NULL, minallowed = NULL,
-    minexponent = NULL, mirror = NULL, nticks = NULL, range = NULL,
-    rangemode = NULL, separatethousands = NULL, showaxeslabels = NULL,
-    showbackground = NULL, showexponent = NULL, showgrid = NULL,
-    showline = NULL, showspikes = NULL, showticklabels = NULL,
-    showtickprefix = NULL, showticksuffix = NULL, spikecolor = NULL,
-    spikesides = NULL, spikethickness = NULL, tick0 = NULL,
-    tickangle = NULL, tickcolor = NULL, tickfont = NULL, tickformat = NULL,
-    tickformatstops = NULL, ticklen = NULL, tickmode = NULL,
-    tickprefix = NULL, ticks = NULL, ticksuffix = NULL, ticktext = NULL,
-    tickvals = NULL, tickwidth = NULL, title = NULL, type = NULL,
-    visible = NULL, zeroline = NULL, zerolinecolor = NULL,
-    zerolinewidth = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.zaxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout scene zaxis title objects
-#'
-#' The object for the layout's \code{scene.zaxis.title}
-#' (\code{\link{go_scene_zaxis}()}). \code{go_scene_zaxis_title()} creates
-#' one, with exactly its properties; a named list with the same properties
-#' works too.
-#'
-#' @details
-#' Nested objects are named lists, or objects of the constructors their
-#' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
-#' @param font Sets this axis' title font. A \code{\link{go_font}()} object
-#'   or named list, with properties \code{color}, \code{family},
-#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
-#'   \code{textcase}, \code{variant} and \code{weight} (see
-#'   \code{\link{go_font}()}).
-#' @param text Sets the title of this axis. String.
-#' @param ... Not used: properties must be named in full.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return A \code{go_layout_scene_zaxis_title} object (a named list).
-#'
-#' @noMd
-#' @export
-#' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     scene = go_scene(
-#'       zaxis = go_scene_zaxis(
-#'         title = go_scene_zaxis_title(text = "title")
-#'       )
-#'     )
-#'   )
-go_scene_zaxis_title <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.scene.zaxis.title", arg, environment(), list(...), skip_invalid)
-}
-
 #' Layout selection objects
 #'
 #' The object for an element of the figure layout's \code{selections} list
@@ -4810,7 +3940,10 @@ go_scene_zaxis_title <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -4872,6 +4005,7 @@ go_scene_zaxis_title <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_selection} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -4897,7 +4031,10 @@ go_selection <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -4916,6 +4053,7 @@ go_selection <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_selection_line} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -4941,7 +4079,10 @@ go_selection_line <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -5121,6 +4262,7 @@ go_selection_line <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_shape} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -5151,7 +4293,10 @@ go_shape <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -5170,6 +4315,7 @@ go_shape <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_shape_line} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -5195,7 +4341,10 @@ go_shape_line <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -5274,6 +4423,7 @@ go_shape_line <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_slider} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -5303,7 +4453,10 @@ go_slider <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -5327,6 +4480,7 @@ go_slider <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_slider_currentvalue} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -5353,7 +4507,10 @@ go_slider_currentvalue <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -5370,6 +4527,7 @@ go_slider_currentvalue <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_slider_pad} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -5396,7 +4554,10 @@ go_slider_pad <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -5440,6 +4601,7 @@ go_slider_pad <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_slider_step} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -5467,7 +4629,10 @@ go_slider_step <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -5491,6 +4656,7 @@ go_slider_step <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_slider_transition} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -5516,7 +4682,10 @@ go_slider_transition <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -5542,6 +4711,7 @@ go_slider_transition <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_smith} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -5566,7 +4736,10 @@ go_smith <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -5662,6 +4835,7 @@ go_smith <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_smith_imaginaryaxis} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -5692,7 +4866,10 @@ go_smith_imaginaryaxis <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -5792,6 +4969,7 @@ go_smith_imaginaryaxis <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_smith_realaxis} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -5824,30 +5002,33 @@ go_smith_realaxis <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
-#' @param aaxis A \code{\link{go_ternary_aaxis}()} object or named list,
+#' @param aaxis A \code{\link{go_ternary_axis}()} object or named list,
 #'   with properties \code{color}, \code{dtick}, \code{exponentformat},
 #'   \code{gridcolor}, \code{griddash}, \code{gridwidth},
 #'   \code{hoverformat}, \code{labelalias}, \code{layer}, \code{linecolor},
 #'   \code{linewidth}, \code{min} and 32 more (see
-#'   \code{\link{go_ternary_aaxis}()}).
-#' @param baxis A \code{\link{go_ternary_baxis}()} object or named list,
+#'   \code{\link{go_ternary_axis}()}).
+#' @param baxis A \code{\link{go_ternary_axis}()} object or named list,
 #'   with properties \code{color}, \code{dtick}, \code{exponentformat},
 #'   \code{gridcolor}, \code{griddash}, \code{gridwidth},
 #'   \code{hoverformat}, \code{labelalias}, \code{layer}, \code{linecolor},
 #'   \code{linewidth}, \code{min} and 32 more (see
-#'   \code{\link{go_ternary_baxis}()}).
+#'   \code{\link{go_ternary_axis}()}).
 #' @param bgcolor Set the background color of the subplot Color: a CSS
 #'   color string or R color name.
-#' @param caxis A \code{\link{go_ternary_caxis}()} object or named list,
+#' @param caxis A \code{\link{go_ternary_axis}()} object or named list,
 #'   with properties \code{color}, \code{dtick}, \code{exponentformat},
 #'   \code{gridcolor}, \code{griddash}, \code{gridwidth},
 #'   \code{hoverformat}, \code{labelalias}, \code{layer}, \code{linecolor},
 #'   \code{linewidth}, \code{min} and 32 more (see
-#'   \code{\link{go_ternary_caxis}()}).
+#'   \code{\link{go_ternary_axis}()}).
 #' @param domain A \code{\link{go_domain}()} object or named list, with
 #'   properties \code{column}, \code{row}, \code{x} and \code{y} (see
 #'   \code{\link{go_domain}()}).
@@ -5861,6 +5042,7 @@ go_smith_realaxis <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_ternary} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -5876,849 +5058,6 @@ go_ternary <- function(
   plotly_object("layout.ternary", arg, environment(), list(...), skip_invalid)
 }
 
-#' Layout ternary aaxis objects
-#'
-#' The object for the layout's \code{ternary.aaxis}
-#' (\code{\link{go_ternary}()}). \code{go_ternary_aaxis()} creates one, with
-#' exactly its properties; a named list with the same properties works too.
-#'
-#' @details
-#' Nested objects are named lists, or objects of the constructors their
-#' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
-#' @param color Sets default for all colors associated with this axis all
-#'   at once: line, font, tick, and grid colors. Grid color is lightened by
-#'   blending this with the plot background Individual pieces can override
-#'   this. Color: a CSS color string or R color name.
-#' @param dtick Sets the step in-between ticks on this axis. Use with
-#'   `tick0`. Must be a positive number, or special strings available to
-#'   "log" and "date" axes. If the axis `type` is "log", then ticks are set
-#'   every 10^(n*dtick) where n is the tick number. For example, to set a
-#'   tick mark at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks
-#'   at 1, 100, 10000, ... set dtick to 2. To set tick marks at 1, 5, 25,
-#'   125, 625, 3125, ... set dtick to log_10(5), or 0.69897000433. "log"
-#'   has several special values; "L<f>", where `f` is a positive number,
-#'   gives ticks linearly spaced in value (but not position). For example
-#'   `tick0` = 0.1, `dtick` = "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6
-#'   etc. To show powers of 10 plus small digits between, use "D1" (all
-#'   digits) or "D2" (only 2 and 5). `tick0` is ignored for "D1" and "D2".
-#'   If the axis `type` is "date", then you must convert the time to
-#'   milliseconds. For example, to set the interval between ticks to one
-#'   day, set `dtick` to 86400000.0. "date" also has special values "M<n>"
-#'   gives ticks spaced by a number of months. `n` must be a positive
-#'   integer. To set ticks on the 15th of every third month, set `tick0` to
-#'   "2000-01-15" and `dtick` to "M3". To set ticks every 4 years, set
-#'   `dtick` to "M48" Any value.
-#' @param exponentformat Determines a formatting rule for the tick
-#'   exponents. For example, consider the number 1,000,000,000. If "none",
-#'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-#'   1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-#'   prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-#'   covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-#'   Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-#'   the above ranges, the formatting rule will automatically be switched
-#'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-#'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
-#' @param gridcolor Sets the color of the grid lines. Color: a CSS color
-#'   string or R color name.
-#' @param griddash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param gridwidth Sets the width (in px) of the grid lines. Number in the
-#'   interval [0, Inf].
-#' @param hoverformat Sets the hover text formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param labelalias Replacement text for specific tick or hover labels.
-#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-#'   to Canada. The labels we would have shown must match the keys exactly,
-#'   after adding any tickprefix or ticksuffix. For negative numbers the
-#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
-#'   That means you need to use -1 instead of -1. labelalias can be used
-#'   with any axis type, and both keys (if needed) and values (if desired)
-#'   can include html-like tags or MathJax. Any value.
-#' @param layer Sets the layer on which this axis is displayed. If "above
-#'   traces", this axis is displayed above all the subplot's traces If
-#'   "below traces", this axis is displayed below all the subplot's traces,
-#'   but above the grid lines. Useful when used together with scatter-like
-#'   traces with `cliponaxis` set to FALSE to show markers and/or text
-#'   nodes above this axis. One of \code{"above traces"}, \code{"below
-#'   traces"}.
-#' @param linecolor Sets the axis line color. Color: a CSS color string or
-#'   R color name.
-#' @param linewidth Sets the width (in px) of the axis line. Number in the
-#'   interval [0, Inf].
-#' @param min The minimum value visible on this axis. The maximum is
-#'   determined by the sum minus the minimum values of the other two axes.
-#'   The full view corresponds to all the minima set to zero. Number in the
-#'   interval [0, Inf].
-#' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
-#'   This only has an effect when `tickformat` is "SI" or "B". Number in
-#'   the interval [0, Inf].
-#' @param nticks Specifies the maximum number of ticks for the particular
-#'   axis. The actual number of ticks will be chosen automatically to be
-#'   less than or equal to `nticks`. Has an effect only if `tickmode` is
-#'   set to "auto". Integer in the interval [1, Inf].
-#' @param separatethousands If "true", even 4-digit integers are separated
-#'   Logical.
-#' @param showexponent If "all", all exponents are shown besides their
-#'   significands. If "first", only the exponent of the first tick is
-#'   shown. If "last", only the exponent of the last tick is shown. If
-#'   "none", no exponents appear. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showgrid Determines whether or not grid lines are drawn. If TRUE,
-#'   the grid lines are drawn at every tick mark. Logical.
-#' @param showline Determines whether or not a line bounding this axis is
-#'   drawn. Logical.
-#' @param showspikes Determines whether or not spikes (aka droplines) are
-#'   drawn for this axis. Ternary spikes are accompanied by axis value
-#'   labels formatted according to `hoverformat`. Logical.
-#' @param showticklabels Determines whether or not the tick labels are
-#'   drawn. Logical.
-#' @param showtickprefix If "all", all tick labels are displayed with a
-#'   prefix. If "first", only the first tick is displayed with a prefix. If
-#'   "last", only the last tick is displayed with a suffix. If "none", tick
-#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
-#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
-#' @param spikecolor Sets the spike color. If undefined, will use the
-#'   series color Color: a CSS color string or R color name.
-#' @param spikedash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param spikemode Determines the drawing mode for the spike line If
-#'   "toaxis", the line is drawn from the data point to the axis the series
-#'   is plotted on. If "across", the line is drawn across the entire plot
-#'   area, and supercedes "toaxis". If "marker", then a marker dot is drawn
-#'   on the axis the series is plotted on Any combination of
-#'   \code{"toaxis"}, \code{"across"}, \code{"marker"} joined with
-#'   \code{"+"}.
-#' @param spikesnap Determines whether spikelines are stuck to the cursor
-#'   or to the closest datapoints. One of \code{"data"}, \code{"cursor"},
-#'   \code{"hovered data"}.
-#' @param spikethickness Sets the spike line width in pixels. Number.
-#' @param tick0 Sets the placement of the first tick on this axis. Use with
-#'   `dtick`. If the axis `type` is "log", then you must take the log of
-#'   your starting tick (e.g. to set the starting tick to 100, set the
-#'   `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-#'   If the axis `type` is "date", it should be a date string, like date
-#'   data. If the axis `type` is "category", it should be a number, using
-#'   the scale where each category is assigned a serial number from zero in
-#'   the order it appears. Any value.
-#' @param tickangle Sets the angle of the tick labels with respect to the
-#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
-#'   vertically. Angle in degrees.
-#' @param tickcolor Sets the tick color. Color: a CSS color string or R
-#'   color name.
-#' @param tickfont Sets the tick font. A \code{\link{go_font}()} object or
-#'   named list, with properties \code{color}, \code{family},
-#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
-#'   \code{textcase}, \code{variant} and \code{weight} (see
-#'   \code{\link{go_font}()}).
-#' @param tickformat Sets the tick label formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param tickformatstops List, each element a
-#'   \code{\link{go_tickformatstop}()} object or named list, with
-#'   properties \code{dtickrange}, \code{enabled}, \code{name},
-#'   \code{templateitemname} and \code{value} (see
-#'   \code{\link{go_tickformatstop}()}).
-#' @param ticklabelstep Sets the spacing between tick labels as compared to
-#'   the spacing between ticks. A value of 1 (default) means each tick gets
-#'   a label. A value of 2 means shows every 2nd label. A larger value n
-#'   means only every nth tick is labeled. `tick0` determines which labels
-#'   are shown. Not implemented for axes with `type` "log" or
-#'   "multicategory", or when `tickmode` is "array". Integer in the
-#'   interval [1, Inf].
-#' @param ticklen Sets the tick length (in px). Number in the interval [0,
-#'   Inf].
-#' @param tickmode Sets the tick mode for this axis. If "auto", the number
-#'   of ticks is set via `nticks`. If "linear", the placement of the ticks
-#'   is determined by a starting position `tick0` and a tick step `dtick`
-#'   ("linear" is the default value if `tick0` and `dtick` are provided).
-#'   If "array", the placement of the ticks is set via `tickvals` and the
-#'   tick text is `ticktext`. ("array" is the default value if `tickvals`
-#'   is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.
-#' @param tickprefix Sets a tick label prefix. String.
-#' @param ticks Determines whether ticks are drawn or not. If **, this
-#'   axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-#'   drawn outside (inside) the axis lines. One of \code{"outside"},
-#'   \code{"inside"}, \code{""}.
-#' @param ticksuffix Sets a tick label suffix. String.
-#' @param ticktext Sets the text displayed at the ticks position via
-#'   `tickvals`. Only has an effect if `tickmode` is set to "array". Used
-#'   with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#' @param tickvals Sets the values at which ticks on this axis appear. Only
-#'   has an effect if `tickmode` is set to "array". Used with `ticktext`.
-#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
-#'   Inf].
-#' @param title String (the title text), or a
-#'   \code{\link{go_ternary_aaxis_title}()} object or named list, with
-#'   properties \code{font} and \code{text} (see
-#'   \code{\link{go_ternary_aaxis_title}()}).
-#' @param uirevision Controls persistence of user-driven changes in axis
-#'   `min`, and `title` if in `editable: true` configuration. Defaults to
-#'   `ternary<N>.uirevision`. Any value.
-#' @param ... Not used: properties must be named in full.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return A \code{go_layout_ternary_aaxis} object (a named list).
-#'
-#' @noMd
-#' @export
-#' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     ternary = go_ternary(
-#'       aaxis = go_ternary_aaxis(color = "red")
-#'     )
-#'   )
-go_ternary_aaxis <- function(
-    arg = NULL, ..., color = NULL, dtick = NULL, exponentformat = NULL,
-    gridcolor = NULL, griddash = NULL, gridwidth = NULL, hoverformat = NULL,
-    labelalias = NULL, layer = NULL, linecolor = NULL, linewidth = NULL,
-    min = NULL, minexponent = NULL, nticks = NULL, separatethousands = NULL,
-    showexponent = NULL, showgrid = NULL, showline = NULL,
-    showspikes = NULL, showticklabels = NULL, showtickprefix = NULL,
-    showticksuffix = NULL, spikecolor = NULL, spikedash = NULL,
-    spikemode = NULL, spikesnap = NULL, spikethickness = NULL, tick0 = NULL,
-    tickangle = NULL, tickcolor = NULL, tickfont = NULL, tickformat = NULL,
-    tickformatstops = NULL, ticklabelstep = NULL, ticklen = NULL,
-    tickmode = NULL, tickprefix = NULL, ticks = NULL, ticksuffix = NULL,
-    ticktext = NULL, tickvals = NULL, tickwidth = NULL, title = NULL,
-    uirevision = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.aaxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout ternary aaxis title objects
-#'
-#' The object for the layout's \code{ternary.aaxis.title}
-#' (\code{\link{go_ternary_aaxis}()}). \code{go_ternary_aaxis_title()}
-#' creates one, with exactly its properties; a named list with the same
-#' properties works too.
-#'
-#' @details
-#' Nested objects are named lists, or objects of the constructors their
-#' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
-#' @param font Sets this axis' title font. A \code{\link{go_font}()} object
-#'   or named list, with properties \code{color}, \code{family},
-#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
-#'   \code{textcase}, \code{variant} and \code{weight} (see
-#'   \code{\link{go_font}()}).
-#' @param text Sets the title of this axis. String.
-#' @param ... Not used: properties must be named in full.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return A \code{go_layout_ternary_aaxis_title} object (a named list).
-#'
-#' @noMd
-#' @export
-#' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     ternary = go_ternary(
-#'       aaxis = go_ternary_aaxis(
-#'         title = go_ternary_aaxis_title(text = "title")
-#'       )
-#'     )
-#'   )
-go_ternary_aaxis_title <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.aaxis.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout ternary baxis objects
-#'
-#' The object for the layout's \code{ternary.baxis}
-#' (\code{\link{go_ternary}()}). \code{go_ternary_baxis()} creates one, with
-#' exactly its properties; a named list with the same properties works too.
-#'
-#' @details
-#' Nested objects are named lists, or objects of the constructors their
-#' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
-#' @param color Sets default for all colors associated with this axis all
-#'   at once: line, font, tick, and grid colors. Grid color is lightened by
-#'   blending this with the plot background Individual pieces can override
-#'   this. Color: a CSS color string or R color name.
-#' @param dtick Sets the step in-between ticks on this axis. Use with
-#'   `tick0`. Must be a positive number, or special strings available to
-#'   "log" and "date" axes. If the axis `type` is "log", then ticks are set
-#'   every 10^(n*dtick) where n is the tick number. For example, to set a
-#'   tick mark at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks
-#'   at 1, 100, 10000, ... set dtick to 2. To set tick marks at 1, 5, 25,
-#'   125, 625, 3125, ... set dtick to log_10(5), or 0.69897000433. "log"
-#'   has several special values; "L<f>", where `f` is a positive number,
-#'   gives ticks linearly spaced in value (but not position). For example
-#'   `tick0` = 0.1, `dtick` = "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6
-#'   etc. To show powers of 10 plus small digits between, use "D1" (all
-#'   digits) or "D2" (only 2 and 5). `tick0` is ignored for "D1" and "D2".
-#'   If the axis `type` is "date", then you must convert the time to
-#'   milliseconds. For example, to set the interval between ticks to one
-#'   day, set `dtick` to 86400000.0. "date" also has special values "M<n>"
-#'   gives ticks spaced by a number of months. `n` must be a positive
-#'   integer. To set ticks on the 15th of every third month, set `tick0` to
-#'   "2000-01-15" and `dtick` to "M3". To set ticks every 4 years, set
-#'   `dtick` to "M48" Any value.
-#' @param exponentformat Determines a formatting rule for the tick
-#'   exponents. For example, consider the number 1,000,000,000. If "none",
-#'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-#'   1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-#'   prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-#'   covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-#'   Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-#'   the above ranges, the formatting rule will automatically be switched
-#'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-#'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
-#' @param gridcolor Sets the color of the grid lines. Color: a CSS color
-#'   string or R color name.
-#' @param griddash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param gridwidth Sets the width (in px) of the grid lines. Number in the
-#'   interval [0, Inf].
-#' @param hoverformat Sets the hover text formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param labelalias Replacement text for specific tick or hover labels.
-#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-#'   to Canada. The labels we would have shown must match the keys exactly,
-#'   after adding any tickprefix or ticksuffix. For negative numbers the
-#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
-#'   That means you need to use -1 instead of -1. labelalias can be used
-#'   with any axis type, and both keys (if needed) and values (if desired)
-#'   can include html-like tags or MathJax. Any value.
-#' @param layer Sets the layer on which this axis is displayed. If "above
-#'   traces", this axis is displayed above all the subplot's traces If
-#'   "below traces", this axis is displayed below all the subplot's traces,
-#'   but above the grid lines. Useful when used together with scatter-like
-#'   traces with `cliponaxis` set to FALSE to show markers and/or text
-#'   nodes above this axis. One of \code{"above traces"}, \code{"below
-#'   traces"}.
-#' @param linecolor Sets the axis line color. Color: a CSS color string or
-#'   R color name.
-#' @param linewidth Sets the width (in px) of the axis line. Number in the
-#'   interval [0, Inf].
-#' @param min The minimum value visible on this axis. The maximum is
-#'   determined by the sum minus the minimum values of the other two axes.
-#'   The full view corresponds to all the minima set to zero. Number in the
-#'   interval [0, Inf].
-#' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
-#'   This only has an effect when `tickformat` is "SI" or "B". Number in
-#'   the interval [0, Inf].
-#' @param nticks Specifies the maximum number of ticks for the particular
-#'   axis. The actual number of ticks will be chosen automatically to be
-#'   less than or equal to `nticks`. Has an effect only if `tickmode` is
-#'   set to "auto". Integer in the interval [1, Inf].
-#' @param separatethousands If "true", even 4-digit integers are separated
-#'   Logical.
-#' @param showexponent If "all", all exponents are shown besides their
-#'   significands. If "first", only the exponent of the first tick is
-#'   shown. If "last", only the exponent of the last tick is shown. If
-#'   "none", no exponents appear. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showgrid Determines whether or not grid lines are drawn. If TRUE,
-#'   the grid lines are drawn at every tick mark. Logical.
-#' @param showline Determines whether or not a line bounding this axis is
-#'   drawn. Logical.
-#' @param showspikes Determines whether or not spikes (aka droplines) are
-#'   drawn for this axis. Ternary spikes are accompanied by axis value
-#'   labels formatted according to `hoverformat`. Logical.
-#' @param showticklabels Determines whether or not the tick labels are
-#'   drawn. Logical.
-#' @param showtickprefix If "all", all tick labels are displayed with a
-#'   prefix. If "first", only the first tick is displayed with a prefix. If
-#'   "last", only the last tick is displayed with a suffix. If "none", tick
-#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
-#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
-#' @param spikecolor Sets the spike color. If undefined, will use the
-#'   series color Color: a CSS color string or R color name.
-#' @param spikedash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param spikemode Determines the drawing mode for the spike line If
-#'   "toaxis", the line is drawn from the data point to the axis the series
-#'   is plotted on. If "across", the line is drawn across the entire plot
-#'   area, and supercedes "toaxis". If "marker", then a marker dot is drawn
-#'   on the axis the series is plotted on Any combination of
-#'   \code{"toaxis"}, \code{"across"}, \code{"marker"} joined with
-#'   \code{"+"}.
-#' @param spikesnap Determines whether spikelines are stuck to the cursor
-#'   or to the closest datapoints. One of \code{"data"}, \code{"cursor"},
-#'   \code{"hovered data"}.
-#' @param spikethickness Sets the spike line width in pixels. Number.
-#' @param tick0 Sets the placement of the first tick on this axis. Use with
-#'   `dtick`. If the axis `type` is "log", then you must take the log of
-#'   your starting tick (e.g. to set the starting tick to 100, set the
-#'   `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-#'   If the axis `type` is "date", it should be a date string, like date
-#'   data. If the axis `type` is "category", it should be a number, using
-#'   the scale where each category is assigned a serial number from zero in
-#'   the order it appears. Any value.
-#' @param tickangle Sets the angle of the tick labels with respect to the
-#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
-#'   vertically. Angle in degrees.
-#' @param tickcolor Sets the tick color. Color: a CSS color string or R
-#'   color name.
-#' @param tickfont Sets the tick font. A \code{\link{go_font}()} object or
-#'   named list, with properties \code{color}, \code{family},
-#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
-#'   \code{textcase}, \code{variant} and \code{weight} (see
-#'   \code{\link{go_font}()}).
-#' @param tickformat Sets the tick label formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param tickformatstops List, each element a
-#'   \code{\link{go_tickformatstop}()} object or named list, with
-#'   properties \code{dtickrange}, \code{enabled}, \code{name},
-#'   \code{templateitemname} and \code{value} (see
-#'   \code{\link{go_tickformatstop}()}).
-#' @param ticklabelstep Sets the spacing between tick labels as compared to
-#'   the spacing between ticks. A value of 1 (default) means each tick gets
-#'   a label. A value of 2 means shows every 2nd label. A larger value n
-#'   means only every nth tick is labeled. `tick0` determines which labels
-#'   are shown. Not implemented for axes with `type` "log" or
-#'   "multicategory", or when `tickmode` is "array". Integer in the
-#'   interval [1, Inf].
-#' @param ticklen Sets the tick length (in px). Number in the interval [0,
-#'   Inf].
-#' @param tickmode Sets the tick mode for this axis. If "auto", the number
-#'   of ticks is set via `nticks`. If "linear", the placement of the ticks
-#'   is determined by a starting position `tick0` and a tick step `dtick`
-#'   ("linear" is the default value if `tick0` and `dtick` are provided).
-#'   If "array", the placement of the ticks is set via `tickvals` and the
-#'   tick text is `ticktext`. ("array" is the default value if `tickvals`
-#'   is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.
-#' @param tickprefix Sets a tick label prefix. String.
-#' @param ticks Determines whether ticks are drawn or not. If **, this
-#'   axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-#'   drawn outside (inside) the axis lines. One of \code{"outside"},
-#'   \code{"inside"}, \code{""}.
-#' @param ticksuffix Sets a tick label suffix. String.
-#' @param ticktext Sets the text displayed at the ticks position via
-#'   `tickvals`. Only has an effect if `tickmode` is set to "array". Used
-#'   with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#' @param tickvals Sets the values at which ticks on this axis appear. Only
-#'   has an effect if `tickmode` is set to "array". Used with `ticktext`.
-#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
-#'   Inf].
-#' @param title String (the title text), or a
-#'   \code{\link{go_ternary_baxis_title}()} object or named list, with
-#'   properties \code{font} and \code{text} (see
-#'   \code{\link{go_ternary_baxis_title}()}).
-#' @param uirevision Controls persistence of user-driven changes in axis
-#'   `min`, and `title` if in `editable: true` configuration. Defaults to
-#'   `ternary<N>.uirevision`. Any value.
-#' @param ... Not used: properties must be named in full.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return A \code{go_layout_ternary_baxis} object (a named list).
-#'
-#' @noMd
-#' @export
-#' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     ternary = go_ternary(
-#'       baxis = go_ternary_baxis(color = "red")
-#'     )
-#'   )
-go_ternary_baxis <- function(
-    arg = NULL, ..., color = NULL, dtick = NULL, exponentformat = NULL,
-    gridcolor = NULL, griddash = NULL, gridwidth = NULL, hoverformat = NULL,
-    labelalias = NULL, layer = NULL, linecolor = NULL, linewidth = NULL,
-    min = NULL, minexponent = NULL, nticks = NULL, separatethousands = NULL,
-    showexponent = NULL, showgrid = NULL, showline = NULL,
-    showspikes = NULL, showticklabels = NULL, showtickprefix = NULL,
-    showticksuffix = NULL, spikecolor = NULL, spikedash = NULL,
-    spikemode = NULL, spikesnap = NULL, spikethickness = NULL, tick0 = NULL,
-    tickangle = NULL, tickcolor = NULL, tickfont = NULL, tickformat = NULL,
-    tickformatstops = NULL, ticklabelstep = NULL, ticklen = NULL,
-    tickmode = NULL, tickprefix = NULL, ticks = NULL, ticksuffix = NULL,
-    ticktext = NULL, tickvals = NULL, tickwidth = NULL, title = NULL,
-    uirevision = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.baxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout ternary baxis title objects
-#'
-#' The object for the layout's \code{ternary.baxis.title}
-#' (\code{\link{go_ternary_baxis}()}). \code{go_ternary_baxis_title()}
-#' creates one, with exactly its properties; a named list with the same
-#' properties works too.
-#'
-#' @details
-#' Nested objects are named lists, or objects of the constructors their
-#' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
-#' @param font Sets this axis' title font. A \code{\link{go_font}()} object
-#'   or named list, with properties \code{color}, \code{family},
-#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
-#'   \code{textcase}, \code{variant} and \code{weight} (see
-#'   \code{\link{go_font}()}).
-#' @param text Sets the title of this axis. String.
-#' @param ... Not used: properties must be named in full.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return A \code{go_layout_ternary_baxis_title} object (a named list).
-#'
-#' @noMd
-#' @export
-#' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     ternary = go_ternary(
-#'       baxis = go_ternary_baxis(
-#'         title = go_ternary_baxis_title(text = "title")
-#'       )
-#'     )
-#'   )
-go_ternary_baxis_title <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.baxis.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout ternary caxis objects
-#'
-#' The object for the layout's \code{ternary.caxis}
-#' (\code{\link{go_ternary}()}). \code{go_ternary_caxis()} creates one, with
-#' exactly its properties; a named list with the same properties works too.
-#'
-#' @details
-#' Nested objects are named lists, or objects of the constructors their
-#' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
-#' @param color Sets default for all colors associated with this axis all
-#'   at once: line, font, tick, and grid colors. Grid color is lightened by
-#'   blending this with the plot background Individual pieces can override
-#'   this. Color: a CSS color string or R color name.
-#' @param dtick Sets the step in-between ticks on this axis. Use with
-#'   `tick0`. Must be a positive number, or special strings available to
-#'   "log" and "date" axes. If the axis `type` is "log", then ticks are set
-#'   every 10^(n*dtick) where n is the tick number. For example, to set a
-#'   tick mark at 1, 10, 100, 1000, ... set dtick to 1. To set tick marks
-#'   at 1, 100, 10000, ... set dtick to 2. To set tick marks at 1, 5, 25,
-#'   125, 625, 3125, ... set dtick to log_10(5), or 0.69897000433. "log"
-#'   has several special values; "L<f>", where `f` is a positive number,
-#'   gives ticks linearly spaced in value (but not position). For example
-#'   `tick0` = 0.1, `dtick` = "L0.5" will put ticks at 0.1, 0.6, 1.1, 1.6
-#'   etc. To show powers of 10 plus small digits between, use "D1" (all
-#'   digits) or "D2" (only 2 and 5). `tick0` is ignored for "D1" and "D2".
-#'   If the axis `type` is "date", then you must convert the time to
-#'   milliseconds. For example, to set the interval between ticks to one
-#'   day, set `dtick` to 86400000.0. "date" also has special values "M<n>"
-#'   gives ticks spaced by a number of months. `n` must be a positive
-#'   integer. To set ticks on the 15th of every third month, set `tick0` to
-#'   "2000-01-15" and `dtick` to "M3". To set ticks every 4 years, set
-#'   `dtick` to "M48" Any value.
-#' @param exponentformat Determines a formatting rule for the tick
-#'   exponents. For example, consider the number 1,000,000,000. If "none",
-#'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-#'   1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-#'   prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-#'   covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-#'   Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-#'   the above ranges, the formatting rule will automatically be switched
-#'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-#'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
-#' @param gridcolor Sets the color of the grid lines. Color: a CSS color
-#'   string or R color name.
-#' @param griddash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param gridwidth Sets the width (in px) of the grid lines. Number in the
-#'   interval [0, Inf].
-#' @param hoverformat Sets the hover text formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param labelalias Replacement text for specific tick or hover labels.
-#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-#'   to Canada. The labels we would have shown must match the keys exactly,
-#'   after adding any tickprefix or ticksuffix. For negative numbers the
-#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
-#'   That means you need to use -1 instead of -1. labelalias can be used
-#'   with any axis type, and both keys (if needed) and values (if desired)
-#'   can include html-like tags or MathJax. Any value.
-#' @param layer Sets the layer on which this axis is displayed. If "above
-#'   traces", this axis is displayed above all the subplot's traces If
-#'   "below traces", this axis is displayed below all the subplot's traces,
-#'   but above the grid lines. Useful when used together with scatter-like
-#'   traces with `cliponaxis` set to FALSE to show markers and/or text
-#'   nodes above this axis. One of \code{"above traces"}, \code{"below
-#'   traces"}.
-#' @param linecolor Sets the axis line color. Color: a CSS color string or
-#'   R color name.
-#' @param linewidth Sets the width (in px) of the axis line. Number in the
-#'   interval [0, Inf].
-#' @param min The minimum value visible on this axis. The maximum is
-#'   determined by the sum minus the minimum values of the other two axes.
-#'   The full view corresponds to all the minima set to zero. Number in the
-#'   interval [0, Inf].
-#' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
-#'   This only has an effect when `tickformat` is "SI" or "B". Number in
-#'   the interval [0, Inf].
-#' @param nticks Specifies the maximum number of ticks for the particular
-#'   axis. The actual number of ticks will be chosen automatically to be
-#'   less than or equal to `nticks`. Has an effect only if `tickmode` is
-#'   set to "auto". Integer in the interval [1, Inf].
-#' @param separatethousands If "true", even 4-digit integers are separated
-#'   Logical.
-#' @param showexponent If "all", all exponents are shown besides their
-#'   significands. If "first", only the exponent of the first tick is
-#'   shown. If "last", only the exponent of the last tick is shown. If
-#'   "none", no exponents appear. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showgrid Determines whether or not grid lines are drawn. If TRUE,
-#'   the grid lines are drawn at every tick mark. Logical.
-#' @param showline Determines whether or not a line bounding this axis is
-#'   drawn. Logical.
-#' @param showspikes Determines whether or not spikes (aka droplines) are
-#'   drawn for this axis. Ternary spikes are accompanied by axis value
-#'   labels formatted according to `hoverformat`. Logical.
-#' @param showticklabels Determines whether or not the tick labels are
-#'   drawn. Logical.
-#' @param showtickprefix If "all", all tick labels are displayed with a
-#'   prefix. If "first", only the first tick is displayed with a prefix. If
-#'   "last", only the last tick is displayed with a suffix. If "none", tick
-#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
-#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
-#' @param spikecolor Sets the spike color. If undefined, will use the
-#'   series color Color: a CSS color string or R color name.
-#' @param spikedash Sets the dash style of lines. Set to a dash type string
-#'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-#'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-#'   \code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-#'   \code{"longdashdot"}, or a string matching
-#'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-#' @param spikemode Determines the drawing mode for the spike line If
-#'   "toaxis", the line is drawn from the data point to the axis the series
-#'   is plotted on. If "across", the line is drawn across the entire plot
-#'   area, and supercedes "toaxis". If "marker", then a marker dot is drawn
-#'   on the axis the series is plotted on Any combination of
-#'   \code{"toaxis"}, \code{"across"}, \code{"marker"} joined with
-#'   \code{"+"}.
-#' @param spikesnap Determines whether spikelines are stuck to the cursor
-#'   or to the closest datapoints. One of \code{"data"}, \code{"cursor"},
-#'   \code{"hovered data"}.
-#' @param spikethickness Sets the spike line width in pixels. Number.
-#' @param tick0 Sets the placement of the first tick on this axis. Use with
-#'   `dtick`. If the axis `type` is "log", then you must take the log of
-#'   your starting tick (e.g. to set the starting tick to 100, set the
-#'   `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-#'   If the axis `type` is "date", it should be a date string, like date
-#'   data. If the axis `type` is "category", it should be a number, using
-#'   the scale where each category is assigned a serial number from zero in
-#'   the order it appears. Any value.
-#' @param tickangle Sets the angle of the tick labels with respect to the
-#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
-#'   vertically. Angle in degrees.
-#' @param tickcolor Sets the tick color. Color: a CSS color string or R
-#'   color name.
-#' @param tickfont Sets the tick font. A \code{\link{go_font}()} object or
-#'   named list, with properties \code{color}, \code{family},
-#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
-#'   \code{textcase}, \code{variant} and \code{weight} (see
-#'   \code{\link{go_font}()}).
-#' @param tickformat Sets the tick label formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param tickformatstops List, each element a
-#'   \code{\link{go_tickformatstop}()} object or named list, with
-#'   properties \code{dtickrange}, \code{enabled}, \code{name},
-#'   \code{templateitemname} and \code{value} (see
-#'   \code{\link{go_tickformatstop}()}).
-#' @param ticklabelstep Sets the spacing between tick labels as compared to
-#'   the spacing between ticks. A value of 1 (default) means each tick gets
-#'   a label. A value of 2 means shows every 2nd label. A larger value n
-#'   means only every nth tick is labeled. `tick0` determines which labels
-#'   are shown. Not implemented for axes with `type` "log" or
-#'   "multicategory", or when `tickmode` is "array". Integer in the
-#'   interval [1, Inf].
-#' @param ticklen Sets the tick length (in px). Number in the interval [0,
-#'   Inf].
-#' @param tickmode Sets the tick mode for this axis. If "auto", the number
-#'   of ticks is set via `nticks`. If "linear", the placement of the ticks
-#'   is determined by a starting position `tick0` and a tick step `dtick`
-#'   ("linear" is the default value if `tick0` and `dtick` are provided).
-#'   If "array", the placement of the ticks is set via `tickvals` and the
-#'   tick text is `ticktext`. ("array" is the default value if `tickvals`
-#'   is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.
-#' @param tickprefix Sets a tick label prefix. String.
-#' @param ticks Determines whether ticks are drawn or not. If **, this
-#'   axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-#'   drawn outside (inside) the axis lines. One of \code{"outside"},
-#'   \code{"inside"}, \code{""}.
-#' @param ticksuffix Sets a tick label suffix. String.
-#' @param ticktext Sets the text displayed at the ticks position via
-#'   `tickvals`. Only has an effect if `tickmode` is set to "array". Used
-#'   with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#' @param tickvals Sets the values at which ticks on this axis appear. Only
-#'   has an effect if `tickmode` is set to "array". Used with `ticktext`.
-#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
-#'   Inf].
-#' @param title String (the title text), or a
-#'   \code{\link{go_ternary_caxis_title}()} object or named list, with
-#'   properties \code{font} and \code{text} (see
-#'   \code{\link{go_ternary_caxis_title}()}).
-#' @param uirevision Controls persistence of user-driven changes in axis
-#'   `min`, and `title` if in `editable: true` configuration. Defaults to
-#'   `ternary<N>.uirevision`. Any value.
-#' @param ... Not used: properties must be named in full.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return A \code{go_layout_ternary_caxis} object (a named list).
-#'
-#' @noMd
-#' @export
-#' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     ternary = go_ternary(
-#'       caxis = go_ternary_caxis(color = "red")
-#'     )
-#'   )
-go_ternary_caxis <- function(
-    arg = NULL, ..., color = NULL, dtick = NULL, exponentformat = NULL,
-    gridcolor = NULL, griddash = NULL, gridwidth = NULL, hoverformat = NULL,
-    labelalias = NULL, layer = NULL, linecolor = NULL, linewidth = NULL,
-    min = NULL, minexponent = NULL, nticks = NULL, separatethousands = NULL,
-    showexponent = NULL, showgrid = NULL, showline = NULL,
-    showspikes = NULL, showticklabels = NULL, showtickprefix = NULL,
-    showticksuffix = NULL, spikecolor = NULL, spikedash = NULL,
-    spikemode = NULL, spikesnap = NULL, spikethickness = NULL, tick0 = NULL,
-    tickangle = NULL, tickcolor = NULL, tickfont = NULL, tickformat = NULL,
-    tickformatstops = NULL, ticklabelstep = NULL, ticklen = NULL,
-    tickmode = NULL, tickprefix = NULL, ticks = NULL, ticksuffix = NULL,
-    ticktext = NULL, tickvals = NULL, tickwidth = NULL, title = NULL,
-    uirevision = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.caxis", arg, environment(), list(...), skip_invalid)
-}
-
-#' Layout ternary caxis title objects
-#'
-#' The object for the layout's \code{ternary.caxis.title}
-#' (\code{\link{go_ternary_caxis}()}). \code{go_ternary_caxis_title()}
-#' creates one, with exactly its properties; a named list with the same
-#' properties works too.
-#'
-#' @details
-#' Nested objects are named lists, or objects of the constructors their
-#' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
-#'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
-#' @param font Sets this axis' title font. A \code{\link{go_font}()} object
-#'   or named list, with properties \code{color}, \code{family},
-#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
-#'   \code{textcase}, \code{variant} and \code{weight} (see
-#'   \code{\link{go_font}()}).
-#' @param text Sets the title of this axis. String.
-#' @param ... Not used: properties must be named in full.
-#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
-#'   instead of raising an error.
-#' @return A \code{go_layout_ternary_caxis_title} object (a named list).
-#'
-#' @noMd
-#' @export
-#' @examples
-#' go_figure() |>
-#'   update_layout(
-#'     ternary = go_ternary(
-#'       caxis = go_ternary_caxis(
-#'         title = go_ternary_caxis_title(text = "title")
-#'       )
-#'     )
-#'   )
-go_ternary_caxis_title <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("layout.ternary.caxis.title", arg, environment(), list(...), skip_invalid)
-}
-
 #' Layout title objects
 #'
 #' The object for the figure layout's \code{title}. \code{go_layout_title()}
@@ -6728,7 +5067,10 @@ go_ternary_caxis_title <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -6788,6 +5130,7 @@ go_ternary_caxis_title <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_title} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -6817,7 +5160,10 @@ go_layout_title <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -6834,6 +5180,7 @@ go_layout_title <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_title_pad} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -6860,7 +5207,10 @@ go_title_pad <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -6875,6 +5225,7 @@ go_title_pad <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_title_subtitle} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -6900,7 +5251,10 @@ go_title_subtitle <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -6928,6 +5282,7 @@ go_title_subtitle <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_transition} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -6951,7 +5306,10 @@ go_layout_transition <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -6969,6 +5327,7 @@ go_layout_transition <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_uniformtext} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -6991,7 +5350,10 @@ go_uniformtext <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -7059,6 +5421,7 @@ go_uniformtext <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_updatemenu} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -7086,7 +5449,10 @@ go_updatemenu <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -7130,6 +5496,7 @@ go_updatemenu <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_updatemenu_button} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -7157,7 +5524,10 @@ go_updatemenu_button <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -7174,6 +5544,7 @@ go_updatemenu_button <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_updatemenu_pad} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -7200,7 +5571,10 @@ go_updatemenu_pad <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -7681,6 +6055,7 @@ go_updatemenu_pad <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_xaxis} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -7732,7 +6107,10 @@ go_xaxis <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -7774,6 +6152,7 @@ go_xaxis <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_xaxis_rangeselector} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -7803,7 +6182,10 @@ go_xaxis_rangeselector <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -7843,6 +6225,7 @@ go_xaxis_rangeselector <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_xaxis_rangeselector_button} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -7872,7 +6255,10 @@ go_xaxis_rangeselector_button <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -7906,6 +6292,7 @@ go_xaxis_rangeselector_button <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_xaxis_rangeslider} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -7933,7 +6320,10 @@ go_xaxis_rangeslider <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -7950,6 +6340,7 @@ go_xaxis_rangeslider <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_xaxis_rangeslider_yaxis} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -7976,7 +6367,10 @@ go_xaxis_rangeslider_yaxis <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -7999,6 +6393,7 @@ go_xaxis_rangeslider_yaxis <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_xaxis_title} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -8025,7 +6420,10 @@ go_xaxis_title <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -8508,6 +6906,7 @@ go_xaxis_title <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_yaxis} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
@@ -8557,7 +6956,10 @@ go_yaxis <- function(
 #' @details
 #' Nested objects are named lists, or objects of the constructors their
 #' arguments name. Every property is checked against the plotly.js schema
-#' when the object is created or modified.
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from. Named arguments take precedence.
@@ -8580,6 +6982,7 @@ go_yaxis <- function(
 #'   instead of raising an error.
 #' @return A \code{go_layout_yaxis_title} object (a named list).
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 #' @examples
