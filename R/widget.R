@@ -447,7 +447,13 @@ mathjax_dependency <- function(source = c("local", "cdn")) {
 MATHJAX_VERSION <- "3.2.2"
 
 mathjax_path <- function() {
-  system.file("htmlwidgets", "lib", "mathjax", "tex-svg.js", package = "plotly.core")
+  system.file(
+    "htmlwidgets",
+    "lib",
+    "mathjax",
+    "tex-svg.js",
+    package = "plotly.core"
+  )
 }
 
 # JSON serialiser used by the widget: length-1 vectors become scalars and

@@ -413,12 +413,19 @@ CHROME_LIBS_STAMP <- ".plotly-core-libs"
 
 chrome_id <- function(path) {
   info <- file.info(path)
-  paste(normalizePath(path, mustWork = FALSE), info$size, as.numeric(info$mtime))
+  paste(
+    normalizePath(path, mustWork = FALSE),
+    info$size,
+    as.numeric(info$mtime)
+  )
 }
 
 write_chrome_libs_stamp <- function(path, dir = chrome_lib_dir()) {
   writeLines(
-    c(paste0("date: ", format(Sys.Date())), paste0("chrome: ", chrome_id(path))),
+    c(
+      paste0("date: ", format(Sys.Date())),
+      paste0("chrome: ", chrome_id(path))
+    ),
     file.path(dir, CHROME_LIBS_STAMP)
   )
 }
@@ -436,7 +443,11 @@ chrome_libs_stale <- function(
   }
   stamp <- readLines(f, warn = FALSE)
   field <- function(name) {
-    sub(paste0("^", name, ": "), "", grep(paste0("^", name, ": "), stamp, value = TRUE))
+    sub(
+      paste0("^", name, ": "),
+      "",
+      grep(paste0("^", name, ": "), stamp, value = TRUE)
+    )
   }
   date <- as.Date(field("date")[1])
   is.na(date) ||
@@ -456,8 +467,12 @@ refresh_chrome_libs <- function(
   unlink(new, recursive = TRUE)
   on.exit(unlink(new, recursive = TRUE), add = TRUE)
   lib_path <- fetch_chrome_libs(path, family, dir = new)
-  if (!length(lib_path) || length(chrome_missing_libs(path, lib_path = lib_path))) {
-    message("Couldn't download the libraries again; using the ones downloaded before.")
+  if (
+    !length(lib_path) || length(chrome_missing_libs(path, lib_path = lib_path))
+  ) {
+    message(
+      "Couldn't download the libraries again; using the ones downloaded before."
+    )
     return(chrome_lib_path(dir))
   }
   unlink(dir, recursive = TRUE)

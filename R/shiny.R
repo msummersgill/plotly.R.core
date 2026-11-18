@@ -100,7 +100,11 @@ config.default <- function(
     if (isTRUE(mathjax)) {
       mathjax <- "local"
     }
-    if (!is.character(mathjax) || length(mathjax) != 1L || !mathjax %in% c("local", "cdn")) {
+    if (
+      !is.character(mathjax) ||
+        length(mathjax) != 1L ||
+        !mathjax %in% c("local", "cdn")
+    ) {
       stop("`mathjax` must be \"local\" (or TRUE) or \"cdn\"", call. = FALSE)
     }
     p <- set_widget_setting(p, "mathjax", mathjax)

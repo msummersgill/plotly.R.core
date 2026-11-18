@@ -276,7 +276,10 @@ set_crosstalk_keys <- function(
   n <- length(fig$data)
   traces <- traces %||% seq_len(n)
   if (!length(traces) || any(traces < 1L | traces > n)) {
-    stop(sprintf("`traces` must be indices of the figure's %d traces", n), call. = FALSE)
+    stop(
+      sprintf("`traces` must be indices of the figure's %d traces", n),
+      call. = FALSE
+    )
   }
   if (!is.list(key)) {
     key <- rep(list(key), length(traces))
@@ -316,8 +319,23 @@ link_shared_traces <- function(fig, data, n_before) {
 }
 
 TRACE_ROW_ARRAYS <- c(
-  "x", "y", "z", "lat", "lon", "locations", "values", "labels", "r",
-  "theta", "a", "b", "c", "real", "imag", "ids", "customdata"
+  "x",
+  "y",
+  "z",
+  "lat",
+  "lon",
+  "locations",
+  "values",
+  "labels",
+  "r",
+  "theta",
+  "a",
+  "b",
+  "c",
+  "real",
+  "imag",
+  "ids",
+  "customdata"
 )
 
 trace_has_rows <- function(trace, n) {
@@ -390,8 +408,13 @@ crosstalk_payload <- function(x, selectize = NULL) {
   }
   x$highlight <- hl
   x$selectize <- if (length(sel)) sel
-  if (is.null(x$layout$dragmode) && is.null(x$layout$template$layout$dragmode)) {
-    if (identical(hl$on, "plotly_selected") || identical(hl$on, "plotly_selecting")) {
+  if (
+    is.null(x$layout$dragmode) && is.null(x$layout$template$layout$dragmode)
+  ) {
+    if (
+      identical(hl$on, "plotly_selected") ||
+        identical(hl$on, "plotly_selecting")
+    ) {
       x$layout$dragmode <- "select"
     }
   }

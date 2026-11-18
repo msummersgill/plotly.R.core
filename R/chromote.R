@@ -3,7 +3,6 @@
 # printing the SVG image to a page of the figure's size (as plotly's Kaleido
 # does), EPS by converting the SVG image with rsvg.
 
-
 #' @rdname save_image
 #' @export
 chrome_exporter <- function(...) {

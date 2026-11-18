@@ -221,7 +221,9 @@ need <- c("libxkbcommon.so.0", "libgbm.so.1")
 # nothing missing on the system: no downloaded libraries are used, even if
 # some were downloaded before
 stopifnot(identical(
-  ens("/x/chrome", missing = function(lp) character(), cached = function() stop("cache used")),
+  ens("/x/chrome", missing = function(lp) character(), cached = function() {
+    stop("cache used")
+  }),
   character()
 ))
 # the system lacks some, the earlier download has them: its directories; when
@@ -229,33 +231,69 @@ stopifnot(identical(
 # and other sessions get a message (once)
 sys_lacks <- function(lp) if (length(lp)) character() else need
 stopifnot(identical(
-  ens("/x/chrome", missing = sys_lacks, cached = function() "/cache",
-      fetchable = TRUE, family = "debian", stale = function() FALSE),
+  ens(
+    "/x/chrome",
+    missing = sys_lacks,
+    cached = function() "/cache",
+    fetchable = TRUE,
+    family = "debian",
+    stale = function() FALSE
+  ),
   "/cache"
 ))
 asked <- NULL
 stopifnot(identical(
-  ens("/x/chrome", ask = TRUE, missing = sys_lacks, cached = function() "/cache",
-      fetchable = TRUE, family = "debian", stale = function() TRUE,
-      confirm = function(msg) { asked <<- msg; TRUE },
-      refresh = function() "/fresh"),
+  ens(
+    "/x/chrome",
+    ask = TRUE,
+    missing = sys_lacks,
+    cached = function() "/cache",
+    fetchable = TRUE,
+    family = "debian",
+    stale = function() TRUE,
+    confirm = function(msg) {
+      asked <<- msg
+      TRUE
+    },
+    refresh = function() "/fresh"
+  ),
   "/fresh"
 ))
 stopifnot(grepl("days old", asked), grepl("again", asked))
 stopifnot(identical(
-  ens("/x/chrome", ask = TRUE, missing = sys_lacks, cached = function() "/cache",
-      fetchable = TRUE, family = "debian", stale = function() TRUE,
-      confirm = function(msg) FALSE, refresh = function() stop("refreshed")),
+  ens(
+    "/x/chrome",
+    ask = TRUE,
+    missing = sys_lacks,
+    cached = function() "/cache",
+    fetchable = TRUE,
+    family = "debian",
+    stale = function() TRUE,
+    confirm = function(msg) FALSE,
+    refresh = function() stop("refreshed")
+  ),
   "/cache"
 ))
 assign("stale_libs_noted", FALSE, envir = plotly.core:::export_env)
 msgs <- character()
-for (i in 1:2) withCallingHandlers(
-  ens("/x/chrome", ask = FALSE, missing = sys_lacks, cached = function() "/cache",
-      fetchable = TRUE, family = "debian", stale = function() TRUE,
-      refresh = function() stop("refreshed")),
-  message = function(m) { msgs <<- c(msgs, conditionMessage(m)); invokeRestart("muffleMessage") }
-)
+for (i in 1:2) {
+  withCallingHandlers(
+    ens(
+      "/x/chrome",
+      ask = FALSE,
+      missing = sys_lacks,
+      cached = function() "/cache",
+      fetchable = TRUE,
+      family = "debian",
+      stale = function() TRUE,
+      refresh = function() stop("refreshed")
+    ),
+    message = function(m) {
+      msgs <<- c(msgs, conditionMessage(m))
+      invokeRestart("muffleMessage")
+    }
+  )
+}
 stopifnot(length(msgs) == 1L, grepl("install_chrome()", msgs, fixed = TRUE))
 
 # Staleness: age, and the Chrome they were downloaded for
@@ -474,7 +512,11 @@ if (
   shared <- go_figure() |>
     add_scatter(x = tt, y = cumsum(rnorm(48))) |>
     add_scatter(x = tt, y = cumsum(rnorm(48)))
-  stopifnot(grepl('"bref"', plotly.core:::export_figure(shared)$json, fixed = TRUE))
+  stopifnot(grepl(
+    '"bref"',
+    plotly.core:::export_figure(shared)$json,
+    fixed = TRUE
+  ))
   save_image(shared, path("dates.svg"))
   svg <- paste(readLines(path("dates.svg"), warn = FALSE), collapse = "\n")
   stopifnot(grepl("Mar 2", svg, fixed = TRUE), grepl("2024", svg, fixed = TRUE))
