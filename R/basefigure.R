@@ -43,7 +43,7 @@
 #' )
 #' fig <- fig |>
 #'   add_scatter(x = 1:3, y = c(3, 2, 1), mode = "markers") |>
-#'   update_layout(xaxis_title = "x")
+#'   update_layout(xaxis = go_xaxis(title = "x"))
 #' if (interactive()) print(fig)
 #'
 #' # pipe in a data frame and refer to its columns with formulas
@@ -229,10 +229,20 @@ print.go_figure <- function(x, ...) {
 #' @param options Chunk options (from knitr).
 #' @exportS3Method knitr::knit_print
 knit_print.go_figure <- function(x, ..., options = NULL) {
-  static <- options$plotly.static %||% !knitr::is_html_output()
+  # Static unless the document is HTML made by pandoc (R Markdown, Quarto):
+  # knitting without pandoc (R's "Run examples" help pages, knitr::knit())
+  # can't load widgets, and knitr would screenshot them with PhantomJS
+  static <- options$plotly.static %||%
+    (!knitr::is_html_output() || is.null(knitr::pandoc_to()))
   if (isTRUE(static)) {
     img <- knit_static_image(x, options)
-    if (!is.null(img)) return(img)
+    if (!is.null(img)) {
+      return(img)
+    }
+    if (is.null(knitr::pandoc_to())) {
+      # no widget either: knitr would try a PhantomJS screenshot
+      return(invisible(x))
+    }
   }
   knitr::knit_print(plotly_widget(x), ..., options = options)
 }
@@ -249,10 +259,25 @@ knit_static_image <- function(x, options) {
     return(NULL)
   }
   dpi <- options$dpi %||% 96
-  width <- x$layout$width %||% round((options$fig.width %||% 7) * dpi)
-  height <- x$layout$height %||% round((options$fig.height %||% 5) * dpi)
+  fig_width <- options$fig.width %||% 7
+  fig_height <- options$fig.height %||% 5
+  if (is.null(knitr::pandoc_to())) {
+    # without pandoc (R's "Run examples" help pages): a size that fits the help
+    # pane, a part of the screen (help pages knit at 9 x 7 in)
+    fig_width <- min(fig_width, 5)
+    fig_height <- min(fig_height, 3.5)
+  }
+  width <- x$layout$width %||% round(fig_width * dpi)
+  height <- x$layout$height %||% round(fig_height * dpi)
   ext <- if (knitr::is_latex_output()) "pdf" else "png"
-  path <- knitr::fig_path(paste0(".", ext), options)
+  # numbered, so several figures in one chunk get their own files
+  label <- options$label %||% "plotly"
+  if (!identical(the$knit_label, label)) {
+    the$knit_label <- label
+    the$knit_n <- 0L
+  }
+  the$knit_n <- the$knit_n + 1L
+  path <- knitr::fig_path(paste0(".", ext), options, number = the$knit_n)
   dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
   ok <- tryCatch(
     {
@@ -278,7 +303,11 @@ knit_static_image <- function(x, options) {
   if (!ok) {
     return(NULL)
   }
-  knitr::knit_print(knitr::include_graphics(path), options = options)
+  # PNGs are exported at twice the size: shown at their figure size in HTML
+  knitr::knit_print(
+    knitr::include_graphics(path, dpi = if (ext == "png") 2 * dpi else NULL),
+    options = options
+  )
 }
 
 # Adding traces -----------------------------------------------------------------
@@ -390,6 +419,14 @@ add_traces <- function(
   exclude_empty_subplots = FALSE
 ) {
   check_figure(fig)
+  # formulas kept by constructors (go_scatter(x = ~col)) use the figure's data
+  if (is.list(data) && !inherits(data, "plotly_obj") && is.null(names(data))) {
+    data <- lapply(data, function(tr) {
+      if (has_formula(tr)) eval_formulas(tr, trace_data(fig), "trace") else tr
+    })
+  } else if (has_formula(data)) {
+    data <- eval_formulas(data, trace_data(fig), "trace")
+  }
   data <- validate_data(data)
   n <- length(data)
   expand <- function(x, name) {
@@ -452,21 +489,22 @@ subplot_not_empty <- function(fig, xref, yref) {
 
 # Recursively update graph object `obj` (schema key `key`) with `patch`.
 # Properties that are compound objects are merged unless `overwrite` is TRUE;
-# everything else is replaced. NULL removes a property. Names may use magic
-# underscores (marker_size). The result is validated.
+# everything else is replaced. NULL removes a property. The result is
+# validated.
 update_object <- function(obj, key, patch, overwrite = FALSE) {
   entry <- get_validator(key)
   obj <- if (is.null(obj)) list() else unclass(obj)
   patch <- unclass(patch)
-  for (name in names(patch)) {
-    val <- patch[[name]]
+  # by position: a name may appear in both `patch` and `...` (applied in turn)
+  for (i in seq_along(patch)) {
+    name <- names(patch)[[i]]
+    val <- patch[[i]]
     ck <- child_key(key, name)
     if (is.na(ck)) {
       if (!is.null(entry$trace_type) && name == "type") {
         next
       }
-      obj <- set_magic_property(obj, key, entry, name, val)
-      next
+      raise_invalid_prop(name, key, entry)
     }
     child <- get_validator(ck)
     is_compound <- child$superclass %in%
@@ -492,7 +530,9 @@ update_object <- function(obj, key, patch, overwrite = FALSE) {
   out
 }
 
-combine_patch <- function(patch, dots) {
+# `patch` and `...` of an update_*() function, with formulas (~col) evaluated
+# in the figure's data (that of go_figure(<data frame>)).
+combine_patch <- function(patch, dots, fig = NULL) {
   if (
     !is.null(patch) &&
       (!is.list(patch) || (length(patch) && is.null(names(patch))))
@@ -502,16 +542,24 @@ combine_patch <- function(patch, dots) {
   if (length(dots) && (is.null(names(dots)) || any(!nzchar(names(dots))))) {
     stop("All properties in `...` must be named", call. = FALSE)
   }
-  c(unclass(patch), dots)
+  out <- c(unclass(patch), dots)
+  if (has_formula(out)) {
+    data <- trace_data(fig)
+    out[] <- lapply(seq_along(out), function(i) {
+      eval_formulas(out[[i]], data, names(out)[[i]])
+    })
+  }
+  out
 }
 
 #' Update a figure's layout
 #'
 #' Updates layout properties, merging nested objects (e.g. `xaxis`) with any
 #' existing values unless `overwrite = TRUE`. Properties can be given in
-#' `patch`, in `...`, or both; `...` is applied last. Names may use "magic
-#' underscores": `xaxis_title_text = "x"` is the same as
-#' `xaxis = list(title = list(text = "x"))`.
+#' `patch`, in `...`, or both; `...` is applied last. Nested properties are
+#' given as named lists, which are merged into the existing objects:
+#' `xaxis = list(title = list(text = "x"))` sets the x axis title and keeps
+#' its other properties.
 #'
 #' @param fig A `go_figure` object.
 #' @param patch A named list or [go_layout()] object of updates.
@@ -521,14 +569,14 @@ combine_patch <- function(patch, dots) {
 #' @export
 #' @examples
 #' go_figure() |>
-#'   update_layout(title = "Title", xaxis = list(range = c(0, 10))) |>
-#'   update_layout(xaxis_title = "x", yaxis = list(type = "log"))
+#'   update_layout(title = "Title", xaxis = go_xaxis(range = c(0, 10))) |>
+#'   update_layout(xaxis = go_xaxis(title = "x"), yaxis = go_yaxis(type = "log"))
 update_layout <- function(fig, patch = NULL, ..., overwrite = FALSE) {
   check_figure(fig)
   layout <- update_object(
     fig$layout,
     "layout",
-    combine_patch(patch, list(...)),
+    combine_patch(patch, list(...), fig),
     overwrite
   )
   modify_figure(fig, layout = layout)
@@ -536,22 +584,8 @@ update_layout <- function(fig, patch = NULL, ..., overwrite = FALSE) {
 
 # Selecting ---------------------------------------------------------------------
 
-# Look up a property by plain or magic-underscore name; NULL if absent.
-get_prop <- function(obj, name) {
-  obj <- unclass(obj)
-  if (name %in% names(obj)) {
-    return(obj[[name]])
-  }
-  pos <- gregexpr("_", name, fixed = TRUE)[[1L]]
-  for (p in pos[pos > 0L]) {
-    head <- substr(name, 1L, p - 1L)
-    if (is.list(obj[[head]])) {
-      found <- get_prop(obj[[head]], substr(name, p + 1L, nchar(name)))
-      if (!is.null(found)) return(found)
-    }
-  }
-  NULL
-}
+# Look up a property by name; NULL if absent.
+get_prop <- function(obj, name) unclass(obj)[[name]]
 
 plain_value <- function(x) {
   if (is.list(x)) {
@@ -566,6 +600,30 @@ plain_value <- function(x) {
 
 values_match <- function(a, b) {
   isTRUE(all.equal(plain_value(a), plain_value(b), check.attributes = FALSE))
+}
+
+# Every property in named list `selector` matches `obj`'s; nested named lists
+# match nested objects property by property (list(marker = list(color = "red"))
+# matches any trace with red markers).
+props_match <- function(obj, selector) {
+  for (name in names(selector)) {
+    val <- get_prop(obj, name)
+    want <- selector[[name]]
+    ok <- if (
+      is.list(want) &&
+        !is.null(names(want)) &&
+        is.list(val) &&
+        !is.null(names(val))
+    ) {
+      props_match(val, want)
+    } else {
+      !is.null(val) && values_match(val, want)
+    }
+    if (!ok) {
+      return(FALSE)
+    }
+  }
+  TRUE
 }
 
 # plotly.py's _selector_matches: NULL matches everything, a string matches
@@ -584,11 +642,7 @@ selector_matches <- function(obj, selector) {
   if (
     is.list(selector) && (length(selector) == 0L || !is.null(names(selector)))
   ) {
-    for (name in names(selector)) {
-      val <- get_prop(obj, name)
-      if (is.null(val) || !values_match(val, selector[[name]])) return(FALSE)
-    }
-    return(TRUE)
+    return(props_match(obj, selector))
   }
   stop(
     "`selector` must be NULL, a named list, a string, a function or (for traces) trace indices",
@@ -672,9 +726,9 @@ trace_indices <- function(
 #' @param fig A `go_figure` object.
 #' @param selector Which traces to use: `NULL` (all), a trace type such as
 #'   `"scatter"`, indices into the matching traces, a named list of property
-#'   values that must all match (names may use magic underscores, e.g.
-#'   `list(marker_color = "red")`), or a function that takes a trace and
-#'   returns `TRUE` or `FALSE`.
+#'   values that must all match (nested lists match nested properties, e.g.
+#'   `list(marker = list(color = "red"))`), or a function that takes a trace
+#'   and returns `TRUE` or `FALSE`.
 #' @param row,col Only traces in this subplot grid row and/or column.
 #' @param secondary_y Only traces on secondary (`TRUE`) or primary (`FALSE`)
 #'   y axes.
@@ -691,7 +745,11 @@ trace_indices <- function(
 #'   add_scatter(y = 1:3, name = "a") |>
 #'   add_scatter(y = 3:1, name = "b", mode = "markers")
 #' select_traces(fig, list(name = "b"))
-#' fig <- update_traces(fig, marker_size = 12, selector = list(mode = "markers"))
+#' fig <- update_traces(
+#'   fig,
+#'   marker = go_scatter_marker(size = 12),
+#'   selector = list(mode = "markers")
+#' )
 #' fig <- for_each_trace(fig, function(tr) {
 #'   tr$name <- toupper(tr$name)
 #'   tr
@@ -720,7 +778,7 @@ update_traces <- function(
   overwrite = FALSE
 ) {
   check_figure(fig)
-  patch <- combine_patch(patch, list(...))
+  patch <- combine_patch(patch, list(...), fig)
   data <- fig$data
   for (i in trace_indices(fig, selector, row, col, secondary_y)) {
     data[[i]] <- update_object(data[[i]], data[[i]]$type, patch, overwrite)
@@ -839,7 +897,7 @@ update_layout_subplots <- function(
   col = NULL,
   secondary_y = NULL
 ) {
-  patch <- combine_patch(patch, dots)
+  patch <- combine_patch(patch, dots, fig)
   key <- paste0("layout.", prefix)
   layout <- unclass(fig$layout)
   for (n in layout_subplot_keys(fig, prefix, selector, row, col, secondary_y)) {
@@ -945,7 +1003,7 @@ update_layout_array <- function(
   col = NULL,
   secondary_y = NULL
 ) {
-  patch <- combine_patch(patch, dots)
+  patch <- combine_patch(patch, dots, fig)
   element_key <- get_validator(paste0("layout.", prop))$element_key
   arr <- fig$layout[[prop]] %||% list()
   for (i in layout_array_indices(fig, prop, selector, row, col, secondary_y)) {

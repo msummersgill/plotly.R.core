@@ -4,19 +4,6 @@
 \alias{add_table}
 \alias{add_table.default}
 \alias{go_table}
-\alias{go_table_cells}
-\alias{go_table_cells_fill}
-\alias{go_table_cells_font}
-\alias{go_table_cells_line}
-\alias{go_table_domain}
-\alias{go_table_header}
-\alias{go_table_header_fill}
-\alias{go_table_header_font}
-\alias{go_table_header_line}
-\alias{go_table_hoverlabel}
-\alias{go_table_hoverlabel_font}
-\alias{go_table_legendgrouptitle}
-\alias{go_table_legendgrouptitle_font}
 \title{Table traces}
 \usage{
 add_table(fig, ...)
@@ -71,163 +58,24 @@ go_table(
   visible = NULL,
   skip_invalid = FALSE
 )
-
-go_table_cells(
-  arg = NULL,
-  ...,
-  align = NULL,
-  fill = NULL,
-  font = NULL,
-  format = NULL,
-  height = NULL,
-  line = NULL,
-  prefix = NULL,
-  suffix = NULL,
-  values = NULL,
-  skip_invalid = FALSE
-)
-
-go_table_cells_fill(arg = NULL, ..., color = NULL, skip_invalid = FALSE)
-
-go_table_cells_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_table_cells_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_table_domain(
-  arg = NULL,
-  ...,
-  column = NULL,
-  row = NULL,
-  x = NULL,
-  y = NULL,
-  skip_invalid = FALSE
-)
-
-go_table_header(
-  arg = NULL,
-  ...,
-  align = NULL,
-  fill = NULL,
-  font = NULL,
-  format = NULL,
-  height = NULL,
-  line = NULL,
-  prefix = NULL,
-  suffix = NULL,
-  values = NULL,
-  skip_invalid = FALSE
-)
-
-go_table_header_fill(arg = NULL, ..., color = NULL, skip_invalid = FALSE)
-
-go_table_header_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_table_header_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_table_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  skip_invalid = FALSE
-)
-
-go_table_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_table_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_table_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
 }
 \arguments{
 \item{fig}{A \code{go_figure} object.}
 
-\item{...}{Further properties, including nested properties in
-"magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}. Property values may be one-sided
-formulas, evaluated in \code{data} for \code{add_*()} functions.}
+\item{...}{Not used: properties must be named in full.}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
-~col}, \code{marker_size = ~col}) are evaluated. Default: the data
+~col}, \code{marker = list(size = ~col)}, \code{marker =
+go_scatter_marker(size = ~col)}) are evaluated. Default: the data
 given to \code{\link{go_figure}()}. Only the evaluated values are
 added to the trace. A \code{crosstalk::SharedData} works the same way,
 and links the trace to its crosstalk group (see
 \code{\link{highlight}()}).}
 
-\item{cells}{Named list or \code{\link{go_table_cells}()} object.}
+\item{cells}{A \code{\link{go_table_cells}()} object or named list, with
+properties \code{align}, \code{fill}, \code{font}, \code{format},
+\code{height}, \code{line}, \code{prefix}, \code{suffix} and
+\code{values} (see \code{\link{go_table_cells}()}).}
 
 \item{columnorder}{Specifies the rendered order of the data columns; for
 example, a value `2` at position `0` means that column index `0` in
@@ -244,9 +92,14 @@ listening to hover, click and selection events. Note that, "scatter"
 traces also appends customdata items in the markers DOM elements Data
 array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
-\item{domain}{Named list or \code{\link{go_table_domain}()} object.}
+\item{domain}{A \code{\link{go_domain}()} object or named list, with
+properties \code{column}, \code{row}, \code{x} and \code{y} (see
+\code{\link{go_domain}()}).}
 
-\item{header}{Named list or \code{\link{go_table_header}()} object.}
+\item{header}{A \code{\link{go_table_header}()} object or named list,
+with properties \code{align}, \code{fill}, \code{font}, \code{format},
+\code{height}, \code{line}, \code{prefix}, \code{suffix} and
+\code{values} (see \code{\link{go_table_header}()}).}
 
 \item{hoverinfo}{Determines what trace information appears on hover. If
 `none` or `skip` are set, no information is displayed upon hovering.
@@ -255,8 +108,10 @@ combination of \code{"x"}, \code{"y"}, \code{"z"}, \code{"text"},
 \code{"name"} joined with \code{"+"}, or one of \code{"all"},
 \code{"none"}, \code{"skip"}, or a vector of these.}
 
-\item{hoverlabel}{Named list or \code{\link{go_table_hoverlabel}()}
-object.}
+\item{hoverlabel}{A \code{\link{go_hoverlabel}()} object or named list,
+with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+\code{font}, \code{namelength} and \code{showarrow} (see
+\code{\link{go_hoverlabel}()}).}
 
 \item{ids}{Assigns id labels to each datum. These ids for object
 constancy of data points during animation. Should be an array of
@@ -269,8 +124,9 @@ Settings for these legends are set in the layout, under
 `layout.legend`, `layout.legend2`, etc. Subplot id: \code{"legend"},
 \code{"legend2"}, \code{"legend3"}, ....}
 
-\item{legendgrouptitle}{Named list or
-\code{\link{go_table_legendgrouptitle}()} object.}
+\item{legendgrouptitle}{A \code{\link{go_legendgrouptitle}()} object or
+named list, with properties \code{font} and \code{text} (see
+\code{\link{go_legendgrouptitle}()}).}
 
 \item{legendrank}{Sets the legend rank for this trace. Items and groups
 with smaller ranks are presented on top/left side while with
@@ -320,13 +176,9 @@ with it as it moves. Any value.}
 (provided that the legend itself is visible). One of
 \code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
 
-\item{row}{\strong{\code{add_table()}}: Subplot grid row (figures
-  created with \code{\link{make_subplots}()} only). May be \code{"all"}
-  or a vector to address several cells.
-
-  \strong{\code{go_table_domain()}}: If there is a layout grid, use the
-  domain for this row in the grid for this table trace. Integer in the
-  interval [0, Inf].}
+\item{row}{Subplot grid row (figures created with
+\code{\link{make_subplots}()} only). May be \code{"all"} or a vector
+to address several cells.}
 
 \item{col}{Subplot grid column (figures created with
 \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
@@ -337,205 +189,10 @@ instead of raising an error.}
 
 \item{arg}{Optional named list, or graph object of the same type, to
 initialise properties from (constructors). Named arguments take precedence.}
-
-\item{align}{\strong{\code{go_table_cells()}, \code{go_table_header()}}:
-  Sets the horizontal alignment of the `text` within the box. Has an
-  effect only if `text` spans two or more lines (i.e. `text` contains
-  one or more <br> HTML tags) or if an explicit width is set to override
-  the text width. One of \code{"left"}, \code{"center"}, \code{"right"},
-  or a vector of these.
-
-  \strong{\code{go_table_hoverlabel()}}: Sets the horizontal alignment
-  of the text content within hover label box. Has an effect only if the
-  hover label text spans two or more lines One of \code{"left"},
-  \code{"right"}, \code{"auto"}, or a vector of these.}
-
-\item{fill}{\strong{\code{go_table_cells()}}: Named list or
-  \code{\link{go_table_cells_fill}()} object.
-
-  \strong{\code{go_table_header()}}: Named list or
-  \code{\link{go_table_header_fill}()} object.}
-
-\item{font}{\strong{\code{go_table_cells()}}: Named list or
-  \code{\link{go_table_cells_font}()} object.
-
-  \strong{\code{go_table_header()}}: Named list or
-  \code{\link{go_table_header_font}()} object.
-
-  \strong{\code{go_table_hoverlabel()}}: Sets the font used in hover
-  labels. Named list or \code{\link{go_table_hoverlabel_font}()} object.
-
-  \strong{\code{go_table_legendgrouptitle()}}: Sets this legend group's
-  title font. Named list or
-  \code{\link{go_table_legendgrouptitle_font}()} object.}
-
-\item{format}{Sets the cell value formatting rule using d3 formatting
-mini-languages which are very similar to those in Python. For numbers,
-see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. Data
-array: a vector, factor, Date/POSIXct vector, matrix or list.}
-
-\item{height}{The height of cells. Number.}
-
-\item{line}{\strong{\code{go_table_cells()}}: Named list or
-  \code{\link{go_table_cells_line}()} object.
-
-  \strong{\code{go_table_header()}}: Named list or
-  \code{\link{go_table_header_line}()} object.}
-
-\item{prefix}{Prefix for cell values. String, or a vector of these.}
-
-\item{suffix}{Suffix for cell values. String, or a vector of these.}
-
-\item{values}{\strong{\code{go_table_cells()}}: Cell values.
-  `values[m][n]` represents the value of the `n`th point in column `m`,
-  therefore the `values[m]` vector length for all columns must be the
-  same (longer vectors will be truncated). Each value must be a finite
-  number or a string. Data array: a vector, factor, Date/POSIXct vector,
-  matrix or list.
-
-  \strong{\code{go_table_header()}}: Header cell values. `values[m][n]`
-  represents the value of the `n`th point in column `m`, therefore the
-  `values[m]` vector length for all columns must be the same (longer
-  vectors will be truncated). Each value must be a finite number or a
-  string. Data array: a vector, factor, Date/POSIXct vector, matrix or
-  list.}
-
-\item{color}{\strong{\code{go_table_cells_fill()},
-  \code{go_table_header_fill()}}: Sets the cell fill color. It accepts
-  either a specific color or an array of colors or a 2D array of colors.
-  Color: a CSS color string or R color name, or a vector of these.
-
-  \strong{\code{go_table_cells_font()}, \code{go_table_cells_line()},
-  \code{go_table_header_font()}, \code{go_table_header_line()},
-  \code{go_table_hoverlabel_font()}}: Color: a CSS color string or R
-  color name, or a vector of these.
-
-  \strong{\code{go_table_legendgrouptitle_font()}}: Color: a CSS color
-  string or R color name.}
-
-\item{family}{\strong{\code{go_table_cells_font()},
-  \code{go_table_header_font()}, \code{go_table_hoverlabel_font()}}:
-  HTML font family - the typeface that will be applied by the web
-  browser. The web browser can only apply a font if it is available on
-  the system where it runs. Provide multiple font families, separated by
-  commas, to indicate the order in which to apply fonts if they aren't
-  available. String, or a vector of these.
-
-  \strong{\code{go_table_legendgrouptitle_font()}}: HTML font family -
-  the typeface that will be applied by the web browser. The web browser
-  can only apply a font if it is available on the system where it runs.
-  Provide multiple font families, separated by commas, to indicate the
-  order in which to apply fonts if they aren't available. String.}
-
-\item{lineposition}{\strong{\code{go_table_cells_font()},
-  \code{go_table_header_font()}, \code{go_table_hoverlabel_font()}}:
-  Sets the kind of decoration line(s) with text, such as an "under",
-  "over" or "through" as well as combinations e.g. "under+over", etc.
-  Any combination of \code{"under"}, \code{"over"}, \code{"through"}
-  joined with \code{"+"}, or one of \code{"none"}, or a vector of these.
-
-  \strong{\code{go_table_legendgrouptitle_font()}}: Sets the kind of
-  decoration line(s) with text, such as an "under", "over" or "through"
-  as well as combinations e.g. "under+over", etc. Any combination of
-  \code{"under"}, \code{"over"}, \code{"through"} joined with
-  \code{"+"}, or one of \code{"none"}.}
-
-\item{shadow}{\strong{\code{go_table_cells_font()},
-  \code{go_table_header_font()}, \code{go_table_hoverlabel_font()}}:
-  Sets the shape and color of the shadow behind text. "auto" places
-  minimal shadow and applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.
-
-  \strong{\code{go_table_legendgrouptitle_font()}}: Sets the shape and
-  color of the shadow behind text. "auto" places minimal shadow and
-  applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.}
-
-\item{size}{\strong{\code{go_table_cells_font()},
-  \code{go_table_header_font()}, \code{go_table_hoverlabel_font()}}:
-  Number in the interval [1, Inf], or a vector of these.
-
-  \strong{\code{go_table_legendgrouptitle_font()}}: Number in the
-  interval [1, Inf].}
-
-\item{style}{\strong{\code{go_table_cells_font()},
-  \code{go_table_header_font()}, \code{go_table_hoverlabel_font()}}:
-  Sets whether a font should be styled with a normal or italic face from
-  its family. One of \code{"normal"}, \code{"italic"}, or a vector of
-  these.
-
-  \strong{\code{go_table_legendgrouptitle_font()}}: Sets whether a font
-  should be styled with a normal or italic face from its family. One of
-  \code{"normal"}, \code{"italic"}.}
-
-\item{textcase}{\strong{\code{go_table_cells_font()},
-  \code{go_table_header_font()}, \code{go_table_hoverlabel_font()}}:
-  Sets capitalization of text. It can be used to make text appear in
-  all-uppercase or all-lowercase, or with each word capitalized. One of
-  \code{"normal"}, \code{"word caps"}, \code{"upper"}, \code{"lower"},
-  or a vector of these.
-
-  \strong{\code{go_table_legendgrouptitle_font()}}: Sets capitalization
-  of text. It can be used to make text appear in all-uppercase or
-  all-lowercase, or with each word capitalized. One of \code{"normal"},
-  \code{"word caps"}, \code{"upper"}, \code{"lower"}.}
-
-\item{variant}{\strong{\code{go_table_cells_font()},
-  \code{go_table_header_font()}, \code{go_table_hoverlabel_font()}}:
-  Sets the variant of the font. One of \code{"normal"},
-  \code{"small-caps"}, \code{"all-small-caps"},
-  \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}, or a
-  vector of these.
-
-  \strong{\code{go_table_legendgrouptitle_font()}}: Sets the variant of
-  the font. One of \code{"normal"}, \code{"small-caps"},
-  \code{"all-small-caps"}, \code{"all-petite-caps"},
-  \code{"petite-caps"}, \code{"unicase"}.}
-
-\item{weight}{\strong{\code{go_table_cells_font()},
-  \code{go_table_header_font()}, \code{go_table_hoverlabel_font()}}:
-  Sets the weight (or boldness) of the font. Integer in the interval [1,
-  1000], or a vector of these.
-
-  \strong{\code{go_table_legendgrouptitle_font()}}: Sets the weight (or
-  boldness) of the font. Integer in the interval [1, 1000].}
-
-\item{width}{Number, or a vector of these.}
-
-\item{column}{If there is a layout grid, use the domain for this column
-in the grid for this table trace. Integer in the interval [0, Inf].}
-
-\item{x}{Sets the horizontal domain of this table trace (in plot
-fraction). Vector or list of 2 element(s).}
-
-\item{y}{Sets the vertical domain of this table trace (in plot
-fraction). Vector or list of 2 element(s).}
-
-\item{bgcolor}{Sets the background color of the hover labels for this
-trace Color: a CSS color string or R color name, or a vector of these.}
-
-\item{bordercolor}{Sets the border color of the hover labels for this
-trace. Color: a CSS color string or R color name, or a vector of
-these.}
-
-\item{namelength}{Sets the default length (in number of characters) of
-the trace name in the hover labels for all traces. -1 shows the whole
-name regardless of length. 0-3 shows the first 0-3 characters, and an
-integer >3 will show the whole name if it is less than that many
-characters, but if it is longer, will truncate to `namelength - 3`
-characters and add an ellipsis. Integer in the interval [-1, Inf], or
-a vector of these.}
-
-\item{showarrow}{Sets whether or not to show the hover label
-arrow/triangle pointing to the data point. Logical.}
-
-\item{text}{Sets the title of the legend group. String.}
 }
 \value{
-Each \code{go_*()} function returns a graph object of the same
-  class as its name; \code{add_*()} functions return the modified figure.
+\code{go_*()} functions return a graph object;
+  \code{add_*()} functions return the modified figure.
 }
 \description{
 Table view for detailed data viewing. The data are arranged in a grid of
@@ -544,34 +201,27 @@ individual cells. Table is using a column-major order, ie. the grid is
 represented as a vector of column vectors.
 }
 \details{
-\code{go_table()} and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-\code{\link{plotly_obj-modify}()}). \code{add_table()} creates an object
-and adds it to a figure.
+\code{go_table()} creates a validated graph object (a named list).
+\code{add_table()} creates one and adds it to a figure.
 
-Nested objects documented here:
-\describe{
-\item{\code{go_table_cells()}}{\code{table.cells}}
-\item{\code{go_table_cells_fill()}}{\code{table.cells.fill}}
-\item{\code{go_table_cells_font()}}{\code{table.cells.font}}
-\item{\code{go_table_cells_line()}}{\code{table.cells.line}}
-\item{\code{go_table_domain()}}{\code{table.domain}}
-\item{\code{go_table_header()}}{\code{table.header}}
-\item{\code{go_table_header_fill()}}{\code{table.header.fill}}
-\item{\code{go_table_header_font()}}{\code{table.header.font}}
-\item{\code{go_table_header_line()}}{\code{table.header.line}}
-\item{\code{go_table_hoverlabel()}}{\code{table.hoverlabel}}
-\item{\code{go_table_hoverlabel_font()}}{\code{table.hoverlabel.font}:
-Sets the font used in hover labels.}
-\item{\code{go_table_legendgrouptitle()}}{\code{table.legendgrouptitle}}
-\item{\code{go_table_legendgrouptitle_font()}}{\code{table.legendgrouptitle.font}:
-Sets this legend group's title font.}
-}
+
+Nested objects are given as named lists or with their constructors, which
+are linked from the arguments below. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+\code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+evaluated in the data, and then checked, when the trace is added with
+\code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_table()
+d <- head(mtcars)
+d |>
+  go_figure() |>
+  add_table(
+    header = go_table_header(values = names(d)),
+    cells = go_table_cells(values = d)
+  )
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}
 }
+\concept{traces}

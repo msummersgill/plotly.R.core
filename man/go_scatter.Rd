@@ -4,30 +4,6 @@
 \alias{add_scatter}
 \alias{add_scatter.default}
 \alias{go_scatter}
-\alias{go_scatter_error_x}
-\alias{go_scatter_error_y}
-\alias{go_scatter_fillgradient}
-\alias{go_scatter_fillpattern}
-\alias{go_scatter_hoverlabel}
-\alias{go_scatter_hoverlabel_font}
-\alias{go_scatter_legendgrouptitle}
-\alias{go_scatter_legendgrouptitle_font}
-\alias{go_scatter_line}
-\alias{go_scatter_marker}
-\alias{go_scatter_marker_colorbar}
-\alias{go_scatter_marker_colorbar_tickfont}
-\alias{go_scatter_marker_colorbar_tickformatstop}
-\alias{go_scatter_marker_colorbar_title}
-\alias{go_scatter_marker_colorbar_title_font}
-\alias{go_scatter_marker_gradient}
-\alias{go_scatter_marker_line}
-\alias{go_scatter_selected}
-\alias{go_scatter_selected_marker}
-\alias{go_scatter_selected_textfont}
-\alias{go_scatter_textfont}
-\alias{go_scatter_unselected}
-\alias{go_scatter_unselected_marker}
-\alias{go_scatter_unselected_textfont}
 \title{Scatter traces}
 \usage{
 add_scatter(fig, ...)
@@ -175,360 +151,15 @@ go_scatter(
   zorder = NULL,
   skip_invalid = FALSE
 )
-
-go_scatter_error_x(
-  arg = NULL,
-  ...,
-  array = NULL,
-  arrayminus = NULL,
-  color = NULL,
-  copy_ystyle = NULL,
-  symmetric = NULL,
-  thickness = NULL,
-  traceref = NULL,
-  tracerefminus = NULL,
-  type = NULL,
-  value = NULL,
-  valueminus = NULL,
-  visible = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_error_y(
-  arg = NULL,
-  ...,
-  array = NULL,
-  arrayminus = NULL,
-  color = NULL,
-  symmetric = NULL,
-  thickness = NULL,
-  traceref = NULL,
-  tracerefminus = NULL,
-  type = NULL,
-  value = NULL,
-  valueminus = NULL,
-  visible = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_fillgradient(
-  arg = NULL,
-  ...,
-  colorscale = NULL,
-  start = NULL,
-  stop = NULL,
-  type = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_fillpattern(
-  arg = NULL,
-  ...,
-  bgcolor = NULL,
-  fgcolor = NULL,
-  fgopacity = NULL,
-  fillmode = NULL,
-  path = NULL,
-  shape = NULL,
-  size = NULL,
-  solidity = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_line(
-  arg = NULL,
-  ...,
-  backoff = NULL,
-  color = NULL,
-  dash = NULL,
-  shape = NULL,
-  simplify = NULL,
-  smoothing = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_marker(
-  arg = NULL,
-  ...,
-  angle = NULL,
-  angleref = NULL,
-  autocolorscale = NULL,
-  cauto = NULL,
-  cmax = NULL,
-  cmid = NULL,
-  cmin = NULL,
-  color = NULL,
-  coloraxis = NULL,
-  colorbar = NULL,
-  colorscale = NULL,
-  gradient = NULL,
-  line = NULL,
-  maxdisplayed = NULL,
-  opacity = NULL,
-  reversescale = NULL,
-  showscale = NULL,
-  size = NULL,
-  sizemin = NULL,
-  sizemode = NULL,
-  sizeref = NULL,
-  standoff = NULL,
-  symbol = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_marker_colorbar(
-  arg = NULL,
-  ...,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  borderwidth = NULL,
-  dtick = NULL,
-  exponentformat = NULL,
-  labelalias = NULL,
-  len = NULL,
-  lenmode = NULL,
-  minexponent = NULL,
-  nticks = NULL,
-  orientation = NULL,
-  outlinecolor = NULL,
-  outlinewidth = NULL,
-  separatethousands = NULL,
-  showexponent = NULL,
-  showticklabels = NULL,
-  showtickprefix = NULL,
-  showticksuffix = NULL,
-  thickness = NULL,
-  thicknessmode = NULL,
-  tick0 = NULL,
-  tickangle = NULL,
-  tickcolor = NULL,
-  tickfont = NULL,
-  tickformat = NULL,
-  tickformatstops = NULL,
-  ticklabeloverflow = NULL,
-  ticklabelposition = NULL,
-  ticklabelstep = NULL,
-  ticklen = NULL,
-  tickmode = NULL,
-  tickprefix = NULL,
-  ticks = NULL,
-  ticksuffix = NULL,
-  ticktext = NULL,
-  tickvals = NULL,
-  tickwidth = NULL,
-  title = NULL,
-  x = NULL,
-  xanchor = NULL,
-  xpad = NULL,
-  xref = NULL,
-  y = NULL,
-  yanchor = NULL,
-  ypad = NULL,
-  yref = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_marker_colorbar_tickfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_marker_colorbar_tickformatstop(
-  arg = NULL,
-  ...,
-  dtickrange = NULL,
-  enabled = NULL,
-  name = NULL,
-  templateitemname = NULL,
-  value = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_marker_colorbar_title(
-  arg = NULL,
-  ...,
-  font = NULL,
-  side = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_marker_colorbar_title_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_marker_gradient(
-  arg = NULL,
-  ...,
-  color = NULL,
-  type = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_marker_line(
-  arg = NULL,
-  ...,
-  autocolorscale = NULL,
-  cauto = NULL,
-  cmax = NULL,
-  cmid = NULL,
-  cmin = NULL,
-  color = NULL,
-  coloraxis = NULL,
-  colorscale = NULL,
-  dash = NULL,
-  reversescale = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_selected(
-  arg = NULL,
-  ...,
-  marker = NULL,
-  textfont = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_selected_marker(
-  arg = NULL,
-  ...,
-  color = NULL,
-  opacity = NULL,
-  size = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_selected_textfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_textfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_unselected(
-  arg = NULL,
-  ...,
-  marker = NULL,
-  textfont = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_unselected_marker(
-  arg = NULL,
-  ...,
-  color = NULL,
-  opacity = NULL,
-  size = NULL,
-  skip_invalid = FALSE
-)
-
-go_scatter_unselected_textfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  skip_invalid = FALSE
-)
 }
 \arguments{
 \item{fig}{A \code{go_figure} object.}
 
-\item{...}{Further properties, including nested properties in
-"magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}. Property values may be one-sided
-formulas, evaluated in \code{data} for \code{add_*()} functions.}
+\item{...}{Not used: properties must be named in full.}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
-~col}, \code{marker_size = ~col}) are evaluated. Default: the data
+~col}, \code{marker = list(size = ~col)}, \code{marker =
+go_scatter_marker(size = ~col)}) are evaluated. Default: the data
 given to \code{\link{go_figure}()}. Only the evaluated values are
 added to the trace. A \code{crosstalk::SharedData} works the same way,
 and links the trace to its crosstalk group (see
@@ -556,9 +187,18 @@ array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{dy}{Sets the y coordinate step. See `y0` for more info. Number.}
 
-\item{error_x}{Named list or \code{\link{go_scatter_error_x}()} object.}
+\item{error_x}{A \code{\link{go_error_bar}()} object or named list, with
+properties \code{array}, \code{arrayminus}, \code{color},
+\code{copy_ystyle}, \code{symmetric}, \code{thickness},
+\code{traceref}, \code{tracerefminus}, \code{type}, \code{value},
+\code{valueminus}, \code{visible} and \code{width} (see
+\code{\link{go_error_bar}()}).}
 
-\item{error_y}{Named list or \code{\link{go_scatter_error_y}()} object.}
+\item{error_y}{A \code{\link{go_error_bar}()} object or named list, with
+properties \code{array}, \code{arrayminus}, \code{color},
+\code{symmetric}, \code{thickness}, \code{traceref},
+\code{tracerefminus}, \code{type}, \code{value}, \code{valueminus},
+\code{visible} and \code{width} (see \code{\link{go_error_bar}()}).}
 
 \item{fill}{Sets the area to fill with a solid color. Defaults to "none"
 unless this trace is stacked, then it gets "tonexty" ("tonextx") if
@@ -587,11 +227,16 @@ ignored except for setting the background color of the hover label, if
 any. Color: a CSS color string or R color name.}
 
 \item{fillgradient}{Sets a fill gradient. If not specified, the
-fillcolor is used instead. Named list or
-\code{\link{go_scatter_fillgradient}()} object.}
+fillcolor is used instead. A \code{\link{go_scatter_fillgradient}()}
+object or named list, with properties \code{colorscale}, \code{start},
+\code{stop} and \code{type} (see
+\code{\link{go_scatter_fillgradient}()}).}
 
-\item{fillpattern}{Sets the pattern within the marker. Named list or
-\code{\link{go_scatter_fillpattern}()} object.}
+\item{fillpattern}{Sets the pattern within the marker. A
+\code{\link{go_pattern}()} object or named list, with properties
+\code{bgcolor}, \code{fgcolor}, \code{fgopacity}, \code{fillmode},
+\code{path}, \code{shape}, \code{size} and \code{solidity} (see
+\code{\link{go_pattern}()}).}
 
 \item{groupnorm}{Only relevant when `stackgroup` is used, and only the
 first `groupnorm` found in the `stackgroup` will be used - including
@@ -610,8 +255,10 @@ combination of \code{"x"}, \code{"y"}, \code{"z"}, \code{"text"},
 \code{"name"} joined with \code{"+"}, or one of \code{"all"},
 \code{"none"}, \code{"skip"}, or a vector of these.}
 
-\item{hoverlabel}{Named list or \code{\link{go_scatter_hoverlabel}()}
-object.}
+\item{hoverlabel}{A \code{\link{go_hoverlabel}()} object or named list,
+with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+\code{font}, \code{namelength} and \code{showarrow} (see
+\code{\link{go_hoverlabel}()}).}
 
 \item{hoveron}{Do the hover effects highlight individual points (markers
 or line points) or do they highlight filled regions? If the fill is
@@ -673,8 +320,9 @@ Settings for these legends are set in the layout, under
 shapes part of the same legend group hide/show at the same time when
 toggling legend items. String.}
 
-\item{legendgrouptitle}{Named list or
-\code{\link{go_scatter_legendgrouptitle}()} object.}
+\item{legendgrouptitle}{A \code{\link{go_legendgrouptitle}()} object or
+named list, with properties \code{font} and \code{text} (see
+\code{\link{go_legendgrouptitle}()}).}
 
 \item{legendrank}{Sets the legend rank for this trace. Items and groups
 with smaller ranks are presented on top/left side while with
@@ -688,20 +336,16 @@ to their order in data and layout. Number.}
 \item{legendwidth}{Sets the width (in px or fraction) of the legend for
 this trace. Number in the interval [0, Inf].}
 
-\item{line}{\strong{\code{go_scatter()}}: Named list or
-  \code{\link{go_scatter_line}()} object.
+\item{line}{A \code{\link{go_scatter_line}()} object or named list, with
+properties \code{backoff}, \code{color}, \code{dash}, \code{shape},
+\code{simplify}, \code{smoothing} and \code{width} (see
+\code{\link{go_scatter_line}()}).}
 
-  \strong{\code{go_scatter_marker()}}: Named list or
-  \code{\link{go_scatter_marker_line}()} object.}
-
-\item{marker}{\strong{\code{go_scatter()}}: Named list or
-  \code{\link{go_scatter_marker}()} object.
-
-  \strong{\code{go_scatter_selected()}}: Named list or
-  \code{\link{go_scatter_selected_marker}()} object.
-
-  \strong{\code{go_scatter_unselected()}}: Named list or
-  \code{\link{go_scatter_unselected_marker}()} object.}
+\item{marker}{A \code{\link{go_scatter_marker}()} object or named list,
+with properties \code{angle}, \code{angleref}, \code{autocolorscale},
+\code{cauto}, \code{cmax}, \code{cmid}, \code{cmin}, \code{color},
+\code{coloraxis}, \code{colorbar}, \code{colorscale}, \code{gradient}
+and 11 more (see \code{\link{go_scatter_marker}()}).}
 
 \item{meta}{Assigns extra meta information associated with this trace
 that can be used in various text attributes. Attributes such as trace
@@ -721,47 +365,27 @@ is "lines+markers". Otherwise, "lines". Any combination of
 \code{"lines"}, \code{"markers"}, \code{"text"} joined with
 \code{"+"}, or one of \code{"none"}.}
 
-\item{name}{\strong{\code{go_scatter()}}: Sets the trace name. The trace
-  name appears as the legend item and on hover. String.
-
-  \strong{\code{go_scatter_marker_colorbar_tickformatstop()}}: When used
-  in a template, named items are created in the output figure in
-  addition to any items the figure already has in this array. You can
-  modify these items in the output figure by making your own item with
-  `templateitemname` matching this `name` alongside your modifications
-  (including `visible: false` or `enabled: false` to hide it). Has no
-  effect outside of a template. String.}
+\item{name}{Sets the trace name. The trace name appears as the legend
+item and on hover. String.}
 
 \item{offsetgroup}{Set several traces linked to the same position axis
 or matching axes to the same offsetgroup where bars of the same
 position coordinate will line up. String.}
 
-\item{opacity}{\strong{\code{go_scatter()}}: Sets the opacity of the
-  trace. Number in the interval [0, 1].
+\item{opacity}{Sets the opacity of the trace. Number in the interval [0,
+1].}
 
-  \strong{\code{go_scatter_marker()}}: Sets the marker opacity. Number
-  in the interval [0, 1], or a vector of these.
+\item{orientation}{Only relevant in the following cases: 1. when
+`scattermode` is set to "group". 2. when `stackgroup` is used, and
+only the first `orientation` found in the `stackgroup` will be used -
+including if `visible` is "legendonly" but not if it is `false`. Sets
+the stacking direction. With "v" ("h"), the y (x) values of subsequent
+traces are added. Also affects the default value of `fill`. One of
+\code{"v"}, \code{"h"}.}
 
-  \strong{\code{go_scatter_selected_marker()}}: Sets the marker opacity
-  of selected points. Number in the interval [0, 1].
-
-  \strong{\code{go_scatter_unselected_marker()}}: Sets the marker
-  opacity of unselected points, applied only when a selection exists.
-  Number in the interval [0, 1].}
-
-\item{orientation}{\strong{\code{go_scatter()}}: Only relevant in the
-  following cases: 1. when `scattermode` is set to "group". 2. when
-  `stackgroup` is used, and only the first `orientation` found in the
-  `stackgroup` will be used - including if `visible` is "legendonly" but
-  not if it is `false`. Sets the stacking direction. With "v" ("h"), the
-  y (x) values of subsequent traces are added. Also affects the default
-  value of `fill`. One of \code{"v"}, \code{"h"}.
-
-  \strong{\code{go_scatter_marker_colorbar()}}: Sets the orientation of
-  the colorbar. One of \code{"h"}, \code{"v"}.}
-
-\item{selected}{Named list or \code{\link{go_scatter_selected}()}
-object.}
+\item{selected}{A \code{\link{go_selected}()} object or named list, with
+properties \code{marker} and \code{textfont} (see
+\code{\link{go_selected}()}).}
 
 \item{selectedpoints}{Array containing integer indices of selected
 points. Has an effect only for traces that support selections. Note
@@ -794,27 +418,18 @@ to (or be filled to) other traces in the same group. With multiple
 traces are not already consecutive, the later ones will be pushed down
 in the drawing order. String.}
 
-\item{text}{\strong{\code{go_scatter()}}: Sets text elements associated
-  with each (x,y) pair. If a single string, the same string appears over
-  all the data points. If an array of string, the items are mapped in
-  order to the this trace's (x,y) coordinates. If trace `hoverinfo`
-  contains a "text" flag and "hovertext" is not set, these elements will
-  be seen in the hover labels. String, or a vector of these.
+\item{text}{Sets text elements associated with each (x,y) pair. If a
+single string, the same string appears over all the data points. If an
+array of string, the items are mapped in order to the this trace's
+(x,y) coordinates. If trace `hoverinfo` contains a "text" flag and
+"hovertext" is not set, these elements will be seen in the hover
+labels. String, or a vector of these.}
 
-  \strong{\code{go_scatter_legendgrouptitle()}}: Sets the title of the
-  legend group. String.
-
-  \strong{\code{go_scatter_marker_colorbar_title()}}: Sets the title of
-  the color bar. String.}
-
-\item{textfont}{\strong{\code{go_scatter()}}: Sets the text font. Named
-  list or \code{\link{go_scatter_textfont}()} object.
-
-  \strong{\code{go_scatter_selected()}}: Named list or
-  \code{\link{go_scatter_selected_textfont}()} object.
-
-  \strong{\code{go_scatter_unselected()}}: Named list or
-  \code{\link{go_scatter_unselected_textfont}()} object.}
+\item{textfont}{Sets the text font. A \code{\link{go_font}()} object or
+named list, with properties \code{color}, \code{family},
+\code{lineposition}, \code{shadow}, \code{size}, \code{style},
+\code{textcase}, \code{variant} and \code{weight} (see
+\code{\link{go_font}()}).}
 
 \item{textposition}{Sets the positions of the `text` elements with
 respects to the (x,y) coordinates. One of \code{"top left"},
@@ -863,27 +478,17 @@ array, such that the same trace has a different index, you can still
 preserve user-driven changes if you give each trace a `uid` that stays
 with it as it moves. Any value.}
 
-\item{unselected}{Named list or \code{\link{go_scatter_unselected}()}
-object.}
+\item{unselected}{A \code{\link{go_unselected}()} object or named list,
+with properties \code{marker} and \code{textfont} (see
+\code{\link{go_unselected}()}).}
 
-\item{visible}{\strong{\code{go_scatter()}}: Determines whether or not
-  this trace is visible. If "legendonly", the trace is not drawn, but
-  can appear as a legend item (provided that the legend itself is
-  visible). One of \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
+\item{visible}{Determines whether or not this trace is visible. If
+"legendonly", the trace is not drawn, but can appear as a legend item
+(provided that the legend itself is visible). One of
+\code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
 
-  \strong{\code{go_scatter_error_x()}, \code{go_scatter_error_y()}}:
-  Determines whether or not this set of error bars is visible. Logical.}
-
-\item{x}{\strong{\code{go_scatter()}}: Sets the x coordinates. Data
-  array: a vector, factor, Date/POSIXct vector, matrix or list.
-
-  \strong{\code{go_scatter_marker_colorbar()}}: Sets the x position with
-  respect to `xref` of the color bar (in plot fraction). When `xref` is
-  "paper", defaults to 1.02 when `orientation` is "v" and 0.5 when
-  `orientation` is "h". When `xref` is "container", defaults to 1 when
-  `orientation` is "v" and 0.5 when `orientation` is "h". Must be
-  between 0 and 1 if `xref` is "container" and between "-2" and 3 if
-  `xref` is "paper". Number.}
+\item{x}{Sets the x coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
 
 \item{x0}{Alternate to `x`. Builds a linear space of x coordinates. Use
 with `dx` where `x0` is the starting coordinate and `dx` the step. Any
@@ -928,16 +533,8 @@ default would be on a Sunday i.e. 2000-01-02, otherwise it would be at
 Sets the alignment of data points on the x axis. One of
 \code{"start"}, \code{"middle"}, \code{"end"}.}
 
-\item{y}{\strong{\code{go_scatter()}}: Sets the y coordinates. Data
-  array: a vector, factor, Date/POSIXct vector, matrix or list.
-
-  \strong{\code{go_scatter_marker_colorbar()}}: Sets the y position with
-  respect to `yref` of the color bar (in plot fraction). When `yref` is
-  "paper", defaults to 0.5 when `orientation` is "v" and 1.02 when
-  `orientation` is "h". When `yref` is "container", defaults to 0.5 when
-  `orientation` is "v" and 1 when `orientation` is "h". Must be between
-  0 and 1 if `yref` is "container" and between "-2" and 3 if `yref` is
-  "paper". Number.}
+\item{y}{Sets the y coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
 
 \item{y0}{Alternate to `y`. Builds a linear space of y coordinates. Use
 with `dy` where `y0` is the starting coordinate and `dy` the step. Any
@@ -1002,884 +599,10 @@ instead of raising an error.}
 
 \item{arg}{Optional named list, or graph object of the same type, to
 initialise properties from (constructors). Named arguments take precedence.}
-
-\item{array}{Sets the data corresponding the length of each error bar.
-Values are plotted relative to the underlying data. Data array: a
-vector, factor, Date/POSIXct vector, matrix or list.}
-
-\item{arrayminus}{Sets the data corresponding the length of each error
-bar in the bottom (left) direction for vertical (horizontal) bars
-Values are plotted relative to the underlying data. Data array: a
-vector, factor, Date/POSIXct vector, matrix or list.}
-
-\item{color}{\strong{\code{go_scatter_error_x()},
-  \code{go_scatter_error_y()}}: Sets the stroke color of the error bars.
-  Color: a CSS color string or R color name.
-
-  \strong{\code{go_scatter_hoverlabel_font()},
-  \code{go_scatter_textfont()}}: Color: a CSS color string or R color
-  name, or a vector of these.
-
-  \strong{\code{go_scatter_legendgrouptitle_font()},
-  \code{go_scatter_marker_colorbar_tickfont()},
-  \code{go_scatter_marker_colorbar_title_font()}}: Color: a CSS color
-  string or R color name.
-
-  \strong{\code{go_scatter_line()}}: Sets the line color. Color: a CSS
-  color string or R color name.
-
-  \strong{\code{go_scatter_marker()}}: Sets the marker color. It accepts
-  either a specific color or an array of numbers that are mapped to the
-  colorscale relative to the max and min values of the array or relative
-  to `marker.cmin` and `marker.cmax` if set. Color: a CSS color string
-  or R color name, or a number mapped to a color by
-  \code{scatter.marker.colorscale}, or a vector of these.
-
-  \strong{\code{go_scatter_marker_gradient()}}: Sets the final color of
-  the gradient fill: the center color for radial, the right for
-  horizontal, or the bottom for vertical. Color: a CSS color string or R
-  color name, or a vector of these.
-
-  \strong{\code{go_scatter_marker_line()}}: Sets the marker.line color.
-  It accepts either a specific color or an array of numbers that are
-  mapped to the colorscale relative to the max and min values of the
-  array or relative to `marker.line.cmin` and `marker.line.cmax` if set.
-  Color: a CSS color string or R color name, or a number mapped to a
-  color by \code{scatter.marker.line.colorscale}, or a vector of these.
-
-  \strong{\code{go_scatter_selected_marker()}}: Sets the marker color of
-  selected points. Color: a CSS color string or R color name.
-
-  \strong{\code{go_scatter_selected_textfont()}}: Sets the text font
-  color of selected points. Color: a CSS color string or R color name.
-
-  \strong{\code{go_scatter_unselected_marker()}}: Sets the marker color
-  of unselected points, applied only when a selection exists. Color: a
-  CSS color string or R color name.
-
-  \strong{\code{go_scatter_unselected_textfont()}}: Sets the text font
-  color of unselected points, applied only when a selection exists.
-  Color: a CSS color string or R color name.}
-
-\item{copy_ystyle}{Logical.}
-
-\item{symmetric}{Determines whether or not the error bars have the same
-length in both direction (top/bottom for vertical bars, left/right for
-horizontal bars. Logical.}
-
-\item{thickness}{\strong{\code{go_scatter_error_x()},
-  \code{go_scatter_error_y()}}: Sets the thickness (in px) of the error
-  bars. Number in the interval [0, Inf].
-
-  \strong{\code{go_scatter_marker_colorbar()}}: Sets the thickness of
-  the color bar This measure excludes the size of the padding, ticks and
-  labels. Number in the interval [0, Inf].}
-
-\item{traceref}{Integer in the interval [0, Inf].}
-
-\item{tracerefminus}{Integer in the interval [0, Inf].}
-
-\item{type}{\strong{\code{go_scatter_error_x()},
-  \code{go_scatter_error_y()}}: Determines the rule used to generate the
-  error bars. If "constant", the bar lengths are of a constant value.
-  Set this constant in `value`. If "percent", the bar lengths correspond
-  to a percentage of underlying data. Set this percentage in `value`. If
-  "sqrt", the bar lengths correspond to the square of the underlying
-  data. If "data", the bar lengths are set with data set `array`. One of
-  \code{"percent"}, \code{"constant"}, \code{"sqrt"}, \code{"data"}.
-
-  \strong{\code{go_scatter_fillgradient()}}: Sets the type/orientation
-  of the color gradient for the fill. Defaults to "none". One of
-  \code{"radial"}, \code{"horizontal"}, \code{"vertical"},
-  \code{"none"}.
-
-  \strong{\code{go_scatter_marker_gradient()}}: Sets the type of
-  gradient used to fill the markers One of \code{"radial"},
-  \code{"horizontal"}, \code{"vertical"}, \code{"none"}, or a vector of
-  these.}
-
-\item{value}{\strong{\code{go_scatter_error_x()},
-  \code{go_scatter_error_y()}}: Sets the value of either the percentage
-  (if `type` is set to "percent") or the constant (if `type` is set to
-  "constant") corresponding to the lengths of the error bars. Number in
-  the interval [0, Inf].
-
-  \strong{\code{go_scatter_marker_colorbar_tickformatstop()}}: string -
-  dtickformat for described zoom level, the same as "tickformat" String.}
-
-\item{valueminus}{Sets the value of either the percentage (if `type` is
-set to "percent") or the constant (if `type` is set to "constant")
-corresponding to the lengths of the error bars in the bottom (left)
-direction for vertical (horizontal) bars Number in the interval [0,
-Inf].}
-
-\item{width}{\strong{\code{go_scatter_error_x()},
-  \code{go_scatter_error_y()}}: Sets the width (in px) of the cross-bar
-  at both ends of the error bars. Number in the interval [0, Inf].
-
-  \strong{\code{go_scatter_line()}}: Sets the line width (in px). Number
-  in the interval [0, Inf].
-
-  \strong{\code{go_scatter_marker_line()}}: Sets the width (in px) of
-  the lines bounding the marker points. Number in the interval [0, Inf],
-  or a vector of these.}
-
-\item{colorscale}{\strong{\code{go_scatter_fillgradient()}}: Sets the
-  fill gradient colors as a color scale. The color scale is interpreted
-  as a gradient applied in the direction specified by "orientation",
-  from the lowest to the highest value of the scatter plot along that
-  axis, or from the center to the most distant point from it, if
-  orientation is "radial". Colorscale: a vector of colors, a two-column
-  data.frame of (value, color), or the name of a sequential, diverging
-  or cyclical scale in \code{\link{px_colors}()} (append \code{"_r"} to
-  reverse).
-
-  \strong{\code{go_scatter_marker()}}: Sets the colorscale. Has an
-  effect only if in `marker.color` is set to a numerical array. The
-  colorscale must be an array containing arrays mapping a normalized
-  value to an rgb, rgba, hex, hsl, hsla, hwb, or named color string. At
-  minimum, a mapping for the lowest (0) and highest (1) values are
-  required. For example, `[[0, 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`.
-  To control the bounds of the colorscale in color space, use
-  `marker.cmin` and `marker.cmax`. Alternatively, `colorscale` may be a
-  palette name string of the following list:
-  Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-  Colorscale: a vector of colors, a two-column data.frame of (value,
-  color), or the name of a sequential, diverging or cyclical scale in
-  \code{\link{px_colors}()} (append \code{"_r"} to reverse).
-
-  \strong{\code{go_scatter_marker_line()}}: Sets the colorscale. Has an
-  effect only if in `marker.line.color` is set to a numerical array. The
-  colorscale must be an array containing arrays mapping a normalized
-  value to an rgb, rgba, hex, hsl, hsla, hwb, or named color string. At
-  minimum, a mapping for the lowest (0) and highest (1) values are
-  required. For example, `[[0, 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']]`.
-  To control the bounds of the colorscale in color space, use
-  `marker.line.cmin` and `marker.line.cmax`. Alternatively, `colorscale`
-  may be a palette name string of the following list:
-  Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-  Colorscale: a vector of colors, a two-column data.frame of (value,
-  color), or the name of a sequential, diverging or cyclical scale in
-  \code{\link{px_colors}()} (append \code{"_r"} to reverse).}
-
-\item{start}{Sets the gradient start value. It is given as the absolute
-position on the axis determined by the orientiation. E.g., if
-orientation is "horizontal", the gradient will be horizontal and start
-from the x-position given by start. If omitted, the gradient starts at
-the lowest value of the trace along the respective axis. Ignored if
-orientation is "radial". Number.}
-
-\item{stop}{Sets the gradient end value. It is given as the absolute
-position on the axis determined by the orientiation. E.g., if
-orientation is "horizontal", the gradient will be horizontal and end
-at the x-position given by end. If omitted, the gradient ends at the
-highest value of the trace along the respective axis. Ignored if
-orientation is "radial". Number.}
-
-\item{bgcolor}{\strong{\code{go_scatter_fillpattern()}}: When there is
-  no colorscale sets the color of background pattern fill. Defaults to a
-  `marker.color` background when `fillmode` is "overlay". Otherwise,
-  defaults to a transparent background. Color: a CSS color string or R
-  color name, or a vector of these.
-
-  \strong{\code{go_scatter_hoverlabel()}}: Sets the background color of
-  the hover labels for this trace Color: a CSS color string or R color
-  name, or a vector of these.
-
-  \strong{\code{go_scatter_marker_colorbar()}}: Sets the color of padded
-  area. Color: a CSS color string or R color name.}
-
-\item{fgcolor}{When there is no colorscale sets the color of foreground
-pattern fill. Defaults to a `marker.color` background when `fillmode`
-is "replace". Otherwise, defaults to dark grey or white to increase
-contrast with the `bgcolor`. Color: a CSS color string or R color
-name, or a vector of these.}
-
-\item{fgopacity}{Sets the opacity of the foreground pattern fill.
-Defaults to a 0.5 when `fillmode` is "overlay". Otherwise, defaults to
-1. Number in the interval [0, 1].}
-
-\item{fillmode}{Determines whether `marker.color` should be used as a
-default to `bgcolor` or a `fgcolor`. One of \code{"replace"},
-\code{"overlay"}.}
-
-\item{path}{Sets a custom path for pattern fill. Use with no `shape` or
-`solidity`, provide an SVG path string for the regions of the square
-from (0,0) to (`size`,`size`) to color. String, or a vector of these.}
-
-\item{shape}{\strong{\code{go_scatter_fillpattern()}}: Sets the shape of
-  the pattern fill. By default, no pattern is used for filling the area.
-  One of \code{""}, \code{"/"}, \code{"\\\\"}, \code{"x"}, \code{"-"},
-  \code{"|"}, \code{"+"}, \code{"."}, or a vector of these.
-
-  \strong{\code{go_scatter_line()}}: Determines the line shape. With
-  "spline" the lines are drawn using spline interpolation. The other
-  available values correspond to step-wise line shapes. One of
-  \code{"linear"}, \code{"spline"}, \code{"hv"}, \code{"vh"},
-  \code{"hvh"}, \code{"vhv"}.}
-
-\item{size}{\strong{\code{go_scatter_fillpattern()}}: Sets the size of
-  unit squares of the pattern fill in pixels, which corresponds to the
-  interval of repetition of the pattern. Number in the interval [0,
-  Inf], or a vector of these.
-
-  \strong{\code{go_scatter_hoverlabel_font()},
-  \code{go_scatter_textfont()}}: Number in the interval [1, Inf], or a
-  vector of these.
-
-  \strong{\code{go_scatter_legendgrouptitle_font()},
-  \code{go_scatter_marker_colorbar_tickfont()},
-  \code{go_scatter_marker_colorbar_title_font()}}: Number in the
-  interval [1, Inf].
-
-  \strong{\code{go_scatter_marker()}}: Sets the marker size (in px).
-  Number in the interval [0, Inf], or a vector of these.
-
-  \strong{\code{go_scatter_selected_marker()}}: Sets the marker size of
-  selected points. Number in the interval [0, Inf].
-
-  \strong{\code{go_scatter_unselected_marker()}}: Sets the marker size
-  of unselected points, applied only when a selection exists. Number in
-  the interval [0, Inf].}
-
-\item{solidity}{Sets the solidity of the pattern fill. Solidity is
-roughly the fraction of the area filled by the pattern. Solidity of 0
-shows only the background color without pattern and solidty of 1 shows
-only the foreground color without pattern. Number in the interval [0,
-1], or a vector of these.}
-
-\item{align}{Sets the horizontal alignment of the text content within
-hover label box. Has an effect only if the hover label text spans two
-or more lines One of \code{"left"}, \code{"right"}, \code{"auto"}, or
-a vector of these.}
-
-\item{bordercolor}{\strong{\code{go_scatter_hoverlabel()}}: Sets the
-  border color of the hover labels for this trace. Color: a CSS color
-  string or R color name, or a vector of these.
-
-  \strong{\code{go_scatter_marker_colorbar()}}: Sets the axis line
-  color. Color: a CSS color string or R color name.}
-
-\item{font}{\strong{\code{go_scatter_hoverlabel()}}: Sets the font used
-  in hover labels. Named list or
-  \code{\link{go_scatter_hoverlabel_font}()} object.
-
-  \strong{\code{go_scatter_legendgrouptitle()}}: Sets this legend
-  group's title font. Named list or
-  \code{\link{go_scatter_legendgrouptitle_font}()} object.
-
-  \strong{\code{go_scatter_marker_colorbar_title()}}: Sets this color
-  bar's title font. Named list or
-  \code{\link{go_scatter_marker_colorbar_title_font}()} object.}
-
-\item{namelength}{Sets the default length (in number of characters) of
-the trace name in the hover labels for all traces. -1 shows the whole
-name regardless of length. 0-3 shows the first 0-3 characters, and an
-integer >3 will show the whole name if it is less than that many
-characters, but if it is longer, will truncate to `namelength - 3`
-characters and add an ellipsis. Integer in the interval [-1, Inf], or
-a vector of these.}
-
-\item{showarrow}{Sets whether or not to show the hover label
-arrow/triangle pointing to the data point. Logical.}
-
-\item{family}{\strong{\code{go_scatter_hoverlabel_font()},
-  \code{go_scatter_textfont()}}: HTML font family - the typeface that
-  will be applied by the web browser. The web browser can only apply a
-  font if it is available on the system where it runs. Provide multiple
-  font families, separated by commas, to indicate the order in which to
-  apply fonts if they aren't available. String, or a vector of these.
-
-  \strong{\code{go_scatter_legendgrouptitle_font()},
-  \code{go_scatter_marker_colorbar_tickfont()},
-  \code{go_scatter_marker_colorbar_title_font()}}: HTML font family -
-  the typeface that will be applied by the web browser. The web browser
-  can only apply a font if it is available on the system where it runs.
-  Provide multiple font families, separated by commas, to indicate the
-  order in which to apply fonts if they aren't available. String.}
-
-\item{lineposition}{\strong{\code{go_scatter_hoverlabel_font()},
-  \code{go_scatter_textfont()}}: Sets the kind of decoration line(s)
-  with text, such as an "under", "over" or "through" as well as
-  combinations e.g. "under+over", etc. Any combination of
-  \code{"under"}, \code{"over"}, \code{"through"} joined with
-  \code{"+"}, or one of \code{"none"}, or a vector of these.
-
-  \strong{\code{go_scatter_legendgrouptitle_font()},
-  \code{go_scatter_marker_colorbar_tickfont()},
-  \code{go_scatter_marker_colorbar_title_font()}}: Sets the kind of
-  decoration line(s) with text, such as an "under", "over" or "through"
-  as well as combinations e.g. "under+over", etc. Any combination of
-  \code{"under"}, \code{"over"}, \code{"through"} joined with
-  \code{"+"}, or one of \code{"none"}.}
-
-\item{shadow}{\strong{\code{go_scatter_hoverlabel_font()},
-  \code{go_scatter_textfont()}}: Sets the shape and color of the shadow
-  behind text. "auto" places minimal shadow and applies contrast text
-  font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.
-
-  \strong{\code{go_scatter_legendgrouptitle_font()},
-  \code{go_scatter_marker_colorbar_tickfont()},
-  \code{go_scatter_marker_colorbar_title_font()}}: Sets the shape and
-  color of the shadow behind text. "auto" places minimal shadow and
-  applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.}
-
-\item{style}{\strong{\code{go_scatter_hoverlabel_font()},
-  \code{go_scatter_textfont()}}: Sets whether a font should be styled
-  with a normal or italic face from its family. One of \code{"normal"},
-  \code{"italic"}, or a vector of these.
-
-  \strong{\code{go_scatter_legendgrouptitle_font()},
-  \code{go_scatter_marker_colorbar_tickfont()},
-  \code{go_scatter_marker_colorbar_title_font()}}: Sets whether a font
-  should be styled with a normal or italic face from its family. One of
-  \code{"normal"}, \code{"italic"}.}
-
-\item{textcase}{\strong{\code{go_scatter_hoverlabel_font()},
-  \code{go_scatter_textfont()}}: Sets capitalization of text. It can be
-  used to make text appear in all-uppercase or all-lowercase, or with
-  each word capitalized. One of \code{"normal"}, \code{"word caps"},
-  \code{"upper"}, \code{"lower"}, or a vector of these.
-
-  \strong{\code{go_scatter_legendgrouptitle_font()},
-  \code{go_scatter_marker_colorbar_tickfont()},
-  \code{go_scatter_marker_colorbar_title_font()}}: Sets capitalization
-  of text. It can be used to make text appear in all-uppercase or
-  all-lowercase, or with each word capitalized. One of \code{"normal"},
-  \code{"word caps"}, \code{"upper"}, \code{"lower"}.}
-
-\item{variant}{\strong{\code{go_scatter_hoverlabel_font()},
-  \code{go_scatter_textfont()}}: Sets the variant of the font. One of
-  \code{"normal"}, \code{"small-caps"}, \code{"all-small-caps"},
-  \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}, or a
-  vector of these.
-
-  \strong{\code{go_scatter_legendgrouptitle_font()},
-  \code{go_scatter_marker_colorbar_tickfont()},
-  \code{go_scatter_marker_colorbar_title_font()}}: Sets the variant of
-  the font. One of \code{"normal"}, \code{"small-caps"},
-  \code{"all-small-caps"}, \code{"all-petite-caps"},
-  \code{"petite-caps"}, \code{"unicase"}.}
-
-\item{weight}{\strong{\code{go_scatter_hoverlabel_font()},
-  \code{go_scatter_textfont()}}: Sets the weight (or boldness) of the
-  font. Integer in the interval [1, 1000], or a vector of these.
-
-  \strong{\code{go_scatter_legendgrouptitle_font()},
-  \code{go_scatter_marker_colorbar_tickfont()},
-  \code{go_scatter_marker_colorbar_title_font()}}: Sets the weight (or
-  boldness) of the font. Integer in the interval [1, 1000].}
-
-\item{backoff}{Sets the line back off from the end point of the nth line
-segment (in px). This option is useful e.g. to avoid overlap with
-arrowhead markers. With "auto" the lines would trim before markers if
-`marker.angleref` is set to "previous". Number in the interval [0,
-Inf], or a vector of these.}
-
-\item{dash}{\strong{\code{go_scatter_line()}}: Sets the dash style of
-  lines. Set to a dash type string ("solid", "dot", "dash", "longdash",
-  "dashdot", or "longdashdot") or a dash length list in px (eg
-  "5px,10px,2px,2px"). One of \code{"solid"}, \code{"dot"},
-  \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-  \code{"longdashdot"}, or a string matching
-  \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
-
-  \strong{\code{go_scatter_marker_line()}}: Sets the dash style of
-  lines. Set to a dash type string ("solid", "dot", "dash", "longdash",
-  "dashdot", or "longdashdot") or a dash length list in px (eg
-  "5px,10px,2px,2px"). One of \code{"solid"}, \code{"dot"},
-  \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-  \code{"longdashdot"}, or a string matching
-  \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"},
-  or a vector of these.}
-
-\item{simplify}{Simplifies lines by removing nearly-collinear points.
-When transitioning lines, it may be desirable to disable this so that
-the number of points along the resulting SVG path is unaffected.
-Logical.}
-
-\item{smoothing}{Has an effect only if `shape` is set to "spline" Sets
-the amount of smoothing. 0 corresponds to no smoothing (equivalent to
-a "linear" shape). Number in the interval [0, 1.3].}
-
-\item{angle}{Sets the marker angle in respect to `angleref`. Angle in
-degrees, or a vector of these.}
-
-\item{angleref}{Sets the reference for marker angle. With "previous",
-angle 0 points along the line from the previous point to this one.
-With "up", angle 0 points toward the top of the screen. One of
-\code{"previous"}, \code{"up"}.}
-
-\item{autocolorscale}{\strong{\code{go_scatter_marker()}}: Determines
-  whether the colorscale is a default palette (`autocolorscale: true`)
-  or the palette determined by `marker.colorscale`. Has an effect only
-  if in `marker.color` is set to a numerical array. In case `colorscale`
-  is unspecified or `autocolorscale` is true, the default palette will
-  be chosen according to whether numbers in the `color` array are all
-  positive, all negative or mixed. Logical.
-
-  \strong{\code{go_scatter_marker_line()}}: Determines whether the
-  colorscale is a default palette (`autocolorscale: true`) or the
-  palette determined by `marker.line.colorscale`. Has an effect only if
-  in `marker.line.color` is set to a numerical array. In case
-  `colorscale` is unspecified or `autocolorscale` is true, the default
-  palette will be chosen according to whether numbers in the `color`
-  array are all positive, all negative or mixed. Logical.}
-
-\item{cauto}{\strong{\code{go_scatter_marker()}}: Determines whether or
-  not the color domain is computed with respect to the input data (here
-  in `marker.color`) or the bounds set in `marker.cmin` and
-  `marker.cmax` Has an effect only if in `marker.color` is set to a
-  numerical array. Defaults to `false` when `marker.cmin` and
-  `marker.cmax` are set by the user. Logical.
-
-  \strong{\code{go_scatter_marker_line()}}: Determines whether or not
-  the color domain is computed with respect to the input data (here in
-  `marker.line.color`) or the bounds set in `marker.line.cmin` and
-  `marker.line.cmax` Has an effect only if in `marker.line.color` is set
-  to a numerical array. Defaults to `false` when `marker.line.cmin` and
-  `marker.line.cmax` are set by the user. Logical.}
-
-\item{cmax}{\strong{\code{go_scatter_marker()}}: Sets the upper bound of
-  the color domain. Has an effect only if in `marker.color` is set to a
-  numerical array. Value should have the same units as in `marker.color`
-  and if set, `marker.cmin` must be set as well. Number.
-
-  \strong{\code{go_scatter_marker_line()}}: Sets the upper bound of the
-  color domain. Has an effect only if in `marker.line.color` is set to a
-  numerical array. Value should have the same units as in
-  `marker.line.color` and if set, `marker.line.cmin` must be set as
-  well. Number.}
-
-\item{cmid}{\strong{\code{go_scatter_marker()}}: Sets the mid-point of
-  the color domain by scaling `marker.cmin` and/or `marker.cmax` to be
-  equidistant to this point. Has an effect only if in `marker.color` is
-  set to a numerical array. Value should have the same units as in
-  `marker.color`. Has no effect when `marker.cauto` is `false`. Number.
-
-  \strong{\code{go_scatter_marker_line()}}: Sets the mid-point of the
-  color domain by scaling `marker.line.cmin` and/or `marker.line.cmax`
-  to be equidistant to this point. Has an effect only if in
-  `marker.line.color` is set to a numerical array. Value should have the
-  same units as in `marker.line.color`. Has no effect when
-  `marker.line.cauto` is `false`. Number.}
-
-\item{cmin}{\strong{\code{go_scatter_marker()}}: Sets the lower bound of
-  the color domain. Has an effect only if in `marker.color` is set to a
-  numerical array. Value should have the same units as in `marker.color`
-  and if set, `marker.cmax` must be set as well. Number.
-
-  \strong{\code{go_scatter_marker_line()}}: Sets the lower bound of the
-  color domain. Has an effect only if in `marker.line.color` is set to a
-  numerical array. Value should have the same units as in
-  `marker.line.color` and if set, `marker.line.cmax` must be set as
-  well. Number.}
-
-\item{coloraxis}{Sets a reference to a shared color axis. References to
-these shared color axes are "coloraxis", "coloraxis2", "coloraxis3",
-etc. Settings for these shared color axes are set in the layout, under
-`layout.coloraxis`, `layout.coloraxis2`, etc. Note that multiple color
-scales can be linked to the same color axis. Subplot id:
-\code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
-
-\item{colorbar}{Named list or \code{\link{go_scatter_marker_colorbar}()}
-object.}
-
-\item{gradient}{Named list or \code{\link{go_scatter_marker_gradient}()}
-object.}
-
-\item{maxdisplayed}{Sets a maximum number of points to be drawn on the
-graph. 0 corresponds to no limit. Number in the interval [0, Inf].}
-
-\item{reversescale}{\strong{\code{go_scatter_marker()}}: Reverses the
-  color mapping if true. Has an effect only if in `marker.color` is set
-  to a numerical array. If true, `marker.cmin` will correspond to the
-  last color in the array and `marker.cmax` will correspond to the first
-  color. Logical.
-
-  \strong{\code{go_scatter_marker_line()}}: Reverses the color mapping
-  if true. Has an effect only if in `marker.line.color` is set to a
-  numerical array. If true, `marker.line.cmin` will correspond to the
-  last color in the array and `marker.line.cmax` will correspond to the
-  first color. Logical.}
-
-\item{showscale}{Determines whether or not a colorbar is displayed for
-this trace. Has an effect only if in `marker.color` is set to a
-numerical array. Logical.}
-
-\item{sizemin}{Has an effect only if `marker.size` is set to a numerical
-array. Sets the minimum size (in px) of the rendered marker points.
-Number in the interval [0, Inf].}
-
-\item{sizemode}{Has an effect only if `marker.size` is set to a
-numerical array. Sets the rule for which the data in `size` is
-converted to pixels. One of \code{"diameter"}, \code{"area"}.}
-
-\item{sizeref}{Has an effect only if `marker.size` is set to a numerical
-array. Sets the scale factor used to determine the rendered size of
-marker points. Use with `sizemin` and `sizemode`. Number.}
-
-\item{standoff}{Moves the marker away from the data point in the
-direction of `angle` (in px). This can be useful for example if you
-have another marker at this location and you want to point an
-arrowhead marker at it. Number in the interval [0, Inf], or a vector
-of these.}
-
-\item{symbol}{Sets the marker symbol type. Adding 100 is equivalent to
-appending "-open" to a symbol name. Adding 200 is equivalent to
-appending "-dot" to a symbol name. Adding 300 is equivalent to
-appending "-open-dot" or "dot-open" to a symbol name. One of
-\code{"0"}, \code{"circle"}, \code{"100"}, \code{"circle-open"},
-\code{"200"}, \code{"circle-dot"}, \code{"300"},
-\code{"circle-open-dot"}, \code{"1"}, \code{"square"}, \code{"101"},
-\code{"square-open"}, \code{"201"}, \code{"square-dot"}, \code{"301"},
-\code{"square-open-dot"}, \code{"2"}, \code{"diamond"}, \code{"102"},
-\code{"diamond-open"}, \code{"202"}, \code{"diamond-dot"},
-\code{"302"}, \code{"diamond-open-dot"}, \code{"3"}, \code{"cross"},
-\code{"103"}, \code{"cross-open"}, \code{"203"}, \code{"cross-dot"},
-\code{"303"}, \code{"cross-open-dot"}, \code{"4"}, \code{"x"},
-\code{"104"}, \code{"x-open"}, \code{"204"}, \code{"x-dot"},
-\code{"304"}, \code{"x-open-dot"}, \code{"5"}, \code{"triangle-up"},
-\code{"105"}, \code{"triangle-up-open"}, \code{"205"},
-\code{"triangle-up-dot"}, \code{"305"}, \code{"triangle-up-open-dot"},
-\code{"6"}, \code{"triangle-down"}, \code{"106"},
-\code{"triangle-down-open"}, \code{"206"}, \code{"triangle-down-dot"},
-\code{"306"}, \code{"triangle-down-open-dot"}, \code{"7"},
-\code{"triangle-left"}, \code{"107"}, \code{"triangle-left-open"},
-\code{"207"}, \code{"triangle-left-dot"}, \code{"307"},
-\code{"triangle-left-open-dot"}, \code{"8"}, \code{"triangle-right"},
-\code{"108"}, \code{"triangle-right-open"}, \code{"208"},
-\code{"triangle-right-dot"}, \code{"308"},
-\code{"triangle-right-open-dot"}, \code{"9"}, \code{"triangle-ne"},
-\code{"109"}, \code{"triangle-ne-open"}, \code{"209"},
-\code{"triangle-ne-dot"}, \code{"309"}, \code{"triangle-ne-open-dot"},
-\code{"10"}, \code{"triangle-se"}, \code{"110"},
-\code{"triangle-se-open"}, \code{"210"}, \code{"triangle-se-dot"},
-\code{"310"}, \code{"triangle-se-open-dot"}, \code{"11"},
-\code{"triangle-sw"}, \code{"111"}, \code{"triangle-sw-open"},
-\code{"211"}, \code{"triangle-sw-dot"}, \code{"311"},
-\code{"triangle-sw-open-dot"}, \code{"12"}, \code{"triangle-nw"},
-\code{"112"}, \code{"triangle-nw-open"}, \code{"212"},
-\code{"triangle-nw-dot"}, \code{"312"}, \code{"triangle-nw-open-dot"},
-\code{"13"}, \code{"pentagon"}, \code{"113"}, \code{"pentagon-open"},
-\code{"213"}, \code{"pentagon-dot"}, \code{"313"},
-\code{"pentagon-open-dot"}, \code{"14"}, \code{"hexagon"},
-\code{"114"}, \code{"hexagon-open"}, \code{"214"},
-\code{"hexagon-dot"}, \code{"314"}, \code{"hexagon-open-dot"},
-\code{"15"}, \code{"hexagon2"}, \code{"115"}, \code{"hexagon2-open"},
-\code{"215"}, \code{"hexagon2-dot"}, \code{"315"},
-\code{"hexagon2-open-dot"}, \code{"16"}, \code{"octagon"},
-\code{"116"}, \code{"octagon-open"}, \code{"216"},
-\code{"octagon-dot"}, \code{"316"}, \code{"octagon-open-dot"},
-\code{"17"}, \code{"star"}, \code{"117"}, \code{"star-open"},
-\code{"217"}, \code{"star-dot"}, \code{"317"}, \code{"star-open-dot"},
-\code{"18"}, \code{"hexagram"}, \code{"118"}, \code{"hexagram-open"},
-\code{"218"}, \code{"hexagram-dot"}, \code{"318"},
-\code{"hexagram-open-dot"}, \code{"19"}, \code{"star-triangle-up"},
-\code{"119"}, \code{"star-triangle-up-open"}, \code{"219"},
-\code{"star-triangle-up-dot"}, \code{"319"},
-\code{"star-triangle-up-open-dot"}, \code{"20"},
-\code{"star-triangle-down"}, \code{"120"},
-\code{"star-triangle-down-open"}, \code{"220"},
-\code{"star-triangle-down-dot"}, \code{"320"},
-\code{"star-triangle-down-open-dot"}, \code{"21"},
-\code{"star-square"}, \code{"121"}, \code{"star-square-open"},
-\code{"221"}, \code{"star-square-dot"}, \code{"321"},
-\code{"star-square-open-dot"}, \code{"22"}, \code{"star-diamond"},
-\code{"122"}, \code{"star-diamond-open"}, \code{"222"},
-\code{"star-diamond-dot"}, \code{"322"},
-\code{"star-diamond-open-dot"}, \code{"23"}, \code{"diamond-tall"},
-\code{"123"}, \code{"diamond-tall-open"}, \code{"223"},
-\code{"diamond-tall-dot"}, \code{"323"},
-\code{"diamond-tall-open-dot"}, \code{"24"}, \code{"diamond-wide"},
-\code{"124"}, \code{"diamond-wide-open"}, \code{"224"},
-\code{"diamond-wide-dot"}, \code{"324"},
-\code{"diamond-wide-open-dot"}, \code{"25"}, \code{"hourglass"},
-\code{"125"}, \code{"hourglass-open"}, \code{"26"}, \code{"bowtie"},
-\code{"126"}, \code{"bowtie-open"}, \code{"27"},
-\code{"circle-cross"}, \code{"127"}, \code{"circle-cross-open"},
-\code{"28"}, \code{"circle-x"}, \code{"128"}, \code{"circle-x-open"},
-\code{"29"}, \code{"square-cross"}, \code{"129"},
-\code{"square-cross-open"}, \code{"30"}, \code{"square-x"},
-\code{"130"}, \code{"square-x-open"}, \code{"31"},
-\code{"diamond-cross"}, \code{"131"}, \code{"diamond-cross-open"},
-\code{"32"}, \code{"diamond-x"}, \code{"132"},
-\code{"diamond-x-open"}, \code{"33"}, \code{"cross-thin"},
-\code{"133"}, \code{"cross-thin-open"}, \code{"34"}, \code{"x-thin"},
-\code{"134"}, \code{"x-thin-open"}, \code{"35"}, \code{"asterisk"},
-\code{"135"}, \code{"asterisk-open"}, \code{"36"}, \code{"hash"},
-\code{"136"}, \code{"hash-open"}, \code{"236"}, \code{"hash-dot"},
-\code{"336"}, \code{"hash-open-dot"}, \code{"37"}, \code{"y-up"},
-\code{"137"}, \code{"y-up-open"}, \code{"38"}, \code{"y-down"},
-\code{"138"}, \code{"y-down-open"}, \code{"39"}, \code{"y-left"},
-\code{"139"}, \code{"y-left-open"}, \code{"40"}, \code{"y-right"},
-\code{"140"}, \code{"y-right-open"}, \code{"41"}, \code{"line-ew"},
-\code{"141"}, \code{"line-ew-open"}, \code{"42"}, \code{"line-ns"},
-\code{"142"}, \code{"line-ns-open"}, \code{"43"}, \code{"line-ne"},
-\code{"143"}, \code{"line-ne-open"}, \code{"44"}, \code{"line-nw"},
-\code{"144"}, \code{"line-nw-open"}, \code{"45"}, \code{"arrow-up"},
-\code{"145"}, \code{"arrow-up-open"}, \code{"46"},
-\code{"arrow-down"}, \code{"146"}, \code{"arrow-down-open"},
-\code{"47"}, \code{"arrow-left"}, \code{"147"},
-\code{"arrow-left-open"}, \code{"48"}, \code{"arrow-right"},
-\code{"148"}, \code{"arrow-right-open"}, \code{"49"},
-\code{"arrow-bar-up"}, \code{"149"}, \code{"arrow-bar-up-open"},
-\code{"50"}, \code{"arrow-bar-down"}, \code{"150"},
-\code{"arrow-bar-down-open"}, \code{"51"}, \code{"arrow-bar-left"},
-\code{"151"}, \code{"arrow-bar-left-open"}, \code{"52"},
-\code{"arrow-bar-right"}, \code{"152"}, \code{"arrow-bar-right-open"},
-\code{"53"}, \code{"arrow"}, \code{"153"}, \code{"arrow-open"},
-\code{"54"}, \code{"arrow-wide"}, \code{"154"},
-\code{"arrow-wide-open"}, \code{0}, \code{100}, \code{200},
-\code{300}, \code{1}, \code{101}, \code{201}, \code{301}, \code{2},
-\code{102}, \code{202}, \code{302}, \code{3}, \code{103}, \code{203},
-\code{303}, \code{4}, \code{104}, \code{204}, \code{304}, \code{5},
-\code{105}, \code{205}, \code{305}, \code{6}, \code{106}, \code{206},
-\code{306}, \code{7}, \code{107}, \code{207}, \code{307}, \code{8},
-\code{108}, \code{208}, \code{308}, \code{9}, \code{109}, \code{209},
-\code{309}, \code{10}, \code{110}, \code{210}, \code{310}, \code{11},
-\code{111}, \code{211}, \code{311}, \code{12}, \code{112}, \code{212},
-\code{312}, \code{13}, \code{113}, \code{213}, \code{313}, \code{14},
-\code{114}, \code{214}, \code{314}, \code{15}, \code{115}, \code{215},
-\code{315}, \code{16}, \code{116}, \code{216}, \code{316}, \code{17},
-\code{117}, \code{217}, \code{317}, \code{18}, \code{118}, \code{218},
-\code{318}, \code{19}, \code{119}, \code{219}, \code{319}, \code{20},
-\code{120}, \code{220}, \code{320}, \code{21}, \code{121}, \code{221},
-\code{321}, \code{22}, \code{122}, \code{222}, \code{322}, \code{23},
-\code{123}, \code{223}, \code{323}, \code{24}, \code{124}, \code{224},
-\code{324}, \code{25}, \code{125}, \code{26}, \code{126}, \code{27},
-\code{127}, \code{28}, \code{128}, \code{29}, \code{129}, \code{30},
-\code{130}, \code{31}, \code{131}, \code{32}, \code{132}, \code{33},
-\code{133}, \code{34}, \code{134}, \code{35}, \code{135}, \code{36},
-\code{136}, \code{236}, \code{336}, \code{37}, \code{137}, \code{38},
-\code{138}, \code{39}, \code{139}, \code{40}, \code{140}, \code{41},
-\code{141}, \code{42}, \code{142}, \code{43}, \code{143}, \code{44},
-\code{144}, \code{45}, \code{145}, \code{46}, \code{146}, \code{47},
-\code{147}, \code{48}, \code{148}, \code{49}, \code{149}, \code{50},
-\code{150}, \code{51}, \code{151}, \code{52}, \code{152}, \code{53},
-\code{153}, \code{54}, \code{154}, or a vector of these.}
-
-\item{borderwidth}{Sets the width (in px) or the border enclosing this
-color bar. Number in the interval [0, Inf].}
-
-\item{dtick}{Sets the step in-between ticks on this color bar. Use with
-`tick0`. Must be a positive number. Note: unlike on x/y axes, the
-special "log" and "date" string forms ("L<f>", "D1", "D2", "M<n>") are
-not supported here: this axis is always linear, so such strings are
-silently ignored and the step is set to 1. Any value.}
-
-\item{exponentformat}{Determines a formatting rule for the tick
-exponents. For example, consider the number 1,000,000,000. If "none",
-it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-the above ranges, the formatting rule will automatically be switched
-to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-\code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.}
-
-\item{labelalias}{Replacement text for specific tick or hover labels.
-For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-to Canada. The labels we would have shown must match the keys exactly,
-after adding any tickprefix or ticksuffix. For negative numbers the
-minus sign symbol used (U+2212) is wider than the regular ascii dash.
-That means you need to use -1 instead of -1. labelalias can be used
-with any axis type, and both keys (if needed) and values (if desired)
-can include html-like tags or MathJax. Any value.}
-
-\item{len}{Sets the length of the color bar This measure excludes the
-padding of both ends. That is, the color bar length is this length
-minus the padding on both ends. Number in the interval [0, Inf].}
-
-\item{lenmode}{Determines whether this color bar's length (i.e. the
-measure in the color variation direction) is set in units of plot
-"fraction" or in *pixels. Use `len` to set the value. One of
-\code{"fraction"}, \code{"pixels"}.}
-
-\item{minexponent}{Hide SI prefix for 10^n if |n| is below this number.
-This only has an effect when `tickformat` is "SI" or "B". Number in
-the interval [0, Inf].}
-
-\item{nticks}{Specifies the maximum number of ticks for the particular
-axis. The actual number of ticks will be chosen automatically to be
-less than or equal to `nticks`. Has an effect only if `tickmode` is
-set to "auto". Integer in the interval [0, Inf].}
-
-\item{outlinecolor}{Sets the axis line color. Color: a CSS color string
-or R color name.}
-
-\item{outlinewidth}{Sets the width (in px) of the axis line. Number in
-the interval [0, Inf].}
-
-\item{separatethousands}{If "true", even 4-digit integers are separated
-Logical.}
-
-\item{showexponent}{If "all", all exponents are shown besides their
-significands. If "first", only the exponent of the first tick is
-shown. If "last", only the exponent of the last tick is shown. If
-"none", no exponents appear. One of \code{"all"}, \code{"first"},
-\code{"last"}, \code{"none"}.}
-
-\item{showticklabels}{Determines whether or not the tick labels are
-drawn. Logical.}
-
-\item{showtickprefix}{If "all", all tick labels are displayed with a
-prefix. If "first", only the first tick is displayed with a prefix. If
-"last", only the last tick is displayed with a suffix. If "none", tick
-prefixes are hidden. One of \code{"all"}, \code{"first"},
-\code{"last"}, \code{"none"}.}
-
-\item{showticksuffix}{Same as `showtickprefix` but for tick suffixes.
-One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.}
-
-\item{thicknessmode}{Determines whether this color bar's thickness (i.e.
-the measure in the constant color direction) is set in units of plot
-"fraction" or in "pixels". Use `thickness` to set the value. One of
-\code{"fraction"}, \code{"pixels"}.}
-
-\item{tick0}{Sets the placement of the first tick on this axis. Use with
-`dtick`. If the axis `type` is "log", then you must take the log of
-your starting tick (e.g. to set the starting tick to 100, set the
-`tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-If the axis `type` is "date", it should be a date string, like date
-data. If the axis `type` is "category", it should be a number, using
-the scale where each category is assigned a serial number from zero in
-the order it appears. Any value.}
-
-\item{tickangle}{Sets the angle of the tick labels with respect to the
-horizontal. For example, a `tickangle` of -90 draws the tick labels
-vertically. Angle in degrees.}
-
-\item{tickcolor}{Sets the tick color. Color: a CSS color string or R
-color name.}
-
-\item{tickfont}{Sets the color bar's tick label font Named list or
-\code{\link{go_scatter_marker_colorbar_tickfont}()} object.}
-
-\item{tickformat}{Sets the tick label formatting rule using d3
-formatting mini-languages which are very similar to those in Python.
-For numbers, see:
-https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-We add two items to d3's date formatter: "\%h" for half of the year as
-a decimal number as well as "\%\{n\}f" for fractional seconds with n
-digits. For example, "2016-10-13 09:15:23.456" with tickformat
-"\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.}
-
-\item{tickformatstops}{List of named lists or
-\code{\link{go_scatter_marker_colorbar_tickformatstop}()} objects.}
-
-\item{ticklabeloverflow}{Determines how we handle tick labels that would
-overflow either the graph div or the domain of the axis. The default
-value for inside tick labels is "hide past domain". In other cases the
-default is "hide past div". One of \code{"allow"}, \code{"hide past
-div"}, \code{"hide past domain"}.}
-
-\item{ticklabelposition}{Determines where tick labels are drawn relative
-to the ticks. Left and right options are used when `orientation` is
-"h", top and bottom when `orientation` is "v". One of
-\code{"outside"}, \code{"inside"}, \code{"outside top"}, \code{"inside
-top"}, \code{"outside left"}, \code{"inside left"}, \code{"outside
-right"}, \code{"inside right"}, \code{"outside bottom"}, \code{"inside
-bottom"}.}
-
-\item{ticklabelstep}{Sets the spacing between tick labels as compared to
-the spacing between ticks. A value of 1 (default) means each tick gets
-a label. A value of 2 means shows every 2nd label. A larger value n
-means only every nth tick is labeled. `tick0` determines which labels
-are shown. Not implemented for axes with `type` "log" or
-"multicategory", or when `tickmode` is "array". Integer in the
-interval [1, Inf].}
-
-\item{ticklen}{Sets the tick length (in px). Number in the interval [0,
-Inf].}
-
-\item{tickmode}{Sets the tick mode for this axis. If "auto", the number
-of ticks is set via `nticks`. If "linear", the placement of the ticks
-is determined by a starting position `tick0` and a tick step `dtick`
-("linear" is the default value if `tick0` and `dtick` are provided).
-If "array", the placement of the ticks is set via `tickvals` and the
-tick text is `ticktext`. ("array" is the default value if `tickvals`
-is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.}
-
-\item{tickprefix}{Sets a tick label prefix. String.}
-
-\item{ticks}{Determines whether ticks are drawn or not. If **, this
-axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-drawn outside (inside) the axis lines. One of \code{"outside"},
-\code{"inside"}, \code{""}.}
-
-\item{ticksuffix}{Sets a tick label suffix. String.}
-
-\item{ticktext}{Sets the text displayed at the ticks position via
-`tickvals`. Only has an effect if `tickmode` is set to "array". Used
-with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.}
-
-\item{tickvals}{Sets the values at which ticks on this axis appear. Only
-has an effect if `tickmode` is set to "array". Used with `ticktext`.
-Data array: a vector, factor, Date/POSIXct vector, matrix or list.}
-
-\item{tickwidth}{Sets the tick width (in px). Number in the interval [0,
-Inf].}
-
-\item{title}{String (the title text), named list or
-\code{\link{go_scatter_marker_colorbar_title}()} object.}
-
-\item{xanchor}{Sets this color bar's horizontal position anchor. This
-anchor binds the `x` position to the "left", "center" or "right" of
-the color bar. Defaults to "left" when `orientation` is "v" and
-"center" when `orientation` is "h". One of \code{"left"},
-\code{"center"}, \code{"right"}.}
-
-\item{xpad}{Sets the amount of padding (in px) along the x direction.
-Number in the interval [0, Inf].}
-
-\item{xref}{Sets the container `x` refers to. "container" spans the
-entire `width` of the plot. "paper" refers to the width of the
-plotting area only. One of \code{"container"}, \code{"paper"}.}
-
-\item{yanchor}{Sets this color bar's vertical position anchor This
-anchor binds the `y` position to the "top", "middle" or "bottom" of
-the color bar. Defaults to "middle" when `orientation` is "v" and
-"bottom" when `orientation` is "h". One of \code{"top"},
-\code{"middle"}, \code{"bottom"}.}
-
-\item{ypad}{Sets the amount of padding (in px) along the y direction.
-Number in the interval [0, Inf].}
-
-\item{yref}{Sets the container `y` refers to. "container" spans the
-entire `height` of the plot. "paper" refers to the height of the
-plotting area only. One of \code{"container"}, \code{"paper"}.}
-
-\item{dtickrange}{range ["min", "max"], where "min", "max" - dtick
-values which describe some zoom level, it is possible to omit "min" or
-"max" value by passing "null" Vector or list of 2 element(s).}
-
-\item{enabled}{Determines whether or not this stop is used. If `false`,
-this stop is ignored even within its `dtickrange`. Logical.}
-
-\item{templateitemname}{Used to refer to a named item in this array in
-the template. Named items from the template will be created even
-without a matching item in the input figure, but you can modify one by
-making an item with `templateitemname` matching its `name`, alongside
-your modifications (including `visible: false` or `enabled: false` to
-hide it). If there is no template or no matching item, this item will
-be hidden unless you explicitly show it with `visible: true`. String.}
-
-\item{side}{Determines the location of color bar's title with respect to
-the color bar. Defaults to "top" when `orientation` is "v" and
-defaults to "right" when `orientation` is "h". One of \code{"right"},
-\code{"top"}, \code{"bottom"}.}
 }
 \value{
-Each \code{go_*()} function returns a graph object of the same
-  class as its name; \code{add_*()} functions return the modified figure.
+\code{go_*()} functions return a graph object;
+  \code{add_*()} functions return the modified figure.
 }
 \description{
 The scatter trace type encompasses line charts, scatter charts, text
@@ -1889,50 +612,23 @@ only) is via `text`. Bubble charts are achieved by setting `marker.size`
 and/or `marker.color` to numerical arrays.
 }
 \details{
-\code{go_scatter()} and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-\code{\link{plotly_obj-modify}()}). \code{add_scatter()} creates an
-object and adds it to a figure.
+\code{go_scatter()} creates a validated graph object (a named list).
+\code{add_scatter()} creates one and adds it to a figure.
 
-Nested objects documented here:
-\describe{
-\item{\code{go_scatter_error_x()}}{\code{scatter.error_x}}
-\item{\code{go_scatter_error_y()}}{\code{scatter.error_y}}
-\item{\code{go_scatter_fillgradient()}}{\code{scatter.fillgradient}: Sets
-a fill gradient. If not specified, the fillcolor is used instead.}
-\item{\code{go_scatter_fillpattern()}}{\code{scatter.fillpattern}: Sets
-the pattern within the marker.}
-\item{\code{go_scatter_hoverlabel()}}{\code{scatter.hoverlabel}}
-\item{\code{go_scatter_hoverlabel_font()}}{\code{scatter.hoverlabel.font}:
-Sets the font used in hover labels.}
-\item{\code{go_scatter_legendgrouptitle()}}{\code{scatter.legendgrouptitle}}
-\item{\code{go_scatter_legendgrouptitle_font()}}{\code{scatter.legendgrouptitle.font}:
-Sets this legend group's title font.}
-\item{\code{go_scatter_line()}}{\code{scatter.line}}
-\item{\code{go_scatter_marker()}}{\code{scatter.marker}}
-\item{\code{go_scatter_marker_colorbar()}}{\code{scatter.marker.colorbar}}
-\item{\code{go_scatter_marker_colorbar_tickfont()}}{\code{scatter.marker.colorbar.tickfont}:
-Sets the color bar's tick label font}
-\item{\code{go_scatter_marker_colorbar_tickformatstop()}}{\code{scatter.marker.colorbar.tickformatstop}}
-\item{\code{go_scatter_marker_colorbar_title()}}{\code{scatter.marker.colorbar.title}}
-\item{\code{go_scatter_marker_colorbar_title_font()}}{\code{scatter.marker.colorbar.title.font}:
-Sets this color bar's title font.}
-\item{\code{go_scatter_marker_gradient()}}{\code{scatter.marker.gradient}}
-\item{\code{go_scatter_marker_line()}}{\code{scatter.marker.line}}
-\item{\code{go_scatter_selected()}}{\code{scatter.selected}}
-\item{\code{go_scatter_selected_marker()}}{\code{scatter.selected.marker}}
-\item{\code{go_scatter_selected_textfont()}}{\code{scatter.selected.textfont}}
-\item{\code{go_scatter_textfont()}}{\code{scatter.textfont}: Sets the
-text font.}
-\item{\code{go_scatter_unselected()}}{\code{scatter.unselected}}
-\item{\code{go_scatter_unselected_marker()}}{\code{scatter.unselected.marker}}
-\item{\code{go_scatter_unselected_textfont()}}{\code{scatter.unselected.textfont}}
-}
+
+Nested objects are given as named lists or with their constructors, which
+are linked from the arguments below. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+\code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+evaluated in the data, and then checked, when the trace is added with
+\code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_scatter(x = 1:3, y = c(2, 1, 3), mode = "markers", marker_color = "red")
+mtcars |>
+  go_figure() |>
+  add_scatter(x = ~wt, y = ~mpg, mode = "markers")
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}
 }
+\concept{traces}

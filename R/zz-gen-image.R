@@ -8,41 +8,22 @@
 #' 'domain'`) and it will have the same scale as its x axis (ie.
 #' `scaleanchor: 'x,`) in order for pixels to be rendered as squares.
 #'
-#' \code{go_image()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}). \code{add_image()} creates an object
-#' and adds it to a figure.
+#' \code{go_image()} creates a validated graph object (a named list).
+#' \code{add_image()} creates one and adds it to a figure.
 #'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_image_hoverlabel()}}{\code{image.hoverlabel}}
-#' \item{\code{go_image_hoverlabel_font()}}{\code{image.hoverlabel.font}:
-#' Sets the font used in hover labels.}
-#' \item{\code{go_image_legendgrouptitle()}}{\code{image.legendgrouptitle}}
-#' \item{\code{go_image_legendgrouptitle_font()}}{\code{image.legendgrouptitle.font}:
-#' Sets this legend group's title font.}
-#' }
+#' @details
+#' Nested objects are given as named lists or with their constructors, which
+#' are linked from the arguments below. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+#' evaluated in the data, and then checked, when the trace is added with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
-#' @param align Sets the horizontal alignment of the text content within
-#'   hover label box. Has an effect only if the hover label text spans two
-#'   or more lines One of \code{"left"}, \code{"right"}, \code{"auto"}, or
-#'   a vector of these.
-#' @param bgcolor Sets the background color of the hover labels for this
-#'   trace Color: a CSS color string or R color name, or a vector of these.
-#' @param bordercolor Sets the border color of the hover labels for this
-#'   trace. Color: a CSS color string or R color name, or a vector of
-#'   these.
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
-#' @param color \strong{\code{go_image_hoverlabel_font()}}: Color: a CSS
-#'   color string or R color name, or a vector of these.
-#'
-#'   \strong{\code{go_image_legendgrouptitle_font()}}: Color: a CSS color
-#'   string or R color name.
 #' @param colormodel Color model used to map the numerical color components
 #'   described in `z` into colors. If `source` is specified, this attribute
 #'   will be set to `rgba256` otherwise it defaults to `rgb`. One of
@@ -53,41 +34,25 @@
 #'   traces also appends customdata items in the markers DOM elements Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param data A data frame in which formula properties (e.g. \code{x =
-#'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
+#'   ~col}, \code{marker = list(size = ~col)}, \code{marker =
+#'   go_scatter_marker(size = ~col)}) are evaluated. Default: the data
 #'   given to \code{\link{go_figure}()}. Only the evaluated values are
 #'   added to the trace. A \code{crosstalk::SharedData} works the same way,
 #'   and links the trace to its crosstalk group (see
 #'   \code{\link{highlight}()}).
 #' @param dx Set the pixel's horizontal size. Number.
 #' @param dy Set the pixel's vertical size Number.
-#' @param family \strong{\code{go_image_hoverlabel_font()}}: HTML font
-#'   family - the typeface that will be applied by the web browser. The web
-#'   browser can only apply a font if it is available on the system where
-#'   it runs. Provide multiple font families, separated by commas, to
-#'   indicate the order in which to apply fonts if they aren't available.
-#'   String, or a vector of these.
-#'
-#'   \strong{\code{go_image_legendgrouptitle_font()}}: HTML font family -
-#'   the typeface that will be applied by the web browser. The web browser
-#'   can only apply a font if it is available on the system where it runs.
-#'   Provide multiple font families, separated by commas, to indicate the
-#'   order in which to apply fonts if they aren't available. String.
 #' @param fig A \code{go_figure} object.
-#' @param font \strong{\code{go_image_hoverlabel()}}: Sets the font used in
-#'   hover labels. Named list or \code{\link{go_image_hoverlabel_font}()}
-#'   object.
-#'
-#'   \strong{\code{go_image_legendgrouptitle()}}: Sets this legend group's
-#'   title font. Named list or
-#'   \code{\link{go_image_legendgrouptitle_font}()} object.
 #' @param hoverinfo Determines what trace information appears on hover. If
 #'   `none` or `skip` are set, no information is displayed upon hovering.
 #'   But, if `none` is set, click and hover events are still fired. Any
 #'   combination of \code{"x"}, \code{"y"}, \code{"z"}, \code{"color"},
 #'   \code{"name"}, \code{"text"} joined with \code{"+"}, or one of
 #'   \code{"all"}, \code{"none"}, \code{"skip"}, or a vector of these.
-#' @param hoverlabel Named list or \code{\link{go_image_hoverlabel}()}
-#'   object.
+#' @param hoverlabel A \code{\link{go_hoverlabel}()} object or named list,
+#'   with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+#'   \code{font}, \code{namelength} and \code{showarrow} (see
+#'   \code{\link{go_hoverlabel}()}).
 #' @param hovertemplate Template string used for rendering the information
 #'   that appear on hover box. Note that this will override `hoverinfo`.
 #'   Variables are inserted using \%\{variable\}, for example "y: \%\{y\}"
@@ -131,8 +96,9 @@
 #'   Settings for these legends are set in the layout, under
 #'   `layout.legend`, `layout.legend2`, etc. Subplot id: \code{"legend"},
 #'   \code{"legend2"}, \code{"legend3"}, ....
-#' @param legendgrouptitle Named list or
-#'   \code{\link{go_image_legendgrouptitle}()} object.
+#' @param legendgrouptitle A \code{\link{go_legendgrouptitle}()} object or
+#'   named list, with properties \code{font} and \code{text} (see
+#'   \code{\link{go_legendgrouptitle}()}).
 #' @param legendrank Sets the legend rank for this trace. Items and groups
 #'   with smaller ranks are presented on top/left side while with
 #'   "reversed" `legend.traceorder` they are on bottom/right side. The
@@ -143,17 +109,6 @@
 #'   to their order in data and layout. Number.
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param lineposition \strong{\code{go_image_hoverlabel_font()}}: Sets the
-#'   kind of decoration line(s) with text, such as an "under", "over" or
-#'   "through" as well as combinations e.g. "under+over", etc. Any
-#'   combination of \code{"under"}, \code{"over"}, \code{"through"} joined
-#'   with \code{"+"}, or one of \code{"none"}, or a vector of these.
-#'
-#'   \strong{\code{go_image_legendgrouptitle_font()}}: Sets the kind of
-#'   decoration line(s) with text, such as an "under", "over" or "through"
-#'   as well as combinations e.g. "under+over", etc. Any combination of
-#'   \code{"under"}, \code{"over"}, \code{"through"} joined with
-#'   \code{"+"}, or one of \code{"none"}.
 #' @param meta Assigns extra meta information associated with this trace
 #'   that can be used in various text attributes. Attributes such as trace
 #'   `name`, graph, axis and colorbar `title.text`, annotation `text`
@@ -165,13 +120,6 @@
 #'   `meta` and `n` is the trace index. Any value.
 #' @param name Sets the trace name. The trace name appears as the legend
 #'   item and on hover. String.
-#' @param namelength Sets the default length (in number of characters) of
-#'   the trace name in the hover labels for all traces. -1 shows the whole
-#'   name regardless of length. 0-3 shows the first 0-3 characters, and an
-#'   integer >3 will show the whole name if it is less than that many
-#'   characters, but if it is longer, will truncate to `namelength - 3`
-#'   characters and add an ellipsis. Integer in the interval [-1, Inf], or
-#'   a vector of these.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
 #' @param row Subplot grid row (figures created with
@@ -179,50 +127,11 @@
 #'   to address several cells.
 #' @param secondary_y If \code{TRUE}, use the secondary y axis of the
 #'   subplot.
-#' @param shadow \strong{\code{go_image_hoverlabel_font()}}: Sets the shape
-#'   and color of the shadow behind text. "auto" places minimal shadow and
-#'   applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String, or a vector of these.
-#'
-#'   \strong{\code{go_image_legendgrouptitle_font()}}: Sets the shape and
-#'   color of the shadow behind text. "auto" places minimal shadow and
-#'   applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param showarrow Sets whether or not to show the hover label
-#'   arrow/triangle pointing to the data point. Logical.
-#' @param size \strong{\code{go_image_hoverlabel_font()}}: Number in the
-#'   interval [1, Inf], or a vector of these.
-#'
-#'   \strong{\code{go_image_legendgrouptitle_font()}}: Number in the
-#'   interval [1, Inf].
 #' @param source Specifies the data URI of the image to be visualized. The
 #'   URI consists of "data:image/[<media
 #'   subtype\\\\>][;base64\\\\],<data\\\\>" String.
-#' @param style \strong{\code{go_image_hoverlabel_font()}}: Sets whether a
-#'   font should be styled with a normal or italic face from its family.
-#'   One of \code{"normal"}, \code{"italic"}, or a vector of these.
-#'
-#'   \strong{\code{go_image_legendgrouptitle_font()}}: Sets whether a font
-#'   should be styled with a normal or italic face from its family. One of
-#'   \code{"normal"}, \code{"italic"}.
-#' @param text \strong{\code{go_image()}}: Sets the text elements
-#'   associated with each z value. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
-#'
-#'   \strong{\code{go_image_legendgrouptitle()}}: Sets the title of the
-#'   legend group. String.
-#' @param textcase \strong{\code{go_image_hoverlabel_font()}}: Sets
-#'   capitalization of text. It can be used to make text appear in
-#'   all-uppercase or all-lowercase, or with each word capitalized. One of
-#'   \code{"normal"}, \code{"word caps"}, \code{"upper"}, \code{"lower"},
-#'   or a vector of these.
-#'
-#'   \strong{\code{go_image_legendgrouptitle_font()}}: Sets capitalization
-#'   of text. It can be used to make text appear in all-uppercase or
-#'   all-lowercase, or with each word capitalized. One of \code{"normal"},
-#'   \code{"word caps"}, \code{"upper"}, \code{"lower"}.
+#' @param text Sets the text elements associated with each z value. Data
+#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param uid Assign an id to this trace, Use this to provide object
 #'   constancy between traces during animations and transitions. String.
 #' @param uirevision Controls persistence of some user-driven changes to
@@ -239,25 +148,10 @@
 #'   array, such that the same trace has a different index, you can still
 #'   preserve user-driven changes if you give each trace a `uid` that stays
 #'   with it as it moves. Any value.
-#' @param variant \strong{\code{go_image_hoverlabel_font()}}: Sets the
-#'   variant of the font. One of \code{"normal"}, \code{"small-caps"},
-#'   \code{"all-small-caps"}, \code{"all-petite-caps"},
-#'   \code{"petite-caps"}, \code{"unicase"}, or a vector of these.
-#'
-#'   \strong{\code{go_image_legendgrouptitle_font()}}: Sets the variant of
-#'   the font. One of \code{"normal"}, \code{"small-caps"},
-#'   \code{"all-small-caps"}, \code{"all-petite-caps"},
-#'   \code{"petite-caps"}, \code{"unicase"}.
 #' @param visible Determines whether or not this trace is visible. If
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param weight \strong{\code{go_image_hoverlabel_font()}}: Sets the
-#'   weight (or boldness) of the font. Integer in the interval [1, 1000],
-#'   or a vector of these.
-#'
-#'   \strong{\code{go_image_legendgrouptitle_font()}}: Sets the weight (or
-#'   boldness) of the font. Integer in the interval [1, 1000].
 #' @param x0 Set the image's x position. The left edge of the image (or the
 #'   right edge if the x axis is reversed or dx is negative) will be found
 #'   at xmin=x0-dx/2 Any value.
@@ -299,19 +193,21 @@
 #' @param zsmooth Picks a smoothing algorithm used to smooth `z` data. This
 #'   only applies for image traces that use the `source` attribute. One of
 #'   \code{"fast"}, \code{FALSE}.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
+#' @param ... Not used: properties must be named in full.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
+#' @return \code{go_*()} functions return a graph object;
+#'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
+#'
+#' @concept traces
 #' @noMd
 #' @export
 #' @examples
-#' go_image()
+#' rgb <- col2rgb(terrain.colors(100)[cut(volcano, 100)])
+#' z <- array(t(rgb), c(dim(volcano), 3))
+#' go_figure() |>
+#'   add_image(z = z)
 go_image <- function(
     arg = NULL, ..., colormodel = NULL, customdata = NULL, dx = NULL,
     dy = NULL, hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
@@ -324,42 +220,5 @@ go_image <- function(
     skip_invalid = FALSE
 ) {
   plotly_object("image", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_image
-#' @export
-go_image_hoverlabel <- function(
-    arg = NULL, ..., align = NULL, bgcolor = NULL, bordercolor = NULL,
-    font = NULL, namelength = NULL, showarrow = NULL, skip_invalid = FALSE
-) {
-  plotly_object("image.hoverlabel", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_image
-#' @export
-go_image_hoverlabel_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("image.hoverlabel.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_image
-#' @export
-go_image_legendgrouptitle <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("image.legendgrouptitle", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_image
-#' @export
-go_image_legendgrouptitle_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("image.legendgrouptitle.font", arg, environment(), list(...), skip_invalid)
 }
 

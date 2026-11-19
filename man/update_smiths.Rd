@@ -30,9 +30,9 @@ or a function that takes an object and returns \code{TRUE} or \code{FALSE}.}
 \item{row, col}{Only objects in this subplot grid row and/or column
 (figures created with \code{\link{make_subplots}()} only).}
 
-\item{patch}{A named list or \code{\link{go_layout_smith}()} object of property updates.}
+\item{patch}{A named list or \code{\link{go_smith}()} object of property updates.}
 
-\item{...}{Further named updates (names may use magic underscores).}
+\item{...}{Further named updates, by their full names.}
 
 \item{overwrite}{If \code{TRUE}, replace nested objects instead of merging.}
 
@@ -40,7 +40,7 @@ or a function that takes an object and returns \code{TRUE} or \code{FALSE}.}
 If it returns anything other than a list, the object is left unchanged.}
 }
 \value{
-\code{select_smiths()} returns a named list of \code{\link{go_layout_smith}()} objects; the
+\code{select_smiths()} returns a named list of smith objects; the
   others return the modified figure.
 }
 \description{
@@ -49,4 +49,7 @@ Work with all of a figure's layout smith objects (\code{smith}, \code{smith2}, \
 their properties like \code{\link{update_layout}()} does, and \code{for_each_smith()}
 replaces each one with the result of \code{fn}. The base object (e.g.
 \code{smith}) is always included, even if it has not been set yet.
+}
+\seealso{
+\code{\link{go_smith}()} for the properties of smith objects.
 }

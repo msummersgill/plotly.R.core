@@ -15,12 +15,9 @@ go_layout_transition(
 }
 \arguments{
 \item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from (constructors). Named arguments take precedence.}
+initialise properties from. Named arguments take precedence.}
 
-\item{...}{Further properties, including nested properties in
-"magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}. Property values may be one-sided
-formulas, evaluated in \code{data} for \code{add_*()} functions.}
+\item{...}{Not used: properties must be named in full.}
 
 \item{duration}{The duration of the transition, in milliseconds. If
 equal to zero, updates are synchronous. Number in the interval [0,
@@ -48,17 +45,26 @@ change. One of \code{"layout first"}, \code{"traces first"}.}
 instead of raising an error.}
 }
 \value{
-Each \code{go_*()} function returns a graph object of the same
-  class as its name; \code{add_*()} functions return the modified figure.
+A \code{go_layout_transition} object (a named list).
 }
 \description{
-Sets transition options used during Plotly.react updates.
+Sets transition options used during Plotly.react updates. The object for
+the figure layout's \code{transition}. \code{go_layout_transition()}
+creates one, with exactly its properties; a named list with the same
+properties works too.
 }
 \details{
-\code{go_layout_transition()} create validated graph objects (named
-lists). Every property is checked against the plotly.js schema when an
-object is created or modified (see \code{\link{plotly_obj-modify}()}).
+Nested objects are named lists, or objects of the constructors their
+arguments name. Every property is checked against the plotly.js schema
+when the object is created or modified. A property may be a one-sided
+formula (\code{color = ~col}): it is kept, and evaluated in the data
+(then checked) when its trace is added to a figure with
+\code{add_<trace>()} or \code{add_trace()}.
 }
-\seealso{
-\code{\link{go_layout}()}
+\examples{
+mtcars |>
+  go_figure() |>
+  add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
+  update_layout(transition = go_layout_transition())
 }
+\concept{layout objects}

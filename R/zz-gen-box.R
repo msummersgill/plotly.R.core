@@ -23,46 +23,23 @@
 #' boxes) to a 2D array with the outer length corresponding to the number of
 #' boxes in the traces and the inner length corresponding the sample size.
 #'
-#' \code{go_box()} and the nested object constructors below create validated
-#' graph objects (named lists). Every property is checked against the
-#' plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}). \code{add_box()} creates an object
-#' and adds it to a figure.
+#' \code{go_box()} creates a validated graph object (a named list).
+#' \code{add_box()} creates one and adds it to a figure.
 #'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_box_hoverlabel()}}{\code{box.hoverlabel}}
-#' \item{\code{go_box_hoverlabel_font()}}{\code{box.hoverlabel.font}: Sets
-#' the font used in hover labels.}
-#' \item{\code{go_box_legendgrouptitle()}}{\code{box.legendgrouptitle}}
-#' \item{\code{go_box_legendgrouptitle_font()}}{\code{box.legendgrouptitle.font}:
-#' Sets this legend group's title font.}
-#' \item{\code{go_box_line()}}{\code{box.line}}
-#' \item{\code{go_box_marker()}}{\code{box.marker}}
-#' \item{\code{go_box_marker_line()}}{\code{box.marker.line}}
-#' \item{\code{go_box_selected()}}{\code{box.selected}}
-#' \item{\code{go_box_selected_marker()}}{\code{box.selected.marker}}
-#' \item{\code{go_box_unselected()}}{\code{box.unselected}}
-#' \item{\code{go_box_unselected_marker()}}{\code{box.unselected.marker}}
-#' }
+#' @details
+#' Nested objects are given as named lists or with their constructors, which
+#' are linked from the arguments below. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+#' evaluated in the data, and then checked, when the trace is added with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
-#' @param align Sets the horizontal alignment of the text content within
-#'   hover label box. Has an effect only if the hover label text spans two
-#'   or more lines One of \code{"left"}, \code{"right"}, \code{"auto"}, or
-#'   a vector of these.
 #' @param alignmentgroup Set several traces linked to the same position
 #'   axis or matching axes to the same alignmentgroup. This controls
 #'   whether bars compute their positional range dependently or
 #'   independently. String.
-#' @param angle Sets the marker angle in respect to `angleref`. Angle in
-#'   degrees.
-#' @param bgcolor Sets the background color of the hover labels for this
-#'   trace Color: a CSS color string or R color name, or a vector of these.
-#' @param bordercolor Sets the border color of the hover labels for this
-#'   trace. Color: a CSS color string or R color name, or a vector of
-#'   these.
 #' @param boxmean If TRUE, the mean of the box(es)' underlying distribution
 #'   is drawn as a dashed line inside the box(es). If "sd" the standard
 #'   deviation is also drawn. Defaults to TRUE when `mean` is set. Defaults
@@ -81,39 +58,13 @@
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
-#' @param color \strong{\code{go_box_hoverlabel_font()}}: Color: a CSS
-#'   color string or R color name, or a vector of these.
-#'
-#'   \strong{\code{go_box_legendgrouptitle_font()}}: Color: a CSS color
-#'   string or R color name.
-#'
-#'   \strong{\code{go_box_line()}}: Sets the color of line bounding the
-#'   box(es). Color: a CSS color string or R color name.
-#'
-#'   \strong{\code{go_box_marker()}}: Sets the marker color. It accepts
-#'   either a specific color or an array of numbers that are mapped to the
-#'   colorscale relative to the max and min values of the array or relative
-#'   to `marker.cmin` and `marker.cmax` if set. Color: a CSS color string
-#'   or R color name.
-#'
-#'   \strong{\code{go_box_marker_line()}}: Sets the marker.line color. It
-#'   accepts either a specific color or an array of numbers that are mapped
-#'   to the colorscale relative to the max and min values of the array or
-#'   relative to `marker.line.cmin` and `marker.line.cmax` if set. Color: a
-#'   CSS color string or R color name.
-#'
-#'   \strong{\code{go_box_selected_marker()}}: Sets the marker color of
-#'   selected points. Color: a CSS color string or R color name.
-#'
-#'   \strong{\code{go_box_unselected_marker()}}: Sets the marker color of
-#'   unselected points, applied only when a selection exists. Color: a CSS
-#'   color string or R color name.
 #' @param customdata Assigns extra data each datum. This may be useful when
 #'   listening to hover, click and selection events. Note that, "scatter"
 #'   traces also appends customdata items in the markers DOM elements Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param data A data frame in which formula properties (e.g. \code{x =
-#'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
+#'   ~col}, \code{marker = list(size = ~col)}, \code{marker =
+#'   go_scatter_marker(size = ~col)}) are evaluated. Default: the data
 #'   given to \code{\link{go_figure}()}. Only the evaluated values are
 #'   added to the trace. A \code{crosstalk::SharedData} works the same way,
 #'   and links the trace to its crosstalk group (see
@@ -122,37 +73,20 @@
 #'   q1/median/q3. Number.
 #' @param dy Sets the y coordinate step for multi-box traces set using
 #'   q1/median/q3. Number.
-#' @param family \strong{\code{go_box_hoverlabel_font()}}: HTML font family
-#'   - the typeface that will be applied by the web browser. The web
-#'   browser can only apply a font if it is available on the system where
-#'   it runs. Provide multiple font families, separated by commas, to
-#'   indicate the order in which to apply fonts if they aren't available.
-#'   String, or a vector of these.
-#'
-#'   \strong{\code{go_box_legendgrouptitle_font()}}: HTML font family - the
-#'   typeface that will be applied by the web browser. The web browser can
-#'   only apply a font if it is available on the system where it runs.
-#'   Provide multiple font families, separated by commas, to indicate the
-#'   order in which to apply fonts if they aren't available. String.
 #' @param fig A \code{go_figure} object.
 #' @param fillcolor Sets the fill color. Defaults to a half-transparent
 #'   variant of the line color, marker color, or marker line color,
 #'   whichever is available. Color: a CSS color string or R color name.
-#' @param font \strong{\code{go_box_hoverlabel()}}: Sets the font used in
-#'   hover labels. Named list or \code{\link{go_box_hoverlabel_font}()}
-#'   object.
-#'
-#'   \strong{\code{go_box_legendgrouptitle()}}: Sets this legend group's
-#'   title font. Named list or \code{\link{go_box_legendgrouptitle_font}()}
-#'   object.
 #' @param hoverinfo Determines what trace information appears on hover. If
 #'   `none` or `skip` are set, no information is displayed upon hovering.
 #'   But, if `none` is set, click and hover events are still fired. Any
 #'   combination of \code{"x"}, \code{"y"}, \code{"z"}, \code{"text"},
 #'   \code{"name"} joined with \code{"+"}, or one of \code{"all"},
 #'   \code{"none"}, \code{"skip"}, or a vector of these.
-#' @param hoverlabel Named list or \code{\link{go_box_hoverlabel}()}
-#'   object.
+#' @param hoverlabel A \code{\link{go_hoverlabel}()} object or named list,
+#'   with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+#'   \code{font}, \code{namelength} and \code{showarrow} (see
+#'   \code{\link{go_hoverlabel}()}).
 #' @param hoveron Do the hover effects highlight individual boxes or sample
 #'   points or both? Any combination of \code{"boxes"}, \code{"points"}
 #'   joined with \code{"+"}.
@@ -204,8 +138,9 @@
 #' @param legendgroup Sets the legend group for this trace. Traces and
 #'   shapes part of the same legend group hide/show at the same time when
 #'   toggling legend items. String.
-#' @param legendgrouptitle Named list or
-#'   \code{\link{go_box_legendgrouptitle}()} object.
+#' @param legendgrouptitle A \code{\link{go_legendgrouptitle}()} object or
+#'   named list, with properties \code{font} and \code{text} (see
+#'   \code{\link{go_legendgrouptitle}()}).
 #' @param legendrank Sets the legend rank for this trace. Items and groups
 #'   with smaller ranks are presented on top/left side while with
 #'   "reversed" `legend.traceorder` they are on bottom/right side. The
@@ -216,36 +151,19 @@
 #'   to their order in data and layout. Number.
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param line \strong{\code{go_box()}}: Named list or
-#'   \code{\link{go_box_line}()} object.
-#'
-#'   \strong{\code{go_box_marker()}}: Named list or
-#'   \code{\link{go_box_marker_line}()} object.
-#' @param lineposition \strong{\code{go_box_hoverlabel_font()}}: Sets the
-#'   kind of decoration line(s) with text, such as an "under", "over" or
-#'   "through" as well as combinations e.g. "under+over", etc. Any
-#'   combination of \code{"under"}, \code{"over"}, \code{"through"} joined
-#'   with \code{"+"}, or one of \code{"none"}, or a vector of these.
-#'
-#'   \strong{\code{go_box_legendgrouptitle_font()}}: Sets the kind of
-#'   decoration line(s) with text, such as an "under", "over" or "through"
-#'   as well as combinations e.g. "under+over", etc. Any combination of
-#'   \code{"under"}, \code{"over"}, \code{"through"} joined with
-#'   \code{"+"}, or one of \code{"none"}.
+#' @param line A \code{\link{go_box_line}()} object or named list, with
+#'   properties \code{color} and \code{width} (see
+#'   \code{\link{go_box_line}()}).
 #' @param lowerfence Sets the lower fence values. There should be as many
 #'   items as the number of boxes desired. This attribute has effect only
 #'   under the q1/median/q3 signature. If `lowerfence` is not provided but
 #'   a sample (in `y` or `x`) is set, we compute the lower as the last
 #'   sample point below 1.5 times the IQR. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
-#' @param marker \strong{\code{go_box()}}: Named list or
-#'   \code{\link{go_box_marker}()} object.
-#'
-#'   \strong{\code{go_box_selected()}}: Named list or
-#'   \code{\link{go_box_selected_marker}()} object.
-#'
-#'   \strong{\code{go_box_unselected()}}: Named list or
-#'   \code{\link{go_box_unselected_marker}()} object.
+#' @param marker A \code{\link{go_box_marker}()} object or named list, with
+#'   properties \code{angle}, \code{color}, \code{line}, \code{opacity},
+#'   \code{outliercolor}, \code{size} and \code{symbol} (see
+#'   \code{\link{go_box_marker}()}).
 #' @param mean Sets the mean values. There should be as many items as the
 #'   number of boxes desired. This attribute has effect only under the
 #'   q1/median/q3 signature. If `mean` is not provided but a sample (in `y`
@@ -268,13 +186,6 @@
 #'   item and on hover. For box traces, the name will also be used for the
 #'   position coordinate, if `x` and `x0` (`y` and `y0` if horizontal) are
 #'   missing and the position axis is categorical String.
-#' @param namelength Sets the default length (in number of characters) of
-#'   the trace name in the hover labels for all traces. -1 shows the whole
-#'   name regardless of length. 0-3 shows the first 0-3 characters, and an
-#'   integer >3 will show the whole name if it is less than that many
-#'   characters, but if it is longer, will truncate to `namelength - 3`
-#'   characters and add an ellipsis. Integer in the interval [-1, Inf], or
-#'   a vector of these.
 #' @param notched Determines whether or not notches are drawn. Notches
 #'   displays a confidence interval around the median. We compute the
 #'   confidence interval as median +/- 1.57 * IQR / sqrt(N), where IQR is
@@ -296,29 +207,11 @@
 #' @param offsetgroup Set several traces linked to the same position axis
 #'   or matching axes to the same offsetgroup where bars of the same
 #'   position coordinate will line up. String.
-#' @param opacity \strong{\code{go_box()}}: Sets the opacity of the trace.
-#'   Number in the interval [0, 1].
-#'
-#'   \strong{\code{go_box_marker()}}: Sets the marker opacity. Number in
-#'   the interval [0, 1].
-#'
-#'   \strong{\code{go_box_selected_marker()}}: Sets the marker opacity of
-#'   selected points. Number in the interval [0, 1].
-#'
-#'   \strong{\code{go_box_unselected_marker()}}: Sets the marker opacity of
-#'   unselected points, applied only when a selection exists. Number in the
-#'   interval [0, 1].
+#' @param opacity Sets the opacity of the trace. Number in the interval [0,
+#'   1].
 #' @param orientation Sets the orientation of the box(es). If "v" ("h"),
 #'   the distribution is visualized along the vertical (horizontal). One of
 #'   \code{"v"}, \code{"h"}.
-#' @param outliercolor \strong{\code{go_box_marker()}}: Sets the color of
-#'   the outlier sample points. Color: a CSS color string or R color name.
-#'
-#'   \strong{\code{go_box_marker_line()}}: Sets the border line color of
-#'   the outlier sample points. Defaults to marker.color Color: a CSS color
-#'   string or R color name.
-#' @param outlierwidth Sets the border line width (in px) of the outlier
-#'   sample points. Number in the interval [0, Inf].
 #' @param pointpos Sets the position of the sample points in relation to
 #'   the box(es). If 0, the sample points are places over the center of the
 #'   box(es). Positive (negative) values correspond to positions to the
@@ -356,57 +249,249 @@
 #'   5-stddev Number in the interval [0, Inf].
 #' @param secondary_y If \code{TRUE}, use the secondary y axis of the
 #'   subplot.
-#' @param selected Named list or \code{\link{go_box_selected}()} object.
+#' @param selected A \code{\link{go_selected}()} object or named list, with
+#'   properties \code{marker} (see \code{\link{go_selected}()}).
 #' @param selectedpoints Array containing integer indices of selected
 #'   points. Has an effect only for traces that support selections. Note
 #'   that an empty array means an empty selection where the `unselected`
 #'   are turned on for all points, whereas, any other non-array values
 #'   means no selection all where the `selected` and `unselected` styles
 #'   have no effect. Any value.
-#' @param shadow \strong{\code{go_box_hoverlabel_font()}}: Sets the shape
-#'   and color of the shadow behind text. "auto" places minimal shadow and
-#'   applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String, or a vector of these.
-#'
-#'   \strong{\code{go_box_legendgrouptitle_font()}}: Sets the shape and
-#'   color of the shadow behind text. "auto" places minimal shadow and
-#'   applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param showarrow Sets whether or not to show the hover label
-#'   arrow/triangle pointing to the data point. Logical.
 #' @param showlegend Determines whether or not an item corresponding to
 #'   this trace is shown in the legend. Logical.
 #' @param showwhiskers Determines whether or not whiskers are visible.
 #'   Defaults to true for `sizemode` "quartiles", false for "sd". Logical.
-#' @param size \strong{\code{go_box_hoverlabel_font()}}: Number in the
-#'   interval [1, Inf], or a vector of these.
-#'
-#'   \strong{\code{go_box_legendgrouptitle_font()}}: Number in the interval
-#'   [1, Inf].
-#'
-#'   \strong{\code{go_box_marker()}}: Sets the marker size (in px). Number
-#'   in the interval [0, Inf].
-#'
-#'   \strong{\code{go_box_selected_marker()}}: Sets the marker size of
-#'   selected points. Number in the interval [0, Inf].
-#'
-#'   \strong{\code{go_box_unselected_marker()}}: Sets the marker size of
-#'   unselected points, applied only when a selection exists. Number in the
-#'   interval [0, Inf].
 #' @param sizemode Sets the upper and lower bound for the boxes quartiles
 #'   means box is drawn between Q1 and Q3 SD means the box is drawn between
 #'   Mean +- Standard Deviation Argument sdmultiple (default 1) to scale
 #'   the box size So it could be drawn 1-stddev, 3-stddev etc One of
 #'   \code{"quartiles"}, \code{"sd"}.
-#' @param style \strong{\code{go_box_hoverlabel_font()}}: Sets whether a
-#'   font should be styled with a normal or italic face from its family.
-#'   One of \code{"normal"}, \code{"italic"}, or a vector of these.
+#' @param text Sets the text elements associated with each sample value. If
+#'   a single string, the same string appears over all the data points. If
+#'   an array of string, the items are mapped in order to the this trace's
+#'   (x,y) coordinates. To be seen, trace `hoverinfo` must contain a "text"
+#'   flag. String, or a vector of these.
+#' @param uid Assign an id to this trace, Use this to provide object
+#'   constancy between traces during animations and transitions. String.
+#' @param uirevision Controls persistence of some user-driven changes to
+#'   the trace: `constraintrange` in `parcoords` traces, as well as some
+#'   `editable: true` modifications such as `name` and `colorbar.title`.
+#'   Defaults to `layout.uirevision`. Note that other user-driven trace
+#'   attribute changes are controlled by `layout` attributes:
+#'   `trace.visible` is controlled by `layout.legend.uirevision`,
+#'   `selectedpoints` is controlled by `layout.selectionrevision`, and
+#'   `colorbar.(x|y)` (accessible with `config: \{editable: true\}`) is
+#'   controlled by `layout.editrevision`. Trace changes are tracked by
+#'   `uid`, which only falls back on trace index if no `uid` is provided.
+#'   So if your app can add/remove traces before the end of the `data`
+#'   array, such that the same trace has a different index, you can still
+#'   preserve user-driven changes if you give each trace a `uid` that stays
+#'   with it as it moves. Any value.
+#' @param unselected A \code{\link{go_unselected}()} object or named list,
+#'   with properties \code{marker} (see \code{\link{go_unselected}()}).
+#' @param upperfence Sets the upper fence values. There should be as many
+#'   items as the number of boxes desired. This attribute has effect only
+#'   under the q1/median/q3 signature. If `upperfence` is not provided but
+#'   a sample (in `y` or `x`) is set, we compute the upper as the last
+#'   sample point above 1.5 times the IQR. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param visible Determines whether or not this trace is visible. If
+#'   "legendonly", the trace is not drawn, but can appear as a legend item
+#'   (provided that the legend itself is visible). One of
+#'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
+#' @param whiskerwidth Sets the width of the whiskers relative to the box
+#'   width. For example, with 1, the whiskers are as wide as the box(es).
+#'   Number in the interval [0, 1].
+#' @param width Sets the width of the box in data coordinate If 0 (default
+#'   value) the width is automatically selected based on the positions of
+#'   other box traces in the same subplot. Number in the interval [0, Inf].
+#' @param x Sets the x sample data or coordinates. See overview for more
+#'   info. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#'   list.
+#' @param x0 Sets the x coordinate for single-box traces or the starting
+#'   coordinate for multi-box traces set using q1/median/q3. See overview
+#'   for more info. Any value.
+#' @param xaxis Sets a reference between this trace's x coordinates and a
+#'   2D cartesian x axis. If "x" (the default value), the x coordinates
+#'   refer to `layout.xaxis`. If "x2", the x coordinates refer to
+#'   `layout.xaxis2`, and so on. Subplot id: \code{"x"}, \code{"x2"},
+#'   \code{"x3"}, ....
+#' @param xcalendar Sets the calendar system to use with `x` date data. One
+#'   of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},
+#'   \code{"ethiopian"}, \code{"gregorian"}, \code{"hebrew"},
+#'   \code{"islamic"}, \code{"jalali"}, \code{"julian"}, \code{"mayan"},
+#'   \code{"nanakshahi"}, \code{"nepali"}, \code{"persian"},
+#'   \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.
+#' @param xhoverformat Sets the hover text formatting rule for `x` using d3
+#'   formatting mini-languages which are very similar to those in Python.
+#'   For numbers, see:
+#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
+#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
+#'   We add two items to d3's date formatter: "\%h" for half of the year as
+#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
+#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
+#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
+#'   are formatted using `xaxis.hoverformat`. String.
+#' @param xperiod Only relevant when the axis `type` is "date". Sets the
+#'   period positioning in milliseconds or "M<n>" on the x axis. Special
+#'   values in the form of "M<n>" could be used to declare the number of
+#'   months. In this case `n` must be a positive integer. Any value.
+#' @param xperiod0 Only relevant when the axis `type` is "date". Sets the
+#'   base for period positioning in milliseconds or date string on the x0
+#'   axis. When `x0period` is round number of weeks, the `x0period0` by
+#'   default would be on a Sunday i.e. 2000-01-02, otherwise it would be at
+#'   2000-01-01. Any value.
+#' @param xperiodalignment Only relevant when the axis `type` is "date".
+#'   Sets the alignment of data points on the x axis. One of
+#'   \code{"start"}, \code{"middle"}, \code{"end"}.
+#' @param y Sets the y sample data or coordinates. See overview for more
+#'   info. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#'   list.
+#' @param y0 Sets the y coordinate for single-box traces or the starting
+#'   coordinate for multi-box traces set using q1/median/q3. See overview
+#'   for more info. Any value.
+#' @param yaxis Sets a reference between this trace's y coordinates and a
+#'   2D cartesian y axis. If "y" (the default value), the y coordinates
+#'   refer to `layout.yaxis`. If "y2", the y coordinates refer to
+#'   `layout.yaxis2`, and so on. Subplot id: \code{"y"}, \code{"y2"},
+#'   \code{"y3"}, ....
+#' @param ycalendar Sets the calendar system to use with `y` date data. One
+#'   of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},
+#'   \code{"ethiopian"}, \code{"gregorian"}, \code{"hebrew"},
+#'   \code{"islamic"}, \code{"jalali"}, \code{"julian"}, \code{"mayan"},
+#'   \code{"nanakshahi"}, \code{"nepali"}, \code{"persian"},
+#'   \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.
+#' @param yhoverformat Sets the hover text formatting rule for `y` using d3
+#'   formatting mini-languages which are very similar to those in Python.
+#'   For numbers, see:
+#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
+#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
+#'   We add two items to d3's date formatter: "\%h" for half of the year as
+#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
+#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
+#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
+#'   are formatted using `yaxis.hoverformat`. String.
+#' @param yperiod Only relevant when the axis `type` is "date". Sets the
+#'   period positioning in milliseconds or "M<n>" on the y axis. Special
+#'   values in the form of "M<n>" could be used to declare the number of
+#'   months. In this case `n` must be a positive integer. Any value.
+#' @param yperiod0 Only relevant when the axis `type` is "date". Sets the
+#'   base for period positioning in milliseconds or date string on the y0
+#'   axis. When `y0period` is round number of weeks, the `y0period0` by
+#'   default would be on a Sunday i.e. 2000-01-02, otherwise it would be at
+#'   2000-01-01. Any value.
+#' @param yperiodalignment Only relevant when the axis `type` is "date".
+#'   Sets the alignment of data points on the y axis. One of
+#'   \code{"start"}, \code{"middle"}, \code{"end"}.
+#' @param zorder Sets the layer on which this trace is displayed, relative
+#'   to other SVG traces on the same subplot. SVG traces with higher
+#'   `zorder` appear in front of those with lower `zorder`. Integer.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return \code{go_*()} functions return a graph object;
+#'   \code{add_*()} functions return the modified figure.
+#' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
 #'
-#'   \strong{\code{go_box_legendgrouptitle_font()}}: Sets whether a font
-#'   should be styled with a normal or italic face from its family. One of
-#'   \code{"normal"}, \code{"italic"}.
+#' @concept traces
+#' @noMd
+#' @export
+#' @examples
+#' mtcars |>
+#'   go_figure() |>
+#'   add_box(x = ~factor(cyl), y = ~mpg)
+go_box <- function(
+    arg = NULL, ..., alignmentgroup = NULL, boxmean = NULL,
+    boxpoints = NULL, customdata = NULL, dx = NULL, dy = NULL,
+    fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, jitter = NULL, legend = NULL, legendgroup = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    line = NULL, lowerfence = NULL, marker = NULL, mean = NULL,
+    median = NULL, meta = NULL, name = NULL, notched = NULL,
+    notchspan = NULL, notchwidth = NULL, offsetgroup = NULL, opacity = NULL,
+    orientation = NULL, pointpos = NULL, q1 = NULL, q3 = NULL,
+    quartilemethod = NULL, sd = NULL, sdmultiple = NULL, selected = NULL,
+    selectedpoints = NULL, showlegend = NULL, showwhiskers = NULL,
+    sizemode = NULL, text = NULL, uid = NULL, uirevision = NULL,
+    unselected = NULL, upperfence = NULL, visible = NULL,
+    whiskerwidth = NULL, width = NULL, x = NULL, x0 = NULL, xaxis = NULL,
+    xcalendar = NULL, xhoverformat = NULL, xperiod = NULL, xperiod0 = NULL,
+    xperiodalignment = NULL, y = NULL, y0 = NULL, yaxis = NULL,
+    ycalendar = NULL, yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
+    yperiodalignment = NULL, zorder = NULL, skip_invalid = FALSE
+) {
+  plotly_object("box", arg, environment(), list(...), skip_invalid)
+}
+
+#' Box line objects
+#'
+#' The object for the \code{line} of a box trace (\code{\link{go_box}()}).
+#' \code{go_box_line()} creates one, with exactly its properties; a named
+#' list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the color of line bounding the box(es). Color: a CSS
+#'   color string or R color name.
+#' @param width Sets the width (in px) of line bounding the box(es). Number
+#'   in the interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_box_line} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
+#' @export
+#' @examples
+#' mtcars |>
+#'   go_figure() |>
+#'   add_box(x = ~factor(cyl), y = ~mpg, line = go_box_line(color = "red"))
+go_box_line <- function(
+    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+) {
+  plotly_object("box.line", arg, environment(), list(...), skip_invalid)
+}
+
+#' Box marker objects
+#'
+#' The object for the \code{marker} of a box trace (\code{\link{go_box}()}).
+#' \code{go_box_marker()} creates one, with exactly its properties; a named
+#' list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param angle Sets the marker angle in respect to `angleref`. Angle in
+#'   degrees.
+#' @param color Sets the marker color. It accepts either a specific color
+#'   or an array of numbers that are mapped to the colorscale relative to
+#'   the max and min values of the array or relative to `marker.cmin` and
+#'   `marker.cmax` if set. Color: a CSS color string or R color name.
+#' @param line A \code{\link{go_box_marker_line}()} object or named list,
+#'   with properties \code{color}, \code{outliercolor}, \code{outlierwidth}
+#'   and \code{width} (see \code{\link{go_box_marker_line}()}).
+#' @param opacity Sets the marker opacity. Number in the interval [0, 1].
+#' @param outliercolor Sets the color of the outlier sample points. Color:
+#'   a CSS color string or R color name.
+#' @param size Sets the marker size (in px). Number in the interval [0,
+#'   Inf].
 #' @param symbol Sets the marker symbol type. Adding 100 is equivalent to
 #'   appending "-open" to a symbol name. Adding 200 is equivalent to
 #'   appending "-dot" to a symbol name. Adding 300 is equivalent to
@@ -540,245 +625,22 @@
 #'   \code{147}, \code{48}, \code{148}, \code{49}, \code{149}, \code{50},
 #'   \code{150}, \code{51}, \code{151}, \code{52}, \code{152}, \code{53},
 #'   \code{153}, \code{54}, \code{154}.
-#' @param text \strong{\code{go_box()}}: Sets the text elements associated
-#'   with each sample value. If a single string, the same string appears
-#'   over all the data points. If an array of string, the items are mapped
-#'   in order to the this trace's (x,y) coordinates. To be seen, trace
-#'   `hoverinfo` must contain a "text" flag. String, or a vector of these.
-#'
-#'   \strong{\code{go_box_legendgrouptitle()}}: Sets the title of the
-#'   legend group. String.
-#' @param textcase \strong{\code{go_box_hoverlabel_font()}}: Sets
-#'   capitalization of text. It can be used to make text appear in
-#'   all-uppercase or all-lowercase, or with each word capitalized. One of
-#'   \code{"normal"}, \code{"word caps"}, \code{"upper"}, \code{"lower"},
-#'   or a vector of these.
-#'
-#'   \strong{\code{go_box_legendgrouptitle_font()}}: Sets capitalization of
-#'   text. It can be used to make text appear in all-uppercase or
-#'   all-lowercase, or with each word capitalized. One of \code{"normal"},
-#'   \code{"word caps"}, \code{"upper"}, \code{"lower"}.
-#' @param uid Assign an id to this trace, Use this to provide object
-#'   constancy between traces during animations and transitions. String.
-#' @param uirevision Controls persistence of some user-driven changes to
-#'   the trace: `constraintrange` in `parcoords` traces, as well as some
-#'   `editable: true` modifications such as `name` and `colorbar.title`.
-#'   Defaults to `layout.uirevision`. Note that other user-driven trace
-#'   attribute changes are controlled by `layout` attributes:
-#'   `trace.visible` is controlled by `layout.legend.uirevision`,
-#'   `selectedpoints` is controlled by `layout.selectionrevision`, and
-#'   `colorbar.(x|y)` (accessible with `config: \{editable: true\}`) is
-#'   controlled by `layout.editrevision`. Trace changes are tracked by
-#'   `uid`, which only falls back on trace index if no `uid` is provided.
-#'   So if your app can add/remove traces before the end of the `data`
-#'   array, such that the same trace has a different index, you can still
-#'   preserve user-driven changes if you give each trace a `uid` that stays
-#'   with it as it moves. Any value.
-#' @param unselected Named list or \code{\link{go_box_unselected}()}
-#'   object.
-#' @param upperfence Sets the upper fence values. There should be as many
-#'   items as the number of boxes desired. This attribute has effect only
-#'   under the q1/median/q3 signature. If `upperfence` is not provided but
-#'   a sample (in `y` or `x`) is set, we compute the upper as the last
-#'   sample point above 1.5 times the IQR. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
-#' @param variant \strong{\code{go_box_hoverlabel_font()}}: Sets the
-#'   variant of the font. One of \code{"normal"}, \code{"small-caps"},
-#'   \code{"all-small-caps"}, \code{"all-petite-caps"},
-#'   \code{"petite-caps"}, \code{"unicase"}, or a vector of these.
-#'
-#'   \strong{\code{go_box_legendgrouptitle_font()}}: Sets the variant of
-#'   the font. One of \code{"normal"}, \code{"small-caps"},
-#'   \code{"all-small-caps"}, \code{"all-petite-caps"},
-#'   \code{"petite-caps"}, \code{"unicase"}.
-#' @param visible Determines whether or not this trace is visible. If
-#'   "legendonly", the trace is not drawn, but can appear as a legend item
-#'   (provided that the legend itself is visible). One of
-#'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param weight \strong{\code{go_box_hoverlabel_font()}}: Sets the weight
-#'   (or boldness) of the font. Integer in the interval [1, 1000], or a
-#'   vector of these.
-#'
-#'   \strong{\code{go_box_legendgrouptitle_font()}}: Sets the weight (or
-#'   boldness) of the font. Integer in the interval [1, 1000].
-#' @param whiskerwidth Sets the width of the whiskers relative to the box
-#'   width. For example, with 1, the whiskers are as wide as the box(es).
-#'   Number in the interval [0, 1].
-#' @param width \strong{\code{go_box()}}: Sets the width of the box in data
-#'   coordinate If 0 (default value) the width is automatically selected
-#'   based on the positions of other box traces in the same subplot. Number
-#'   in the interval [0, Inf].
-#'
-#'   \strong{\code{go_box_line()}}: Sets the width (in px) of line bounding
-#'   the box(es). Number in the interval [0, Inf].
-#'
-#'   \strong{\code{go_box_marker_line()}}: Sets the width (in px) of the
-#'   lines bounding the marker points. Number in the interval [0, Inf].
-#' @param x Sets the x sample data or coordinates. See overview for more
-#'   info. Data array: a vector, factor, Date/POSIXct vector, matrix or
-#'   list.
-#' @param x0 Sets the x coordinate for single-box traces or the starting
-#'   coordinate for multi-box traces set using q1/median/q3. See overview
-#'   for more info. Any value.
-#' @param xaxis Sets a reference between this trace's x coordinates and a
-#'   2D cartesian x axis. If "x" (the default value), the x coordinates
-#'   refer to `layout.xaxis`. If "x2", the x coordinates refer to
-#'   `layout.xaxis2`, and so on. Subplot id: \code{"x"}, \code{"x2"},
-#'   \code{"x3"}, ....
-#' @param xcalendar Sets the calendar system to use with `x` date data. One
-#'   of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},
-#'   \code{"ethiopian"}, \code{"gregorian"}, \code{"hebrew"},
-#'   \code{"islamic"}, \code{"jalali"}, \code{"julian"}, \code{"mayan"},
-#'   \code{"nanakshahi"}, \code{"nepali"}, \code{"persian"},
-#'   \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.
-#' @param xhoverformat Sets the hover text formatting rule for `x` using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
-#'   are formatted using `xaxis.hoverformat`. String.
-#' @param xperiod Only relevant when the axis `type` is "date". Sets the
-#'   period positioning in milliseconds or "M<n>" on the x axis. Special
-#'   values in the form of "M<n>" could be used to declare the number of
-#'   months. In this case `n` must be a positive integer. Any value.
-#' @param xperiod0 Only relevant when the axis `type` is "date". Sets the
-#'   base for period positioning in milliseconds or date string on the x0
-#'   axis. When `x0period` is round number of weeks, the `x0period0` by
-#'   default would be on a Sunday i.e. 2000-01-02, otherwise it would be at
-#'   2000-01-01. Any value.
-#' @param xperiodalignment Only relevant when the axis `type` is "date".
-#'   Sets the alignment of data points on the x axis. One of
-#'   \code{"start"}, \code{"middle"}, \code{"end"}.
-#' @param y Sets the y sample data or coordinates. See overview for more
-#'   info. Data array: a vector, factor, Date/POSIXct vector, matrix or
-#'   list.
-#' @param y0 Sets the y coordinate for single-box traces or the starting
-#'   coordinate for multi-box traces set using q1/median/q3. See overview
-#'   for more info. Any value.
-#' @param yaxis Sets a reference between this trace's y coordinates and a
-#'   2D cartesian y axis. If "y" (the default value), the y coordinates
-#'   refer to `layout.yaxis`. If "y2", the y coordinates refer to
-#'   `layout.yaxis2`, and so on. Subplot id: \code{"y"}, \code{"y2"},
-#'   \code{"y3"}, ....
-#' @param ycalendar Sets the calendar system to use with `y` date data. One
-#'   of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},
-#'   \code{"ethiopian"}, \code{"gregorian"}, \code{"hebrew"},
-#'   \code{"islamic"}, \code{"jalali"}, \code{"julian"}, \code{"mayan"},
-#'   \code{"nanakshahi"}, \code{"nepali"}, \code{"persian"},
-#'   \code{"taiwan"}, \code{"thai"}, \code{"ummalqura"}.
-#' @param yhoverformat Sets the hover text formatting rule for `y` using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
-#'   are formatted using `yaxis.hoverformat`. String.
-#' @param yperiod Only relevant when the axis `type` is "date". Sets the
-#'   period positioning in milliseconds or "M<n>" on the y axis. Special
-#'   values in the form of "M<n>" could be used to declare the number of
-#'   months. In this case `n` must be a positive integer. Any value.
-#' @param yperiod0 Only relevant when the axis `type` is "date". Sets the
-#'   base for period positioning in milliseconds or date string on the y0
-#'   axis. When `y0period` is round number of weeks, the `y0period0` by
-#'   default would be on a Sunday i.e. 2000-01-02, otherwise it would be at
-#'   2000-01-01. Any value.
-#' @param yperiodalignment Only relevant when the axis `type` is "date".
-#'   Sets the alignment of data points on the y axis. One of
-#'   \code{"start"}, \code{"middle"}, \code{"end"}.
-#' @param zorder Sets the layer on which this trace is displayed, relative
-#'   to other SVG traces on the same subplot. SVG traces with higher
-#'   `zorder` appear in front of those with lower `zorder`. Integer.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
+#' @param ... Not used: properties must be named in full.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
+#' @return A \code{go_box_marker} object (a named list).
+#'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
-#' go_box(x = 1:3, y = c(2, 1, 3), marker_color = "red")
-go_box <- function(
-    arg = NULL, ..., alignmentgroup = NULL, boxmean = NULL,
-    boxpoints = NULL, customdata = NULL, dx = NULL, dy = NULL,
-    fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, jitter = NULL, legend = NULL, legendgroup = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    line = NULL, lowerfence = NULL, marker = NULL, mean = NULL,
-    median = NULL, meta = NULL, name = NULL, notched = NULL,
-    notchspan = NULL, notchwidth = NULL, offsetgroup = NULL, opacity = NULL,
-    orientation = NULL, pointpos = NULL, q1 = NULL, q3 = NULL,
-    quartilemethod = NULL, sd = NULL, sdmultiple = NULL, selected = NULL,
-    selectedpoints = NULL, showlegend = NULL, showwhiskers = NULL,
-    sizemode = NULL, text = NULL, uid = NULL, uirevision = NULL,
-    unselected = NULL, upperfence = NULL, visible = NULL,
-    whiskerwidth = NULL, width = NULL, x = NULL, x0 = NULL, xaxis = NULL,
-    xcalendar = NULL, xhoverformat = NULL, xperiod = NULL, xperiod0 = NULL,
-    xperiodalignment = NULL, y = NULL, y0 = NULL, yaxis = NULL,
-    ycalendar = NULL, yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
-    yperiodalignment = NULL, zorder = NULL, skip_invalid = FALSE
-) {
-  plotly_object("box", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_box
-#' @export
-go_box_hoverlabel <- function(
-    arg = NULL, ..., align = NULL, bgcolor = NULL, bordercolor = NULL,
-    font = NULL, namelength = NULL, showarrow = NULL, skip_invalid = FALSE
-) {
-  plotly_object("box.hoverlabel", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_box
-#' @export
-go_box_hoverlabel_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("box.hoverlabel.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_box
-#' @export
-go_box_legendgrouptitle <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("box.legendgrouptitle", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_box
-#' @export
-go_box_legendgrouptitle_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("box.legendgrouptitle.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_box
-#' @export
-go_box_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
-) {
-  plotly_object("box.line", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_box
-#' @export
+#' mtcars |>
+#'   go_figure() |>
+#'   add_box(
+#'     x = ~factor(cyl),
+#'     y = ~mpg,
+#'     marker = go_box_marker(color = "red")
+#'   )
 go_box_marker <- function(
     arg = NULL, ..., angle = NULL, color = NULL, line = NULL,
     opacity = NULL, outliercolor = NULL, size = NULL, symbol = NULL,
@@ -787,46 +649,55 @@ go_box_marker <- function(
   plotly_object("box.marker", arg, environment(), list(...), skip_invalid)
 }
 
-#' @rdname go_box
+#' Box marker line objects
+#'
+#' The object for the \code{marker.line} of a box trace
+#' (\code{\link{go_box_marker}()}). \code{go_box_marker_line()} creates one,
+#' with exactly its properties; a named list with the same properties works
+#' too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the marker.line color. It accepts either a specific
+#'   color or an array of numbers that are mapped to the colorscale
+#'   relative to the max and min values of the array or relative to
+#'   `marker.line.cmin` and `marker.line.cmax` if set. Color: a CSS color
+#'   string or R color name.
+#' @param outliercolor Sets the border line color of the outlier sample
+#'   points. Defaults to marker.color Color: a CSS color string or R color
+#'   name.
+#' @param outlierwidth Sets the border line width (in px) of the outlier
+#'   sample points. Number in the interval [0, Inf].
+#' @param width Sets the width (in px) of the lines bounding the marker
+#'   points. Number in the interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_box_marker_line} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
 #' @export
+#' @examples
+#' mtcars |>
+#'   go_figure() |>
+#'   add_box(
+#'     x = ~factor(cyl),
+#'     y = ~mpg,
+#'     marker = go_box_marker(line = go_box_marker_line(color = "red"))
+#'   )
 go_box_marker_line <- function(
     arg = NULL, ..., color = NULL, outliercolor = NULL, outlierwidth = NULL,
     width = NULL, skip_invalid = FALSE
 ) {
   plotly_object("box.marker.line", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_box
-#' @export
-go_box_selected <- function(
-    arg = NULL, ..., marker = NULL, skip_invalid = FALSE
-) {
-  plotly_object("box.selected", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_box
-#' @export
-go_box_selected_marker <- function(
-    arg = NULL, ..., color = NULL, opacity = NULL, size = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("box.selected.marker", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_box
-#' @export
-go_box_unselected <- function(
-    arg = NULL, ..., marker = NULL, skip_invalid = FALSE
-) {
-  plotly_object("box.unselected", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_box
-#' @export
-go_box_unselected_marker <- function(
-    arg = NULL, ..., color = NULL, opacity = NULL, size = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("box.unselected.marker", arg, environment(), list(...), skip_invalid)
 }
 

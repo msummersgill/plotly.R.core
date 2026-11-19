@@ -31,14 +31,22 @@ reference:
   - title: Updating figures
     contents:
       - starts_with("update_")
-  - title: Trace constructors
+  - title: Traces
+    desc: One constructor per trace type; add_<trace>() adds one to a figure.
     contents:
-      - starts_with("go_")
-      - -go_figure
-      - -starts_with("go_layout")
-  - title: Layout constructors
+      - has_concept("traces")
+  - title: Trace objects
+    desc: Objects nested in traces, named after their path.
     contents:
-      - starts_with("go_layout")
+      - has_concept("trace objects")
+  - title: Layout
+    desc: The layout and the objects in it.
+    contents:
+      - has_concept("layout objects")
+  - title: Shared object types
+    desc: Objects used in several places in traces and layouts.
+    contents:
+      - has_concept("shared object types")
   - title: Plotly Express
     contents:
       - starts_with("px_")
@@ -50,6 +58,7 @@ reference:
       - config
       - write_html
       - save_image
+      - available_fonts
       - install_chrome
       - plotly_json
       - TeX

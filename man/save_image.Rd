@@ -44,6 +44,9 @@ sessions); elsewhere, download it once with
 \code{chromote::chrome_versions_add("latest-stable", "chrome-headless-shell")}.
 
 The browser is started on the first export and reused for later ones.
+Fonts are the ones installed on this computer: \code{save_image()} warns when
+a font a figure asks for is not installed (see \code{\link[=available_fonts]{available_fonts()}}).
+
 Large figures can take a while to draw: an export waits up to
 \code{getOption("plotly.core.export_timeout", 300)} seconds.
 LaTeX (see \code{\link[=TeX]{TeX()}}) is typeset with the MathJax bundled with the package,

@@ -2,15 +2,6 @@
 % Please edit documentation in R/zz-gen-candlestick.R, R/zz-gen-figure.R
 \name{go_candlestick}
 \alias{go_candlestick}
-\alias{go_candlestick_decreasing}
-\alias{go_candlestick_decreasing_line}
-\alias{go_candlestick_hoverlabel}
-\alias{go_candlestick_hoverlabel_font}
-\alias{go_candlestick_increasing}
-\alias{go_candlestick_increasing_line}
-\alias{go_candlestick_legendgrouptitle}
-\alias{go_candlestick_legendgrouptitle_font}
-\alias{go_candlestick_line}
 \alias{add_candlestick}
 \alias{add_candlestick.default}
 \title{Candlestick traces}
@@ -59,91 +50,6 @@ go_candlestick(
   zorder = NULL,
   skip_invalid = FALSE
 )
-
-go_candlestick_decreasing(
-  arg = NULL,
-  ...,
-  fillcolor = NULL,
-  line = NULL,
-  skip_invalid = FALSE
-)
-
-go_candlestick_decreasing_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_candlestick_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  split = NULL,
-  skip_invalid = FALSE
-)
-
-go_candlestick_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_candlestick_increasing(
-  arg = NULL,
-  ...,
-  fillcolor = NULL,
-  line = NULL,
-  skip_invalid = FALSE
-)
-
-go_candlestick_increasing_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_candlestick_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_candlestick_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_candlestick_line(arg = NULL, ..., width = NULL, skip_invalid = FALSE)
 
 add_candlestick(fig, ...)
 
@@ -200,10 +106,7 @@ add_candlestick(fig, ...)
 \item{arg}{Optional named list, or graph object of the same type, to
 initialise properties from (constructors). Named arguments take precedence.}
 
-\item{...}{Further properties, including nested properties in
-"magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}. Property values may be one-sided
-formulas, evaluated in \code{data} for \code{add_*()} functions.}
+\item{...}{Not used: properties must be named in full.}
 
 \item{close}{Sets the close values. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.}
@@ -213,8 +116,9 @@ listening to hover, click and selection events. Note that, "scatter"
 traces also appends customdata items in the markers DOM elements Data
 array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
-\item{decreasing}{Named list or
-\code{\link{go_candlestick_decreasing}()} object.}
+\item{decreasing}{A \code{\link{go_candlestick_decreasing}()} object or
+named list, with properties \code{fillcolor} and \code{line} (see
+\code{\link{go_candlestick_decreasing}()}).}
 
 \item{high}{Sets the high values. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.}
@@ -226,8 +130,10 @@ combination of \code{"x"}, \code{"y"}, \code{"z"}, \code{"text"},
 \code{"name"} joined with \code{"+"}, or one of \code{"all"},
 \code{"none"}, \code{"skip"}, or a vector of these.}
 
-\item{hoverlabel}{Named list or
-\code{\link{go_candlestick_hoverlabel}()} object.}
+\item{hoverlabel}{A \code{\link{go_hoverlabel}()} object or named list,
+with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+\code{font}, \code{namelength}, \code{showarrow} and \code{split} (see
+\code{\link{go_hoverlabel}()}).}
 
 \item{hovertemplate}{Template string used for rendering the information
 that appear on hover box. Note that this will override `hoverinfo`.
@@ -270,8 +176,9 @@ constancy of data points during animation. Should be an array of
 strings, not numbers or any other type. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.}
 
-\item{increasing}{Named list or
-\code{\link{go_candlestick_increasing}()} object.}
+\item{increasing}{A \code{\link{go_candlestick_increasing}()} object or
+named list, with properties \code{fillcolor} and \code{line} (see
+\code{\link{go_candlestick_increasing}()}).}
 
 \item{legend}{Sets the reference to a legend to show this trace in.
 References to these legends are "legend", "legend2", "legend3", etc.
@@ -283,8 +190,9 @@ Settings for these legends are set in the layout, under
 shapes part of the same legend group hide/show at the same time when
 toggling legend items. String.}
 
-\item{legendgrouptitle}{Named list or
-\code{\link{go_candlestick_legendgrouptitle}()} object.}
+\item{legendgrouptitle}{A \code{\link{go_legendgrouptitle}()} object or
+named list, with properties \code{font} and \code{text} (see
+\code{\link{go_legendgrouptitle}()}).}
 
 \item{legendrank}{Sets the legend rank for this trace. Items and groups
 with smaller ranks are presented on top/left side while with
@@ -298,14 +206,9 @@ to their order in data and layout. Number.}
 \item{legendwidth}{Sets the width (in px or fraction) of the legend for
 this trace. Number in the interval [0, Inf].}
 
-\item{line}{\strong{\code{go_candlestick()}}: Named list or
-  \code{\link{go_candlestick_line}()} object.
-
-  \strong{\code{go_candlestick_decreasing()}}: Named list or
-  \code{\link{go_candlestick_decreasing_line}()} object.
-
-  \strong{\code{go_candlestick_increasing()}}: Named list or
-  \code{\link{go_candlestick_increasing_line}()} object.}
+\item{line}{A \code{\link{go_candlestick_line}()} object or named list,
+with properties \code{width} (see
+\code{\link{go_candlestick_line}()}).}
 
 \item{low}{Sets the low values. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.}
@@ -339,14 +242,10 @@ have no effect. Any value.}
 \item{showlegend}{Determines whether or not an item corresponding to
 this trace is shown in the legend. Logical.}
 
-\item{text}{\strong{\code{go_candlestick()}}: Sets hover text elements
-  associated with each sample point. If a single string, the same string
-  appears over all the data points. If an array of string, the items are
-  mapped in order to this trace's sample points. String, or a vector of
-  these.
-
-  \strong{\code{go_candlestick_legendgrouptitle()}}: Sets the title of
-  the legend group. String.}
+\item{text}{Sets hover text elements associated with each sample point.
+If a single string, the same string appears over all the data points.
+If an array of string, the items are mapped in order to this trace's
+sample points. String, or a vector of these.}
 
 \item{uid}{Assign an id to this trace, Use this to provide object
 constancy between traces during animations and transitions. String.}
@@ -442,148 +341,11 @@ to other SVG traces on the same subplot. SVG traces with higher
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
 
-\item{fillcolor}{Sets the fill color. Defaults to a half-transparent
-variant of the line color, marker color, or marker line color,
-whichever is available. Color: a CSS color string or R color name.}
-
-\item{color}{\strong{\code{go_candlestick_decreasing_line()},
-  \code{go_candlestick_increasing_line()}}: Sets the color of line
-  bounding the box(es). Color: a CSS color string or R color name.
-
-  \strong{\code{go_candlestick_hoverlabel_font()}}: Color: a CSS color
-  string or R color name, or a vector of these.
-
-  \strong{\code{go_candlestick_legendgrouptitle_font()}}: Color: a CSS
-  color string or R color name.}
-
-\item{width}{\strong{\code{go_candlestick_decreasing_line()},
-  \code{go_candlestick_increasing_line()}}: Sets the width (in px) of
-  line bounding the box(es). Number in the interval [0, Inf].
-
-  \strong{\code{go_candlestick_line()}}: Sets the width (in px) of line
-  bounding the box(es). Note that this style setting can also be set per
-  direction via `increasing.line.width` and `decreasing.line.width`.
-  Number in the interval [0, Inf].}
-
-\item{align}{Sets the horizontal alignment of the text content within
-hover label box. Has an effect only if the hover label text spans two
-or more lines One of \code{"left"}, \code{"right"}, \code{"auto"}, or
-a vector of these.}
-
-\item{bgcolor}{Sets the background color of the hover labels for this
-trace Color: a CSS color string or R color name, or a vector of these.}
-
-\item{bordercolor}{Sets the border color of the hover labels for this
-trace. Color: a CSS color string or R color name, or a vector of
-these.}
-
-\item{font}{\strong{\code{go_candlestick_hoverlabel()}}: Sets the font
-  used in hover labels. Named list or
-  \code{\link{go_candlestick_hoverlabel_font}()} object.
-
-  \strong{\code{go_candlestick_legendgrouptitle()}}: Sets this legend
-  group's title font. Named list or
-  \code{\link{go_candlestick_legendgrouptitle_font}()} object.}
-
-\item{namelength}{Sets the default length (in number of characters) of
-the trace name in the hover labels for all traces. -1 shows the whole
-name regardless of length. 0-3 shows the first 0-3 characters, and an
-integer >3 will show the whole name if it is less than that many
-characters, but if it is longer, will truncate to `namelength - 3`
-characters and add an ellipsis. Integer in the interval [-1, Inf], or
-a vector of these.}
-
-\item{showarrow}{Sets whether or not to show the hover label
-arrow/triangle pointing to the data point. Logical.}
-
-\item{split}{Show hover information (open, close, high, low) in separate
-labels, rather than a single unified label. Default: FALSE. When set
-to TRUE, `hovertemplate` is ignored. Logical.}
-
-\item{family}{\strong{\code{go_candlestick_hoverlabel_font()}}: HTML
-  font family - the typeface that will be applied by the web browser.
-  The web browser can only apply a font if it is available on the system
-  where it runs. Provide multiple font families, separated by commas, to
-  indicate the order in which to apply fonts if they aren't available.
-  String, or a vector of these.
-
-  \strong{\code{go_candlestick_legendgrouptitle_font()}}: HTML font
-  family - the typeface that will be applied by the web browser. The web
-  browser can only apply a font if it is available on the system where
-  it runs. Provide multiple font families, separated by commas, to
-  indicate the order in which to apply fonts if they aren't available.
-  String.}
-
-\item{lineposition}{\strong{\code{go_candlestick_hoverlabel_font()}}:
-  Sets the kind of decoration line(s) with text, such as an "under",
-  "over" or "through" as well as combinations e.g. "under+over", etc.
-  Any combination of \code{"under"}, \code{"over"}, \code{"through"}
-  joined with \code{"+"}, or one of \code{"none"}, or a vector of these.
-
-  \strong{\code{go_candlestick_legendgrouptitle_font()}}: Sets the kind
-  of decoration line(s) with text, such as an "under", "over" or
-  "through" as well as combinations e.g. "under+over", etc. Any
-  combination of \code{"under"}, \code{"over"}, \code{"through"} joined
-  with \code{"+"}, or one of \code{"none"}.}
-
-\item{shadow}{\strong{\code{go_candlestick_hoverlabel_font()}}: Sets the
-  shape and color of the shadow behind text. "auto" places minimal
-  shadow and applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.
-
-  \strong{\code{go_candlestick_legendgrouptitle_font()}}: Sets the shape
-  and color of the shadow behind text. "auto" places minimal shadow and
-  applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.}
-
-\item{size}{\strong{\code{go_candlestick_hoverlabel_font()}}: Number in
-  the interval [1, Inf], or a vector of these.
-
-  \strong{\code{go_candlestick_legendgrouptitle_font()}}: Number in the
-  interval [1, Inf].}
-
-\item{style}{\strong{\code{go_candlestick_hoverlabel_font()}}: Sets
-  whether a font should be styled with a normal or italic face from its
-  family. One of \code{"normal"}, \code{"italic"}, or a vector of these.
-
-  \strong{\code{go_candlestick_legendgrouptitle_font()}}: Sets whether a
-  font should be styled with a normal or italic face from its family.
-  One of \code{"normal"}, \code{"italic"}.}
-
-\item{textcase}{\strong{\code{go_candlestick_hoverlabel_font()}}: Sets
-  capitalization of text. It can be used to make text appear in
-  all-uppercase or all-lowercase, or with each word capitalized. One of
-  \code{"normal"}, \code{"word caps"}, \code{"upper"}, \code{"lower"},
-  or a vector of these.
-
-  \strong{\code{go_candlestick_legendgrouptitle_font()}}: Sets
-  capitalization of text. It can be used to make text appear in
-  all-uppercase or all-lowercase, or with each word capitalized. One of
-  \code{"normal"}, \code{"word caps"}, \code{"upper"}, \code{"lower"}.}
-
-\item{variant}{\strong{\code{go_candlestick_hoverlabel_font()}}: Sets
-  the variant of the font. One of \code{"normal"}, \code{"small-caps"},
-  \code{"all-small-caps"}, \code{"all-petite-caps"},
-  \code{"petite-caps"}, \code{"unicase"}, or a vector of these.
-
-  \strong{\code{go_candlestick_legendgrouptitle_font()}}: Sets the
-  variant of the font. One of \code{"normal"}, \code{"small-caps"},
-  \code{"all-small-caps"}, \code{"all-petite-caps"},
-  \code{"petite-caps"}, \code{"unicase"}.}
-
-\item{weight}{\strong{\code{go_candlestick_hoverlabel_font()}}: Sets the
-  weight (or boldness) of the font. Integer in the interval [1, 1000],
-  or a vector of these.
-
-  \strong{\code{go_candlestick_legendgrouptitle_font()}}: Sets the
-  weight (or boldness) of the font. Integer in the interval [1, 1000].}
-
 \item{fig}{A \code{go_figure} object.}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
-~col}, \code{marker_size = ~col}) are evaluated. Default: the data
+~col}, \code{marker = list(size = ~col)}, \code{marker =
+go_scatter_marker(size = ~col)}) are evaluated. Default: the data
 given to \code{\link{go_figure}()}. Only the evaluated values are
 added to the trace. A \code{crosstalk::SharedData} works the same way,
 and links the trace to its crosstalk group (see
@@ -601,8 +363,8 @@ to address several cells.}
 subplot.}
 }
 \value{
-Each \code{go_*()} function returns a graph object of the same
-  class as its name; \code{add_*()} functions return the modified figure.
+\code{go_*()} functions return a graph object;
+  \code{add_*()} functions return the modified figure.
 }
 \description{
 The candlestick is a style of financial chart describing open, high, low
@@ -614,30 +376,33 @@ increasing (decreasing). By default, increasing candles are drawn in
 green whereas decreasing are drawn in red.
 }
 \details{
-\code{go_candlestick()} and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-\code{\link{plotly_obj-modify}()}). \code{add_candlestick()} creates an
-object and adds it to a figure.
+\code{go_candlestick()} creates a validated graph object (a named list).
+\code{add_candlestick()} creates one and adds it to a figure.
 
-Nested objects documented here:
-\describe{
-\item{\code{go_candlestick_decreasing()}}{\code{candlestick.decreasing}}
-\item{\code{go_candlestick_decreasing_line()}}{\code{candlestick.decreasing.line}}
-\item{\code{go_candlestick_hoverlabel()}}{\code{candlestick.hoverlabel}}
-\item{\code{go_candlestick_hoverlabel_font()}}{\code{candlestick.hoverlabel.font}:
-Sets the font used in hover labels.}
-\item{\code{go_candlestick_increasing()}}{\code{candlestick.increasing}}
-\item{\code{go_candlestick_increasing_line()}}{\code{candlestick.increasing.line}}
-\item{\code{go_candlestick_legendgrouptitle()}}{\code{candlestick.legendgrouptitle}}
-\item{\code{go_candlestick_legendgrouptitle_font()}}{\code{candlestick.legendgrouptitle.font}:
-Sets this legend group's title font.}
-\item{\code{go_candlestick_line()}}{\code{candlestick.line}}
-}
+
+Nested objects are given as named lists or with their constructors, which
+are linked from the arguments below. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+\code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+evaluated in the data, and then checked, when the trace is added with
+\code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_candlestick()
+d <- data.frame(day = 1:30, close = EuStockMarkets[1:30, "DAX"])
+d$open <- c(d$close[1], head(d$close, -1))
+d$high <- pmax(d$open, d$close) + 5
+d$low <- pmin(d$open, d$close) - 5
+d |>
+  go_figure() |>
+  add_candlestick(
+    x = ~day,
+    open = ~open,
+    high = ~high,
+    low = ~low,
+    close = ~close
+  )
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}
 }
+\concept{traces}

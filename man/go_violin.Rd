@@ -4,20 +4,6 @@
 \alias{add_violin}
 \alias{add_violin.default}
 \alias{go_violin}
-\alias{go_violin_box}
-\alias{go_violin_box_line}
-\alias{go_violin_hoverlabel}
-\alias{go_violin_hoverlabel_font}
-\alias{go_violin_legendgrouptitle}
-\alias{go_violin_legendgrouptitle_font}
-\alias{go_violin_line}
-\alias{go_violin_marker}
-\alias{go_violin_marker_line}
-\alias{go_violin_meanline}
-\alias{go_violin_selected}
-\alias{go_violin_selected_marker}
-\alias{go_violin_unselected}
-\alias{go_violin_unselected_marker}
 \title{Violin traces}
 \usage{
 add_violin(fig, ...)
@@ -141,147 +127,15 @@ go_violin(
   zorder = NULL,
   skip_invalid = FALSE
 )
-
-go_violin_box(
-  arg = NULL,
-  ...,
-  fillcolor = NULL,
-  line = NULL,
-  visible = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_violin_box_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_violin_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  skip_invalid = FALSE
-)
-
-go_violin_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_violin_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_violin_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_violin_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_violin_marker(
-  arg = NULL,
-  ...,
-  angle = NULL,
-  color = NULL,
-  line = NULL,
-  opacity = NULL,
-  outliercolor = NULL,
-  size = NULL,
-  symbol = NULL,
-  skip_invalid = FALSE
-)
-
-go_violin_marker_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  outliercolor = NULL,
-  outlierwidth = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_violin_meanline(
-  arg = NULL,
-  ...,
-  color = NULL,
-  visible = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_violin_selected(arg = NULL, ..., marker = NULL, skip_invalid = FALSE)
-
-go_violin_selected_marker(
-  arg = NULL,
-  ...,
-  color = NULL,
-  opacity = NULL,
-  size = NULL,
-  skip_invalid = FALSE
-)
-
-go_violin_unselected(arg = NULL, ..., marker = NULL, skip_invalid = FALSE)
-
-go_violin_unselected_marker(
-  arg = NULL,
-  ...,
-  color = NULL,
-  opacity = NULL,
-  size = NULL,
-  skip_invalid = FALSE
-)
 }
 \arguments{
 \item{fig}{A \code{go_figure} object.}
 
-\item{...}{Further properties, including nested properties in
-"magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}. Property values may be one-sided
-formulas, evaluated in \code{data} for \code{add_*()} functions.}
+\item{...}{Not used: properties must be named in full.}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
-~col}, \code{marker_size = ~col}) are evaluated. Default: the data
+~col}, \code{marker = list(size = ~col)}, \code{marker =
+go_scatter_marker(size = ~col)}) are evaluated. Default: the data
 given to \code{\link{go_figure}()}. Only the evaluated values are
 added to the trace. A \code{crosstalk::SharedData} works the same way,
 and links the trace to its crosstalk group (see
@@ -296,20 +150,18 @@ independently. String.}
 estimate. By default, the bandwidth is determined by Silverman's rule
 of thumb. Number in the interval [0, Inf].}
 
-\item{box}{Named list or \code{\link{go_violin_box}()} object.}
+\item{box}{A \code{\link{go_violin_box}()} object or named list, with
+properties \code{fillcolor}, \code{line}, \code{visible} and
+\code{width} (see \code{\link{go_violin_box}()}).}
 
 \item{customdata}{Assigns extra data each datum. This may be useful when
 listening to hover, click and selection events. Note that, "scatter"
 traces also appends customdata items in the markers DOM elements Data
 array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
-\item{fillcolor}{\strong{\code{go_violin()}}: Sets the fill color.
-  Defaults to a half-transparent variant of the line color, marker
-  color, or marker line color, whichever is available. Color: a CSS
-  color string or R color name.
-
-  \strong{\code{go_violin_box()}}: Sets the inner box plot fill color.
-  Color: a CSS color string or R color name.}
+\item{fillcolor}{Sets the fill color. Defaults to a half-transparent
+variant of the line color, marker color, or marker line color,
+whichever is available. Color: a CSS color string or R color name.}
 
 \item{hoverinfo}{Determines what trace information appears on hover. If
 `none` or `skip` are set, no information is displayed upon hovering.
@@ -318,8 +170,10 @@ combination of \code{"x"}, \code{"y"}, \code{"z"}, \code{"text"},
 \code{"name"} joined with \code{"+"}, or one of \code{"all"},
 \code{"none"}, \code{"skip"}, or a vector of these.}
 
-\item{hoverlabel}{Named list or \code{\link{go_violin_hoverlabel}()}
-object.}
+\item{hoverlabel}{A \code{\link{go_hoverlabel}()} object or named list,
+with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+\code{font}, \code{namelength} and \code{showarrow} (see
+\code{\link{go_hoverlabel}()}).}
 
 \item{hoveron}{Do the hover effects highlight individual violins or
 sample points or the kernel density estimate or any combination of
@@ -381,8 +235,9 @@ Settings for these legends are set in the layout, under
 shapes part of the same legend group hide/show at the same time when
 toggling legend items. String.}
 
-\item{legendgrouptitle}{Named list or
-\code{\link{go_violin_legendgrouptitle}()} object.}
+\item{legendgrouptitle}{A \code{\link{go_legendgrouptitle}()} object or
+named list, with properties \code{font} and \code{text} (see
+\code{\link{go_legendgrouptitle}()}).}
 
 \item{legendrank}{Sets the legend rank for this trace. Items and groups
 with smaller ranks are presented on top/left side while with
@@ -396,25 +251,18 @@ to their order in data and layout. Number.}
 \item{legendwidth}{Sets the width (in px or fraction) of the legend for
 this trace. Number in the interval [0, Inf].}
 
-\item{line}{\strong{\code{go_violin()}}: Named list or
-  \code{\link{go_violin_line}()} object.
+\item{line}{A \code{\link{go_violin_line}()} object or named list, with
+properties \code{color} and \code{width} (see
+\code{\link{go_violin_line}()}).}
 
-  \strong{\code{go_violin_box()}}: Named list or
-  \code{\link{go_violin_box_line}()} object.
+\item{marker}{A \code{\link{go_violin_marker}()} object or named list,
+with properties \code{angle}, \code{color}, \code{line},
+\code{opacity}, \code{outliercolor}, \code{size} and \code{symbol}
+(see \code{\link{go_violin_marker}()}).}
 
-  \strong{\code{go_violin_marker()}}: Named list or
-  \code{\link{go_violin_marker_line}()} object.}
-
-\item{marker}{\strong{\code{go_violin()}}: Named list or
-  \code{\link{go_violin_marker}()} object.
-
-  \strong{\code{go_violin_selected()}}: Named list or
-  \code{\link{go_violin_selected_marker}()} object.
-
-  \strong{\code{go_violin_unselected()}}: Named list or
-  \code{\link{go_violin_unselected_marker}()} object.}
-
-\item{meanline}{Named list or \code{\link{go_violin_meanline}()} object.}
+\item{meanline}{A \code{\link{go_violin_meanline}()} object or named
+list, with properties \code{color}, \code{visible} and \code{width}
+(see \code{\link{go_violin_meanline}()}).}
 
 \item{meta}{Assigns extra meta information associated with this trace
 that can be used in various text attributes. Attributes such as trace
@@ -437,18 +285,8 @@ name is also used as a default value for attribute `scalegroup`
 or matching axes to the same offsetgroup where bars of the same
 position coordinate will line up. String.}
 
-\item{opacity}{\strong{\code{go_violin()}}: Sets the opacity of the
-  trace. Number in the interval [0, 1].
-
-  \strong{\code{go_violin_marker()}}: Sets the marker opacity. Number in
-  the interval [0, 1].
-
-  \strong{\code{go_violin_selected_marker()}}: Sets the marker opacity
-  of selected points. Number in the interval [0, 1].
-
-  \strong{\code{go_violin_unselected_marker()}}: Sets the marker opacity
-  of unselected points, applied only when a selection exists. Number in
-  the interval [0, 1].}
+\item{opacity}{Sets the opacity of the trace. Number in the interval [0,
+1].}
 
 \item{orientation}{Sets the orientation of the violin(s). If "v" ("h"),
 the distribution is visualized along the vertical (horizontal). One of
@@ -495,7 +333,8 @@ determined. "width" means each violin has the same (max) width "count"
 means the violins are scaled by the number of sample points making up
 each violin. One of \code{"width"}, \code{"count"}.}
 
-\item{selected}{Named list or \code{\link{go_violin_selected}()} object.}
+\item{selected}{A \code{\link{go_selected}()} object or named list, with
+properties \code{marker} (see \code{\link{go_selected}()}).}
 
 \item{selectedpoints}{Array containing integer indices of selected
 points. Has an effect only for traces that support selections. Note
@@ -525,15 +364,11 @@ sample's minimum to its maximum value. For custom span settings, use
 mode "manual" and fill in the `span` attribute. One of \code{"soft"},
 \code{"hard"}, \code{"manual"}.}
 
-\item{text}{\strong{\code{go_violin()}}: Sets the text elements
-  associated with each sample value. If a single string, the same string
-  appears over all the data points. If an array of string, the items are
-  mapped in order to the this trace's (x,y) coordinates. To be seen,
-  trace `hoverinfo` must contain a "text" flag. String, or a vector of
-  these.
-
-  \strong{\code{go_violin_legendgrouptitle()}}: Sets the title of the
-  legend group. String.}
+\item{text}{Sets the text elements associated with each sample value. If
+a single string, the same string appears over all the data points. If
+an array of string, the items are mapped in order to the this trace's
+(x,y) coordinates. To be seen, trace `hoverinfo` must contain a "text"
+flag. String, or a vector of these.}
 
 \item{uid}{Assign an id to this trace, Use this to provide object
 constancy between traces during animations and transitions. String.}
@@ -553,43 +388,18 @@ array, such that the same trace has a different index, you can still
 preserve user-driven changes if you give each trace a `uid` that stays
 with it as it moves. Any value.}
 
-\item{unselected}{Named list or \code{\link{go_violin_unselected}()}
-object.}
+\item{unselected}{A \code{\link{go_unselected}()} object or named list,
+with properties \code{marker} (see \code{\link{go_unselected}()}).}
 
-\item{visible}{\strong{\code{go_violin()}}: Determines whether or not
-  this trace is visible. If "legendonly", the trace is not drawn, but
-  can appear as a legend item (provided that the legend itself is
-  visible). One of \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
+\item{visible}{Determines whether or not this trace is visible. If
+"legendonly", the trace is not drawn, but can appear as a legend item
+(provided that the legend itself is visible). One of
+\code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
 
-  \strong{\code{go_violin_box()}}: Determines if an miniature box plot
-  is drawn inside the violins.  Logical.
-
-  \strong{\code{go_violin_meanline()}}: Determines if a line
-  corresponding to the sample's mean is shown inside the violins. If
-  `box.visible` is turned on, the mean line is drawn inside the inner
-  box. Otherwise, the mean line is drawn from one side of the violin to
-  other. Logical.}
-
-\item{width}{\strong{\code{go_violin()}}: Sets the width of the violin
-  in data coordinates. If 0 (default value) the width is automatically
-  selected based on the positions of other violin traces in the same
-  subplot. Number in the interval [0, Inf].
-
-  \strong{\code{go_violin_box()}}: Sets the width of the inner box plots
-  relative to the violins' width. For example, with 1, the inner box
-  plots are as wide as the violins. Number in the interval [0, 1].
-
-  \strong{\code{go_violin_box_line()}}: Sets the inner box plot bounding
-  line width. Number in the interval [0, Inf].
-
-  \strong{\code{go_violin_line()}}: Sets the width (in px) of line
-  bounding the violin(s). Number in the interval [0, Inf].
-
-  \strong{\code{go_violin_marker_line()}}: Sets the width (in px) of the
-  lines bounding the marker points. Number in the interval [0, Inf].
-
-  \strong{\code{go_violin_meanline()}}: Sets the mean line width. Number
-  in the interval [0, Inf].}
+\item{width}{Sets the width of the violin in data coordinates. If 0
+(default value) the width is automatically selected based on the
+positions of other violin traces in the same subplot. Number in the
+interval [0, Inf].}
 
 \item{x}{Sets the x sample data or coordinates. See overview for more
 info. Data array: a vector, factor, Date/POSIXct vector, matrix or
@@ -661,312 +471,10 @@ instead of raising an error.}
 
 \item{arg}{Optional named list, or graph object of the same type, to
 initialise properties from (constructors). Named arguments take precedence.}
-
-\item{color}{\strong{\code{go_violin_box_line()}}: Sets the inner box
-  plot bounding line color. Color: a CSS color string or R color name.
-
-  \strong{\code{go_violin_hoverlabel_font()}}: Color: a CSS color string
-  or R color name, or a vector of these.
-
-  \strong{\code{go_violin_legendgrouptitle_font()}}: Color: a CSS color
-  string or R color name.
-
-  \strong{\code{go_violin_line()}}: Sets the color of line bounding the
-  violin(s). Color: a CSS color string or R color name.
-
-  \strong{\code{go_violin_marker()}}: Sets the marker color. It accepts
-  either a specific color or an array of numbers that are mapped to the
-  colorscale relative to the max and min values of the array or relative
-  to `marker.cmin` and `marker.cmax` if set. Color: a CSS color string
-  or R color name.
-
-  \strong{\code{go_violin_marker_line()}}: Sets the marker.line color.
-  It accepts either a specific color or an array of numbers that are
-  mapped to the colorscale relative to the max and min values of the
-  array or relative to `marker.line.cmin` and `marker.line.cmax` if set.
-  Color: a CSS color string or R color name.
-
-  \strong{\code{go_violin_meanline()}}: Sets the mean line color. Color:
-  a CSS color string or R color name.
-
-  \strong{\code{go_violin_selected_marker()}}: Sets the marker color of
-  selected points. Color: a CSS color string or R color name.
-
-  \strong{\code{go_violin_unselected_marker()}}: Sets the marker color
-  of unselected points, applied only when a selection exists. Color: a
-  CSS color string or R color name.}
-
-\item{align}{Sets the horizontal alignment of the text content within
-hover label box. Has an effect only if the hover label text spans two
-or more lines One of \code{"left"}, \code{"right"}, \code{"auto"}, or
-a vector of these.}
-
-\item{bgcolor}{Sets the background color of the hover labels for this
-trace Color: a CSS color string or R color name, or a vector of these.}
-
-\item{bordercolor}{Sets the border color of the hover labels for this
-trace. Color: a CSS color string or R color name, or a vector of
-these.}
-
-\item{font}{\strong{\code{go_violin_hoverlabel()}}: Sets the font used
-  in hover labels. Named list or
-  \code{\link{go_violin_hoverlabel_font}()} object.
-
-  \strong{\code{go_violin_legendgrouptitle()}}: Sets this legend group's
-  title font. Named list or
-  \code{\link{go_violin_legendgrouptitle_font}()} object.}
-
-\item{namelength}{Sets the default length (in number of characters) of
-the trace name in the hover labels for all traces. -1 shows the whole
-name regardless of length. 0-3 shows the first 0-3 characters, and an
-integer >3 will show the whole name if it is less than that many
-characters, but if it is longer, will truncate to `namelength - 3`
-characters and add an ellipsis. Integer in the interval [-1, Inf], or
-a vector of these.}
-
-\item{showarrow}{Sets whether or not to show the hover label
-arrow/triangle pointing to the data point. Logical.}
-
-\item{family}{\strong{\code{go_violin_hoverlabel_font()}}: HTML font
-  family - the typeface that will be applied by the web browser. The web
-  browser can only apply a font if it is available on the system where
-  it runs. Provide multiple font families, separated by commas, to
-  indicate the order in which to apply fonts if they aren't available.
-  String, or a vector of these.
-
-  \strong{\code{go_violin_legendgrouptitle_font()}}: HTML font family -
-  the typeface that will be applied by the web browser. The web browser
-  can only apply a font if it is available on the system where it runs.
-  Provide multiple font families, separated by commas, to indicate the
-  order in which to apply fonts if they aren't available. String.}
-
-\item{lineposition}{\strong{\code{go_violin_hoverlabel_font()}}: Sets
-  the kind of decoration line(s) with text, such as an "under", "over"
-  or "through" as well as combinations e.g. "under+over", etc. Any
-  combination of \code{"under"}, \code{"over"}, \code{"through"} joined
-  with \code{"+"}, or one of \code{"none"}, or a vector of these.
-
-  \strong{\code{go_violin_legendgrouptitle_font()}}: Sets the kind of
-  decoration line(s) with text, such as an "under", "over" or "through"
-  as well as combinations e.g. "under+over", etc. Any combination of
-  \code{"under"}, \code{"over"}, \code{"through"} joined with
-  \code{"+"}, or one of \code{"none"}.}
-
-\item{shadow}{\strong{\code{go_violin_hoverlabel_font()}}: Sets the
-  shape and color of the shadow behind text. "auto" places minimal
-  shadow and applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.
-
-  \strong{\code{go_violin_legendgrouptitle_font()}}: Sets the shape and
-  color of the shadow behind text. "auto" places minimal shadow and
-  applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.}
-
-\item{size}{\strong{\code{go_violin_hoverlabel_font()}}: Number in the
-  interval [1, Inf], or a vector of these.
-
-  \strong{\code{go_violin_legendgrouptitle_font()}}: Number in the
-  interval [1, Inf].
-
-  \strong{\code{go_violin_marker()}}: Sets the marker size (in px).
-  Number in the interval [0, Inf].
-
-  \strong{\code{go_violin_selected_marker()}}: Sets the marker size of
-  selected points. Number in the interval [0, Inf].
-
-  \strong{\code{go_violin_unselected_marker()}}: Sets the marker size of
-  unselected points, applied only when a selection exists. Number in the
-  interval [0, Inf].}
-
-\item{style}{\strong{\code{go_violin_hoverlabel_font()}}: Sets whether a
-  font should be styled with a normal or italic face from its family.
-  One of \code{"normal"}, \code{"italic"}, or a vector of these.
-
-  \strong{\code{go_violin_legendgrouptitle_font()}}: Sets whether a font
-  should be styled with a normal or italic face from its family. One of
-  \code{"normal"}, \code{"italic"}.}
-
-\item{textcase}{\strong{\code{go_violin_hoverlabel_font()}}: Sets
-  capitalization of text. It can be used to make text appear in
-  all-uppercase or all-lowercase, or with each word capitalized. One of
-  \code{"normal"}, \code{"word caps"}, \code{"upper"}, \code{"lower"},
-  or a vector of these.
-
-  \strong{\code{go_violin_legendgrouptitle_font()}}: Sets capitalization
-  of text. It can be used to make text appear in all-uppercase or
-  all-lowercase, or with each word capitalized. One of \code{"normal"},
-  \code{"word caps"}, \code{"upper"}, \code{"lower"}.}
-
-\item{variant}{\strong{\code{go_violin_hoverlabel_font()}}: Sets the
-  variant of the font. One of \code{"normal"}, \code{"small-caps"},
-  \code{"all-small-caps"}, \code{"all-petite-caps"},
-  \code{"petite-caps"}, \code{"unicase"}, or a vector of these.
-
-  \strong{\code{go_violin_legendgrouptitle_font()}}: Sets the variant of
-  the font. One of \code{"normal"}, \code{"small-caps"},
-  \code{"all-small-caps"}, \code{"all-petite-caps"},
-  \code{"petite-caps"}, \code{"unicase"}.}
-
-\item{weight}{\strong{\code{go_violin_hoverlabel_font()}}: Sets the
-  weight (or boldness) of the font. Integer in the interval [1, 1000],
-  or a vector of these.
-
-  \strong{\code{go_violin_legendgrouptitle_font()}}: Sets the weight (or
-  boldness) of the font. Integer in the interval [1, 1000].}
-
-\item{angle}{Sets the marker angle in respect to `angleref`. Angle in
-degrees.}
-
-\item{outliercolor}{\strong{\code{go_violin_marker()}}: Sets the color
-  of the outlier sample points. Color: a CSS color string or R color
-  name.
-
-  \strong{\code{go_violin_marker_line()}}: Sets the border line color of
-  the outlier sample points. Defaults to marker.color Color: a CSS color
-  string or R color name.}
-
-\item{symbol}{Sets the marker symbol type. Adding 100 is equivalent to
-appending "-open" to a symbol name. Adding 200 is equivalent to
-appending "-dot" to a symbol name. Adding 300 is equivalent to
-appending "-open-dot" or "dot-open" to a symbol name. One of
-\code{"0"}, \code{"circle"}, \code{"100"}, \code{"circle-open"},
-\code{"200"}, \code{"circle-dot"}, \code{"300"},
-\code{"circle-open-dot"}, \code{"1"}, \code{"square"}, \code{"101"},
-\code{"square-open"}, \code{"201"}, \code{"square-dot"}, \code{"301"},
-\code{"square-open-dot"}, \code{"2"}, \code{"diamond"}, \code{"102"},
-\code{"diamond-open"}, \code{"202"}, \code{"diamond-dot"},
-\code{"302"}, \code{"diamond-open-dot"}, \code{"3"}, \code{"cross"},
-\code{"103"}, \code{"cross-open"}, \code{"203"}, \code{"cross-dot"},
-\code{"303"}, \code{"cross-open-dot"}, \code{"4"}, \code{"x"},
-\code{"104"}, \code{"x-open"}, \code{"204"}, \code{"x-dot"},
-\code{"304"}, \code{"x-open-dot"}, \code{"5"}, \code{"triangle-up"},
-\code{"105"}, \code{"triangle-up-open"}, \code{"205"},
-\code{"triangle-up-dot"}, \code{"305"}, \code{"triangle-up-open-dot"},
-\code{"6"}, \code{"triangle-down"}, \code{"106"},
-\code{"triangle-down-open"}, \code{"206"}, \code{"triangle-down-dot"},
-\code{"306"}, \code{"triangle-down-open-dot"}, \code{"7"},
-\code{"triangle-left"}, \code{"107"}, \code{"triangle-left-open"},
-\code{"207"}, \code{"triangle-left-dot"}, \code{"307"},
-\code{"triangle-left-open-dot"}, \code{"8"}, \code{"triangle-right"},
-\code{"108"}, \code{"triangle-right-open"}, \code{"208"},
-\code{"triangle-right-dot"}, \code{"308"},
-\code{"triangle-right-open-dot"}, \code{"9"}, \code{"triangle-ne"},
-\code{"109"}, \code{"triangle-ne-open"}, \code{"209"},
-\code{"triangle-ne-dot"}, \code{"309"}, \code{"triangle-ne-open-dot"},
-\code{"10"}, \code{"triangle-se"}, \code{"110"},
-\code{"triangle-se-open"}, \code{"210"}, \code{"triangle-se-dot"},
-\code{"310"}, \code{"triangle-se-open-dot"}, \code{"11"},
-\code{"triangle-sw"}, \code{"111"}, \code{"triangle-sw-open"},
-\code{"211"}, \code{"triangle-sw-dot"}, \code{"311"},
-\code{"triangle-sw-open-dot"}, \code{"12"}, \code{"triangle-nw"},
-\code{"112"}, \code{"triangle-nw-open"}, \code{"212"},
-\code{"triangle-nw-dot"}, \code{"312"}, \code{"triangle-nw-open-dot"},
-\code{"13"}, \code{"pentagon"}, \code{"113"}, \code{"pentagon-open"},
-\code{"213"}, \code{"pentagon-dot"}, \code{"313"},
-\code{"pentagon-open-dot"}, \code{"14"}, \code{"hexagon"},
-\code{"114"}, \code{"hexagon-open"}, \code{"214"},
-\code{"hexagon-dot"}, \code{"314"}, \code{"hexagon-open-dot"},
-\code{"15"}, \code{"hexagon2"}, \code{"115"}, \code{"hexagon2-open"},
-\code{"215"}, \code{"hexagon2-dot"}, \code{"315"},
-\code{"hexagon2-open-dot"}, \code{"16"}, \code{"octagon"},
-\code{"116"}, \code{"octagon-open"}, \code{"216"},
-\code{"octagon-dot"}, \code{"316"}, \code{"octagon-open-dot"},
-\code{"17"}, \code{"star"}, \code{"117"}, \code{"star-open"},
-\code{"217"}, \code{"star-dot"}, \code{"317"}, \code{"star-open-dot"},
-\code{"18"}, \code{"hexagram"}, \code{"118"}, \code{"hexagram-open"},
-\code{"218"}, \code{"hexagram-dot"}, \code{"318"},
-\code{"hexagram-open-dot"}, \code{"19"}, \code{"star-triangle-up"},
-\code{"119"}, \code{"star-triangle-up-open"}, \code{"219"},
-\code{"star-triangle-up-dot"}, \code{"319"},
-\code{"star-triangle-up-open-dot"}, \code{"20"},
-\code{"star-triangle-down"}, \code{"120"},
-\code{"star-triangle-down-open"}, \code{"220"},
-\code{"star-triangle-down-dot"}, \code{"320"},
-\code{"star-triangle-down-open-dot"}, \code{"21"},
-\code{"star-square"}, \code{"121"}, \code{"star-square-open"},
-\code{"221"}, \code{"star-square-dot"}, \code{"321"},
-\code{"star-square-open-dot"}, \code{"22"}, \code{"star-diamond"},
-\code{"122"}, \code{"star-diamond-open"}, \code{"222"},
-\code{"star-diamond-dot"}, \code{"322"},
-\code{"star-diamond-open-dot"}, \code{"23"}, \code{"diamond-tall"},
-\code{"123"}, \code{"diamond-tall-open"}, \code{"223"},
-\code{"diamond-tall-dot"}, \code{"323"},
-\code{"diamond-tall-open-dot"}, \code{"24"}, \code{"diamond-wide"},
-\code{"124"}, \code{"diamond-wide-open"}, \code{"224"},
-\code{"diamond-wide-dot"}, \code{"324"},
-\code{"diamond-wide-open-dot"}, \code{"25"}, \code{"hourglass"},
-\code{"125"}, \code{"hourglass-open"}, \code{"26"}, \code{"bowtie"},
-\code{"126"}, \code{"bowtie-open"}, \code{"27"},
-\code{"circle-cross"}, \code{"127"}, \code{"circle-cross-open"},
-\code{"28"}, \code{"circle-x"}, \code{"128"}, \code{"circle-x-open"},
-\code{"29"}, \code{"square-cross"}, \code{"129"},
-\code{"square-cross-open"}, \code{"30"}, \code{"square-x"},
-\code{"130"}, \code{"square-x-open"}, \code{"31"},
-\code{"diamond-cross"}, \code{"131"}, \code{"diamond-cross-open"},
-\code{"32"}, \code{"diamond-x"}, \code{"132"},
-\code{"diamond-x-open"}, \code{"33"}, \code{"cross-thin"},
-\code{"133"}, \code{"cross-thin-open"}, \code{"34"}, \code{"x-thin"},
-\code{"134"}, \code{"x-thin-open"}, \code{"35"}, \code{"asterisk"},
-\code{"135"}, \code{"asterisk-open"}, \code{"36"}, \code{"hash"},
-\code{"136"}, \code{"hash-open"}, \code{"236"}, \code{"hash-dot"},
-\code{"336"}, \code{"hash-open-dot"}, \code{"37"}, \code{"y-up"},
-\code{"137"}, \code{"y-up-open"}, \code{"38"}, \code{"y-down"},
-\code{"138"}, \code{"y-down-open"}, \code{"39"}, \code{"y-left"},
-\code{"139"}, \code{"y-left-open"}, \code{"40"}, \code{"y-right"},
-\code{"140"}, \code{"y-right-open"}, \code{"41"}, \code{"line-ew"},
-\code{"141"}, \code{"line-ew-open"}, \code{"42"}, \code{"line-ns"},
-\code{"142"}, \code{"line-ns-open"}, \code{"43"}, \code{"line-ne"},
-\code{"143"}, \code{"line-ne-open"}, \code{"44"}, \code{"line-nw"},
-\code{"144"}, \code{"line-nw-open"}, \code{"45"}, \code{"arrow-up"},
-\code{"145"}, \code{"arrow-up-open"}, \code{"46"},
-\code{"arrow-down"}, \code{"146"}, \code{"arrow-down-open"},
-\code{"47"}, \code{"arrow-left"}, \code{"147"},
-\code{"arrow-left-open"}, \code{"48"}, \code{"arrow-right"},
-\code{"148"}, \code{"arrow-right-open"}, \code{"49"},
-\code{"arrow-bar-up"}, \code{"149"}, \code{"arrow-bar-up-open"},
-\code{"50"}, \code{"arrow-bar-down"}, \code{"150"},
-\code{"arrow-bar-down-open"}, \code{"51"}, \code{"arrow-bar-left"},
-\code{"151"}, \code{"arrow-bar-left-open"}, \code{"52"},
-\code{"arrow-bar-right"}, \code{"152"}, \code{"arrow-bar-right-open"},
-\code{"53"}, \code{"arrow"}, \code{"153"}, \code{"arrow-open"},
-\code{"54"}, \code{"arrow-wide"}, \code{"154"},
-\code{"arrow-wide-open"}, \code{0}, \code{100}, \code{200},
-\code{300}, \code{1}, \code{101}, \code{201}, \code{301}, \code{2},
-\code{102}, \code{202}, \code{302}, \code{3}, \code{103}, \code{203},
-\code{303}, \code{4}, \code{104}, \code{204}, \code{304}, \code{5},
-\code{105}, \code{205}, \code{305}, \code{6}, \code{106}, \code{206},
-\code{306}, \code{7}, \code{107}, \code{207}, \code{307}, \code{8},
-\code{108}, \code{208}, \code{308}, \code{9}, \code{109}, \code{209},
-\code{309}, \code{10}, \code{110}, \code{210}, \code{310}, \code{11},
-\code{111}, \code{211}, \code{311}, \code{12}, \code{112}, \code{212},
-\code{312}, \code{13}, \code{113}, \code{213}, \code{313}, \code{14},
-\code{114}, \code{214}, \code{314}, \code{15}, \code{115}, \code{215},
-\code{315}, \code{16}, \code{116}, \code{216}, \code{316}, \code{17},
-\code{117}, \code{217}, \code{317}, \code{18}, \code{118}, \code{218},
-\code{318}, \code{19}, \code{119}, \code{219}, \code{319}, \code{20},
-\code{120}, \code{220}, \code{320}, \code{21}, \code{121}, \code{221},
-\code{321}, \code{22}, \code{122}, \code{222}, \code{322}, \code{23},
-\code{123}, \code{223}, \code{323}, \code{24}, \code{124}, \code{224},
-\code{324}, \code{25}, \code{125}, \code{26}, \code{126}, \code{27},
-\code{127}, \code{28}, \code{128}, \code{29}, \code{129}, \code{30},
-\code{130}, \code{31}, \code{131}, \code{32}, \code{132}, \code{33},
-\code{133}, \code{34}, \code{134}, \code{35}, \code{135}, \code{36},
-\code{136}, \code{236}, \code{336}, \code{37}, \code{137}, \code{38},
-\code{138}, \code{39}, \code{139}, \code{40}, \code{140}, \code{41},
-\code{141}, \code{42}, \code{142}, \code{43}, \code{143}, \code{44},
-\code{144}, \code{45}, \code{145}, \code{46}, \code{146}, \code{47},
-\code{147}, \code{48}, \code{148}, \code{49}, \code{149}, \code{50},
-\code{150}, \code{51}, \code{151}, \code{52}, \code{152}, \code{53},
-\code{153}, \code{54}, \code{154}.}
-
-\item{outlierwidth}{Sets the border line width (in px) of the outlier
-sample points. Number in the interval [0, Inf].}
 }
 \value{
-Each \code{go_*()} function returns a graph object of the same
-  class as its name; \code{add_*()} functions return the modified figure.
+\code{go_*()} functions return a graph object;
+  \code{add_*()} functions return the modified figure.
 }
 \description{
 In vertical (horizontal) violin plots, statistics are computed using `y`
@@ -976,35 +484,23 @@ drawn. That violin position is then positioned with `name` or with `x0`
 (`y0`) if provided.
 }
 \details{
-\code{go_violin()} and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-\code{\link{plotly_obj-modify}()}). \code{add_violin()} creates an object
-and adds it to a figure.
+\code{go_violin()} creates a validated graph object (a named list).
+\code{add_violin()} creates one and adds it to a figure.
 
-Nested objects documented here:
-\describe{
-\item{\code{go_violin_box()}}{\code{violin.box}}
-\item{\code{go_violin_box_line()}}{\code{violin.box.line}}
-\item{\code{go_violin_hoverlabel()}}{\code{violin.hoverlabel}}
-\item{\code{go_violin_hoverlabel_font()}}{\code{violin.hoverlabel.font}:
-Sets the font used in hover labels.}
-\item{\code{go_violin_legendgrouptitle()}}{\code{violin.legendgrouptitle}}
-\item{\code{go_violin_legendgrouptitle_font()}}{\code{violin.legendgrouptitle.font}:
-Sets this legend group's title font.}
-\item{\code{go_violin_line()}}{\code{violin.line}}
-\item{\code{go_violin_marker()}}{\code{violin.marker}}
-\item{\code{go_violin_marker_line()}}{\code{violin.marker.line}}
-\item{\code{go_violin_meanline()}}{\code{violin.meanline}}
-\item{\code{go_violin_selected()}}{\code{violin.selected}}
-\item{\code{go_violin_selected_marker()}}{\code{violin.selected.marker}}
-\item{\code{go_violin_unselected()}}{\code{violin.unselected}}
-\item{\code{go_violin_unselected_marker()}}{\code{violin.unselected.marker}}
-}
+
+Nested objects are given as named lists or with their constructors, which
+are linked from the arguments below. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+\code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+evaluated in the data, and then checked, when the trace is added with
+\code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_violin(x = 1:3, y = c(2, 1, 3), marker_color = "red")
+mtcars |>
+  go_figure() |>
+  add_violin(x = ~factor(cyl), y = ~mpg)
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}
 }
+\concept{traces}

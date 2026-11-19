@@ -57,7 +57,7 @@ SUBPLOT_PROP_NAMED_SUBPLOT <- c("polar", "ternary", "map")
 #' @param x_title,y_title Titles below and to the left of the whole grid.
 #' @param figure An existing [go_figure()] to add the subplots to.
 #' @param font Font for the subplot, column, row and x/y titles: a named list
-#'   or [go_layout_annotation_font()] object. Default `list(size = 16)`.
+#'   or [go_font()] object. Default `list(size = 16)`.
 #' @return A `go_figure` with the subplot grid in its layout.
 #' @seealso [print_grid()], [get_subplot()]
 #' @export
@@ -65,7 +65,7 @@ SUBPLOT_PROP_NAMED_SUBPLOT <- c("polar", "ternary", "map")
 #' fig <- make_subplots(rows = 1, cols = 2, subplot_titles = c("Left", "Right")) |>
 #'   add_scatter(x = 1:3, y = c(4, 5, 6), row = 1, col = 1) |>
 #'   add_scatter(x = 20:22, y = c(50, 60, 70), row = 1, col = 2) |>
-#'   update_yaxes(title_text = "y", row = 1, col = 1)
+#'   update_yaxes(title = "y", row = 1, col = 1)
 #'
 #' # Mixed subplot types and a secondary y axis
 #' fig <- make_subplots(

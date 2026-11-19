@@ -1,10 +1,35 @@
 # plotly.core 0.1.0
 
 * Initial CRAN submission.
-* Graph objects generated from the plotly.js (4.3.0) schema: a `go_*()`
-  constructor for every trace type and layout object, `add_<trace>()`,
-  `update_layout()`, `update_traces()` and friends, with plotly.py-style
-  validation and generated documentation.
+* Graph objects generated from the plotly.js (4.3.0) schema, with
+  plotly.py-style validation and generated documentation: `go_figure()`,
+  `add_<trace>()`, `update_layout()`, `update_traces()` and friends, and a
+  `go_*()` constructor for every object in the schema, each with exactly that
+  object's properties (#5):
+  * traces and the layout: `go_scatter()`, `go_bar()`, ..., `go_layout()`;
+  * objects shared across the schema, one constructor for all of their
+    places: `go_font()`, `go_colorbar()`, `go_hoverlabel()`,
+    `go_legendgrouptitle()`, `go_tickformatstop()`, `go_domain()`,
+    `go_pattern()` and `go_error_bar()` (plotly.js's shared TypeScript types),
+    `go_bins()`, `go_minor()`, `go_rangebreak()`, ... (objects that are the
+    same everywhere they appear), x/y/z axes that are the same
+    (`go_scene_axis()`, `go_ternary_axis()`, `go_caps_axis()`, ...), the
+    selected/unselected point styles of all traces (`go_selected()`,
+    `go_unselected()`) and the objects in them (`go_colorbar_title()`,
+    `go_selected_marker()`, ...);
+  * every other object, named after its path without `layout.`:
+    `go_scatter_marker()`, `go_scatter_marker_line()`,
+    `go_sankey_link()`, `go_xaxis()`,
+    `go_scene()`, `go_scene_camera_eye()`, `go_annotation()`,
+    `go_slider_step()`, ..., with `go_layout_title()`, `go_layout_image()`,
+    `go_layout_colorscale()` and `go_layout_transition()` where the path name
+    would be ambiguous or is a trace's.
+
+  Named lists work wherever an object does. One-sided formulas
+  (`go_scatter_marker(color = ~cyl)`) are kept by constructors and evaluated
+  in the data, then checked, when the trace is added with `add_<trace>()` or
+  `add_trace()`. plotly.py's "magic underscore"
+  property names (`marker_size = 10`) are not supported.
 * Plotly Express: all of plotly.py's `px.*` functions as `px_scatter()`,
   `px_line()`, `px_bar()`, ... plus `px_imshow()`, with faceting, marginals,
   trendlines, animation, the `px.data` datasets and templates.
@@ -17,6 +42,10 @@
   read back as the same double, and date-times keep microseconds.
 * `write_html()` saves figures as HTML pages faster than
   `htmlwidgets::saveWidget()`.
+* `available_fonts()` lists the font families installed on this computer
+  (with the systemfonts package), and `save_image()` warns when a figure asks
+  for a font that is not installed; see `?available_fonts` for local versus
+  viewer fonts.
 * Shiny (`plotlyOutput()`, `renderPlotly()`, `event_data()`, `plotlyProxy()`),
   knitr/Quarto output, and static image export (`save_image()`) to PNG, JPEG,
   WebP, SVG, PDF and EPS with headless Chrome via chromote, with LaTeX

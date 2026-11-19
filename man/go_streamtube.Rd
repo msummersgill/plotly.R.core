@@ -4,18 +4,6 @@
 \alias{add_streamtube}
 \alias{add_streamtube.default}
 \alias{go_streamtube}
-\alias{go_streamtube_colorbar}
-\alias{go_streamtube_colorbar_tickfont}
-\alias{go_streamtube_colorbar_tickformatstop}
-\alias{go_streamtube_colorbar_title}
-\alias{go_streamtube_colorbar_title_font}
-\alias{go_streamtube_hoverlabel}
-\alias{go_streamtube_hoverlabel_font}
-\alias{go_streamtube_legendgrouptitle}
-\alias{go_streamtube_legendgrouptitle_font}
-\alias{go_streamtube_lighting}
-\alias{go_streamtube_lightposition}
-\alias{go_streamtube_starts}
 \title{Streamtube traces}
 \usage{
 add_streamtube(fig, ...)
@@ -130,200 +118,15 @@ go_streamtube(
   zhoverformat = NULL,
   skip_invalid = FALSE
 )
-
-go_streamtube_colorbar(
-  arg = NULL,
-  ...,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  borderwidth = NULL,
-  dtick = NULL,
-  exponentformat = NULL,
-  labelalias = NULL,
-  len = NULL,
-  lenmode = NULL,
-  minexponent = NULL,
-  nticks = NULL,
-  orientation = NULL,
-  outlinecolor = NULL,
-  outlinewidth = NULL,
-  separatethousands = NULL,
-  showexponent = NULL,
-  showticklabels = NULL,
-  showtickprefix = NULL,
-  showticksuffix = NULL,
-  thickness = NULL,
-  thicknessmode = NULL,
-  tick0 = NULL,
-  tickangle = NULL,
-  tickcolor = NULL,
-  tickfont = NULL,
-  tickformat = NULL,
-  tickformatstops = NULL,
-  ticklabeloverflow = NULL,
-  ticklabelposition = NULL,
-  ticklabelstep = NULL,
-  ticklen = NULL,
-  tickmode = NULL,
-  tickprefix = NULL,
-  ticks = NULL,
-  ticksuffix = NULL,
-  ticktext = NULL,
-  tickvals = NULL,
-  tickwidth = NULL,
-  title = NULL,
-  x = NULL,
-  xanchor = NULL,
-  xpad = NULL,
-  xref = NULL,
-  y = NULL,
-  yanchor = NULL,
-  ypad = NULL,
-  yref = NULL,
-  skip_invalid = FALSE
-)
-
-go_streamtube_colorbar_tickfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_streamtube_colorbar_tickformatstop(
-  arg = NULL,
-  ...,
-  dtickrange = NULL,
-  enabled = NULL,
-  name = NULL,
-  templateitemname = NULL,
-  value = NULL,
-  skip_invalid = FALSE
-)
-
-go_streamtube_colorbar_title(
-  arg = NULL,
-  ...,
-  font = NULL,
-  side = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_streamtube_colorbar_title_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_streamtube_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  skip_invalid = FALSE
-)
-
-go_streamtube_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_streamtube_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_streamtube_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_streamtube_lighting(
-  arg = NULL,
-  ...,
-  ambient = NULL,
-  diffuse = NULL,
-  facenormalsepsilon = NULL,
-  fresnel = NULL,
-  roughness = NULL,
-  specular = NULL,
-  vertexnormalsepsilon = NULL,
-  skip_invalid = FALSE
-)
-
-go_streamtube_lightposition(
-  arg = NULL,
-  ...,
-  x = NULL,
-  y = NULL,
-  z = NULL,
-  skip_invalid = FALSE
-)
-
-go_streamtube_starts(
-  arg = NULL,
-  ...,
-  x = NULL,
-  y = NULL,
-  z = NULL,
-  skip_invalid = FALSE
-)
 }
 \arguments{
 \item{fig}{A \code{go_figure} object.}
 
-\item{...}{Further properties, including nested properties in
-"magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}. Property values may be one-sided
-formulas, evaluated in \code{data} for \code{add_*()} functions.}
+\item{...}{Not used: properties must be named in full.}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
-~col}, \code{marker_size = ~col}) are evaluated. Default: the data
+~col}, \code{marker = list(size = ~col)}, \code{marker =
+go_scatter_marker(size = ~col)}) are evaluated. Default: the data
 given to \code{\link{go_figure}()}. Only the evaluated values are
 added to the trace. A \code{crosstalk::SharedData} works the same way,
 and links the trace to its crosstalk group (see
@@ -361,8 +164,11 @@ etc. Settings for these shared color axes are set in the layout, under
 scales can be linked to the same color axis. Subplot id:
 \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
 
-\item{colorbar}{Named list or \code{\link{go_streamtube_colorbar}()}
-object.}
+\item{colorbar}{A \code{\link{go_colorbar}()} object or named list, with
+properties \code{bgcolor}, \code{bordercolor}, \code{borderwidth},
+\code{dtick}, \code{exponentformat}, \code{labelalias}, \code{len},
+\code{lenmode}, \code{minexponent}, \code{nticks}, \code{orientation},
+\code{outlinecolor} and 34 more (see \code{\link{go_colorbar}()}).}
 
 \item{colorscale}{Sets the colorscale. The colorscale must be an array
 containing arrays mapping a normalized value to an rgb, rgba, hex,
@@ -389,8 +195,10 @@ combination of \code{"x"}, \code{"y"}, \code{"z"}, \code{"u"},
 \code{"text"}, \code{"name"} joined with \code{"+"}, or one of
 \code{"all"}, \code{"none"}, \code{"skip"}, or a vector of these.}
 
-\item{hoverlabel}{Named list or \code{\link{go_streamtube_hoverlabel}()}
-object.}
+\item{hoverlabel}{A \code{\link{go_hoverlabel}()} object or named list,
+with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+\code{font}, \code{namelength} and \code{showarrow} (see
+\code{\link{go_hoverlabel}()}).}
 
 \item{hovertemplate}{Template string used for rendering the information
 that appear on hover box. Note that this will override `hoverinfo`.
@@ -444,8 +252,9 @@ Settings for these legends are set in the layout, under
 shapes part of the same legend group hide/show at the same time when
 toggling legend items. String.}
 
-\item{legendgrouptitle}{Named list or
-\code{\link{go_streamtube_legendgrouptitle}()} object.}
+\item{legendgrouptitle}{A \code{\link{go_legendgrouptitle}()} object or
+named list, with properties \code{font} and \code{text} (see
+\code{\link{go_legendgrouptitle}()}).}
 
 \item{legendrank}{Sets the legend rank for this trace. Items and groups
 with smaller ranks are presented on top/left side while with
@@ -459,11 +268,15 @@ to their order in data and layout. Number.}
 \item{legendwidth}{Sets the width (in px or fraction) of the legend for
 this trace. Number in the interval [0, Inf].}
 
-\item{lighting}{Named list or \code{\link{go_streamtube_lighting}()}
-object.}
+\item{lighting}{A \code{\link{go_streamtube_lighting}()} object or named
+list, with properties \code{ambient}, \code{diffuse},
+\code{facenormalsepsilon}, \code{fresnel}, \code{roughness},
+\code{specular} and \code{vertexnormalsepsilon} (see
+\code{\link{go_streamtube_lighting}()}).}
 
-\item{lightposition}{Named list or
-\code{\link{go_streamtube_lightposition}()} object.}
+\item{lightposition}{A \code{\link{go_lightposition}()} object or named
+list, with properties \code{x}, \code{y} and \code{z} (see
+\code{\link{go_lightposition}()}).}
 
 \item{maxdisplayed}{The maximum number of displayed segments in a
 streamtube. Integer in the interval [0, Inf].}
@@ -478,16 +291,8 @@ trace, simply use `\%\{meta[i]\}` where `i` is the index or key of the
 use `\%\{data[n[.meta[i]\}` where `i` is the index or key of the
 `meta` and `n` is the trace index. Any value.}
 
-\item{name}{\strong{\code{go_streamtube()}}: Sets the trace name. The
-  trace name appears as the legend item and on hover. String.
-
-  \strong{\code{go_streamtube_colorbar_tickformatstop()}}: When used in
-  a template, named items are created in the output figure in addition
-  to any items the figure already has in this array. You can modify
-  these items in the output figure by making your own item with
-  `templateitemname` matching this `name` alongside your modifications
-  (including `visible: false` or `enabled: false` to hide it). Has no
-  effect outside of a template. String.}
+\item{name}{Sets the trace name. The trace name appears as the legend
+item and on hover. String.}
 
 \item{opacity}{Sets the opacity of the surface. Please note that in the
 case of using high `opacity` values for example a value greater than
@@ -516,18 +321,14 @@ this trace. Logical.}
 which avoids two max divergence tubes from touching at adjacent
 starting positions. Number in the interval [0, Inf].}
 
-\item{starts}{Named list or \code{\link{go_streamtube_starts}()} object.}
+\item{starts}{A \code{\link{go_streamtube_starts}()} object or named
+list, with properties \code{x}, \code{y} and \code{z} (see
+\code{\link{go_streamtube_starts}()}).}
 
-\item{text}{\strong{\code{go_streamtube()}}: Sets a text element
-  associated with this trace. If trace `hoverinfo` contains a "text"
-  flag, this text element will be seen in all hover labels. Note that
-  streamtube traces do not support array `text` values. String.
-
-  \strong{\code{go_streamtube_colorbar_title()}}: Sets the title of the
-  color bar. String.
-
-  \strong{\code{go_streamtube_legendgrouptitle()}}: Sets the title of
-  the legend group. String.}
+\item{text}{Sets a text element associated with this trace. If trace
+`hoverinfo` contains a "text" flag, this text element will be seen in
+all hover labels. Note that streamtube traces do not support array
+`text` values. String.}
 
 \item{u}{Sets the x components of the vector field. Data array: a
 vector, factor, Date/POSIXct vector, matrix or list.}
@@ -579,25 +380,8 @@ For numbers, see:
 https://github.com/d3/d3-format/tree/v1.4.5#d3-format.By default the
 values are formatted using generic number format. String.}
 
-\item{x}{\strong{\code{go_streamtube()}}: Sets the x coordinates of the
-  vector field. Data array: a vector, factor, Date/POSIXct vector,
-  matrix or list.
-
-  \strong{\code{go_streamtube_colorbar()}}: Sets the x position with
-  respect to `xref` of the color bar (in plot fraction). When `xref` is
-  "paper", defaults to 1.02 when `orientation` is "v" and 0.5 when
-  `orientation` is "h". When `xref` is "container", defaults to 1 when
-  `orientation` is "v" and 0.5 when `orientation` is "h". Must be
-  between 0 and 1 if `xref` is "container" and between "-2" and 3 if
-  `xref` is "paper". Number.
-
-  \strong{\code{go_streamtube_lightposition()}}: Numeric vector,
-  representing the X coordinate for each vertex. Number in the interval
-  [-100000, 100000].
-
-  \strong{\code{go_streamtube_starts()}}: Sets the x components of the
-  starting position of the streamtubes Data array: a vector, factor,
-  Date/POSIXct vector, matrix or list.}
+\item{x}{Sets the x coordinates of the vector field. Data array: a
+vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{xhoverformat}{Sets the hover text formatting rule for `x` using d3
 formatting mini-languages which are very similar to those in Python.
@@ -610,25 +394,8 @@ digits. For example, "2016-10-13 09:15:23.456" with tickformat
 "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 are formatted using `xaxis.hoverformat`. String.}
 
-\item{y}{\strong{\code{go_streamtube()}}: Sets the y coordinates of the
-  vector field. Data array: a vector, factor, Date/POSIXct vector,
-  matrix or list.
-
-  \strong{\code{go_streamtube_colorbar()}}: Sets the y position with
-  respect to `yref` of the color bar (in plot fraction). When `yref` is
-  "paper", defaults to 0.5 when `orientation` is "v" and 1.02 when
-  `orientation` is "h". When `yref` is "container", defaults to 0.5 when
-  `orientation` is "v" and 1 when `orientation` is "h". Must be between
-  0 and 1 if `yref` is "container" and between "-2" and 3 if `yref` is
-  "paper". Number.
-
-  \strong{\code{go_streamtube_lightposition()}}: Numeric vector,
-  representing the Y coordinate for each vertex. Number in the interval
-  [-100000, 100000].
-
-  \strong{\code{go_streamtube_starts()}}: Sets the y components of the
-  starting position of the streamtubes Data array: a vector, factor,
-  Date/POSIXct vector, matrix or list.}
+\item{y}{Sets the y coordinates of the vector field. Data array: a
+vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{yhoverformat}{Sets the hover text formatting rule for `y` using d3
 formatting mini-languages which are very similar to those in Python.
@@ -641,17 +408,8 @@ digits. For example, "2016-10-13 09:15:23.456" with tickformat
 "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 are formatted using `yaxis.hoverformat`. String.}
 
-\item{z}{\strong{\code{go_streamtube()}}: Sets the z coordinates of the
-  vector field. Data array: a vector, factor, Date/POSIXct vector,
-  matrix or list.
-
-  \strong{\code{go_streamtube_lightposition()}}: Numeric vector,
-  representing the Z coordinate for each vertex. Number in the interval
-  [-100000, 100000].
-
-  \strong{\code{go_streamtube_starts()}}: Sets the z components of the
-  starting position of the streamtubes Data array: a vector, factor,
-  Date/POSIXct vector, matrix or list.}
+\item{z}{Sets the z coordinates of the vector field. Data array: a
+vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{zhoverformat}{Sets the hover text formatting rule for `z` using d3
 formatting mini-languages which are very similar to those in Python.
@@ -677,404 +435,10 @@ instead of raising an error.}
 
 \item{arg}{Optional named list, or graph object of the same type, to
 initialise properties from (constructors). Named arguments take precedence.}
-
-\item{bgcolor}{\strong{\code{go_streamtube_colorbar()}}: Sets the color
-  of padded area. Color: a CSS color string or R color name.
-
-  \strong{\code{go_streamtube_hoverlabel()}}: Sets the background color
-  of the hover labels for this trace Color: a CSS color string or R
-  color name, or a vector of these.}
-
-\item{bordercolor}{\strong{\code{go_streamtube_colorbar()}}: Sets the
-  axis line color. Color: a CSS color string or R color name.
-
-  \strong{\code{go_streamtube_hoverlabel()}}: Sets the border color of
-  the hover labels for this trace. Color: a CSS color string or R color
-  name, or a vector of these.}
-
-\item{borderwidth}{Sets the width (in px) or the border enclosing this
-color bar. Number in the interval [0, Inf].}
-
-\item{dtick}{Sets the step in-between ticks on this color bar. Use with
-`tick0`. Must be a positive number. Note: unlike on x/y axes, the
-special "log" and "date" string forms ("L<f>", "D1", "D2", "M<n>") are
-not supported here: this axis is always linear, so such strings are
-silently ignored and the step is set to 1. Any value.}
-
-\item{exponentformat}{Determines a formatting rule for the tick
-exponents. For example, consider the number 1,000,000,000. If "none",
-it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-the above ranges, the formatting rule will automatically be switched
-to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-\code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.}
-
-\item{labelalias}{Replacement text for specific tick or hover labels.
-For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-to Canada. The labels we would have shown must match the keys exactly,
-after adding any tickprefix or ticksuffix. For negative numbers the
-minus sign symbol used (U+2212) is wider than the regular ascii dash.
-That means you need to use -1 instead of -1. labelalias can be used
-with any axis type, and both keys (if needed) and values (if desired)
-can include html-like tags or MathJax. Any value.}
-
-\item{len}{Sets the length of the color bar This measure excludes the
-padding of both ends. That is, the color bar length is this length
-minus the padding on both ends. Number in the interval [0, Inf].}
-
-\item{lenmode}{Determines whether this color bar's length (i.e. the
-measure in the color variation direction) is set in units of plot
-"fraction" or in *pixels. Use `len` to set the value. One of
-\code{"fraction"}, \code{"pixels"}.}
-
-\item{minexponent}{Hide SI prefix for 10^n if |n| is below this number.
-This only has an effect when `tickformat` is "SI" or "B". Number in
-the interval [0, Inf].}
-
-\item{nticks}{Specifies the maximum number of ticks for the particular
-axis. The actual number of ticks will be chosen automatically to be
-less than or equal to `nticks`. Has an effect only if `tickmode` is
-set to "auto". Integer in the interval [0, Inf].}
-
-\item{orientation}{Sets the orientation of the colorbar. One of
-\code{"h"}, \code{"v"}.}
-
-\item{outlinecolor}{Sets the axis line color. Color: a CSS color string
-or R color name.}
-
-\item{outlinewidth}{Sets the width (in px) of the axis line. Number in
-the interval [0, Inf].}
-
-\item{separatethousands}{If "true", even 4-digit integers are separated
-Logical.}
-
-\item{showexponent}{If "all", all exponents are shown besides their
-significands. If "first", only the exponent of the first tick is
-shown. If "last", only the exponent of the last tick is shown. If
-"none", no exponents appear. One of \code{"all"}, \code{"first"},
-\code{"last"}, \code{"none"}.}
-
-\item{showticklabels}{Determines whether or not the tick labels are
-drawn. Logical.}
-
-\item{showtickprefix}{If "all", all tick labels are displayed with a
-prefix. If "first", only the first tick is displayed with a prefix. If
-"last", only the last tick is displayed with a suffix. If "none", tick
-prefixes are hidden. One of \code{"all"}, \code{"first"},
-\code{"last"}, \code{"none"}.}
-
-\item{showticksuffix}{Same as `showtickprefix` but for tick suffixes.
-One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.}
-
-\item{thickness}{Sets the thickness of the color bar This measure
-excludes the size of the padding, ticks and labels. Number in the
-interval [0, Inf].}
-
-\item{thicknessmode}{Determines whether this color bar's thickness (i.e.
-the measure in the constant color direction) is set in units of plot
-"fraction" or in "pixels". Use `thickness` to set the value. One of
-\code{"fraction"}, \code{"pixels"}.}
-
-\item{tick0}{Sets the placement of the first tick on this axis. Use with
-`dtick`. If the axis `type` is "log", then you must take the log of
-your starting tick (e.g. to set the starting tick to 100, set the
-`tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-If the axis `type` is "date", it should be a date string, like date
-data. If the axis `type` is "category", it should be a number, using
-the scale where each category is assigned a serial number from zero in
-the order it appears. Any value.}
-
-\item{tickangle}{Sets the angle of the tick labels with respect to the
-horizontal. For example, a `tickangle` of -90 draws the tick labels
-vertically. Angle in degrees.}
-
-\item{tickcolor}{Sets the tick color. Color: a CSS color string or R
-color name.}
-
-\item{tickfont}{Sets the color bar's tick label font Named list or
-\code{\link{go_streamtube_colorbar_tickfont}()} object.}
-
-\item{tickformat}{Sets the tick label formatting rule using d3
-formatting mini-languages which are very similar to those in Python.
-For numbers, see:
-https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-We add two items to d3's date formatter: "\%h" for half of the year as
-a decimal number as well as "\%\{n\}f" for fractional seconds with n
-digits. For example, "2016-10-13 09:15:23.456" with tickformat
-"\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.}
-
-\item{tickformatstops}{List of named lists or
-\code{\link{go_streamtube_colorbar_tickformatstop}()} objects.}
-
-\item{ticklabeloverflow}{Determines how we handle tick labels that would
-overflow either the graph div or the domain of the axis. The default
-value for inside tick labels is "hide past domain". In other cases the
-default is "hide past div". One of \code{"allow"}, \code{"hide past
-div"}, \code{"hide past domain"}.}
-
-\item{ticklabelposition}{Determines where tick labels are drawn relative
-to the ticks. Left and right options are used when `orientation` is
-"h", top and bottom when `orientation` is "v". One of
-\code{"outside"}, \code{"inside"}, \code{"outside top"}, \code{"inside
-top"}, \code{"outside left"}, \code{"inside left"}, \code{"outside
-right"}, \code{"inside right"}, \code{"outside bottom"}, \code{"inside
-bottom"}.}
-
-\item{ticklabelstep}{Sets the spacing between tick labels as compared to
-the spacing between ticks. A value of 1 (default) means each tick gets
-a label. A value of 2 means shows every 2nd label. A larger value n
-means only every nth tick is labeled. `tick0` determines which labels
-are shown. Not implemented for axes with `type` "log" or
-"multicategory", or when `tickmode` is "array". Integer in the
-interval [1, Inf].}
-
-\item{ticklen}{Sets the tick length (in px). Number in the interval [0,
-Inf].}
-
-\item{tickmode}{Sets the tick mode for this axis. If "auto", the number
-of ticks is set via `nticks`. If "linear", the placement of the ticks
-is determined by a starting position `tick0` and a tick step `dtick`
-("linear" is the default value if `tick0` and `dtick` are provided).
-If "array", the placement of the ticks is set via `tickvals` and the
-tick text is `ticktext`. ("array" is the default value if `tickvals`
-is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.}
-
-\item{tickprefix}{Sets a tick label prefix. String.}
-
-\item{ticks}{Determines whether ticks are drawn or not. If **, this
-axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-drawn outside (inside) the axis lines. One of \code{"outside"},
-\code{"inside"}, \code{""}.}
-
-\item{ticksuffix}{Sets a tick label suffix. String.}
-
-\item{ticktext}{Sets the text displayed at the ticks position via
-`tickvals`. Only has an effect if `tickmode` is set to "array". Used
-with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.}
-
-\item{tickvals}{Sets the values at which ticks on this axis appear. Only
-has an effect if `tickmode` is set to "array". Used with `ticktext`.
-Data array: a vector, factor, Date/POSIXct vector, matrix or list.}
-
-\item{tickwidth}{Sets the tick width (in px). Number in the interval [0,
-Inf].}
-
-\item{title}{String (the title text), named list or
-\code{\link{go_streamtube_colorbar_title}()} object.}
-
-\item{xanchor}{Sets this color bar's horizontal position anchor. This
-anchor binds the `x` position to the "left", "center" or "right" of
-the color bar. Defaults to "left" when `orientation` is "v" and
-"center" when `orientation` is "h". One of \code{"left"},
-\code{"center"}, \code{"right"}.}
-
-\item{xpad}{Sets the amount of padding (in px) along the x direction.
-Number in the interval [0, Inf].}
-
-\item{xref}{Sets the container `x` refers to. "container" spans the
-entire `width` of the plot. "paper" refers to the width of the
-plotting area only. One of \code{"container"}, \code{"paper"}.}
-
-\item{yanchor}{Sets this color bar's vertical position anchor This
-anchor binds the `y` position to the "top", "middle" or "bottom" of
-the color bar. Defaults to "middle" when `orientation` is "v" and
-"bottom" when `orientation` is "h". One of \code{"top"},
-\code{"middle"}, \code{"bottom"}.}
-
-\item{ypad}{Sets the amount of padding (in px) along the y direction.
-Number in the interval [0, Inf].}
-
-\item{yref}{Sets the container `y` refers to. "container" spans the
-entire `height` of the plot. "paper" refers to the height of the
-plotting area only. One of \code{"container"}, \code{"paper"}.}
-
-\item{color}{\strong{\code{go_streamtube_colorbar_tickfont()},
-  \code{go_streamtube_colorbar_title_font()},
-  \code{go_streamtube_legendgrouptitle_font()}}: Color: a CSS color
-  string or R color name.
-
-  \strong{\code{go_streamtube_hoverlabel_font()}}: Color: a CSS color
-  string or R color name, or a vector of these.}
-
-\item{family}{\strong{\code{go_streamtube_colorbar_tickfont()},
-  \code{go_streamtube_colorbar_title_font()},
-  \code{go_streamtube_legendgrouptitle_font()}}: HTML font family - the
-  typeface that will be applied by the web browser. The web browser can
-  only apply a font if it is available on the system where it runs.
-  Provide multiple font families, separated by commas, to indicate the
-  order in which to apply fonts if they aren't available. String.
-
-  \strong{\code{go_streamtube_hoverlabel_font()}}: HTML font family -
-  the typeface that will be applied by the web browser. The web browser
-  can only apply a font if it is available on the system where it runs.
-  Provide multiple font families, separated by commas, to indicate the
-  order in which to apply fonts if they aren't available. String, or a
-  vector of these.}
-
-\item{lineposition}{\strong{\code{go_streamtube_colorbar_tickfont()},
-  \code{go_streamtube_colorbar_title_font()},
-  \code{go_streamtube_legendgrouptitle_font()}}: Sets the kind of
-  decoration line(s) with text, such as an "under", "over" or "through"
-  as well as combinations e.g. "under+over", etc. Any combination of
-  \code{"under"}, \code{"over"}, \code{"through"} joined with
-  \code{"+"}, or one of \code{"none"}.
-
-  \strong{\code{go_streamtube_hoverlabel_font()}}: Sets the kind of
-  decoration line(s) with text, such as an "under", "over" or "through"
-  as well as combinations e.g. "under+over", etc. Any combination of
-  \code{"under"}, \code{"over"}, \code{"through"} joined with
-  \code{"+"}, or one of \code{"none"}, or a vector of these.}
-
-\item{shadow}{\strong{\code{go_streamtube_colorbar_tickfont()},
-  \code{go_streamtube_colorbar_title_font()},
-  \code{go_streamtube_legendgrouptitle_font()}}: Sets the shape and
-  color of the shadow behind text. "auto" places minimal shadow and
-  applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.
-
-  \strong{\code{go_streamtube_hoverlabel_font()}}: Sets the shape and
-  color of the shadow behind text. "auto" places minimal shadow and
-  applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.}
-
-\item{size}{\strong{\code{go_streamtube_colorbar_tickfont()},
-  \code{go_streamtube_colorbar_title_font()},
-  \code{go_streamtube_legendgrouptitle_font()}}: Number in the interval
-  [1, Inf].
-
-  \strong{\code{go_streamtube_hoverlabel_font()}}: Number in the
-  interval [1, Inf], or a vector of these.}
-
-\item{style}{\strong{\code{go_streamtube_colorbar_tickfont()},
-  \code{go_streamtube_colorbar_title_font()},
-  \code{go_streamtube_legendgrouptitle_font()}}: Sets whether a font
-  should be styled with a normal or italic face from its family. One of
-  \code{"normal"}, \code{"italic"}.
-
-  \strong{\code{go_streamtube_hoverlabel_font()}}: Sets whether a font
-  should be styled with a normal or italic face from its family. One of
-  \code{"normal"}, \code{"italic"}, or a vector of these.}
-
-\item{textcase}{\strong{\code{go_streamtube_colorbar_tickfont()},
-  \code{go_streamtube_colorbar_title_font()},
-  \code{go_streamtube_legendgrouptitle_font()}}: Sets capitalization of
-  text. It can be used to make text appear in all-uppercase or
-  all-lowercase, or with each word capitalized. One of \code{"normal"},
-  \code{"word caps"}, \code{"upper"}, \code{"lower"}.
-
-  \strong{\code{go_streamtube_hoverlabel_font()}}: Sets capitalization
-  of text. It can be used to make text appear in all-uppercase or
-  all-lowercase, or with each word capitalized. One of \code{"normal"},
-  \code{"word caps"}, \code{"upper"}, \code{"lower"}, or a vector of
-  these.}
-
-\item{variant}{\strong{\code{go_streamtube_colorbar_tickfont()},
-  \code{go_streamtube_colorbar_title_font()},
-  \code{go_streamtube_legendgrouptitle_font()}}: Sets the variant of the
-  font. One of \code{"normal"}, \code{"small-caps"},
-  \code{"all-small-caps"}, \code{"all-petite-caps"},
-  \code{"petite-caps"}, \code{"unicase"}.
-
-  \strong{\code{go_streamtube_hoverlabel_font()}}: Sets the variant of
-  the font. One of \code{"normal"}, \code{"small-caps"},
-  \code{"all-small-caps"}, \code{"all-petite-caps"},
-  \code{"petite-caps"}, \code{"unicase"}, or a vector of these.}
-
-\item{weight}{\strong{\code{go_streamtube_colorbar_tickfont()},
-  \code{go_streamtube_colorbar_title_font()},
-  \code{go_streamtube_legendgrouptitle_font()}}: Sets the weight (or
-  boldness) of the font. Integer in the interval [1, 1000].
-
-  \strong{\code{go_streamtube_hoverlabel_font()}}: Sets the weight (or
-  boldness) of the font. Integer in the interval [1, 1000], or a vector
-  of these.}
-
-\item{dtickrange}{range ["min", "max"], where "min", "max" - dtick
-values which describe some zoom level, it is possible to omit "min" or
-"max" value by passing "null" Vector or list of 2 element(s).}
-
-\item{enabled}{Determines whether or not this stop is used. If `false`,
-this stop is ignored even within its `dtickrange`. Logical.}
-
-\item{templateitemname}{Used to refer to a named item in this array in
-the template. Named items from the template will be created even
-without a matching item in the input figure, but you can modify one by
-making an item with `templateitemname` matching its `name`, alongside
-your modifications (including `visible: false` or `enabled: false` to
-hide it). If there is no template or no matching item, this item will
-be hidden unless you explicitly show it with `visible: true`. String.}
-
-\item{value}{string - dtickformat for described zoom level, the same as
-"tickformat" String.}
-
-\item{font}{\strong{\code{go_streamtube_colorbar_title()}}: Sets this
-  color bar's title font. Named list or
-  \code{\link{go_streamtube_colorbar_title_font}()} object.
-
-  \strong{\code{go_streamtube_hoverlabel()}}: Sets the font used in
-  hover labels. Named list or
-  \code{\link{go_streamtube_hoverlabel_font}()} object.
-
-  \strong{\code{go_streamtube_legendgrouptitle()}}: Sets this legend
-  group's title font. Named list or
-  \code{\link{go_streamtube_legendgrouptitle_font}()} object.}
-
-\item{side}{Determines the location of color bar's title with respect to
-the color bar. Defaults to "top" when `orientation` is "v" and
-defaults to "right" when `orientation` is "h". One of \code{"right"},
-\code{"top"}, \code{"bottom"}.}
-
-\item{align}{Sets the horizontal alignment of the text content within
-hover label box. Has an effect only if the hover label text spans two
-or more lines One of \code{"left"}, \code{"right"}, \code{"auto"}, or
-a vector of these.}
-
-\item{namelength}{Sets the default length (in number of characters) of
-the trace name in the hover labels for all traces. -1 shows the whole
-name regardless of length. 0-3 shows the first 0-3 characters, and an
-integer >3 will show the whole name if it is less than that many
-characters, but if it is longer, will truncate to `namelength - 3`
-characters and add an ellipsis. Integer in the interval [-1, Inf], or
-a vector of these.}
-
-\item{showarrow}{Sets whether or not to show the hover label
-arrow/triangle pointing to the data point. Logical.}
-
-\item{ambient}{Ambient light increases overall color visibility but can
-wash out the image. Number in the interval [0, 1].}
-
-\item{diffuse}{Represents the extent that incident rays are reflected in
-a range of angles. Number in the interval [0, 1].}
-
-\item{facenormalsepsilon}{Epsilon for face normals calculation avoids
-math issues arising from degenerate geometry. Number in the interval
-[0, 1].}
-
-\item{fresnel}{Represents the reflectance as a dependency of the viewing
-angle; e.g. paper is reflective when viewing it from the edge of the
-paper (almost 90 degrees), causing shine. Number in the interval [0,
-5].}
-
-\item{roughness}{Alters specular reflection; the rougher the surface,
-the wider and less contrasty the shine. Number in the interval [0, 1].}
-
-\item{specular}{Represents the level that incident rays are reflected in
-a single direction, causing shine. Number in the interval [0, 2].}
-
-\item{vertexnormalsepsilon}{Epsilon for vertex normals calculation
-avoids math issues arising from degenerate geometry. Number in the
-interval [0, 1].}
 }
 \value{
-Each \code{go_*()} function returns a graph object of the same
-  class as its name; \code{add_*()} functions return the modified figure.
+\code{go_*()} functions return a graph object;
+  \code{add_*()} functions return the modified figure.
 }
 \description{
 Use a streamtube trace to visualize flow in a vector field.  Specify a
@@ -1087,35 +451,24 @@ the norm of (u, v, w), and the local radius by the divergence of (u, v,
 w).
 }
 \details{
-\code{go_streamtube()} and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-\code{\link{plotly_obj-modify}()}). \code{add_streamtube()} creates an
-object and adds it to a figure.
+\code{go_streamtube()} creates a validated graph object (a named list).
+\code{add_streamtube()} creates one and adds it to a figure.
 
-Nested objects documented here:
-\describe{
-\item{\code{go_streamtube_colorbar()}}{\code{streamtube.colorbar}}
-\item{\code{go_streamtube_colorbar_tickfont()}}{\code{streamtube.colorbar.tickfont}:
-Sets the color bar's tick label font}
-\item{\code{go_streamtube_colorbar_tickformatstop()}}{\code{streamtube.colorbar.tickformatstop}}
-\item{\code{go_streamtube_colorbar_title()}}{\code{streamtube.colorbar.title}}
-\item{\code{go_streamtube_colorbar_title_font()}}{\code{streamtube.colorbar.title.font}:
-Sets this color bar's title font.}
-\item{\code{go_streamtube_hoverlabel()}}{\code{streamtube.hoverlabel}}
-\item{\code{go_streamtube_hoverlabel_font()}}{\code{streamtube.hoverlabel.font}:
-Sets the font used in hover labels.}
-\item{\code{go_streamtube_legendgrouptitle()}}{\code{streamtube.legendgrouptitle}}
-\item{\code{go_streamtube_legendgrouptitle_font()}}{\code{streamtube.legendgrouptitle.font}:
-Sets this legend group's title font.}
-\item{\code{go_streamtube_lighting()}}{\code{streamtube.lighting}}
-\item{\code{go_streamtube_lightposition()}}{\code{streamtube.lightposition}}
-\item{\code{go_streamtube_starts()}}{\code{streamtube.starts}}
-}
+
+Nested objects are given as named lists or with their constructors, which
+are linked from the arguments below. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+\code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+evaluated in the data, and then checked, when the trace is added with
+\code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_streamtube(x = 1:3, y = c(2, 1, 3))
+d <- expand.grid(x = 1:3, y = 1:3, z = 1:3)
+d |>
+  go_figure() |>
+  add_streamtube(x = ~x, y = ~y, z = ~z, u = ~y, v = ~-x, w = ~z)
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}
 }
+\concept{traces}

@@ -16,3 +16,4 @@
 ^\.github$
 ^vignettes/\.quarto$
 ^vignettes/\.gitignore$
+^\.githooks$

@@ -221,7 +221,9 @@ need <- c("libxkbcommon.so.0", "libgbm.so.1")
 # nothing missing on the system: no downloaded libraries are used, even if
 # some were downloaded before
 stopifnot(identical(
-  ens("/x/chrome", missing = function(lp) character(), cached = function() stop("cache used")),
+  ens("/x/chrome", missing = function(lp) character(), cached = function() {
+    stop("cache used")
+  }),
   character()
 ))
 # the system lacks some, the earlier download has them: its directories; when
@@ -229,33 +231,69 @@ stopifnot(identical(
 # and other sessions get a message (once)
 sys_lacks <- function(lp) if (length(lp)) character() else need
 stopifnot(identical(
-  ens("/x/chrome", missing = sys_lacks, cached = function() "/cache",
-      fetchable = TRUE, family = "debian", stale = function() FALSE),
+  ens(
+    "/x/chrome",
+    missing = sys_lacks,
+    cached = function() "/cache",
+    fetchable = TRUE,
+    family = "debian",
+    stale = function() FALSE
+  ),
   "/cache"
 ))
 asked <- NULL
 stopifnot(identical(
-  ens("/x/chrome", ask = TRUE, missing = sys_lacks, cached = function() "/cache",
-      fetchable = TRUE, family = "debian", stale = function() TRUE,
-      confirm = function(msg) { asked <<- msg; TRUE },
-      refresh = function() "/fresh"),
+  ens(
+    "/x/chrome",
+    ask = TRUE,
+    missing = sys_lacks,
+    cached = function() "/cache",
+    fetchable = TRUE,
+    family = "debian",
+    stale = function() TRUE,
+    confirm = function(msg) {
+      asked <<- msg
+      TRUE
+    },
+    refresh = function() "/fresh"
+  ),
   "/fresh"
 ))
 stopifnot(grepl("days old", asked), grepl("again", asked))
 stopifnot(identical(
-  ens("/x/chrome", ask = TRUE, missing = sys_lacks, cached = function() "/cache",
-      fetchable = TRUE, family = "debian", stale = function() TRUE,
-      confirm = function(msg) FALSE, refresh = function() stop("refreshed")),
+  ens(
+    "/x/chrome",
+    ask = TRUE,
+    missing = sys_lacks,
+    cached = function() "/cache",
+    fetchable = TRUE,
+    family = "debian",
+    stale = function() TRUE,
+    confirm = function(msg) FALSE,
+    refresh = function() stop("refreshed")
+  ),
   "/cache"
 ))
 assign("stale_libs_noted", FALSE, envir = plotly.core:::export_env)
 msgs <- character()
-for (i in 1:2) withCallingHandlers(
-  ens("/x/chrome", ask = FALSE, missing = sys_lacks, cached = function() "/cache",
-      fetchable = TRUE, family = "debian", stale = function() TRUE,
-      refresh = function() stop("refreshed")),
-  message = function(m) { msgs <<- c(msgs, conditionMessage(m)); invokeRestart("muffleMessage") }
-)
+for (i in 1:2) {
+  withCallingHandlers(
+    ens(
+      "/x/chrome",
+      ask = FALSE,
+      missing = sys_lacks,
+      cached = function() "/cache",
+      fetchable = TRUE,
+      family = "debian",
+      stale = function() TRUE,
+      refresh = function() stop("refreshed")
+    ),
+    message = function(m) {
+      msgs <<- c(msgs, conditionMessage(m))
+      invokeRestart("muffleMessage")
+    }
+  )
+}
 stopifnot(length(msgs) == 1L, grepl("install_chrome()", msgs, fixed = TRUE))
 
 # Staleness: age, and the Chrome they were downloaded for
@@ -427,6 +465,45 @@ if (
   )
 }
 
+# Fonts: available_fonts() and the warning for fonts that are not installed
+if (requireNamespace("systemfonts", quietly = TRUE)) {
+  fonts <- available_fonts()
+  stopifnot(is.character(fonts), length(fonts) > 0L, !is.unsorted(fonts))
+  fig <- go_figure() |>
+    add_scatter(
+      y = 1:3,
+      textfont = go_font(family = "No Such Font Abc, Arial")
+    ) |>
+    update_layout(
+      font = go_font(family = "sans-serif"),
+      template = list(layout = list(font = list(family = "Template Only Font")))
+    )
+  stopifnot(identical(
+    plotly.core:::figure_font_families(unclass(fig)[c("data", "layout")]),
+    c("No Such Font Abc, Arial", "sans-serif")
+  ))
+  assign("font_warned", NULL, envir = plotly.core:::the)
+  msg <- tryCatch(
+    plotly.core:::check_figure_fonts(fig),
+    warning = conditionMessage
+  )
+  stopifnot(grepl('"No Such Font Abc" is not installed', msg))
+  if ("arial" %in% tolower(fonts)) {
+    stopifnot(grepl('uses "Arial" instead', msg))
+  }
+  # once a session per font, and nothing for installed or generic fonts
+  stopifnot(is.null(tryCatch(
+    plotly.core:::check_figure_fonts(fig),
+    warning = conditionMessage
+  )))
+  ok <- go_figure() |>
+    update_layout(font = go_font(family = paste(fonts[[1L]], ", serif")))
+  stopifnot(is.null(tryCatch(
+    plotly.core:::check_figure_fonts(ok),
+    warning = conditionMessage
+  )))
+}
+
 # Exports start a browser, so only run them off CRAN, where Chrome is found.
 if (
   identical(Sys.getenv("NOT_CRAN"), "true") &&
@@ -474,7 +551,11 @@ if (
   shared <- go_figure() |>
     add_scatter(x = tt, y = cumsum(rnorm(48))) |>
     add_scatter(x = tt, y = cumsum(rnorm(48)))
-  stopifnot(grepl('"bref"', plotly.core:::export_figure(shared)$json, fixed = TRUE))
+  stopifnot(grepl(
+    '"bref"',
+    plotly.core:::export_figure(shared)$json,
+    fixed = TRUE
+  ))
   save_image(shared, path("dates.svg"))
   svg <- paste(readLines(path("dates.svg"), warn = FALSE), collapse = "\n")
   stopifnot(grepl("Mar 2", svg, fixed = TRUE), grepl("2024", svg, fixed = TRUE))
@@ -499,6 +580,52 @@ if (
   save_image(tex, path("tex.svg"))
   svg <- paste(readLines(path("tex.svg"), warn = FALSE), collapse = "\n")
   stopifnot(grepl("-math-group", svg), !grepl(">$\\alpha", svg, fixed = TRUE))
+
+  # maps (MapLibre) draw in the export page, which is a local file
+  map_png <- path("map.png")
+  save_image(
+    go_figure() |>
+      add_scattermap(lat = c(45, 46), lon = c(-73, -74)) |>
+      update_layout(map = go_map(style = "white-bg")),
+    map_png
+  )
+  stopifnot(file.size(map_png) > 0)
+
+  # a failed export doesn't break the next ones
+  bad <- tryCatch(
+    plotly.core:::shared_chrome_exporter()$transform(
+      go_figure(),
+      path("never.png"),
+      width = -1
+    ),
+    error = function(e) "failed"
+  )
+  stopifnot(identical(bad, "failed"))
+  save_image(go_figure() |> add_bar(y = 1:3), path("after.png"))
+  stopifnot(file.size(path("after.png")) > 0)
+
+  # knitting without pandoc (R's "Run examples" help pages, knitr::knit()):
+  # static images, one file per figure, never a PhantomJS screenshot
+  if (requireNamespace("knitr", quietly = TRUE)) {
+    old <- setwd(dir)
+    rhtml <- c(
+      "<html><body>",
+      "<!--begin.rcode two-figures",
+      "library(plotly.core)",
+      "go_figure() |> add_bar(x = 1:2, y = 1:2)",
+      "go_figure() |> add_scatter(x = 1:2, y = 2:1)",
+      "end.rcode-->",
+      "</body></html>"
+    )
+    out <- knitr::knit(text = rhtml, quiet = TRUE)
+    setwd(old)
+    imgs <- regmatches(out, gregexpr("figure/[^\"]+[.]png", out))[[1L]]
+    stopifnot(
+      length(unique(imgs)) == 2L,
+      all(file.exists(file.path(dir, imgs))),
+      !any(grepl("PhantomJS", out))
+    )
+  }
 
   plotly.core:::export_env$chrome$shutdown()
 }

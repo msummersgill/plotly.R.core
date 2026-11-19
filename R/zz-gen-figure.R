@@ -1337,13 +1337,16 @@ add_waterfall.default <- function(
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
-#' @param patch A named list or \code{\link{go_layout_coloraxis}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list or \code{\link{go_coloraxis}()} object of property updates.
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_coloraxes()} returns a named list of \code{\link{go_layout_coloraxis}()} objects; the
+#' @return \code{select_coloraxes()} returns a named list of coloraxis objects; the
 #'   others return the modified figure.
+#'
+#' @seealso \code{\link{go_coloraxis}()} for the properties of coloraxis objects.
+#'
 #' @name update_coloraxes
 #' @noMd
 NULL
@@ -1380,13 +1383,16 @@ for_each_coloraxis <- function(fig, fn, selector = NULL, row = NULL, col = NULL)
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
-#' @param patch A named list or \code{\link{go_layout_geo}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list or \code{\link{go_geo}()} object of property updates.
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_geos()} returns a named list of \code{\link{go_layout_geo}()} objects; the
+#' @return \code{select_geos()} returns a named list of geo objects; the
 #'   others return the modified figure.
+#'
+#' @seealso \code{\link{go_geo}()} for the properties of geo objects.
+#'
 #' @name update_geos
 #' @noMd
 NULL
@@ -1423,13 +1429,16 @@ for_each_geo <- function(fig, fn, selector = NULL, row = NULL, col = NULL) {
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
-#' @param patch A named list or \code{\link{go_layout_legend}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list or \code{\link{go_legend}()} object of property updates.
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_legends()} returns a named list of \code{\link{go_layout_legend}()} objects; the
+#' @return \code{select_legends()} returns a named list of legend objects; the
 #'   others return the modified figure.
+#'
+#' @seealso \code{\link{go_legend}()} for the properties of legend objects.
+#'
 #' @name update_legends
 #' @noMd
 NULL
@@ -1466,13 +1475,16 @@ for_each_legend <- function(fig, fn, selector = NULL, row = NULL, col = NULL) {
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
-#' @param patch A named list or \code{\link{go_layout_map}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list or \code{\link{go_map}()} object of property updates.
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_maps()} returns a named list of \code{\link{go_layout_map}()} objects; the
+#' @return \code{select_maps()} returns a named list of map objects; the
 #'   others return the modified figure.
+#'
+#' @seealso \code{\link{go_map}()} for the properties of map objects.
+#'
 #' @name update_maps
 #' @noMd
 NULL
@@ -1509,13 +1521,16 @@ for_each_map <- function(fig, fn, selector = NULL, row = NULL, col = NULL) {
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
-#' @param patch A named list or \code{\link{go_layout_polar}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list or \code{\link{go_polar}()} object of property updates.
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_polars()} returns a named list of \code{\link{go_layout_polar}()} objects; the
+#' @return \code{select_polars()} returns a named list of polar objects; the
 #'   others return the modified figure.
+#'
+#' @seealso \code{\link{go_polar}()} for the properties of polar objects.
+#'
 #' @name update_polars
 #' @noMd
 NULL
@@ -1552,13 +1567,16 @@ for_each_polar <- function(fig, fn, selector = NULL, row = NULL, col = NULL) {
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
-#' @param patch A named list or \code{\link{go_layout_scene}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list or \code{\link{go_scene}()} object of property updates.
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_scenes()} returns a named list of \code{\link{go_layout_scene}()} objects; the
+#' @return \code{select_scenes()} returns a named list of scene objects; the
 #'   others return the modified figure.
+#'
+#' @seealso \code{\link{go_scene}()} for the properties of scene objects.
+#'
 #' @name update_scenes
 #' @noMd
 NULL
@@ -1595,13 +1613,16 @@ for_each_scene <- function(fig, fn, selector = NULL, row = NULL, col = NULL) {
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
-#' @param patch A named list or \code{\link{go_layout_smith}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list or \code{\link{go_smith}()} object of property updates.
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_smiths()} returns a named list of \code{\link{go_layout_smith}()} objects; the
+#' @return \code{select_smiths()} returns a named list of smith objects; the
 #'   others return the modified figure.
+#'
+#' @seealso \code{\link{go_smith}()} for the properties of smith objects.
+#'
 #' @name update_smiths
 #' @noMd
 NULL
@@ -1638,13 +1659,16 @@ for_each_smith <- function(fig, fn, selector = NULL, row = NULL, col = NULL) {
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
-#' @param patch A named list or \code{\link{go_layout_ternary}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list or \code{\link{go_ternary}()} object of property updates.
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_ternaries()} returns a named list of \code{\link{go_layout_ternary}()} objects; the
+#' @return \code{select_ternaries()} returns a named list of ternary objects; the
 #'   others return the modified figure.
+#'
+#' @seealso \code{\link{go_ternary}()} for the properties of ternary objects.
+#'
 #' @name update_ternaries
 #' @noMd
 NULL
@@ -1681,13 +1705,16 @@ for_each_ternary <- function(fig, fn, selector = NULL, row = NULL, col = NULL) {
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
-#' @param patch A named list or \code{\link{go_layout_xaxis}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list or \code{\link{go_xaxis}()} object of property updates.
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_xaxes()} returns a named list of \code{\link{go_layout_xaxis}()} objects; the
+#' @return \code{select_xaxes()} returns a named list of xaxis objects; the
 #'   others return the modified figure.
+#'
+#' @seealso \code{\link{go_xaxis}()} for the properties of xaxis objects.
+#'
 #' @name update_xaxes
 #' @noMd
 NULL
@@ -1725,13 +1752,16 @@ for_each_xaxis <- function(fig, fn, selector = NULL, row = NULL, col = NULL) {
 #' @param row,col Only objects in this subplot grid row and/or column
 #'   (figures created with \code{\link{make_subplots}()} only).
 #' @param secondary_y Only secondary (\code{TRUE}) or primary (\code{FALSE}) y axes.
-#' @param patch A named list or \code{\link{go_layout_yaxis}()} object of property updates.
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list or \code{\link{go_yaxis}()} object of property updates.
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_yaxes()} returns a named list of \code{\link{go_layout_yaxis}()} objects; the
+#' @return \code{select_yaxes()} returns a named list of yaxis objects; the
 #'   others return the modified figure.
+#'
+#' @seealso \code{\link{go_yaxis}()} for the properties of yaxis objects.
+#'
 #' @name update_yaxes
 #' @noMd
 NULL
@@ -1754,7 +1784,257 @@ for_each_yaxis <- function(fig, fn, selector = NULL, row = NULL, col = NULL, sec
   for_each_layout_subplot(fig, "yaxis", fn, selector, row, col, secondary_y)
 }
 
-#' @rdname go_layout_annotation
+#' Add a layout annotation
+#'
+#' \code{add_annotation()} adds an annotation to the figure's layout
+#' \code{annotations}. Nested objects are named lists, e.g. \code{font =
+#' list(size = 14)}, or objects of the constructors their arguments name.
+#'
+#' @param arg Optional named list of properties to start from. Named
+#'   arguments take precedence.
+#' @param align Sets the horizontal alignment of the `text` within the box.
+#'   Has an effect only if `text` spans two or more lines (i.e. `text`
+#'   contains one or more <br> HTML tags) or if an explicit width is set to
+#'   override the text width. One of \code{"left"}, \code{"center"},
+#'   \code{"right"}.
+#' @param arrowcolor Sets the color of the annotation arrow. Color: a CSS
+#'   color string or R color name.
+#' @param arrowhead Sets the end annotation arrow head style. Integer in
+#'   the interval [0, 8].
+#' @param arrowside Sets the annotation arrow head position. Any
+#'   combination of \code{"end"}, \code{"start"} joined with \code{"+"}, or
+#'   one of \code{"none"}.
+#' @param arrowsize Sets the size of the end annotation arrow head,
+#'   relative to `arrowwidth`. A value of 1 (default) gives a head about 3x
+#'   as wide as the line. Number in the interval [0.3, Inf].
+#' @param arrowwidth Sets the width (in px) of annotation arrow line.
+#'   Number in the interval [0.1, Inf].
+#' @param ax Sets the x component of the arrow tail about the arrow head.
+#'   If `axref` is `pixel`, a positive (negative) component corresponds to
+#'   an arrow pointing from right to left (left to right). If `axref` is
+#'   not `pixel` and is exactly the same as `xref`, this is an absolute
+#'   value on that axis, like `x`, specified in the same coordinates as
+#'   `xref`. Any value.
+#' @param axref Indicates in what coordinates the tail of the annotation
+#'   (ax,ay) is specified. If set to a x axis id (e.g. "x" or "x2"), the
+#'   `x` position refers to a x coordinate. If set to "paper", the `x`
+#'   position refers to the distance from the left of the plotting area in
+#'   normalized coordinates where 0 (1) corresponds to the left (right). If
+#'   set to a x axis ID followed by "domain" (separated by a space), the
+#'   position behaves like for "paper", but refers to the distance in
+#'   fractions of the domain length from the left of the domain of that
+#'   axis: e.g., "x2 domain" refers to the domain of the second x axis and
+#'   a x position of 0.5 refers to the point between the left and the right
+#'   of the domain of the second x axis. In order for absolute positioning
+#'   of the arrow to work, "axref" must be exactly the same as "xref",
+#'   otherwise "axref" will revert to "pixel" (explained next). For
+#'   relative positioning, "axref" can be set to "pixel", in which case the
+#'   "ax" value is specified in pixels relative to "x". Absolute
+#'   positioning is useful for trendline annotations which should continue
+#'   to indicate the correct trend when zoomed. Relative positioning is
+#'   useful for specifying the text offset for an annotated point. One of
+#'   \code{"pixel"}, or a string matching \code{"^x([2-9]|[1-9][0-9]+)?(
+#'   domain)?$"}.
+#' @param ay Sets the y component of the arrow tail about the arrow head.
+#'   If `ayref` is `pixel`, a positive (negative) component corresponds to
+#'   an arrow pointing from bottom to top (top to bottom). If `ayref` is
+#'   not `pixel` and is exactly the same as `yref`, this is an absolute
+#'   value on that axis, like `y`, specified in the same coordinates as
+#'   `yref`. Any value.
+#' @param ayref Indicates in what coordinates the tail of the annotation
+#'   (ax,ay) is specified. If set to a y axis id (e.g. "y" or "y2"), the
+#'   `y` position refers to a y coordinate. If set to "paper", the `y`
+#'   position refers to the distance from the bottom of the plotting area
+#'   in normalized coordinates where 0 (1) corresponds to the bottom (top).
+#'   If set to a y axis ID followed by "domain" (separated by a space), the
+#'   position behaves like for "paper", but refers to the distance in
+#'   fractions of the domain length from the bottom of the domain of that
+#'   axis: e.g., "y2 domain" refers to the domain of the second y axis and
+#'   a y position of 0.5 refers to the point between the bottom and the top
+#'   of the domain of the second y axis. In order for absolute positioning
+#'   of the arrow to work, "ayref" must be exactly the same as "yref",
+#'   otherwise "ayref" will revert to "pixel" (explained next). For
+#'   relative positioning, "ayref" can be set to "pixel", in which case the
+#'   "ay" value is specified in pixels relative to "y". Absolute
+#'   positioning is useful for trendline annotations which should continue
+#'   to indicate the correct trend when zoomed. Relative positioning is
+#'   useful for specifying the text offset for an annotated point. One of
+#'   \code{"pixel"}, or a string matching \code{"^y([2-9]|[1-9][0-9]+)?(
+#'   domain)?$"}.
+#' @param bgcolor Sets the background color of the annotation. Color: a CSS
+#'   color string or R color name.
+#' @param bordercolor Sets the color of the border enclosing the annotation
+#'   `text`. Color: a CSS color string or R color name.
+#' @param borderpad Sets the padding (in px) between the `text` and the
+#'   enclosing border. Number in the interval [0, Inf].
+#' @param borderwidth Sets the width (in px) of the border enclosing the
+#'   annotation `text`. Number in the interval [0, Inf].
+#' @param captureevents Determines whether the annotation text box captures
+#'   mouse move and click events, or allows those events to pass through to
+#'   data points in the plot that may be behind the annotation. By default
+#'   `captureevents` is FALSE unless `hovertext` is provided. If you use
+#'   the event `plotly_clickannotation` without `hovertext` you must
+#'   explicitly enable `captureevents`. Logical.
+#' @param clicktoshow Makes this annotation respond to clicks on the plot.
+#'   If you click a data point that exactly matches the `x` and `y` values
+#'   of this annotation, and it is hidden (visible: false), it will appear.
+#'   In "onoff" mode, you must click the same point again to make it
+#'   disappear, so if you click multiple points, you can show multiple
+#'   annotations. In "onout" mode, a click anywhere else in the plot (on
+#'   another data point or not) will hide this annotation. If you need to
+#'   show/hide this annotation in response to different `x` or `y` values,
+#'   you can set `xclick` and/or `yclick`. This is useful for example to
+#'   label the side of a bar. To label markers though, `standoff` is
+#'   preferred over `xclick` and `yclick`. One of \code{"onoff"},
+#'   \code{"onout"}, \code{FALSE}.
+#' @param col Subplot grid column whose axes the object refers to (see
+#'   \code{row}).
+#' @param exclude_empty_subplots If \code{TRUE}, skip subplots that have no
+#'   traces or layout objects.
+#' @param fig A \code{go_figure} object.
+#' @param font Sets the annotation text font. A \code{\link{go_font}()}
+#'   object or named list, with properties \code{color}, \code{family},
+#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#'   \code{textcase}, \code{variant} and \code{weight} (see
+#'   \code{\link{go_font}()}).
+#' @param height Sets an explicit height for the text box. null (default)
+#'   lets the text set the box height. Taller text will be clipped. Number
+#'   in the interval [1, Inf].
+#' @param hoverlabel A \code{\link{go_hoverlabel}()} object or named list,
+#'   with properties \code{bgcolor}, \code{bordercolor} and \code{font}
+#'   (see \code{\link{go_hoverlabel}()}).
+#' @param hovertext Sets text to appear when hovering over this annotation.
+#'   If omitted or blank, no hover label will appear. String.
+#' @param name When used in a template, named items are created in the
+#'   output figure in addition to any items the figure already has in this
+#'   array. You can modify these items in the output figure by making your
+#'   own item with `templateitemname` matching this `name` alongside your
+#'   modifications (including `visible: false` or `enabled: false` to hide
+#'   it). Has no effect outside of a template. String.
+#' @param opacity Sets the opacity of the annotation (text + arrow). Number
+#'   in the interval [0, 1].
+#' @param row Subplot grid row whose axes the object refers to (figures
+#'   created with \code{\link{make_subplots}()} only). May be \code{"all"}
+#'   or a vector to add the object to several cells.
+#' @param secondary_y If \code{TRUE}, refer to the secondary y axis of the
+#'   subplot.
+#' @param showarrow Determines whether or not the annotation is drawn with
+#'   an arrow. If TRUE, `text` is placed near the arrow's tail. If FALSE,
+#'   `text` lines up with the `x` and `y` provided. Logical.
+#' @param standoff Sets a distance, in pixels, to move the end arrowhead
+#'   away from the position it is pointing at, for example to point at the
+#'   edge of a marker independent of zoom. Note that this shortens the
+#'   arrow from the `ax` / `ay` vector, in contrast to `xshift` / `yshift`
+#'   which moves everything by this amount. Number in the interval [0,
+#'   Inf].
+#' @param startarrowhead Sets the start annotation arrow head style.
+#'   Integer in the interval [0, 8].
+#' @param startarrowsize Sets the size of the start annotation arrow head,
+#'   relative to `arrowwidth`. A value of 1 (default) gives a head about 3x
+#'   as wide as the line. Number in the interval [0.3, Inf].
+#' @param startstandoff Sets a distance, in pixels, to move the start
+#'   arrowhead away from the position it is pointing at, for example to
+#'   point at the edge of a marker independent of zoom. Note that this
+#'   shortens the arrow from the `ax` / `ay` vector, in contrast to
+#'   `xshift` / `yshift` which moves everything by this amount. Number in
+#'   the interval [0, Inf].
+#' @param templateitemname Used to refer to a named item in this array in
+#'   the template. Named items from the template will be created even
+#'   without a matching item in the input figure, but you can modify one by
+#'   making an item with `templateitemname` matching its `name`, alongside
+#'   your modifications (including `visible: false` or `enabled: false` to
+#'   hide it). If there is no template or no matching item, this item will
+#'   be hidden unless you explicitly show it with `visible: true`. String.
+#' @param text Sets the text associated with this annotation. Plotly uses a
+#'   subset of HTML tags to do things like newline (`<br>`), bold
+#'   (`<b></b>`), italics (`<i></i>`), hyperlinks (`<a href='...'></a>`).
+#'   Tags `<em>`, `<sup>`, `<sub>`, `<s>`, `<u>`, and `<span>` are also
+#'   supported. String.
+#' @param textangle Sets the angle at which the `text` is drawn with
+#'   respect to the horizontal. Angle in degrees.
+#' @param valign Sets the vertical alignment of the `text` within the box.
+#'   Has an effect only if an explicit height is set to override the text
+#'   height. One of \code{"top"}, \code{"middle"}, \code{"bottom"}.
+#' @param visible Determines whether or not this annotation is visible.
+#'   Logical.
+#' @param width Sets an explicit width for the text box. null (default)
+#'   lets the text set the box width. Wider text will be clipped. There is
+#'   no automatic wrapping; use <br> to start a new line. Number in the
+#'   interval [1, Inf].
+#' @param x Sets the annotation's x position. If the axis `type` is "log",
+#'   then you must take the log of your desired range. If the axis `type`
+#'   is "date", it should be date strings, like date data, though Date
+#'   objects and unix milliseconds will be accepted and converted to
+#'   strings. If the axis `type` is "category", it should be numbers, using
+#'   the scale where each category is assigned a serial number from zero in
+#'   the order it appears. Any value.
+#' @param xanchor Sets the text box's horizontal position anchor This
+#'   anchor binds the `x` position to the "left", "center" or "right" of
+#'   the annotation. For example, if `x` is set to 1, `xref` to "paper" and
+#'   `xanchor` to "right" then the right-most portion of the annotation
+#'   lines up with the right-most edge of the plotting area. If "auto", the
+#'   anchor is equivalent to "center" for data-referenced annotations or if
+#'   there is an arrow, whereas for paper-referenced with no arrow, the
+#'   anchor picked corresponds to the closest side. One of \code{"auto"},
+#'   \code{"left"}, \code{"center"}, \code{"right"}.
+#' @param xclick Toggle this annotation when clicking a data point whose
+#'   `x` value is `xclick` rather than the annotation's `x` value. Any
+#'   value.
+#' @param xref Sets the annotation's x coordinate axis. If set to a x axis
+#'   id (e.g. "x" or "x2"), the `x` position refers to a x coordinate. If
+#'   set to "paper", the `x` position refers to the distance from the left
+#'   of the plotting area in normalized coordinates where 0 (1) corresponds
+#'   to the left (right). If set to a x axis ID followed by "domain"
+#'   (separated by a space), the position behaves like for "paper", but
+#'   refers to the distance in fractions of the domain length from the left
+#'   of the domain of that axis: e.g., "x2 domain" refers to the domain of
+#'   the second x axis and a x position of 0.5 refers to the point between
+#'   the left and the right of the domain of the second x axis. One of
+#'   \code{"paper"}, or a string matching \code{"^x([2-9]|[1-9][0-9]+)?(
+#'   domain)?$"}.
+#' @param xshift Shifts the position of the whole annotation and arrow to
+#'   the right (positive) or left (negative) by this many pixels. Number.
+#' @param y Sets the annotation's y position. If the axis `type` is "log",
+#'   then you must take the log of your desired range. If the axis `type`
+#'   is "date", it should be date strings, like date data, though Date
+#'   objects and unix milliseconds will be accepted and converted to
+#'   strings. If the axis `type` is "category", it should be numbers, using
+#'   the scale where each category is assigned a serial number from zero in
+#'   the order it appears. Any value.
+#' @param yanchor Sets the text box's vertical position anchor This anchor
+#'   binds the `y` position to the "top", "middle" or "bottom" of the
+#'   annotation. For example, if `y` is set to 1, `yref` to "paper" and
+#'   `yanchor` to "top" then the top-most portion of the annotation lines
+#'   up with the top-most edge of the plotting area. If "auto", the anchor
+#'   is equivalent to "middle" for data-referenced annotations or if there
+#'   is an arrow, whereas for paper-referenced with no arrow, the anchor
+#'   picked corresponds to the closest side. One of \code{"auto"},
+#'   \code{"top"}, \code{"middle"}, \code{"bottom"}.
+#' @param yclick Toggle this annotation when clicking a data point whose
+#'   `y` value is `yclick` rather than the annotation's `y` value. Any
+#'   value.
+#' @param yref Sets the annotation's y coordinate axis. If set to a y axis
+#'   id (e.g. "y" or "y2"), the `y` position refers to a y coordinate. If
+#'   set to "paper", the `y` position refers to the distance from the
+#'   bottom of the plotting area in normalized coordinates where 0 (1)
+#'   corresponds to the bottom (top). If set to a y axis ID followed by
+#'   "domain" (separated by a space), the position behaves like for
+#'   "paper", but refers to the distance in fractions of the domain length
+#'   from the bottom of the domain of that axis: e.g., "y2 domain" refers
+#'   to the domain of the second y axis and a y position of 0.5 refers to
+#'   the point between the bottom and the top of the domain of the second y
+#'   axis. One of \code{"paper"}, or a string matching
+#'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
+#' @param yshift Shifts the position of the whole annotation and arrow up
+#'   (positive) or down (negative) by this many pixels. Number.
+#' @param ... Further properties, by their full names.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return The modified figure.
+#' @seealso \code{\link{update_annotations}()}, \code{\link{go_annotation}()}
+#'
+#' @concept layout objects
+#' @noMd
 #' @export
 add_annotation <- function(
     fig, arg = NULL, ..., align = NULL, arrowcolor = NULL, arrowhead = NULL,
@@ -1788,12 +2068,12 @@ add_annotation <- function(
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects on this subplot grid row and/or column's axes.
 #' @param secondary_y Only objects on secondary (\code{TRUE}) or primary (\code{FALSE}) y axes.
-#' @param patch A named list of property updates (see \code{\link{go_layout_annotation}()}).
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list of property updates (see \code{\link{add_annotation}()}).
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_annotations()} returns a list of \code{\link{go_layout_annotation}()} objects; the
+#' @return \code{select_annotations()} returns a list of annotation objects; the
 #'   others return the modified figure.
 #' @seealso \code{\link{add_annotation}()}
 #' @name update_annotations
@@ -1818,7 +2098,98 @@ for_each_annotation <- function(fig, fn, selector = NULL, row = NULL, col = NULL
   for_each_layout_array(fig, "annotations", fn, selector, row, col, secondary_y)
 }
 
-#' @rdname go_layout_image
+#' Add a layout image
+#'
+#' \code{add_layout_image()} adds an image to the figure's layout
+#' \code{images}. Nested objects are named lists, e.g. \code{font =
+#' list(size = 14)}, or objects of the constructors their arguments name.
+#'
+#' @param arg Optional named list of properties to start from. Named
+#'   arguments take precedence.
+#' @param col Subplot grid column whose axes the object refers to (see
+#'   \code{row}).
+#' @param exclude_empty_subplots If \code{TRUE}, skip subplots that have no
+#'   traces or layout objects.
+#' @param fig A \code{go_figure} object.
+#' @param layer Specifies whether images are drawn below or above traces.
+#'   When `xref` and `yref` are both set to `paper`, image is drawn below
+#'   the entire plot area. One of \code{"below"}, \code{"above"}.
+#' @param name When used in a template, named items are created in the
+#'   output figure in addition to any items the figure already has in this
+#'   array. You can modify these items in the output figure by making your
+#'   own item with `templateitemname` matching this `name` alongside your
+#'   modifications (including `visible: false` or `enabled: false` to hide
+#'   it). Has no effect outside of a template. String.
+#' @param opacity Sets the opacity of the image. Number in the interval [0,
+#'   1].
+#' @param row Subplot grid row whose axes the object refers to (figures
+#'   created with \code{\link{make_subplots}()} only). May be \code{"all"}
+#'   or a vector to add the object to several cells.
+#' @param secondary_y If \code{TRUE}, refer to the secondary y axis of the
+#'   subplot.
+#' @param sizex Sets the image container size horizontally. The image will
+#'   be sized based on the `position` value. When `xref` is set to `paper`,
+#'   units are sized relative to the plot width. When `xref` ends with `
+#'   domain`, units are sized relative to the axis width. Number.
+#' @param sizey Sets the image container size vertically. The image will be
+#'   sized based on the `position` value. When `yref` is set to `paper`,
+#'   units are sized relative to the plot height. When `yref` ends with `
+#'   domain`, units are sized relative to the axis height. Number.
+#' @param sizing Specifies which dimension of the image to constrain. One
+#'   of \code{"fill"}, \code{"contain"}, \code{"stretch"}.
+#' @param source Specifies the URL of the image to be used. The URL must be
+#'   accessible from the domain where the plot code is run, and can be
+#'   either relative or absolute. String.
+#' @param templateitemname Used to refer to a named item in this array in
+#'   the template. Named items from the template will be created even
+#'   without a matching item in the input figure, but you can modify one by
+#'   making an item with `templateitemname` matching its `name`, alongside
+#'   your modifications (including `visible: false` or `enabled: false` to
+#'   hide it). If there is no template or no matching item, this item will
+#'   be hidden unless you explicitly show it with `visible: true`. String.
+#' @param visible Determines whether or not this image is visible. Logical.
+#' @param x Sets the image's x position. When `xref` is set to `paper`,
+#'   units are sized relative to the plot height. See `xref` for more info
+#'   Any value.
+#' @param xanchor Sets the anchor for the x position One of \code{"left"},
+#'   \code{"center"}, \code{"right"}.
+#' @param xref Sets the images's x coordinate axis. If set to a x axis id
+#'   (e.g. "x" or "x2"), the `x` position refers to a x coordinate. If set
+#'   to "paper", the `x` position refers to the distance from the left of
+#'   the plotting area in normalized coordinates where 0 (1) corresponds to
+#'   the left (right). If set to a x axis ID followed by "domain"
+#'   (separated by a space), the position behaves like for "paper", but
+#'   refers to the distance in fractions of the domain length from the left
+#'   of the domain of that axis: e.g., "x2 domain" refers to the domain of
+#'   the second x axis and a x position of 0.5 refers to the point between
+#'   the left and the right of the domain of the second x axis. One of
+#'   \code{"paper"}, or a string matching \code{"^x([2-9]|[1-9][0-9]+)?(
+#'   domain)?$"}.
+#' @param y Sets the image's y position. When `yref` is set to `paper`,
+#'   units are sized relative to the plot height. See `yref` for more info
+#'   Any value.
+#' @param yanchor Sets the anchor for the y position. One of \code{"top"},
+#'   \code{"middle"}, \code{"bottom"}.
+#' @param yref Sets the images's y coordinate axis. If set to a y axis id
+#'   (e.g. "y" or "y2"), the `y` position refers to a y coordinate. If set
+#'   to "paper", the `y` position refers to the distance from the bottom of
+#'   the plotting area in normalized coordinates where 0 (1) corresponds to
+#'   the bottom (top). If set to a y axis ID followed by "domain"
+#'   (separated by a space), the position behaves like for "paper", but
+#'   refers to the distance in fractions of the domain length from the
+#'   bottom of the domain of that axis: e.g., "y2 domain" refers to the
+#'   domain of the second y axis and a y position of 0.5 refers to the
+#'   point between the bottom and the top of the domain of the second y
+#'   axis. One of \code{"paper"}, or a string matching
+#'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
+#' @param ... Further properties, by their full names.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return The modified figure.
+#' @seealso \code{\link{update_layout_images}()}, \code{\link{go_layout_image}()}
+#'
+#' @concept layout objects
+#' @noMd
 #' @export
 add_layout_image <- function(
     fig, arg = NULL, ..., layer = NULL, name = NULL, opacity = NULL,
@@ -1845,12 +2216,12 @@ add_layout_image <- function(
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects on this subplot grid row and/or column's axes.
 #' @param secondary_y Only objects on secondary (\code{TRUE}) or primary (\code{FALSE}) y axes.
-#' @param patch A named list of property updates (see \code{\link{go_layout_image}()}).
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list of property updates (see \code{\link{add_layout_image}()}).
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_layout_images()} returns a list of \code{\link{go_layout_image}()} objects; the
+#' @return \code{select_layout_images()} returns a list of image objects; the
 #'   others return the modified figure.
 #' @seealso \code{\link{add_layout_image}()}
 #' @name update_layout_images
@@ -1875,7 +2246,85 @@ for_each_layout_image <- function(fig, fn, selector = NULL, row = NULL, col = NU
   for_each_layout_array(fig, "images", fn, selector, row, col, secondary_y)
 }
 
-#' @rdname go_layout_selection
+#' Add a layout selection
+#'
+#' \code{add_selection()} adds a selection to the figure's layout
+#' \code{selections}. Nested objects are named lists, e.g. \code{font =
+#' list(size = 14)}, or objects of the constructors their arguments name.
+#'
+#' @param arg Optional named list of properties to start from. Named
+#'   arguments take precedence.
+#' @param col Subplot grid column whose axes the object refers to (see
+#'   \code{row}).
+#' @param exclude_empty_subplots If \code{TRUE}, skip subplots that have no
+#'   traces or layout objects.
+#' @param fig A \code{go_figure} object.
+#' @param line A \code{\link{go_selection_line}()} object or named list,
+#'   with properties \code{color}, \code{dash} and \code{width} (see
+#'   \code{\link{go_selection_line}()}).
+#' @param name When used in a template, named items are created in the
+#'   output figure in addition to any items the figure already has in this
+#'   array. You can modify these items in the output figure by making your
+#'   own item with `templateitemname` matching this `name` alongside your
+#'   modifications (including `visible: false` or `enabled: false` to hide
+#'   it). Has no effect outside of a template. String.
+#' @param opacity Sets the opacity of the selection. Number in the interval
+#'   [0, 1].
+#' @param path For `type` "path" - a valid SVG path similar to
+#'   `shapes.path` in data coordinates. Allowed segments are: M, L and Z.
+#'   String.
+#' @param row Subplot grid row whose axes the object refers to (figures
+#'   created with \code{\link{make_subplots}()} only). May be \code{"all"}
+#'   or a vector to add the object to several cells.
+#' @param secondary_y If \code{TRUE}, refer to the secondary y axis of the
+#'   subplot.
+#' @param templateitemname Used to refer to a named item in this array in
+#'   the template. Named items from the template will be created even
+#'   without a matching item in the input figure, but you can modify one by
+#'   making an item with `templateitemname` matching its `name`, alongside
+#'   your modifications (including `visible: false` or `enabled: false` to
+#'   hide it). If there is no template or no matching item, this item will
+#'   be hidden unless you explicitly show it with `visible: true`. String.
+#' @param type Specifies the selection type to be drawn. If "rect", a
+#'   rectangle is drawn linking (`x0`,`y0`), (`x1`,`y0`), (`x1`,`y1`) and
+#'   (`x0`,`y1`). If "path", draw a custom SVG path using `path`. One of
+#'   \code{"rect"}, \code{"path"}.
+#' @param x0 Sets the selection's starting x position. Any value.
+#' @param x1 Sets the selection's end x position. Any value.
+#' @param xref Sets the selection's x coordinate axis. If set to a x axis
+#'   id (e.g. "x" or "x2"), the `x` position refers to a x coordinate. If
+#'   set to "paper", the `x` position refers to the distance from the left
+#'   of the plotting area in normalized coordinates where 0 (1) corresponds
+#'   to the left (right). If set to a x axis ID followed by "domain"
+#'   (separated by a space), the position behaves like for "paper", but
+#'   refers to the distance in fractions of the domain length from the left
+#'   of the domain of that axis: e.g., "x2 domain" refers to the domain of
+#'   the second x axis and a x position of 0.5 refers to the point between
+#'   the left and the right of the domain of the second x axis. One of
+#'   \code{"paper"}, or a string matching \code{"^x([2-9]|[1-9][0-9]+)?(
+#'   domain)?$"}.
+#' @param y0 Sets the selection's starting y position. Any value.
+#' @param y1 Sets the selection's end y position. Any value.
+#' @param yref Sets the selection's x coordinate axis. If set to a y axis
+#'   id (e.g. "y" or "y2"), the `y` position refers to a y coordinate. If
+#'   set to "paper", the `y` position refers to the distance from the
+#'   bottom of the plotting area in normalized coordinates where 0 (1)
+#'   corresponds to the bottom (top). If set to a y axis ID followed by
+#'   "domain" (separated by a space), the position behaves like for
+#'   "paper", but refers to the distance in fractions of the domain length
+#'   from the bottom of the domain of that axis: e.g., "y2 domain" refers
+#'   to the domain of the second y axis and a y position of 0.5 refers to
+#'   the point between the bottom and the top of the domain of the second y
+#'   axis. One of \code{"paper"}, or a string matching
+#'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
+#' @param ... Further properties, by their full names.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return The modified figure.
+#' @seealso \code{\link{update_selections}()}, \code{\link{go_selection}()}
+#'
+#' @concept layout objects
+#' @noMd
 #' @export
 add_selection <- function(
     fig, arg = NULL, ..., line = NULL, name = NULL, opacity = NULL,
@@ -1900,12 +2349,12 @@ add_selection <- function(
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects on this subplot grid row and/or column's axes.
 #' @param secondary_y Only objects on secondary (\code{TRUE}) or primary (\code{FALSE}) y axes.
-#' @param patch A named list of property updates (see \code{\link{go_layout_selection}()}).
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list of property updates (see \code{\link{add_selection}()}).
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_selections()} returns a list of \code{\link{go_layout_selection}()} objects; the
+#' @return \code{select_selections()} returns a list of selection objects; the
 #'   others return the modified figure.
 #' @seealso \code{\link{add_selection}()}
 #' @name update_selections
@@ -1930,7 +2379,203 @@ for_each_selection <- function(fig, fn, selector = NULL, row = NULL, col = NULL,
   for_each_layout_array(fig, "selections", fn, selector, row, col, secondary_y)
 }
 
-#' @rdname go_layout_shape
+#' Add a layout shape
+#'
+#' \code{add_shape()} adds a shape to the figure's layout \code{shapes}.
+#' Nested objects are named lists, e.g. \code{font = list(size = 14)}, or
+#' objects of the constructors their arguments name.
+#'
+#' @param arg Optional named list of properties to start from. Named
+#'   arguments take precedence.
+#' @param col Subplot grid column whose axes the object refers to (see
+#'   \code{row}).
+#' @param editable Determines whether the shape could be activated for edit
+#'   or not. Has no effect when the older editable shapes mode is enabled
+#'   via `config.editable` or `config.edits.shapePosition`. Logical.
+#' @param exclude_empty_subplots If \code{TRUE}, skip subplots that have no
+#'   traces or layout objects.
+#' @param fig A \code{go_figure} object.
+#' @param fillcolor Sets the color filling the shape's interior. Only
+#'   applies to closed shapes. Color: a CSS color string or R color name.
+#' @param fillrule Determines which regions of complex paths constitute the
+#'   interior. For more info please visit
+#'   https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule
+#'   One of \code{"evenodd"}, \code{"nonzero"}.
+#' @param label A \code{\link{go_label}()} object or named list, with
+#'   properties \code{font}, \code{padding}, \code{text}, \code{textangle},
+#'   \code{textposition}, \code{texttemplate}, \code{texttemplatefallback},
+#'   \code{xanchor} and \code{yanchor} (see \code{\link{go_label}()}).
+#' @param layer Specifies whether shapes are drawn below gridlines
+#'   ("below"), between gridlines and traces ("between") or above traces
+#'   ("above"). One of \code{"below"}, \code{"above"}, \code{"between"}.
+#' @param legend Sets the reference to a legend to show this shape in.
+#'   References to these legends are "legend", "legend2", "legend3", etc.
+#'   Settings for these legends are set in the layout, under
+#'   `layout.legend`, `layout.legend2`, etc. Subplot id: \code{"legend"},
+#'   \code{"legend2"}, \code{"legend3"}, ....
+#' @param legendgroup Sets the legend group for this shape. Traces and
+#'   shapes part of the same legend group hide/show at the same time when
+#'   toggling legend items. String.
+#' @param legendgrouptitle A \code{\link{go_legendgrouptitle}()} object or
+#'   named list, with properties \code{font} and \code{text} (see
+#'   \code{\link{go_legendgrouptitle}()}).
+#' @param legendrank Sets the legend rank for this shape. Items and groups
+#'   with smaller ranks are presented on top/left side while with
+#'   "reversed" `legend.traceorder` they are on bottom/right side. The
+#'   default legendrank is 1000, so that you can use ranks less than 1000
+#'   to place certain items before all unranked items, and ranks greater
+#'   than 1000 to go after all unranked items. When having unranked or
+#'   equal rank items shapes would be displayed after traces i.e. according
+#'   to their order in data and layout. Number.
+#' @param legendwidth Sets the width (in px or fraction) of the legend for
+#'   this shape. Number in the interval [0, Inf].
+#' @param line A \code{\link{go_shape_line}()} object or named list, with
+#'   properties \code{color}, \code{dash} and \code{width} (see
+#'   \code{\link{go_shape_line}()}).
+#' @param name When used in a template, named items are created in the
+#'   output figure in addition to any items the figure already has in this
+#'   array. You can modify these items in the output figure by making your
+#'   own item with `templateitemname` matching this `name` alongside your
+#'   modifications (including `visible: false` or `enabled: false` to hide
+#'   it). Has no effect outside of a template. String.
+#' @param opacity Sets the opacity of the shape. Number in the interval [0,
+#'   1].
+#' @param path For `type` "path" - a valid SVG path with the pixel values
+#'   replaced by data values in `xsizemode`/`ysizemode` being "scaled" and
+#'   taken unmodified as pixels relative to `xanchor` and `yanchor` in case
+#'   of "pixel" size mode. There are a few restrictions / quirks only
+#'   absolute instructions, not relative. So the allowed segments are: M,
+#'   L, H, V, Q, C, T, S, and Z arcs (A) are not allowed because radius rx
+#'   and ry are relative. In the future we could consider supporting
+#'   relative commands, but we would have to decide on how to handle date
+#'   and log axes. Note that even as is, Q and C Bezier paths that are
+#'   smooth on linear axes may not be smooth on log, and vice versa. no
+#'   chained "polybezier" commands - specify the segment type for each one.
+#'   On category axes, values are numbers scaled to the serial numbers of
+#'   categories because using the categories themselves there would be no
+#'   way to describe fractional positions On data axes: because space and T
+#'   are both normal components of path strings, we can't use either to
+#'   separate date from time parts. Therefore we'll use underscore for this
+#'   purpose: 2015-02-21_13:45:56.789 String.
+#' @param row Subplot grid row whose axes the object refers to (figures
+#'   created with \code{\link{make_subplots}()} only). May be \code{"all"}
+#'   or a vector to add the object to several cells.
+#' @param secondary_y If \code{TRUE}, refer to the secondary y axis of the
+#'   subplot.
+#' @param showlegend Determines whether or not this shape is shown in the
+#'   legend. Logical.
+#' @param templateitemname Used to refer to a named item in this array in
+#'   the template. Named items from the template will be created even
+#'   without a matching item in the input figure, but you can modify one by
+#'   making an item with `templateitemname` matching its `name`, alongside
+#'   your modifications (including `visible: false` or `enabled: false` to
+#'   hide it). If there is no template or no matching item, this item will
+#'   be hidden unless you explicitly show it with `visible: true`. String.
+#' @param type Specifies the shape type to be drawn. If "line", a line is
+#'   drawn from (`x0`,`y0`) to (`x1`,`y1`) with respect to the axes' sizing
+#'   mode. If "circle", a circle is drawn from ((`x0`+`x1`)/2,
+#'   (`y0`+`y1`)/2)) with radius (|(`x0`+`x1`)/2 - `x0`|, |(`y0`+`y1`)/2
+#'   -`y0`)|) with respect to the axes' sizing mode. If "rect", a rectangle
+#'   is drawn linking (`x0`,`y0`), (`x1`,`y0`), (`x1`,`y1`), (`x0`,`y1`),
+#'   (`x0`,`y0`) with respect to the axes' sizing mode. If "path", draw a
+#'   custom SVG path using `path`. with respect to the axes' sizing mode.
+#'   One of \code{"circle"}, \code{"rect"}, \code{"path"}, \code{"line"}.
+#' @param visible Determines whether or not this shape is visible. If
+#'   "legendonly", the shape is not drawn, but can appear as a legend item
+#'   (provided that the legend itself is visible). One of
+#'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
+#' @param x0 Sets the shape's starting x position. See `type` and
+#'   `xsizemode` for more info. Any value.
+#' @param x0shift Shifts `x0` away from the center of the category when
+#'   `xref` is a "category" or "multicategory" axis. -0.5 corresponds to
+#'   the start of the category and 0.5 corresponds to the end of the
+#'   category. Number in the interval [-1, 1].
+#' @param x1 Sets the shape's end x position. See `type` and `xsizemode`
+#'   for more info. Any value.
+#' @param x1shift Shifts `x1` away from the center of the category when
+#'   `xref` is a "category" or "multicategory" axis. -0.5 corresponds to
+#'   the start of the category and 0.5 corresponds to the end of the
+#'   category. Number in the interval [-1, 1].
+#' @param xanchor Only relevant in conjunction with `xsizemode` set to
+#'   "pixel". Specifies the anchor point on the x axis to which `x0`, `x1`
+#'   and x coordinates within `path` are relative to. E.g. useful to attach
+#'   a pixel sized shape to a certain data value. No effect when
+#'   `xsizemode` not set to "pixel". Any value.
+#' @param xref Sets the shape's x coordinate axis. If set to a x axis id
+#'   (e.g. "x" or "x2"), the `x` position refers to a x coordinate. If set
+#'   to "paper", the `x` position refers to the distance from the left of
+#'   the plotting area in normalized coordinates where 0 (1) corresponds to
+#'   the left (right). If set to a x axis ID followed by "domain"
+#'   (separated by a space), the position behaves like for "paper", but
+#'   refers to the distance in fractions of the domain length from the left
+#'   of the domain of that axis: e.g., "x2 domain" refers to the domain of
+#'   the second x axis and a x position of 0.5 refers to the point between
+#'   the left and the right of the domain of the second x axis. If an array
+#'   of axis IDs is provided, each `x` value will refer to the
+#'   corresponding axis, e.g., ['x', 'x2'] for a rectangle, line, or circle
+#'   means `x0` uses the `x` axis and `x1` uses the `x2` axis. Path shapes
+#'   using an array should have one entry for each x coordinate in the
+#'   string. One of \code{"paper"}, or a string matching
+#'   \code{"^x([2-9]|[1-9][0-9]+)?( domain)?$"}, or a vector of these.
+#' @param xsizemode Sets the shapes's sizing mode along the x axis. If set
+#'   to "scaled", `x0`, `x1` and x coordinates within `path` refer to data
+#'   values on the x axis or a fraction of the plot area's width (`xref`
+#'   set to "paper"). If set to "pixel", `xanchor` specifies the x position
+#'   in terms of data or plot fraction but `x0`, `x1` and x coordinates
+#'   within `path` are pixels relative to `xanchor`. This way, the shape
+#'   can have a fixed width while maintaining a position relative to data
+#'   or plot fraction. Note: `xsizemode` "pixel" is not supported when
+#'   `xref` is an array. One of \code{"scaled"}, \code{"pixel"}.
+#' @param y0 Sets the shape's starting y position. See `type` and
+#'   `ysizemode` for more info. Any value.
+#' @param y0shift Shifts `y0` away from the center of the category when
+#'   `yref` is a "category" or "multicategory" axis. -0.5 corresponds to
+#'   the start of the category and 0.5 corresponds to the end of the
+#'   category. Number in the interval [-1, 1].
+#' @param y1 Sets the shape's end y position. See `type` and `ysizemode`
+#'   for more info. Any value.
+#' @param y1shift Shifts `y1` away from the center of the category when
+#'   `yref` is a "category" or "multicategory" axis. -0.5 corresponds to
+#'   the start of the category and 0.5 corresponds to the end of the
+#'   category. Number in the interval [-1, 1].
+#' @param yanchor Only relevant in conjunction with `ysizemode` set to
+#'   "pixel". Specifies the anchor point on the y axis to which `y0`, `y1`
+#'   and y coordinates within `path` are relative to. E.g. useful to attach
+#'   a pixel sized shape to a certain data value. No effect when
+#'   `ysizemode` not set to "pixel". Any value.
+#' @param yref Sets the shape's y coordinate axis. If set to a y axis id
+#'   (e.g. "y" or "y2"), the `y` position refers to a y coordinate. If set
+#'   to "paper", the `y` position refers to the distance from the bottom of
+#'   the plotting area in normalized coordinates where 0 (1) corresponds to
+#'   the bottom (top). If set to a y axis ID followed by "domain"
+#'   (separated by a space), the position behaves like for "paper", but
+#'   refers to the distance in fractions of the domain length from the
+#'   bottom of the domain of that axis: e.g., "y2 domain" refers to the
+#'   domain of the second y axis and a y position of 0.5 refers to the
+#'   point between the bottom and the top of the domain of the second y
+#'   axis. If an array of axis IDs is provided, each `y` value will refer
+#'   to the corresponding axis, e.g., ['y', 'y2'] for a rectangle, line, or
+#'   circle means `y0` uses the `y` axis and `y1` uses the `y2` axis. Path
+#'   shapes using an array should have one entry for each y coordinate in
+#'   the string. One of \code{"paper"}, or a string matching
+#'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}, or a vector of these.
+#' @param ysizemode Sets the shapes's sizing mode along the y axis. If set
+#'   to "scaled", `y0`, `y1` and y coordinates within `path` refer to data
+#'   values on the y axis or a fraction of the plot area's height (`yref`
+#'   set to "paper"). If set to "pixel", `yanchor` specifies the y position
+#'   in terms of data or plot fraction but `y0`, `y1` and y coordinates
+#'   within `path` are pixels relative to `yanchor`. This way, the shape
+#'   can have a fixed height while maintaining a position relative to data
+#'   or plot fraction. Note: `ysizemode` "pixel" is not supported when
+#'   `yref` is an array. One of \code{"scaled"}, \code{"pixel"}.
+#' @param ... Further properties, by their full names.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return The modified figure.
+#' @seealso \code{\link{update_shapes}()}, \code{\link{go_shape}()}
+#'
+#' @concept layout objects
+#' @noMd
 #' @export
 add_shape <- function(
     fig, arg = NULL, ..., editable = NULL, fillcolor = NULL,
@@ -1961,12 +2606,12 @@ add_shape <- function(
 #'   or a function that takes an object and returns \code{TRUE} or \code{FALSE}.
 #' @param row,col Only objects on this subplot grid row and/or column's axes.
 #' @param secondary_y Only objects on secondary (\code{TRUE}) or primary (\code{FALSE}) y axes.
-#' @param patch A named list of property updates (see \code{\link{go_layout_shape}()}).
-#' @param ... Further named updates (names may use magic underscores).
+#' @param patch A named list of property updates (see \code{\link{add_shape}()}).
+#' @param ... Further named updates, by their full names.
 #' @param overwrite If \code{TRUE}, replace nested objects instead of merging.
 #' @param fn A function that takes an object and returns the modified object.
 #'   If it returns anything other than a list, the object is left unchanged.
-#' @return \code{select_shapes()} returns a list of \code{\link{go_layout_shape}()} objects; the
+#' @return \code{select_shapes()} returns a list of shape objects; the
 #'   others return the modified figure.
 #' @seealso \code{\link{add_shape}()}
 #' @name update_shapes

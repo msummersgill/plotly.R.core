@@ -2,21 +2,6 @@
 % Please edit documentation in R/zz-gen-choroplethmap.R, R/zz-gen-figure.R
 \name{go_choroplethmap}
 \alias{go_choroplethmap}
-\alias{go_choroplethmap_colorbar}
-\alias{go_choroplethmap_colorbar_tickfont}
-\alias{go_choroplethmap_colorbar_tickformatstop}
-\alias{go_choroplethmap_colorbar_title}
-\alias{go_choroplethmap_colorbar_title_font}
-\alias{go_choroplethmap_hoverlabel}
-\alias{go_choroplethmap_hoverlabel_font}
-\alias{go_choroplethmap_legendgrouptitle}
-\alias{go_choroplethmap_legendgrouptitle_font}
-\alias{go_choroplethmap_marker}
-\alias{go_choroplethmap_marker_line}
-\alias{go_choroplethmap_selected}
-\alias{go_choroplethmap_selected_marker}
-\alias{go_choroplethmap_unselected}
-\alias{go_choroplethmap_unselected_marker}
 \alias{add_choroplethmap}
 \alias{add_choroplethmap.default}
 \title{Choroplethmap traces}
@@ -63,197 +48,6 @@ go_choroplethmap(
   zmax = NULL,
   zmid = NULL,
   zmin = NULL,
-  skip_invalid = FALSE
-)
-
-go_choroplethmap_colorbar(
-  arg = NULL,
-  ...,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  borderwidth = NULL,
-  dtick = NULL,
-  exponentformat = NULL,
-  labelalias = NULL,
-  len = NULL,
-  lenmode = NULL,
-  minexponent = NULL,
-  nticks = NULL,
-  orientation = NULL,
-  outlinecolor = NULL,
-  outlinewidth = NULL,
-  separatethousands = NULL,
-  showexponent = NULL,
-  showticklabels = NULL,
-  showtickprefix = NULL,
-  showticksuffix = NULL,
-  thickness = NULL,
-  thicknessmode = NULL,
-  tick0 = NULL,
-  tickangle = NULL,
-  tickcolor = NULL,
-  tickfont = NULL,
-  tickformat = NULL,
-  tickformatstops = NULL,
-  ticklabeloverflow = NULL,
-  ticklabelposition = NULL,
-  ticklabelstep = NULL,
-  ticklen = NULL,
-  tickmode = NULL,
-  tickprefix = NULL,
-  ticks = NULL,
-  ticksuffix = NULL,
-  ticktext = NULL,
-  tickvals = NULL,
-  tickwidth = NULL,
-  title = NULL,
-  x = NULL,
-  xanchor = NULL,
-  xpad = NULL,
-  xref = NULL,
-  y = NULL,
-  yanchor = NULL,
-  ypad = NULL,
-  yref = NULL,
-  skip_invalid = FALSE
-)
-
-go_choroplethmap_colorbar_tickfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_choroplethmap_colorbar_tickformatstop(
-  arg = NULL,
-  ...,
-  dtickrange = NULL,
-  enabled = NULL,
-  name = NULL,
-  templateitemname = NULL,
-  value = NULL,
-  skip_invalid = FALSE
-)
-
-go_choroplethmap_colorbar_title(
-  arg = NULL,
-  ...,
-  font = NULL,
-  side = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_choroplethmap_colorbar_title_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_choroplethmap_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  skip_invalid = FALSE
-)
-
-go_choroplethmap_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_choroplethmap_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_choroplethmap_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_choroplethmap_marker(
-  arg = NULL,
-  ...,
-  line = NULL,
-  opacity = NULL,
-  skip_invalid = FALSE
-)
-
-go_choroplethmap_marker_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_choroplethmap_selected(arg = NULL, ..., marker = NULL, skip_invalid = FALSE)
-
-go_choroplethmap_selected_marker(
-  arg = NULL,
-  ...,
-  opacity = NULL,
-  skip_invalid = FALSE
-)
-
-go_choroplethmap_unselected(
-  arg = NULL,
-  ...,
-  marker = NULL,
-  skip_invalid = FALSE
-)
-
-go_choroplethmap_unselected_marker(
-  arg = NULL,
-  ...,
-  opacity = NULL,
   skip_invalid = FALSE
 )
 
@@ -311,10 +105,7 @@ add_choroplethmap(fig, ...)
 \item{arg}{Optional named list, or graph object of the same type, to
 initialise properties from (constructors). Named arguments take precedence.}
 
-\item{...}{Further properties, including nested properties in
-"magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}. Property values may be one-sided
-formulas, evaluated in \code{data} for \code{add_*()} functions.}
+\item{...}{Not used: properties must be named in full.}
 
 \item{autocolorscale}{Determines whether the colorscale is a default
 palette (`autocolorscale: true`) or the palette determined by
@@ -335,8 +126,11 @@ etc. Settings for these shared color axes are set in the layout, under
 scales can be linked to the same color axis. Subplot id:
 \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
 
-\item{colorbar}{Named list or \code{\link{go_choroplethmap_colorbar}()}
-object.}
+\item{colorbar}{A \code{\link{go_colorbar}()} object or named list, with
+properties \code{bgcolor}, \code{bordercolor}, \code{borderwidth},
+\code{dtick}, \code{exponentformat}, \code{labelalias}, \code{len},
+\code{lenmode}, \code{minexponent}, \code{nticks}, \code{orientation},
+\code{outlinecolor} and 34 more (see \code{\link{go_colorbar}()}).}
 
 \item{colorscale}{Sets the colorscale. The colorscale must be an array
 containing arrays mapping a normalized value to an rgb, rgba, hex,
@@ -371,8 +165,10 @@ combination of \code{"location"}, \code{"z"}, \code{"text"},
 \code{"name"} joined with \code{"+"}, or one of \code{"all"},
 \code{"none"}, \code{"skip"}, or a vector of these.}
 
-\item{hoverlabel}{Named list or
-\code{\link{go_choroplethmap_hoverlabel}()} object.}
+\item{hoverlabel}{A \code{\link{go_hoverlabel}()} object or named list,
+with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+\code{font}, \code{namelength} and \code{showarrow} (see
+\code{\link{go_hoverlabel}()}).}
 
 \item{hovertemplate}{Template string used for rendering the information
 that appear on hover box. Note that this will override `hoverinfo`.
@@ -425,8 +221,9 @@ Settings for these legends are set in the layout, under
 shapes part of the same legend group hide/show at the same time when
 toggling legend items. String.}
 
-\item{legendgrouptitle}{Named list or
-\code{\link{go_choroplethmap_legendgrouptitle}()} object.}
+\item{legendgrouptitle}{A \code{\link{go_legendgrouptitle}()} object or
+named list, with properties \code{font} and \code{text} (see
+\code{\link{go_legendgrouptitle}()}).}
 
 \item{legendrank}{Sets the legend rank for this trace. Items and groups
 with smaller ranks are presented on top/left side while with
@@ -444,14 +241,9 @@ this trace. Number in the interval [0, Inf].}
 their feature `id` field. Data array: a vector, factor, Date/POSIXct
 vector, matrix or list.}
 
-\item{marker}{\strong{\code{go_choroplethmap()}}: Named list or
-  \code{\link{go_choroplethmap_marker}()} object.
-
-  \strong{\code{go_choroplethmap_selected()}}: Named list or
-  \code{\link{go_choroplethmap_selected_marker}()} object.
-
-  \strong{\code{go_choroplethmap_unselected()}}: Named list or
-  \code{\link{go_choroplethmap_unselected_marker}()} object.}
+\item{marker}{A \code{\link{go_choroplethmap_marker}()} object or named
+list, with properties \code{line} and \code{opacity} (see
+\code{\link{go_choroplethmap_marker}()}).}
 
 \item{meta}{Assigns extra meta information associated with this trace
 that can be used in various text attributes. Attributes such as trace
@@ -463,23 +255,15 @@ trace, simply use `\%\{meta[i]\}` where `i` is the index or key of the
 use `\%\{data[n[.meta[i]\}` where `i` is the index or key of the
 `meta` and `n` is the trace index. Any value.}
 
-\item{name}{\strong{\code{go_choroplethmap()}}: Sets the trace name. The
-  trace name appears as the legend item and on hover. String.
-
-  \strong{\code{go_choroplethmap_colorbar_tickformatstop()}}: When used
-  in a template, named items are created in the output figure in
-  addition to any items the figure already has in this array. You can
-  modify these items in the output figure by making your own item with
-  `templateitemname` matching this `name` alongside your modifications
-  (including `visible: false` or `enabled: false` to hide it). Has no
-  effect outside of a template. String.}
+\item{name}{Sets the trace name. The trace name appears as the legend
+item and on hover. String.}
 
 \item{reversescale}{Reverses the color mapping if true. If true, `zmin`
 will correspond to the last color in the array and `zmax` will
 correspond to the first color. Logical.}
 
-\item{selected}{Named list or \code{\link{go_choroplethmap_selected}()}
-object.}
+\item{selected}{A \code{\link{go_selected}()} object or named list, with
+properties \code{marker} (see \code{\link{go_selected}()}).}
 
 \item{selectedpoints}{Array containing integer indices of selected
 points. Has an effect only for traces that support selections. Note
@@ -499,14 +283,8 @@ and a map subplot. If "map" (the default value), the data refer to
 `layout.map`. If "map2", the data refer to `layout.map2`, and so on.
 Subplot id: \code{"map"}, \code{"map2"}, \code{"map3"}, ....}
 
-\item{text}{\strong{\code{go_choroplethmap()}}: Sets the text elements
-  associated with each location. String, or a vector of these.
-
-  \strong{\code{go_choroplethmap_colorbar_title()}}: Sets the title of
-  the color bar. String.
-
-  \strong{\code{go_choroplethmap_legendgrouptitle()}}: Sets the title of
-  the legend group. String.}
+\item{text}{Sets the text elements associated with each location.
+String, or a vector of these.}
 
 \item{uid}{Assign an id to this trace, Use this to provide object
 constancy between traces during animations and transitions. String.}
@@ -526,8 +304,8 @@ array, such that the same trace has a different index, you can still
 preserve user-driven changes if you give each trace a `uid` that stays
 with it as it moves. Any value.}
 
-\item{unselected}{Named list or
-\code{\link{go_choroplethmap_unselected}()} object.}
+\item{unselected}{A \code{\link{go_unselected}()} object or named list,
+with properties \code{marker} (see \code{\link{go_unselected}()}).}
 
 \item{visible}{Determines whether or not this trace is visible. If
 "legendonly", the trace is not drawn, but can appear as a legend item
@@ -557,416 +335,11 @@ Number.}
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
 
-\item{bgcolor}{\strong{\code{go_choroplethmap_colorbar()}}: Sets the
-  color of padded area. Color: a CSS color string or R color name.
-
-  \strong{\code{go_choroplethmap_hoverlabel()}}: Sets the background
-  color of the hover labels for this trace Color: a CSS color string or
-  R color name, or a vector of these.}
-
-\item{bordercolor}{\strong{\code{go_choroplethmap_colorbar()}}: Sets the
-  axis line color. Color: a CSS color string or R color name.
-
-  \strong{\code{go_choroplethmap_hoverlabel()}}: Sets the border color
-  of the hover labels for this trace. Color: a CSS color string or R
-  color name, or a vector of these.}
-
-\item{borderwidth}{Sets the width (in px) or the border enclosing this
-color bar. Number in the interval [0, Inf].}
-
-\item{dtick}{Sets the step in-between ticks on this color bar. Use with
-`tick0`. Must be a positive number. Note: unlike on x/y axes, the
-special "log" and "date" string forms ("L<f>", "D1", "D2", "M<n>") are
-not supported here: this axis is always linear, so such strings are
-silently ignored and the step is set to 1. Any value.}
-
-\item{exponentformat}{Determines a formatting rule for the tick
-exponents. For example, consider the number 1,000,000,000. If "none",
-it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-the above ranges, the formatting rule will automatically be switched
-to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-\code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.}
-
-\item{labelalias}{Replacement text for specific tick or hover labels.
-For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-to Canada. The labels we would have shown must match the keys exactly,
-after adding any tickprefix or ticksuffix. For negative numbers the
-minus sign symbol used (U+2212) is wider than the regular ascii dash.
-That means you need to use -1 instead of -1. labelalias can be used
-with any axis type, and both keys (if needed) and values (if desired)
-can include html-like tags or MathJax. Any value.}
-
-\item{len}{Sets the length of the color bar This measure excludes the
-padding of both ends. That is, the color bar length is this length
-minus the padding on both ends. Number in the interval [0, Inf].}
-
-\item{lenmode}{Determines whether this color bar's length (i.e. the
-measure in the color variation direction) is set in units of plot
-"fraction" or in *pixels. Use `len` to set the value. One of
-\code{"fraction"}, \code{"pixels"}.}
-
-\item{minexponent}{Hide SI prefix for 10^n if |n| is below this number.
-This only has an effect when `tickformat` is "SI" or "B". Number in
-the interval [0, Inf].}
-
-\item{nticks}{Specifies the maximum number of ticks for the particular
-axis. The actual number of ticks will be chosen automatically to be
-less than or equal to `nticks`. Has an effect only if `tickmode` is
-set to "auto". Integer in the interval [0, Inf].}
-
-\item{orientation}{Sets the orientation of the colorbar. One of
-\code{"h"}, \code{"v"}.}
-
-\item{outlinecolor}{Sets the axis line color. Color: a CSS color string
-or R color name.}
-
-\item{outlinewidth}{Sets the width (in px) of the axis line. Number in
-the interval [0, Inf].}
-
-\item{separatethousands}{If "true", even 4-digit integers are separated
-Logical.}
-
-\item{showexponent}{If "all", all exponents are shown besides their
-significands. If "first", only the exponent of the first tick is
-shown. If "last", only the exponent of the last tick is shown. If
-"none", no exponents appear. One of \code{"all"}, \code{"first"},
-\code{"last"}, \code{"none"}.}
-
-\item{showticklabels}{Determines whether or not the tick labels are
-drawn. Logical.}
-
-\item{showtickprefix}{If "all", all tick labels are displayed with a
-prefix. If "first", only the first tick is displayed with a prefix. If
-"last", only the last tick is displayed with a suffix. If "none", tick
-prefixes are hidden. One of \code{"all"}, \code{"first"},
-\code{"last"}, \code{"none"}.}
-
-\item{showticksuffix}{Same as `showtickprefix` but for tick suffixes.
-One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.}
-
-\item{thickness}{Sets the thickness of the color bar This measure
-excludes the size of the padding, ticks and labels. Number in the
-interval [0, Inf].}
-
-\item{thicknessmode}{Determines whether this color bar's thickness (i.e.
-the measure in the constant color direction) is set in units of plot
-"fraction" or in "pixels". Use `thickness` to set the value. One of
-\code{"fraction"}, \code{"pixels"}.}
-
-\item{tick0}{Sets the placement of the first tick on this axis. Use with
-`dtick`. If the axis `type` is "log", then you must take the log of
-your starting tick (e.g. to set the starting tick to 100, set the
-`tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-If the axis `type` is "date", it should be a date string, like date
-data. If the axis `type` is "category", it should be a number, using
-the scale where each category is assigned a serial number from zero in
-the order it appears. Any value.}
-
-\item{tickangle}{Sets the angle of the tick labels with respect to the
-horizontal. For example, a `tickangle` of -90 draws the tick labels
-vertically. Angle in degrees.}
-
-\item{tickcolor}{Sets the tick color. Color: a CSS color string or R
-color name.}
-
-\item{tickfont}{Sets the color bar's tick label font Named list or
-\code{\link{go_choroplethmap_colorbar_tickfont}()} object.}
-
-\item{tickformat}{Sets the tick label formatting rule using d3
-formatting mini-languages which are very similar to those in Python.
-For numbers, see:
-https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-We add two items to d3's date formatter: "\%h" for half of the year as
-a decimal number as well as "\%\{n\}f" for fractional seconds with n
-digits. For example, "2016-10-13 09:15:23.456" with tickformat
-"\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.}
-
-\item{tickformatstops}{List of named lists or
-\code{\link{go_choroplethmap_colorbar_tickformatstop}()} objects.}
-
-\item{ticklabeloverflow}{Determines how we handle tick labels that would
-overflow either the graph div or the domain of the axis. The default
-value for inside tick labels is "hide past domain". In other cases the
-default is "hide past div". One of \code{"allow"}, \code{"hide past
-div"}, \code{"hide past domain"}.}
-
-\item{ticklabelposition}{Determines where tick labels are drawn relative
-to the ticks. Left and right options are used when `orientation` is
-"h", top and bottom when `orientation` is "v". One of
-\code{"outside"}, \code{"inside"}, \code{"outside top"}, \code{"inside
-top"}, \code{"outside left"}, \code{"inside left"}, \code{"outside
-right"}, \code{"inside right"}, \code{"outside bottom"}, \code{"inside
-bottom"}.}
-
-\item{ticklabelstep}{Sets the spacing between tick labels as compared to
-the spacing between ticks. A value of 1 (default) means each tick gets
-a label. A value of 2 means shows every 2nd label. A larger value n
-means only every nth tick is labeled. `tick0` determines which labels
-are shown. Not implemented for axes with `type` "log" or
-"multicategory", or when `tickmode` is "array". Integer in the
-interval [1, Inf].}
-
-\item{ticklen}{Sets the tick length (in px). Number in the interval [0,
-Inf].}
-
-\item{tickmode}{Sets the tick mode for this axis. If "auto", the number
-of ticks is set via `nticks`. If "linear", the placement of the ticks
-is determined by a starting position `tick0` and a tick step `dtick`
-("linear" is the default value if `tick0` and `dtick` are provided).
-If "array", the placement of the ticks is set via `tickvals` and the
-tick text is `ticktext`. ("array" is the default value if `tickvals`
-is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.}
-
-\item{tickprefix}{Sets a tick label prefix. String.}
-
-\item{ticks}{Determines whether ticks are drawn or not. If **, this
-axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-drawn outside (inside) the axis lines. One of \code{"outside"},
-\code{"inside"}, \code{""}.}
-
-\item{ticksuffix}{Sets a tick label suffix. String.}
-
-\item{ticktext}{Sets the text displayed at the ticks position via
-`tickvals`. Only has an effect if `tickmode` is set to "array". Used
-with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.}
-
-\item{tickvals}{Sets the values at which ticks on this axis appear. Only
-has an effect if `tickmode` is set to "array". Used with `ticktext`.
-Data array: a vector, factor, Date/POSIXct vector, matrix or list.}
-
-\item{tickwidth}{Sets the tick width (in px). Number in the interval [0,
-Inf].}
-
-\item{title}{String (the title text), named list or
-\code{\link{go_choroplethmap_colorbar_title}()} object.}
-
-\item{x}{Sets the x position with respect to `xref` of the color bar (in
-plot fraction). When `xref` is "paper", defaults to 1.02 when
-`orientation` is "v" and 0.5 when `orientation` is "h". When `xref` is
-"container", defaults to 1 when `orientation` is "v" and 0.5 when
-`orientation` is "h". Must be between 0 and 1 if `xref` is "container"
-and between "-2" and 3 if `xref` is "paper". Number.}
-
-\item{xanchor}{Sets this color bar's horizontal position anchor. This
-anchor binds the `x` position to the "left", "center" or "right" of
-the color bar. Defaults to "left" when `orientation` is "v" and
-"center" when `orientation` is "h". One of \code{"left"},
-\code{"center"}, \code{"right"}.}
-
-\item{xpad}{Sets the amount of padding (in px) along the x direction.
-Number in the interval [0, Inf].}
-
-\item{xref}{Sets the container `x` refers to. "container" spans the
-entire `width` of the plot. "paper" refers to the width of the
-plotting area only. One of \code{"container"}, \code{"paper"}.}
-
-\item{y}{Sets the y position with respect to `yref` of the color bar (in
-plot fraction). When `yref` is "paper", defaults to 0.5 when
-`orientation` is "v" and 1.02 when `orientation` is "h". When `yref`
-is "container", defaults to 0.5 when `orientation` is "v" and 1 when
-`orientation` is "h". Must be between 0 and 1 if `yref` is "container"
-and between "-2" and 3 if `yref` is "paper". Number.}
-
-\item{yanchor}{Sets this color bar's vertical position anchor This
-anchor binds the `y` position to the "top", "middle" or "bottom" of
-the color bar. Defaults to "middle" when `orientation` is "v" and
-"bottom" when `orientation` is "h". One of \code{"top"},
-\code{"middle"}, \code{"bottom"}.}
-
-\item{ypad}{Sets the amount of padding (in px) along the y direction.
-Number in the interval [0, Inf].}
-
-\item{yref}{Sets the container `y` refers to. "container" spans the
-entire `height` of the plot. "paper" refers to the height of the
-plotting area only. One of \code{"container"}, \code{"paper"}.}
-
-\item{color}{\strong{\code{go_choroplethmap_colorbar_tickfont()},
-  \code{go_choroplethmap_colorbar_title_font()},
-  \code{go_choroplethmap_legendgrouptitle_font()}}: Color: a CSS color
-  string or R color name.
-
-  \strong{\code{go_choroplethmap_hoverlabel_font()}}: Color: a CSS color
-  string or R color name, or a vector of these.
-
-  \strong{\code{go_choroplethmap_marker_line()}}: Sets the marker.line
-  color. It accepts either a specific color or an array of numbers that
-  are mapped to the colorscale relative to the max and min values of the
-  array or relative to `marker.line.cmin` and `marker.line.cmax` if set.
-  Color: a CSS color string or R color name, or a vector of these.}
-
-\item{family}{\strong{\code{go_choroplethmap_colorbar_tickfont()},
-  \code{go_choroplethmap_colorbar_title_font()},
-  \code{go_choroplethmap_legendgrouptitle_font()}}: HTML font family -
-  the typeface that will be applied by the web browser. The web browser
-  can only apply a font if it is available on the system where it runs.
-  Provide multiple font families, separated by commas, to indicate the
-  order in which to apply fonts if they aren't available. String.
-
-  \strong{\code{go_choroplethmap_hoverlabel_font()}}: HTML font family -
-  the typeface that will be applied by the web browser. The web browser
-  can only apply a font if it is available on the system where it runs.
-  Provide multiple font families, separated by commas, to indicate the
-  order in which to apply fonts if they aren't available. String, or a
-  vector of these.}
-
-\item{lineposition}{\strong{\code{go_choroplethmap_colorbar_tickfont()},
-  \code{go_choroplethmap_colorbar_title_font()},
-  \code{go_choroplethmap_legendgrouptitle_font()}}: Sets the kind of
-  decoration line(s) with text, such as an "under", "over" or "through"
-  as well as combinations e.g. "under+over", etc. Any combination of
-  \code{"under"}, \code{"over"}, \code{"through"} joined with
-  \code{"+"}, or one of \code{"none"}.
-
-  \strong{\code{go_choroplethmap_hoverlabel_font()}}: Sets the kind of
-  decoration line(s) with text, such as an "under", "over" or "through"
-  as well as combinations e.g. "under+over", etc. Any combination of
-  \code{"under"}, \code{"over"}, \code{"through"} joined with
-  \code{"+"}, or one of \code{"none"}, or a vector of these.}
-
-\item{shadow}{\strong{\code{go_choroplethmap_colorbar_tickfont()},
-  \code{go_choroplethmap_colorbar_title_font()},
-  \code{go_choroplethmap_legendgrouptitle_font()}}: Sets the shape and
-  color of the shadow behind text. "auto" places minimal shadow and
-  applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.
-
-  \strong{\code{go_choroplethmap_hoverlabel_font()}}: Sets the shape and
-  color of the shadow behind text. "auto" places minimal shadow and
-  applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.}
-
-\item{size}{\strong{\code{go_choroplethmap_colorbar_tickfont()},
-  \code{go_choroplethmap_colorbar_title_font()},
-  \code{go_choroplethmap_legendgrouptitle_font()}}: Number in the
-  interval [1, Inf].
-
-  \strong{\code{go_choroplethmap_hoverlabel_font()}}: Number in the
-  interval [1, Inf], or a vector of these.}
-
-\item{style}{\strong{\code{go_choroplethmap_colorbar_tickfont()},
-  \code{go_choroplethmap_colorbar_title_font()},
-  \code{go_choroplethmap_legendgrouptitle_font()}}: Sets whether a font
-  should be styled with a normal or italic face from its family. One of
-  \code{"normal"}, \code{"italic"}.
-
-  \strong{\code{go_choroplethmap_hoverlabel_font()}}: Sets whether a
-  font should be styled with a normal or italic face from its family.
-  One of \code{"normal"}, \code{"italic"}, or a vector of these.}
-
-\item{textcase}{\strong{\code{go_choroplethmap_colorbar_tickfont()},
-  \code{go_choroplethmap_colorbar_title_font()},
-  \code{go_choroplethmap_legendgrouptitle_font()}}: Sets capitalization
-  of text. It can be used to make text appear in all-uppercase or
-  all-lowercase, or with each word capitalized. One of \code{"normal"},
-  \code{"word caps"}, \code{"upper"}, \code{"lower"}.
-
-  \strong{\code{go_choroplethmap_hoverlabel_font()}}: Sets
-  capitalization of text. It can be used to make text appear in
-  all-uppercase or all-lowercase, or with each word capitalized. One of
-  \code{"normal"}, \code{"word caps"}, \code{"upper"}, \code{"lower"},
-  or a vector of these.}
-
-\item{variant}{\strong{\code{go_choroplethmap_colorbar_tickfont()},
-  \code{go_choroplethmap_colorbar_title_font()},
-  \code{go_choroplethmap_legendgrouptitle_font()}}: Sets the variant of
-  the font. One of \code{"normal"}, \code{"small-caps"},
-  \code{"all-small-caps"}, \code{"all-petite-caps"},
-  \code{"petite-caps"}, \code{"unicase"}.
-
-  \strong{\code{go_choroplethmap_hoverlabel_font()}}: Sets the variant
-  of the font. One of \code{"normal"}, \code{"small-caps"},
-  \code{"all-small-caps"}, \code{"all-petite-caps"},
-  \code{"petite-caps"}, \code{"unicase"}, or a vector of these.}
-
-\item{weight}{\strong{\code{go_choroplethmap_colorbar_tickfont()},
-  \code{go_choroplethmap_colorbar_title_font()},
-  \code{go_choroplethmap_legendgrouptitle_font()}}: Sets the weight (or
-  boldness) of the font. Integer in the interval [1, 1000].
-
-  \strong{\code{go_choroplethmap_hoverlabel_font()}}: Sets the weight
-  (or boldness) of the font. Integer in the interval [1, 1000], or a
-  vector of these.}
-
-\item{dtickrange}{range ["min", "max"], where "min", "max" - dtick
-values which describe some zoom level, it is possible to omit "min" or
-"max" value by passing "null" Vector or list of 2 element(s).}
-
-\item{enabled}{Determines whether or not this stop is used. If `false`,
-this stop is ignored even within its `dtickrange`. Logical.}
-
-\item{templateitemname}{Used to refer to a named item in this array in
-the template. Named items from the template will be created even
-without a matching item in the input figure, but you can modify one by
-making an item with `templateitemname` matching its `name`, alongside
-your modifications (including `visible: false` or `enabled: false` to
-hide it). If there is no template or no matching item, this item will
-be hidden unless you explicitly show it with `visible: true`. String.}
-
-\item{value}{string - dtickformat for described zoom level, the same as
-"tickformat" String.}
-
-\item{font}{\strong{\code{go_choroplethmap_colorbar_title()}}: Sets this
-  color bar's title font. Named list or
-  \code{\link{go_choroplethmap_colorbar_title_font}()} object.
-
-  \strong{\code{go_choroplethmap_hoverlabel()}}: Sets the font used in
-  hover labels. Named list or
-  \code{\link{go_choroplethmap_hoverlabel_font}()} object.
-
-  \strong{\code{go_choroplethmap_legendgrouptitle()}}: Sets this legend
-  group's title font. Named list or
-  \code{\link{go_choroplethmap_legendgrouptitle_font}()} object.}
-
-\item{side}{Determines the location of color bar's title with respect to
-the color bar. Defaults to "top" when `orientation` is "v" and
-defaults to "right" when `orientation` is "h". One of \code{"right"},
-\code{"top"}, \code{"bottom"}.}
-
-\item{align}{Sets the horizontal alignment of the text content within
-hover label box. Has an effect only if the hover label text spans two
-or more lines One of \code{"left"}, \code{"right"}, \code{"auto"}, or
-a vector of these.}
-
-\item{namelength}{Sets the default length (in number of characters) of
-the trace name in the hover labels for all traces. -1 shows the whole
-name regardless of length. 0-3 shows the first 0-3 characters, and an
-integer >3 will show the whole name if it is less than that many
-characters, but if it is longer, will truncate to `namelength - 3`
-characters and add an ellipsis. Integer in the interval [-1, Inf], or
-a vector of these.}
-
-\item{showarrow}{Sets whether or not to show the hover label
-arrow/triangle pointing to the data point. Logical.}
-
-\item{line}{Named list or \code{\link{go_choroplethmap_marker_line}()}
-object.}
-
-\item{opacity}{\strong{\code{go_choroplethmap_marker()}}: Sets the
-  opacity of the locations. Number in the interval [0, 1], or a vector
-  of these.
-
-  \strong{\code{go_choroplethmap_selected_marker()}}: Sets the marker
-  opacity of selected points. Number in the interval [0, 1].
-
-  \strong{\code{go_choroplethmap_unselected_marker()}}: Sets the marker
-  opacity of unselected points, applied only when a selection exists.
-  Number in the interval [0, 1].}
-
-\item{width}{Sets the width (in px) of the lines bounding the marker
-points. Number in the interval [0, Inf], or a vector of these.}
-
 \item{fig}{A \code{go_figure} object.}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
-~col}, \code{marker_size = ~col}) are evaluated. Default: the data
+~col}, \code{marker = list(size = ~col)}, \code{marker =
+go_scatter_marker(size = ~col)}) are evaluated. Default: the data
 given to \code{\link{go_figure}()}. Only the evaluated values are
 added to the trace. A \code{crosstalk::SharedData} works the same way,
 and links the trace to its crosstalk group (see
@@ -981,8 +354,8 @@ to address several cells.}
 to address several cells.}
 }
 \value{
-Each \code{go_*()} function returns a graph object of the same
-  class as its name; \code{add_*()} functions return the modified figure.
+\code{go_*()} functions return a graph object;
+  \code{add_*()} functions return the modified figure.
 }
 \description{
 GeoJSON features to be filled are set in `geojson` The data that
@@ -990,38 +363,18 @@ describes the choropleth value-to-color mapping is set in `locations` and
 `z`.
 }
 \details{
-\code{go_choroplethmap()} and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-\code{\link{plotly_obj-modify}()}). \code{add_choroplethmap()} creates an
-object and adds it to a figure.
+\code{go_choroplethmap()} creates a validated graph object (a named
+list). \code{add_choroplethmap()} creates one and adds it to a figure.
 
-Nested objects documented here:
-\describe{
-\item{\code{go_choroplethmap_colorbar()}}{\code{choroplethmap.colorbar}}
-\item{\code{go_choroplethmap_colorbar_tickfont()}}{\code{choroplethmap.colorbar.tickfont}:
-Sets the color bar's tick label font}
-\item{\code{go_choroplethmap_colorbar_tickformatstop()}}{\code{choroplethmap.colorbar.tickformatstop}}
-\item{\code{go_choroplethmap_colorbar_title()}}{\code{choroplethmap.colorbar.title}}
-\item{\code{go_choroplethmap_colorbar_title_font()}}{\code{choroplethmap.colorbar.title.font}:
-Sets this color bar's title font.}
-\item{\code{go_choroplethmap_hoverlabel()}}{\code{choroplethmap.hoverlabel}}
-\item{\code{go_choroplethmap_hoverlabel_font()}}{\code{choroplethmap.hoverlabel.font}:
-Sets the font used in hover labels.}
-\item{\code{go_choroplethmap_legendgrouptitle()}}{\code{choroplethmap.legendgrouptitle}}
-\item{\code{go_choroplethmap_legendgrouptitle_font()}}{\code{choroplethmap.legendgrouptitle.font}:
-Sets this legend group's title font.}
-\item{\code{go_choroplethmap_marker()}}{\code{choroplethmap.marker}}
-\item{\code{go_choroplethmap_marker_line()}}{\code{choroplethmap.marker.line}}
-\item{\code{go_choroplethmap_selected()}}{\code{choroplethmap.selected}}
-\item{\code{go_choroplethmap_selected_marker()}}{\code{choroplethmap.selected.marker}}
-\item{\code{go_choroplethmap_unselected()}}{\code{choroplethmap.unselected}}
-\item{\code{go_choroplethmap_unselected_marker()}}{\code{choroplethmap.unselected.marker}}
-}
-}
-\examples{
-go_choroplethmap()
+
+Nested objects are given as named lists or with their constructors, which
+are linked from the arguments below. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+\code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+evaluated in the data, and then checked, when the trace is added with
+\code{add_<trace>()} or \code{add_trace()}.
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}
 }
+\concept{traces}

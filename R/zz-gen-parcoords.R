@@ -6,41 +6,265 @@
 #' samples are specified in `dimensions`. The colors are set in
 #' `line.color`.
 #'
-#' \code{go_parcoords()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}). \code{add_parcoords()} creates an
-#' object and adds it to a figure.
+#' \code{go_parcoords()} creates a validated graph object (a named list).
+#' \code{add_parcoords()} creates one and adds it to a figure.
 #'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_parcoords_dimension()}}{\code{parcoords.dimension}: The
-#' dimensions (variables) of the parallel coordinates chart. 2..60
-#' dimensions are supported.}
-#' \item{\code{go_parcoords_domain()}}{\code{parcoords.domain}}
-#' \item{\code{go_parcoords_labelfont()}}{\code{parcoords.labelfont}: Sets
-#' the font for the `dimension` labels.}
-#' \item{\code{go_parcoords_legendgrouptitle()}}{\code{parcoords.legendgrouptitle}}
-#' \item{\code{go_parcoords_legendgrouptitle_font()}}{\code{parcoords.legendgrouptitle.font}:
-#' Sets this legend group's title font.}
-#' \item{\code{go_parcoords_line()}}{\code{parcoords.line}}
-#' \item{\code{go_parcoords_line_colorbar()}}{\code{parcoords.line.colorbar}}
-#' \item{\code{go_parcoords_line_colorbar_tickfont()}}{\code{parcoords.line.colorbar.tickfont}:
-#' Sets the color bar's tick label font}
-#' \item{\code{go_parcoords_line_colorbar_tickformatstop()}}{\code{parcoords.line.colorbar.tickformatstop}}
-#' \item{\code{go_parcoords_line_colorbar_title()}}{\code{parcoords.line.colorbar.title}}
-#' \item{\code{go_parcoords_line_colorbar_title_font()}}{\code{parcoords.line.colorbar.title.font}:
-#' Sets this color bar's title font.}
-#' \item{\code{go_parcoords_rangefont()}}{\code{parcoords.rangefont}: Sets
-#' the font for the `dimension` range values.}
-#' \item{\code{go_parcoords_tickfont()}}{\code{parcoords.tickfont}: Sets the
-#' font for the `dimension` tick values.}
-#' \item{\code{go_parcoords_unselected()}}{\code{parcoords.unselected}}
-#' \item{\code{go_parcoords_unselected_line()}}{\code{parcoords.unselected.line}}
-#' }
+#' @details
+#' Nested objects are given as named lists or with their constructors, which
+#' are linked from the arguments below. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+#' evaluated in the data, and then checked, when the trace is added with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
+#' @param col Subplot grid column (figures created with
+#'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
+#'   to address several cells.
+#' @param customdata Assigns extra data each datum. This may be useful when
+#'   listening to hover, click and selection events. Note that, "scatter"
+#'   traces also appends customdata items in the markers DOM elements Data
+#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param data A data frame in which formula properties (e.g. \code{x =
+#'   ~col}, \code{marker = list(size = ~col)}, \code{marker =
+#'   go_scatter_marker(size = ~col)}) are evaluated. Default: the data
+#'   given to \code{\link{go_figure}()}. Only the evaluated values are
+#'   added to the trace. A \code{crosstalk::SharedData} works the same way,
+#'   and links the trace to its crosstalk group (see
+#'   \code{\link{highlight}()}).
+#' @param dimensions List, each element a
+#'   \code{\link{go_parcoords_dimension}()} object or named list, with
+#'   properties \code{constraintrange}, \code{label}, \code{multiselect},
+#'   \code{name}, \code{range}, \code{templateitemname}, \code{tickformat},
+#'   \code{ticktext}, \code{tickvals}, \code{values} and \code{visible}
+#'   (see \code{\link{go_parcoords_dimension}()}).
+#' @param domain A \code{\link{go_domain}()} object or named list, with
+#'   properties \code{column}, \code{row}, \code{x} and \code{y} (see
+#'   \code{\link{go_domain}()}).
+#' @param fig A \code{go_figure} object.
+#' @param ids Assigns id labels to each datum. These ids for object
+#'   constancy of data points during animation. Should be an array of
+#'   strings, not numbers or any other type. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param labelangle Sets the angle of the labels with respect to the
+#'   horizontal. For example, a `tickangle` of -90 draws the labels
+#'   vertically. Tilted labels with "labelangle" may be positioned better
+#'   inside margins when `labelposition` is set to "bottom". Angle in
+#'   degrees.
+#' @param labelfont Sets the font for the `dimension` labels. A
+#'   \code{\link{go_font}()} object or named list, with properties
+#'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#'   \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#'   \code{weight} (see \code{\link{go_font}()}).
+#' @param labelside Specifies the location of the `label`. "top" positions
+#'   labels above, next to the title "bottom" positions labels below the
+#'   graph Tilted labels with "labelangle" may be positioned better inside
+#'   margins when `labelposition` is set to "bottom". One of \code{"top"},
+#'   \code{"bottom"}.
+#' @param legend Sets the reference to a legend to show this trace in.
+#'   References to these legends are "legend", "legend2", "legend3", etc.
+#'   Settings for these legends are set in the layout, under
+#'   `layout.legend`, `layout.legend2`, etc. Subplot id: \code{"legend"},
+#'   \code{"legend2"}, \code{"legend3"}, ....
+#' @param legendgrouptitle A \code{\link{go_legendgrouptitle}()} object or
+#'   named list, with properties \code{font} and \code{text} (see
+#'   \code{\link{go_legendgrouptitle}()}).
+#' @param legendrank Sets the legend rank for this trace. Items and groups
+#'   with smaller ranks are presented on top/left side while with
+#'   "reversed" `legend.traceorder` they are on bottom/right side. The
+#'   default legendrank is 1000, so that you can use ranks less than 1000
+#'   to place certain items before all unranked items, and ranks greater
+#'   than 1000 to go after all unranked items. When having unranked or
+#'   equal rank items shapes would be displayed after traces i.e. according
+#'   to their order in data and layout. Number.
+#' @param legendwidth Sets the width (in px or fraction) of the legend for
+#'   this trace. Number in the interval [0, Inf].
+#' @param line A \code{\link{go_parcoords_line}()} object or named list,
+#'   with properties \code{autocolorscale}, \code{cauto}, \code{cmax},
+#'   \code{cmid}, \code{cmin}, \code{color}, \code{coloraxis},
+#'   \code{colorbar}, \code{colorscale}, \code{reversescale} and
+#'   \code{showscale} (see \code{\link{go_parcoords_line}()}).
+#' @param meta Assigns extra meta information associated with this trace
+#'   that can be used in various text attributes. Attributes such as trace
+#'   `name`, graph, axis and colorbar `title.text`, annotation `text`
+#'   `rangeselector`, `updatemenues` and `sliders` `label` text all support
+#'   `meta`. To access the trace `meta` values in an attribute in the same
+#'   trace, simply use `\%\{meta[i]\}` where `i` is the index or key of the
+#'   `meta` item in question. To access trace `meta` in layout attributes,
+#'   use `\%\{data[n[.meta[i]\}` where `i` is the index or key of the
+#'   `meta` and `n` is the trace index. Any value.
+#' @param name Sets the trace name. The trace name appears as the legend
+#'   item and on hover. String.
+#' @param rangefont Sets the font for the `dimension` range values. A
+#'   \code{\link{go_font}()} object or named list, with properties
+#'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#'   \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#'   \code{weight} (see \code{\link{go_font}()}).
+#' @param row Subplot grid row (figures created with
+#'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
+#'   to address several cells.
+#' @param tickfont Sets the font for the `dimension` tick values. A
+#'   \code{\link{go_font}()} object or named list, with properties
+#'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#'   \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#'   \code{weight} (see \code{\link{go_font}()}).
+#' @param uid Assign an id to this trace, Use this to provide object
+#'   constancy between traces during animations and transitions. String.
+#' @param uirevision Controls persistence of some user-driven changes to
+#'   the trace: `constraintrange` in `parcoords` traces, as well as some
+#'   `editable: true` modifications such as `name` and `colorbar.title`.
+#'   Defaults to `layout.uirevision`. Note that other user-driven trace
+#'   attribute changes are controlled by `layout` attributes:
+#'   `trace.visible` is controlled by `layout.legend.uirevision`,
+#'   `selectedpoints` is controlled by `layout.selectionrevision`, and
+#'   `colorbar.(x|y)` (accessible with `config: \{editable: true\}`) is
+#'   controlled by `layout.editrevision`. Trace changes are tracked by
+#'   `uid`, which only falls back on trace index if no `uid` is provided.
+#'   So if your app can add/remove traces before the end of the `data`
+#'   array, such that the same trace has a different index, you can still
+#'   preserve user-driven changes if you give each trace a `uid` that stays
+#'   with it as it moves. Any value.
+#' @param unselected A \code{\link{go_unselected}()} object or named list,
+#'   with properties \code{line} (see \code{\link{go_unselected}()}).
+#' @param visible Determines whether or not this trace is visible. If
+#'   "legendonly", the trace is not drawn, but can appear as a legend item
+#'   (provided that the legend itself is visible). One of
+#'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return \code{go_*()} functions return a graph object;
+#'   \code{add_*()} functions return the modified figure.
+#' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
+#'
+#' @concept traces
+#' @noMd
+#' @export
+#' @examples
+#' iris |>
+#'   go_figure() |>
+#'   add_parcoords(
+#'     dimensions = list(
+#'       go_parcoords_dimension(label = "Sepal.Length", values = ~Sepal.Length),
+#'       go_parcoords_dimension(label = "Sepal.Width", values = ~Sepal.Width),
+#'       go_parcoords_dimension(label = "Petal.Length", values = ~Petal.Length)
+#'     )
+#'   )
+go_parcoords <- function(
+    arg = NULL, ..., customdata = NULL, dimensions = NULL, domain = NULL,
+    ids = NULL, labelangle = NULL, labelfont = NULL, labelside = NULL,
+    legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    legendwidth = NULL, line = NULL, meta = NULL, name = NULL,
+    rangefont = NULL, tickfont = NULL, uid = NULL, uirevision = NULL,
+    unselected = NULL, visible = NULL, skip_invalid = FALSE
+) {
+  plotly_object("parcoords", arg, environment(), list(...), skip_invalid)
+}
+
+#' Parcoords dimension objects
+#'
+#' The dimensions (variables) of the parallel coordinates chart. 2..60
+#' dimensions are supported. The object for an element of the
+#' \code{dimensions} list of a parcoords trace
+#' (\code{\link{go_parcoords}()}). \code{go_parcoords_dimension()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param constraintrange The domain range to which the filter on the
+#'   dimension is constrained. Must be an array of `[fromValue, toValue]`
+#'   with `fromValue <= toValue`, or if `multiselect` is not disabled, you
+#'   may give an array of arrays, where each inner array is `[fromValue,
+#'   toValue]`. Vector or list of up to 2 element(s).
+#' @param label The shown name of the dimension. String.
+#' @param multiselect Do we allow multiple selection ranges or just a
+#'   single range? Logical.
+#' @param name When used in a template, named items are created in the
+#'   output figure in addition to any items the figure already has in this
+#'   array. You can modify these items in the output figure by making your
+#'   own item with `templateitemname` matching this `name` alongside your
+#'   modifications (including `visible: false` or `enabled: false` to hide
+#'   it). Has no effect outside of a template. String.
+#' @param range The domain range that represents the full, shown axis
+#'   extent. Defaults to the `values` extent. Must be an array of
+#'   `[fromValue, toValue]` with finite numbers as elements. Vector or list
+#'   of 2 element(s).
+#' @param templateitemname Used to refer to a named item in this array in
+#'   the template. Named items from the template will be created even
+#'   without a matching item in the input figure, but you can modify one by
+#'   making an item with `templateitemname` matching its `name`, alongside
+#'   your modifications (including `visible: false` or `enabled: false` to
+#'   hide it). If there is no template or no matching item, this item will
+#'   be hidden unless you explicitly show it with `visible: true`. String.
+#' @param tickformat Sets the tick label formatting rule using d3
+#'   formatting mini-languages which are very similar to those in Python.
+#'   For numbers, see:
+#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
+#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
+#'   We add two items to d3's date formatter: "\%h" for half of the year as
+#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
+#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
+#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
+#' @param ticktext Sets the text displayed at the ticks position via
+#'   `tickvals`. Data array: a vector, factor, Date/POSIXct vector, matrix
+#'   or list.
+#' @param tickvals Sets the values at which ticks on this axis appear. Data
+#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param values Dimension values. `values[n]` represents the value of the
+#'   `n`th point in the dataset, therefore the `values` vector for all
+#'   dimensions must be the same (longer vectors will be truncated). Each
+#'   value must be a finite number. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param visible Shows the dimension when set to `true` (the default).
+#'   Hides the dimension for `false`. Logical.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_parcoords_dimension} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
+#' @export
+#' @examples
+#' go_parcoords(
+#'   dimensions = list(go_parcoords_dimension(visible = TRUE))
+#' )
+go_parcoords_dimension <- function(
+    arg = NULL, ..., constraintrange = NULL, label = NULL,
+    multiselect = NULL, name = NULL, range = NULL, templateitemname = NULL,
+    tickformat = NULL, ticktext = NULL, tickvals = NULL, values = NULL,
+    visible = NULL, skip_invalid = FALSE
+) {
+  plotly_object("parcoords.dimension", arg, environment(), list(...), skip_invalid)
+}
+
+#' Parcoords line objects
+#'
+#' The object for the \code{line} of a parcoords trace
+#' (\code{\link{go_parcoords}()}). \code{go_parcoords_line()} creates one,
+#' with exactly its properties; a named list with the same properties works
+#' too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `line.colorscale`. Has an effect only if in `line.color` is set to a
@@ -48,12 +272,6 @@
 #'   `autocolorscale` is true, the default palette will be chosen according
 #'   to whether numbers in the `color` array are all positive, all negative
 #'   or mixed. Logical.
-#' @param bgcolor Sets the color of padded area. Color: a CSS color string
-#'   or R color name.
-#' @param bordercolor Sets the axis line color. Color: a CSS color string
-#'   or R color name.
-#' @param borderwidth Sets the width (in px) or the border enclosing this
-#'   color bar. Number in the interval [0, Inf].
 #' @param cauto Determines whether or not the color domain is computed with
 #'   respect to the input data (here in `line.color`) or the bounds set in
 #'   `line.cmin` and `line.cmax` Has an effect only if in `line.color` is
@@ -72,34 +290,23 @@
 #'   if in `line.color` is set to a numerical array. Value should have the
 #'   same units as in `line.color` and if set, `line.cmax` must be set as
 #'   well. Number.
-#' @param col Subplot grid column (figures created with
-#'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
-#'   to address several cells.
-#' @param color \strong{\code{go_parcoords_labelfont()},
-#'   \code{go_parcoords_legendgrouptitle_font()},
-#'   \code{go_parcoords_line_colorbar_tickfont()},
-#'   \code{go_parcoords_line_colorbar_title_font()},
-#'   \code{go_parcoords_rangefont()}, \code{go_parcoords_tickfont()}}:
-#'   Color: a CSS color string or R color name.
-#'
-#'   \strong{\code{go_parcoords_line()}}: Sets the line color. It accepts
-#'   either a specific color or an array of numbers that are mapped to the
-#'   colorscale relative to the max and min values of the array or relative
-#'   to `line.cmin` and `line.cmax` if set. Color: a CSS color string or R
-#'   color name, or a number mapped to a color by
-#'   \code{parcoords.line.colorscale}, or a vector of these.
-#'
-#'   \strong{\code{go_parcoords_unselected_line()}}: Sets the base color of
-#'   unselected lines. in connection with `unselected.line.opacity`. Color:
-#'   a CSS color string or R color name.
+#' @param color Sets the line color. It accepts either a specific color or
+#'   an array of numbers that are mapped to the colorscale relative to the
+#'   max and min values of the array or relative to `line.cmin` and
+#'   `line.cmax` if set. Color: a CSS color string or R color name, or a
+#'   number mapped to a color by \code{parcoords.line.colorscale}, or a
+#'   vector of these.
 #' @param coloraxis Sets a reference to a shared color axis. References to
 #'   these shared color axes are "coloraxis", "coloraxis2", "coloraxis3",
 #'   etc. Settings for these shared color axes are set in the layout, under
 #'   `layout.coloraxis`, `layout.coloraxis2`, etc. Note that multiple color
 #'   scales can be linked to the same color axis. Subplot id:
 #'   \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....
-#' @param colorbar Named list or \code{\link{go_parcoords_line_colorbar}()}
-#'   object.
+#' @param colorbar A \code{\link{go_colorbar}()} object or named list, with
+#'   properties \code{bgcolor}, \code{bordercolor}, \code{borderwidth},
+#'   \code{dtick}, \code{exponentformat}, \code{labelalias}, \code{len},
+#'   \code{lenmode}, \code{minexponent}, \code{nticks}, \code{orientation},
+#'   \code{outlinecolor} and 34 more (see \code{\link{go_colorbar}()}).
 #' @param colorscale Sets the colorscale. Has an effect only if in
 #'   `line.color` is set to a numerical array. The colorscale must be an
 #'   array containing arrays mapping a normalized value to an rgb, rgba,
@@ -113,465 +320,32 @@
 #'   Colorscale: a vector of colors, a two-column data.frame of (value,
 #'   color), or the name of a sequential, diverging or cyclical scale in
 #'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
-#' @param column If there is a layout grid, use the domain for this column
-#'   in the grid for this parcoords trace. Integer in the interval [0,
-#'   Inf].
-#' @param constraintrange The domain range to which the filter on the
-#'   dimension is constrained. Must be an array of `[fromValue, toValue]`
-#'   with `fromValue <= toValue`, or if `multiselect` is not disabled, you
-#'   may give an array of arrays, where each inner array is `[fromValue,
-#'   toValue]`. Vector or list of up to 2 element(s).
-#' @param customdata Assigns extra data each datum. This may be useful when
-#'   listening to hover, click and selection events. Note that, "scatter"
-#'   traces also appends customdata items in the markers DOM elements Data
-#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param data A data frame in which formula properties (e.g. \code{x =
-#'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
-#'   given to \code{\link{go_figure}()}. Only the evaluated values are
-#'   added to the trace. A \code{crosstalk::SharedData} works the same way,
-#'   and links the trace to its crosstalk group (see
-#'   \code{\link{highlight}()}).
-#' @param dimensions List of named lists or
-#'   \code{\link{go_parcoords_dimension}()} objects.
-#' @param domain Named list or \code{\link{go_parcoords_domain}()} object.
-#' @param dtick Sets the step in-between ticks on this color bar. Use with
-#'   `tick0`. Must be a positive number. Note: unlike on x/y axes, the
-#'   special "log" and "date" string forms ("L<f>", "D1", "D2", "M<n>") are
-#'   not supported here: this axis is always linear, so such strings are
-#'   silently ignored and the step is set to 1. Any value.
-#' @param dtickrange range ["min", "max"], where "min", "max" - dtick
-#'   values which describe some zoom level, it is possible to omit "min" or
-#'   "max" value by passing "null" Vector or list of 2 element(s).
-#' @param enabled Determines whether or not this stop is used. If `false`,
-#'   this stop is ignored even within its `dtickrange`. Logical.
-#' @param exponentformat Determines a formatting rule for the tick
-#'   exponents. For example, consider the number 1,000,000,000. If "none",
-#'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-#'   1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-#'   prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-#'   covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-#'   Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-#'   the above ranges, the formatting rule will automatically be switched
-#'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-#'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param fig A \code{go_figure} object.
-#' @param font \strong{\code{go_parcoords_legendgrouptitle()}}: Sets this
-#'   legend group's title font. Named list or
-#'   \code{\link{go_parcoords_legendgrouptitle_font}()} object.
-#'
-#'   \strong{\code{go_parcoords_line_colorbar_title()}}: Sets this color
-#'   bar's title font. Named list or
-#'   \code{\link{go_parcoords_line_colorbar_title_font}()} object.
-#' @param ids Assigns id labels to each datum. These ids for object
-#'   constancy of data points during animation. Should be an array of
-#'   strings, not numbers or any other type. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
-#' @param label The shown name of the dimension. String.
-#' @param labelalias Replacement text for specific tick or hover labels.
-#'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-#'   to Canada. The labels we would have shown must match the keys exactly,
-#'   after adding any tickprefix or ticksuffix. For negative numbers the
-#'   minus sign symbol used (U+2212) is wider than the regular ascii dash.
-#'   That means you need to use -1 instead of -1. labelalias can be used
-#'   with any axis type, and both keys (if needed) and values (if desired)
-#'   can include html-like tags or MathJax. Any value.
-#' @param labelangle Sets the angle of the labels with respect to the
-#'   horizontal. For example, a `tickangle` of -90 draws the labels
-#'   vertically. Tilted labels with "labelangle" may be positioned better
-#'   inside margins when `labelposition` is set to "bottom". Angle in
-#'   degrees.
-#' @param labelfont Sets the font for the `dimension` labels. Named list or
-#'   \code{\link{go_parcoords_labelfont}()} object.
-#' @param labelside Specifies the location of the `label`. "top" positions
-#'   labels above, next to the title "bottom" positions labels below the
-#'   graph Tilted labels with "labelangle" may be positioned better inside
-#'   margins when `labelposition` is set to "bottom". One of \code{"top"},
-#'   \code{"bottom"}.
-#' @param legend Sets the reference to a legend to show this trace in.
-#'   References to these legends are "legend", "legend2", "legend3", etc.
-#'   Settings for these legends are set in the layout, under
-#'   `layout.legend`, `layout.legend2`, etc. Subplot id: \code{"legend"},
-#'   \code{"legend2"}, \code{"legend3"}, ....
-#' @param legendgrouptitle Named list or
-#'   \code{\link{go_parcoords_legendgrouptitle}()} object.
-#' @param legendrank Sets the legend rank for this trace. Items and groups
-#'   with smaller ranks are presented on top/left side while with
-#'   "reversed" `legend.traceorder` they are on bottom/right side. The
-#'   default legendrank is 1000, so that you can use ranks less than 1000
-#'   to place certain items before all unranked items, and ranks greater
-#'   than 1000 to go after all unranked items. When having unranked or
-#'   equal rank items shapes would be displayed after traces i.e. according
-#'   to their order in data and layout. Number.
-#' @param legendwidth Sets the width (in px or fraction) of the legend for
-#'   this trace. Number in the interval [0, Inf].
-#' @param len Sets the length of the color bar This measure excludes the
-#'   padding of both ends. That is, the color bar length is this length
-#'   minus the padding on both ends. Number in the interval [0, Inf].
-#' @param lenmode Determines whether this color bar's length (i.e. the
-#'   measure in the color variation direction) is set in units of plot
-#'   "fraction" or in *pixels. Use `len` to set the value. One of
-#'   \code{"fraction"}, \code{"pixels"}.
-#' @param line \strong{\code{go_parcoords()}}: Named list or
-#'   \code{\link{go_parcoords_line}()} object.
-#'
-#'   \strong{\code{go_parcoords_unselected()}}: Named list or
-#'   \code{\link{go_parcoords_unselected_line}()} object.
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param meta Assigns extra meta information associated with this trace
-#'   that can be used in various text attributes. Attributes such as trace
-#'   `name`, graph, axis and colorbar `title.text`, annotation `text`
-#'   `rangeselector`, `updatemenues` and `sliders` `label` text all support
-#'   `meta`. To access the trace `meta` values in an attribute in the same
-#'   trace, simply use `\%\{meta[i]\}` where `i` is the index or key of the
-#'   `meta` item in question. To access trace `meta` in layout attributes,
-#'   use `\%\{data[n[.meta[i]\}` where `i` is the index or key of the
-#'   `meta` and `n` is the trace index. Any value.
-#' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
-#'   This only has an effect when `tickformat` is "SI" or "B". Number in
-#'   the interval [0, Inf].
-#' @param multiselect Do we allow multiple selection ranges or just a
-#'   single range? Logical.
-#' @param name \strong{\code{go_parcoords()}}: Sets the trace name. The
-#'   trace name appears as the legend item and on hover. String.
-#'
-#'   \strong{\code{go_parcoords_dimension()},
-#'   \code{go_parcoords_line_colorbar_tickformatstop()}}: When used in a
-#'   template, named items are created in the output figure in addition to
-#'   any items the figure already has in this array. You can modify these
-#'   items in the output figure by making your own item with
-#'   `templateitemname` matching this `name` alongside your modifications
-#'   (including `visible: false` or `enabled: false` to hide it). Has no
-#'   effect outside of a template. String.
-#' @param nticks Specifies the maximum number of ticks for the particular
-#'   axis. The actual number of ticks will be chosen automatically to be
-#'   less than or equal to `nticks`. Has an effect only if `tickmode` is
-#'   set to "auto". Integer in the interval [0, Inf].
-#' @param opacity Sets the opacity of unselected lines. The default "auto"
-#'   decreases the opacity smoothly as the number of lines increases. Use 1
-#'   to achieve exact `unselected.line.color`. Number in the interval [0,
-#'   1].
-#' @param orientation Sets the orientation of the colorbar. One of
-#'   \code{"h"}, \code{"v"}.
-#' @param outlinecolor Sets the axis line color. Color: a CSS color string
-#'   or R color name.
-#' @param outlinewidth Sets the width (in px) of the axis line. Number in
-#'   the interval [0, Inf].
-#' @param range The domain range that represents the full, shown axis
-#'   extent. Defaults to the `values` extent. Must be an array of
-#'   `[fromValue, toValue]` with finite numbers as elements. Vector or list
-#'   of 2 element(s).
-#' @param rangefont Sets the font for the `dimension` range values. Named
-#'   list or \code{\link{go_parcoords_rangefont}()} object.
 #' @param reversescale Reverses the color mapping if true. Has an effect
 #'   only if in `line.color` is set to a numerical array. If true,
 #'   `line.cmin` will correspond to the last color in the array and
 #'   `line.cmax` will correspond to the first color. Logical.
-#' @param row \strong{\code{add_parcoords()}}: Subplot grid row (figures
-#'   created with \code{\link{make_subplots}()} only). May be \code{"all"}
-#'   or a vector to address several cells.
-#'
-#'   \strong{\code{go_parcoords_domain()}}: If there is a layout grid, use
-#'   the domain for this row in the grid for this parcoords trace. Integer
-#'   in the interval [0, Inf].
-#' @param separatethousands If "true", even 4-digit integers are separated
-#'   Logical.
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param showexponent If "all", all exponents are shown besides their
-#'   significands. If "first", only the exponent of the first tick is
-#'   shown. If "last", only the exponent of the last tick is shown. If
-#'   "none", no exponents appear. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
 #' @param showscale Determines whether or not a colorbar is displayed for
 #'   this trace. Has an effect only if in `line.color` is set to a
 #'   numerical array. Logical.
-#' @param showticklabels Determines whether or not the tick labels are
-#'   drawn. Logical.
-#' @param showtickprefix If "all", all tick labels are displayed with a
-#'   prefix. If "first", only the first tick is displayed with a prefix. If
-#'   "last", only the last tick is displayed with a suffix. If "none", tick
-#'   prefixes are hidden. One of \code{"all"}, \code{"first"},
-#'   \code{"last"}, \code{"none"}.
-#' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
-#'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
-#' @param side Determines the location of color bar's title with respect to
-#'   the color bar. Defaults to "top" when `orientation` is "v" and
-#'   defaults to "right" when `orientation` is "h". One of \code{"right"},
-#'   \code{"top"}, \code{"bottom"}.
-#' @param size Number in the interval [1, Inf].
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param templateitemname Used to refer to a named item in this array in
-#'   the template. Named items from the template will be created even
-#'   without a matching item in the input figure, but you can modify one by
-#'   making an item with `templateitemname` matching its `name`, alongside
-#'   your modifications (including `visible: false` or `enabled: false` to
-#'   hide it). If there is no template or no matching item, this item will
-#'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param text \strong{\code{go_parcoords_legendgrouptitle()}}: Sets the
-#'   title of the legend group. String.
-#'
-#'   \strong{\code{go_parcoords_line_colorbar_title()}}: Sets the title of
-#'   the color bar. String.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param thickness Sets the thickness of the color bar This measure
-#'   excludes the size of the padding, ticks and labels. Number in the
-#'   interval [0, Inf].
-#' @param thicknessmode Determines whether this color bar's thickness (i.e.
-#'   the measure in the constant color direction) is set in units of plot
-#'   "fraction" or in "pixels". Use `thickness` to set the value. One of
-#'   \code{"fraction"}, \code{"pixels"}.
-#' @param tick0 Sets the placement of the first tick on this axis. Use with
-#'   `dtick`. If the axis `type` is "log", then you must take the log of
-#'   your starting tick (e.g. to set the starting tick to 100, set the
-#'   `tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-#'   If the axis `type` is "date", it should be a date string, like date
-#'   data. If the axis `type` is "category", it should be a number, using
-#'   the scale where each category is assigned a serial number from zero in
-#'   the order it appears. Any value.
-#' @param tickangle Sets the angle of the tick labels with respect to the
-#'   horizontal. For example, a `tickangle` of -90 draws the tick labels
-#'   vertically. Angle in degrees.
-#' @param tickcolor Sets the tick color. Color: a CSS color string or R
-#'   color name.
-#' @param tickfont \strong{\code{go_parcoords()}}: Sets the font for the
-#'   `dimension` tick values. Named list or
-#'   \code{\link{go_parcoords_tickfont}()} object.
-#'
-#'   \strong{\code{go_parcoords_line_colorbar()}}: Sets the color bar's
-#'   tick label font Named list or
-#'   \code{\link{go_parcoords_line_colorbar_tickfont}()} object.
-#' @param tickformat Sets the tick label formatting rule using d3
-#'   formatting mini-languages which are very similar to those in Python.
-#'   For numbers, see:
-#'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-#'   see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-#'   We add two items to d3's date formatter: "\%h" for half of the year as
-#'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
-#'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
-#'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param tickformatstops List of named lists or
-#'   \code{\link{go_parcoords_line_colorbar_tickformatstop}()} objects.
-#' @param ticklabeloverflow Determines how we handle tick labels that would
-#'   overflow either the graph div or the domain of the axis. The default
-#'   value for inside tick labels is "hide past domain". In other cases the
-#'   default is "hide past div". One of \code{"allow"}, \code{"hide past
-#'   div"}, \code{"hide past domain"}.
-#' @param ticklabelposition Determines where tick labels are drawn relative
-#'   to the ticks. Left and right options are used when `orientation` is
-#'   "h", top and bottom when `orientation` is "v". One of
-#'   \code{"outside"}, \code{"inside"}, \code{"outside top"}, \code{"inside
-#'   top"}, \code{"outside left"}, \code{"inside left"}, \code{"outside
-#'   right"}, \code{"inside right"}, \code{"outside bottom"}, \code{"inside
-#'   bottom"}.
-#' @param ticklabelstep Sets the spacing between tick labels as compared to
-#'   the spacing between ticks. A value of 1 (default) means each tick gets
-#'   a label. A value of 2 means shows every 2nd label. A larger value n
-#'   means only every nth tick is labeled. `tick0` determines which labels
-#'   are shown. Not implemented for axes with `type` "log" or
-#'   "multicategory", or when `tickmode` is "array". Integer in the
-#'   interval [1, Inf].
-#' @param ticklen Sets the tick length (in px). Number in the interval [0,
-#'   Inf].
-#' @param tickmode Sets the tick mode for this axis. If "auto", the number
-#'   of ticks is set via `nticks`. If "linear", the placement of the ticks
-#'   is determined by a starting position `tick0` and a tick step `dtick`
-#'   ("linear" is the default value if `tick0` and `dtick` are provided).
-#'   If "array", the placement of the ticks is set via `tickvals` and the
-#'   tick text is `ticktext`. ("array" is the default value if `tickvals`
-#'   is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.
-#' @param tickprefix Sets a tick label prefix. String.
-#' @param ticks Determines whether ticks are drawn or not. If **, this
-#'   axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-#'   drawn outside (inside) the axis lines. One of \code{"outside"},
-#'   \code{"inside"}, \code{""}.
-#' @param ticksuffix Sets a tick label suffix. String.
-#' @param ticktext \strong{\code{go_parcoords_dimension()}}: Sets the text
-#'   displayed at the ticks position via `tickvals`. Data array: a vector,
-#'   factor, Date/POSIXct vector, matrix or list.
-#'
-#'   \strong{\code{go_parcoords_line_colorbar()}}: Sets the text displayed
-#'   at the ticks position via `tickvals`. Only has an effect if `tickmode`
-#'   is set to "array". Used with `tickvals`. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
-#' @param tickvals \strong{\code{go_parcoords_dimension()}}: Sets the
-#'   values at which ticks on this axis appear. Data array: a vector,
-#'   factor, Date/POSIXct vector, matrix or list.
-#'
-#'   \strong{\code{go_parcoords_line_colorbar()}}: Sets the values at which
-#'   ticks on this axis appear. Only has an effect if `tickmode` is set to
-#'   "array". Used with `ticktext`. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
-#' @param tickwidth Sets the tick width (in px). Number in the interval [0,
-#'   Inf].
-#' @param title String (the title text), named list or
-#'   \code{\link{go_parcoords_line_colorbar_title}()} object.
-#' @param uid Assign an id to this trace, Use this to provide object
-#'   constancy between traces during animations and transitions. String.
-#' @param uirevision Controls persistence of some user-driven changes to
-#'   the trace: `constraintrange` in `parcoords` traces, as well as some
-#'   `editable: true` modifications such as `name` and `colorbar.title`.
-#'   Defaults to `layout.uirevision`. Note that other user-driven trace
-#'   attribute changes are controlled by `layout` attributes:
-#'   `trace.visible` is controlled by `layout.legend.uirevision`,
-#'   `selectedpoints` is controlled by `layout.selectionrevision`, and
-#'   `colorbar.(x|y)` (accessible with `config: \{editable: true\}`) is
-#'   controlled by `layout.editrevision`. Trace changes are tracked by
-#'   `uid`, which only falls back on trace index if no `uid` is provided.
-#'   So if your app can add/remove traces before the end of the `data`
-#'   array, such that the same trace has a different index, you can still
-#'   preserve user-driven changes if you give each trace a `uid` that stays
-#'   with it as it moves. Any value.
-#' @param unselected Named list or \code{\link{go_parcoords_unselected}()}
-#'   object.
-#' @param value string - dtickformat for described zoom level, the same as
-#'   "tickformat" String.
-#' @param values Dimension values. `values[n]` represents the value of the
-#'   `n`th point in the dataset, therefore the `values` vector for all
-#'   dimensions must be the same (longer vectors will be truncated). Each
-#'   value must be a finite number. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param visible \strong{\code{go_parcoords()}}: Determines whether or not
-#'   this trace is visible. If "legendonly", the trace is not drawn, but
-#'   can appear as a legend item (provided that the legend itself is
-#'   visible). One of \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#'
-#'   \strong{\code{go_parcoords_dimension()}}: Shows the dimension when set
-#'   to `true` (the default). Hides the dimension for `false`. Logical.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param x \strong{\code{go_parcoords_domain()}}: Sets the horizontal
-#'   domain of this parcoords trace (in plot fraction). Vector or list of 2
-#'   element(s).
-#'
-#'   \strong{\code{go_parcoords_line_colorbar()}}: Sets the x position with
-#'   respect to `xref` of the color bar (in plot fraction). When `xref` is
-#'   "paper", defaults to 1.02 when `orientation` is "v" and 0.5 when
-#'   `orientation` is "h". When `xref` is "container", defaults to 1 when
-#'   `orientation` is "v" and 0.5 when `orientation` is "h". Must be
-#'   between 0 and 1 if `xref` is "container" and between "-2" and 3 if
-#'   `xref` is "paper". Number.
-#' @param xanchor Sets this color bar's horizontal position anchor. This
-#'   anchor binds the `x` position to the "left", "center" or "right" of
-#'   the color bar. Defaults to "left" when `orientation` is "v" and
-#'   "center" when `orientation` is "h". One of \code{"left"},
-#'   \code{"center"}, \code{"right"}.
-#' @param xpad Sets the amount of padding (in px) along the x direction.
-#'   Number in the interval [0, Inf].
-#' @param xref Sets the container `x` refers to. "container" spans the
-#'   entire `width` of the plot. "paper" refers to the width of the
-#'   plotting area only. One of \code{"container"}, \code{"paper"}.
-#' @param y \strong{\code{go_parcoords_domain()}}: Sets the vertical domain
-#'   of this parcoords trace (in plot fraction). Vector or list of 2
-#'   element(s).
-#'
-#'   \strong{\code{go_parcoords_line_colorbar()}}: Sets the y position with
-#'   respect to `yref` of the color bar (in plot fraction). When `yref` is
-#'   "paper", defaults to 0.5 when `orientation` is "v" and 1.02 when
-#'   `orientation` is "h". When `yref` is "container", defaults to 0.5 when
-#'   `orientation` is "v" and 1 when `orientation` is "h". Must be between
-#'   0 and 1 if `yref` is "container" and between "-2" and 3 if `yref` is
-#'   "paper". Number.
-#' @param yanchor Sets this color bar's vertical position anchor This
-#'   anchor binds the `y` position to the "top", "middle" or "bottom" of
-#'   the color bar. Defaults to "middle" when `orientation` is "v" and
-#'   "bottom" when `orientation` is "h". One of \code{"top"},
-#'   \code{"middle"}, \code{"bottom"}.
-#' @param ypad Sets the amount of padding (in px) along the y direction.
-#'   Number in the interval [0, Inf].
-#' @param yref Sets the container `y` refers to. "container" spans the
-#'   entire `height` of the plot. "paper" refers to the height of the
-#'   plotting area only. One of \code{"container"}, \code{"paper"}.
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
+#' @param ... Not used: properties must be named in full.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
+#' @return A \code{go_parcoords_line} object (a named list).
+#'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
-#' go_parcoords()
-go_parcoords <- function(
-    arg = NULL, ..., customdata = NULL, dimensions = NULL, domain = NULL,
-    ids = NULL, labelangle = NULL, labelfont = NULL, labelside = NULL,
-    legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, line = NULL, meta = NULL, name = NULL,
-    rangefont = NULL, tickfont = NULL, uid = NULL, uirevision = NULL,
-    unselected = NULL, visible = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcoords", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcoords
-#' @export
-go_parcoords_dimension <- function(
-    arg = NULL, ..., constraintrange = NULL, label = NULL,
-    multiselect = NULL, name = NULL, range = NULL, templateitemname = NULL,
-    tickformat = NULL, ticktext = NULL, tickvals = NULL, values = NULL,
-    visible = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcoords.dimension", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcoords
-#' @export
-go_parcoords_domain <- function(
-    arg = NULL, ..., column = NULL, row = NULL, x = NULL, y = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("parcoords.domain", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcoords
-#' @export
-go_parcoords_labelfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcoords.labelfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcoords
-#' @export
-go_parcoords_legendgrouptitle <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcoords.legendgrouptitle", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcoords
-#' @export
-go_parcoords_legendgrouptitle_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcoords.legendgrouptitle.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcoords
-#' @export
+#' iris |>
+#'   go_figure() |>
+#'   add_parcoords(
+#'     dimensions = list(
+#'       go_parcoords_dimension(label = "Sepal.Length", values = ~Sepal.Length),
+#'       go_parcoords_dimension(label = "Sepal.Width", values = ~Sepal.Width),
+#'       go_parcoords_dimension(label = "Petal.Length", values = ~Petal.Length)
+#'     ),
+#'     line = go_parcoords_line(color = "red")
+#'   )
 go_parcoords_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
@@ -579,99 +353,5 @@ go_parcoords_line <- function(
     showscale = NULL, skip_invalid = FALSE
 ) {
   plotly_object("parcoords.line", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcoords
-#' @export
-go_parcoords_line_colorbar <- function(
-    arg = NULL, ..., bgcolor = NULL, bordercolor = NULL, borderwidth = NULL,
-    dtick = NULL, exponentformat = NULL, labelalias = NULL, len = NULL,
-    lenmode = NULL, minexponent = NULL, nticks = NULL, orientation = NULL,
-    outlinecolor = NULL, outlinewidth = NULL, separatethousands = NULL,
-    showexponent = NULL, showticklabels = NULL, showtickprefix = NULL,
-    showticksuffix = NULL, thickness = NULL, thicknessmode = NULL,
-    tick0 = NULL, tickangle = NULL, tickcolor = NULL, tickfont = NULL,
-    tickformat = NULL, tickformatstops = NULL, ticklabeloverflow = NULL,
-    ticklabelposition = NULL, ticklabelstep = NULL, ticklen = NULL,
-    tickmode = NULL, tickprefix = NULL, ticks = NULL, ticksuffix = NULL,
-    ticktext = NULL, tickvals = NULL, tickwidth = NULL, title = NULL,
-    x = NULL, xanchor = NULL, xpad = NULL, xref = NULL, y = NULL,
-    yanchor = NULL, ypad = NULL, yref = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcoords.line.colorbar", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcoords
-#' @export
-go_parcoords_line_colorbar_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcoords.line.colorbar.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcoords
-#' @export
-go_parcoords_line_colorbar_tickformatstop <- function(
-    arg = NULL, ..., dtickrange = NULL, enabled = NULL, name = NULL,
-    templateitemname = NULL, value = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcoords.line.colorbar.tickformatstop", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcoords
-#' @export
-go_parcoords_line_colorbar_title <- function(
-    arg = NULL, ..., font = NULL, side = NULL, text = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("parcoords.line.colorbar.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcoords
-#' @export
-go_parcoords_line_colorbar_title_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcoords.line.colorbar.title.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcoords
-#' @export
-go_parcoords_rangefont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcoords.rangefont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcoords
-#' @export
-go_parcoords_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcoords.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcoords
-#' @export
-go_parcoords_unselected <- function(
-    arg = NULL, ..., line = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcoords.unselected", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_parcoords
-#' @export
-go_parcoords_unselected_line <- function(
-    arg = NULL, ..., color = NULL, opacity = NULL, skip_invalid = FALSE
-) {
-  plotly_object("parcoords.unselected.line", arg, environment(), list(...), skip_invalid)
 }
 

@@ -2,19 +2,6 @@
 % Please edit documentation in R/zz-gen-contour.R, R/zz-gen-figure.R
 \name{go_contour}
 \alias{go_contour}
-\alias{go_contour_colorbar}
-\alias{go_contour_colorbar_tickfont}
-\alias{go_contour_colorbar_tickformatstop}
-\alias{go_contour_colorbar_title}
-\alias{go_contour_colorbar_title_font}
-\alias{go_contour_contours}
-\alias{go_contour_contours_labelfont}
-\alias{go_contour_hoverlabel}
-\alias{go_contour_hoverlabel_font}
-\alias{go_contour_legendgrouptitle}
-\alias{go_contour_legendgrouptitle_font}
-\alias{go_contour_line}
-\alias{go_contour_textfont}
 \alias{add_contour}
 \alias{add_contour.default}
 \title{Contour traces}
@@ -86,215 +73,6 @@ go_contour(
   zmid = NULL,
   zmin = NULL,
   zorder = NULL,
-  skip_invalid = FALSE
-)
-
-go_contour_colorbar(
-  arg = NULL,
-  ...,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  borderwidth = NULL,
-  dtick = NULL,
-  exponentformat = NULL,
-  labelalias = NULL,
-  len = NULL,
-  lenmode = NULL,
-  minexponent = NULL,
-  nticks = NULL,
-  orientation = NULL,
-  outlinecolor = NULL,
-  outlinewidth = NULL,
-  separatethousands = NULL,
-  showexponent = NULL,
-  showticklabels = NULL,
-  showtickprefix = NULL,
-  showticksuffix = NULL,
-  thickness = NULL,
-  thicknessmode = NULL,
-  tick0 = NULL,
-  tickangle = NULL,
-  tickcolor = NULL,
-  tickfont = NULL,
-  tickformat = NULL,
-  tickformatstops = NULL,
-  ticklabeloverflow = NULL,
-  ticklabelposition = NULL,
-  ticklabelstep = NULL,
-  ticklen = NULL,
-  tickmode = NULL,
-  tickprefix = NULL,
-  ticks = NULL,
-  ticksuffix = NULL,
-  ticktext = NULL,
-  tickvals = NULL,
-  tickwidth = NULL,
-  title = NULL,
-  x = NULL,
-  xanchor = NULL,
-  xpad = NULL,
-  xref = NULL,
-  y = NULL,
-  yanchor = NULL,
-  ypad = NULL,
-  yref = NULL,
-  skip_invalid = FALSE
-)
-
-go_contour_colorbar_tickfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_contour_colorbar_tickformatstop(
-  arg = NULL,
-  ...,
-  dtickrange = NULL,
-  enabled = NULL,
-  name = NULL,
-  templateitemname = NULL,
-  value = NULL,
-  skip_invalid = FALSE
-)
-
-go_contour_colorbar_title(
-  arg = NULL,
-  ...,
-  font = NULL,
-  side = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_contour_colorbar_title_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_contour_contours(
-  arg = NULL,
-  ...,
-  coloring = NULL,
-  end = NULL,
-  labelfont = NULL,
-  labelformat = NULL,
-  operation = NULL,
-  showlabels = NULL,
-  showlines = NULL,
-  size = NULL,
-  start = NULL,
-  type = NULL,
-  value = NULL,
-  skip_invalid = FALSE
-)
-
-go_contour_contours_labelfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_contour_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  skip_invalid = FALSE
-)
-
-go_contour_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_contour_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_contour_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_contour_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  dash = NULL,
-  smoothing = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_contour_textfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
   skip_invalid = FALSE
 )
 
@@ -378,10 +156,7 @@ add_contour(fig, ...)
 \item{arg}{Optional named list, or graph object of the same type, to
 initialise properties from (constructors). Named arguments take precedence.}
 
-\item{...}{Further properties, including nested properties in
-"magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}. Property values may be one-sided
-formulas, evaluated in \code{data} for \code{add_*()} functions.}
+\item{...}{Not used: properties must be named in full.}
 
 \item{autocolorscale}{Determines whether the colorscale is a default
 palette (`autocolorscale: true`) or the palette determined by
@@ -402,8 +177,11 @@ etc. Settings for these shared color axes are set in the layout, under
 scales can be linked to the same color axis. Subplot id:
 \code{"coloraxis"}, \code{"coloraxis2"}, \code{"coloraxis3"}, ....}
 
-\item{colorbar}{Named list or \code{\link{go_contour_colorbar}()}
-object.}
+\item{colorbar}{A \code{\link{go_colorbar}()} object or named list, with
+properties \code{bgcolor}, \code{bordercolor}, \code{borderwidth},
+\code{dtick}, \code{exponentformat}, \code{labelalias}, \code{len},
+\code{lenmode}, \code{minexponent}, \code{nticks}, \code{orientation},
+\code{outlinecolor} and 34 more (see \code{\link{go_colorbar}()}).}
 
 \item{colorscale}{Sets the colorscale. The colorscale must be an array
 containing arrays mapping a normalized value to an rgb, rgba, hex,
@@ -422,8 +200,11 @@ missing values) in the `z` data are filled in. It is defaulted to true
 if `z` is a one dimensional array otherwise it is defaulted to false.
 Logical.}
 
-\item{contours}{Named list or \code{\link{go_contour_contours}()}
-object.}
+\item{contours}{A \code{\link{go_contour_contours}()} object or named
+list, with properties \code{coloring}, \code{end}, \code{labelfont},
+\code{labelformat}, \code{operation}, \code{showlabels},
+\code{showlines}, \code{size}, \code{start}, \code{type} and
+\code{value} (see \code{\link{go_contour_contours}()}).}
 
 \item{customdata}{Assigns extra data each datum. This may be useful when
 listening to hover, click and selection events. Note that, "scatter"
@@ -447,8 +228,10 @@ combination of \code{"x"}, \code{"y"}, \code{"z"}, \code{"text"},
 \code{"name"} joined with \code{"+"}, or one of \code{"all"},
 \code{"none"}, \code{"skip"}, or a vector of these.}
 
-\item{hoverlabel}{Named list or \code{\link{go_contour_hoverlabel}()}
-object.}
+\item{hoverlabel}{A \code{\link{go_hoverlabel}()} object or named list,
+with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+\code{font}, \code{namelength} and \code{showarrow} (see
+\code{\link{go_hoverlabel}()}).}
 
 \item{hoverongaps}{Determines whether or not gaps (i.e. \{nan\} or
 missing values) in the `z` data have hover labels associated with
@@ -505,8 +288,9 @@ Settings for these legends are set in the layout, under
 shapes part of the same legend group hide/show at the same time when
 toggling legend items. String.}
 
-\item{legendgrouptitle}{Named list or
-\code{\link{go_contour_legendgrouptitle}()} object.}
+\item{legendgrouptitle}{A \code{\link{go_legendgrouptitle}()} object or
+named list, with properties \code{font} and \code{text} (see
+\code{\link{go_legendgrouptitle}()}).}
 
 \item{legendrank}{Sets the legend rank for this trace. Items and groups
 with smaller ranks are presented on top/left side while with
@@ -520,7 +304,9 @@ to their order in data and layout. Number.}
 \item{legendwidth}{Sets the width (in px or fraction) of the legend for
 this trace. Number in the interval [0, Inf].}
 
-\item{line}{Named list or \code{\link{go_contour_line}()} object.}
+\item{line}{A \code{\link{go_contour_line}()} object or named list, with
+properties \code{color}, \code{dash}, \code{smoothing} and
+\code{width} (see \code{\link{go_contour_line}()}).}
 
 \item{meta}{Assigns extra meta information associated with this trace
 that can be used in various text attributes. Attributes such as trace
@@ -532,16 +318,8 @@ trace, simply use `\%\{meta[i]\}` where `i` is the index or key of the
 use `\%\{data[n[.meta[i]\}` where `i` is the index or key of the
 `meta` and `n` is the trace index. Any value.}
 
-\item{name}{\strong{\code{go_contour()}}: Sets the trace name. The trace
-  name appears as the legend item and on hover. String.
-
-  \strong{\code{go_contour_colorbar_tickformatstop()}}: When used in a
-  template, named items are created in the output figure in addition to
-  any items the figure already has in this array. You can modify these
-  items in the output figure by making your own item with
-  `templateitemname` matching this `name` alongside your modifications
-  (including `visible: false` or `enabled: false` to hide it). Has no
-  effect outside of a template. String.}
+\item{name}{Sets the trace name. The trace name appears as the legend
+item and on hover. String.}
 
 \item{ncontours}{Sets the maximum number of contour levels. The actual
 number of contours will be chosen automatically to be less than or
@@ -562,19 +340,15 @@ this trace is shown in the legend. Logical.}
 \item{showscale}{Determines whether or not a colorbar is displayed for
 this trace. Logical.}
 
-\item{text}{\strong{\code{go_contour()}}: Sets the text elements
-  associated with each z value. Data array: a vector, factor,
-  Date/POSIXct vector, matrix or list.
-
-  \strong{\code{go_contour_colorbar_title()}}: Sets the title of the
-  color bar. String.
-
-  \strong{\code{go_contour_legendgrouptitle()}}: Sets the title of the
-  legend group. String.}
+\item{text}{Sets the text elements associated with each z value. Data
+array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{textfont}{For this trace it only has an effect if
-`contours.coloring` is set to "heatmap". Sets the text font. Named
-list or \code{\link{go_contour_textfont}()} object.}
+`contours.coloring` is set to "heatmap". Sets the text font. A
+\code{\link{go_font}()} object or named list, with properties
+\code{color}, \code{family}, \code{lineposition}, \code{shadow},
+\code{size}, \code{style}, \code{textcase}, \code{variant} and
+\code{weight} (see \code{\link{go_font}()}).}
 
 \item{texttemplate}{For this trace it only has an effect if
 `contours.coloring` is set to "heatmap". Template string used for
@@ -626,16 +400,8 @@ with it as it moves. Any value.}
 (provided that the legend itself is visible). One of
 \code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
 
-\item{x}{\strong{\code{go_contour()}}: Sets the x coordinates. Data
-  array: a vector, factor, Date/POSIXct vector, matrix or list.
-
-  \strong{\code{go_contour_colorbar()}}: Sets the x position with
-  respect to `xref` of the color bar (in plot fraction). When `xref` is
-  "paper", defaults to 1.02 when `orientation` is "v" and 0.5 when
-  `orientation` is "h". When `xref` is "container", defaults to 1 when
-  `orientation` is "v" and 0.5 when `orientation` is "h". Must be
-  between 0 and 1 if `xref` is "container" and between "-2" and 3 if
-  `xref` is "paper". Number.}
+\item{x}{Sets the x coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
 
 \item{x0}{Alternate to `x`. Builds a linear space of x coordinates. Use
 with `dx` where `x0` is the starting coordinate and `dx` the step. Any
@@ -686,16 +452,8 @@ heatmap's x coordinates are given by "x0" and "dx" (the default
 behavior when `x` is not provided). One of \code{"array"},
 \code{"scaled"}.}
 
-\item{y}{\strong{\code{go_contour()}}: Sets the y coordinates. Data
-  array: a vector, factor, Date/POSIXct vector, matrix or list.
-
-  \strong{\code{go_contour_colorbar()}}: Sets the y position with
-  respect to `yref` of the color bar (in plot fraction). When `yref` is
-  "paper", defaults to 0.5 when `orientation` is "v" and 1.02 when
-  `orientation` is "h". When `yref` is "container", defaults to 0.5 when
-  `orientation` is "v" and 1 when `orientation` is "h". Must be between
-  0 and 1 if `yref` is "container" and between "-2" and 3 if `yref` is
-  "paper". Number.}
+\item{y}{Sets the y coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
 
 \item{y0}{Alternate to `y`. Builds a linear space of y coordinates. Use
 with `dy` where `y0` is the starting coordinate and `dy` the step. Any
@@ -778,470 +536,11 @@ to other SVG traces on the same subplot. SVG traces with higher
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
 
-\item{bgcolor}{\strong{\code{go_contour_colorbar()}}: Sets the color of
-  padded area. Color: a CSS color string or R color name.
-
-  \strong{\code{go_contour_hoverlabel()}}: Sets the background color of
-  the hover labels for this trace Color: a CSS color string or R color
-  name, or a vector of these.}
-
-\item{bordercolor}{\strong{\code{go_contour_colorbar()}}: Sets the axis
-  line color. Color: a CSS color string or R color name.
-
-  \strong{\code{go_contour_hoverlabel()}}: Sets the border color of the
-  hover labels for this trace. Color: a CSS color string or R color
-  name, or a vector of these.}
-
-\item{borderwidth}{Sets the width (in px) or the border enclosing this
-color bar. Number in the interval [0, Inf].}
-
-\item{dtick}{Sets the step in-between ticks on this color bar. Use with
-`tick0`. Must be a positive number. Note: unlike on x/y axes, the
-special "log" and "date" string forms ("L<f>", "D1", "D2", "M<n>") are
-not supported here: this axis is always linear, so such strings are
-silently ignored and the step is set to 1. Any value.}
-
-\item{exponentformat}{Determines a formatting rule for the tick
-exponents. For example, consider the number 1,000,000,000. If "none",
-it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
-1x10^9 (with 9 in a super script). If "SI", 1G. If "B", 1B. "SI" uses
-prefixes from "femto" f (10^-15) to "tera" T (10^12). "SI extended"
-covers instead the full SI range from "quecto" q (10^-30) to "quetta"
-Q (10^30). If "SI" or "SI extended" is used and the exponent is beyond
-the above ranges, the formatting rule will automatically be switched
-to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
-\code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.}
-
-\item{labelalias}{Replacement text for specific tick or hover labels.
-For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
-to Canada. The labels we would have shown must match the keys exactly,
-after adding any tickprefix or ticksuffix. For negative numbers the
-minus sign symbol used (U+2212) is wider than the regular ascii dash.
-That means you need to use -1 instead of -1. labelalias can be used
-with any axis type, and both keys (if needed) and values (if desired)
-can include html-like tags or MathJax. Any value.}
-
-\item{len}{Sets the length of the color bar This measure excludes the
-padding of both ends. That is, the color bar length is this length
-minus the padding on both ends. Number in the interval [0, Inf].}
-
-\item{lenmode}{Determines whether this color bar's length (i.e. the
-measure in the color variation direction) is set in units of plot
-"fraction" or in *pixels. Use `len` to set the value. One of
-\code{"fraction"}, \code{"pixels"}.}
-
-\item{minexponent}{Hide SI prefix for 10^n if |n| is below this number.
-This only has an effect when `tickformat` is "SI" or "B". Number in
-the interval [0, Inf].}
-
-\item{nticks}{Specifies the maximum number of ticks for the particular
-axis. The actual number of ticks will be chosen automatically to be
-less than or equal to `nticks`. Has an effect only if `tickmode` is
-set to "auto". Integer in the interval [0, Inf].}
-
-\item{orientation}{Sets the orientation of the colorbar. One of
-\code{"h"}, \code{"v"}.}
-
-\item{outlinecolor}{Sets the axis line color. Color: a CSS color string
-or R color name.}
-
-\item{outlinewidth}{Sets the width (in px) of the axis line. Number in
-the interval [0, Inf].}
-
-\item{separatethousands}{If "true", even 4-digit integers are separated
-Logical.}
-
-\item{showexponent}{If "all", all exponents are shown besides their
-significands. If "first", only the exponent of the first tick is
-shown. If "last", only the exponent of the last tick is shown. If
-"none", no exponents appear. One of \code{"all"}, \code{"first"},
-\code{"last"}, \code{"none"}.}
-
-\item{showticklabels}{Determines whether or not the tick labels are
-drawn. Logical.}
-
-\item{showtickprefix}{If "all", all tick labels are displayed with a
-prefix. If "first", only the first tick is displayed with a prefix. If
-"last", only the last tick is displayed with a suffix. If "none", tick
-prefixes are hidden. One of \code{"all"}, \code{"first"},
-\code{"last"}, \code{"none"}.}
-
-\item{showticksuffix}{Same as `showtickprefix` but for tick suffixes.
-One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.}
-
-\item{thickness}{Sets the thickness of the color bar This measure
-excludes the size of the padding, ticks and labels. Number in the
-interval [0, Inf].}
-
-\item{thicknessmode}{Determines whether this color bar's thickness (i.e.
-the measure in the constant color direction) is set in units of plot
-"fraction" or in "pixels". Use `thickness` to set the value. One of
-\code{"fraction"}, \code{"pixels"}.}
-
-\item{tick0}{Sets the placement of the first tick on this axis. Use with
-`dtick`. If the axis `type` is "log", then you must take the log of
-your starting tick (e.g. to set the starting tick to 100, set the
-`tick0` to 2) except when `dtick`="L<f>" (see `dtick` for more info).
-If the axis `type` is "date", it should be a date string, like date
-data. If the axis `type` is "category", it should be a number, using
-the scale where each category is assigned a serial number from zero in
-the order it appears. Any value.}
-
-\item{tickangle}{Sets the angle of the tick labels with respect to the
-horizontal. For example, a `tickangle` of -90 draws the tick labels
-vertically. Angle in degrees.}
-
-\item{tickcolor}{Sets the tick color. Color: a CSS color string or R
-color name.}
-
-\item{tickfont}{Sets the color bar's tick label font Named list or
-\code{\link{go_contour_colorbar_tickfont}()} object.}
-
-\item{tickformat}{Sets the tick label formatting rule using d3
-formatting mini-languages which are very similar to those in Python.
-For numbers, see:
-https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-We add two items to d3's date formatter: "\%h" for half of the year as
-a decimal number as well as "\%\{n\}f" for fractional seconds with n
-digits. For example, "2016-10-13 09:15:23.456" with tickformat
-"\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.}
-
-\item{tickformatstops}{List of named lists or
-\code{\link{go_contour_colorbar_tickformatstop}()} objects.}
-
-\item{ticklabeloverflow}{Determines how we handle tick labels that would
-overflow either the graph div or the domain of the axis. The default
-value for inside tick labels is "hide past domain". In other cases the
-default is "hide past div". One of \code{"allow"}, \code{"hide past
-div"}, \code{"hide past domain"}.}
-
-\item{ticklabelposition}{Determines where tick labels are drawn relative
-to the ticks. Left and right options are used when `orientation` is
-"h", top and bottom when `orientation` is "v". One of
-\code{"outside"}, \code{"inside"}, \code{"outside top"}, \code{"inside
-top"}, \code{"outside left"}, \code{"inside left"}, \code{"outside
-right"}, \code{"inside right"}, \code{"outside bottom"}, \code{"inside
-bottom"}.}
-
-\item{ticklabelstep}{Sets the spacing between tick labels as compared to
-the spacing between ticks. A value of 1 (default) means each tick gets
-a label. A value of 2 means shows every 2nd label. A larger value n
-means only every nth tick is labeled. `tick0` determines which labels
-are shown. Not implemented for axes with `type` "log" or
-"multicategory", or when `tickmode` is "array". Integer in the
-interval [1, Inf].}
-
-\item{ticklen}{Sets the tick length (in px). Number in the interval [0,
-Inf].}
-
-\item{tickmode}{Sets the tick mode for this axis. If "auto", the number
-of ticks is set via `nticks`. If "linear", the placement of the ticks
-is determined by a starting position `tick0` and a tick step `dtick`
-("linear" is the default value if `tick0` and `dtick` are provided).
-If "array", the placement of the ticks is set via `tickvals` and the
-tick text is `ticktext`. ("array" is the default value if `tickvals`
-is provided). One of \code{"auto"}, \code{"linear"}, \code{"array"}.}
-
-\item{tickprefix}{Sets a tick label prefix. String.}
-
-\item{ticks}{Determines whether ticks are drawn or not. If **, this
-axis' ticks are not drawn. If "outside" ("inside"), this axis' are
-drawn outside (inside) the axis lines. One of \code{"outside"},
-\code{"inside"}, \code{""}.}
-
-\item{ticksuffix}{Sets a tick label suffix. String.}
-
-\item{ticktext}{Sets the text displayed at the ticks position via
-`tickvals`. Only has an effect if `tickmode` is set to "array". Used
-with `tickvals`. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.}
-
-\item{tickvals}{Sets the values at which ticks on this axis appear. Only
-has an effect if `tickmode` is set to "array". Used with `ticktext`.
-Data array: a vector, factor, Date/POSIXct vector, matrix or list.}
-
-\item{tickwidth}{Sets the tick width (in px). Number in the interval [0,
-Inf].}
-
-\item{title}{String (the title text), named list or
-\code{\link{go_contour_colorbar_title}()} object.}
-
-\item{xanchor}{Sets this color bar's horizontal position anchor. This
-anchor binds the `x` position to the "left", "center" or "right" of
-the color bar. Defaults to "left" when `orientation` is "v" and
-"center" when `orientation` is "h". One of \code{"left"},
-\code{"center"}, \code{"right"}.}
-
-\item{xpad}{Sets the amount of padding (in px) along the x direction.
-Number in the interval [0, Inf].}
-
-\item{xref}{Sets the container `x` refers to. "container" spans the
-entire `width` of the plot. "paper" refers to the width of the
-plotting area only. One of \code{"container"}, \code{"paper"}.}
-
-\item{yanchor}{Sets this color bar's vertical position anchor This
-anchor binds the `y` position to the "top", "middle" or "bottom" of
-the color bar. Defaults to "middle" when `orientation` is "v" and
-"bottom" when `orientation` is "h". One of \code{"top"},
-\code{"middle"}, \code{"bottom"}.}
-
-\item{ypad}{Sets the amount of padding (in px) along the y direction.
-Number in the interval [0, Inf].}
-
-\item{yref}{Sets the container `y` refers to. "container" spans the
-entire `height` of the plot. "paper" refers to the height of the
-plotting area only. One of \code{"container"}, \code{"paper"}.}
-
-\item{color}{\strong{\code{go_contour_colorbar_tickfont()},
-  \code{go_contour_colorbar_title_font()},
-  \code{go_contour_contours_labelfont()},
-  \code{go_contour_legendgrouptitle_font()},
-  \code{go_contour_textfont()}}: Color: a CSS color string or R color
-  name.
-
-  \strong{\code{go_contour_hoverlabel_font()}}: Color: a CSS color
-  string or R color name, or a vector of these.
-
-  \strong{\code{go_contour_line()}}: Sets the color of the contour
-  level. Has no effect if `contours.coloring` is set to "lines". Color:
-  a CSS color string or R color name.}
-
-\item{family}{\strong{\code{go_contour_colorbar_tickfont()},
-  \code{go_contour_colorbar_title_font()},
-  \code{go_contour_contours_labelfont()},
-  \code{go_contour_legendgrouptitle_font()},
-  \code{go_contour_textfont()}}: HTML font family - the typeface that
-  will be applied by the web browser. The web browser can only apply a
-  font if it is available on the system where it runs. Provide multiple
-  font families, separated by commas, to indicate the order in which to
-  apply fonts if they aren't available. String.
-
-  \strong{\code{go_contour_hoverlabel_font()}}: HTML font family - the
-  typeface that will be applied by the web browser. The web browser can
-  only apply a font if it is available on the system where it runs.
-  Provide multiple font families, separated by commas, to indicate the
-  order in which to apply fonts if they aren't available. String, or a
-  vector of these.}
-
-\item{lineposition}{\strong{\code{go_contour_colorbar_tickfont()},
-  \code{go_contour_colorbar_title_font()},
-  \code{go_contour_contours_labelfont()},
-  \code{go_contour_legendgrouptitle_font()},
-  \code{go_contour_textfont()}}: Sets the kind of decoration line(s)
-  with text, such as an "under", "over" or "through" as well as
-  combinations e.g. "under+over", etc. Any combination of
-  \code{"under"}, \code{"over"}, \code{"through"} joined with
-  \code{"+"}, or one of \code{"none"}.
-
-  \strong{\code{go_contour_hoverlabel_font()}}: Sets the kind of
-  decoration line(s) with text, such as an "under", "over" or "through"
-  as well as combinations e.g. "under+over", etc. Any combination of
-  \code{"under"}, \code{"over"}, \code{"through"} joined with
-  \code{"+"}, or one of \code{"none"}, or a vector of these.}
-
-\item{shadow}{\strong{\code{go_contour_colorbar_tickfont()},
-  \code{go_contour_colorbar_title_font()},
-  \code{go_contour_contours_labelfont()},
-  \code{go_contour_legendgrouptitle_font()},
-  \code{go_contour_textfont()}}: Sets the shape and color of the shadow
-  behind text. "auto" places minimal shadow and applies contrast text
-  font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.
-
-  \strong{\code{go_contour_hoverlabel_font()}}: Sets the shape and color
-  of the shadow behind text. "auto" places minimal shadow and applies
-  contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.}
-
-\item{size}{\strong{\code{go_contour_colorbar_tickfont()},
-  \code{go_contour_colorbar_title_font()},
-  \code{go_contour_contours_labelfont()},
-  \code{go_contour_legendgrouptitle_font()},
-  \code{go_contour_textfont()}}: Number in the interval [1, Inf].
-
-  \strong{\code{go_contour_contours()}}: Sets the step between each
-  contour level. Must be positive. Number in the interval [0, Inf].
-
-  \strong{\code{go_contour_hoverlabel_font()}}: Number in the interval
-  [1, Inf], or a vector of these.}
-
-\item{style}{\strong{\code{go_contour_colorbar_tickfont()},
-  \code{go_contour_colorbar_title_font()},
-  \code{go_contour_contours_labelfont()},
-  \code{go_contour_legendgrouptitle_font()},
-  \code{go_contour_textfont()}}: Sets whether a font should be styled
-  with a normal or italic face from its family. One of \code{"normal"},
-  \code{"italic"}.
-
-  \strong{\code{go_contour_hoverlabel_font()}}: Sets whether a font
-  should be styled with a normal or italic face from its family. One of
-  \code{"normal"}, \code{"italic"}, or a vector of these.}
-
-\item{textcase}{\strong{\code{go_contour_colorbar_tickfont()},
-  \code{go_contour_colorbar_title_font()},
-  \code{go_contour_contours_labelfont()},
-  \code{go_contour_legendgrouptitle_font()},
-  \code{go_contour_textfont()}}: Sets capitalization of text. It can be
-  used to make text appear in all-uppercase or all-lowercase, or with
-  each word capitalized. One of \code{"normal"}, \code{"word caps"},
-  \code{"upper"}, \code{"lower"}.
-
-  \strong{\code{go_contour_hoverlabel_font()}}: Sets capitalization of
-  text. It can be used to make text appear in all-uppercase or
-  all-lowercase, or with each word capitalized. One of \code{"normal"},
-  \code{"word caps"}, \code{"upper"}, \code{"lower"}, or a vector of
-  these.}
-
-\item{variant}{\strong{\code{go_contour_colorbar_tickfont()},
-  \code{go_contour_colorbar_title_font()},
-  \code{go_contour_contours_labelfont()},
-  \code{go_contour_legendgrouptitle_font()},
-  \code{go_contour_textfont()}}: Sets the variant of the font. One of
-  \code{"normal"}, \code{"small-caps"}, \code{"all-small-caps"},
-  \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-
-  \strong{\code{go_contour_hoverlabel_font()}}: Sets the variant of the
-  font. One of \code{"normal"}, \code{"small-caps"},
-  \code{"all-small-caps"}, \code{"all-petite-caps"},
-  \code{"petite-caps"}, \code{"unicase"}, or a vector of these.}
-
-\item{weight}{\strong{\code{go_contour_colorbar_tickfont()},
-  \code{go_contour_colorbar_title_font()},
-  \code{go_contour_contours_labelfont()},
-  \code{go_contour_legendgrouptitle_font()},
-  \code{go_contour_textfont()}}: Sets the weight (or boldness) of the
-  font. Integer in the interval [1, 1000].
-
-  \strong{\code{go_contour_hoverlabel_font()}}: Sets the weight (or
-  boldness) of the font. Integer in the interval [1, 1000], or a vector
-  of these.}
-
-\item{dtickrange}{range ["min", "max"], where "min", "max" - dtick
-values which describe some zoom level, it is possible to omit "min" or
-"max" value by passing "null" Vector or list of 2 element(s).}
-
-\item{enabled}{Determines whether or not this stop is used. If `false`,
-this stop is ignored even within its `dtickrange`. Logical.}
-
-\item{templateitemname}{Used to refer to a named item in this array in
-the template. Named items from the template will be created even
-without a matching item in the input figure, but you can modify one by
-making an item with `templateitemname` matching its `name`, alongside
-your modifications (including `visible: false` or `enabled: false` to
-hide it). If there is no template or no matching item, this item will
-be hidden unless you explicitly show it with `visible: true`. String.}
-
-\item{value}{\strong{\code{go_contour_colorbar_tickformatstop()}}:
-  string - dtickformat for described zoom level, the same as
-  "tickformat" String.
-
-  \strong{\code{go_contour_contours()}}: Sets the value or values of the
-  constraint boundary. When `operation` is set to one of the comparison
-  values (`=,<,>=,>,<=`) "value" is expected to be a number. When
-  `operation` is set to one of the interval values
-  (`[],(),[),(],][,)(,](,)[`) "value" is expected to be an array of two
-  numbers where the first is the lower bound and the second is the upper
-  bound. Any value.}
-
-\item{font}{\strong{\code{go_contour_colorbar_title()}}: Sets this color
-  bar's title font. Named list or
-  \code{\link{go_contour_colorbar_title_font}()} object.
-
-  \strong{\code{go_contour_hoverlabel()}}: Sets the font used in hover
-  labels. Named list or \code{\link{go_contour_hoverlabel_font}()}
-  object.
-
-  \strong{\code{go_contour_legendgrouptitle()}}: Sets this legend
-  group's title font. Named list or
-  \code{\link{go_contour_legendgrouptitle_font}()} object.}
-
-\item{side}{Determines the location of color bar's title with respect to
-the color bar. Defaults to "top" when `orientation` is "v" and
-defaults to "right" when `orientation` is "h". One of \code{"right"},
-\code{"top"}, \code{"bottom"}.}
-
-\item{coloring}{Determines the coloring method showing the contour
-values. If "fill", coloring is done evenly between each contour level
-If "heatmap", a heatmap gradient coloring is applied between each
-contour level. If "lines", coloring is done on the contour lines. If
-"none", no coloring is applied on this trace. One of \code{"fill"},
-\code{"heatmap"}, \code{"lines"}, \code{"none"}.}
-
-\item{end}{Sets the end contour level value. Must be more than
-`contours.start` Number.}
-
-\item{labelfont}{Sets the font used for labeling the contour levels. The
-default color comes from the lines, if shown. The default family and
-size come from `layout.font`. Named list or
-\code{\link{go_contour_contours_labelfont}()} object.}
-
-\item{labelformat}{Sets the contour label formatting rule using d3
-formatting mini-languages which are very similar to those in Python.
-For numbers, see:
-https://github.com/d3/d3-format/tree/v1.4.5#d3-format. String.}
-
-\item{operation}{Sets the constraint operation. "=" keeps regions equal
-to `value` "<" and "<=" keep regions less than `value` ">" and ">="
-keep regions greater than `value` "[]", "()", "[)", and "(]" keep
-regions inside `value[0]` to `value[1]` "][", ")(", "](", ")[" keep
-regions outside `value[0]` to `value[1]` Open vs. closed intervals
-make no difference to constraint display, but all versions are
-allowed. One of \code{"="}, \code{"<"}, \code{">="}, \code{">"},
-\code{"<="}, \code{"[]"}, \code{"()"}, \code{"[)"}, \code{"(]"},
-\code{"]["}, \code{")("}, \code{"]("}, \code{")["}.}
-
-\item{showlabels}{Determines whether to label the contour lines with
-their values. Logical.}
-
-\item{showlines}{Determines whether or not the contour lines are drawn.
-Has an effect only if `contours.coloring` is set to "fill". Logical.}
-
-\item{start}{Sets the starting contour level value. Must be less than
-`contours.end` Number.}
-
-\item{type}{If `levels`, the data is represented as a contour plot with
-multiple levels displayed. If `constraint`, the data is represented as
-constraints with the invalid region shaded as specified by the
-`operation` and `value` parameters. One of \code{"levels"},
-\code{"constraint"}.}
-
-\item{align}{Sets the horizontal alignment of the text content within
-hover label box. Has an effect only if the hover label text spans two
-or more lines One of \code{"left"}, \code{"right"}, \code{"auto"}, or
-a vector of these.}
-
-\item{namelength}{Sets the default length (in number of characters) of
-the trace name in the hover labels for all traces. -1 shows the whole
-name regardless of length. 0-3 shows the first 0-3 characters, and an
-integer >3 will show the whole name if it is less than that many
-characters, but if it is longer, will truncate to `namelength - 3`
-characters and add an ellipsis. Integer in the interval [-1, Inf], or
-a vector of these.}
-
-\item{showarrow}{Sets whether or not to show the hover label
-arrow/triangle pointing to the data point. Logical.}
-
-\item{dash}{Sets the dash style of lines. Set to a dash type string
-("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-\code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-\code{"longdashdot"}, or a string matching
-\code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
-
-\item{smoothing}{Sets the amount of smoothing for the contour lines,
-where 0 corresponds to no smoothing. Number in the interval [0, 1.3].}
-
-\item{width}{Sets the contour line width (in px) Defaults to 0.5 when
-`contours.type` is "levels". Defaults to 2 when `contours.type` is
-"constraint". Number in the interval [0, Inf].}
-
 \item{fig}{A \code{go_figure} object.}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
-~col}, \code{marker_size = ~col}) are evaluated. Default: the data
+~col}, \code{marker = list(size = ~col)}, \code{marker =
+go_scatter_marker(size = ~col)}) are evaluated. Default: the data
 given to \code{\link{go_figure}()}. Only the evaluated values are
 added to the trace. A \code{crosstalk::SharedData} works the same way,
 and links the trace to its crosstalk group (see
@@ -1259,8 +558,8 @@ to address several cells.}
 subplot.}
 }
 \value{
-Each \code{go_*()} function returns a graph object of the same
-  class as its name; \code{add_*()} functions return the modified figure.
+\code{go_*()} functions return a graph object;
+  \code{add_*()} functions return the modified figure.
 }
 \description{
 The data from which contour lines are computed is set in `z`. Data in `z`
@@ -1271,41 +570,23 @@ auto-generated) and the M columns correspond to M x coordinates (set in
 behavior is flipped.
 }
 \details{
-\code{go_contour()} and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-\code{\link{plotly_obj-modify}()}). \code{add_contour()} creates an
-object and adds it to a figure.
+\code{go_contour()} creates a validated graph object (a named list).
+\code{add_contour()} creates one and adds it to a figure.
 
-Nested objects documented here:
-\describe{
-\item{\code{go_contour_colorbar()}}{\code{contour.colorbar}}
-\item{\code{go_contour_colorbar_tickfont()}}{\code{contour.colorbar.tickfont}:
-Sets the color bar's tick label font}
-\item{\code{go_contour_colorbar_tickformatstop()}}{\code{contour.colorbar.tickformatstop}}
-\item{\code{go_contour_colorbar_title()}}{\code{contour.colorbar.title}}
-\item{\code{go_contour_colorbar_title_font()}}{\code{contour.colorbar.title.font}:
-Sets this color bar's title font.}
-\item{\code{go_contour_contours()}}{\code{contour.contours}}
-\item{\code{go_contour_contours_labelfont()}}{\code{contour.contours.labelfont}:
-Sets the font used for labeling the contour levels. The default color
-comes from the lines, if shown. The default family and size come from
-`layout.font`.}
-\item{\code{go_contour_hoverlabel()}}{\code{contour.hoverlabel}}
-\item{\code{go_contour_hoverlabel_font()}}{\code{contour.hoverlabel.font}:
-Sets the font used in hover labels.}
-\item{\code{go_contour_legendgrouptitle()}}{\code{contour.legendgrouptitle}}
-\item{\code{go_contour_legendgrouptitle_font()}}{\code{contour.legendgrouptitle.font}:
-Sets this legend group's title font.}
-\item{\code{go_contour_line()}}{\code{contour.line}}
-\item{\code{go_contour_textfont()}}{\code{contour.textfont}: For this
-trace it only has an effect if `contours.coloring` is set to "heatmap".
-Sets the text font.}
-}
+
+Nested objects are given as named lists or with their constructors, which
+are linked from the arguments below. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+\code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+evaluated in the data, and then checked, when the trace is added with
+\code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_contour(x = 1:3, y = c(2, 1, 3))
+airquality |>
+  go_figure() |>
+  add_contour(x = ~Day, y = ~Month, z = ~Temp)
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}
 }
+\concept{traces}

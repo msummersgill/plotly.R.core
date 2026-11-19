@@ -8,105 +8,387 @@
 #' Deltas are taken with respect to a `reference`. Gauges can be either
 #' angular or bullet (aka linear) gauges.
 #'
-#' \code{go_indicator()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}). \code{add_indicator()} creates an
-#' object and adds it to a figure.
+#' \code{go_indicator()} creates a validated graph object (a named list).
+#' \code{add_indicator()} creates one and adds it to a figure.
 #'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_indicator_delta()}}{\code{indicator.delta}}
-#' \item{\code{go_indicator_delta_decreasing()}}{\code{indicator.delta.decreasing}}
-#' \item{\code{go_indicator_delta_font()}}{\code{indicator.delta.font}: Set
-#' the font used to display the delta}
-#' \item{\code{go_indicator_delta_increasing()}}{\code{indicator.delta.increasing}}
-#' \item{\code{go_indicator_domain()}}{\code{indicator.domain}}
-#' \item{\code{go_indicator_gauge()}}{\code{indicator.gauge}: The gauge of
-#' the Indicator plot.}
-#' \item{\code{go_indicator_gauge_axis()}}{\code{indicator.gauge.axis}}
-#' \item{\code{go_indicator_gauge_axis_tickfont()}}{\code{indicator.gauge.axis.tickfont}:
-#' Sets the color bar's tick label font}
-#' \item{\code{go_indicator_gauge_axis_tickformatstop()}}{\code{indicator.gauge.axis.tickformatstop}}
-#' \item{\code{go_indicator_gauge_bar()}}{\code{indicator.gauge.bar}: Set
-#' the appearance of the gauge's value}
-#' \item{\code{go_indicator_gauge_bar_line()}}{\code{indicator.gauge.bar.line}}
-#' \item{\code{go_indicator_gauge_step()}}{\code{indicator.gauge.step}}
-#' \item{\code{go_indicator_gauge_step_line()}}{\code{indicator.gauge.step.line}}
-#' \item{\code{go_indicator_gauge_threshold()}}{\code{indicator.gauge.threshold}}
-#' \item{\code{go_indicator_gauge_threshold_line()}}{\code{indicator.gauge.threshold.line}}
-#' \item{\code{go_indicator_legendgrouptitle()}}{\code{indicator.legendgrouptitle}}
-#' \item{\code{go_indicator_legendgrouptitle_font()}}{\code{indicator.legendgrouptitle.font}:
-#' Sets this legend group's title font.}
-#' \item{\code{go_indicator_number()}}{\code{indicator.number}}
-#' \item{\code{go_indicator_number_font()}}{\code{indicator.number.font}:
-#' Set the font used to display main number}
-#' \item{\code{go_indicator_title()}}{\code{indicator.title}}
-#' \item{\code{go_indicator_title_font()}}{\code{indicator.title.font}: Set
-#' the font used to display the title}
-#' }
+#' @details
+#' Nested objects are given as named lists or with their constructors, which
+#' are linked from the arguments below. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+#' evaluated in the data, and then checked, when the trace is added with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
-#' @param align \strong{\code{go_indicator()}}: Sets the horizontal
-#'   alignment of the `text` within the box. Note that this attribute has
-#'   no effect if an angular gauge is displayed: in this case, it is always
-#'   centered One of \code{"left"}, \code{"center"}, \code{"right"}.
+#' @param align Sets the horizontal alignment of the `text` within the box.
+#'   Note that this attribute has no effect if an angular gauge is
+#'   displayed: in this case, it is always centered One of \code{"left"},
+#'   \code{"center"}, \code{"right"}.
+#' @param col Subplot grid column (figures created with
+#'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
+#'   to address several cells.
+#' @param customdata Assigns extra data each datum. This may be useful when
+#'   listening to hover, click and selection events. Note that, "scatter"
+#'   traces also appends customdata items in the markers DOM elements Data
+#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param data A data frame in which formula properties (e.g. \code{x =
+#'   ~col}, \code{marker = list(size = ~col)}, \code{marker =
+#'   go_scatter_marker(size = ~col)}) are evaluated. Default: the data
+#'   given to \code{\link{go_figure}()}. Only the evaluated values are
+#'   added to the trace. A \code{crosstalk::SharedData} works the same way,
+#'   and links the trace to its crosstalk group (see
+#'   \code{\link{highlight}()}).
+#' @param delta A \code{\link{go_indicator_delta}()} object or named list,
+#'   with properties \code{decreasing}, \code{font}, \code{increasing},
+#'   \code{position}, \code{prefix}, \code{reference}, \code{relative},
+#'   \code{suffix} and \code{valueformat} (see
+#'   \code{\link{go_indicator_delta}()}).
+#' @param domain A \code{\link{go_domain}()} object or named list, with
+#'   properties \code{column}, \code{row}, \code{x} and \code{y} (see
+#'   \code{\link{go_domain}()}).
+#' @param fig A \code{go_figure} object.
+#' @param gauge The gauge of the Indicator plot. A
+#'   \code{\link{go_indicator_gauge}()} object or named list, with
+#'   properties \code{axis}, \code{bar}, \code{bgcolor},
+#'   \code{bordercolor}, \code{borderwidth}, \code{shape}, \code{steps} and
+#'   \code{threshold} (see \code{\link{go_indicator_gauge}()}).
+#' @param ids Assigns id labels to each datum. These ids for object
+#'   constancy of data points during animation. Should be an array of
+#'   strings, not numbers or any other type. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param legend Sets the reference to a legend to show this trace in.
+#'   References to these legends are "legend", "legend2", "legend3", etc.
+#'   Settings for these legends are set in the layout, under
+#'   `layout.legend`, `layout.legend2`, etc. Subplot id: \code{"legend"},
+#'   \code{"legend2"}, \code{"legend3"}, ....
+#' @param legendgrouptitle A \code{\link{go_legendgrouptitle}()} object or
+#'   named list, with properties \code{font} and \code{text} (see
+#'   \code{\link{go_legendgrouptitle}()}).
+#' @param legendrank Sets the legend rank for this trace. Items and groups
+#'   with smaller ranks are presented on top/left side while with
+#'   "reversed" `legend.traceorder` they are on bottom/right side. The
+#'   default legendrank is 1000, so that you can use ranks less than 1000
+#'   to place certain items before all unranked items, and ranks greater
+#'   than 1000 to go after all unranked items. When having unranked or
+#'   equal rank items shapes would be displayed after traces i.e. according
+#'   to their order in data and layout. Number.
+#' @param legendwidth Sets the width (in px or fraction) of the legend for
+#'   this trace. Number in the interval [0, Inf].
+#' @param meta Assigns extra meta information associated with this trace
+#'   that can be used in various text attributes. Attributes such as trace
+#'   `name`, graph, axis and colorbar `title.text`, annotation `text`
+#'   `rangeselector`, `updatemenues` and `sliders` `label` text all support
+#'   `meta`. To access the trace `meta` values in an attribute in the same
+#'   trace, simply use `\%\{meta[i]\}` where `i` is the index or key of the
+#'   `meta` item in question. To access trace `meta` in layout attributes,
+#'   use `\%\{data[n[.meta[i]\}` where `i` is the index or key of the
+#'   `meta` and `n` is the trace index. Any value.
+#' @param mode Determines how the value is displayed on the graph. `number`
+#'   displays the value numerically in text. `delta` displays the
+#'   difference to a reference value in text. Finally, `gauge` displays the
+#'   value graphically on an axis. Any combination of \code{"number"},
+#'   \code{"delta"}, \code{"gauge"} joined with \code{"+"}.
+#' @param name Sets the trace name. The trace name appears as the legend
+#'   item and on hover. String.
+#' @param number A \code{\link{go_indicator_number}()} object or named
+#'   list, with properties \code{font}, \code{prefix}, \code{suffix} and
+#'   \code{valueformat} (see \code{\link{go_indicator_number}()}).
+#' @param row Subplot grid row (figures created with
+#'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
+#'   to address several cells.
+#' @param title String (the title text), or a
+#'   \code{\link{go_indicator_title}()} object or named list, with
+#'   properties \code{align}, \code{font} and \code{text} (see
+#'   \code{\link{go_indicator_title}()}).
+#' @param uid Assign an id to this trace, Use this to provide object
+#'   constancy between traces during animations and transitions. String.
+#' @param uirevision Controls persistence of some user-driven changes to
+#'   the trace: `constraintrange` in `parcoords` traces, as well as some
+#'   `editable: true` modifications such as `name` and `colorbar.title`.
+#'   Defaults to `layout.uirevision`. Note that other user-driven trace
+#'   attribute changes are controlled by `layout` attributes:
+#'   `trace.visible` is controlled by `layout.legend.uirevision`,
+#'   `selectedpoints` is controlled by `layout.selectionrevision`, and
+#'   `colorbar.(x|y)` (accessible with `config: \{editable: true\}`) is
+#'   controlled by `layout.editrevision`. Trace changes are tracked by
+#'   `uid`, which only falls back on trace index if no `uid` is provided.
+#'   So if your app can add/remove traces before the end of the `data`
+#'   array, such that the same trace has a different index, you can still
+#'   preserve user-driven changes if you give each trace a `uid` that stays
+#'   with it as it moves. Any value.
+#' @param value Sets the number to be displayed. Number.
+#' @param visible Determines whether or not this trace is visible. If
+#'   "legendonly", the trace is not drawn, but can appear as a legend item
+#'   (provided that the legend itself is visible). One of
+#'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return \code{go_*()} functions return a graph object;
+#'   \code{add_*()} functions return the modified figure.
+#' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
 #'
-#'   \strong{\code{go_indicator_title()}}: Sets the horizontal alignment of
-#'   the title. It defaults to `center` except for bullet charts for which
-#'   it defaults to right. One of \code{"left"}, \code{"center"},
-#'   \code{"right"}.
-#' @param axis Named list or \code{\link{go_indicator_gauge_axis}()}
-#'   object.
-#' @param bar Set the appearance of the gauge's value Named list or
-#'   \code{\link{go_indicator_gauge_bar}()} object.
+#' @concept traces
+#' @noMd
+#' @export
+#' @examples
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg")
+#'   )
+go_indicator <- function(
+    arg = NULL, ..., align = NULL, customdata = NULL, delta = NULL,
+    domain = NULL, gauge = NULL, ids = NULL, legend = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    meta = NULL, mode = NULL, name = NULL, number = NULL, title = NULL,
+    uid = NULL, uirevision = NULL, value = NULL, visible = NULL,
+    skip_invalid = FALSE
+) {
+  plotly_object("indicator", arg, environment(), list(...), skip_invalid)
+}
+
+#' Indicator delta objects
+#'
+#' The object for the \code{delta} of an indicator trace
+#' (\code{\link{go_indicator}()}). \code{go_indicator_delta()} creates one,
+#' with exactly its properties; a named list with the same properties works
+#' too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param decreasing A \code{\link{go_indicator_delta_decreasing}()} object
+#'   or named list, with properties \code{color} and \code{symbol} (see
+#'   \code{\link{go_indicator_delta_decreasing}()}).
+#' @param font Set the font used to display the delta A
+#'   \code{\link{go_font}()} object or named list, with properties
+#'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#'   \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#'   \code{weight} (see \code{\link{go_font}()}).
+#' @param increasing A \code{\link{go_indicator_delta_increasing}()} object
+#'   or named list, with properties \code{color} and \code{symbol} (see
+#'   \code{\link{go_indicator_delta_increasing}()}).
+#' @param position Sets the position of delta with respect to the number.
+#'   One of \code{"top"}, \code{"bottom"}, \code{"left"}, \code{"right"}.
+#' @param prefix Sets a prefix appearing before the delta. String.
+#' @param reference Sets the reference value to compute the delta. By
+#'   default, it is set to the current value. Number.
+#' @param relative Show relative change Logical.
+#' @param suffix Sets a suffix appearing next to the delta. String.
+#' @param valueformat Sets the value formatting rule using d3 formatting
+#'   mini-languages which are very similar to those in Python. For numbers,
+#'   see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. String.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_indicator_delta} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
+#' @export
+#' @examples
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     delta = go_indicator_delta()
+#'   )
+go_indicator_delta <- function(
+    arg = NULL, ..., decreasing = NULL, font = NULL, increasing = NULL,
+    position = NULL, prefix = NULL, reference = NULL, relative = NULL,
+    suffix = NULL, valueformat = NULL, skip_invalid = FALSE
+) {
+  plotly_object("indicator.delta", arg, environment(), list(...), skip_invalid)
+}
+
+#' Indicator delta decreasing objects
+#'
+#' The object for the \code{delta.decreasing} of an indicator trace
+#' (\code{\link{go_indicator_delta}()}).
+#' \code{go_indicator_delta_decreasing()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the color for increasing value. Color: a CSS color
+#'   string or R color name.
+#' @param symbol Sets the symbol to display for increasing value String.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_indicator_delta_decreasing} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
+#' @export
+#' @examples
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     delta = go_indicator_delta(
+#'       decreasing = go_indicator_delta_decreasing(color = "red")
+#'     )
+#'   )
+go_indicator_delta_decreasing <- function(
+    arg = NULL, ..., color = NULL, symbol = NULL, skip_invalid = FALSE
+) {
+  plotly_object("indicator.delta.decreasing", arg, environment(), list(...), skip_invalid)
+}
+
+#' Indicator delta increasing objects
+#'
+#' The object for the \code{delta.increasing} of an indicator trace
+#' (\code{\link{go_indicator_delta}()}).
+#' \code{go_indicator_delta_increasing()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the color for increasing value. Color: a CSS color
+#'   string or R color name.
+#' @param symbol Sets the symbol to display for increasing value String.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_indicator_delta_increasing} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
+#' @export
+#' @examples
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     delta = go_indicator_delta(
+#'       increasing = go_indicator_delta_increasing(color = "red")
+#'     )
+#'   )
+go_indicator_delta_increasing <- function(
+    arg = NULL, ..., color = NULL, symbol = NULL, skip_invalid = FALSE
+) {
+  plotly_object("indicator.delta.increasing", arg, environment(), list(...), skip_invalid)
+}
+
+#' Indicator gauge objects
+#'
+#' The gauge of the Indicator plot. The object for the \code{gauge} of an
+#' indicator trace (\code{\link{go_indicator}()}).
+#' \code{go_indicator_gauge()} creates one, with exactly its properties; a
+#' named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param axis A \code{\link{go_indicator_gauge_axis}()} object or named
+#'   list, with properties \code{dtick}, \code{exponentformat},
+#'   \code{labelalias}, \code{minexponent}, \code{nticks}, \code{range},
+#'   \code{separatethousands}, \code{showexponent}, \code{showticklabels},
+#'   \code{showtickprefix}, \code{showticksuffix}, \code{tick0} and 15 more
+#'   (see \code{\link{go_indicator_gauge_axis}()}).
+#' @param bar Set the appearance of the gauge's value A
+#'   \code{\link{go_indicator_gauge_bar}()} object or named list, with
+#'   properties \code{color}, \code{line} and \code{thickness} (see
+#'   \code{\link{go_indicator_gauge_bar}()}).
 #' @param bgcolor Sets the gauge background color. Color: a CSS color
 #'   string or R color name.
 #' @param bordercolor Sets the color of the border enclosing the gauge.
 #'   Color: a CSS color string or R color name.
 #' @param borderwidth Sets the width (in px) of the border enclosing the
 #'   gauge. Number in the interval [0, Inf].
-#' @param col Subplot grid column (figures created with
-#'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
-#'   to address several cells.
-#' @param color \strong{\code{go_indicator_delta_decreasing()},
-#'   \code{go_indicator_delta_increasing()}}: Sets the color for increasing
-#'   value. Color: a CSS color string or R color name.
+#' @param shape Set the shape of the gauge One of \code{"angular"},
+#'   \code{"bullet"}.
+#' @param steps List, each element a
+#'   \code{\link{go_indicator_gauge_step}()} object or named list, with
+#'   properties \code{color}, \code{line}, \code{name}, \code{range},
+#'   \code{templateitemname} and \code{thickness} (see
+#'   \code{\link{go_indicator_gauge_step}()}).
+#' @param threshold A \code{\link{go_indicator_gauge_threshold}()} object
+#'   or named list, with properties \code{line}, \code{thickness} and
+#'   \code{value} (see \code{\link{go_indicator_gauge_threshold}()}).
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_indicator_gauge} object (a named list).
 #'
-#'   \strong{\code{go_indicator_delta_font()},
-#'   \code{go_indicator_gauge_axis_tickfont()},
-#'   \code{go_indicator_legendgrouptitle_font()},
-#'   \code{go_indicator_number_font()}, \code{go_indicator_title_font()}}:
-#'   Color: a CSS color string or R color name.
+#' @concept trace objects
+#' @noMd
+#' @export
+#' @examples
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     gauge = go_indicator_gauge(bgcolor = "lightyellow")
+#'   )
+go_indicator_gauge <- function(
+    arg = NULL, ..., axis = NULL, bar = NULL, bgcolor = NULL,
+    bordercolor = NULL, borderwidth = NULL, shape = NULL, steps = NULL,
+    threshold = NULL, skip_invalid = FALSE
+) {
+  plotly_object("indicator.gauge", arg, environment(), list(...), skip_invalid)
+}
+
+#' Indicator gauge axis objects
 #'
-#'   \strong{\code{go_indicator_gauge_bar()},
-#'   \code{go_indicator_gauge_step()}}: Sets the background color of the
-#'   arc. Color: a CSS color string or R color name.
+#' The object for the \code{gauge.axis} of an indicator trace
+#' (\code{\link{go_indicator_gauge}()}). \code{go_indicator_gauge_axis()}
+#' creates one, with exactly its properties; a named list with the same
+#' properties works too.
 #'
-#'   \strong{\code{go_indicator_gauge_bar_line()},
-#'   \code{go_indicator_gauge_step_line()}}: Sets the color of the line
-#'   enclosing each sector. Color: a CSS color string or R color name.
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#'   \strong{\code{go_indicator_gauge_threshold_line()}}: Sets the color of
-#'   the threshold line. Color: a CSS color string or R color name.
-#' @param column If there is a layout grid, use the domain for this column
-#'   in the grid for this indicator trace. Integer in the interval [0,
-#'   Inf].
-#' @param customdata Assigns extra data each datum. This may be useful when
-#'   listening to hover, click and selection events. Note that, "scatter"
-#'   traces also appends customdata items in the markers DOM elements Data
-#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param data A data frame in which formula properties (e.g. \code{x =
-#'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
-#'   given to \code{\link{go_figure}()}. Only the evaluated values are
-#'   added to the trace. A \code{crosstalk::SharedData} works the same way,
-#'   and links the trace to its crosstalk group (see
-#'   \code{\link{highlight}()}).
-#' @param decreasing Named list or
-#'   \code{\link{go_indicator_delta_decreasing}()} object.
-#' @param delta Named list or \code{\link{go_indicator_delta}()} object.
-#' @param domain Named list or \code{\link{go_indicator_domain}()} object.
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
 #' @param dtick Sets the step in-between ticks on this axis. Use with
 #'   `tick0`. Must be a positive number, or special strings available to
 #'   "log" and "date" axes. If the axis `type` is "log", then ticks are set
@@ -126,11 +408,6 @@
 #'   integer. To set ticks on the 15th of every third month, set `tick0` to
 #'   "2000-01-15" and `dtick` to "M3". To set ticks every 4 years, set
 #'   `dtick` to "M48" Any value.
-#' @param dtickrange range ["min", "max"], where "min", "max" - dtick
-#'   values which describe some zoom level, it is possible to omit "min" or
-#'   "max" value by passing "null" Vector or list of 2 element(s).
-#' @param enabled Determines whether or not this stop is used. If `false`,
-#'   this stop is ignored even within its `dtickrange`. Logical.
 #' @param exponentformat Determines a formatting rule for the tick
 #'   exponents. For example, consider the number 1,000,000,000. If "none",
 #'   it appears as 1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power",
@@ -141,34 +418,6 @@
 #'   the above ranges, the formatting rule will automatically be switched
 #'   to the power notation. One of \code{"none"}, \code{"e"}, \code{"E"},
 #'   \code{"power"}, \code{"SI"}, \code{"B"}, \code{"SI extended"}.
-#' @param family HTML font family - the typeface that will be applied by
-#'   the web browser. The web browser can only apply a font if it is
-#'   available on the system where it runs. Provide multiple font families,
-#'   separated by commas, to indicate the order in which to apply fonts if
-#'   they aren't available. String.
-#' @param fig A \code{go_figure} object.
-#' @param font \strong{\code{go_indicator_delta()}}: Set the font used to
-#'   display the delta Named list or
-#'   \code{\link{go_indicator_delta_font}()} object.
-#'
-#'   \strong{\code{go_indicator_legendgrouptitle()}}: Sets this legend
-#'   group's title font. Named list or
-#'   \code{\link{go_indicator_legendgrouptitle_font}()} object.
-#'
-#'   \strong{\code{go_indicator_number()}}: Set the font used to display
-#'   main number Named list or \code{\link{go_indicator_number_font}()}
-#'   object.
-#'
-#'   \strong{\code{go_indicator_title()}}: Set the font used to display the
-#'   title Named list or \code{\link{go_indicator_title_font}()} object.
-#' @param gauge The gauge of the Indicator plot. Named list or
-#'   \code{\link{go_indicator_gauge}()} object.
-#' @param ids Assigns id labels to each datum. These ids for object
-#'   constancy of data points during animation. Should be an array of
-#'   strings, not numbers or any other type. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
-#' @param increasing Named list or
-#'   \code{\link{go_indicator_delta_increasing}()} object.
 #' @param labelalias Replacement text for specific tick or hover labels.
 #'   For example using \{US: 'USA', CA: 'Canada'\} changes US to USA and CA
 #'   to Canada. The labels we would have shown must match the keys exactly,
@@ -177,95 +426,17 @@
 #'   That means you need to use -1 instead of -1. labelalias can be used
 #'   with any axis type, and both keys (if needed) and values (if desired)
 #'   can include html-like tags or MathJax. Any value.
-#' @param legend Sets the reference to a legend to show this trace in.
-#'   References to these legends are "legend", "legend2", "legend3", etc.
-#'   Settings for these legends are set in the layout, under
-#'   `layout.legend`, `layout.legend2`, etc. Subplot id: \code{"legend"},
-#'   \code{"legend2"}, \code{"legend3"}, ....
-#' @param legendgrouptitle Named list or
-#'   \code{\link{go_indicator_legendgrouptitle}()} object.
-#' @param legendrank Sets the legend rank for this trace. Items and groups
-#'   with smaller ranks are presented on top/left side while with
-#'   "reversed" `legend.traceorder` they are on bottom/right side. The
-#'   default legendrank is 1000, so that you can use ranks less than 1000
-#'   to place certain items before all unranked items, and ranks greater
-#'   than 1000 to go after all unranked items. When having unranked or
-#'   equal rank items shapes would be displayed after traces i.e. according
-#'   to their order in data and layout. Number.
-#' @param legendwidth Sets the width (in px or fraction) of the legend for
-#'   this trace. Number in the interval [0, Inf].
-#' @param line \strong{\code{go_indicator_gauge_bar()}}: Named list or
-#'   \code{\link{go_indicator_gauge_bar_line}()} object.
-#'
-#'   \strong{\code{go_indicator_gauge_step()}}: Named list or
-#'   \code{\link{go_indicator_gauge_step_line}()} object.
-#'
-#'   \strong{\code{go_indicator_gauge_threshold()}}: Named list or
-#'   \code{\link{go_indicator_gauge_threshold_line}()} object.
-#' @param lineposition Sets the kind of decoration line(s) with text, such
-#'   as an "under", "over" or "through" as well as combinations e.g.
-#'   "under+over", etc. Any combination of \code{"under"}, \code{"over"},
-#'   \code{"through"} joined with \code{"+"}, or one of \code{"none"}.
-#' @param meta Assigns extra meta information associated with this trace
-#'   that can be used in various text attributes. Attributes such as trace
-#'   `name`, graph, axis and colorbar `title.text`, annotation `text`
-#'   `rangeselector`, `updatemenues` and `sliders` `label` text all support
-#'   `meta`. To access the trace `meta` values in an attribute in the same
-#'   trace, simply use `\%\{meta[i]\}` where `i` is the index or key of the
-#'   `meta` item in question. To access trace `meta` in layout attributes,
-#'   use `\%\{data[n[.meta[i]\}` where `i` is the index or key of the
-#'   `meta` and `n` is the trace index. Any value.
 #' @param minexponent Hide SI prefix for 10^n if |n| is below this number.
 #'   This only has an effect when `tickformat` is "SI" or "B". Number in
 #'   the interval [0, Inf].
-#' @param mode Determines how the value is displayed on the graph. `number`
-#'   displays the value numerically in text. `delta` displays the
-#'   difference to a reference value in text. Finally, `gauge` displays the
-#'   value graphically on an axis. Any combination of \code{"number"},
-#'   \code{"delta"}, \code{"gauge"} joined with \code{"+"}.
-#' @param name \strong{\code{go_indicator()}}: Sets the trace name. The
-#'   trace name appears as the legend item and on hover. String.
-#'
-#'   \strong{\code{go_indicator_gauge_axis_tickformatstop()},
-#'   \code{go_indicator_gauge_step()}}: When used in a template, named
-#'   items are created in the output figure in addition to any items the
-#'   figure already has in this array. You can modify these items in the
-#'   output figure by making your own item with `templateitemname` matching
-#'   this `name` alongside your modifications (including `visible: false`
-#'   or `enabled: false` to hide it). Has no effect outside of a template.
-#'   String.
 #' @param nticks Specifies the maximum number of ticks for the particular
 #'   axis. The actual number of ticks will be chosen automatically to be
 #'   less than or equal to `nticks`. Has an effect only if `tickmode` is
 #'   set to "auto". Integer in the interval [0, Inf].
-#' @param number Named list or \code{\link{go_indicator_number}()} object.
-#' @param position Sets the position of delta with respect to the number.
-#'   One of \code{"top"}, \code{"bottom"}, \code{"left"}, \code{"right"}.
-#' @param prefix \strong{\code{go_indicator_delta()}}: Sets a prefix
-#'   appearing before the delta. String.
-#'
-#'   \strong{\code{go_indicator_number()}}: Sets a prefix appearing before
-#'   the number. String.
 #' @param range Sets the range of this axis. Vector or list of 2
 #'   element(s).
-#' @param reference Sets the reference value to compute the delta. By
-#'   default, it is set to the current value. Number.
-#' @param relative Show relative change Logical.
-#' @param row \strong{\code{add_indicator()}}: Subplot grid row (figures
-#'   created with \code{\link{make_subplots}()} only). May be \code{"all"}
-#'   or a vector to address several cells.
-#'
-#'   \strong{\code{go_indicator_domain()}}: If there is a layout grid, use
-#'   the domain for this row in the grid for this indicator trace. Integer
-#'   in the interval [0, Inf].
 #' @param separatethousands If "true", even 4-digit integers are separated
 #'   Logical.
-#' @param shadow Sets the shape and color of the shadow behind text. "auto"
-#'   places minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param shape Set the shape of the gauge One of \code{"angular"},
-#'   \code{"bullet"}.
 #' @param showexponent If "all", all exponents are shown besides their
 #'   significands. If "first", only the exponent of the first tick is
 #'   shown. If "last", only the exponent of the last tick is shown. If
@@ -280,43 +451,6 @@
 #'   \code{"last"}, \code{"none"}.
 #' @param showticksuffix Same as `showtickprefix` but for tick suffixes.
 #'   One of \code{"all"}, \code{"first"}, \code{"last"}, \code{"none"}.
-#' @param size Number in the interval [1, Inf].
-#' @param steps List of named lists or
-#'   \code{\link{go_indicator_gauge_step}()} objects.
-#' @param style Sets whether a font should be styled with a normal or
-#'   italic face from its family. One of \code{"normal"}, \code{"italic"}.
-#' @param suffix \strong{\code{go_indicator_delta()}}: Sets a suffix
-#'   appearing next to the delta. String.
-#'
-#'   \strong{\code{go_indicator_number()}}: Sets a suffix appearing next to
-#'   the number. String.
-#' @param symbol Sets the symbol to display for increasing value String.
-#' @param templateitemname Used to refer to a named item in this array in
-#'   the template. Named items from the template will be created even
-#'   without a matching item in the input figure, but you can modify one by
-#'   making an item with `templateitemname` matching its `name`, alongside
-#'   your modifications (including `visible: false` or `enabled: false` to
-#'   hide it). If there is no template or no matching item, this item will
-#'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param text \strong{\code{go_indicator_legendgrouptitle()}}: Sets the
-#'   title of the legend group. String.
-#'
-#'   \strong{\code{go_indicator_title()}}: Sets the title of this
-#'   indicator. String.
-#' @param textcase Sets capitalization of text. It can be used to make text
-#'   appear in all-uppercase or all-lowercase, or with each word
-#'   capitalized. One of \code{"normal"}, \code{"word caps"},
-#'   \code{"upper"}, \code{"lower"}.
-#' @param thickness \strong{\code{go_indicator_gauge_bar()},
-#'   \code{go_indicator_gauge_step()}}: Sets the thickness of the bar as a
-#'   fraction of the total thickness of the gauge. Number in the interval
-#'   [0, 1].
-#'
-#'   \strong{\code{go_indicator_gauge_threshold()}}: Sets the thickness of
-#'   the threshold line as a fraction of the thickness of the gauge. Number
-#'   in the interval [0, 1].
-#' @param threshold Named list or
-#'   \code{\link{go_indicator_gauge_threshold}()} object.
 #' @param tick0 Sets the placement of the first tick on this axis. Use with
 #'   `dtick`. If the axis `type` is "log", then you must take the log of
 #'   your starting tick (e.g. to set the starting tick to 100, set the
@@ -330,8 +464,11 @@
 #'   vertically. Angle in degrees.
 #' @param tickcolor Sets the tick color. Color: a CSS color string or R
 #'   color name.
-#' @param tickfont Sets the color bar's tick label font Named list or
-#'   \code{\link{go_indicator_gauge_axis_tickfont}()} object.
+#' @param tickfont Sets the color bar's tick label font A
+#'   \code{\link{go_font}()} object or named list, with properties
+#'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#'   \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#'   \code{weight} (see \code{\link{go_font}()}).
 #' @param tickformat Sets the tick label formatting rule using d3
 #'   formatting mini-languages which are very similar to those in Python.
 #'   For numbers, see:
@@ -341,8 +478,11 @@
 #'   a decimal number as well as "\%\{n\}f" for fractional seconds with n
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46" String.
-#' @param tickformatstops List of named lists or
-#'   \code{\link{go_indicator_gauge_axis_tickformatstop}()} objects.
+#' @param tickformatstops List, each element a
+#'   \code{\link{go_tickformatstop}()} object or named list, with
+#'   properties \code{dtickrange}, \code{enabled}, \code{name},
+#'   \code{templateitemname} and \code{value} (see
+#'   \code{\link{go_tickformatstop}()}).
 #' @param ticklabelstep Sets the spacing between tick labels as compared to
 #'   the spacing between ticks. A value of 1 (default) means each tick gets
 #'   a label. A value of 2 means shows every 2nd label. A larger value n
@@ -374,139 +514,28 @@
 #'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param tickwidth Sets the tick width (in px). Number in the interval [0,
 #'   Inf].
-#' @param title String (the title text), named list or
-#'   \code{\link{go_indicator_title}()} object.
-#' @param uid Assign an id to this trace, Use this to provide object
-#'   constancy between traces during animations and transitions. String.
-#' @param uirevision Controls persistence of some user-driven changes to
-#'   the trace: `constraintrange` in `parcoords` traces, as well as some
-#'   `editable: true` modifications such as `name` and `colorbar.title`.
-#'   Defaults to `layout.uirevision`. Note that other user-driven trace
-#'   attribute changes are controlled by `layout` attributes:
-#'   `trace.visible` is controlled by `layout.legend.uirevision`,
-#'   `selectedpoints` is controlled by `layout.selectionrevision`, and
-#'   `colorbar.(x|y)` (accessible with `config: \{editable: true\}`) is
-#'   controlled by `layout.editrevision`. Trace changes are tracked by
-#'   `uid`, which only falls back on trace index if no `uid` is provided.
-#'   So if your app can add/remove traces before the end of the `data`
-#'   array, such that the same trace has a different index, you can still
-#'   preserve user-driven changes if you give each trace a `uid` that stays
-#'   with it as it moves. Any value.
-#' @param value \strong{\code{go_indicator()}}: Sets the number to be
-#'   displayed. Number.
-#'
-#'   \strong{\code{go_indicator_gauge_axis_tickformatstop()}}: string -
-#'   dtickformat for described zoom level, the same as "tickformat" String.
-#'
-#'   \strong{\code{go_indicator_gauge_threshold()}}: Sets a treshold value
-#'   drawn as a line. Number.
-#' @param valueformat Sets the value formatting rule using d3 formatting
-#'   mini-languages which are very similar to those in Python. For numbers,
-#'   see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. String.
-#' @param variant Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.
-#' @param visible \strong{\code{go_indicator()}}: Determines whether or not
-#'   this trace is visible. If "legendonly", the trace is not drawn, but
-#'   can appear as a legend item (provided that the legend itself is
-#'   visible). One of \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#'
-#'   \strong{\code{go_indicator_gauge_axis()}}: A single toggle to hide the
-#'   axis while preserving interaction like dragging. Default is true when
-#'   a cheater plot is present on the axis, otherwise false Logical.
-#' @param weight Sets the weight (or boldness) of the font. Integer in the
-#'   interval [1, 1000].
-#' @param width \strong{\code{go_indicator_gauge_bar_line()},
-#'   \code{go_indicator_gauge_step_line()}}: Sets the width (in px) of the
-#'   line enclosing each sector. Number in the interval [0, Inf].
-#'
-#'   \strong{\code{go_indicator_gauge_threshold_line()}}: Sets the width
-#'   (in px) of the threshold line. Number in the interval [0, Inf].
-#' @param x Sets the horizontal domain of this indicator trace (in plot
-#'   fraction). Vector or list of 2 element(s).
-#' @param y Sets the vertical domain of this indicator trace (in plot
-#'   fraction). Vector or list of 2 element(s).
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
+#' @param visible A single toggle to hide the axis while preserving
+#'   interaction like dragging. Default is true when a cheater plot is
+#'   present on the axis, otherwise false Logical.
+#' @param ... Not used: properties must be named in full.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
-#' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
+#' @return A \code{go_indicator_gauge_axis} object (a named list).
+#'
+#' @concept trace objects
 #' @noMd
 #' @export
 #' @examples
-#' go_indicator()
-go_indicator <- function(
-    arg = NULL, ..., align = NULL, customdata = NULL, delta = NULL,
-    domain = NULL, gauge = NULL, ids = NULL, legend = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    meta = NULL, mode = NULL, name = NULL, number = NULL, title = NULL,
-    uid = NULL, uirevision = NULL, value = NULL, visible = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("indicator", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_indicator
-#' @export
-go_indicator_delta <- function(
-    arg = NULL, ..., decreasing = NULL, font = NULL, increasing = NULL,
-    position = NULL, prefix = NULL, reference = NULL, relative = NULL,
-    suffix = NULL, valueformat = NULL, skip_invalid = FALSE
-) {
-  plotly_object("indicator.delta", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_indicator
-#' @export
-go_indicator_delta_decreasing <- function(
-    arg = NULL, ..., color = NULL, symbol = NULL, skip_invalid = FALSE
-) {
-  plotly_object("indicator.delta.decreasing", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_indicator
-#' @export
-go_indicator_delta_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("indicator.delta.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_indicator
-#' @export
-go_indicator_delta_increasing <- function(
-    arg = NULL, ..., color = NULL, symbol = NULL, skip_invalid = FALSE
-) {
-  plotly_object("indicator.delta.increasing", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_indicator
-#' @export
-go_indicator_domain <- function(
-    arg = NULL, ..., column = NULL, row = NULL, x = NULL, y = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("indicator.domain", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_indicator
-#' @export
-go_indicator_gauge <- function(
-    arg = NULL, ..., axis = NULL, bar = NULL, bgcolor = NULL,
-    bordercolor = NULL, borderwidth = NULL, shape = NULL, steps = NULL,
-    threshold = NULL, skip_invalid = FALSE
-) {
-  plotly_object("indicator.gauge", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_indicator
-#' @export
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     gauge = go_indicator_gauge(
+#'       axis = go_indicator_gauge_axis(visible = TRUE)
+#'     )
+#'   )
 go_indicator_gauge_axis <- function(
     arg = NULL, ..., dtick = NULL, exponentformat = NULL, labelalias = NULL,
     minexponent = NULL, nticks = NULL, range = NULL,
@@ -521,27 +550,50 @@ go_indicator_gauge_axis <- function(
   plotly_object("indicator.gauge.axis", arg, environment(), list(...), skip_invalid)
 }
 
-#' @rdname go_indicator
+#' Indicator gauge bar objects
+#'
+#' Set the appearance of the gauge's value The object for the
+#' \code{gauge.bar} of an indicator trace
+#' (\code{\link{go_indicator_gauge}()}). \code{go_indicator_gauge_bar()}
+#' creates one, with exactly its properties; a named list with the same
+#' properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the background color of the arc. Color: a CSS color
+#'   string or R color name.
+#' @param line A \code{\link{go_indicator_gauge_bar_line}()} object or
+#'   named list, with properties \code{color} and \code{width} (see
+#'   \code{\link{go_indicator_gauge_bar_line}()}).
+#' @param thickness Sets the thickness of the bar as a fraction of the
+#'   total thickness of the gauge. Number in the interval [0, 1].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_indicator_gauge_bar} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
 #' @export
-go_indicator_gauge_axis_tickfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("indicator.gauge.axis.tickfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_indicator
-#' @export
-go_indicator_gauge_axis_tickformatstop <- function(
-    arg = NULL, ..., dtickrange = NULL, enabled = NULL, name = NULL,
-    templateitemname = NULL, value = NULL, skip_invalid = FALSE
-) {
-  plotly_object("indicator.gauge.axis.tickformatstop", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_indicator
-#' @export
+#' @examples
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     gauge = go_indicator_gauge(
+#'       bar = go_indicator_gauge_bar(color = "red")
+#'     )
+#'   )
 go_indicator_gauge_bar <- function(
     arg = NULL, ..., color = NULL, line = NULL, thickness = NULL,
     skip_invalid = FALSE
@@ -549,16 +601,114 @@ go_indicator_gauge_bar <- function(
   plotly_object("indicator.gauge.bar", arg, environment(), list(...), skip_invalid)
 }
 
-#' @rdname go_indicator
+#' Indicator gauge bar line objects
+#'
+#' The object for the \code{gauge.bar.line} of an indicator trace
+#' (\code{\link{go_indicator_gauge_bar}()}).
+#' \code{go_indicator_gauge_bar_line()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the color of the line enclosing each sector. Color: a
+#'   CSS color string or R color name.
+#' @param width Sets the width (in px) of the line enclosing each sector.
+#'   Number in the interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_indicator_gauge_bar_line} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
 #' @export
+#' @examples
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     gauge = go_indicator_gauge(
+#'       bar = go_indicator_gauge_bar(
+#'         line = go_indicator_gauge_bar_line(color = "red")
+#'       )
+#'     )
+#'   )
 go_indicator_gauge_bar_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
   plotly_object("indicator.gauge.bar.line", arg, environment(), list(...), skip_invalid)
 }
 
-#' @rdname go_indicator
+#' Indicator gauge step objects
+#'
+#' The object for an element of the \code{steps} list of an indicator
+#' trace's \code{gauge} (\code{\link{go_indicator_gauge}()}).
+#' \code{go_indicator_gauge_step()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the background color of the arc. Color: a CSS color
+#'   string or R color name.
+#' @param line A \code{\link{go_indicator_gauge_step_line}()} object or
+#'   named list, with properties \code{color} and \code{width} (see
+#'   \code{\link{go_indicator_gauge_step_line}()}).
+#' @param name When used in a template, named items are created in the
+#'   output figure in addition to any items the figure already has in this
+#'   array. You can modify these items in the output figure by making your
+#'   own item with `templateitemname` matching this `name` alongside your
+#'   modifications (including `visible: false` or `enabled: false` to hide
+#'   it). Has no effect outside of a template. String.
+#' @param range Sets the range of this axis. Vector or list of 2
+#'   element(s).
+#' @param templateitemname Used to refer to a named item in this array in
+#'   the template. Named items from the template will be created even
+#'   without a matching item in the input figure, but you can modify one by
+#'   making an item with `templateitemname` matching its `name`, alongside
+#'   your modifications (including `visible: false` or `enabled: false` to
+#'   hide it). If there is no template or no matching item, this item will
+#'   be hidden unless you explicitly show it with `visible: true`. String.
+#' @param thickness Sets the thickness of the bar as a fraction of the
+#'   total thickness of the gauge. Number in the interval [0, 1].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_indicator_gauge_step} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
 #' @export
+#' @examples
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     gauge = go_indicator_gauge(
+#'       steps = list(
+#'         go_indicator_gauge_step(range = c(0, 20), color = "red")
+#'       )
+#'     )
+#'   )
 go_indicator_gauge_step <- function(
     arg = NULL, ..., color = NULL, line = NULL, name = NULL, range = NULL,
     templateitemname = NULL, thickness = NULL, skip_invalid = FALSE
@@ -566,16 +716,98 @@ go_indicator_gauge_step <- function(
   plotly_object("indicator.gauge.step", arg, environment(), list(...), skip_invalid)
 }
 
-#' @rdname go_indicator
+#' Indicator gauge step line objects
+#'
+#' The object for the \code{gauge.step.line} of an indicator trace
+#' (\code{\link{go_indicator_gauge_step}()}).
+#' \code{go_indicator_gauge_step_line()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the color of the line enclosing each sector. Color: a
+#'   CSS color string or R color name.
+#' @param width Sets the width (in px) of the line enclosing each sector.
+#'   Number in the interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_indicator_gauge_step_line} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
 #' @export
+#' @examples
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     gauge = go_indicator_gauge(
+#'       steps = list(
+#'         go_indicator_gauge_step(
+#'           range = c(0, 20), line = go_indicator_gauge_step_line(color = "red")
+#'         )
+#'       )
+#'     )
+#'   )
 go_indicator_gauge_step_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
   plotly_object("indicator.gauge.step.line", arg, environment(), list(...), skip_invalid)
 }
 
-#' @rdname go_indicator
+#' Indicator gauge threshold objects
+#'
+#' The object for the \code{gauge.threshold} of an indicator trace
+#' (\code{\link{go_indicator_gauge}()}).
+#' \code{go_indicator_gauge_threshold()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param line A \code{\link{go_indicator_gauge_threshold_line}()} object
+#'   or named list, with properties \code{color} and \code{width} (see
+#'   \code{\link{go_indicator_gauge_threshold_line}()}).
+#' @param thickness Sets the thickness of the threshold line as a fraction
+#'   of the thickness of the gauge. Number in the interval [0, 1].
+#' @param value Sets a treshold value drawn as a line. Number.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_indicator_gauge_threshold} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
 #' @export
+#' @examples
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     gauge = go_indicator_gauge(
+#'       threshold = go_indicator_gauge_threshold(thickness = 0.5)
+#'     )
+#'   )
 go_indicator_gauge_threshold <- function(
     arg = NULL, ..., line = NULL, thickness = NULL, value = NULL,
     skip_invalid = FALSE
@@ -583,34 +815,98 @@ go_indicator_gauge_threshold <- function(
   plotly_object("indicator.gauge.threshold", arg, environment(), list(...), skip_invalid)
 }
 
-#' @rdname go_indicator
+#' Indicator gauge threshold line objects
+#'
+#' The object for the \code{gauge.threshold.line} of an indicator trace
+#' (\code{\link{go_indicator_gauge_threshold}()}).
+#' \code{go_indicator_gauge_threshold_line()} creates one, with exactly its
+#' properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the color of the threshold line. Color: a CSS color
+#'   string or R color name.
+#' @param width Sets the width (in px) of the threshold line. Number in the
+#'   interval [0, Inf].
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_indicator_gauge_threshold_line} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
 #' @export
+#' @examples
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     gauge = go_indicator_gauge(
+#'       threshold = go_indicator_gauge_threshold(
+#'         line = go_indicator_gauge_threshold_line(color = "red")
+#'       )
+#'     )
+#'   )
 go_indicator_gauge_threshold_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
   plotly_object("indicator.gauge.threshold.line", arg, environment(), list(...), skip_invalid)
 }
 
-#' @rdname go_indicator
+#' Indicator number objects
+#'
+#' The object for the \code{number} of an indicator trace
+#' (\code{\link{go_indicator}()}). \code{go_indicator_number()} creates one,
+#' with exactly its properties; a named list with the same properties works
+#' too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param font Set the font used to display main number A
+#'   \code{\link{go_font}()} object or named list, with properties
+#'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#'   \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#'   \code{weight} (see \code{\link{go_font}()}).
+#' @param prefix Sets a prefix appearing before the number. String.
+#' @param suffix Sets a suffix appearing next to the number. String.
+#' @param valueformat Sets the value formatting rule using d3 formatting
+#'   mini-languages which are very similar to those in Python. For numbers,
+#'   see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. String.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_indicator_number} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
 #' @export
-go_indicator_legendgrouptitle <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("indicator.legendgrouptitle", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_indicator
-#' @export
-go_indicator_legendgrouptitle_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("indicator.legendgrouptitle.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_indicator
-#' @export
+#' @examples
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     number = go_indicator_number()
+#'   )
 go_indicator_number <- function(
     arg = NULL, ..., font = NULL, prefix = NULL, suffix = NULL,
     valueformat = NULL, skip_invalid = FALSE
@@ -618,32 +914,48 @@ go_indicator_number <- function(
   plotly_object("indicator.number", arg, environment(), list(...), skip_invalid)
 }
 
-#' @rdname go_indicator
+#' Indicator title objects
+#'
+#' The object for the \code{title} of an indicator trace
+#' (\code{\link{go_indicator}()}). \code{go_indicator_title()} creates one,
+#' with exactly its properties; a named list with the same properties works
+#' too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param align Sets the horizontal alignment of the title. It defaults to
+#'   `center` except for bullet charts for which it defaults to right. One
+#'   of \code{"left"}, \code{"center"}, \code{"right"}.
+#' @param font Set the font used to display the title A
+#'   \code{\link{go_font}()} object or named list, with properties
+#'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#'   \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#'   \code{weight} (see \code{\link{go_font}()}).
+#' @param text Sets the title of this indicator. String.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_indicator_title} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
 #' @export
-go_indicator_number_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("indicator.number.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_indicator
-#' @export
+#' @examples
+#' go_indicator(
+#'   title = go_indicator_title(text = "title")
+#' )
 go_indicator_title <- function(
     arg = NULL, ..., align = NULL, font = NULL, text = NULL,
     skip_invalid = FALSE
 ) {
   plotly_object("indicator.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_indicator
-#' @export
-go_indicator_title_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("indicator.title.font", arg, environment(), list(...), skip_invalid)
 }
 

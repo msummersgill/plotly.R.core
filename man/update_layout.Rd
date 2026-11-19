@@ -21,12 +21,13 @@ The modified figure.
 \description{
 Updates layout properties, merging nested objects (e.g. \code{xaxis}) with any
 existing values unless \code{overwrite = TRUE}. Properties can be given in
-\code{patch}, in \code{...}, or both; \code{...} is applied last. Names may use "magic
-underscores": \code{xaxis_title_text = "x"} is the same as
-\code{xaxis = list(title = list(text = "x"))}.
+\code{patch}, in \code{...}, or both; \code{...} is applied last. Nested properties are
+given as named lists, which are merged into the existing objects:
+\code{xaxis = list(title = list(text = "x"))} sets the x axis title and keeps
+its other properties.
 }
 \examples{
 go_figure() |>
-  update_layout(title = "Title", xaxis = list(range = c(0, 10))) |>
-  update_layout(xaxis_title = "x", yaxis = list(type = "log"))
+  update_layout(title = "Title", xaxis = go_xaxis(range = c(0, 10))) |>
+  update_layout(xaxis = go_xaxis(title = "x"), yaxis = go_yaxis(type = "log"))
 }

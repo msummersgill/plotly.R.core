@@ -67,7 +67,8 @@ Suggests:
     quarto,
     rmarkdown,
     rsvg,
-    shiny
+    shiny,
+    systemfonts
 VignetteBuilder: quarto
 URL: https://msummersgill.github.io/plotly.R.core/, https://github.com/msummersgill/plotly.R.core
 BugReports: https://github.com/msummersgill/plotly.R.core/issues

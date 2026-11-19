@@ -93,6 +93,20 @@ validate_coerce <- function(
       }
     )
   }
+  # validators convert values before checking them (numbers to strings, ...):
+  # errors about the whole value report it as it was given
+  tryCatch(
+    validate_coerce_by_type(v, key, entry, skip_invalid),
+    plotly_invalid_value = function(e) {
+      if (!isTRUE(e$elements) && identical(e$key, key)) {
+        raise_invalid_val(v, key, entry)
+      }
+      stop(e)
+    }
+  )
+}
+
+validate_coerce_by_type <- function(v, key, entry, skip_invalid = FALSE) {
   switch(
     entry$superclass,
     "DataArrayValidator" = vc_data_array(v, key, entry),
@@ -180,7 +194,7 @@ raise_invalid_val <- function(v, key, entry, elements = FALSE) {
   msg <- paste0(what, "\n\n", describe_validator(entry, prop_name(key)))
   stop(structure(
     class = c("plotly_invalid_value", "error", "condition"),
-    list(message = msg, call = NULL)
+    list(message = msg, call = NULL, key = key, elements = elements)
   ))
 }
 
@@ -331,20 +345,80 @@ describe_validator <- function(entry, name) {
     ),
     CompoundValidator = ,
     TitleValidator = sprintf(
-      "%s an object (a named list) that may be created with %s()",
+      "%s an object (a named list)%s",
       head,
-      entry$data_class
+      shared_hint(class_key(entry$data_class))
     ),
     CompoundArrayValidator = sprintf(
-      "%s a list of objects (named lists) that may be created with %s()",
+      "%s a list of objects (named lists)%s",
       head,
-      entry$data_class
+      shared_hint(entry$element_key)
     ),
     paste(head, "of an unknown type")
   )
 }
 
 # Helpers --------------------------------------------------------------------
+
+# ", or a go_font() object" for keys of a shared type.
+shared_hint <- function(key) {
+  type <- if (is.null(key)) NA else shared_type_of(key)
+  if (is.na(type)) "" else sprintf(", or a go_%s() object", type)
+}
+
+# Constructor of the object at schema key `key` (go_scatter_marker(),
+# go_font(), ...), or NA.
+constructor_of <- function(key) unname(.constructors[key])
+
+# The nested call that sets a magic-underscore name: for "scatter" and
+# c("marker", "line", "width"), "marker = go_scatter_marker(line =
+# go_scatter_marker_line(width = ...))". NULL if the parts name no property.
+nested_call <- function(key, parts) {
+  for (p in seq_along(parts)) {
+    name <- paste(parts[seq_len(p)], collapse = "_")
+    ck <- child_key(key, name)
+    if (is.na(ck)) {
+      next
+    }
+    if (p == length(parts)) {
+      return(paste(name, "= ..."))
+    }
+    entry <- get_validator(ck)
+    is_array <- entry$superclass == "CompoundArrayValidator"
+    obj <- if (is_array) entry$element_key else ck
+    if (
+      !get_validator(obj)$superclass %in%
+        c("CompoundValidator", "TitleValidator")
+    ) {
+      next
+    }
+    inner <- nested_call(obj, parts[-seq_len(p)])
+    if (is.null(inner)) {
+      next
+    }
+    ctor <- constructor_of(obj)
+    call <- sprintf("%s(%s)", if (is.na(ctor)) "list" else ctor, inner)
+    return(sprintf(
+      "%s = %s",
+      name,
+      if (is_array) sprintf("list(%s)", call) else call
+    ))
+  }
+  NULL
+}
+
+# How errors name the object at schema key `key`: its constructor for traces
+# and the layout ("go_scatter()"), its path for nested objects ("scatter.marker").
+object_label <- function(key, entry) {
+  if (!is.null(entry$label)) {
+    return(entry$label)
+  }
+  if (!is.null(entry$trace_type) || identical(key, "layout")) {
+    paste0(entry$data_class, "()")
+  } else {
+    key
+  }
+}
 
 as_char_if_factor <- function(v) if (is.factor(v)) as.character(v) else v
 
@@ -377,10 +451,46 @@ check_scalar_or_array <- function(v, key, entry) {
 
 # Simple validators ----------------------------------------------------------
 
+# Data arrays that may hold 2D data, given as a matrix or data frame (written
+# as rows of values): plotly.js reads them as one row per y (z, text, ...) or
+# one value per point (customdata).
+DATA_ARRAYS_2D <- c("z", "customdata", "surfacecolor")
+DATA_ARRAYS_2D_FOR <- list(
+  x = c("surface", "carpet"),
+  y = c("surface", "carpet"),
+  text = c("heatmap", "contour", "surface", "contourcarpet"),
+  hovertext = c("heatmap", "contour", "surface", "contourcarpet")
+)
+# ... and table cell and header values, which plotly.js reads as columns
+DATA_ARRAYS_COLUMNS <- c("table.cells.values", "table.header.values")
+
 vc_data_array <- function(v, key, entry) {
-  # A data.frame is 2D data (e.g. customdata): serialised as rows of values.
   if (is.data.frame(v)) {
-    return(v)
+    if (key %in% DATA_ARRAYS_COLUMNS) {
+      return(unname(lapply(v, as_char_if_factor)))
+    }
+    name <- prop_name(key)
+    trace <- sub("\\..*$", "", key)
+    if (name %in% DATA_ARRAYS_2D || trace %in% DATA_ARRAYS_2D_FOR[[name]]) {
+      return(v)
+    }
+    stop(
+      structure(
+        class = c("plotly_invalid_value", "error", "condition"),
+        list(
+          message = sprintf(
+            "A data frame can't be used for the '%s' property of %s, which takes one value per point: use one of its columns (e.g. %s = df$col, or %s = ~col with the data frame as data)",
+            name,
+            prop_parent(key),
+            name,
+            name
+          ),
+          call = NULL,
+          key = key,
+          elements = TRUE # report as is, not as an invalid value
+        )
+      )
+    )
   }
   if (is.list(v) && !is.null(names(v))) {
     raise_invalid_val(v, key, entry)
@@ -832,9 +942,20 @@ raise_invalid_prop <- function(name, key, entry) {
   } else {
     ""
   }
+  # plotly.py's "magic underscore" names (marker_size) are not supported:
+  # suggest the nested call, e.g. marker = go_scatter_marker(size = ...)
+  if (grepl("_", name, fixed = TRUE)) {
+    nested <- nested_call(key, strsplit(name, "_", fixed = TRUE)[[1L]])
+    if (!is.null(nested)) {
+      hint <- paste0(
+        "\n\nNested properties are set with their objects: ",
+        nested
+      )
+    }
+  }
   msg <- sprintf(
-    "Invalid property specified for object of type %s: '%s'%s\n\n    Valid properties:\n%s",
-    entry$data_class,
+    "Invalid property specified for %s: '%s'%s\n\n    Valid properties:\n%s",
+    object_label(key, entry),
     name,
     hint,
     paste(
@@ -863,6 +984,40 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
   if (inherits(v, entry$data_class)) {
     return(v)
   } # already validated
+  if (inherits(v, "plotly_obj") && !inherits(v, "plotly_shared")) {
+    # an object made for another place: only where the property has its name
+    # (a bar marker.line in a scatter marker.line, go_xaxis() in xaxis2)
+    from <- tryCatch(class_key(class(v)[[1L]]), error = function(e) NULL)
+    # (or of the same shared type: a scene xaxis in zaxis)
+    same_type <- !is.null(from) &&
+      !is.na(shared_type_of(key)) &&
+      identical(shared_type_of(from), shared_type_of(key))
+    if (!is.null(from) && prop_name(from) != prop_name(key) && !same_type) {
+      stop(
+        sprintf("A %s object can't be used for %s", from, key),
+        call. = FALSE
+      )
+    }
+  }
+  if (inherits(v, "plotly_shared")) {
+    # a go_font(), go_colorbar(), ... object: only where the schema has one
+    type <- sub("^go_", "", class(v)[[1L]])
+    if (!identical(shared_type_of(key), type)) {
+      stop(
+        sprintf(
+          "A go_%s() object can't be used for %s, which is %s",
+          type,
+          key,
+          sub(
+            "^ *The '[^']*' property is ",
+            "",
+            describe_validator(entry, prop_name(key))
+          )
+        ),
+        call. = FALSE
+      )
+    }
+  }
   if (is.data.frame(v) || !is.list(v)) {
     raise_invalid_val(v, key, entry)
   }
@@ -877,7 +1032,7 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
   if (anyDuplicated(nms)) {
     msg <- sprintf(
       "Duplicate properties for %s: %s",
-      entry$data_class,
+      object_label(key, entry),
       paste(unique(nms[duplicated(nms)]), collapse = ", ")
     )
     if (!skip_invalid) {
@@ -923,6 +1078,12 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
       next
     }
     ck <- child_key(key, name)
+    if (!is.na(ck) && inherits(v[[i]], "formula")) {
+      # deferred: a constructor keeps x = ~col for add_<trace>() or add_trace()
+      # to evaluate in the figure's data; plotly_widget() refuses any left
+      out[i] <- list(v[[i]])
+      next
+    }
     if (is.na(ck)) {
       if (skip_invalid) {
         next

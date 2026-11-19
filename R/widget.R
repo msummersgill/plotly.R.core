@@ -42,6 +42,7 @@ plotly_widget <- function(
   config = NULL,
   bundle = NULL
 ) {
+  check_no_formulas(fig)
   layout <- unclass(fig$layout %||% list())
   if (is.null(layout$template)) {
     tpl <- default_template()
@@ -447,7 +448,51 @@ mathjax_dependency <- function(source = c("local", "cdn")) {
 MATHJAX_VERSION <- "3.2.2"
 
 mathjax_path <- function() {
-  system.file("htmlwidgets", "lib", "mathjax", "tex-svg.js", package = "plotly.core")
+  system.file(
+    "htmlwidgets",
+    "lib",
+    "mathjax",
+    "tex-svg.js",
+    package = "plotly.core"
+  )
+}
+
+# Formulas kept by constructors must be evaluated before a figure is drawn.
+check_no_formulas <- function(fig) {
+  where <- function(x, path) {
+    if (inherits(x, "formula")) {
+      return(paste0(path, " = ", paste(deparse(x), collapse = " ")))
+    }
+    if (is.list(x) && !is.data.frame(x)) {
+      for (i in seq_along(x)) {
+        nm <- names(x)[i]
+        sub <- if (is.null(nm) || !nzchar(nm)) {
+          sprintf("%s[[%d]]", path, i)
+        } else if (nzchar(path)) {
+          paste(path, nm, sep = "$")
+        } else {
+          nm
+        }
+        found <- where(x[[i]], sub)
+        if (!is.null(found)) return(found)
+      }
+    }
+    NULL
+  }
+  found <- where(unclass(fig)[c("data", "layout", "frames")], "")
+  if (!is.null(found)) {
+    stop(
+      sprintf(
+        paste(
+          "Can't draw a figure with an unevaluated formula (%s). Formulas are",
+          "evaluated in the data when a trace is added with add_<trace>() or",
+          "add_trace(): pass `data` there, or pipe a data frame into go_figure()."
+        ),
+        found
+      ),
+      call. = FALSE
+    )
+  }
 }
 
 # JSON serialiser used by the widget: length-1 vectors become scalars and

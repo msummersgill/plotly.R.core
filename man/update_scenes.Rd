@@ -30,9 +30,9 @@ or a function that takes an object and returns \code{TRUE} or \code{FALSE}.}
 \item{row, col}{Only objects in this subplot grid row and/or column
 (figures created with \code{\link{make_subplots}()} only).}
 
-\item{patch}{A named list or \code{\link{go_layout_scene}()} object of property updates.}
+\item{patch}{A named list or \code{\link{go_scene}()} object of property updates.}
 
-\item{...}{Further named updates (names may use magic underscores).}
+\item{...}{Further named updates, by their full names.}
 
 \item{overwrite}{If \code{TRUE}, replace nested objects instead of merging.}
 
@@ -40,7 +40,7 @@ or a function that takes an object and returns \code{TRUE} or \code{FALSE}.}
 If it returns anything other than a list, the object is left unchanged.}
 }
 \value{
-\code{select_scenes()} returns a named list of \code{\link{go_layout_scene}()} objects; the
+\code{select_scenes()} returns a named list of scene objects; the
   others return the modified figure.
 }
 \description{
@@ -49,4 +49,7 @@ Work with all of a figure's layout scene objects (\code{scene}, \code{scene2}, \
 their properties like \code{\link{update_layout}()} does, and \code{for_each_scene()}
 replaces each one with the result of \code{fn}. The base object (e.g.
 \code{scene}) is always included, even if it has not been set yet.
+}
+\seealso{
+\code{\link{go_scene}()} for the properties of scene objects.
 }

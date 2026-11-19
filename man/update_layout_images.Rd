@@ -45,9 +45,9 @@ or a function that takes an object and returns \code{TRUE} or \code{FALSE}.}
 
 \item{secondary_y}{Only objects on secondary (\code{TRUE}) or primary (\code{FALSE}) y axes.}
 
-\item{patch}{A named list of property updates (see \code{\link{go_layout_image}()}).}
+\item{patch}{A named list of property updates (see \code{\link{add_layout_image}()}).}
 
-\item{...}{Further named updates (names may use magic underscores).}
+\item{...}{Further named updates, by their full names.}
 
 \item{overwrite}{If \code{TRUE}, replace nested objects instead of merging.}
 
@@ -55,7 +55,7 @@ or a function that takes an object and returns \code{TRUE} or \code{FALSE}.}
 If it returns anything other than a list, the object is left unchanged.}
 }
 \value{
-\code{select_layout_images()} returns a list of \code{\link{go_layout_image}()} objects; the
+\code{select_layout_images()} returns a list of image objects; the
   others return the modified figure.
 }
 \description{

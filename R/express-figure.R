@@ -1499,18 +1499,18 @@ configure_cartesian_marginal_axes <- function(args, fig, orders) {
   }
   y_title <- get_decorated_label(args, args$y, "y")
   if (!is.null(args$marginal_x)) {
-    fig <- update_yaxes(fig, title_text = y_title, row = 1, col = 1)
+    fig <- update_yaxes(fig, title = list(text = y_title), row = 1, col = 1)
   } else {
     for (r in seq_len(nrows)) {
-      fig <- update_yaxes(fig, title_text = y_title, row = r, col = 1)
+      fig <- update_yaxes(fig, title = list(text = y_title), row = r, col = 1)
     }
   }
   x_title <- get_decorated_label(args, args$x, "x")
   if (!is.null(args$marginal_y)) {
-    fig <- update_xaxes(fig, title_text = x_title, row = 1, col = 1)
+    fig <- update_xaxes(fig, title = list(text = x_title), row = 1, col = 1)
   } else {
     for (cc in seq_len(ncols)) {
-      fig <- update_xaxes(fig, title_text = x_title, row = 1, col = cc)
+      fig <- update_xaxes(fig, title = list(text = x_title), row = 1, col = cc)
     }
   }
   if (isTRUE(args$log_x)) {

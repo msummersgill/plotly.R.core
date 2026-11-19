@@ -2,10 +2,6 @@
 % Please edit documentation in R/zz-gen-layout.R
 \name{go_layout_title}
 \alias{go_layout_title}
-\alias{go_layout_title_font}
-\alias{go_layout_title_pad}
-\alias{go_layout_title_subtitle}
-\alias{go_layout_title_subtitle_font}
 \title{Layout title objects}
 \usage{
 go_layout_title(
@@ -24,63 +20,12 @@ go_layout_title(
   yref = NULL,
   skip_invalid = FALSE
 )
-
-go_layout_title_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_layout_title_pad(
-  arg = NULL,
-  ...,
-  b = NULL,
-  l = NULL,
-  r = NULL,
-  t = NULL,
-  skip_invalid = FALSE
-)
-
-go_layout_title_subtitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_layout_title_subtitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
 }
 \arguments{
 \item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from (constructors). Named arguments take precedence.}
+initialise properties from. Named arguments take precedence.}
 
-\item{...}{Further properties, including nested properties in
-"magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}. Property values may be one-sided
-formulas, evaluated in \code{data} for \code{add_*()} functions.}
+\item{...}{Not used: properties must be named in full.}
 
 \item{automargin}{Determines whether the title can automatically push
 the figure margins. If `yref='paper'` then the margin will expand to
@@ -93,28 +38,26 @@ to ensure that minimal margin space is needed. Note that when
 `yref='paper'`, only 1 or 0 are allowed y values. Invalid values will
 be reset to the default 1. Logical.}
 
-\item{font}{\strong{\code{go_layout_title()}}: Sets the title font.
-  Named list or \code{\link{go_layout_title_font}()} object.
-
-  \strong{\code{go_layout_title_subtitle()}}: Sets the subtitle font.
-  Named list or \code{\link{go_layout_title_subtitle_font}()} object.}
+\item{font}{Sets the title font. A \code{\link{go_font}()} object or
+named list, with properties \code{color}, \code{family},
+\code{lineposition}, \code{shadow}, \code{size}, \code{style},
+\code{textcase}, \code{variant} and \code{weight} (see
+\code{\link{go_font}()}).}
 
 \item{pad}{Sets the padding of the title. Each padding value only
 applies when the corresponding `xanchor`/`yanchor` value is set
 accordingly. E.g. for left padding to take effect, `xanchor` must be
 set to "left". The same rule applies if `xanchor`/`yanchor` is
 determined automatically. Padding is muted if the respective anchor
-value is "middle"/"center". Named list or
-\code{\link{go_layout_title_pad}()} object.}
+value is "middle"/"center". A \code{\link{go_title_pad}()} object or
+named list, with properties \code{b}, \code{l}, \code{r} and \code{t}
+(see \code{\link{go_title_pad}()}).}
 
-\item{subtitle}{Named list or \code{\link{go_layout_title_subtitle}()}
-object.}
+\item{subtitle}{A \code{\link{go_title_subtitle}()} object or named
+list, with properties \code{font} and \code{text} (see
+\code{\link{go_title_subtitle}()}).}
 
-\item{text}{\strong{\code{go_layout_title()}}: Sets the plot's title.
-  String.
-
-  \strong{\code{go_layout_title_subtitle()}}: Sets the plot's subtitle.
-  String.}
+\item{text}{Sets the plot's title. String.}
 
 \item{x}{Sets the x position with respect to `xref` in normalized
 coordinates from 0 (left) to 1 (right). Number in the interval [0, 1].}
@@ -148,82 +91,27 @@ plotting area only. One of \code{"container"}, \code{"paper"}.}
 
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
-
-\item{color}{Color: a CSS color string or R color name.}
-
-\item{family}{HTML font family - the typeface that will be applied by
-the web browser. The web browser can only apply a font if it is
-available on the system where it runs. Provide multiple font families,
-separated by commas, to indicate the order in which to apply fonts if
-they aren't available. String.}
-
-\item{lineposition}{Sets the kind of decoration line(s) with text, such
-as an "under", "over" or "through" as well as combinations e.g.
-"under+over", etc. Any combination of \code{"under"}, \code{"over"},
-\code{"through"} joined with \code{"+"}, or one of \code{"none"}.}
-
-\item{shadow}{Sets the shape and color of the shadow behind text. "auto"
-places minimal shadow and applies contrast text font color. See
-https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-additional options. String.}
-
-\item{size}{Number in the interval [1, Inf].}
-
-\item{style}{Sets whether a font should be styled with a normal or
-italic face from its family. One of \code{"normal"}, \code{"italic"}.}
-
-\item{textcase}{Sets capitalization of text. It can be used to make text
-appear in all-uppercase or all-lowercase, or with each word
-capitalized. One of \code{"normal"}, \code{"word caps"},
-\code{"upper"}, \code{"lower"}.}
-
-\item{variant}{Sets the variant of the font. One of \code{"normal"},
-\code{"small-caps"}, \code{"all-small-caps"},
-\code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}.}
-
-\item{weight}{Sets the weight (or boldness) of the font. Integer in the
-interval [1, 1000].}
-
-\item{b}{The amount of padding (in px) along the bottom of the
-component. Number.}
-
-\item{l}{The amount of padding (in px) on the left side of the
-component. Number.}
-
-\item{r}{The amount of padding (in px) on the right side of the
-component. Number.}
-
-\item{t}{The amount of padding (in px) along the top of the component.
-Number.}
 }
 \value{
-Each \code{go_*()} function returns a graph object of the same
-  class as its name; \code{add_*()} functions return the modified figure.
+A \code{go_layout_title} object (a named list).
 }
 \description{
-Properties of \code{layout.title}.
+The object for the figure layout's \code{title}. \code{go_layout_title()}
+creates one, with exactly its properties; a named list with the same
+properties works too.
 }
 \details{
-\code{go_layout_title()} and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-\code{\link{plotly_obj-modify}()}).
-
-Nested objects documented here:
-\describe{
-\item{\code{go_layout_title_font()}}{\code{layout.title.font}: Sets the
-title font.}
-\item{\code{go_layout_title_pad()}}{\code{layout.title.pad}: Sets the
-padding of the title. Each padding value only applies when the
-corresponding `xanchor`/`yanchor` value is set accordingly. E.g. for left
-padding to take effect, `xanchor` must be set to "left". The same rule
-applies if `xanchor`/`yanchor` is determined automatically. Padding is
-muted if the respective anchor value is "middle"/"center".}
-\item{\code{go_layout_title_subtitle()}}{\code{layout.title.subtitle}}
-\item{\code{go_layout_title_subtitle_font()}}{\code{layout.title.subtitle.font}:
-Sets the subtitle font.}
+Nested objects are named lists, or objects of the constructors their
+arguments name. Every property is checked against the plotly.js schema
+when the object is created or modified. A property may be a one-sided
+formula (\code{color = ~col}): it is kept, and evaluated in the data
+(then checked) when its trace is added to a figure with
+\code{add_<trace>()} or \code{add_trace()}.
 }
+\examples{
+mtcars |>
+  go_figure() |>
+  add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
+  update_layout(title = go_layout_title(text = "title"))
 }
-\seealso{
-\code{\link{go_layout}()}
-}
+\concept{layout objects}

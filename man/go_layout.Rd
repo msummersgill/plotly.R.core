@@ -102,19 +102,23 @@ go_layout(
 \item{arg}{Optional named list, or graph object of the same type, to
 initialise properties from (constructors). Named arguments take precedence.}
 
-\item{...}{Further properties, including nested properties in
-"magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}. Property values may be one-sided
-formulas, evaluated in \code{data} for \code{add_*()} functions.}
+\item{...}{Further properties, by their full names (e.g. numbered subplots
+such as \code{xaxis2} in \code{go_layout()}).}
 
-\item{activeselection}{Named list or
-\code{\link{go_layout_activeselection}()} object.}
+\item{activeselection}{A \code{\link{go_activeselection}()} object or
+named list, with properties \code{fillcolor} and \code{opacity} (see
+\code{\link{go_activeselection}()}).}
 
-\item{activeshape}{Named list or \code{\link{go_layout_activeshape}()}
-object.}
+\item{activeshape}{A \code{\link{go_activeshape}()} object or named
+list, with properties \code{fillcolor} and \code{opacity} (see
+\code{\link{go_activeshape}()}).}
 
-\item{annotations}{List of named lists or
-\code{\link{go_layout_annotation}()} objects.}
+\item{annotations}{List, each element a \code{\link{go_annotation}()}
+object or named list, with properties \code{align}, \code{arrowcolor},
+\code{arrowhead}, \code{arrowside}, \code{arrowsize},
+\code{arrowwidth}, \code{ax}, \code{axref}, \code{ay}, \code{ayref},
+\code{bgcolor}, \code{bordercolor} and 31 more (see
+\code{\link{go_annotation}()}).}
 
 \item{autosize}{Determines whether or not a layout width or height that
 has been left undefined by the user is initialized on each relayout.
@@ -199,11 +203,15 @@ using this feature. Selection events are sent accordingly as long as
 combination of \code{"event"}, \code{"select"} joined with \code{"+"},
 or one of \code{"none"}.}
 
-\item{coloraxis}{Named list or \code{\link{go_layout_coloraxis}()}
-object.}
+\item{coloraxis}{A \code{\link{go_coloraxis}()} object or named list,
+with properties \code{autocolorscale}, \code{cauto}, \code{cmax},
+\code{cmid}, \code{cmin}, \code{colorbar}, \code{colorscale},
+\code{reversescale} and \code{showscale} (see
+\code{\link{go_coloraxis}()}).}
 
-\item{colorscale}{Named list or \code{\link{go_layout_colorscale}()}
-object.}
+\item{colorscale}{A \code{\link{go_layout_colorscale}()} object or named
+list, with properties \code{diverging}, \code{sequential} and
+\code{sequentialminus} (see \code{\link{go_layout_colorscale}()}).}
 
 \item{colorway}{Sets the default trace colors. Vector of colors.}
 
@@ -271,8 +279,11 @@ slices, but you can set `false` to disable. Colors provided in the
 trace, using `marker.colors`, are never extended. Logical.}
 
 \item{font}{Sets the global font. Note that fonts used in traces and
-other layout components inherit from the global font. Named list or
-\code{\link{go_layout_font}()} object.}
+other layout components inherit from the global font. A
+\code{\link{go_font}()} object or named list, with properties
+\code{color}, \code{family}, \code{lineposition}, \code{shadow},
+\code{size}, \code{style}, \code{textcase}, \code{variant} and
+\code{weight} (see \code{\link{go_font}()}).}
 
 \item{funnelareacolorway}{Sets the default funnelarea slice colors.
 Defaults to the main `colorway` used for trace colors. If you specify
@@ -293,9 +304,18 @@ plotted over one another, you might need to reduce "opacity" to see
 multiple bars. One of \code{"stack"}, \code{"group"},
 \code{"overlay"}.}
 
-\item{geo}{Named list or \code{\link{go_layout_geo}()} object.}
+\item{geo}{A \code{\link{go_geo}()} object or named list, with
+properties \code{bgcolor}, \code{center}, \code{coastlinecolor},
+\code{coastlinewidth}, \code{countrycolor}, \code{countrywidth},
+\code{domain}, \code{fitbounds}, \code{framecolor}, \code{framewidth},
+\code{lakecolor}, \code{landcolor} and 20 more (see
+\code{\link{go_geo}()}).}
 
-\item{grid}{Named list or \code{\link{go_layout_grid}()} object.}
+\item{grid}{A \code{\link{go_grid}()} object or named list, with
+properties \code{columns}, \code{domain}, \code{pattern},
+\code{roworder}, \code{rows}, \code{subplots}, \code{xaxes},
+\code{xgap}, \code{xside}, \code{yaxes}, \code{ygap} and \code{yside}
+(see \code{\link{go_grid}()}).}
 
 \item{height}{Sets the plot's height (in px). Number in the interval
 [10, Inf].}
@@ -322,8 +342,10 @@ fills, etc) hovering is on inside the area and off outside, but these
 objects will not supersede hover on point-like objects in case of
 conflict. Integer in the interval [-1, Inf].}
 
-\item{hoverlabel}{Named list or \code{\link{go_layout_hoverlabel}()}
-object.}
+\item{hoverlabel}{A \code{\link{go_hoverlabel}()} object or named list,
+with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+\code{font}, \code{grouptitlefont}, \code{namelength} and
+\code{showarrow} (see \code{\link{go_hoverlabel}()}).}
 
 \item{hovermode}{Determines the mode of hover interactions. If
 "closest", a single hoverlabel will appear for the "closest" point
@@ -359,14 +381,29 @@ the main `colorway` used for trace colors. If you specify a new list
 here it can still be extended with lighter and darker colors, see
 `extendiciclecolors`. Vector of colors.}
 
-\item{images}{List of named lists or \code{\link{go_layout_image}()}
-objects.}
+\item{images}{List, each element a \code{\link{go_layout_image}()}
+object or named list, with properties \code{layer}, \code{name},
+\code{opacity}, \code{sizex}, \code{sizey}, \code{sizing},
+\code{source}, \code{templateitemname}, \code{visible}, \code{x},
+\code{xanchor}, \code{xref}, \code{y}, \code{yanchor} and \code{yref}
+(see \code{\link{go_layout_image}()}).}
 
-\item{legend}{Named list or \code{\link{go_layout_legend}()} object.}
+\item{legend}{A \code{\link{go_legend}()} object or named list, with
+properties \code{bgcolor}, \code{bordercolor}, \code{borderwidth},
+\code{entrywidth}, \code{entrywidthmode}, \code{font},
+\code{groupclick}, \code{groupdoubleclick}, \code{grouptitlefont},
+\code{indentation}, \code{itemclick}, \code{itemdoubleclick} and 19
+more (see \code{\link{go_legend}()}).}
 
-\item{map}{Named list or \code{\link{go_layout_map}()} object.}
+\item{map}{A \code{\link{go_map}()} object or named list, with
+properties \code{bearing}, \code{bounds}, \code{center},
+\code{domain}, \code{fitbounds}, \code{layers}, \code{pitch},
+\code{style}, \code{uirevision} and \code{zoom} (see
+\code{\link{go_map}()}).}
 
-\item{margin}{Named list or \code{\link{go_layout_margin}()} object.}
+\item{margin}{A \code{\link{go_margin}()} object or named list, with
+properties \code{autoexpand}, \code{b}, \code{l}, \code{pad}, \code{r}
+and \code{t} (see \code{\link{go_margin}()}).}
 
 \item{meta}{Assigns extra meta information that can be used in various
 `text` attributes. Attributes such as the graph, axis and colorbar
@@ -383,12 +420,21 @@ margin.automargin applied (in px) Number in the interval [2, Inf].}
 \item{minreducedwidth}{Minimum width of the plot with margin.automargin
 applied (in px) Number in the interval [2, Inf].}
 
-\item{modebar}{Named list or \code{\link{go_layout_modebar}()} object.}
+\item{modebar}{A \code{\link{go_modebar}()} object or named list, with
+properties \code{activecolor}, \code{add}, \code{bgcolor},
+\code{color}, \code{orientation}, \code{remove} and \code{uirevision}
+(see \code{\link{go_modebar}()}).}
 
-\item{newselection}{Named list or \code{\link{go_layout_newselection}()}
-object.}
+\item{newselection}{A \code{\link{go_newselection}()} object or named
+list, with properties \code{line} and \code{mode} (see
+\code{\link{go_newselection}()}).}
 
-\item{newshape}{Named list or \code{\link{go_layout_newshape}()} object.}
+\item{newshape}{A \code{\link{go_newshape}()} object or named list, with
+properties \code{drawdirection}, \code{fillcolor}, \code{fillrule},
+\code{label}, \code{layer}, \code{legend}, \code{legendgroup},
+\code{legendgrouptitle}, \code{legendrank}, \code{legendwidth},
+\code{line}, \code{name}, \code{opacity}, \code{showlegend} and
+\code{visible} (see \code{\link{go_newshape}()}).}
 
 \item{paper_bgcolor}{Sets the background color of the paper where the
 graph is drawn. Color: a CSS color string or R color name.}
@@ -401,7 +447,11 @@ it can still be extended with lighter and darker colors, see
 \item{plot_bgcolor}{Sets the background color of the plotting area
 in-between x and y axes. Color: a CSS color string or R color name.}
 
-\item{polar}{Named list or \code{\link{go_layout_polar}()} object.}
+\item{polar}{A \code{\link{go_polar}()} object or named list, with
+properties \code{angularaxis}, \code{bargap}, \code{barmode},
+\code{bgcolor}, \code{domain}, \code{gridshape}, \code{hole},
+\code{radialaxis}, \code{sector} and \code{uirevision} (see
+\code{\link{go_polar}()}).}
 
 \item{scattergap}{Sets the gap (in plot fraction) between scatter points
 of adjacent location coordinates. Defaults to `bargap`. Number in the
@@ -414,7 +464,11 @@ location. With "overlay", the scatter points are plotted over one
 another, you might need to reduce "opacity" to see multiple scatter
 points. One of \code{"group"}, \code{"overlay"}.}
 
-\item{scene}{Named list or \code{\link{go_layout_scene}()} object.}
+\item{scene}{A \code{\link{go_scene}()} object or named list, with
+properties \code{annotations}, \code{aspectmode}, \code{aspectratio},
+\code{bgcolor}, \code{camera}, \code{domain}, \code{dragmode},
+\code{hovermode}, \code{uirevision}, \code{xaxis}, \code{yaxis} and
+\code{zaxis} (see \code{\link{go_scene}()}).}
 
 \item{selectdirection}{When `dragmode` is set to "select", this limits
 the selection of the drag to horizontal, vertical or diagonal. "h"
@@ -425,16 +479,23 @@ and "any" sets no limit. One of \code{"h"}, \code{"v"}, \code{"d"},
 \item{selectionrevision}{Controls persistence of user-driven changes in
 selected points from all traces. Any value.}
 
-\item{selections}{List of named lists or
-\code{\link{go_layout_selection}()} objects.}
+\item{selections}{List, each element a \code{\link{go_selection}()}
+object or named list, with properties \code{line}, \code{name},
+\code{opacity}, \code{path}, \code{templateitemname}, \code{type},
+\code{x0}, \code{x1}, \code{xref}, \code{y0}, \code{y1} and
+\code{yref} (see \code{\link{go_selection}()}).}
 
 \item{separators}{Sets the decimal and thousand separators. For example,
 ". " puts a '.' before decimals and a space between thousands. In
 English locales, dflt is ".," but other locales may alter this
 default. String.}
 
-\item{shapes}{List of named lists or \code{\link{go_layout_shape}()}
-objects.}
+\item{shapes}{List, each element a \code{\link{go_shape}()} object or
+named list, with properties \code{editable}, \code{fillcolor},
+\code{fillrule}, \code{label}, \code{layer}, \code{legend},
+\code{legendgroup}, \code{legendgrouptitle}, \code{legendrank},
+\code{legendwidth}, \code{line}, \code{name} and 20 more (see
+\code{\link{go_shape}()}).}
 
 \item{showlegend}{Determines whether or not a legend is drawn. Default
 is `true` if there is a trace to show and any of these: a) Two or more
@@ -442,10 +503,16 @@ traces would by default be shown in the legend. b) One pie trace is
 shown in the legend. c) One trace is explicitly given with
 `showlegend: true`. Logical.}
 
-\item{sliders}{List of named lists or \code{\link{go_layout_slider}()}
-objects.}
+\item{sliders}{List, each element a \code{\link{go_slider}()} object or
+named list, with properties \code{active}, \code{activebgcolor},
+\code{bgcolor}, \code{bordercolor}, \code{borderwidth},
+\code{currentvalue}, \code{font}, \code{len}, \code{lenmode},
+\code{minorticklen}, \code{name}, \code{pad} and 11 more (see
+\code{\link{go_slider}()}).}
 
-\item{smith}{Named list or \code{\link{go_layout_smith}()} object.}
+\item{smith}{A \code{\link{go_smith}()} object or named list, with
+properties \code{bgcolor}, \code{domain}, \code{imaginaryaxis} and
+\code{realaxis} (see \code{\link{go_smith}()}).}
 
 \item{spikedistance}{Sets the default distance (in pixels) to look for
 data to draw spikelines to (-1 means no cutoff, 0 means no looking for
@@ -476,13 +543,21 @@ this for a watermark annotation or a logo image, for example. To omit
 one of these items on the plot, make an item with matching
 `templateitemname` and `visible: false`. Any value.}
 
-\item{ternary}{Named list or \code{\link{go_layout_ternary}()} object.}
+\item{ternary}{A \code{\link{go_ternary}()} object or named list, with
+properties \code{aaxis}, \code{baxis}, \code{bgcolor}, \code{caxis},
+\code{domain}, \code{sum} and \code{uirevision} (see
+\code{\link{go_ternary}()}).}
 
-\item{title}{String (the title text), named list or
-\code{\link{go_layout_title}()} object.}
+\item{title}{String (the title text), or a
+\code{\link{go_layout_title}()} object or named list, with properties
+\code{automargin}, \code{font}, \code{pad}, \code{subtitle},
+\code{text}, \code{x}, \code{xanchor}, \code{xref}, \code{y},
+\code{yanchor} and \code{yref} (see \code{\link{go_layout_title}()}).}
 
 \item{transition}{Sets transition options used during Plotly.react
-updates. Named list or \code{\link{go_layout_transition}()} object.}
+updates. A \code{\link{go_layout_transition}()} object or named list,
+with properties \code{duration}, \code{easing} and \code{ordering}
+(see \code{\link{go_layout_transition}()}).}
 
 \item{treemapcolorway}{Sets the default treemap slice colors. Defaults
 to the main `colorway` used for trace colors. If you specify a new
@@ -505,11 +580,16 @@ the y data is changed, you can update `yaxis.uirevision="quantity"`
 and the y axis range will reset but the x axis range will retain any
 user-driven zoom. Any value.}
 
-\item{uniformtext}{Named list or \code{\link{go_layout_uniformtext}()}
-object.}
+\item{uniformtext}{A \code{\link{go_uniformtext}()} object or named
+list, with properties \code{minsize} and \code{mode} (see
+\code{\link{go_uniformtext}()}).}
 
-\item{updatemenus}{List of named lists or
-\code{\link{go_layout_updatemenu}()} objects.}
+\item{updatemenus}{List, each element a \code{\link{go_updatemenu}()}
+object or named list, with properties \code{active}, \code{bgcolor},
+\code{bordercolor}, \code{borderwidth}, \code{buttons},
+\code{direction}, \code{font}, \code{name}, \code{pad},
+\code{showactive}, \code{templateitemname}, \code{type} and 5 more
+(see \code{\link{go_updatemenu}()}).}
 
 \item{violingap}{Sets the gap (in plot fraction) between violins of
 adjacent location coordinates. Has no effect on traces that have
@@ -541,29 +621,46 @@ to see multiple bars. One of \code{"group"}, \code{"overlay"}.}
 \item{width}{Sets the plot's width (in px). Number in the interval [10,
 Inf].}
 
-\item{xaxis}{Named list or \code{\link{go_layout_xaxis}()} object.}
+\item{xaxis}{A \code{\link{go_xaxis}()} object or named list, with
+properties \code{anchor}, \code{automargin}, \code{autorange},
+\code{autorangeoptions}, \code{autotickangles},
+\code{autotypenumbers}, \code{calendar}, \code{categoryarray},
+\code{categoryorder}, \code{color}, \code{constrain},
+\code{constraintoward} and 80 more (see \code{\link{go_xaxis}()}).}
 
-\item{yaxis}{Named list or \code{\link{go_layout_yaxis}()} object.}
+\item{yaxis}{A \code{\link{go_yaxis}()} object or named list, with
+properties \code{anchor}, \code{automargin}, \code{autorange},
+\code{autorangeoptions}, \code{autoshift}, \code{autotickangles},
+\code{autotypenumbers}, \code{calendar}, \code{categoryarray},
+\code{categoryorder}, \code{color}, \code{constrain} and 80 more (see
+\code{\link{go_yaxis}()}).}
 
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
 }
 \value{
-Each \code{go_*()} function returns a graph object of the same
-  class as its name; \code{add_*()} functions return the modified figure.
+\code{go_*()} functions return a graph object;
+  \code{add_*()} functions return the modified figure.
 }
 \description{
 Layout properties of a figure: axes, title, legend, margins, fonts and
 other settings that are not specific to a trace.
 }
 \details{
-\code{go_layout()} create validated graph objects (named lists). Every
-property is checked against the plotly.js schema when an object is
-created or modified (see \code{\link{plotly_obj-modify}()}).
+\code{go_layout()} creates a validated graph object (a named list).
+
+
+Nested objects are given as named lists or with their constructors, which
+are linked from the arguments below. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+\code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+evaluated in the data, and then checked, when the trace is added with
+\code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_layout(title = "My plot", xaxis = list(title = "x", range = c(0, 10)))
+go_layout(title = "My plot", xaxis = go_xaxis(title = "x", range = c(0, 10)))
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{update_layout}()}
 }
+\concept{layout objects}

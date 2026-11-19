@@ -6,81 +6,31 @@
 #' sector labels are set in `labels`. The sector colors are set in
 #' `marker.colors`
 #'
-#' \code{go_pie()} and the nested object constructors below create validated
-#' graph objects (named lists). Every property is checked against the
-#' plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}). \code{add_pie()} creates an object
-#' and adds it to a figure.
+#' \code{go_pie()} creates a validated graph object (a named list).
+#' \code{add_pie()} creates one and adds it to a figure.
 #'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_pie_domain()}}{\code{pie.domain}}
-#' \item{\code{go_pie_hoverlabel()}}{\code{pie.hoverlabel}}
-#' \item{\code{go_pie_hoverlabel_font()}}{\code{pie.hoverlabel.font}: Sets
-#' the font used in hover labels.}
-#' \item{\code{go_pie_insidetextfont()}}{\code{pie.insidetextfont}: Sets the
-#' font used for `textinfo` lying inside the sector.}
-#' \item{\code{go_pie_legendgrouptitle()}}{\code{pie.legendgrouptitle}}
-#' \item{\code{go_pie_legendgrouptitle_font()}}{\code{pie.legendgrouptitle.font}:
-#' Sets this legend group's title font.}
-#' \item{\code{go_pie_marker()}}{\code{pie.marker}}
-#' \item{\code{go_pie_marker_line()}}{\code{pie.marker.line}}
-#' \item{\code{go_pie_marker_pattern()}}{\code{pie.marker.pattern}: Sets the
-#' pattern within the marker.}
-#' \item{\code{go_pie_outsidetextfont()}}{\code{pie.outsidetextfont}: Sets
-#' the font used for `textinfo` lying outside the sector.}
-#' \item{\code{go_pie_textfont()}}{\code{pie.textfont}: Sets the font used
-#' for `textinfo`.}
-#' \item{\code{go_pie_title()}}{\code{pie.title}}
-#' \item{\code{go_pie_title_font()}}{\code{pie.title.font}: Sets the font
-#' used for `title`.}
-#' }
+#' @details
+#' Nested objects are given as named lists or with their constructors, which
+#' are linked from the arguments below. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+#' evaluated in the data, and then checked, when the trace is added with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
-#' @param align Sets the horizontal alignment of the text content within
-#'   hover label box. Has an effect only if the hover label text spans two
-#'   or more lines One of \code{"left"}, \code{"right"}, \code{"auto"}, or
-#'   a vector of these.
 #' @param automargin Determines whether outside text labels can push the
 #'   margins. Logical.
-#' @param bgcolor \strong{\code{go_pie_hoverlabel()}}: Sets the background
-#'   color of the hover labels for this trace Color: a CSS color string or
-#'   R color name, or a vector of these.
-#'
-#'   \strong{\code{go_pie_marker_pattern()}}: When there is no colorscale
-#'   sets the color of background pattern fill. Defaults to a
-#'   `marker.color` background when `fillmode` is "overlay". Otherwise,
-#'   defaults to a transparent background. Color: a CSS color string or R
-#'   color name, or a vector of these.
-#' @param bordercolor Sets the border color of the hover labels for this
-#'   trace. Color: a CSS color string or R color name, or a vector of
-#'   these.
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
-#' @param color \strong{\code{go_pie_hoverlabel_font()},
-#'   \code{go_pie_insidetextfont()}, \code{go_pie_outsidetextfont()},
-#'   \code{go_pie_textfont()}, \code{go_pie_title_font()}}: Color: a CSS
-#'   color string or R color name, or a vector of these.
-#'
-#'   \strong{\code{go_pie_legendgrouptitle_font()}}: Color: a CSS color
-#'   string or R color name.
-#'
-#'   \strong{\code{go_pie_marker_line()}}: Sets the color of the line
-#'   enclosing each sector. Color: a CSS color string or R color name, or a
-#'   vector of these.
-#' @param colors Sets the color of each sector. If not specified, the
-#'   default trace color set is used to pick the sector colors. Data array:
-#'   a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param column If there is a layout grid, use the domain for this column
-#'   in the grid for this pie trace. Integer in the interval [0, Inf].
 #' @param customdata Assigns extra data each datum. This may be useful when
 #'   listening to hover, click and selection events. Note that, "scatter"
 #'   traces also appends customdata items in the markers DOM elements Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param data A data frame in which formula properties (e.g. \code{x =
-#'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
+#'   ~col}, \code{marker = list(size = ~col)}, \code{marker =
+#'   go_scatter_marker(size = ~col)}) are evaluated. Default: the data
 #'   given to \code{\link{go_figure}()}. Only the evaluated values are
 #'   added to the trace. A \code{crosstalk::SharedData} works the same way,
 #'   and links the trace to its crosstalk group (see
@@ -89,43 +39,10 @@
 #'   follow one another. One of \code{"clockwise"},
 #'   \code{"counterclockwise"}.
 #' @param dlabel Sets the label step. See `label0` for more info. Number.
-#' @param domain Named list or \code{\link{go_pie_domain}()} object.
-#' @param family \strong{\code{go_pie_hoverlabel_font()},
-#'   \code{go_pie_insidetextfont()}, \code{go_pie_outsidetextfont()},
-#'   \code{go_pie_textfont()}, \code{go_pie_title_font()}}: HTML font
-#'   family - the typeface that will be applied by the web browser. The web
-#'   browser can only apply a font if it is available on the system where
-#'   it runs. Provide multiple font families, separated by commas, to
-#'   indicate the order in which to apply fonts if they aren't available.
-#'   String, or a vector of these.
-#'
-#'   \strong{\code{go_pie_legendgrouptitle_font()}}: HTML font family - the
-#'   typeface that will be applied by the web browser. The web browser can
-#'   only apply a font if it is available on the system where it runs.
-#'   Provide multiple font families, separated by commas, to indicate the
-#'   order in which to apply fonts if they aren't available. String.
-#' @param fgcolor When there is no colorscale sets the color of foreground
-#'   pattern fill. Defaults to a `marker.color` background when `fillmode`
-#'   is "replace". Otherwise, defaults to dark grey or white to increase
-#'   contrast with the `bgcolor`. Color: a CSS color string or R color
-#'   name, or a vector of these.
-#' @param fgopacity Sets the opacity of the foreground pattern fill.
-#'   Defaults to a 0.5 when `fillmode` is "overlay". Otherwise, defaults to
-#'   1. Number in the interval [0, 1].
+#' @param domain A \code{\link{go_domain}()} object or named list, with
+#'   properties \code{column}, \code{row}, \code{x} and \code{y} (see
+#'   \code{\link{go_domain}()}).
 #' @param fig A \code{go_figure} object.
-#' @param fillmode Determines whether `marker.color` should be used as a
-#'   default to `bgcolor` or a `fgcolor`. One of \code{"replace"},
-#'   \code{"overlay"}.
-#' @param font \strong{\code{go_pie_hoverlabel()}}: Sets the font used in
-#'   hover labels. Named list or \code{\link{go_pie_hoverlabel_font}()}
-#'   object.
-#'
-#'   \strong{\code{go_pie_legendgrouptitle()}}: Sets this legend group's
-#'   title font. Named list or \code{\link{go_pie_legendgrouptitle_font}()}
-#'   object.
-#'
-#'   \strong{\code{go_pie_title()}}: Sets the font used for `title`. Named
-#'   list or \code{\link{go_pie_title_font}()} object.
 #' @param hole Sets the fraction of the radius to cut out of the pie. Use
 #'   this to make a donut chart. Number in the interval [0, 1].
 #' @param hoverinfo Determines what trace information appears on hover.
@@ -135,8 +52,10 @@
 #'   \code{"text"}, \code{"value"}, \code{"percent"}, \code{"name"} joined
 #'   with \code{"+"}, or one of \code{"all"}, \code{"none"}, \code{"skip"},
 #'   or a vector of these.
-#' @param hoverlabel Named list or \code{\link{go_pie_hoverlabel}()}
-#'   object.
+#' @param hoverlabel A \code{\link{go_hoverlabel}()} object or named list,
+#'   with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+#'   \code{font}, \code{namelength} and \code{showarrow} (see
+#'   \code{\link{go_hoverlabel}()}).
 #' @param hovertemplate Template string used for rendering the information
 #'   that appear on hover box. Note that this will override `hoverinfo`.
 #'   Variables are inserted using \%\{variable\}, for example "y: \%\{y\}"
@@ -179,7 +98,10 @@
 #'   strings, not numbers or any other type. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
 #' @param insidetextfont Sets the font used for `textinfo` lying inside the
-#'   sector. Named list or \code{\link{go_pie_insidetextfont}()} object.
+#'   sector. A \code{\link{go_font}()} object or named list, with
+#'   properties \code{color}, \code{family}, \code{lineposition},
+#'   \code{shadow}, \code{size}, \code{style}, \code{textcase},
+#'   \code{variant} and \code{weight} (see \code{\link{go_font}()}).
 #' @param insidetextorientation Controls the orientation of the text inside
 #'   chart sectors. When set to "auto", text may be oriented in any
 #'   direction in order to be as big as possible in the middle of a sector.
@@ -206,8 +128,9 @@
 #' @param legendgroup Sets the legend group for this trace. Traces and
 #'   shapes part of the same legend group hide/show at the same time when
 #'   toggling legend items. String.
-#' @param legendgrouptitle Named list or
-#'   \code{\link{go_pie_legendgrouptitle}()} object.
+#' @param legendgrouptitle A \code{\link{go_legendgrouptitle}()} object or
+#'   named list, with properties \code{font} and \code{text} (see
+#'   \code{\link{go_legendgrouptitle}()}).
 #' @param legendrank Sets the legend rank for this pie. If passed as an
 #'   array, this will set the legend rank of the individual pie slices.
 #'   Items and groups with smaller ranks are presented on top/left side
@@ -220,21 +143,9 @@
 #'   these.
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param line Named list or \code{\link{go_pie_marker_line}()} object.
-#' @param lineposition \strong{\code{go_pie_hoverlabel_font()},
-#'   \code{go_pie_insidetextfont()}, \code{go_pie_outsidetextfont()},
-#'   \code{go_pie_textfont()}, \code{go_pie_title_font()}}: Sets the kind
-#'   of decoration line(s) with text, such as an "under", "over" or
-#'   "through" as well as combinations e.g. "under+over", etc. Any
-#'   combination of \code{"under"}, \code{"over"}, \code{"through"} joined
-#'   with \code{"+"}, or one of \code{"none"}, or a vector of these.
-#'
-#'   \strong{\code{go_pie_legendgrouptitle_font()}}: Sets the kind of
-#'   decoration line(s) with text, such as an "under", "over" or "through"
-#'   as well as combinations e.g. "under+over", etc. Any combination of
-#'   \code{"under"}, \code{"over"}, \code{"through"} joined with
-#'   \code{"+"}, or one of \code{"none"}.
-#' @param marker Named list or \code{\link{go_pie_marker}()} object.
+#' @param marker A \code{\link{go_pie_marker}()} object or named list, with
+#'   properties \code{colors}, \code{line} and \code{pattern} (see
+#'   \code{\link{go_pie_marker}()}).
 #' @param meta Assigns extra meta information associated with this trace
 #'   that can be used in various text attributes. Attributes such as trace
 #'   `name`, graph, axis and colorbar `title.text`, annotation `text`
@@ -246,120 +157,41 @@
 #'   `meta` and `n` is the trace index. Any value.
 #' @param name Sets the trace name. The trace name appears as the legend
 #'   item and on hover. String.
-#' @param namelength Sets the default length (in number of characters) of
-#'   the trace name in the hover labels for all traces. -1 shows the whole
-#'   name regardless of length. 0-3 shows the first 0-3 characters, and an
-#'   integer >3 will show the whole name if it is less than that many
-#'   characters, but if it is longer, will truncate to `namelength - 3`
-#'   characters and add an ellipsis. Integer in the interval [-1, Inf], or
-#'   a vector of these.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
 #' @param outsidetextfont Sets the font used for `textinfo` lying outside
-#'   the sector. Named list or \code{\link{go_pie_outsidetextfont}()}
-#'   object.
-#' @param path Sets a custom path for pattern fill. Use with no `shape` or
-#'   `solidity`, provide an SVG path string for the regions of the square
-#'   from (0,0) to (`size`,`size`) to color. String, or a vector of these.
-#' @param pattern Sets the pattern within the marker. Named list or
-#'   \code{\link{go_pie_marker_pattern}()} object.
-#' @param position Specifies the location of the `title`. One of \code{"top
-#'   left"}, \code{"top center"}, \code{"top right"}, \code{"middle
-#'   center"}, \code{"bottom left"}, \code{"bottom center"}, \code{"bottom
-#'   right"}.
+#'   the sector. A \code{\link{go_font}()} object or named list, with
+#'   properties \code{color}, \code{family}, \code{lineposition},
+#'   \code{shadow}, \code{size}, \code{style}, \code{textcase},
+#'   \code{variant} and \code{weight} (see \code{\link{go_font}()}).
 #' @param pull Sets the fraction of larger radius to pull the sectors out
 #'   from the center. This can be a constant to pull all slices apart from
 #'   each other equally or an array to highlight one or more slices. Number
 #'   in the interval [0, 1], or a vector of these.
 #' @param rotation Instead of the first slice starting at 12 o'clock,
 #'   rotate to some other angle. Angle in degrees.
-#' @param row \strong{\code{add_pie()}}: Subplot grid row (figures created
-#'   with \code{\link{make_subplots}()} only). May be \code{"all"} or a
-#'   vector to address several cells.
-#'
-#'   \strong{\code{go_pie_domain()}}: If there is a layout grid, use the
-#'   domain for this row in the grid for this pie trace. Integer in the
-#'   interval [0, Inf].
+#' @param row Subplot grid row (figures created with
+#'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
+#'   to address several cells.
 #' @param scalegroup If there are multiple pie charts that should be sized
 #'   according to their totals, link them by providing a non-empty group id
 #'   here shared by every trace in the same group. String.
-#' @param shadow \strong{\code{go_pie_hoverlabel_font()},
-#'   \code{go_pie_insidetextfont()}, \code{go_pie_outsidetextfont()},
-#'   \code{go_pie_textfont()}, \code{go_pie_title_font()}}: Sets the shape
-#'   and color of the shadow behind text. "auto" places minimal shadow and
-#'   applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String, or a vector of these.
-#'
-#'   \strong{\code{go_pie_legendgrouptitle_font()}}: Sets the shape and
-#'   color of the shadow behind text. "auto" places minimal shadow and
-#'   applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param shape Sets the shape of the pattern fill. By default, no pattern
-#'   is used for filling the area. One of \code{""}, \code{"/"},
-#'   \code{"\\\\"}, \code{"x"}, \code{"-"}, \code{"|"}, \code{"+"},
-#'   \code{"."}, or a vector of these.
-#' @param showarrow Sets whether or not to show the hover label
-#'   arrow/triangle pointing to the data point. Logical.
 #' @param showlegend Determines whether or not items corresponding to the
 #'   pie slices are shown in the legend. Can be an array if `values` is
 #'   set. In that case, each entry specifies appearance in the legend for
 #'   one slice. Logical, or a vector of these.
-#' @param size \strong{\code{go_pie_hoverlabel_font()},
-#'   \code{go_pie_insidetextfont()}, \code{go_pie_outsidetextfont()},
-#'   \code{go_pie_textfont()}, \code{go_pie_title_font()}}: Number in the
-#'   interval [1, Inf], or a vector of these.
-#'
-#'   \strong{\code{go_pie_legendgrouptitle_font()}}: Number in the interval
-#'   [1, Inf].
-#'
-#'   \strong{\code{go_pie_marker_pattern()}}: Sets the size of unit squares
-#'   of the pattern fill in pixels, which corresponds to the interval of
-#'   repetition of the pattern. Number in the interval [0, Inf], or a
-#'   vector of these.
-#' @param solidity Sets the solidity of the pattern fill. Solidity is
-#'   roughly the fraction of the area filled by the pattern. Solidity of 0
-#'   shows only the background color without pattern and solidty of 1 shows
-#'   only the foreground color without pattern. Number in the interval [0,
-#'   1], or a vector of these.
 #' @param sort Determines whether or not the sectors are reordered from
 #'   largest to smallest. Logical.
-#' @param style \strong{\code{go_pie_hoverlabel_font()},
-#'   \code{go_pie_insidetextfont()}, \code{go_pie_outsidetextfont()},
-#'   \code{go_pie_textfont()}, \code{go_pie_title_font()}}: Sets whether a
-#'   font should be styled with a normal or italic face from its family.
-#'   One of \code{"normal"}, \code{"italic"}, or a vector of these.
-#'
-#'   \strong{\code{go_pie_legendgrouptitle_font()}}: Sets whether a font
-#'   should be styled with a normal or italic face from its family. One of
-#'   \code{"normal"}, \code{"italic"}.
-#' @param text \strong{\code{go_pie()}}: Sets text elements associated with
-#'   each sector. If trace `textinfo` contains a "text" flag, these
-#'   elements will be seen on the chart. If trace `hoverinfo` contains a
-#'   "text" flag and "hovertext" is not set, these elements will be seen in
-#'   the hover labels. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#'
-#'   \strong{\code{go_pie_legendgrouptitle()}}: Sets the title of the
-#'   legend group. String.
-#'
-#'   \strong{\code{go_pie_title()}}: Sets the title of the chart. If it is
-#'   empty, no title is displayed. String.
-#' @param textcase \strong{\code{go_pie_hoverlabel_font()},
-#'   \code{go_pie_insidetextfont()}, \code{go_pie_outsidetextfont()},
-#'   \code{go_pie_textfont()}, \code{go_pie_title_font()}}: Sets
-#'   capitalization of text. It can be used to make text appear in
-#'   all-uppercase or all-lowercase, or with each word capitalized. One of
-#'   \code{"normal"}, \code{"word caps"}, \code{"upper"}, \code{"lower"},
-#'   or a vector of these.
-#'
-#'   \strong{\code{go_pie_legendgrouptitle_font()}}: Sets capitalization of
-#'   text. It can be used to make text appear in all-uppercase or
-#'   all-lowercase, or with each word capitalized. One of \code{"normal"},
-#'   \code{"word caps"}, \code{"upper"}, \code{"lower"}.
-#' @param textfont Sets the font used for `textinfo`. Named list or
-#'   \code{\link{go_pie_textfont}()} object.
+#' @param text Sets text elements associated with each sector. If trace
+#'   `textinfo` contains a "text" flag, these elements will be seen on the
+#'   chart. If trace `hoverinfo` contains a "text" flag and "hovertext" is
+#'   not set, these elements will be seen in the hover labels. Data array:
+#'   a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param textfont Sets the font used for `textinfo`. A
+#'   \code{\link{go_font}()} object or named list, with properties
+#'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
+#'   \code{size}, \code{style}, \code{textcase}, \code{variant} and
+#'   \code{weight} (see \code{\link{go_font}()}).
 #' @param textinfo Determines what trace information appears on the graph.
 #'   Flags are rendered in a fixed order; use `texttemplate` if you need
 #'   explicit control over the rendered string, including the order of
@@ -391,8 +223,9 @@
 #'   variable referenced in a template is missing. If the boolean value
 #'   'false' is passed in, the specifier with the missing variable will be
 #'   displayed. Any value.
-#' @param title String (the title text), named list or
-#'   \code{\link{go_pie_title}()} object.
+#' @param title String (the title text), or a \code{\link{go_pie_title}()}
+#'   object or named list, with properties \code{font}, \code{position} and
+#'   \code{text} (see \code{\link{go_pie_title}()}).
 #' @param uid Assign an id to this trace, Use this to provide object
 #'   constancy between traces during animations and transitions. String.
 #' @param uirevision Controls persistence of some user-driven changes to
@@ -412,48 +245,25 @@
 #' @param values Sets the values of the sectors. If omitted, we count
 #'   occurrences of each label. Data array: a vector, factor, Date/POSIXct
 #'   vector, matrix or list.
-#' @param variant \strong{\code{go_pie_hoverlabel_font()},
-#'   \code{go_pie_insidetextfont()}, \code{go_pie_outsidetextfont()},
-#'   \code{go_pie_textfont()}, \code{go_pie_title_font()}}: Sets the
-#'   variant of the font. One of \code{"normal"}, \code{"small-caps"},
-#'   \code{"all-small-caps"}, \code{"all-petite-caps"},
-#'   \code{"petite-caps"}, \code{"unicase"}, or a vector of these.
-#'
-#'   \strong{\code{go_pie_legendgrouptitle_font()}}: Sets the variant of
-#'   the font. One of \code{"normal"}, \code{"small-caps"},
-#'   \code{"all-small-caps"}, \code{"all-petite-caps"},
-#'   \code{"petite-caps"}, \code{"unicase"}.
 #' @param visible Determines whether or not this trace is visible. If
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param weight \strong{\code{go_pie_hoverlabel_font()},
-#'   \code{go_pie_insidetextfont()}, \code{go_pie_outsidetextfont()},
-#'   \code{go_pie_textfont()}, \code{go_pie_title_font()}}: Sets the weight
-#'   (or boldness) of the font. Integer in the interval [1, 1000], or a
-#'   vector of these.
-#'
-#'   \strong{\code{go_pie_legendgrouptitle_font()}}: Sets the weight (or
-#'   boldness) of the font. Integer in the interval [1, 1000].
-#' @param width Sets the width (in px) of the line enclosing each sector.
-#'   Number in the interval [0, Inf], or a vector of these.
-#' @param x Sets the horizontal domain of this pie trace (in plot
-#'   fraction). Vector or list of 2 element(s).
-#' @param y Sets the vertical domain of this pie trace (in plot fraction).
-#'   Vector or list of 2 element(s).
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
+#' @param ... Not used: properties must be named in full.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
+#' @return \code{go_*()} functions return a graph object;
+#'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
+#'
+#' @concept traces
 #' @noMd
 #' @export
 #' @examples
-#' go_pie()
+#' d <- as.data.frame(table(cylinders = mtcars$cyl))
+#' d |>
+#'   go_figure() |>
+#'   add_pie(labels = ~cylinders, values = ~Freq)
 go_pie <- function(
     arg = NULL, ..., automargin = NULL, customdata = NULL, direction = NULL,
     dlabel = NULL, domain = NULL, hole = NULL, hoverinfo = NULL,
@@ -472,64 +282,50 @@ go_pie <- function(
   plotly_object("pie", arg, environment(), list(...), skip_invalid)
 }
 
-#' @rdname go_pie
+#' Pie marker objects
+#'
+#' The object for the \code{marker} of a pie trace (\code{\link{go_pie}()}).
+#' \code{go_pie_marker()} creates one, with exactly its properties; a named
+#' list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param colors Sets the color of each sector. If not specified, the
+#'   default trace color set is used to pick the sector colors. Data array:
+#'   a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param line A \code{\link{go_pie_marker_line}()} object or named list,
+#'   with properties \code{color} and \code{width} (see
+#'   \code{\link{go_pie_marker_line}()}).
+#' @param pattern Sets the pattern within the marker. A
+#'   \code{\link{go_pattern}()} object or named list, with properties
+#'   \code{bgcolor}, \code{fgcolor}, \code{fgopacity}, \code{fillmode},
+#'   \code{path}, \code{shape}, \code{size} and \code{solidity} (see
+#'   \code{\link{go_pattern}()}).
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_pie_marker} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
 #' @export
-go_pie_domain <- function(
-    arg = NULL, ..., column = NULL, row = NULL, x = NULL, y = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("pie.domain", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_pie
-#' @export
-go_pie_hoverlabel <- function(
-    arg = NULL, ..., align = NULL, bgcolor = NULL, bordercolor = NULL,
-    font = NULL, namelength = NULL, showarrow = NULL, skip_invalid = FALSE
-) {
-  plotly_object("pie.hoverlabel", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_pie
-#' @export
-go_pie_hoverlabel_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("pie.hoverlabel.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_pie
-#' @export
-go_pie_insidetextfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("pie.insidetextfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_pie
-#' @export
-go_pie_legendgrouptitle <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("pie.legendgrouptitle", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_pie
-#' @export
-go_pie_legendgrouptitle_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("pie.legendgrouptitle.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_pie
-#' @export
+#' @examples
+#' d <- as.data.frame(table(cylinders = mtcars$cyl))
+#' d |>
+#'   go_figure() |>
+#'   add_pie(
+#'     labels = ~cylinders,
+#'     values = ~Freq,
+#'     marker = go_pie_marker(colors = c("red", "blue"))
+#'   )
 go_pie_marker <- function(
     arg = NULL, ..., colors = NULL, line = NULL, pattern = NULL,
     skip_invalid = FALSE
@@ -537,60 +333,98 @@ go_pie_marker <- function(
   plotly_object("pie.marker", arg, environment(), list(...), skip_invalid)
 }
 
-#' @rdname go_pie
+#' Pie marker line objects
+#'
+#' The object for the \code{marker.line} of a pie trace
+#' (\code{\link{go_pie_marker}()}). \code{go_pie_marker_line()} creates one,
+#' with exactly its properties; a named list with the same properties works
+#' too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the color of the line enclosing each sector. Color: a
+#'   CSS color string or R color name, or a vector of these.
+#' @param width Sets the width (in px) of the line enclosing each sector.
+#'   Number in the interval [0, Inf], or a vector of these.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_pie_marker_line} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
 #' @export
+#' @examples
+#' d <- as.data.frame(table(cylinders = mtcars$cyl))
+#' d |>
+#'   go_figure() |>
+#'   add_pie(
+#'     labels = ~cylinders,
+#'     values = ~Freq,
+#'     marker = go_pie_marker(line = go_pie_marker_line(color = "red"))
+#'   )
 go_pie_marker_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
   plotly_object("pie.marker.line", arg, environment(), list(...), skip_invalid)
 }
 
-#' @rdname go_pie
+#' Pie title objects
+#'
+#' The object for the \code{title} of a pie trace (\code{\link{go_pie}()}).
+#' \code{go_pie_title()} creates one, with exactly its properties; a named
+#' list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param font Sets the font used for `title`. A \code{\link{go_font}()}
+#'   object or named list, with properties \code{color}, \code{family},
+#'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
+#'   \code{textcase}, \code{variant} and \code{weight} (see
+#'   \code{\link{go_font}()}).
+#' @param position Specifies the location of the `title`. One of \code{"top
+#'   left"}, \code{"top center"}, \code{"top right"}, \code{"middle
+#'   center"}, \code{"bottom left"}, \code{"bottom center"}, \code{"bottom
+#'   right"}.
+#' @param text Sets the title of the chart. If it is empty, no title is
+#'   displayed. String.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_pie_title} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
 #' @export
-go_pie_marker_pattern <- function(
-    arg = NULL, ..., bgcolor = NULL, fgcolor = NULL, fgopacity = NULL,
-    fillmode = NULL, path = NULL, shape = NULL, size = NULL,
-    solidity = NULL, skip_invalid = FALSE
-) {
-  plotly_object("pie.marker.pattern", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_pie
-#' @export
-go_pie_outsidetextfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("pie.outsidetextfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_pie
-#' @export
-go_pie_textfont <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("pie.textfont", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_pie
-#' @export
+#' @examples
+#' d <- as.data.frame(table(cylinders = mtcars$cyl))
+#' d |>
+#'   go_figure() |>
+#'   add_pie(
+#'     labels = ~cylinders,
+#'     values = ~Freq,
+#'     title = go_pie_title(text = "title")
+#'   )
 go_pie_title <- function(
     arg = NULL, ..., font = NULL, position = NULL, text = NULL,
     skip_invalid = FALSE
 ) {
   plotly_object("pie.title", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_pie
-#' @export
-go_pie_title_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("pie.title.font", arg, environment(), list(...), skip_invalid)
 }
 

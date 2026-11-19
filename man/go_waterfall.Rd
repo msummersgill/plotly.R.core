@@ -4,24 +4,6 @@
 \alias{add_waterfall}
 \alias{add_waterfall.default}
 \alias{go_waterfall}
-\alias{go_waterfall_connector}
-\alias{go_waterfall_connector_line}
-\alias{go_waterfall_decreasing}
-\alias{go_waterfall_decreasing_marker}
-\alias{go_waterfall_decreasing_marker_line}
-\alias{go_waterfall_hoverlabel}
-\alias{go_waterfall_hoverlabel_font}
-\alias{go_waterfall_increasing}
-\alias{go_waterfall_increasing_marker}
-\alias{go_waterfall_increasing_marker_line}
-\alias{go_waterfall_insidetextfont}
-\alias{go_waterfall_legendgrouptitle}
-\alias{go_waterfall_legendgrouptitle_font}
-\alias{go_waterfall_outsidetextfont}
-\alias{go_waterfall_textfont}
-\alias{go_waterfall_totals}
-\alias{go_waterfall_totals_marker}
-\alias{go_waterfall_totals_marker_line}
 \title{Waterfall traces}
 \usage{
 add_waterfall(fig, ...)
@@ -161,184 +143,15 @@ go_waterfall(
   zorder = NULL,
   skip_invalid = FALSE
 )
-
-go_waterfall_connector(
-  arg = NULL,
-  ...,
-  line = NULL,
-  mode = NULL,
-  visible = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_connector_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  dash = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_decreasing(arg = NULL, ..., marker = NULL, skip_invalid = FALSE)
-
-go_waterfall_decreasing_marker(
-  arg = NULL,
-  ...,
-  color = NULL,
-  line = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_decreasing_marker_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_increasing(arg = NULL, ..., marker = NULL, skip_invalid = FALSE)
-
-go_waterfall_increasing_marker(
-  arg = NULL,
-  ...,
-  color = NULL,
-  line = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_increasing_marker_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_insidetextfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_outsidetextfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_textfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_totals(arg = NULL, ..., marker = NULL, skip_invalid = FALSE)
-
-go_waterfall_totals_marker(
-  arg = NULL,
-  ...,
-  color = NULL,
-  line = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_totals_marker_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
 }
 \arguments{
 \item{fig}{A \code{go_figure} object.}
 
-\item{...}{Further properties, including nested properties in
-"magic underscore" form, e.g. \code{marker_size = 10} for
-\code{marker = list(size = 10)}. Property values may be one-sided
-formulas, evaluated in \code{data} for \code{add_*()} functions.}
+\item{...}{Not used: properties must be named in full.}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
-~col}, \code{marker_size = ~col}) are evaluated. Default: the data
+~col}, \code{marker = list(size = ~col)}, \code{marker =
+go_scatter_marker(size = ~col)}) are evaluated. Default: the data
 given to \code{\link{go_figure}()}. Only the evaluated values are
 added to the trace. A \code{crosstalk::SharedData} works the same way,
 and links the trace to its crosstalk group (see
@@ -357,8 +170,9 @@ the subplot axes. To show the text nodes above axis lines and tick
 labels, make sure to set `xaxis.layer` and `yaxis.layer` to "below
 traces". Logical.}
 
-\item{connector}{Named list or \code{\link{go_waterfall_connector}()}
-object.}
+\item{connector}{A \code{\link{go_waterfall_connector}()} object or
+named list, with properties \code{line}, \code{mode} and
+\code{visible} (see \code{\link{go_waterfall_connector}()}).}
 
 \item{constraintext}{Constrain the size of text inside or outside a bar
 to be no larger than the bar itself. One of \code{"inside"},
@@ -369,8 +183,9 @@ listening to hover, click and selection events. Note that, "scatter"
 traces also appends customdata items in the markers DOM elements Data
 array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
-\item{decreasing}{Named list or \code{\link{go_waterfall_decreasing}()}
-object.}
+\item{decreasing}{A \code{\link{go_waterfall_decreasing}()} object or
+named list, with properties \code{marker} (see
+\code{\link{go_waterfall_decreasing}()}).}
 
 \item{dx}{Sets the x coordinate step. See `x0` for more info. Number.}
 
@@ -384,8 +199,10 @@ combination of \code{"name"}, \code{"x"}, \code{"y"}, \code{"text"},
 \code{"+"}, or one of \code{"all"}, \code{"none"}, \code{"skip"}, or a
 vector of these.}
 
-\item{hoverlabel}{Named list or \code{\link{go_waterfall_hoverlabel}()}
-object.}
+\item{hoverlabel}{A \code{\link{go_hoverlabel}()} object or named list,
+with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+\code{font}, \code{namelength} and \code{showarrow} (see
+\code{\link{go_hoverlabel}()}).}
 
 \item{hovertemplate}{Template string used for rendering the information
 that appear on hover box. Note that this will override `hoverinfo`.
@@ -432,15 +249,19 @@ constancy of data points during animation. Should be an array of
 strings, not numbers or any other type. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.}
 
-\item{increasing}{Named list or \code{\link{go_waterfall_increasing}()}
-object.}
+\item{increasing}{A \code{\link{go_waterfall_increasing}()} object or
+named list, with properties \code{marker} (see
+\code{\link{go_waterfall_increasing}()}).}
 
 \item{insidetextanchor}{Determines if texts are kept at center or
 start/end points in `textposition` "inside" mode. One of \code{"end"},
 \code{"middle"}, \code{"start"}.}
 
 \item{insidetextfont}{Sets the font used for `text` lying inside the
-bar. Named list or \code{\link{go_waterfall_insidetextfont}()} object.}
+bar. A \code{\link{go_font}()} object or named list, with properties
+\code{color}, \code{family}, \code{lineposition}, \code{shadow},
+\code{size}, \code{style}, \code{textcase}, \code{variant} and
+\code{weight} (see \code{\link{go_font}()}).}
 
 \item{legend}{Sets the reference to a legend to show this trace in.
 References to these legends are "legend", "legend2", "legend3", etc.
@@ -452,8 +273,9 @@ Settings for these legends are set in the layout, under
 shapes part of the same legend group hide/show at the same time when
 toggling legend items. String.}
 
-\item{legendgrouptitle}{Named list or
-\code{\link{go_waterfall_legendgrouptitle}()} object.}
+\item{legendgrouptitle}{A \code{\link{go_legendgrouptitle}()} object or
+named list, with properties \code{font} and \code{text} (see
+\code{\link{go_legendgrouptitle}()}).}
 
 \item{legendrank}{Sets the legend rank for this trace. Items and groups
 with smaller ranks are presented on top/left side while with
@@ -503,8 +325,10 @@ value of the each bar spans along the vertical (horizontal). One of
 \code{"v"}, \code{"h"}.}
 
 \item{outsidetextfont}{Sets the font used for `text` lying outside the
-bar. Named list or \code{\link{go_waterfall_outsidetextfont}()}
-object.}
+bar. A \code{\link{go_font}()} object or named list, with properties
+\code{color}, \code{family}, \code{lineposition}, \code{shadow},
+\code{size}, \code{style}, \code{textcase}, \code{variant} and
+\code{weight} (see \code{\link{go_font}()}).}
 
 \item{selectedpoints}{Array containing integer indices of selected
 points. Has an effect only for traces that support selections. Note
@@ -516,24 +340,23 @@ have no effect. Any value.}
 \item{showlegend}{Determines whether or not an item corresponding to
 this trace is shown in the legend. Logical.}
 
-\item{text}{\strong{\code{go_waterfall()}}: Sets text elements
-  associated with each (x,y) pair. If a single string, the same string
-  appears over all the data points. If an array of string, the items are
-  mapped in order to the this trace's (x,y) coordinates. If trace
-  `hoverinfo` contains a "text" flag and "hovertext" is not set, these
-  elements will be seen in the hover labels. String, or a vector of
-  these.
-
-  \strong{\code{go_waterfall_legendgrouptitle()}}: Sets the title of the
-  legend group. String.}
+\item{text}{Sets text elements associated with each (x,y) pair. If a
+single string, the same string appears over all the data points. If an
+array of string, the items are mapped in order to the this trace's
+(x,y) coordinates. If trace `hoverinfo` contains a "text" flag and
+"hovertext" is not set, these elements will be seen in the hover
+labels. String, or a vector of these.}
 
 \item{textangle}{Sets the angle of the tick labels with respect to the
 bar. For example, a `tickangle` of -90 draws the tick labels
 vertically. With "auto" the texts may automatically be rotated to fit
 with the maximum size in bars. Angle in degrees.}
 
-\item{textfont}{Sets the font used for `text`. Named list or
-\code{\link{go_waterfall_textfont}()} object.}
+\item{textfont}{Sets the font used for `text`. A \code{\link{go_font}()}
+object or named list, with properties \code{color}, \code{family},
+\code{lineposition}, \code{shadow}, \code{size}, \code{style},
+\code{textcase}, \code{variant} and \code{weight} (see
+\code{\link{go_font}()}).}
 
 \item{textinfo}{Determines what trace information appears on the graph.
 In the case of having multiple waterfalls, totals are computed
@@ -577,7 +400,9 @@ variable referenced in a template is missing. If the boolean value
 'false' is passed in, the specifier with the missing variable will be
 displayed. Any value.}
 
-\item{totals}{Named list or \code{\link{go_waterfall_totals}()} object.}
+\item{totals}{A \code{\link{go_waterfall_totals}()} object or named
+list, with properties \code{marker} (see
+\code{\link{go_waterfall_totals}()}).}
 
 \item{uid}{Assign an id to this trace, Use this to provide object
 constancy between traces during animations and transitions. String.}
@@ -597,30 +422,13 @@ array, such that the same trace has a different index, you can still
 preserve user-driven changes if you give each trace a `uid` that stays
 with it as it moves. Any value.}
 
-\item{visible}{\strong{\code{go_waterfall()}}: Determines whether or not
-  this trace is visible. If "legendonly", the trace is not drawn, but
-  can appear as a legend item (provided that the legend itself is
-  visible). One of \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
+\item{visible}{Determines whether or not this trace is visible. If
+"legendonly", the trace is not drawn, but can appear as a legend item
+(provided that the legend itself is visible). One of
+\code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
 
-  \strong{\code{go_waterfall_connector()}}: Determines if connector
-  lines are drawn.  Logical.}
-
-\item{width}{\strong{\code{go_waterfall()}}: Sets the bar width (in
-  position axis units). Number in the interval [0, Inf], or a vector of
-  these.
-
-  \strong{\code{go_waterfall_connector_line()}}: Sets the line width (in
-  px). Number in the interval [0, Inf].
-
-  \strong{\code{go_waterfall_decreasing_marker_line()}}: Sets the line
-  width of all decreasing values. Number in the interval [0, Inf].
-
-  \strong{\code{go_waterfall_increasing_marker_line()}}: Sets the line
-  width of all increasing values. Number in the interval [0, Inf].
-
-  \strong{\code{go_waterfall_totals_marker_line()}}: Sets the line width
-  of all intermediate sums and total values. Number in the interval [0,
-  Inf].}
+\item{width}{Sets the bar width (in position axis units). Number in the
+interval [0, Inf], or a vector of these.}
 
 \item{x}{Sets the x coordinates. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.}
@@ -720,209 +528,10 @@ instead of raising an error.}
 
 \item{arg}{Optional named list, or graph object of the same type, to
 initialise properties from (constructors). Named arguments take precedence.}
-
-\item{line}{\strong{\code{go_waterfall_connector()}}: Named list or
-  \code{\link{go_waterfall_connector_line}()} object.
-
-  \strong{\code{go_waterfall_decreasing_marker()}}: Named list or
-  \code{\link{go_waterfall_decreasing_marker_line}()} object.
-
-  \strong{\code{go_waterfall_increasing_marker()}}: Named list or
-  \code{\link{go_waterfall_increasing_marker_line}()} object.
-
-  \strong{\code{go_waterfall_totals_marker()}}: Named list or
-  \code{\link{go_waterfall_totals_marker_line}()} object.}
-
-\item{mode}{Sets the shape of connector lines. One of \code{"spanning"},
-\code{"between"}.}
-
-\item{color}{\strong{\code{go_waterfall_connector_line()}}: Sets the
-  line color. Color: a CSS color string or R color name.
-
-  \strong{\code{go_waterfall_decreasing_marker()}}: Sets the marker
-  color of all decreasing values. Color: a CSS color string or R color
-  name.
-
-  \strong{\code{go_waterfall_decreasing_marker_line()}}: Sets the line
-  color of all decreasing values. Color: a CSS color string or R color
-  name.
-
-  \strong{\code{go_waterfall_hoverlabel_font()},
-  \code{go_waterfall_insidetextfont()},
-  \code{go_waterfall_outsidetextfont()},
-  \code{go_waterfall_textfont()}}: Color: a CSS color string or R color
-  name, or a vector of these.
-
-  \strong{\code{go_waterfall_increasing_marker()}}: Sets the marker
-  color of all increasing values. Color: a CSS color string or R color
-  name.
-
-  \strong{\code{go_waterfall_increasing_marker_line()}}: Sets the line
-  color of all increasing values. Color: a CSS color string or R color
-  name.
-
-  \strong{\code{go_waterfall_legendgrouptitle_font()}}: Color: a CSS
-  color string or R color name.
-
-  \strong{\code{go_waterfall_totals_marker()}}: Sets the marker color of
-  all intermediate sums and total values. Color: a CSS color string or R
-  color name.
-
-  \strong{\code{go_waterfall_totals_marker_line()}}: Sets the line color
-  of all intermediate sums and total values. Color: a CSS color string
-  or R color name.}
-
-\item{dash}{Sets the dash style of lines. Set to a dash type string
-("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
-dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
-\code{"dot"}, \code{"dash"}, \code{"longdash"}, \code{"dashdot"},
-\code{"longdashdot"}, or a string matching
-\code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.}
-
-\item{marker}{\strong{\code{go_waterfall_decreasing()}}: Named list or
-  \code{\link{go_waterfall_decreasing_marker}()} object.
-
-  \strong{\code{go_waterfall_increasing()}}: Named list or
-  \code{\link{go_waterfall_increasing_marker}()} object.
-
-  \strong{\code{go_waterfall_totals()}}: Named list or
-  \code{\link{go_waterfall_totals_marker}()} object.}
-
-\item{align}{Sets the horizontal alignment of the text content within
-hover label box. Has an effect only if the hover label text spans two
-or more lines One of \code{"left"}, \code{"right"}, \code{"auto"}, or
-a vector of these.}
-
-\item{bgcolor}{Sets the background color of the hover labels for this
-trace Color: a CSS color string or R color name, or a vector of these.}
-
-\item{bordercolor}{Sets the border color of the hover labels for this
-trace. Color: a CSS color string or R color name, or a vector of
-these.}
-
-\item{font}{\strong{\code{go_waterfall_hoverlabel()}}: Sets the font
-  used in hover labels. Named list or
-  \code{\link{go_waterfall_hoverlabel_font}()} object.
-
-  \strong{\code{go_waterfall_legendgrouptitle()}}: Sets this legend
-  group's title font. Named list or
-  \code{\link{go_waterfall_legendgrouptitle_font}()} object.}
-
-\item{namelength}{Sets the default length (in number of characters) of
-the trace name in the hover labels for all traces. -1 shows the whole
-name regardless of length. 0-3 shows the first 0-3 characters, and an
-integer >3 will show the whole name if it is less than that many
-characters, but if it is longer, will truncate to `namelength - 3`
-characters and add an ellipsis. Integer in the interval [-1, Inf], or
-a vector of these.}
-
-\item{showarrow}{Sets whether or not to show the hover label
-arrow/triangle pointing to the data point. Logical.}
-
-\item{family}{\strong{\code{go_waterfall_hoverlabel_font()},
-  \code{go_waterfall_insidetextfont()},
-  \code{go_waterfall_outsidetextfont()},
-  \code{go_waterfall_textfont()}}: HTML font family - the typeface that
-  will be applied by the web browser. The web browser can only apply a
-  font if it is available on the system where it runs. Provide multiple
-  font families, separated by commas, to indicate the order in which to
-  apply fonts if they aren't available. String, or a vector of these.
-
-  \strong{\code{go_waterfall_legendgrouptitle_font()}}: HTML font family
-  - the typeface that will be applied by the web browser. The web
-  browser can only apply a font if it is available on the system where
-  it runs. Provide multiple font families, separated by commas, to
-  indicate the order in which to apply fonts if they aren't available.
-  String.}
-
-\item{lineposition}{\strong{\code{go_waterfall_hoverlabel_font()},
-  \code{go_waterfall_insidetextfont()},
-  \code{go_waterfall_outsidetextfont()},
-  \code{go_waterfall_textfont()}}: Sets the kind of decoration line(s)
-  with text, such as an "under", "over" or "through" as well as
-  combinations e.g. "under+over", etc. Any combination of
-  \code{"under"}, \code{"over"}, \code{"through"} joined with
-  \code{"+"}, or one of \code{"none"}, or a vector of these.
-
-  \strong{\code{go_waterfall_legendgrouptitle_font()}}: Sets the kind of
-  decoration line(s) with text, such as an "under", "over" or "through"
-  as well as combinations e.g. "under+over", etc. Any combination of
-  \code{"under"}, \code{"over"}, \code{"through"} joined with
-  \code{"+"}, or one of \code{"none"}.}
-
-\item{shadow}{\strong{\code{go_waterfall_hoverlabel_font()},
-  \code{go_waterfall_insidetextfont()},
-  \code{go_waterfall_outsidetextfont()},
-  \code{go_waterfall_textfont()}}: Sets the shape and color of the
-  shadow behind text. "auto" places minimal shadow and applies contrast
-  text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.
-
-  \strong{\code{go_waterfall_legendgrouptitle_font()}}: Sets the shape
-  and color of the shadow behind text. "auto" places minimal shadow and
-  applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.}
-
-\item{size}{\strong{\code{go_waterfall_hoverlabel_font()},
-  \code{go_waterfall_insidetextfont()},
-  \code{go_waterfall_outsidetextfont()},
-  \code{go_waterfall_textfont()}}: Number in the interval [1, Inf], or a
-  vector of these.
-
-  \strong{\code{go_waterfall_legendgrouptitle_font()}}: Number in the
-  interval [1, Inf].}
-
-\item{style}{\strong{\code{go_waterfall_hoverlabel_font()},
-  \code{go_waterfall_insidetextfont()},
-  \code{go_waterfall_outsidetextfont()},
-  \code{go_waterfall_textfont()}}: Sets whether a font should be styled
-  with a normal or italic face from its family. One of \code{"normal"},
-  \code{"italic"}, or a vector of these.
-
-  \strong{\code{go_waterfall_legendgrouptitle_font()}}: Sets whether a
-  font should be styled with a normal or italic face from its family.
-  One of \code{"normal"}, \code{"italic"}.}
-
-\item{textcase}{\strong{\code{go_waterfall_hoverlabel_font()},
-  \code{go_waterfall_insidetextfont()},
-  \code{go_waterfall_outsidetextfont()},
-  \code{go_waterfall_textfont()}}: Sets capitalization of text. It can
-  be used to make text appear in all-uppercase or all-lowercase, or with
-  each word capitalized. One of \code{"normal"}, \code{"word caps"},
-  \code{"upper"}, \code{"lower"}, or a vector of these.
-
-  \strong{\code{go_waterfall_legendgrouptitle_font()}}: Sets
-  capitalization of text. It can be used to make text appear in
-  all-uppercase or all-lowercase, or with each word capitalized. One of
-  \code{"normal"}, \code{"word caps"}, \code{"upper"}, \code{"lower"}.}
-
-\item{variant}{\strong{\code{go_waterfall_hoverlabel_font()},
-  \code{go_waterfall_insidetextfont()},
-  \code{go_waterfall_outsidetextfont()},
-  \code{go_waterfall_textfont()}}: Sets the variant of the font. One of
-  \code{"normal"}, \code{"small-caps"}, \code{"all-small-caps"},
-  \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}, or a
-  vector of these.
-
-  \strong{\code{go_waterfall_legendgrouptitle_font()}}: Sets the variant
-  of the font. One of \code{"normal"}, \code{"small-caps"},
-  \code{"all-small-caps"}, \code{"all-petite-caps"},
-  \code{"petite-caps"}, \code{"unicase"}.}
-
-\item{weight}{\strong{\code{go_waterfall_hoverlabel_font()},
-  \code{go_waterfall_insidetextfont()},
-  \code{go_waterfall_outsidetextfont()},
-  \code{go_waterfall_textfont()}}: Sets the weight (or boldness) of the
-  font. Integer in the interval [1, 1000], or a vector of these.
-
-  \strong{\code{go_waterfall_legendgrouptitle_font()}}: Sets the weight
-  (or boldness) of the font. Integer in the interval [1, 1000].}
 }
 \value{
-Each \code{go_*()} function returns a graph object of the same
-  class as its name; \code{add_*()} functions return the modified figure.
+\code{go_*()} functions return a graph object;
+  \code{add_*()} functions return the modified figure.
 }
 \description{
 Draws waterfall trace which is useful graph to displays the contribution
@@ -932,42 +541,23 @@ set to "v" (the default) and the labels are set in `x`. By setting
 `orientation` to "h", the roles are interchanged.
 }
 \details{
-\code{go_waterfall()} and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-\code{\link{plotly_obj-modify}()}). \code{add_waterfall()} creates an
-object and adds it to a figure.
+\code{go_waterfall()} creates a validated graph object (a named list).
+\code{add_waterfall()} creates one and adds it to a figure.
 
-Nested objects documented here:
-\describe{
-\item{\code{go_waterfall_connector()}}{\code{waterfall.connector}}
-\item{\code{go_waterfall_connector_line()}}{\code{waterfall.connector.line}}
-\item{\code{go_waterfall_decreasing()}}{\code{waterfall.decreasing}}
-\item{\code{go_waterfall_decreasing_marker()}}{\code{waterfall.decreasing.marker}}
-\item{\code{go_waterfall_decreasing_marker_line()}}{\code{waterfall.decreasing.marker.line}}
-\item{\code{go_waterfall_hoverlabel()}}{\code{waterfall.hoverlabel}}
-\item{\code{go_waterfall_hoverlabel_font()}}{\code{waterfall.hoverlabel.font}:
-Sets the font used in hover labels.}
-\item{\code{go_waterfall_increasing()}}{\code{waterfall.increasing}}
-\item{\code{go_waterfall_increasing_marker()}}{\code{waterfall.increasing.marker}}
-\item{\code{go_waterfall_increasing_marker_line()}}{\code{waterfall.increasing.marker.line}}
-\item{\code{go_waterfall_insidetextfont()}}{\code{waterfall.insidetextfont}:
-Sets the font used for `text` lying inside the bar.}
-\item{\code{go_waterfall_legendgrouptitle()}}{\code{waterfall.legendgrouptitle}}
-\item{\code{go_waterfall_legendgrouptitle_font()}}{\code{waterfall.legendgrouptitle.font}:
-Sets this legend group's title font.}
-\item{\code{go_waterfall_outsidetextfont()}}{\code{waterfall.outsidetextfont}:
-Sets the font used for `text` lying outside the bar.}
-\item{\code{go_waterfall_textfont()}}{\code{waterfall.textfont}: Sets the
-font used for `text`.}
-\item{\code{go_waterfall_totals()}}{\code{waterfall.totals}}
-\item{\code{go_waterfall_totals_marker()}}{\code{waterfall.totals.marker}}
-\item{\code{go_waterfall_totals_marker_line()}}{\code{waterfall.totals.marker.line}}
-}
+
+Nested objects are given as named lists or with their constructors, which
+are linked from the arguments below. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+\code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+evaluated in the data, and then checked, when the trace is added with
+\code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_waterfall(x = 1:3, y = c(2, 1, 3))
+mtcars |>
+  go_figure() |>
+  add_waterfall(x = ~factor(cyl), y = ~mpg)
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}
 }
+\concept{traces}

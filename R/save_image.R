@@ -17,6 +17,9 @@
 #' `chromote::chrome_versions_add("latest-stable", "chrome-headless-shell")`.
 #'
 #' The browser is started on the first export and reused for later ones.
+#' Fonts are the ones installed on this computer: `save_image()` warns when
+#' a font a figure asks for is not installed (see [available_fonts()]).
+#'
 #' Large figures can take a while to draw: an export waits up to
 #' `getOption("plotly.core.export_timeout", 300)` seconds.
 #' LaTeX (see [TeX()]) is typeset with the MathJax bundled with the package,
@@ -64,6 +67,7 @@ save_image <- function(
   height = NULL,
   scale = NULL
 ) {
+  check_figure_fonts(p)
   shared_chrome_exporter()$transform(
     p,
     file,

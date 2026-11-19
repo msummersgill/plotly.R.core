@@ -7,67 +7,26 @@
 #' individual cells. Table is using a column-major order, ie. the grid is
 #' represented as a vector of column vectors.
 #'
-#' \code{go_table()} and the nested object constructors below create
-#' validated graph objects (named lists). Every property is checked against
-#' the plotly.js schema when an object is created or modified (see
-#' \code{\link{plotly_obj-modify}()}). \code{add_table()} creates an object
-#' and adds it to a figure.
+#' \code{go_table()} creates a validated graph object (a named list).
+#' \code{add_table()} creates one and adds it to a figure.
 #'
-#' @details Nested objects documented here:
-#' \describe{
-#' \item{\code{go_table_cells()}}{\code{table.cells}}
-#' \item{\code{go_table_cells_fill()}}{\code{table.cells.fill}}
-#' \item{\code{go_table_cells_font()}}{\code{table.cells.font}}
-#' \item{\code{go_table_cells_line()}}{\code{table.cells.line}}
-#' \item{\code{go_table_domain()}}{\code{table.domain}}
-#' \item{\code{go_table_header()}}{\code{table.header}}
-#' \item{\code{go_table_header_fill()}}{\code{table.header.fill}}
-#' \item{\code{go_table_header_font()}}{\code{table.header.font}}
-#' \item{\code{go_table_header_line()}}{\code{table.header.line}}
-#' \item{\code{go_table_hoverlabel()}}{\code{table.hoverlabel}}
-#' \item{\code{go_table_hoverlabel_font()}}{\code{table.hoverlabel.font}:
-#' Sets the font used in hover labels.}
-#' \item{\code{go_table_legendgrouptitle()}}{\code{table.legendgrouptitle}}
-#' \item{\code{go_table_legendgrouptitle_font()}}{\code{table.legendgrouptitle.font}:
-#' Sets this legend group's title font.}
-#' }
+#' @details
+#' Nested objects are given as named lists or with their constructors, which
+#' are linked from the arguments below. Every property is checked against
+#' the plotly.js schema when the object is created or modified (see
+#' \code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
+#' evaluated in the data, and then checked, when the trace is added with
+#' \code{add_<trace>()} or \code{add_trace()}.
 #'
 #' @param arg Optional named list, or graph object of the same type, to
 #'   initialise properties from (constructors). Named arguments take precedence.
-#' @param align \strong{\code{go_table_cells()}, \code{go_table_header()}}:
-#'   Sets the horizontal alignment of the `text` within the box. Has an
-#'   effect only if `text` spans two or more lines (i.e. `text` contains
-#'   one or more <br> HTML tags) or if an explicit width is set to override
-#'   the text width. One of \code{"left"}, \code{"center"}, \code{"right"},
-#'   or a vector of these.
-#'
-#'   \strong{\code{go_table_hoverlabel()}}: Sets the horizontal alignment
-#'   of the text content within hover label box. Has an effect only if the
-#'   hover label text spans two or more lines One of \code{"left"},
-#'   \code{"right"}, \code{"auto"}, or a vector of these.
-#' @param bgcolor Sets the background color of the hover labels for this
-#'   trace Color: a CSS color string or R color name, or a vector of these.
-#' @param bordercolor Sets the border color of the hover labels for this
-#'   trace. Color: a CSS color string or R color name, or a vector of
-#'   these.
-#' @param cells Named list or \code{\link{go_table_cells}()} object.
+#' @param cells A \code{\link{go_table_cells}()} object or named list, with
+#'   properties \code{align}, \code{fill}, \code{font}, \code{format},
+#'   \code{height}, \code{line}, \code{prefix}, \code{suffix} and
+#'   \code{values} (see \code{\link{go_table_cells}()}).
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
-#' @param color \strong{\code{go_table_cells_fill()},
-#'   \code{go_table_header_fill()}}: Sets the cell fill color. It accepts
-#'   either a specific color or an array of colors or a 2D array of colors.
-#'   Color: a CSS color string or R color name, or a vector of these.
-#'
-#'   \strong{\code{go_table_cells_font()}, \code{go_table_cells_line()},
-#'   \code{go_table_header_font()}, \code{go_table_header_line()},
-#'   \code{go_table_hoverlabel_font()}}: Color: a CSS color string or R
-#'   color name, or a vector of these.
-#'
-#'   \strong{\code{go_table_legendgrouptitle_font()}}: Color: a CSS color
-#'   string or R color name.
-#' @param column If there is a layout grid, use the domain for this column
-#'   in the grid for this table trace. Integer in the interval [0, Inf].
 #' @param columnorder Specifies the rendered order of the data columns; for
 #'   example, a value `2` at position `0` means that column index `0` in
 #'   the data will be rendered as the third column, as columns have an
@@ -81,57 +40,30 @@
 #'   traces also appends customdata items in the markers DOM elements Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param data A data frame in which formula properties (e.g. \code{x =
-#'   ~col}, \code{marker_size = ~col}) are evaluated. Default: the data
+#'   ~col}, \code{marker = list(size = ~col)}, \code{marker =
+#'   go_scatter_marker(size = ~col)}) are evaluated. Default: the data
 #'   given to \code{\link{go_figure}()}. Only the evaluated values are
 #'   added to the trace. A \code{crosstalk::SharedData} works the same way,
 #'   and links the trace to its crosstalk group (see
 #'   \code{\link{highlight}()}).
-#' @param domain Named list or \code{\link{go_table_domain}()} object.
-#' @param family \strong{\code{go_table_cells_font()},
-#'   \code{go_table_header_font()}, \code{go_table_hoverlabel_font()}}:
-#'   HTML font family - the typeface that will be applied by the web
-#'   browser. The web browser can only apply a font if it is available on
-#'   the system where it runs. Provide multiple font families, separated by
-#'   commas, to indicate the order in which to apply fonts if they aren't
-#'   available. String, or a vector of these.
-#'
-#'   \strong{\code{go_table_legendgrouptitle_font()}}: HTML font family -
-#'   the typeface that will be applied by the web browser. The web browser
-#'   can only apply a font if it is available on the system where it runs.
-#'   Provide multiple font families, separated by commas, to indicate the
-#'   order in which to apply fonts if they aren't available. String.
+#' @param domain A \code{\link{go_domain}()} object or named list, with
+#'   properties \code{column}, \code{row}, \code{x} and \code{y} (see
+#'   \code{\link{go_domain}()}).
 #' @param fig A \code{go_figure} object.
-#' @param fill \strong{\code{go_table_cells()}}: Named list or
-#'   \code{\link{go_table_cells_fill}()} object.
-#'
-#'   \strong{\code{go_table_header()}}: Named list or
-#'   \code{\link{go_table_header_fill}()} object.
-#' @param font \strong{\code{go_table_cells()}}: Named list or
-#'   \code{\link{go_table_cells_font}()} object.
-#'
-#'   \strong{\code{go_table_header()}}: Named list or
-#'   \code{\link{go_table_header_font}()} object.
-#'
-#'   \strong{\code{go_table_hoverlabel()}}: Sets the font used in hover
-#'   labels. Named list or \code{\link{go_table_hoverlabel_font}()} object.
-#'
-#'   \strong{\code{go_table_legendgrouptitle()}}: Sets this legend group's
-#'   title font. Named list or
-#'   \code{\link{go_table_legendgrouptitle_font}()} object.
-#' @param format Sets the cell value formatting rule using d3 formatting
-#'   mini-languages which are very similar to those in Python. For numbers,
-#'   see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. Data
-#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param header Named list or \code{\link{go_table_header}()} object.
-#' @param height The height of cells. Number.
+#' @param header A \code{\link{go_table_header}()} object or named list,
+#'   with properties \code{align}, \code{fill}, \code{font}, \code{format},
+#'   \code{height}, \code{line}, \code{prefix}, \code{suffix} and
+#'   \code{values} (see \code{\link{go_table_header}()}).
 #' @param hoverinfo Determines what trace information appears on hover. If
 #'   `none` or `skip` are set, no information is displayed upon hovering.
 #'   But, if `none` is set, click and hover events are still fired. Any
 #'   combination of \code{"x"}, \code{"y"}, \code{"z"}, \code{"text"},
 #'   \code{"name"} joined with \code{"+"}, or one of \code{"all"},
 #'   \code{"none"}, \code{"skip"}, or a vector of these.
-#' @param hoverlabel Named list or \code{\link{go_table_hoverlabel}()}
-#'   object.
+#' @param hoverlabel A \code{\link{go_hoverlabel}()} object or named list,
+#'   with properties \code{align}, \code{bgcolor}, \code{bordercolor},
+#'   \code{font}, \code{namelength} and \code{showarrow} (see
+#'   \code{\link{go_hoverlabel}()}).
 #' @param ids Assigns id labels to each datum. These ids for object
 #'   constancy of data points during animation. Should be an array of
 #'   strings, not numbers or any other type. Data array: a vector, factor,
@@ -141,8 +73,9 @@
 #'   Settings for these legends are set in the layout, under
 #'   `layout.legend`, `layout.legend2`, etc. Subplot id: \code{"legend"},
 #'   \code{"legend2"}, \code{"legend3"}, ....
-#' @param legendgrouptitle Named list or
-#'   \code{\link{go_table_legendgrouptitle}()} object.
+#' @param legendgrouptitle A \code{\link{go_legendgrouptitle}()} object or
+#'   named list, with properties \code{font} and \code{text} (see
+#'   \code{\link{go_legendgrouptitle}()}).
 #' @param legendrank Sets the legend rank for this trace. Items and groups
 #'   with smaller ranks are presented on top/left side while with
 #'   "reversed" `legend.traceorder` they are on bottom/right side. The
@@ -153,23 +86,6 @@
 #'   to their order in data and layout. Number.
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param line \strong{\code{go_table_cells()}}: Named list or
-#'   \code{\link{go_table_cells_line}()} object.
-#'
-#'   \strong{\code{go_table_header()}}: Named list or
-#'   \code{\link{go_table_header_line}()} object.
-#' @param lineposition \strong{\code{go_table_cells_font()},
-#'   \code{go_table_header_font()}, \code{go_table_hoverlabel_font()}}:
-#'   Sets the kind of decoration line(s) with text, such as an "under",
-#'   "over" or "through" as well as combinations e.g. "under+over", etc.
-#'   Any combination of \code{"under"}, \code{"over"}, \code{"through"}
-#'   joined with \code{"+"}, or one of \code{"none"}, or a vector of these.
-#'
-#'   \strong{\code{go_table_legendgrouptitle_font()}}: Sets the kind of
-#'   decoration line(s) with text, such as an "under", "over" or "through"
-#'   as well as combinations e.g. "under+over", etc. Any combination of
-#'   \code{"under"}, \code{"over"}, \code{"through"} joined with
-#'   \code{"+"}, or one of \code{"none"}.
 #' @param meta Assigns extra meta information associated with this trace
 #'   that can be used in various text attributes. Attributes such as trace
 #'   `name`, graph, axis and colorbar `title.text`, annotation `text`
@@ -181,63 +97,9 @@
 #'   `meta` and `n` is the trace index. Any value.
 #' @param name Sets the trace name. The trace name appears as the legend
 #'   item and on hover. String.
-#' @param namelength Sets the default length (in number of characters) of
-#'   the trace name in the hover labels for all traces. -1 shows the whole
-#'   name regardless of length. 0-3 shows the first 0-3 characters, and an
-#'   integer >3 will show the whole name if it is less than that many
-#'   characters, but if it is longer, will truncate to `namelength - 3`
-#'   characters and add an ellipsis. Integer in the interval [-1, Inf], or
-#'   a vector of these.
-#' @param prefix Prefix for cell values. String, or a vector of these.
-#' @param row \strong{\code{add_table()}}: Subplot grid row (figures
-#'   created with \code{\link{make_subplots}()} only). May be \code{"all"}
-#'   or a vector to address several cells.
-#'
-#'   \strong{\code{go_table_domain()}}: If there is a layout grid, use the
-#'   domain for this row in the grid for this table trace. Integer in the
-#'   interval [0, Inf].
-#' @param shadow \strong{\code{go_table_cells_font()},
-#'   \code{go_table_header_font()}, \code{go_table_hoverlabel_font()}}:
-#'   Sets the shape and color of the shadow behind text. "auto" places
-#'   minimal shadow and applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String, or a vector of these.
-#'
-#'   \strong{\code{go_table_legendgrouptitle_font()}}: Sets the shape and
-#'   color of the shadow behind text. "auto" places minimal shadow and
-#'   applies contrast text font color. See
-#'   https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-#'   additional options. String.
-#' @param showarrow Sets whether or not to show the hover label
-#'   arrow/triangle pointing to the data point. Logical.
-#' @param size \strong{\code{go_table_cells_font()},
-#'   \code{go_table_header_font()}, \code{go_table_hoverlabel_font()}}:
-#'   Number in the interval [1, Inf], or a vector of these.
-#'
-#'   \strong{\code{go_table_legendgrouptitle_font()}}: Number in the
-#'   interval [1, Inf].
-#' @param style \strong{\code{go_table_cells_font()},
-#'   \code{go_table_header_font()}, \code{go_table_hoverlabel_font()}}:
-#'   Sets whether a font should be styled with a normal or italic face from
-#'   its family. One of \code{"normal"}, \code{"italic"}, or a vector of
-#'   these.
-#'
-#'   \strong{\code{go_table_legendgrouptitle_font()}}: Sets whether a font
-#'   should be styled with a normal or italic face from its family. One of
-#'   \code{"normal"}, \code{"italic"}.
-#' @param suffix Suffix for cell values. String, or a vector of these.
-#' @param text Sets the title of the legend group. String.
-#' @param textcase \strong{\code{go_table_cells_font()},
-#'   \code{go_table_header_font()}, \code{go_table_hoverlabel_font()}}:
-#'   Sets capitalization of text. It can be used to make text appear in
-#'   all-uppercase or all-lowercase, or with each word capitalized. One of
-#'   \code{"normal"}, \code{"word caps"}, \code{"upper"}, \code{"lower"},
-#'   or a vector of these.
-#'
-#'   \strong{\code{go_table_legendgrouptitle_font()}}: Sets capitalization
-#'   of text. It can be used to make text appear in all-uppercase or
-#'   all-lowercase, or with each word capitalized. One of \code{"normal"},
-#'   \code{"word caps"}, \code{"upper"}, \code{"lower"}.
+#' @param row Subplot grid row (figures created with
+#'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
+#'   to address several cells.
 #' @param uid Assign an id to this trace, Use this to provide object
 #'   constancy between traces during animations and transitions. String.
 #' @param uirevision Controls persistence of some user-driven changes to
@@ -254,59 +116,28 @@
 #'   array, such that the same trace has a different index, you can still
 #'   preserve user-driven changes if you give each trace a `uid` that stays
 #'   with it as it moves. Any value.
-#' @param values \strong{\code{go_table_cells()}}: Cell values.
-#'   `values[m][n]` represents the value of the `n`th point in column `m`,
-#'   therefore the `values[m]` vector length for all columns must be the
-#'   same (longer vectors will be truncated). Each value must be a finite
-#'   number or a string. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#'
-#'   \strong{\code{go_table_header()}}: Header cell values. `values[m][n]`
-#'   represents the value of the `n`th point in column `m`, therefore the
-#'   `values[m]` vector length for all columns must be the same (longer
-#'   vectors will be truncated). Each value must be a finite number or a
-#'   string. Data array: a vector, factor, Date/POSIXct vector, matrix or
-#'   list.
-#' @param variant \strong{\code{go_table_cells_font()},
-#'   \code{go_table_header_font()}, \code{go_table_hoverlabel_font()}}:
-#'   Sets the variant of the font. One of \code{"normal"},
-#'   \code{"small-caps"}, \code{"all-small-caps"},
-#'   \code{"all-petite-caps"}, \code{"petite-caps"}, \code{"unicase"}, or a
-#'   vector of these.
-#'
-#'   \strong{\code{go_table_legendgrouptitle_font()}}: Sets the variant of
-#'   the font. One of \code{"normal"}, \code{"small-caps"},
-#'   \code{"all-small-caps"}, \code{"all-petite-caps"},
-#'   \code{"petite-caps"}, \code{"unicase"}.
 #' @param visible Determines whether or not this trace is visible. If
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param weight \strong{\code{go_table_cells_font()},
-#'   \code{go_table_header_font()}, \code{go_table_hoverlabel_font()}}:
-#'   Sets the weight (or boldness) of the font. Integer in the interval [1,
-#'   1000], or a vector of these.
-#'
-#'   \strong{\code{go_table_legendgrouptitle_font()}}: Sets the weight (or
-#'   boldness) of the font. Integer in the interval [1, 1000].
-#' @param width Number, or a vector of these.
-#' @param x Sets the horizontal domain of this table trace (in plot
-#'   fraction). Vector or list of 2 element(s).
-#' @param y Sets the vertical domain of this table trace (in plot
-#'   fraction). Vector or list of 2 element(s).
-#' @param ... Further properties, including nested properties in
-#'   "magic underscore" form, e.g. \code{marker_size = 10} for
-#'   \code{marker = list(size = 10)}. Property values may be one-sided
-#'   formulas, evaluated in \code{data} for \code{add_*()} functions.
+#' @param ... Not used: properties must be named in full.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
-#' @return Each \code{go_*()} function returns a graph object of the same
-#'   class as its name; \code{add_*()} functions return the modified figure.
+#' @return \code{go_*()} functions return a graph object;
+#'   \code{add_*()} functions return the modified figure.
 #' @seealso \code{\link{go_figure}()}, \code{\link{add_trace}()}
+#'
+#' @concept traces
 #' @noMd
 #' @export
 #' @examples
-#' go_table()
+#' d <- head(mtcars)
+#' d |>
+#'   go_figure() |>
+#'   add_table(
+#'     header = go_table_header(values = names(d)),
+#'     cells = go_table_cells(values = d)
+#'   )
 go_table <- function(
     arg = NULL, ..., cells = NULL, columnorder = NULL, columnwidth = NULL,
     customdata = NULL, domain = NULL, header = NULL, hoverinfo = NULL,
@@ -317,8 +148,61 @@ go_table <- function(
   plotly_object("table", arg, environment(), list(...), skip_invalid)
 }
 
-#' @rdname go_table
+#' Table cells objects
+#'
+#' The object for the \code{cells} of a table trace
+#' (\code{\link{go_table}()}). \code{go_table_cells()} creates one, with
+#' exactly its properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param align Sets the horizontal alignment of the `text` within the box.
+#'   Has an effect only if `text` spans two or more lines (i.e. `text`
+#'   contains one or more <br> HTML tags) or if an explicit width is set to
+#'   override the text width. One of \code{"left"}, \code{"center"},
+#'   \code{"right"}, or a vector of these.
+#' @param fill A \code{\link{go_table_cells_fill}()} object or named list,
+#'   with properties \code{color} (see
+#'   \code{\link{go_table_cells_fill}()}).
+#' @param font A \code{\link{go_font}()} object or named list, with
+#'   properties \code{color}, \code{family}, \code{lineposition},
+#'   \code{shadow}, \code{size}, \code{style}, \code{textcase},
+#'   \code{variant} and \code{weight} (see \code{\link{go_font}()}).
+#' @param format Sets the cell value formatting rule using d3 formatting
+#'   mini-languages which are very similar to those in Python. For numbers,
+#'   see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. Data
+#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param height The height of cells. Number.
+#' @param line A \code{\link{go_table_cells_line}()} object or named list,
+#'   with properties \code{color} and \code{width} (see
+#'   \code{\link{go_table_cells_line}()}).
+#' @param prefix Prefix for cell values. String, or a vector of these.
+#' @param suffix Suffix for cell values. String, or a vector of these.
+#' @param values Cell values. `values[m][n]` represents the value of the
+#'   `n`th point in column `m`, therefore the `values[m]` vector length for
+#'   all columns must be the same (longer vectors will be truncated). Each
+#'   value must be a finite number or a string. Data array: a vector,
+#'   factor, Date/POSIXct vector, matrix or list.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_table_cells} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
 #' @export
+#' @examples
+#' go_table(
+#'   cells = go_table_cells()
+#' )
 go_table_cells <- function(
     arg = NULL, ..., align = NULL, fill = NULL, font = NULL, format = NULL,
     height = NULL, line = NULL, prefix = NULL, suffix = NULL, values = NULL,
@@ -327,43 +211,141 @@ go_table_cells <- function(
   plotly_object("table.cells", arg, environment(), list(...), skip_invalid)
 }
 
-#' @rdname go_table
+#' Table cells fill objects
+#'
+#' The object for the \code{cells.fill} of a table trace
+#' (\code{\link{go_table_cells}()}). \code{go_table_cells_fill()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the cell fill color. It accepts either a specific
+#'   color or an array of colors or a 2D array of colors. Color: a CSS
+#'   color string or R color name, or a vector of these.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_table_cells_fill} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
 #' @export
+#' @examples
+#' go_table(
+#'   cells = go_table_cells(
+#'     fill = go_table_cells_fill(color = "red")
+#'   )
+#' )
 go_table_cells_fill <- function(
     arg = NULL, ..., color = NULL, skip_invalid = FALSE
 ) {
   plotly_object("table.cells.fill", arg, environment(), list(...), skip_invalid)
 }
 
-#' @rdname go_table
+#' Table cells line objects
+#'
+#' The object for the \code{cells.line} of a table trace
+#' (\code{\link{go_table_cells}()}). \code{go_table_cells_line()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Color: a CSS color string or R color name, or a vector of
+#'   these.
+#' @param width Number, or a vector of these.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_table_cells_line} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
 #' @export
-go_table_cells_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("table.cells.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_table
-#' @export
+#' @examples
+#' go_table(
+#'   cells = go_table_cells(
+#'     line = go_table_cells_line(color = "red")
+#'   )
+#' )
 go_table_cells_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
   plotly_object("table.cells.line", arg, environment(), list(...), skip_invalid)
 }
 
-#' @rdname go_table
+#' Table header objects
+#'
+#' The object for the \code{header} of a table trace
+#' (\code{\link{go_table}()}). \code{go_table_header()} creates one, with
+#' exactly its properties; a named list with the same properties works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param align Sets the horizontal alignment of the `text` within the box.
+#'   Has an effect only if `text` spans two or more lines (i.e. `text`
+#'   contains one or more <br> HTML tags) or if an explicit width is set to
+#'   override the text width. One of \code{"left"}, \code{"center"},
+#'   \code{"right"}, or a vector of these.
+#' @param fill A \code{\link{go_table_header_fill}()} object or named list,
+#'   with properties \code{color} (see
+#'   \code{\link{go_table_header_fill}()}).
+#' @param font A \code{\link{go_font}()} object or named list, with
+#'   properties \code{color}, \code{family}, \code{lineposition},
+#'   \code{shadow}, \code{size}, \code{style}, \code{textcase},
+#'   \code{variant} and \code{weight} (see \code{\link{go_font}()}).
+#' @param format Sets the cell value formatting rule using d3 formatting
+#'   mini-languages which are very similar to those in Python. For numbers,
+#'   see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. Data
+#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param height The height of cells. Number.
+#' @param line A \code{\link{go_table_header_line}()} object or named list,
+#'   with properties \code{color} and \code{width} (see
+#'   \code{\link{go_table_header_line}()}).
+#' @param prefix Prefix for cell values. String, or a vector of these.
+#' @param suffix Suffix for cell values. String, or a vector of these.
+#' @param values Header cell values. `values[m][n]` represents the value of
+#'   the `n`th point in column `m`, therefore the `values[m]` vector length
+#'   for all columns must be the same (longer vectors will be truncated).
+#'   Each value must be a finite number or a string. Data array: a vector,
+#'   factor, Date/POSIXct vector, matrix or list.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_table_header} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
 #' @export
-go_table_domain <- function(
-    arg = NULL, ..., column = NULL, row = NULL, x = NULL, y = NULL,
-    skip_invalid = FALSE
-) {
-  plotly_object("table.domain", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_table
-#' @export
+#' @examples
+#' go_table(
+#'   header = go_table_header()
+#' )
 go_table_header <- function(
     arg = NULL, ..., align = NULL, fill = NULL, font = NULL, format = NULL,
     height = NULL, line = NULL, prefix = NULL, suffix = NULL, values = NULL,
@@ -372,66 +354,83 @@ go_table_header <- function(
   plotly_object("table.header", arg, environment(), list(...), skip_invalid)
 }
 
-#' @rdname go_table
+#' Table header fill objects
+#'
+#' The object for the \code{header.fill} of a table trace
+#' (\code{\link{go_table_header}()}). \code{go_table_header_fill()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Sets the cell fill color. It accepts either a specific
+#'   color or an array of colors or a 2D array of colors. Color: a CSS
+#'   color string or R color name, or a vector of these.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_table_header_fill} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
 #' @export
+#' @examples
+#' go_table(
+#'   header = go_table_header(
+#'     fill = go_table_header_fill(color = "red")
+#'   )
+#' )
 go_table_header_fill <- function(
     arg = NULL, ..., color = NULL, skip_invalid = FALSE
 ) {
   plotly_object("table.header.fill", arg, environment(), list(...), skip_invalid)
 }
 
-#' @rdname go_table
+#' Table header line objects
+#'
+#' The object for the \code{header.line} of a table trace
+#' (\code{\link{go_table_header}()}). \code{go_table_header_line()} creates
+#' one, with exactly its properties; a named list with the same properties
+#' works too.
+#'
+#' @details
+#' Nested objects are named lists, or objects of the constructors their
+#' arguments name. Every property is checked against the plotly.js schema
+#' when the object is created or modified. A property may be a one-sided
+#' formula (\code{color = ~col}): it is kept, and evaluated in the data
+#' (then checked) when its trace is added to a figure with
+#' \code{add_<trace>()} or \code{add_trace()}.
+#'
+#' @param arg Optional named list, or graph object of the same type, to
+#'   initialise properties from. Named arguments take precedence.
+#' @param color Color: a CSS color string or R color name, or a vector of
+#'   these.
+#' @param width Number, or a vector of these.
+#' @param ... Not used: properties must be named in full.
+#' @param skip_invalid If \code{TRUE}, silently drop invalid properties
+#'   instead of raising an error.
+#' @return A \code{go_table_header_line} object (a named list).
+#'
+#' @concept trace objects
+#' @noMd
 #' @export
-go_table_header_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("table.header.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_table
-#' @export
+#' @examples
+#' go_table(
+#'   header = go_table_header(
+#'     line = go_table_header_line(color = "red")
+#'   )
+#' )
 go_table_header_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
   plotly_object("table.header.line", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_table
-#' @export
-go_table_hoverlabel <- function(
-    arg = NULL, ..., align = NULL, bgcolor = NULL, bordercolor = NULL,
-    font = NULL, namelength = NULL, showarrow = NULL, skip_invalid = FALSE
-) {
-  plotly_object("table.hoverlabel", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_table
-#' @export
-go_table_hoverlabel_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("table.hoverlabel.font", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_table
-#' @export
-go_table_legendgrouptitle <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
-) {
-  plotly_object("table.legendgrouptitle", arg, environment(), list(...), skip_invalid)
-}
-
-#' @rdname go_table
-#' @export
-go_table_legendgrouptitle_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
-) {
-  plotly_object("table.legendgrouptitle.font", arg, environment(), list(...), skip_invalid)
 }
 

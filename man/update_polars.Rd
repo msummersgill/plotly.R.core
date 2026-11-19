@@ -30,9 +30,9 @@ or a function that takes an object and returns \code{TRUE} or \code{FALSE}.}
 \item{row, col}{Only objects in this subplot grid row and/or column
 (figures created with \code{\link{make_subplots}()} only).}
 
-\item{patch}{A named list or \code{\link{go_layout_polar}()} object of property updates.}
+\item{patch}{A named list or \code{\link{go_polar}()} object of property updates.}
 
-\item{...}{Further named updates (names may use magic underscores).}
+\item{...}{Further named updates, by their full names.}
 
 \item{overwrite}{If \code{TRUE}, replace nested objects instead of merging.}
 
@@ -40,7 +40,7 @@ or a function that takes an object and returns \code{TRUE} or \code{FALSE}.}
 If it returns anything other than a list, the object is left unchanged.}
 }
 \value{
-\code{select_polars()} returns a named list of \code{\link{go_layout_polar}()} objects; the
+\code{select_polars()} returns a named list of polar objects; the
   others return the modified figure.
 }
 \description{
@@ -49,4 +49,7 @@ Work with all of a figure's layout polar objects (\code{polar}, \code{polar2}, \
 their properties like \code{\link{update_layout}()} does, and \code{for_each_polar()}
 replaces each one with the result of \code{fn}. The base object (e.g.
 \code{polar}) is always included, even if it has not been set yet.
+}
+\seealso{
+\code{\link{go_polar}()} for the properties of polar objects.
 }

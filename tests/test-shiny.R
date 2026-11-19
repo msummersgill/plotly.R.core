@@ -59,7 +59,10 @@ for (mj in list("local", TRUE)) {
     file.exists(system.file(dep$src$file, "tex-svg.js", package = dep$package))
   )
 }
-stopifnot(inherits(try(config(fig, mathjax = "web"), silent = TRUE), "try-error"))
+stopifnot(inherits(
+  try(config(fig, mathjax = "web"), silent = TRUE),
+  "try-error"
+))
 
 if (requireNamespace("shiny", quietly = TRUE)) {
   out <- plotlyOutput("plot", height = "300px")
