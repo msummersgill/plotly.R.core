@@ -97,151 +97,6 @@ go_funnelarea(
   visible = NULL,
   skip_invalid = FALSE
 )
-
-go_funnelarea_domain(
-  arg = NULL,
-  ...,
-  column = NULL,
-  row = NULL,
-  x = NULL,
-  y = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_insidetextfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_marker(
-  arg = NULL,
-  ...,
-  colors = NULL,
-  line = NULL,
-  pattern = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_marker_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_marker_pattern(
-  arg = NULL,
-  ...,
-  bgcolor = NULL,
-  fgcolor = NULL,
-  fgopacity = NULL,
-  fillmode = NULL,
-  path = NULL,
-  shape = NULL,
-  size = NULL,
-  solidity = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_textfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_title(
-  arg = NULL,
-  ...,
-  font = NULL,
-  position = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_funnelarea_title_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
 ```
 
 ## Arguments
@@ -252,15 +107,14 @@ go_funnelarea_title_font(
 
 - ...:
 
-  Further properties, including nested properties in "magic underscore"
-  form, e.g. `marker_size = 10` for `marker = list(size = 10)`. Property
-  values may be one-sided formulas, evaluated in `data` for `add_*()`
-  functions.
+  Not used: properties must be named in full.
 
 - data:
 
   A data frame in which formula properties (e.g. `x = ~col`,
-  `marker_size = ~col`) are evaluated. Default: the data given to
+  `marker = list(size = ~col)`,
+  `marker = go_scatter_marker(size = ~col)`) are evaluated. Default: the
+  data given to
   [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md).
   Only the evaluated values are added to the trace. A
   [`crosstalk::SharedData`](https://rdrr.io/pkg/crosstalk/man/SharedData.html)
@@ -290,7 +144,11 @@ go_funnelarea_title_font(
 
 - domain:
 
-  Named list or `go_funnelarea_domain()` object.
+  A
+  [`go_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_domain.md)
+  object or named list, with properties `column`, `row`, `x` and `y`
+  (see
+  [`go_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_domain.md)).
 
 - hoverinfo:
 
@@ -303,7 +161,11 @@ go_funnelarea_title_font(
 
 - hoverlabel:
 
-  Named list or `go_funnelarea_hoverlabel()` object.
+  A
+  [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md)
+  object or named list, with properties `align`, `bgcolor`,
+  `bordercolor`, `font`, `namelength` and `showarrow` (see
+  [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md)).
 
 - hovertemplate:
 
@@ -360,8 +222,12 @@ go_funnelarea_title_font(
 
 - insidetextfont:
 
-  Sets the font used for \`textinfo\` lying inside the sector. Named
-  list or `go_funnelarea_insidetextfont()` object.
+  Sets the font used for \`textinfo\` lying inside the sector. A
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)
+  object or named list, with properties `color`, `family`,
+  `lineposition`, `shadow`, `size`, `style`, `textcase`, `variant` and
+  `weight` (see
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)).
 
 - label0:
 
@@ -393,7 +259,10 @@ go_funnelarea_title_font(
 
 - legendgrouptitle:
 
-  Named list or `go_funnelarea_legendgrouptitle()` object.
+  A
+  [`go_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_legendgrouptitle.md)
+  object or named list, with properties `font` and `text` (see
+  [`go_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_legendgrouptitle.md)).
 
 - legendrank:
 
@@ -413,7 +282,11 @@ go_funnelarea_title_font(
 
 - marker:
 
-  Named list or `go_funnelarea_marker()` object.
+  A
+  [`go_funnelarea_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea_marker.md)
+  object or named list, with properties `colors`, `line` and `pattern`
+  (see
+  [`go_funnelarea_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea_marker.md)).
 
 - meta:
 
@@ -450,23 +323,20 @@ go_funnelarea_title_font(
 
 - text:
 
-  **`go_funnelarea()`**: Sets text elements associated with each sector.
-  If trace \`textinfo\` contains a "text" flag, these elements will be
-  seen on the chart. If trace \`hoverinfo\` contains a "text" flag and
-  "hovertext" is not set, these elements will be seen in the hover
-  labels. Data array: a vector, factor, Date/POSIXct vector, matrix or
-  list.
-
-  **`go_funnelarea_legendgrouptitle()`**: Sets the title of the legend
-  group. String.
-
-  **`go_funnelarea_title()`**: Sets the title of the chart. If it is
-  empty, no title is displayed. String.
+  Sets text elements associated with each sector. If trace \`textinfo\`
+  contains a "text" flag, these elements will be seen on the chart. If
+  trace \`hoverinfo\` contains a "text" flag and "hovertext" is not set,
+  these elements will be seen in the hover labels. Data array: a vector,
+  factor, Date/POSIXct vector, matrix or list.
 
 - textfont:
 
-  Sets the font used for \`textinfo\`. Named list or
-  `go_funnelarea_textfont()` object.
+  Sets the font used for \`textinfo\`. A
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)
+  object or named list, with properties `color`, `family`,
+  `lineposition`, `shadow`, `size`, `style`, `textcase`, `variant` and
+  `weight` (see
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)).
 
 - textinfo:
 
@@ -510,7 +380,11 @@ go_funnelarea_title_font(
 
 - title:
 
-  String (the title text), named list or `go_funnelarea_title()` object.
+  String (the title text), or a
+  [`go_funnelarea_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea_title.md)
+  object or named list, with properties `font`, `position` and `text`
+  (see
+  [`go_funnelarea_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea_title.md)).
 
 - uid:
 
@@ -549,13 +423,9 @@ go_funnelarea_title_font(
 
 - row:
 
-  **`add_funnelarea()`**: Subplot grid row (figures created with
+  Subplot grid row (figures created with
   [`make_subplots()`](https://msummersgill.github.io/plotly.R.core/reference/make_subplots.md)
   only). May be `"all"` or a vector to address several cells.
-
-  **`go_funnelarea_domain()`**: If there is a layout grid, use the
-  domain for this row in the grid for this funnelarea trace. Integer in
-  the interval \[0, Inf\].
 
 - col:
 
@@ -573,317 +443,23 @@ go_funnelarea_title_font(
   Optional named list, or graph object of the same type, to initialise
   properties from (constructors). Named arguments take precedence.
 
-- column:
-
-  If there is a layout grid, use the domain for this column in the grid
-  for this funnelarea trace. Integer in the interval \[0, Inf\].
-
-- x:
-
-  Sets the horizontal domain of this funnelarea trace (in plot
-  fraction). Vector or list of 2 element(s).
-
-- y:
-
-  Sets the vertical domain of this funnelarea trace (in plot fraction).
-  Vector or list of 2 element(s).
-
-- align:
-
-  Sets the horizontal alignment of the text content within hover label
-  box. Has an effect only if the hover label text spans two or more
-  lines One of `"left"`, `"right"`, `"auto"`, or a vector of these.
-
-- bgcolor:
-
-  **`go_funnelarea_hoverlabel()`**: Sets the background color of the
-  hover labels for this trace Color: a CSS color string or R color name,
-  or a vector of these.
-
-  **`go_funnelarea_marker_pattern()`**: When there is no colorscale sets
-  the color of background pattern fill. Defaults to a \`marker.color\`
-  background when \`fillmode\` is "overlay". Otherwise, defaults to a
-  transparent background. Color: a CSS color string or R color name, or
-  a vector of these.
-
-- bordercolor:
-
-  Sets the border color of the hover labels for this trace. Color: a CSS
-  color string or R color name, or a vector of these.
-
-- font:
-
-  **`go_funnelarea_hoverlabel()`**: Sets the font used in hover labels.
-  Named list or `go_funnelarea_hoverlabel_font()` object.
-
-  **`go_funnelarea_legendgrouptitle()`**: Sets this legend group's title
-  font. Named list or `go_funnelarea_legendgrouptitle_font()` object.
-
-  **`go_funnelarea_title()`**: Sets the font used for \`title\`. Named
-  list or `go_funnelarea_title_font()` object.
-
-- namelength:
-
-  Sets the default length (in number of characters) of the trace name in
-  the hover labels for all traces. -1 shows the whole name regardless of
-  length. 0-3 shows the first 0-3 characters, and an integer \>3 will
-  show the whole name if it is less than that many characters, but if it
-  is longer, will truncate to \`namelength - 3\` characters and add an
-  ellipsis. Integer in the interval \[-1, Inf\], or a vector of these.
-
-- showarrow:
-
-  Sets whether or not to show the hover label arrow/triangle pointing to
-  the data point. Logical.
-
-- color:
-
-  **`go_funnelarea_hoverlabel_font()`, `go_funnelarea_insidetextfont()`,
-  `go_funnelarea_textfont()`, `go_funnelarea_title_font()`**: Color: a
-  CSS color string or R color name, or a vector of these.
-
-  **`go_funnelarea_legendgrouptitle_font()`**: Color: a CSS color string
-  or R color name.
-
-  **`go_funnelarea_marker_line()`**: Sets the color of the line
-  enclosing each sector. Defaults to the \`paper_bgcolor\` value. Color:
-  a CSS color string or R color name, or a vector of these.
-
-- family:
-
-  **`go_funnelarea_hoverlabel_font()`, `go_funnelarea_insidetextfont()`,
-  `go_funnelarea_textfont()`, `go_funnelarea_title_font()`**: HTML font
-  family - the typeface that will be applied by the web browser. The web
-  browser can only apply a font if it is available on the system where
-  it runs. Provide multiple font families, separated by commas, to
-  indicate the order in which to apply fonts if they aren't available.
-  String, or a vector of these.
-
-  **`go_funnelarea_legendgrouptitle_font()`**: HTML font family - the
-  typeface that will be applied by the web browser. The web browser can
-  only apply a font if it is available on the system where it runs.
-  Provide multiple font families, separated by commas, to indicate the
-  order in which to apply fonts if they aren't available. String.
-
-- lineposition:
-
-  **`go_funnelarea_hoverlabel_font()`, `go_funnelarea_insidetextfont()`,
-  `go_funnelarea_textfont()`, `go_funnelarea_title_font()`**: Sets the
-  kind of decoration line(s) with text, such as an "under", "over" or
-  "through" as well as combinations e.g. "under+over", etc. Any
-  combination of `"under"`, `"over"`, `"through"` joined with `"+"`, or
-  one of `"none"`, or a vector of these.
-
-  **`go_funnelarea_legendgrouptitle_font()`**: Sets the kind of
-  decoration line(s) with text, such as an "under", "over" or "through"
-  as well as combinations e.g. "under+over", etc. Any combination of
-  `"under"`, `"over"`, `"through"` joined with `"+"`, or one of
-  `"none"`.
-
-- shadow:
-
-  **`go_funnelarea_hoverlabel_font()`, `go_funnelarea_insidetextfont()`,
-  `go_funnelarea_textfont()`, `go_funnelarea_title_font()`**: Sets the
-  shape and color of the shadow behind text. "auto" places minimal
-  shadow and applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.
-
-  **`go_funnelarea_legendgrouptitle_font()`**: Sets the shape and color
-  of the shadow behind text. "auto" places minimal shadow and applies
-  contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.
-
-- size:
-
-  **`go_funnelarea_hoverlabel_font()`, `go_funnelarea_insidetextfont()`,
-  `go_funnelarea_textfont()`, `go_funnelarea_title_font()`**: Number in
-  the interval \[1, Inf\], or a vector of these.
-
-  **`go_funnelarea_legendgrouptitle_font()`**: Number in the interval
-  \[1, Inf\].
-
-  **`go_funnelarea_marker_pattern()`**: Sets the size of unit squares of
-  the pattern fill in pixels, which corresponds to the interval of
-  repetition of the pattern. Number in the interval \[0, Inf\], or a
-  vector of these.
-
-- style:
-
-  **`go_funnelarea_hoverlabel_font()`, `go_funnelarea_insidetextfont()`,
-  `go_funnelarea_textfont()`, `go_funnelarea_title_font()`**: Sets
-  whether a font should be styled with a normal or italic face from its
-  family. One of `"normal"`, `"italic"`, or a vector of these.
-
-  **`go_funnelarea_legendgrouptitle_font()`**: Sets whether a font
-  should be styled with a normal or italic face from its family. One of
-  `"normal"`, `"italic"`.
-
-- textcase:
-
-  **`go_funnelarea_hoverlabel_font()`, `go_funnelarea_insidetextfont()`,
-  `go_funnelarea_textfont()`, `go_funnelarea_title_font()`**: Sets
-  capitalization of text. It can be used to make text appear in
-  all-uppercase or all-lowercase, or with each word capitalized. One of
-  `"normal"`, `"word caps"`, `"upper"`, `"lower"`, or a vector of these.
-
-  **`go_funnelarea_legendgrouptitle_font()`**: Sets capitalization of
-  text. It can be used to make text appear in all-uppercase or
-  all-lowercase, or with each word capitalized. One of `"normal"`,
-  `"word caps"`, `"upper"`, `"lower"`.
-
-- variant:
-
-  **`go_funnelarea_hoverlabel_font()`, `go_funnelarea_insidetextfont()`,
-  `go_funnelarea_textfont()`, `go_funnelarea_title_font()`**: Sets the
-  variant of the font. One of `"normal"`, `"small-caps"`,
-  `"all-small-caps"`, `"all-petite-caps"`, `"petite-caps"`, `"unicase"`,
-  or a vector of these.
-
-  **`go_funnelarea_legendgrouptitle_font()`**: Sets the variant of the
-  font. One of `"normal"`, `"small-caps"`, `"all-small-caps"`,
-  `"all-petite-caps"`, `"petite-caps"`, `"unicase"`.
-
-- weight:
-
-  **`go_funnelarea_hoverlabel_font()`, `go_funnelarea_insidetextfont()`,
-  `go_funnelarea_textfont()`, `go_funnelarea_title_font()`**: Sets the
-  weight (or boldness) of the font. Integer in the interval \[1, 1000\],
-  or a vector of these.
-
-  **`go_funnelarea_legendgrouptitle_font()`**: Sets the weight (or
-  boldness) of the font. Integer in the interval \[1, 1000\].
-
-- colors:
-
-  Sets the color of each sector. If not specified, the default trace
-  color set is used to pick the sector colors. Data array: a vector,
-  factor, Date/POSIXct vector, matrix or list.
-
-- line:
-
-  Named list or `go_funnelarea_marker_line()` object.
-
-- pattern:
-
-  Sets the pattern within the marker. Named list or
-  `go_funnelarea_marker_pattern()` object.
-
-- width:
-
-  Sets the width (in px) of the line enclosing each sector. Number in
-  the interval \[0, Inf\], or a vector of these.
-
-- fgcolor:
-
-  When there is no colorscale sets the color of foreground pattern fill.
-  Defaults to a \`marker.color\` background when \`fillmode\` is
-  "replace". Otherwise, defaults to dark grey or white to increase
-  contrast with the \`bgcolor\`. Color: a CSS color string or R color
-  name, or a vector of these.
-
-- fgopacity:
-
-  Sets the opacity of the foreground pattern fill. Defaults to a 0.5
-  when \`fillmode\` is "overlay". Otherwise, defaults to 1. Number in
-  the interval \[0, 1\].
-
-- fillmode:
-
-  Determines whether \`marker.color\` should be used as a default to
-  \`bgcolor\` or a \`fgcolor\`. One of `"replace"`, `"overlay"`.
-
-- path:
-
-  Sets a custom path for pattern fill. Use with no \`shape\` or
-  \`solidity\`, provide an SVG path string for the regions of the square
-  from (0,0) to (\`size\`,\`size\`) to color. String, or a vector of
-  these.
-
-- shape:
-
-  Sets the shape of the pattern fill. By default, no pattern is used for
-  filling the area. One of `""`, `"/"`, `"\\"`, `"x"`, `"-"`, `"|"`,
-  `"+"`, `"."`, or a vector of these.
-
-- solidity:
-
-  Sets the solidity of the pattern fill. Solidity is roughly the
-  fraction of the area filled by the pattern. Solidity of 0 shows only
-  the background color without pattern and solidty of 1 shows only the
-  foreground color without pattern. Number in the interval \[0, 1\], or
-  a vector of these.
-
-- position:
-
-  Specifies the location of the \`title\`. One of `"top left"`,
-  `"top center"`, `"top right"`.
-
 ## Value
 
-Each `go_*()` function returns a graph object of the same class as its
-name; `add_*()` functions return the modified figure.
+`go_*()` functions return a graph object; `add_*()` functions return the
+modified figure.
 
 ## Details
 
-`go_funnelarea()` and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-[`plotly_obj-modify()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
-`add_funnelarea()` creates an object and adds it to a figure.
+`go_funnelarea()` creates a validated graph object (a named list).
+`add_funnelarea()` creates one and adds it to a figure.
 
-Nested objects documented here:
-
-- `go_funnelarea_domain()`:
-
-  `funnelarea.domain`
-
-- `go_funnelarea_hoverlabel()`:
-
-  `funnelarea.hoverlabel`
-
-- `go_funnelarea_hoverlabel_font()`:
-
-  `funnelarea.hoverlabel.font`: Sets the font used in hover labels.
-
-- `go_funnelarea_insidetextfont()`:
-
-  `funnelarea.insidetextfont`: Sets the font used for \`textinfo\` lying
-  inside the sector.
-
-- `go_funnelarea_legendgrouptitle()`:
-
-  `funnelarea.legendgrouptitle`
-
-- `go_funnelarea_legendgrouptitle_font()`:
-
-  `funnelarea.legendgrouptitle.font`: Sets this legend group's title
-  font.
-
-- `go_funnelarea_marker()`:
-
-  `funnelarea.marker`
-
-- `go_funnelarea_marker_line()`:
-
-  `funnelarea.marker.line`
-
-- `go_funnelarea_marker_pattern()`:
-
-  `funnelarea.marker.pattern`: Sets the pattern within the marker.
-
-- `go_funnelarea_textfont()`:
-
-  `funnelarea.textfont`: Sets the font used for \`textinfo\`.
-
-- `go_funnelarea_title()`:
-
-  `funnelarea.title`
-
-- `go_funnelarea_title_font()`:
-
-  `funnelarea.title.font`: Sets the font used for \`title\`.
+Nested objects are given as named lists or with their constructors,
+which are linked from the arguments below. Every property is checked
+against the plotly.js schema when the object is created or modified (see
+[`plotly_obj-modify`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
+One-sided formulas (`~col`) are evaluated in the data, and then checked,
+when the trace is added with `add_<trace>()` or
+[`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md).
 
 ## See also
 
@@ -893,10 +469,8 @@ Nested objects documented here:
 ## Examples
 
 ``` r
-go_funnelarea()
-#> <go_funnelarea>
-#> {
-#>   "type": "funnelarea"
-#> }
-#> 
+d <- as.data.frame(table(cylinders = mtcars$cyl))
+d |>
+  go_figure() |>
+  add_funnelarea(labels = ~cylinders, values = ~Freq)
 ```

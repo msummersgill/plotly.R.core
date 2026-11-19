@@ -61,11 +61,11 @@ for_each_annotation(
 - patch:
 
   A named list of property updates (see
-  [`go_layout_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_annotation.md)).
+  [`add_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/add_annotation.md)).
 
 - ...:
 
-  Further named updates (names may use magic underscores).
+  Further named updates, by their full names.
 
 - overwrite:
 
@@ -78,10 +78,9 @@ for_each_annotation(
 
 ## Value
 
-`select_annotations()` returns a list of
-[`go_layout_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_annotation.md)
-objects; the others return the modified figure.
+`select_annotations()` returns a list of annotation objects; the others
+return the modified figure.
 
 ## See also
 
-[`add_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_annotation.md)
+[`add_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/add_annotation.md)

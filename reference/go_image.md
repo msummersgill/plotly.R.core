@@ -89,56 +89,6 @@ go_image(
   zsmooth = NULL,
   skip_invalid = FALSE
 )
-
-go_image_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  skip_invalid = FALSE
-)
-
-go_image_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_image_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_image_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
 ```
 
 ## Arguments
@@ -149,15 +99,14 @@ go_image_legendgrouptitle_font(
 
 - ...:
 
-  Further properties, including nested properties in "magic underscore"
-  form, e.g. `marker_size = 10` for `marker = list(size = 10)`. Property
-  values may be one-sided formulas, evaluated in `data` for `add_*()`
-  functions.
+  Not used: properties must be named in full.
 
 - data:
 
   A data frame in which formula properties (e.g. `x = ~col`,
-  `marker_size = ~col`) are evaluated. Default: the data given to
+  `marker = list(size = ~col)`,
+  `marker = go_scatter_marker(size = ~col)`) are evaluated. Default: the
+  data given to
   [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md).
   Only the evaluated values are added to the trace. A
   [`crosstalk::SharedData`](https://rdrr.io/pkg/crosstalk/man/SharedData.html)
@@ -197,7 +146,11 @@ go_image_legendgrouptitle_font(
 
 - hoverlabel:
 
-  Named list or `go_image_hoverlabel()` object.
+  A
+  [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md)
+  object or named list, with properties `align`, `bgcolor`,
+  `bordercolor`, `font`, `namelength` and `showarrow` (see
+  [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md)).
 
 - hovertemplate:
 
@@ -258,7 +211,10 @@ go_image_legendgrouptitle_font(
 
 - legendgrouptitle:
 
-  Named list or `go_image_legendgrouptitle()` object.
+  A
+  [`go_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_legendgrouptitle.md)
+  object or named list, with properties `font` and `text` (see
+  [`go_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_legendgrouptitle.md)).
 
 - legendrank:
 
@@ -306,11 +262,8 @@ go_image_legendgrouptitle_font(
 
 - text:
 
-  **`go_image()`**: Sets the text elements associated with each z value.
-  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-
-  **`go_image_legendgrouptitle()`**: Sets the title of the legend group.
-  String.
+  Sets the text elements associated with each z value. Data array: a
+  vector, factor, Date/POSIXct vector, matrix or list.
 
 - uid:
 
@@ -433,171 +386,23 @@ go_image_legendgrouptitle_font(
   Optional named list, or graph object of the same type, to initialise
   properties from (constructors). Named arguments take precedence.
 
-- align:
-
-  Sets the horizontal alignment of the text content within hover label
-  box. Has an effect only if the hover label text spans two or more
-  lines One of `"left"`, `"right"`, `"auto"`, or a vector of these.
-
-- bgcolor:
-
-  Sets the background color of the hover labels for this trace Color: a
-  CSS color string or R color name, or a vector of these.
-
-- bordercolor:
-
-  Sets the border color of the hover labels for this trace. Color: a CSS
-  color string or R color name, or a vector of these.
-
-- font:
-
-  **`go_image_hoverlabel()`**: Sets the font used in hover labels. Named
-  list or `go_image_hoverlabel_font()` object.
-
-  **`go_image_legendgrouptitle()`**: Sets this legend group's title
-  font. Named list or `go_image_legendgrouptitle_font()` object.
-
-- namelength:
-
-  Sets the default length (in number of characters) of the trace name in
-  the hover labels for all traces. -1 shows the whole name regardless of
-  length. 0-3 shows the first 0-3 characters, and an integer \>3 will
-  show the whole name if it is less than that many characters, but if it
-  is longer, will truncate to \`namelength - 3\` characters and add an
-  ellipsis. Integer in the interval \[-1, Inf\], or a vector of these.
-
-- showarrow:
-
-  Sets whether or not to show the hover label arrow/triangle pointing to
-  the data point. Logical.
-
-- color:
-
-  **`go_image_hoverlabel_font()`**: Color: a CSS color string or R color
-  name, or a vector of these.
-
-  **`go_image_legendgrouptitle_font()`**: Color: a CSS color string or R
-  color name.
-
-- family:
-
-  **`go_image_hoverlabel_font()`**: HTML font family - the typeface that
-  will be applied by the web browser. The web browser can only apply a
-  font if it is available on the system where it runs. Provide multiple
-  font families, separated by commas, to indicate the order in which to
-  apply fonts if they aren't available. String, or a vector of these.
-
-  **`go_image_legendgrouptitle_font()`**: HTML font family - the
-  typeface that will be applied by the web browser. The web browser can
-  only apply a font if it is available on the system where it runs.
-  Provide multiple font families, separated by commas, to indicate the
-  order in which to apply fonts if they aren't available. String.
-
-- lineposition:
-
-  **`go_image_hoverlabel_font()`**: Sets the kind of decoration line(s)
-  with text, such as an "under", "over" or "through" as well as
-  combinations e.g. "under+over", etc. Any combination of `"under"`,
-  `"over"`, `"through"` joined with `"+"`, or one of `"none"`, or a
-  vector of these.
-
-  **`go_image_legendgrouptitle_font()`**: Sets the kind of decoration
-  line(s) with text, such as an "under", "over" or "through" as well as
-  combinations e.g. "under+over", etc. Any combination of `"under"`,
-  `"over"`, `"through"` joined with `"+"`, or one of `"none"`.
-
-- shadow:
-
-  **`go_image_hoverlabel_font()`**: Sets the shape and color of the
-  shadow behind text. "auto" places minimal shadow and applies contrast
-  text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.
-
-  **`go_image_legendgrouptitle_font()`**: Sets the shape and color of
-  the shadow behind text. "auto" places minimal shadow and applies
-  contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.
-
-- size:
-
-  **`go_image_hoverlabel_font()`**: Number in the interval \[1, Inf\],
-  or a vector of these.
-
-  **`go_image_legendgrouptitle_font()`**: Number in the interval \[1,
-  Inf\].
-
-- style:
-
-  **`go_image_hoverlabel_font()`**: Sets whether a font should be styled
-  with a normal or italic face from its family. One of `"normal"`,
-  `"italic"`, or a vector of these.
-
-  **`go_image_legendgrouptitle_font()`**: Sets whether a font should be
-  styled with a normal or italic face from its family. One of
-  `"normal"`, `"italic"`.
-
-- textcase:
-
-  **`go_image_hoverlabel_font()`**: Sets capitalization of text. It can
-  be used to make text appear in all-uppercase or all-lowercase, or with
-  each word capitalized. One of `"normal"`, `"word caps"`, `"upper"`,
-  `"lower"`, or a vector of these.
-
-  **`go_image_legendgrouptitle_font()`**: Sets capitalization of text.
-  It can be used to make text appear in all-uppercase or all-lowercase,
-  or with each word capitalized. One of `"normal"`, `"word caps"`,
-  `"upper"`, `"lower"`.
-
-- variant:
-
-  **`go_image_hoverlabel_font()`**: Sets the variant of the font. One of
-  `"normal"`, `"small-caps"`, `"all-small-caps"`, `"all-petite-caps"`,
-  `"petite-caps"`, `"unicase"`, or a vector of these.
-
-  **`go_image_legendgrouptitle_font()`**: Sets the variant of the font.
-  One of `"normal"`, `"small-caps"`, `"all-small-caps"`,
-  `"all-petite-caps"`, `"petite-caps"`, `"unicase"`.
-
-- weight:
-
-  **`go_image_hoverlabel_font()`**: Sets the weight (or boldness) of the
-  font. Integer in the interval \[1, 1000\], or a vector of these.
-
-  **`go_image_legendgrouptitle_font()`**: Sets the weight (or boldness)
-  of the font. Integer in the interval \[1, 1000\].
-
 ## Value
 
-Each `go_*()` function returns a graph object of the same class as its
-name; `add_*()` functions return the modified figure.
+`go_*()` functions return a graph object; `add_*()` functions return the
+modified figure.
 
 ## Details
 
-`go_image()` and the nested object constructors below create validated
-graph objects (named lists). Every property is checked against the
-plotly.js schema when an object is created or modified (see
-[`plotly_obj-modify()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
-`add_image()` creates an object and adds it to a figure.
+`go_image()` creates a validated graph object (a named list).
+`add_image()` creates one and adds it to a figure.
 
-Nested objects documented here:
-
-- `go_image_hoverlabel()`:
-
-  `image.hoverlabel`
-
-- `go_image_hoverlabel_font()`:
-
-  `image.hoverlabel.font`: Sets the font used in hover labels.
-
-- `go_image_legendgrouptitle()`:
-
-  `image.legendgrouptitle`
-
-- `go_image_legendgrouptitle_font()`:
-
-  `image.legendgrouptitle.font`: Sets this legend group's title font.
+Nested objects are given as named lists or with their constructors,
+which are linked from the arguments below. Every property is checked
+against the plotly.js schema when the object is created or modified (see
+[`plotly_obj-modify`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
+One-sided formulas (`~col`) are evaluated in the data, and then checked,
+when the trace is added with `add_<trace>()` or
+[`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md).
 
 ## See also
 
@@ -607,10 +412,8 @@ Nested objects documented here:
 ## Examples
 
 ``` r
-go_image()
-#> <go_image>
-#> {
-#>   "type": "image"
-#> }
-#> 
+rgb <- col2rgb(terrain.colors(100)[cut(volcano, 100)])
+z <- array(t(rgb), c(dim(volcano), 3))
+go_figure() |>
+  add_image(z = z)
 ```

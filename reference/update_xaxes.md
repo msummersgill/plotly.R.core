@@ -48,12 +48,12 @@ for_each_xaxis(fig, fn, selector = NULL, row = NULL, col = NULL)
 - patch:
 
   A named list or
-  [`go_layout_xaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md)
+  [`go_xaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis.md)
   object of property updates.
 
 - ...:
 
-  Further named updates (names may use magic underscores).
+  Further named updates, by their full names.
 
 - overwrite:
 
@@ -66,6 +66,10 @@ for_each_xaxis(fig, fn, selector = NULL, row = NULL, col = NULL)
 
 ## Value
 
-`select_xaxes()` returns a named list of
-[`go_layout_xaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md)
-objects; the others return the modified figure.
+`select_xaxes()` returns a named list of xaxis objects; the others
+return the modified figure.
+
+## See also
+
+[`go_xaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis.md)
+for the properties of xaxis objects.

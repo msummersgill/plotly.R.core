@@ -107,81 +107,6 @@ go_ohlc(
   zorder = NULL,
   skip_invalid = FALSE
 )
-
-go_ohlc_decreasing(arg = NULL, ..., line = NULL, skip_invalid = FALSE)
-
-go_ohlc_decreasing_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  dash = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_ohlc_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  split = NULL,
-  skip_invalid = FALSE
-)
-
-go_ohlc_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_ohlc_increasing(arg = NULL, ..., line = NULL, skip_invalid = FALSE)
-
-go_ohlc_increasing_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  dash = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_ohlc_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_ohlc_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_ohlc_line(arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE)
 ```
 
 ## Arguments
@@ -192,15 +117,14 @@ go_ohlc_line(arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE)
 
 - ...:
 
-  Further properties, including nested properties in "magic underscore"
-  form, e.g. `marker_size = 10` for `marker = list(size = 10)`. Property
-  values may be one-sided formulas, evaluated in `data` for `add_*()`
-  functions.
+  Not used: properties must be named in full.
 
 - data:
 
   A data frame in which formula properties (e.g. `x = ~col`,
-  `marker_size = ~col`) are evaluated. Default: the data given to
+  `marker = list(size = ~col)`,
+  `marker = go_scatter_marker(size = ~col)`) are evaluated. Default: the
+  data given to
   [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md).
   Only the evaluated values are added to the trace. A
   [`crosstalk::SharedData`](https://rdrr.io/pkg/crosstalk/man/SharedData.html)
@@ -221,7 +145,10 @@ go_ohlc_line(arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE)
 
 - decreasing:
 
-  Named list or `go_ohlc_decreasing()` object.
+  A
+  [`go_ohlc_decreasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc_decreasing.md)
+  object or named list, with properties `line` (see
+  [`go_ohlc_decreasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc_decreasing.md)).
 
 - high:
 
@@ -238,7 +165,11 @@ go_ohlc_line(arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE)
 
 - hoverlabel:
 
-  Named list or `go_ohlc_hoverlabel()` object.
+  A
+  [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md)
+  object or named list, with properties `align`, `bgcolor`,
+  `bordercolor`, `font`, `namelength`, `showarrow` and `split` (see
+  [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md)).
 
 - hovertemplate:
 
@@ -290,7 +221,10 @@ go_ohlc_line(arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE)
 
 - increasing:
 
-  Named list or `go_ohlc_increasing()` object.
+  A
+  [`go_ohlc_increasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc_increasing.md)
+  object or named list, with properties `line` (see
+  [`go_ohlc_increasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc_increasing.md)).
 
 - legend:
 
@@ -308,7 +242,10 @@ go_ohlc_line(arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE)
 
 - legendgrouptitle:
 
-  Named list or `go_ohlc_legendgrouptitle()` object.
+  A
+  [`go_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_legendgrouptitle.md)
+  object or named list, with properties `font` and `text` (see
+  [`go_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_legendgrouptitle.md)).
 
 - legendrank:
 
@@ -328,13 +265,10 @@ go_ohlc_line(arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE)
 
 - line:
 
-  **`go_ohlc()`**: Named list or `go_ohlc_line()` object.
-
-  **`go_ohlc_decreasing()`**: Named list or `go_ohlc_decreasing_line()`
-  object.
-
-  **`go_ohlc_increasing()`**: Named list or `go_ohlc_increasing_line()`
-  object.
+  A
+  [`go_ohlc_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc_line.md)
+  object or named list, with properties `dash` and `width` (see
+  [`go_ohlc_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc_line.md)).
 
 - low:
 
@@ -384,13 +318,10 @@ go_ohlc_line(arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE)
 
 - text:
 
-  **`go_ohlc()`**: Sets hover text elements associated with each sample
-  point. If a single string, the same string appears over all the data
-  points. If an array of string, the items are mapped in order to this
-  trace's sample points. String, or a vector of these.
-
-  **`go_ohlc_legendgrouptitle()`**: Sets the title of the legend group.
-  String.
+  Sets hover text elements associated with each sample point. If a
+  single string, the same string appears over all the data points. If an
+  array of string, the items are mapped in order to this trace's sample
+  points. String, or a vector of these.
 
 - tickwidth:
 
@@ -532,228 +463,23 @@ go_ohlc_line(arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE)
   Optional named list, or graph object of the same type, to initialise
   properties from (constructors). Named arguments take precedence.
 
-- color:
-
-  **`go_ohlc_decreasing_line()`, `go_ohlc_increasing_line()`**: Sets the
-  line color. Color: a CSS color string or R color name.
-
-  **`go_ohlc_hoverlabel_font()`**: Color: a CSS color string or R color
-  name, or a vector of these.
-
-  **`go_ohlc_legendgrouptitle_font()`**: Color: a CSS color string or R
-  color name.
-
-- dash:
-
-  **`go_ohlc_decreasing_line()`, `go_ohlc_increasing_line()`**: Sets the
-  dash style of lines. Set to a dash type string ("solid", "dot",
-  "dash", "longdash", "dashdot", or "longdashdot") or a dash length list
-  in px (eg "5px,10px,2px,2px"). One of `"solid"`, `"dot"`, `"dash"`,
-  `"longdash"`, `"dashdot"`, `"longdashdot"`, or a string matching
-  `"^\\d+(\\.\\d+)?(px|%)?((,|\\s)\\s*\\d+(\\.\\d+)?(px|%)?)*$"`.
-
-  **`go_ohlc_line()`**: Sets the dash style of lines. Set to a dash type
-  string ("solid", "dot", "dash", "longdash", "dashdot", or
-  "longdashdot") or a dash length list in px (eg "5px,10px,2px,2px").
-  Note that this style setting can also be set per direction via
-  \`increasing.line.dash\` and \`decreasing.line.dash\`. One of
-  `"solid"`, `"dot"`, `"dash"`, `"longdash"`, `"dashdot"`,
-  `"longdashdot"`, or a string matching
-  `"^\\d+(\\.\\d+)?(px|%)?((,|\\s)\\s*\\d+(\\.\\d+)?(px|%)?)*$"`.
-
-- width:
-
-  **`go_ohlc_decreasing_line()`, `go_ohlc_increasing_line()`**: Sets the
-  line width (in px). Number in the interval \[0, Inf\].
-
-  **`go_ohlc_line()`**: Sets the line width (in px). Note that this
-  style setting can also be set per direction via
-  \`increasing.line.width\` and \`decreasing.line.width\`. Number in the
-  interval \[0, Inf\].
-
-- align:
-
-  Sets the horizontal alignment of the text content within hover label
-  box. Has an effect only if the hover label text spans two or more
-  lines One of `"left"`, `"right"`, `"auto"`, or a vector of these.
-
-- bgcolor:
-
-  Sets the background color of the hover labels for this trace Color: a
-  CSS color string or R color name, or a vector of these.
-
-- bordercolor:
-
-  Sets the border color of the hover labels for this trace. Color: a CSS
-  color string or R color name, or a vector of these.
-
-- font:
-
-  **`go_ohlc_hoverlabel()`**: Sets the font used in hover labels. Named
-  list or `go_ohlc_hoverlabel_font()` object.
-
-  **`go_ohlc_legendgrouptitle()`**: Sets this legend group's title font.
-  Named list or `go_ohlc_legendgrouptitle_font()` object.
-
-- namelength:
-
-  Sets the default length (in number of characters) of the trace name in
-  the hover labels for all traces. -1 shows the whole name regardless of
-  length. 0-3 shows the first 0-3 characters, and an integer \>3 will
-  show the whole name if it is less than that many characters, but if it
-  is longer, will truncate to \`namelength - 3\` characters and add an
-  ellipsis. Integer in the interval \[-1, Inf\], or a vector of these.
-
-- showarrow:
-
-  Sets whether or not to show the hover label arrow/triangle pointing to
-  the data point. Logical.
-
-- split:
-
-  Show hover information (open, close, high, low) in separate labels,
-  rather than a single unified label. Default: FALSE. When set to TRUE,
-  \`hovertemplate\` is ignored. Logical.
-
-- family:
-
-  **`go_ohlc_hoverlabel_font()`**: HTML font family - the typeface that
-  will be applied by the web browser. The web browser can only apply a
-  font if it is available on the system where it runs. Provide multiple
-  font families, separated by commas, to indicate the order in which to
-  apply fonts if they aren't available. String, or a vector of these.
-
-  **`go_ohlc_legendgrouptitle_font()`**: HTML font family - the typeface
-  that will be applied by the web browser. The web browser can only
-  apply a font if it is available on the system where it runs. Provide
-  multiple font families, separated by commas, to indicate the order in
-  which to apply fonts if they aren't available. String.
-
-- lineposition:
-
-  **`go_ohlc_hoverlabel_font()`**: Sets the kind of decoration line(s)
-  with text, such as an "under", "over" or "through" as well as
-  combinations e.g. "under+over", etc. Any combination of `"under"`,
-  `"over"`, `"through"` joined with `"+"`, or one of `"none"`, or a
-  vector of these.
-
-  **`go_ohlc_legendgrouptitle_font()`**: Sets the kind of decoration
-  line(s) with text, such as an "under", "over" or "through" as well as
-  combinations e.g. "under+over", etc. Any combination of `"under"`,
-  `"over"`, `"through"` joined with `"+"`, or one of `"none"`.
-
-- shadow:
-
-  **`go_ohlc_hoverlabel_font()`**: Sets the shape and color of the
-  shadow behind text. "auto" places minimal shadow and applies contrast
-  text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.
-
-  **`go_ohlc_legendgrouptitle_font()`**: Sets the shape and color of the
-  shadow behind text. "auto" places minimal shadow and applies contrast
-  text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.
-
-- size:
-
-  **`go_ohlc_hoverlabel_font()`**: Number in the interval \[1, Inf\], or
-  a vector of these.
-
-  **`go_ohlc_legendgrouptitle_font()`**: Number in the interval \[1,
-  Inf\].
-
-- style:
-
-  **`go_ohlc_hoverlabel_font()`**: Sets whether a font should be styled
-  with a normal or italic face from its family. One of `"normal"`,
-  `"italic"`, or a vector of these.
-
-  **`go_ohlc_legendgrouptitle_font()`**: Sets whether a font should be
-  styled with a normal or italic face from its family. One of
-  `"normal"`, `"italic"`.
-
-- textcase:
-
-  **`go_ohlc_hoverlabel_font()`**: Sets capitalization of text. It can
-  be used to make text appear in all-uppercase or all-lowercase, or with
-  each word capitalized. One of `"normal"`, `"word caps"`, `"upper"`,
-  `"lower"`, or a vector of these.
-
-  **`go_ohlc_legendgrouptitle_font()`**: Sets capitalization of text. It
-  can be used to make text appear in all-uppercase or all-lowercase, or
-  with each word capitalized. One of `"normal"`, `"word caps"`,
-  `"upper"`, `"lower"`.
-
-- variant:
-
-  **`go_ohlc_hoverlabel_font()`**: Sets the variant of the font. One of
-  `"normal"`, `"small-caps"`, `"all-small-caps"`, `"all-petite-caps"`,
-  `"petite-caps"`, `"unicase"`, or a vector of these.
-
-  **`go_ohlc_legendgrouptitle_font()`**: Sets the variant of the font.
-  One of `"normal"`, `"small-caps"`, `"all-small-caps"`,
-  `"all-petite-caps"`, `"petite-caps"`, `"unicase"`.
-
-- weight:
-
-  **`go_ohlc_hoverlabel_font()`**: Sets the weight (or boldness) of the
-  font. Integer in the interval \[1, 1000\], or a vector of these.
-
-  **`go_ohlc_legendgrouptitle_font()`**: Sets the weight (or boldness)
-  of the font. Integer in the interval \[1, 1000\].
-
 ## Value
 
-Each `go_*()` function returns a graph object of the same class as its
-name; `add_*()` functions return the modified figure.
+`go_*()` functions return a graph object; `add_*()` functions return the
+modified figure.
 
 ## Details
 
-`go_ohlc()` and the nested object constructors below create validated
-graph objects (named lists). Every property is checked against the
-plotly.js schema when an object is created or modified (see
-[`plotly_obj-modify()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
-`add_ohlc()` creates an object and adds it to a figure.
+`go_ohlc()` creates a validated graph object (a named list).
+`add_ohlc()` creates one and adds it to a figure.
 
-Nested objects documented here:
-
-- `go_ohlc_decreasing()`:
-
-  `ohlc.decreasing`
-
-- `go_ohlc_decreasing_line()`:
-
-  `ohlc.decreasing.line`
-
-- `go_ohlc_hoverlabel()`:
-
-  `ohlc.hoverlabel`
-
-- `go_ohlc_hoverlabel_font()`:
-
-  `ohlc.hoverlabel.font`: Sets the font used in hover labels.
-
-- `go_ohlc_increasing()`:
-
-  `ohlc.increasing`
-
-- `go_ohlc_increasing_line()`:
-
-  `ohlc.increasing.line`
-
-- `go_ohlc_legendgrouptitle()`:
-
-  `ohlc.legendgrouptitle`
-
-- `go_ohlc_legendgrouptitle_font()`:
-
-  `ohlc.legendgrouptitle.font`: Sets this legend group's title font.
-
-- `go_ohlc_line()`:
-
-  `ohlc.line`
+Nested objects are given as named lists or with their constructors,
+which are linked from the arguments below. Every property is checked
+against the plotly.js schema when the object is created or modified (see
+[`plotly_obj-modify`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
+One-sided formulas (`~col`) are evaluated in the data, and then checked,
+when the trace is added with `add_<trace>()` or
+[`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md).
 
 ## See also
 
@@ -763,10 +489,17 @@ Nested objects documented here:
 ## Examples
 
 ``` r
-go_ohlc()
-#> <go_ohlc>
-#> {
-#>   "type": "ohlc"
-#> }
-#> 
+d <- data.frame(day = 1:30, close = EuStockMarkets[1:30, "DAX"])
+d$open <- c(d$close[1], head(d$close, -1))
+d$high <- pmax(d$open, d$close) + 5
+d$low <- pmin(d$open, d$close) - 5
+d |>
+  go_figure() |>
+  add_ohlc(
+    x = ~day,
+    open = ~open,
+    high = ~high,
+    low = ~low,
+    close = ~close
+  )
 ```

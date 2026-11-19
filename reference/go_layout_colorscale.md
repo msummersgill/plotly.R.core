@@ -1,6 +1,8 @@
 # Layout colorscale objects
 
-Properties of `layout.colorscale`.
+The object for the figure layout's `colorscale`.
+`go_layout_colorscale()` creates one, with exactly its properties; a
+named list with the same properties works too.
 
 ## Usage
 
@@ -20,14 +22,11 @@ go_layout_colorscale(
 - arg:
 
   Optional named list, or graph object of the same type, to initialise
-  properties from (constructors). Named arguments take precedence.
+  properties from. Named arguments take precedence.
 
 - ...:
 
-  Further properties, including nested properties in "magic underscore"
-  form, e.g. `marker_size = 10` for `marker = list(size = 10)`. Property
-  values may be one-sided formulas, evaluated in `data` for `add_*()`
-  functions.
+  Not used: properties must be named in full.
 
 - diverging:
 
@@ -63,16 +62,22 @@ go_layout_colorscale(
 
 ## Value
 
-Each `go_*()` function returns a graph object of the same class as its
-name; `add_*()` functions return the modified figure.
+A `go_layout_colorscale` object (a named list).
 
 ## Details
 
-`go_layout_colorscale()` create validated graph objects (named lists).
-Every property is checked against the plotly.js schema when an object is
-created or modified (see
-[`plotly_obj-modify()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
+Nested objects are named lists, or objects of the constructors their
+arguments name. Every property is checked against the plotly.js schema
+when the object is created or modified. A property may be a one-sided
+formula (`color = ~col`): it is kept, and evaluated in the data (then
+checked) when its trace is added to a figure with `add_<trace>()` or
+[`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md).
 
-## See also
+## Examples
 
-[`go_layout()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout.md)
+``` r
+mtcars |>
+  go_figure() |>
+  add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
+  update_layout(colorscale = go_layout_colorscale())
+```

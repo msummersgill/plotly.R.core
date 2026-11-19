@@ -3,12 +3,71 @@
 ## plotly.core 0.1.0
 
 - Initial CRAN submission.
-- Graph objects generated from the plotly.js (4.3.0) schema: a `go_*()`
-  constructor for every trace type and layout object, `add_<trace>()`,
+- Graph objects generated from the plotly.js (4.3.0) schema, with
+  plotly.py-style validation and generated documentation:
+  [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md),
+  `add_<trace>()`,
   [`update_layout()`](https://msummersgill.github.io/plotly.R.core/reference/update_layout.md),
   [`update_traces()`](https://msummersgill.github.io/plotly.R.core/reference/select_traces.md)
-  and friends, with plotly.py-style validation and generated
-  documentation.
+  and friends, and a `go_*()` constructor for every object in the
+  schema, each with exactly that object’s properties
+  ([\#5](https://github.com/msummersgill/plotly.R.core/issues/5)):
+  - traces and the layout:
+    [`go_scatter()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md),
+    [`go_bar()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md),
+    …,
+    [`go_layout()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout.md);
+  - objects shared across the schema, one constructor for all of their
+    places:
+    [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md),
+    [`go_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_colorbar.md),
+    [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md),
+    [`go_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_legendgrouptitle.md),
+    [`go_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_tickformatstop.md),
+    [`go_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_domain.md),
+    [`go_pattern()`](https://msummersgill.github.io/plotly.R.core/reference/go_pattern.md)
+    and
+    [`go_error_bar()`](https://msummersgill.github.io/plotly.R.core/reference/go_error_bar.md)
+    (plotly.js’s shared TypeScript types),
+    [`go_bins()`](https://msummersgill.github.io/plotly.R.core/reference/go_bins.md),
+    [`go_minor()`](https://msummersgill.github.io/plotly.R.core/reference/go_minor.md),
+    [`go_rangebreak()`](https://msummersgill.github.io/plotly.R.core/reference/go_rangebreak.md),
+    … (objects that are the same everywhere they appear), x/y/z axes
+    that are the same
+    ([`go_scene_axis()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene_axis.md),
+    [`go_ternary_axis()`](https://msummersgill.github.io/plotly.R.core/reference/go_ternary_axis.md),
+    [`go_caps_axis()`](https://msummersgill.github.io/plotly.R.core/reference/go_caps_axis.md),
+    …), the selected/unselected point styles of all traces
+    ([`go_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_selected.md),
+    [`go_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_unselected.md))
+    and the objects in them
+    ([`go_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_colorbar_title.md),
+    [`go_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_selected_marker.md),
+    …);
+  - every other object, named after its path without `layout.`:
+    [`go_scatter_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter_marker.md),
+    [`go_scatter_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter_marker_line.md),
+    [`go_sankey_link()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey_link.md),
+    [`go_xaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis.md),
+    [`go_scene()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene.md),
+    [`go_scene_camera_eye()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene_camera_eye.md),
+    [`go_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/go_annotation.md),
+    [`go_slider_step()`](https://msummersgill.github.io/plotly.R.core/reference/go_slider_step.md),
+    …, with
+    [`go_layout_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_title.md),
+    [`go_layout_image()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_image.md),
+    [`go_layout_colorscale()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_colorscale.md)
+    and
+    [`go_layout_transition()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_transition.md)
+    where the path name would be ambiguous or is a trace’s.
+
+  Named lists work wherever an object does. One-sided formulas
+  (`go_scatter_marker(color = ~cyl)`) are kept by constructors and
+  evaluated in the data, then checked, when the trace is added with
+  `add_<trace>()` or
+  [`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md).
+  plotly.py’s “magic underscore” property names (`marker_size = 10`) are
+  not supported.
 - Plotly Express: all of plotly.py’s `px.*` functions as
   [`px_scatter()`](https://msummersgill.github.io/plotly.R.core/reference/px_scatter.md),
   [`px_line()`](https://msummersgill.github.io/plotly.R.core/reference/px_line.md),
@@ -34,6 +93,13 @@
 - [`write_html()`](https://msummersgill.github.io/plotly.R.core/reference/write_html.md)
   saves figures as HTML pages faster than
   [`htmlwidgets::saveWidget()`](https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html).
+- [`available_fonts()`](https://msummersgill.github.io/plotly.R.core/reference/available_fonts.md)
+  lists the font families installed on this computer (with the
+  systemfonts package), and
+  [`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
+  warns when a figure asks for a font that is not installed; see
+  [`?available_fonts`](https://msummersgill.github.io/plotly.R.core/reference/available_fonts.md)
+  for local versus viewer fonts.
 - Shiny
   ([`plotlyOutput()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyOutput.md),
   [`renderPlotly()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyOutput.md),

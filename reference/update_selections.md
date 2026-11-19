@@ -61,11 +61,11 @@ for_each_selection(
 - patch:
 
   A named list of property updates (see
-  [`go_layout_selection()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_selection.md)).
+  [`add_selection()`](https://msummersgill.github.io/plotly.R.core/reference/add_selection.md)).
 
 - ...:
 
-  Further named updates (names may use magic underscores).
+  Further named updates, by their full names.
 
 - overwrite:
 
@@ -78,10 +78,9 @@ for_each_selection(
 
 ## Value
 
-`select_selections()` returns a list of
-[`go_layout_selection()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_selection.md)
-objects; the others return the modified figure.
+`select_selections()` returns a list of selection objects; the others
+return the modified figure.
 
 ## See also
 
-[`add_selection()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_selection.md)
+[`add_selection()`](https://msummersgill.github.io/plotly.R.core/reference/add_selection.md)

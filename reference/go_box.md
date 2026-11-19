@@ -100,103 +100,6 @@ go_box(
   skip_invalid = FALSE
 )
 
-go_box_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  skip_invalid = FALSE
-)
-
-go_box_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_box_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_box_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_box_line(arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE)
-
-go_box_marker(
-  arg = NULL,
-  ...,
-  angle = NULL,
-  color = NULL,
-  line = NULL,
-  opacity = NULL,
-  outliercolor = NULL,
-  size = NULL,
-  symbol = NULL,
-  skip_invalid = FALSE
-)
-
-go_box_marker_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  outliercolor = NULL,
-  outlierwidth = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_box_selected(arg = NULL, ..., marker = NULL, skip_invalid = FALSE)
-
-go_box_selected_marker(
-  arg = NULL,
-  ...,
-  color = NULL,
-  opacity = NULL,
-  size = NULL,
-  skip_invalid = FALSE
-)
-
-go_box_unselected(arg = NULL, ..., marker = NULL, skip_invalid = FALSE)
-
-go_box_unselected_marker(
-  arg = NULL,
-  ...,
-  color = NULL,
-  opacity = NULL,
-  size = NULL,
-  skip_invalid = FALSE
-)
-
 add_box(fig, ...)
 
 # Default S3 method
@@ -289,10 +192,7 @@ add_box(
 
 - ...:
 
-  Further properties, including nested properties in "magic underscore"
-  form, e.g. `marker_size = 10` for `marker = list(size = 10)`. Property
-  values may be one-sided formulas, evaluated in `data` for `add_*()`
-  functions.
+  Not used: properties must be named in full.
 
 - alignmentgroup:
 
@@ -353,7 +253,11 @@ add_box(
 
 - hoverlabel:
 
-  Named list or `go_box_hoverlabel()` object.
+  A
+  [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md)
+  object or named list, with properties `align`, `bgcolor`,
+  `bordercolor`, `font`, `namelength` and `showarrow` (see
+  [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md)).
 
 - hoveron:
 
@@ -430,7 +334,10 @@ add_box(
 
 - legendgrouptitle:
 
-  Named list or `go_box_legendgrouptitle()` object.
+  A
+  [`go_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_legendgrouptitle.md)
+  object or named list, with properties `font` and `text` (see
+  [`go_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_legendgrouptitle.md)).
 
 - legendrank:
 
@@ -450,9 +357,10 @@ add_box(
 
 - line:
 
-  **`go_box()`**: Named list or `go_box_line()` object.
-
-  **`go_box_marker()`**: Named list or `go_box_marker_line()` object.
+  A
+  [`go_box_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_box_line.md)
+  object or named list, with properties `color` and `width` (see
+  [`go_box_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_box_line.md)).
 
 - lowerfence:
 
@@ -465,13 +373,11 @@ add_box(
 
 - marker:
 
-  **`go_box()`**: Named list or `go_box_marker()` object.
-
-  **`go_box_selected()`**: Named list or `go_box_selected_marker()`
-  object.
-
-  **`go_box_unselected()`**: Named list or `go_box_unselected_marker()`
-  object.
+  A
+  [`go_box_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_box_marker.md)
+  object or named list, with properties `angle`, `color`, `line`,
+  `opacity`, `outliercolor`, `size` and `symbol` (see
+  [`go_box_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_box_marker.md)).
 
 - mean:
 
@@ -542,18 +448,7 @@ add_box(
 
 - opacity:
 
-  **`go_box()`**: Sets the opacity of the trace. Number in the interval
-  \[0, 1\].
-
-  **`go_box_marker()`**: Sets the marker opacity. Number in the interval
-  \[0, 1\].
-
-  **`go_box_selected_marker()`**: Sets the marker opacity of selected
-  points. Number in the interval \[0, 1\].
-
-  **`go_box_unselected_marker()`**: Sets the marker opacity of
-  unselected points, applied only when a selection exists. Number in the
-  interval \[0, 1\].
+  Sets the opacity of the trace. Number in the interval \[0, 1\].
 
 - orientation:
 
@@ -612,7 +507,10 @@ add_box(
 
 - selected:
 
-  Named list or `go_box_selected()` object.
+  A
+  [`go_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_selected.md)
+  object or named list, with properties `marker` (see
+  [`go_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_selected.md)).
 
 - selectedpoints:
 
@@ -643,14 +541,11 @@ add_box(
 
 - text:
 
-  **`go_box()`**: Sets the text elements associated with each sample
-  value. If a single string, the same string appears over all the data
-  points. If an array of string, the items are mapped in order to the
-  this trace's (x,y) coordinates. To be seen, trace \`hoverinfo\` must
-  contain a "text" flag. String, or a vector of these.
-
-  **`go_box_legendgrouptitle()`**: Sets the title of the legend group.
-  String.
+  Sets the text elements associated with each sample value. If a single
+  string, the same string appears over all the data points. If an array
+  of string, the items are mapped in order to the this trace's (x,y)
+  coordinates. To be seen, trace \`hoverinfo\` must contain a "text"
+  flag. String, or a vector of these.
 
 - uid:
 
@@ -677,7 +572,10 @@ add_box(
 
 - unselected:
 
-  Named list or `go_box_unselected()` object.
+  A
+  [`go_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_unselected.md)
+  object or named list, with properties `marker` (see
+  [`go_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_unselected.md)).
 
 - upperfence:
 
@@ -702,16 +600,9 @@ add_box(
 
 - width:
 
-  **`go_box()`**: Sets the width of the box in data coordinate If 0
-  (default value) the width is automatically selected based on the
-  positions of other box traces in the same subplot. Number in the
-  interval \[0, Inf\].
-
-  **`go_box_line()`**: Sets the width (in px) of line bounding the
-  box(es). Number in the interval \[0, Inf\].
-
-  **`go_box_marker_line()`**: Sets the width (in px) of the lines
-  bounding the marker points. Number in the interval \[0, Inf\].
+  Sets the width of the box in data coordinate If 0 (default value) the
+  width is automatically selected based on the positions of other box
+  traces in the same subplot. Number in the interval \[0, Inf\].
 
 - x:
 
@@ -842,285 +733,6 @@ add_box(
   If `TRUE`, silently drop invalid properties instead of raising an
   error.
 
-- align:
-
-  Sets the horizontal alignment of the text content within hover label
-  box. Has an effect only if the hover label text spans two or more
-  lines One of `"left"`, `"right"`, `"auto"`, or a vector of these.
-
-- bgcolor:
-
-  Sets the background color of the hover labels for this trace Color: a
-  CSS color string or R color name, or a vector of these.
-
-- bordercolor:
-
-  Sets the border color of the hover labels for this trace. Color: a CSS
-  color string or R color name, or a vector of these.
-
-- font:
-
-  **`go_box_hoverlabel()`**: Sets the font used in hover labels. Named
-  list or `go_box_hoverlabel_font()` object.
-
-  **`go_box_legendgrouptitle()`**: Sets this legend group's title font.
-  Named list or `go_box_legendgrouptitle_font()` object.
-
-- namelength:
-
-  Sets the default length (in number of characters) of the trace name in
-  the hover labels for all traces. -1 shows the whole name regardless of
-  length. 0-3 shows the first 0-3 characters, and an integer \>3 will
-  show the whole name if it is less than that many characters, but if it
-  is longer, will truncate to \`namelength - 3\` characters and add an
-  ellipsis. Integer in the interval \[-1, Inf\], or a vector of these.
-
-- showarrow:
-
-  Sets whether or not to show the hover label arrow/triangle pointing to
-  the data point. Logical.
-
-- color:
-
-  **`go_box_hoverlabel_font()`**: Color: a CSS color string or R color
-  name, or a vector of these.
-
-  **`go_box_legendgrouptitle_font()`**: Color: a CSS color string or R
-  color name.
-
-  **`go_box_line()`**: Sets the color of line bounding the box(es).
-  Color: a CSS color string or R color name.
-
-  **`go_box_marker()`**: Sets the marker color. It accepts either a
-  specific color or an array of numbers that are mapped to the
-  colorscale relative to the max and min values of the array or relative
-  to \`marker.cmin\` and \`marker.cmax\` if set. Color: a CSS color
-  string or R color name.
-
-  **`go_box_marker_line()`**: Sets the marker.line color. It accepts
-  either a specific color or an array of numbers that are mapped to the
-  colorscale relative to the max and min values of the array or relative
-  to \`marker.line.cmin\` and \`marker.line.cmax\` if set. Color: a CSS
-  color string or R color name.
-
-  **`go_box_selected_marker()`**: Sets the marker color of selected
-  points. Color: a CSS color string or R color name.
-
-  **`go_box_unselected_marker()`**: Sets the marker color of unselected
-  points, applied only when a selection exists. Color: a CSS color
-  string or R color name.
-
-- family:
-
-  **`go_box_hoverlabel_font()`**: HTML font family - the typeface that
-  will be applied by the web browser. The web browser can only apply a
-  font if it is available on the system where it runs. Provide multiple
-  font families, separated by commas, to indicate the order in which to
-  apply fonts if they aren't available. String, or a vector of these.
-
-  **`go_box_legendgrouptitle_font()`**: HTML font family - the typeface
-  that will be applied by the web browser. The web browser can only
-  apply a font if it is available on the system where it runs. Provide
-  multiple font families, separated by commas, to indicate the order in
-  which to apply fonts if they aren't available. String.
-
-- lineposition:
-
-  **`go_box_hoverlabel_font()`**: Sets the kind of decoration line(s)
-  with text, such as an "under", "over" or "through" as well as
-  combinations e.g. "under+over", etc. Any combination of `"under"`,
-  `"over"`, `"through"` joined with `"+"`, or one of `"none"`, or a
-  vector of these.
-
-  **`go_box_legendgrouptitle_font()`**: Sets the kind of decoration
-  line(s) with text, such as an "under", "over" or "through" as well as
-  combinations e.g. "under+over", etc. Any combination of `"under"`,
-  `"over"`, `"through"` joined with `"+"`, or one of `"none"`.
-
-- shadow:
-
-  **`go_box_hoverlabel_font()`**: Sets the shape and color of the shadow
-  behind text. "auto" places minimal shadow and applies contrast text
-  font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.
-
-  **`go_box_legendgrouptitle_font()`**: Sets the shape and color of the
-  shadow behind text. "auto" places minimal shadow and applies contrast
-  text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.
-
-- size:
-
-  **`go_box_hoverlabel_font()`**: Number in the interval \[1, Inf\], or
-  a vector of these.
-
-  **`go_box_legendgrouptitle_font()`**: Number in the interval \[1,
-  Inf\].
-
-  **`go_box_marker()`**: Sets the marker size (in px). Number in the
-  interval \[0, Inf\].
-
-  **`go_box_selected_marker()`**: Sets the marker size of selected
-  points. Number in the interval \[0, Inf\].
-
-  **`go_box_unselected_marker()`**: Sets the marker size of unselected
-  points, applied only when a selection exists. Number in the interval
-  \[0, Inf\].
-
-- style:
-
-  **`go_box_hoverlabel_font()`**: Sets whether a font should be styled
-  with a normal or italic face from its family. One of `"normal"`,
-  `"italic"`, or a vector of these.
-
-  **`go_box_legendgrouptitle_font()`**: Sets whether a font should be
-  styled with a normal or italic face from its family. One of
-  `"normal"`, `"italic"`.
-
-- textcase:
-
-  **`go_box_hoverlabel_font()`**: Sets capitalization of text. It can be
-  used to make text appear in all-uppercase or all-lowercase, or with
-  each word capitalized. One of `"normal"`, `"word caps"`, `"upper"`,
-  `"lower"`, or a vector of these.
-
-  **`go_box_legendgrouptitle_font()`**: Sets capitalization of text. It
-  can be used to make text appear in all-uppercase or all-lowercase, or
-  with each word capitalized. One of `"normal"`, `"word caps"`,
-  `"upper"`, `"lower"`.
-
-- variant:
-
-  **`go_box_hoverlabel_font()`**: Sets the variant of the font. One of
-  `"normal"`, `"small-caps"`, `"all-small-caps"`, `"all-petite-caps"`,
-  `"petite-caps"`, `"unicase"`, or a vector of these.
-
-  **`go_box_legendgrouptitle_font()`**: Sets the variant of the font.
-  One of `"normal"`, `"small-caps"`, `"all-small-caps"`,
-  `"all-petite-caps"`, `"petite-caps"`, `"unicase"`.
-
-- weight:
-
-  **`go_box_hoverlabel_font()`**: Sets the weight (or boldness) of the
-  font. Integer in the interval \[1, 1000\], or a vector of these.
-
-  **`go_box_legendgrouptitle_font()`**: Sets the weight (or boldness) of
-  the font. Integer in the interval \[1, 1000\].
-
-- angle:
-
-  Sets the marker angle in respect to \`angleref\`. Angle in degrees.
-
-- outliercolor:
-
-  **`go_box_marker()`**: Sets the color of the outlier sample points.
-  Color: a CSS color string or R color name.
-
-  **`go_box_marker_line()`**: Sets the border line color of the outlier
-  sample points. Defaults to marker.color Color: a CSS color string or R
-  color name.
-
-- symbol:
-
-  Sets the marker symbol type. Adding 100 is equivalent to appending
-  "-open" to a symbol name. Adding 200 is equivalent to appending "-dot"
-  to a symbol name. Adding 300 is equivalent to appending "-open-dot" or
-  "dot-open" to a symbol name. One of `"0"`, `"circle"`, `"100"`,
-  `"circle-open"`, `"200"`, `"circle-dot"`, `"300"`,
-  `"circle-open-dot"`, `"1"`, `"square"`, `"101"`, `"square-open"`,
-  `"201"`, `"square-dot"`, `"301"`, `"square-open-dot"`, `"2"`,
-  `"diamond"`, `"102"`, `"diamond-open"`, `"202"`, `"diamond-dot"`,
-  `"302"`, `"diamond-open-dot"`, `"3"`, `"cross"`, `"103"`,
-  `"cross-open"`, `"203"`, `"cross-dot"`, `"303"`, `"cross-open-dot"`,
-  `"4"`, `"x"`, `"104"`, `"x-open"`, `"204"`, `"x-dot"`, `"304"`,
-  `"x-open-dot"`, `"5"`, `"triangle-up"`, `"105"`, `"triangle-up-open"`,
-  `"205"`, `"triangle-up-dot"`, `"305"`, `"triangle-up-open-dot"`,
-  `"6"`, `"triangle-down"`, `"106"`, `"triangle-down-open"`, `"206"`,
-  `"triangle-down-dot"`, `"306"`, `"triangle-down-open-dot"`, `"7"`,
-  `"triangle-left"`, `"107"`, `"triangle-left-open"`, `"207"`,
-  `"triangle-left-dot"`, `"307"`, `"triangle-left-open-dot"`, `"8"`,
-  `"triangle-right"`, `"108"`, `"triangle-right-open"`, `"208"`,
-  `"triangle-right-dot"`, `"308"`, `"triangle-right-open-dot"`, `"9"`,
-  `"triangle-ne"`, `"109"`, `"triangle-ne-open"`, `"209"`,
-  `"triangle-ne-dot"`, `"309"`, `"triangle-ne-open-dot"`, `"10"`,
-  `"triangle-se"`, `"110"`, `"triangle-se-open"`, `"210"`,
-  `"triangle-se-dot"`, `"310"`, `"triangle-se-open-dot"`, `"11"`,
-  `"triangle-sw"`, `"111"`, `"triangle-sw-open"`, `"211"`,
-  `"triangle-sw-dot"`, `"311"`, `"triangle-sw-open-dot"`, `"12"`,
-  `"triangle-nw"`, `"112"`, `"triangle-nw-open"`, `"212"`,
-  `"triangle-nw-dot"`, `"312"`, `"triangle-nw-open-dot"`, `"13"`,
-  `"pentagon"`, `"113"`, `"pentagon-open"`, `"213"`, `"pentagon-dot"`,
-  `"313"`, `"pentagon-open-dot"`, `"14"`, `"hexagon"`, `"114"`,
-  `"hexagon-open"`, `"214"`, `"hexagon-dot"`, `"314"`,
-  `"hexagon-open-dot"`, `"15"`, `"hexagon2"`, `"115"`,
-  `"hexagon2-open"`, `"215"`, `"hexagon2-dot"`, `"315"`,
-  `"hexagon2-open-dot"`, `"16"`, `"octagon"`, `"116"`, `"octagon-open"`,
-  `"216"`, `"octagon-dot"`, `"316"`, `"octagon-open-dot"`, `"17"`,
-  `"star"`, `"117"`, `"star-open"`, `"217"`, `"star-dot"`, `"317"`,
-  `"star-open-dot"`, `"18"`, `"hexagram"`, `"118"`, `"hexagram-open"`,
-  `"218"`, `"hexagram-dot"`, `"318"`, `"hexagram-open-dot"`, `"19"`,
-  `"star-triangle-up"`, `"119"`, `"star-triangle-up-open"`, `"219"`,
-  `"star-triangle-up-dot"`, `"319"`, `"star-triangle-up-open-dot"`,
-  `"20"`, `"star-triangle-down"`, `"120"`, `"star-triangle-down-open"`,
-  `"220"`, `"star-triangle-down-dot"`, `"320"`,
-  `"star-triangle-down-open-dot"`, `"21"`, `"star-square"`, `"121"`,
-  `"star-square-open"`, `"221"`, `"star-square-dot"`, `"321"`,
-  `"star-square-open-dot"`, `"22"`, `"star-diamond"`, `"122"`,
-  `"star-diamond-open"`, `"222"`, `"star-diamond-dot"`, `"322"`,
-  `"star-diamond-open-dot"`, `"23"`, `"diamond-tall"`, `"123"`,
-  `"diamond-tall-open"`, `"223"`, `"diamond-tall-dot"`, `"323"`,
-  `"diamond-tall-open-dot"`, `"24"`, `"diamond-wide"`, `"124"`,
-  `"diamond-wide-open"`, `"224"`, `"diamond-wide-dot"`, `"324"`,
-  `"diamond-wide-open-dot"`, `"25"`, `"hourglass"`, `"125"`,
-  `"hourglass-open"`, `"26"`, `"bowtie"`, `"126"`, `"bowtie-open"`,
-  `"27"`, `"circle-cross"`, `"127"`, `"circle-cross-open"`, `"28"`,
-  `"circle-x"`, `"128"`, `"circle-x-open"`, `"29"`, `"square-cross"`,
-  `"129"`, `"square-cross-open"`, `"30"`, `"square-x"`, `"130"`,
-  `"square-x-open"`, `"31"`, `"diamond-cross"`, `"131"`,
-  `"diamond-cross-open"`, `"32"`, `"diamond-x"`, `"132"`,
-  `"diamond-x-open"`, `"33"`, `"cross-thin"`, `"133"`,
-  `"cross-thin-open"`, `"34"`, `"x-thin"`, `"134"`, `"x-thin-open"`,
-  `"35"`, `"asterisk"`, `"135"`, `"asterisk-open"`, `"36"`, `"hash"`,
-  `"136"`, `"hash-open"`, `"236"`, `"hash-dot"`, `"336"`,
-  `"hash-open-dot"`, `"37"`, `"y-up"`, `"137"`, `"y-up-open"`, `"38"`,
-  `"y-down"`, `"138"`, `"y-down-open"`, `"39"`, `"y-left"`, `"139"`,
-  `"y-left-open"`, `"40"`, `"y-right"`, `"140"`, `"y-right-open"`,
-  `"41"`, `"line-ew"`, `"141"`, `"line-ew-open"`, `"42"`, `"line-ns"`,
-  `"142"`, `"line-ns-open"`, `"43"`, `"line-ne"`, `"143"`,
-  `"line-ne-open"`, `"44"`, `"line-nw"`, `"144"`, `"line-nw-open"`,
-  `"45"`, `"arrow-up"`, `"145"`, `"arrow-up-open"`, `"46"`,
-  `"arrow-down"`, `"146"`, `"arrow-down-open"`, `"47"`, `"arrow-left"`,
-  `"147"`, `"arrow-left-open"`, `"48"`, `"arrow-right"`, `"148"`,
-  `"arrow-right-open"`, `"49"`, `"arrow-bar-up"`, `"149"`,
-  `"arrow-bar-up-open"`, `"50"`, `"arrow-bar-down"`, `"150"`,
-  `"arrow-bar-down-open"`, `"51"`, `"arrow-bar-left"`, `"151"`,
-  `"arrow-bar-left-open"`, `"52"`, `"arrow-bar-right"`, `"152"`,
-  `"arrow-bar-right-open"`, `"53"`, `"arrow"`, `"153"`, `"arrow-open"`,
-  `"54"`, `"arrow-wide"`, `"154"`, `"arrow-wide-open"`, `0`, `100`,
-  `200`, `300`, `1`, `101`, `201`, `301`, `2`, `102`, `202`, `302`, `3`,
-  `103`, `203`, `303`, `4`, `104`, `204`, `304`, `5`, `105`, `205`,
-  `305`, `6`, `106`, `206`, `306`, `7`, `107`, `207`, `307`, `8`, `108`,
-  `208`, `308`, `9`, `109`, `209`, `309`, `10`, `110`, `210`, `310`,
-  `11`, `111`, `211`, `311`, `12`, `112`, `212`, `312`, `13`, `113`,
-  `213`, `313`, `14`, `114`, `214`, `314`, `15`, `115`, `215`, `315`,
-  `16`, `116`, `216`, `316`, `17`, `117`, `217`, `317`, `18`, `118`,
-  `218`, `318`, `19`, `119`, `219`, `319`, `20`, `120`, `220`, `320`,
-  `21`, `121`, `221`, `321`, `22`, `122`, `222`, `322`, `23`, `123`,
-  `223`, `323`, `24`, `124`, `224`, `324`, `25`, `125`, `26`, `126`,
-  `27`, `127`, `28`, `128`, `29`, `129`, `30`, `130`, `31`, `131`, `32`,
-  `132`, `33`, `133`, `34`, `134`, `35`, `135`, `36`, `136`, `236`,
-  `336`, `37`, `137`, `38`, `138`, `39`, `139`, `40`, `140`, `41`,
-  `141`, `42`, `142`, `43`, `143`, `44`, `144`, `45`, `145`, `46`,
-  `146`, `47`, `147`, `48`, `148`, `49`, `149`, `50`, `150`, `51`,
-  `151`, `52`, `152`, `53`, `153`, `54`, `154`.
-
-- outlierwidth:
-
-  Sets the border line width (in px) of the outlier sample points.
-  Number in the interval \[0, Inf\].
-
 - fig:
 
   A `go_figure` object.
@@ -1128,7 +740,9 @@ add_box(
 - data:
 
   A data frame in which formula properties (e.g. `x = ~col`,
-  `marker_size = ~col`) are evaluated. Default: the data given to
+  `marker = list(size = ~col)`,
+  `marker = go_scatter_marker(size = ~col)`) are evaluated. Default: the
+  data given to
   [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md).
   Only the evaluated values are added to the trace. A
   [`crosstalk::SharedData`](https://rdrr.io/pkg/crosstalk/man/SharedData.html)
@@ -1153,62 +767,21 @@ add_box(
 
 ## Value
 
-Each `go_*()` function returns a graph object of the same class as its
-name; `add_*()` functions return the modified figure.
+`go_*()` functions return a graph object; `add_*()` functions return the
+modified figure.
 
 ## Details
 
-`go_box()` and the nested object constructors below create validated
-graph objects (named lists). Every property is checked against the
-plotly.js schema when an object is created or modified (see
-[`plotly_obj-modify()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
-`add_box()` creates an object and adds it to a figure.
+`go_box()` creates a validated graph object (a named list). `add_box()`
+creates one and adds it to a figure.
 
-Nested objects documented here:
-
-- `go_box_hoverlabel()`:
-
-  `box.hoverlabel`
-
-- `go_box_hoverlabel_font()`:
-
-  `box.hoverlabel.font`: Sets the font used in hover labels.
-
-- `go_box_legendgrouptitle()`:
-
-  `box.legendgrouptitle`
-
-- `go_box_legendgrouptitle_font()`:
-
-  `box.legendgrouptitle.font`: Sets this legend group's title font.
-
-- `go_box_line()`:
-
-  `box.line`
-
-- `go_box_marker()`:
-
-  `box.marker`
-
-- `go_box_marker_line()`:
-
-  `box.marker.line`
-
-- `go_box_selected()`:
-
-  `box.selected`
-
-- `go_box_selected_marker()`:
-
-  `box.selected.marker`
-
-- `go_box_unselected()`:
-
-  `box.unselected`
-
-- `go_box_unselected_marker()`:
-
-  `box.unselected.marker`
+Nested objects are given as named lists or with their constructors,
+which are linked from the arguments below. Every property is checked
+against the plotly.js schema when the object is created or modified (see
+[`plotly_obj-modify`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
+One-sided formulas (`~col`) are evaluated in the data, and then checked,
+when the trace is added with `add_<trace>()` or
+[`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md).
 
 ## See also
 
@@ -1218,23 +791,7 @@ Nested objects documented here:
 ## Examples
 
 ``` r
-go_box(x = 1:3, y = c(2, 1, 3), marker_color = "red")
-#> <go_box>
-#> {
-#>   "type": "box",
-#>   "x": [
-#>     1,
-#>     2,
-#>     3
-#>   ],
-#>   "y": [
-#>     2,
-#>     1,
-#>     3
-#>   ],
-#>   "marker": {
-#>     "color": "red"
-#>   }
-#> }
-#> 
+mtcars |>
+  go_figure() |>
+  add_box(x = ~factor(cyl), y = ~mpg)
 ```

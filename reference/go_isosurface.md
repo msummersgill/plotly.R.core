@@ -124,276 +124,6 @@ go_isosurface(
   zhoverformat = NULL,
   skip_invalid = FALSE
 )
-
-go_isosurface_caps(
-  arg = NULL,
-  ...,
-  x = NULL,
-  y = NULL,
-  z = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_caps_x(
-  arg = NULL,
-  ...,
-  fill = NULL,
-  show = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_caps_y(
-  arg = NULL,
-  ...,
-  fill = NULL,
-  show = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_caps_z(
-  arg = NULL,
-  ...,
-  fill = NULL,
-  show = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_colorbar(
-  arg = NULL,
-  ...,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  borderwidth = NULL,
-  dtick = NULL,
-  exponentformat = NULL,
-  labelalias = NULL,
-  len = NULL,
-  lenmode = NULL,
-  minexponent = NULL,
-  nticks = NULL,
-  orientation = NULL,
-  outlinecolor = NULL,
-  outlinewidth = NULL,
-  separatethousands = NULL,
-  showexponent = NULL,
-  showticklabels = NULL,
-  showtickprefix = NULL,
-  showticksuffix = NULL,
-  thickness = NULL,
-  thicknessmode = NULL,
-  tick0 = NULL,
-  tickangle = NULL,
-  tickcolor = NULL,
-  tickfont = NULL,
-  tickformat = NULL,
-  tickformatstops = NULL,
-  ticklabeloverflow = NULL,
-  ticklabelposition = NULL,
-  ticklabelstep = NULL,
-  ticklen = NULL,
-  tickmode = NULL,
-  tickprefix = NULL,
-  ticks = NULL,
-  ticksuffix = NULL,
-  ticktext = NULL,
-  tickvals = NULL,
-  tickwidth = NULL,
-  title = NULL,
-  x = NULL,
-  xanchor = NULL,
-  xpad = NULL,
-  xref = NULL,
-  y = NULL,
-  yanchor = NULL,
-  ypad = NULL,
-  yref = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_colorbar_tickfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_colorbar_tickformatstop(
-  arg = NULL,
-  ...,
-  dtickrange = NULL,
-  enabled = NULL,
-  name = NULL,
-  templateitemname = NULL,
-  value = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_colorbar_title(
-  arg = NULL,
-  ...,
-  font = NULL,
-  side = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_colorbar_title_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_contour(
-  arg = NULL,
-  ...,
-  color = NULL,
-  show = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_lighting(
-  arg = NULL,
-  ...,
-  ambient = NULL,
-  diffuse = NULL,
-  facenormalsepsilon = NULL,
-  fresnel = NULL,
-  roughness = NULL,
-  specular = NULL,
-  vertexnormalsepsilon = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_lightposition(
-  arg = NULL,
-  ...,
-  x = NULL,
-  y = NULL,
-  z = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_slices(
-  arg = NULL,
-  ...,
-  x = NULL,
-  y = NULL,
-  z = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_slices_x(
-  arg = NULL,
-  ...,
-  fill = NULL,
-  locations = NULL,
-  show = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_slices_y(
-  arg = NULL,
-  ...,
-  fill = NULL,
-  locations = NULL,
-  show = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_slices_z(
-  arg = NULL,
-  ...,
-  fill = NULL,
-  locations = NULL,
-  show = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_spaceframe(
-  arg = NULL,
-  ...,
-  fill = NULL,
-  show = NULL,
-  skip_invalid = FALSE
-)
-
-go_isosurface_surface(
-  arg = NULL,
-  ...,
-  count = NULL,
-  fill = NULL,
-  pattern = NULL,
-  show = NULL,
-  skip_invalid = FALSE
-)
 ```
 
 ## Arguments
@@ -404,15 +134,14 @@ go_isosurface_surface(
 
 - ...:
 
-  Further properties, including nested properties in "magic underscore"
-  form, e.g. `marker_size = 10` for `marker = list(size = 10)`. Property
-  values may be one-sided formulas, evaluated in `data` for `add_*()`
-  functions.
+  Not used: properties must be named in full.
 
 - data:
 
   A data frame in which formula properties (e.g. `x = ~col`,
-  `marker_size = ~col`) are evaluated. Default: the data given to
+  `marker = list(size = ~col)`,
+  `marker = go_scatter_marker(size = ~col)`) are evaluated. Default: the
+  data given to
   [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md).
   Only the evaluated values are added to the trace. A
   [`crosstalk::SharedData`](https://rdrr.io/pkg/crosstalk/man/SharedData.html)
@@ -430,7 +159,10 @@ go_isosurface_surface(
 
 - caps:
 
-  Named list or `go_isosurface_caps()` object.
+  A
+  [`go_caps()`](https://msummersgill.github.io/plotly.R.core/reference/go_caps.md)
+  object or named list, with properties `x`, `y` and `z` (see
+  [`go_caps()`](https://msummersgill.github.io/plotly.R.core/reference/go_caps.md)).
 
 - cauto:
 
@@ -466,7 +198,13 @@ go_isosurface_surface(
 
 - colorbar:
 
-  Named list or `go_isosurface_colorbar()` object.
+  A
+  [`go_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_colorbar.md)
+  object or named list, with properties `bgcolor`, `bordercolor`,
+  `borderwidth`, `dtick`, `exponentformat`, `labelalias`, `len`,
+  `lenmode`, `minexponent`, `nticks`, `orientation`, `outlinecolor` and
+  34 more (see
+  [`go_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_colorbar.md)).
 
 - colorscale:
 
@@ -486,7 +224,10 @@ go_isosurface_surface(
 
 - contour:
 
-  Named list or `go_isosurface_contour()` object.
+  A
+  [`go_isosurface_contour()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface_contour.md)
+  object or named list, with properties `color`, `show` and `width` (see
+  [`go_isosurface_contour()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface_contour.md)).
 
 - customdata:
 
@@ -511,7 +252,11 @@ go_isosurface_surface(
 
 - hoverlabel:
 
-  Named list or `go_isosurface_hoverlabel()` object.
+  A
+  [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md)
+  object or named list, with properties `align`, `bgcolor`,
+  `bordercolor`, `font`, `namelength` and `showarrow` (see
+  [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md)).
 
 - hovertemplate:
 
@@ -584,7 +329,10 @@ go_isosurface_surface(
 
 - legendgrouptitle:
 
-  Named list or `go_isosurface_legendgrouptitle()` object.
+  A
+  [`go_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_legendgrouptitle.md)
+  object or named list, with properties `font` and `text` (see
+  [`go_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_legendgrouptitle.md)).
 
 - legendrank:
 
@@ -604,11 +352,19 @@ go_isosurface_surface(
 
 - lighting:
 
-  Named list or `go_isosurface_lighting()` object.
+  A
+  [`go_isosurface_lighting()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface_lighting.md)
+  object or named list, with properties `ambient`, `diffuse`,
+  `facenormalsepsilon`, `fresnel`, `roughness`, `specular` and
+  `vertexnormalsepsilon` (see
+  [`go_isosurface_lighting()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface_lighting.md)).
 
 - lightposition:
 
-  Named list or `go_isosurface_lightposition()` object.
+  A
+  [`go_lightposition()`](https://msummersgill.github.io/plotly.R.core/reference/go_lightposition.md)
+  object or named list, with properties `x`, `y` and `z` (see
+  [`go_lightposition()`](https://msummersgill.github.io/plotly.R.core/reference/go_lightposition.md)).
 
 - meta:
 
@@ -625,16 +381,8 @@ go_isosurface_surface(
 
 - name:
 
-  **`go_isosurface()`**: Sets the trace name. The trace name appears as
-  the legend item and on hover. String.
-
-  **`go_isosurface_colorbar_tickformatstop()`**: When used in a
-  template, named items are created in the output figure in addition to
-  any items the figure already has in this array. You can modify these
-  items in the output figure by making your own item with
-  \`templateitemname\` matching this \`name\` alongside your
-  modifications (including \`visible: false\` or \`enabled: false\` to
-  hide it). Has no effect outside of a template. String.
+  Sets the trace name. The trace name appears as the legend item and on
+  hover. String.
 
 - opacity:
 
@@ -671,28 +419,32 @@ go_isosurface_surface(
 
 - slices:
 
-  Named list or `go_isosurface_slices()` object.
+  A
+  [`go_slices()`](https://msummersgill.github.io/plotly.R.core/reference/go_slices.md)
+  object or named list, with properties `x`, `y` and `z` (see
+  [`go_slices()`](https://msummersgill.github.io/plotly.R.core/reference/go_slices.md)).
 
 - spaceframe:
 
-  Named list or `go_isosurface_spaceframe()` object.
+  A
+  [`go_spaceframe()`](https://msummersgill.github.io/plotly.R.core/reference/go_spaceframe.md)
+  object or named list, with properties `fill` and `show` (see
+  [`go_spaceframe()`](https://msummersgill.github.io/plotly.R.core/reference/go_spaceframe.md)).
 
 - surface:
 
-  Named list or `go_isosurface_surface()` object.
+  A
+  [`go_isosurface_surface()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface_surface.md)
+  object or named list, with properties `count`, `fill`, `pattern` and
+  `show` (see
+  [`go_isosurface_surface()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface_surface.md)).
 
 - text:
 
-  **`go_isosurface()`**: Sets the text elements associated with the
-  vertices. If trace \`hoverinfo\` contains a "text" flag and
-  "hovertext" is not set, these elements will be seen in the hover
-  labels. String, or a vector of these.
-
-  **`go_isosurface_colorbar_title()`**: Sets the title of the color bar.
-  String.
-
-  **`go_isosurface_legendgrouptitle()`**: Sets the title of the legend
-  group. String.
+  Sets the text elements associated with the vertices. If trace
+  \`hoverinfo\` contains a "text" flag and "hovertext" is not set, these
+  elements will be seen in the hover labels. String, or a vector of
+  these.
 
 - uid:
 
@@ -719,11 +471,8 @@ go_isosurface_surface(
 
 - value:
 
-  **`go_isosurface()`**: Sets the 4th dimension (value) of the vertices.
-  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-
-  **`go_isosurface_colorbar_tickformatstop()`**: string - dtickformat
-  for described zoom level, the same as "tickformat" String.
+  Sets the 4th dimension (value) of the vertices. Data array: a vector,
+  factor, Date/POSIXct vector, matrix or list.
 
 - valuehoverformat:
 
@@ -740,27 +489,8 @@ go_isosurface_surface(
 
 - x:
 
-  **`go_isosurface()`**: Sets the X coordinates of the vertices on X
-  axis. Data array: a vector, factor, Date/POSIXct vector, matrix or
-  list.
-
-  **`go_isosurface_caps()`**: Named list or `go_isosurface_caps_x()`
-  object.
-
-  **`go_isosurface_colorbar()`**: Sets the x position with respect to
-  \`xref\` of the color bar (in plot fraction). When \`xref\` is
-  "paper", defaults to 1.02 when \`orientation\` is "v" and 0.5 when
-  \`orientation\` is "h". When \`xref\` is "container", defaults to 1
-  when \`orientation\` is "v" and 0.5 when \`orientation\` is "h". Must
-  be between 0 and 1 if \`xref\` is "container" and between "-2" and 3
-  if \`xref\` is "paper". Number.
-
-  **`go_isosurface_lightposition()`**: Numeric vector, representing the
-  X coordinate for each vertex. Number in the interval \[-100000,
-  100000\].
-
-  **`go_isosurface_slices()`**: Named list or `go_isosurface_slices_x()`
-  object.
+  Sets the X coordinates of the vertices on X axis. Data array: a
+  vector, factor, Date/POSIXct vector, matrix or list.
 
 - xhoverformat:
 
@@ -777,27 +507,8 @@ go_isosurface_surface(
 
 - y:
 
-  **`go_isosurface()`**: Sets the Y coordinates of the vertices on Y
-  axis. Data array: a vector, factor, Date/POSIXct vector, matrix or
-  list.
-
-  **`go_isosurface_caps()`**: Named list or `go_isosurface_caps_y()`
-  object.
-
-  **`go_isosurface_colorbar()`**: Sets the y position with respect to
-  \`yref\` of the color bar (in plot fraction). When \`yref\` is
-  "paper", defaults to 0.5 when \`orientation\` is "v" and 1.02 when
-  \`orientation\` is "h". When \`yref\` is "container", defaults to 0.5
-  when \`orientation\` is "v" and 1 when \`orientation\` is "h". Must be
-  between 0 and 1 if \`yref\` is "container" and between "-2" and 3 if
-  \`yref\` is "paper". Number.
-
-  **`go_isosurface_lightposition()`**: Numeric vector, representing the
-  Y coordinate for each vertex. Number in the interval \[-100000,
-  100000\].
-
-  **`go_isosurface_slices()`**: Named list or `go_isosurface_slices_y()`
-  object.
+  Sets the Y coordinates of the vertices on Y axis. Data array: a
+  vector, factor, Date/POSIXct vector, matrix or list.
 
 - yhoverformat:
 
@@ -814,19 +525,8 @@ go_isosurface_surface(
 
 - z:
 
-  **`go_isosurface()`**: Sets the Z coordinates of the vertices on Z
-  axis. Data array: a vector, factor, Date/POSIXct vector, matrix or
-  list.
-
-  **`go_isosurface_caps()`**: Named list or `go_isosurface_caps_z()`
-  object.
-
-  **`go_isosurface_lightposition()`**: Numeric vector, representing the
-  Z coordinate for each vertex. Number in the interval \[-100000,
-  100000\].
-
-  **`go_isosurface_slices()`**: Named list or `go_isosurface_slices_z()`
-  object.
+  Sets the Z coordinates of the vertices on Z axis. Data array: a
+  vector, factor, Date/POSIXct vector, matrix or list.
 
 - zhoverformat:
 
@@ -863,721 +563,23 @@ go_isosurface_surface(
   Optional named list, or graph object of the same type, to initialise
   properties from (constructors). Named arguments take precedence.
 
-- fill:
-
-  **`go_isosurface_caps_x()`, `go_isosurface_caps_y()`,
-  `go_isosurface_caps_z()`**: Sets the fill ratio of the \`caps\`. The
-  default fill value of the \`caps\` is 1 meaning that they are entirely
-  shaded. On the other hand Applying a \`fill\` ratio less than one
-  would allow the creation of openings parallel to the edges. Number in
-  the interval \[0, 1\].
-
-  **`go_isosurface_slices_x()`, `go_isosurface_slices_y()`,
-  `go_isosurface_slices_z()`**: Sets the fill ratio of the \`slices\`.
-  The default fill value of the \`slices\` is 1 meaning that they are
-  entirely shaded. On the other hand Applying a \`fill\` ratio less than
-  one would allow the creation of openings parallel to the edges. Number
-  in the interval \[0, 1\].
-
-  **`go_isosurface_spaceframe()`**: Sets the fill ratio of the
-  \`spaceframe\` elements. The default fill value is 0.15 meaning that
-  only 15% of the area of every faces of tetras would be shaded.
-  Applying a greater \`fill\` ratio would allow the creation of stronger
-  elements or could be sued to have entirely closed areas (in case of
-  using 1). Number in the interval \[0, 1\].
-
-  **`go_isosurface_surface()`**: Sets the fill ratio of the iso-surface.
-  The default fill value of the surface is 1 meaning that they are
-  entirely shaded. On the other hand Applying a \`fill\` ratio less than
-  one would allow the creation of openings parallel to the edges. Number
-  in the interval \[0, 1\].
-
-- show:
-
-  **`go_isosurface_caps_x()`**: Sets the fill ratio of the \`slices\`.
-  The default fill value of the x \`slices\` is 1 meaning that they are
-  entirely shaded. On the other hand Applying a \`fill\` ratio less than
-  one would allow the creation of openings parallel to the edges.
-  Logical.
-
-  **`go_isosurface_caps_y()`**: Sets the fill ratio of the \`slices\`.
-  The default fill value of the y \`slices\` is 1 meaning that they are
-  entirely shaded. On the other hand Applying a \`fill\` ratio less than
-  one would allow the creation of openings parallel to the edges.
-  Logical.
-
-  **`go_isosurface_caps_z()`**: Sets the fill ratio of the \`slices\`.
-  The default fill value of the z \`slices\` is 1 meaning that they are
-  entirely shaded. On the other hand Applying a \`fill\` ratio less than
-  one would allow the creation of openings parallel to the edges.
-  Logical.
-
-  **`go_isosurface_contour()`**: Sets whether or not dynamic contours
-  are shown on hover Logical.
-
-  **`go_isosurface_slices_x()`**: Determines whether or not slice planes
-  about the x dimension are drawn. Logical.
-
-  **`go_isosurface_slices_y()`**: Determines whether or not slice planes
-  about the y dimension are drawn. Logical.
-
-  **`go_isosurface_slices_z()`**: Determines whether or not slice planes
-  about the z dimension are drawn. Logical.
-
-  **`go_isosurface_spaceframe()`**: Displays/hides tetrahedron shapes
-  between minimum and maximum iso-values. Often useful when either caps
-  or surfaces are disabled or filled with values less than 1. Logical.
-
-  **`go_isosurface_surface()`**: Hides/displays surfaces between minimum
-  and maximum iso-values. Logical.
-
-- bgcolor:
-
-  **`go_isosurface_colorbar()`**: Sets the color of padded area. Color:
-  a CSS color string or R color name.
-
-  **`go_isosurface_hoverlabel()`**: Sets the background color of the
-  hover labels for this trace Color: a CSS color string or R color name,
-  or a vector of these.
-
-- bordercolor:
-
-  **`go_isosurface_colorbar()`**: Sets the axis line color. Color: a CSS
-  color string or R color name.
-
-  **`go_isosurface_hoverlabel()`**: Sets the border color of the hover
-  labels for this trace. Color: a CSS color string or R color name, or a
-  vector of these.
-
-- borderwidth:
-
-  Sets the width (in px) or the border enclosing this color bar. Number
-  in the interval \[0, Inf\].
-
-- dtick:
-
-  Sets the step in-between ticks on this color bar. Use with \`tick0\`.
-  Must be a positive number. Note: unlike on x/y axes, the special "log"
-  and "date" string forms ("L\<f\>", "D1", "D2", "M\<n\>") are not
-  supported here: this axis is always linear, so such strings are
-  silently ignored and the step is set to 1. Any value.
-
-- exponentformat:
-
-  Determines a formatting rule for the tick exponents. For example,
-  consider the number 1,000,000,000. If "none", it appears as
-  1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power", 1x10^9 (with 9
-  in a super script). If "SI", 1G. If "B", 1B. "SI" uses prefixes from
-  "femto" f (10^-15) to "tera" T (10^12). "SI extended" covers instead
-  the full SI range from "quecto" q (10^-30) to "quetta" Q (10^30). If
-  "SI" or "SI extended" is used and the exponent is beyond the above
-  ranges, the formatting rule will automatically be switched to the
-  power notation. One of `"none"`, `"e"`, `"E"`, `"power"`, `"SI"`,
-  `"B"`, `"SI extended"`.
-
-- labelalias:
-
-  Replacement text for specific tick or hover labels. For example using
-  {US: 'USA', CA: 'Canada'} changes US to USA and CA to Canada. The
-  labels we would have shown must match the keys exactly, after adding
-  any tickprefix or ticksuffix. For negative numbers the minus sign
-  symbol used (U+2212) is wider than the regular ascii dash. That means
-  you need to use -1 instead of -1. labelalias can be used with any axis
-  type, and both keys (if needed) and values (if desired) can include
-  html-like tags or MathJax. Any value.
-
-- len:
-
-  Sets the length of the color bar This measure excludes the padding of
-  both ends. That is, the color bar length is this length minus the
-  padding on both ends. Number in the interval \[0, Inf\].
-
-- lenmode:
-
-  Determines whether this color bar's length (i.e. the measure in the
-  color variation direction) is set in units of plot "fraction" or in
-  \*pixels. Use \`len\` to set the value. One of `"fraction"`,
-  `"pixels"`.
-
-- minexponent:
-
-  Hide SI prefix for 10^n if \|n\| is below this number. This only has
-  an effect when \`tickformat\` is "SI" or "B". Number in the interval
-  \[0, Inf\].
-
-- nticks:
-
-  Specifies the maximum number of ticks for the particular axis. The
-  actual number of ticks will be chosen automatically to be less than or
-  equal to \`nticks\`. Has an effect only if \`tickmode\` is set to
-  "auto". Integer in the interval \[0, Inf\].
-
-- orientation:
-
-  Sets the orientation of the colorbar. One of `"h"`, `"v"`.
-
-- outlinecolor:
-
-  Sets the axis line color. Color: a CSS color string or R color name.
-
-- outlinewidth:
-
-  Sets the width (in px) of the axis line. Number in the interval \[0,
-  Inf\].
-
-- separatethousands:
-
-  If "true", even 4-digit integers are separated Logical.
-
-- showexponent:
-
-  If "all", all exponents are shown besides their significands. If
-  "first", only the exponent of the first tick is shown. If "last", only
-  the exponent of the last tick is shown. If "none", no exponents
-  appear. One of `"all"`, `"first"`, `"last"`, `"none"`.
-
-- showticklabels:
-
-  Determines whether or not the tick labels are drawn. Logical.
-
-- showtickprefix:
-
-  If "all", all tick labels are displayed with a prefix. If "first",
-  only the first tick is displayed with a prefix. If "last", only the
-  last tick is displayed with a suffix. If "none", tick prefixes are
-  hidden. One of `"all"`, `"first"`, `"last"`, `"none"`.
-
-- showticksuffix:
-
-  Same as \`showtickprefix\` but for tick suffixes. One of `"all"`,
-  `"first"`, `"last"`, `"none"`.
-
-- thickness:
-
-  Sets the thickness of the color bar This measure excludes the size of
-  the padding, ticks and labels. Number in the interval \[0, Inf\].
-
-- thicknessmode:
-
-  Determines whether this color bar's thickness (i.e. the measure in the
-  constant color direction) is set in units of plot "fraction" or in
-  "pixels". Use \`thickness\` to set the value. One of `"fraction"`,
-  `"pixels"`.
-
-- tick0:
-
-  Sets the placement of the first tick on this axis. Use with \`dtick\`.
-  If the axis \`type\` is "log", then you must take the log of your
-  starting tick (e.g. to set the starting tick to 100, set the \`tick0\`
-  to 2) except when \`dtick\`="L\<f\>" (see \`dtick\` for more info). If
-  the axis \`type\` is "date", it should be a date string, like date
-  data. If the axis \`type\` is "category", it should be a number, using
-  the scale where each category is assigned a serial number from zero in
-  the order it appears. Any value.
-
-- tickangle:
-
-  Sets the angle of the tick labels with respect to the horizontal. For
-  example, a \`tickangle\` of -90 draws the tick labels vertically.
-  Angle in degrees.
-
-- tickcolor:
-
-  Sets the tick color. Color: a CSS color string or R color name.
-
-- tickfont:
-
-  Sets the color bar's tick label font Named list or
-  `go_isosurface_colorbar_tickfont()` object.
-
-- tickformat:
-
-  Sets the tick label formatting rule using d3 formatting mini-languages
-  which are very similar to those in Python. For numbers, see:
-  https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-  see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-  We add two items to d3's date formatter: "%h" for half of the year as
-  a decimal number as well as "%{n}f" for fractional seconds with n
-  digits. For example, "2016-10-13 09:15:23.456" with tickformat
-  "%H~%M~%S.%2f" would display "09~15~23.46" String.
-
-- tickformatstops:
-
-  List of named lists or `go_isosurface_colorbar_tickformatstop()`
-  objects.
-
-- ticklabeloverflow:
-
-  Determines how we handle tick labels that would overflow either the
-  graph div or the domain of the axis. The default value for inside tick
-  labels is "hide past domain". In other cases the default is "hide past
-  div". One of `"allow"`, `"hide past div"`, `"hide past domain"`.
-
-- ticklabelposition:
-
-  Determines where tick labels are drawn relative to the ticks. Left and
-  right options are used when \`orientation\` is "h", top and bottom
-  when \`orientation\` is "v". One of `"outside"`, `"inside"`,
-  `"outside top"`, `"inside top"`, `"outside left"`, `"inside left"`,
-  `"outside right"`, `"inside right"`, `"outside bottom"`,
-  `"inside bottom"`.
-
-- ticklabelstep:
-
-  Sets the spacing between tick labels as compared to the spacing
-  between ticks. A value of 1 (default) means each tick gets a label. A
-  value of 2 means shows every 2nd label. A larger value n means only
-  every nth tick is labeled. \`tick0\` determines which labels are
-  shown. Not implemented for axes with \`type\` "log" or
-  "multicategory", or when \`tickmode\` is "array". Integer in the
-  interval \[1, Inf\].
-
-- ticklen:
-
-  Sets the tick length (in px). Number in the interval \[0, Inf\].
-
-- tickmode:
-
-  Sets the tick mode for this axis. If "auto", the number of ticks is
-  set via \`nticks\`. If "linear", the placement of the ticks is
-  determined by a starting position \`tick0\` and a tick step \`dtick\`
-  ("linear" is the default value if \`tick0\` and \`dtick\` are
-  provided). If "array", the placement of the ticks is set via
-  \`tickvals\` and the tick text is \`ticktext\`. ("array" is the
-  default value if \`tickvals\` is provided). One of `"auto"`,
-  `"linear"`, `"array"`.
-
-- tickprefix:
-
-  Sets a tick label prefix. String.
-
-- ticks:
-
-  Determines whether ticks are drawn or not. If \*\*, this axis' ticks
-  are not drawn. If "outside" ("inside"), this axis' are drawn outside
-  (inside) the axis lines. One of `"outside"`, `"inside"`, `""`.
-
-- ticksuffix:
-
-  Sets a tick label suffix. String.
-
-- ticktext:
-
-  Sets the text displayed at the ticks position via \`tickvals\`. Only
-  has an effect if \`tickmode\` is set to "array". Used with
-  \`tickvals\`. Data array: a vector, factor, Date/POSIXct vector,
-  matrix or list.
-
-- tickvals:
-
-  Sets the values at which ticks on this axis appear. Only has an effect
-  if \`tickmode\` is set to "array". Used with \`ticktext\`. Data array:
-  a vector, factor, Date/POSIXct vector, matrix or list.
-
-- tickwidth:
-
-  Sets the tick width (in px). Number in the interval \[0, Inf\].
-
-- title:
-
-  String (the title text), named list or
-  `go_isosurface_colorbar_title()` object.
-
-- xanchor:
-
-  Sets this color bar's horizontal position anchor. This anchor binds
-  the \`x\` position to the "left", "center" or "right" of the color
-  bar. Defaults to "left" when \`orientation\` is "v" and "center" when
-  \`orientation\` is "h". One of `"left"`, `"center"`, `"right"`.
-
-- xpad:
-
-  Sets the amount of padding (in px) along the x direction. Number in
-  the interval \[0, Inf\].
-
-- xref:
-
-  Sets the container \`x\` refers to. "container" spans the entire
-  \`width\` of the plot. "paper" refers to the width of the plotting
-  area only. One of `"container"`, `"paper"`.
-
-- yanchor:
-
-  Sets this color bar's vertical position anchor This anchor binds the
-  \`y\` position to the "top", "middle" or "bottom" of the color bar.
-  Defaults to "middle" when \`orientation\` is "v" and "bottom" when
-  \`orientation\` is "h". One of `"top"`, `"middle"`, `"bottom"`.
-
-- ypad:
-
-  Sets the amount of padding (in px) along the y direction. Number in
-  the interval \[0, Inf\].
-
-- yref:
-
-  Sets the container \`y\` refers to. "container" spans the entire
-  \`height\` of the plot. "paper" refers to the height of the plotting
-  area only. One of `"container"`, `"paper"`.
-
-- color:
-
-  **`go_isosurface_colorbar_tickfont()`,
-  `go_isosurface_colorbar_title_font()`,
-  `go_isosurface_legendgrouptitle_font()`**: Color: a CSS color string
-  or R color name.
-
-  **`go_isosurface_contour()`**: Sets the color of the contour lines.
-  Color: a CSS color string or R color name.
-
-  **`go_isosurface_hoverlabel_font()`**: Color: a CSS color string or R
-  color name, or a vector of these.
-
-- family:
-
-  **`go_isosurface_colorbar_tickfont()`,
-  `go_isosurface_colorbar_title_font()`,
-  `go_isosurface_legendgrouptitle_font()`**: HTML font family - the
-  typeface that will be applied by the web browser. The web browser can
-  only apply a font if it is available on the system where it runs.
-  Provide multiple font families, separated by commas, to indicate the
-  order in which to apply fonts if they aren't available. String.
-
-  **`go_isosurface_hoverlabel_font()`**: HTML font family - the typeface
-  that will be applied by the web browser. The web browser can only
-  apply a font if it is available on the system where it runs. Provide
-  multiple font families, separated by commas, to indicate the order in
-  which to apply fonts if they aren't available. String, or a vector of
-  these.
-
-- lineposition:
-
-  **`go_isosurface_colorbar_tickfont()`,
-  `go_isosurface_colorbar_title_font()`,
-  `go_isosurface_legendgrouptitle_font()`**: Sets the kind of decoration
-  line(s) with text, such as an "under", "over" or "through" as well as
-  combinations e.g. "under+over", etc. Any combination of `"under"`,
-  `"over"`, `"through"` joined with `"+"`, or one of `"none"`.
-
-  **`go_isosurface_hoverlabel_font()`**: Sets the kind of decoration
-  line(s) with text, such as an "under", "over" or "through" as well as
-  combinations e.g. "under+over", etc. Any combination of `"under"`,
-  `"over"`, `"through"` joined with `"+"`, or one of `"none"`, or a
-  vector of these.
-
-- shadow:
-
-  **`go_isosurface_colorbar_tickfont()`,
-  `go_isosurface_colorbar_title_font()`,
-  `go_isosurface_legendgrouptitle_font()`**: Sets the shape and color of
-  the shadow behind text. "auto" places minimal shadow and applies
-  contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.
-
-  **`go_isosurface_hoverlabel_font()`**: Sets the shape and color of the
-  shadow behind text. "auto" places minimal shadow and applies contrast
-  text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.
-
-- size:
-
-  **`go_isosurface_colorbar_tickfont()`,
-  `go_isosurface_colorbar_title_font()`,
-  `go_isosurface_legendgrouptitle_font()`**: Number in the interval \[1,
-  Inf\].
-
-  **`go_isosurface_hoverlabel_font()`**: Number in the interval \[1,
-  Inf\], or a vector of these.
-
-- style:
-
-  **`go_isosurface_colorbar_tickfont()`,
-  `go_isosurface_colorbar_title_font()`,
-  `go_isosurface_legendgrouptitle_font()`**: Sets whether a font should
-  be styled with a normal or italic face from its family. One of
-  `"normal"`, `"italic"`.
-
-  **`go_isosurface_hoverlabel_font()`**: Sets whether a font should be
-  styled with a normal or italic face from its family. One of
-  `"normal"`, `"italic"`, or a vector of these.
-
-- textcase:
-
-  **`go_isosurface_colorbar_tickfont()`,
-  `go_isosurface_colorbar_title_font()`,
-  `go_isosurface_legendgrouptitle_font()`**: Sets capitalization of
-  text. It can be used to make text appear in all-uppercase or
-  all-lowercase, or with each word capitalized. One of `"normal"`,
-  `"word caps"`, `"upper"`, `"lower"`.
-
-  **`go_isosurface_hoverlabel_font()`**: Sets capitalization of text. It
-  can be used to make text appear in all-uppercase or all-lowercase, or
-  with each word capitalized. One of `"normal"`, `"word caps"`,
-  `"upper"`, `"lower"`, or a vector of these.
-
-- variant:
-
-  **`go_isosurface_colorbar_tickfont()`,
-  `go_isosurface_colorbar_title_font()`,
-  `go_isosurface_legendgrouptitle_font()`**: Sets the variant of the
-  font. One of `"normal"`, `"small-caps"`, `"all-small-caps"`,
-  `"all-petite-caps"`, `"petite-caps"`, `"unicase"`.
-
-  **`go_isosurface_hoverlabel_font()`**: Sets the variant of the font.
-  One of `"normal"`, `"small-caps"`, `"all-small-caps"`,
-  `"all-petite-caps"`, `"petite-caps"`, `"unicase"`, or a vector of
-  these.
-
-- weight:
-
-  **`go_isosurface_colorbar_tickfont()`,
-  `go_isosurface_colorbar_title_font()`,
-  `go_isosurface_legendgrouptitle_font()`**: Sets the weight (or
-  boldness) of the font. Integer in the interval \[1, 1000\].
-
-  **`go_isosurface_hoverlabel_font()`**: Sets the weight (or boldness)
-  of the font. Integer in the interval \[1, 1000\], or a vector of
-  these.
-
-- dtickrange:
-
-  range \["min", "max"\], where "min", "max" - dtick values which
-  describe some zoom level, it is possible to omit "min" or "max" value
-  by passing "null" Vector or list of 2 element(s).
-
-- enabled:
-
-  Determines whether or not this stop is used. If \`false\`, this stop
-  is ignored even within its \`dtickrange\`. Logical.
-
-- templateitemname:
-
-  Used to refer to a named item in this array in the template. Named
-  items from the template will be created even without a matching item
-  in the input figure, but you can modify one by making an item with
-  \`templateitemname\` matching its \`name\`, alongside your
-  modifications (including \`visible: false\` or \`enabled: false\` to
-  hide it). If there is no template or no matching item, this item will
-  be hidden unless you explicitly show it with \`visible: true\`.
-  String.
-
-- font:
-
-  **`go_isosurface_colorbar_title()`**: Sets this color bar's title
-  font. Named list or `go_isosurface_colorbar_title_font()` object.
-
-  **`go_isosurface_hoverlabel()`**: Sets the font used in hover labels.
-  Named list or `go_isosurface_hoverlabel_font()` object.
-
-  **`go_isosurface_legendgrouptitle()`**: Sets this legend group's title
-  font. Named list or `go_isosurface_legendgrouptitle_font()` object.
-
-- side:
-
-  Determines the location of color bar's title with respect to the color
-  bar. Defaults to "top" when \`orientation\` is "v" and defaults to
-  "right" when \`orientation\` is "h". One of `"right"`, `"top"`,
-  `"bottom"`.
-
-- width:
-
-  Sets the width of the contour lines. Number in the interval \[1, 16\].
-
-- align:
-
-  Sets the horizontal alignment of the text content within hover label
-  box. Has an effect only if the hover label text spans two or more
-  lines One of `"left"`, `"right"`, `"auto"`, or a vector of these.
-
-- namelength:
-
-  Sets the default length (in number of characters) of the trace name in
-  the hover labels for all traces. -1 shows the whole name regardless of
-  length. 0-3 shows the first 0-3 characters, and an integer \>3 will
-  show the whole name if it is less than that many characters, but if it
-  is longer, will truncate to \`namelength - 3\` characters and add an
-  ellipsis. Integer in the interval \[-1, Inf\], or a vector of these.
-
-- showarrow:
-
-  Sets whether or not to show the hover label arrow/triangle pointing to
-  the data point. Logical.
-
-- ambient:
-
-  Ambient light increases overall color visibility but can wash out the
-  image. Number in the interval \[0, 1\].
-
-- diffuse:
-
-  Represents the extent that incident rays are reflected in a range of
-  angles. Number in the interval \[0, 1\].
-
-- facenormalsepsilon:
-
-  Epsilon for face normals calculation avoids math issues arising from
-  degenerate geometry. Number in the interval \[0, 1\].
-
-- fresnel:
-
-  Represents the reflectance as a dependency of the viewing angle; e.g.
-  paper is reflective when viewing it from the edge of the paper (almost
-  90 degrees), causing shine. Number in the interval \[0, 5\].
-
-- roughness:
-
-  Alters specular reflection; the rougher the surface, the wider and
-  less contrasty the shine. Number in the interval \[0, 1\].
-
-- specular:
-
-  Represents the level that incident rays are reflected in a single
-  direction, causing shine. Number in the interval \[0, 2\].
-
-- vertexnormalsepsilon:
-
-  Epsilon for vertex normals calculation avoids math issues arising from
-  degenerate geometry. Number in the interval \[0, 1\].
-
-- locations:
-
-  **`go_isosurface_slices_x()`**: Specifies the location(s) of slices on
-  the axis. When not specified slices would be created for all points of
-  the axis x except start and end. Data array: a vector, factor,
-  Date/POSIXct vector, matrix or list.
-
-  **`go_isosurface_slices_y()`**: Specifies the location(s) of slices on
-  the axis. When not specified slices would be created for all points of
-  the axis y except start and end. Data array: a vector, factor,
-  Date/POSIXct vector, matrix or list.
-
-  **`go_isosurface_slices_z()`**: Specifies the location(s) of slices on
-  the axis. When not specified slices would be created for all points of
-  the axis z except start and end. Data array: a vector, factor,
-  Date/POSIXct vector, matrix or list.
-
-- count:
-
-  Sets the number of iso-surfaces between minimum and maximum
-  iso-values. By default this value is 2 meaning that only minimum and
-  maximum surfaces would be drawn. Integer in the interval \[1, Inf\].
-
-- pattern:
-
-  Sets the surface pattern of the iso-surface 3-D sections. The default
-  pattern of the surface is \`all\` meaning that the rest of surface
-  elements would be shaded. The check options (either 1 or 2) could be
-  used to draw half of the squares on the surface. Using various
-  combinations of capital \`A\`, \`B\`, \`C\`, \`D\` and \`E\` may also
-  be used to reduce the number of triangles on the iso-surfaces and
-  creating other patterns of interest. Any combination of `"A"`, `"B"`,
-  `"C"`, `"D"`, `"E"` joined with `"+"`, or one of `"all"`, `"odd"`,
-  `"even"`.
-
 ## Value
 
-Each `go_*()` function returns a graph object of the same class as its
-name; `add_*()` functions return the modified figure.
+`go_*()` functions return a graph object; `add_*()` functions return the
+modified figure.
 
 ## Details
 
-`go_isosurface()` and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-[`plotly_obj-modify()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
-`add_isosurface()` creates an object and adds it to a figure.
+`go_isosurface()` creates a validated graph object (a named list).
+`add_isosurface()` creates one and adds it to a figure.
 
-Nested objects documented here:
-
-- `go_isosurface_caps()`:
-
-  `isosurface.caps`
-
-- `go_isosurface_caps_x()`:
-
-  `isosurface.caps.x`
-
-- `go_isosurface_caps_y()`:
-
-  `isosurface.caps.y`
-
-- `go_isosurface_caps_z()`:
-
-  `isosurface.caps.z`
-
-- `go_isosurface_colorbar()`:
-
-  `isosurface.colorbar`
-
-- `go_isosurface_colorbar_tickfont()`:
-
-  `isosurface.colorbar.tickfont`: Sets the color bar's tick label font
-
-- `go_isosurface_colorbar_tickformatstop()`:
-
-  `isosurface.colorbar.tickformatstop`
-
-- `go_isosurface_colorbar_title()`:
-
-  `isosurface.colorbar.title`
-
-- `go_isosurface_colorbar_title_font()`:
-
-  `isosurface.colorbar.title.font`: Sets this color bar's title font.
-
-- `go_isosurface_contour()`:
-
-  `isosurface.contour`
-
-- `go_isosurface_hoverlabel()`:
-
-  `isosurface.hoverlabel`
-
-- `go_isosurface_hoverlabel_font()`:
-
-  `isosurface.hoverlabel.font`: Sets the font used in hover labels.
-
-- `go_isosurface_legendgrouptitle()`:
-
-  `isosurface.legendgrouptitle`
-
-- `go_isosurface_legendgrouptitle_font()`:
-
-  `isosurface.legendgrouptitle.font`: Sets this legend group's title
-  font.
-
-- `go_isosurface_lighting()`:
-
-  `isosurface.lighting`
-
-- `go_isosurface_lightposition()`:
-
-  `isosurface.lightposition`
-
-- `go_isosurface_slices()`:
-
-  `isosurface.slices`
-
-- `go_isosurface_slices_x()`:
-
-  `isosurface.slices.x`
-
-- `go_isosurface_slices_y()`:
-
-  `isosurface.slices.y`
-
-- `go_isosurface_slices_z()`:
-
-  `isosurface.slices.z`
-
-- `go_isosurface_spaceframe()`:
-
-  `isosurface.spaceframe`
-
-- `go_isosurface_surface()`:
-
-  `isosurface.surface`
+Nested objects are given as named lists or with their constructors,
+which are linked from the arguments below. Every property is checked
+against the plotly.js schema when the object is created or modified (see
+[`plotly_obj-modify`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
+One-sided formulas (`~col`) are evaluated in the data, and then checked,
+when the trace is added with `add_<trace>()` or
+[`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md).
 
 ## See also
 
@@ -1587,20 +589,15 @@ Nested objects documented here:
 ## Examples
 
 ``` r
-go_isosurface(x = 1:3, y = c(2, 1, 3))
-#> <go_isosurface>
-#> {
-#>   "type": "isosurface",
-#>   "x": [
-#>     1,
-#>     2,
-#>     3
-#>   ],
-#>   "y": [
-#>     2,
-#>     1,
-#>     3
-#>   ]
-#> }
-#> 
+d <- expand.grid(x = 1:5, y = 1:5, z = 1:5)
+d |>
+  go_figure() |>
+  add_isosurface(
+    x = ~x,
+    y = ~y,
+    z = ~z,
+    value = ~x * y * z,
+    isomin = 10,
+    isomax = 50
+  )
 ```

@@ -48,12 +48,12 @@ for_each_smith(fig, fn, selector = NULL, row = NULL, col = NULL)
 - patch:
 
   A named list or
-  [`go_layout_smith()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_smith.md)
+  [`go_smith()`](https://msummersgill.github.io/plotly.R.core/reference/go_smith.md)
   object of property updates.
 
 - ...:
 
-  Further named updates (names may use magic underscores).
+  Further named updates, by their full names.
 
 - overwrite:
 
@@ -66,6 +66,10 @@ for_each_smith(fig, fn, selector = NULL, row = NULL, col = NULL)
 
 ## Value
 
-`select_smiths()` returns a named list of
-[`go_layout_smith()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_smith.md)
-objects; the others return the modified figure.
+`select_smiths()` returns a named list of smith objects; the others
+return the modified figure.
+
+## See also
+
+[`go_smith()`](https://msummersgill.github.io/plotly.R.core/reference/go_smith.md)
+for the properties of smith objects.

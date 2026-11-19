@@ -2,9 +2,10 @@
 
 Updates layout properties, merging nested objects (e.g. `xaxis`) with
 any existing values unless `overwrite = TRUE`. Properties can be given
-in `patch`, in `...`, or both; `...` is applied last. Names may use
-"magic underscores": `xaxis_title_text = "x"` is the same as
-`xaxis = list(title = list(text = "x"))`.
+in `patch`, in `...`, or both; `...` is applied last. Nested properties
+are given as named lists, which are merged into the existing objects:
+`xaxis = list(title = list(text = "x"))` sets the x axis title and keeps
+its other properties.
 
 ## Usage
 
@@ -40,6 +41,6 @@ The modified figure.
 
 ``` r
 go_figure() |>
-  update_layout(title = "Title", xaxis = list(range = c(0, 10))) |>
-  update_layout(xaxis_title = "x", yaxis = list(type = "log"))
+  update_layout(title = "Title", xaxis = go_xaxis(range = c(0, 10))) |>
+  update_layout(xaxis = go_xaxis(title = "x"), yaxis = go_yaxis(type = "log"))
 ```

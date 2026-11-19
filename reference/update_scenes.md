@@ -48,12 +48,12 @@ for_each_scene(fig, fn, selector = NULL, row = NULL, col = NULL)
 - patch:
 
   A named list or
-  [`go_layout_scene()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
+  [`go_scene()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene.md)
   object of property updates.
 
 - ...:
 
-  Further named updates (names may use magic underscores).
+  Further named updates, by their full names.
 
 - overwrite:
 
@@ -66,6 +66,10 @@ for_each_scene(fig, fn, selector = NULL, row = NULL, col = NULL)
 
 ## Value
 
-`select_scenes()` returns a named list of
-[`go_layout_scene()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-objects; the others return the modified figure.
+`select_scenes()` returns a named list of scene objects; the others
+return the modified figure.
+
+## See also
+
+[`go_scene()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene.md)
+for the properties of scene objects.

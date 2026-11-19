@@ -107,146 +107,6 @@ represented as a vector of column vectors.</p>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">go_table_cells</span><span class="op">(</span></span>
-<span>  arg <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  align <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  font <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  format <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  height <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  line <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  prefix <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  suffix <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  values <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">go_table_cells_fill</span><span class="op">(</span>arg <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, color <span class="op">=</span> <span class="cn">NULL</span>, skip_invalid <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">go_table_cells_font</span><span class="op">(</span></span>
-<span>  arg <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  color <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  family <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  lineposition <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  shadow <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  size <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  style <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  textcase <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  variant <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  weight <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">go_table_cells_line</span><span class="op">(</span></span>
-<span>  arg <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  color <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  width <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">go_table_domain</span><span class="op">(</span></span>
-<span>  arg <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  column <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  row <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">go_table_header</span><span class="op">(</span></span>
-<span>  arg <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  align <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  font <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  format <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  height <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  line <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  prefix <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  suffix <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  values <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">go_table_header_fill</span><span class="op">(</span>arg <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, color <span class="op">=</span> <span class="cn">NULL</span>, skip_invalid <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">go_table_header_font</span><span class="op">(</span></span>
-<span>  arg <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  color <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  family <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  lineposition <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  shadow <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  size <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  style <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  textcase <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  variant <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  weight <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">go_table_header_line</span><span class="op">(</span></span>
-<span>  arg <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  color <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  width <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">go_table_hoverlabel</span><span class="op">(</span></span>
-<span>  arg <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  align <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  bgcolor <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  bordercolor <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  font <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  namelength <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  showarrow <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">go_table_hoverlabel_font</span><span class="op">(</span></span>
-<span>  arg <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  color <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  family <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  lineposition <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  shadow <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  size <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  style <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  textcase <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  variant <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  weight <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">go_table_legendgrouptitle</span><span class="op">(</span></span>
-<span>  arg <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  font <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  text <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">go_table_legendgrouptitle_font</span><span class="op">(</span></span>
-<span>  arg <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  color <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  family <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  lineposition <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  shadow <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  size <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  style <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  textcase <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  variant <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  weight <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -259,15 +119,13 @@ represented as a vector of column vectors.</p>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Further properties, including nested properties in
-"magic underscore" form, e.g. <code>marker_size = 10</code> for
-<code>marker = list(size = 10)</code>. Property values may be one-sided
-formulas, evaluated in <code>data</code> for <code>add_*()</code> functions.</p></dd>
+<dd><p>Not used: properties must be named in full.</p></dd>
 
 
 <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>A data frame in which formula properties (e.g. <code>x =
-~col</code>, <code>marker_size = ~col</code>) are evaluated. Default: the data
+~col</code>, <code>marker = list(size = ~col)</code>, <code>marker =
+go_scatter_marker(size = ~col)</code>) are evaluated. Default: the data
 given to <code><a href="go_figure.html">go_figure()</a></code>. Only the evaluated values are
 added to the trace. A <code><a href="https://rdrr.io/pkg/crosstalk/man/SharedData.html" class="external-link">crosstalk::SharedData</a></code> works the same way,
 and links the trace to its crosstalk group (see
@@ -275,7 +133,10 @@ and links the trace to its crosstalk group (see
 
 
 <dt id="arg-cells">cells<a class="anchor" aria-label="anchor" href="#arg-cells"></a></dt>
-<dd><p>Named list or <code>go_table_cells()</code> object.</p></dd>
+<dd><p>A <code><a href="go_table_cells.html">go_table_cells()</a></code> object or named list, with
+properties <code>align</code>, <code>fill</code>, <code>font</code>, <code>format</code>,
+<code>height</code>, <code>line</code>, <code>prefix</code>, <code>suffix</code> and
+<code>values</code> (see <code><a href="go_table_cells.html">go_table_cells()</a></code>).</p></dd>
 
 
 <dt id="arg-columnorder">columnorder<a class="anchor" aria-label="anchor" href="#arg-columnorder"></a></dt>
@@ -300,11 +161,16 @@ array: a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-domain">domain<a class="anchor" aria-label="anchor" href="#arg-domain"></a></dt>
-<dd><p>Named list or <code>go_table_domain()</code> object.</p></dd>
+<dd><p>A <code><a href="go_domain.html">go_domain()</a></code> object or named list, with
+properties <code>column</code>, <code>row</code>, <code>x</code> and <code>y</code> (see
+<code><a href="go_domain.html">go_domain()</a></code>).</p></dd>
 
 
 <dt id="arg-header">header<a class="anchor" aria-label="anchor" href="#arg-header"></a></dt>
-<dd><p>Named list or <code>go_table_header()</code> object.</p></dd>
+<dd><p>A <code><a href="go_table_header.html">go_table_header()</a></code> object or named list,
+with properties <code>align</code>, <code>fill</code>, <code>font</code>, <code>format</code>,
+<code>height</code>, <code>line</code>, <code>prefix</code>, <code>suffix</code> and
+<code>values</code> (see <code><a href="go_table_header.html">go_table_header()</a></code>).</p></dd>
 
 
 <dt id="arg-hoverinfo">hoverinfo<a class="anchor" aria-label="anchor" href="#arg-hoverinfo"></a></dt>
@@ -317,8 +183,10 @@ combination of <code>"x"</code>, <code>"y"</code>, <code>"z"</code>, <code>"text
 
 
 <dt id="arg-hoverlabel">hoverlabel<a class="anchor" aria-label="anchor" href="#arg-hoverlabel"></a></dt>
-<dd><p>Named list or <code>go_table_hoverlabel()</code>
-object.</p></dd>
+<dd><p>A <code><a href="go_hoverlabel.html">go_hoverlabel()</a></code> object or named list,
+with properties <code>align</code>, <code>bgcolor</code>, <code>bordercolor</code>,
+<code>font</code>, <code>namelength</code> and <code>showarrow</code> (see
+<code><a href="go_hoverlabel.html">go_hoverlabel()</a></code>).</p></dd>
 
 
 <dt id="arg-ids">ids<a class="anchor" aria-label="anchor" href="#arg-ids"></a></dt>
@@ -337,8 +205,9 @@ Settings for these legends are set in the layout, under
 
 
 <dt id="arg-legendgrouptitle">legendgrouptitle<a class="anchor" aria-label="anchor" href="#arg-legendgrouptitle"></a></dt>
-<dd><p>Named list or
-<code>go_table_legendgrouptitle()</code> object.</p></dd>
+<dd><p>A <code><a href="go_legendgrouptitle.html">go_legendgrouptitle()</a></code> object or
+named list, with properties <code>font</code> and <code>text</code> (see
+<code><a href="go_legendgrouptitle.html">go_legendgrouptitle()</a></code>).</p></dd>
 
 
 <dt id="arg-legendrank">legendrank<a class="anchor" aria-label="anchor" href="#arg-legendrank"></a></dt>
@@ -404,12 +273,9 @@ with it as it moves. Any value.</p></dd>
 
 
 <dt id="arg-row">row<a class="anchor" aria-label="anchor" href="#arg-row"></a></dt>
-<dd><p><strong><code>add_table()</code></strong>: Subplot grid row (figures
-  created with <code><a href="make_subplots.html">make_subplots()</a></code> only). May be <code>"all"</code>
-  or a vector to address several cells.</p>
-<p><strong><code>go_table_domain()</code></strong>: If there is a layout grid, use the
-  domain for this row in the grid for this table trace. Integer in the
-  interval [0, Inf].</p></dd>
+<dd><p>Subplot grid row (figures created with
+<code><a href="make_subplots.html">make_subplots()</a></code> only). May be <code>"all"</code> or a vector
+to address several cells.</p></dd>
 
 
 <dt id="arg-col">col<a class="anchor" aria-label="anchor" href="#arg-col"></a></dt>
@@ -427,294 +293,24 @@ instead of raising an error.</p></dd>
 <dd><p>Optional named list, or graph object of the same type, to
 initialise properties from (constructors). Named arguments take precedence.</p></dd>
 
-
-<dt id="arg-align">align<a class="anchor" aria-label="anchor" href="#arg-align"></a></dt>
-<dd><p><strong><code>go_table_cells()</code>, <code>go_table_header()</code></strong>:
-  Sets the horizontal alignment of the `text` within the box. Has an
-  effect only if `text` spans two or more lines (i.e. `text` contains
-  one or more &lt;br&gt; HTML tags) or if an explicit width is set to override
-  the text width. One of <code>"left"</code>, <code>"center"</code>, <code>"right"</code>,
-  or a vector of these.</p>
-<p><strong><code>go_table_hoverlabel()</code></strong>: Sets the horizontal alignment
-  of the text content within hover label box. Has an effect only if the
-  hover label text spans two or more lines One of <code>"left"</code>,
-  <code>"right"</code>, <code>"auto"</code>, or a vector of these.</p></dd>
-
-
-<dt id="arg-fill">fill<a class="anchor" aria-label="anchor" href="#arg-fill"></a></dt>
-<dd><p><strong><code>go_table_cells()</code></strong>: Named list or
-  <code>go_table_cells_fill()</code> object.</p>
-<p><strong><code>go_table_header()</code></strong>: Named list or
-  <code>go_table_header_fill()</code> object.</p></dd>
-
-
-<dt id="arg-font">font<a class="anchor" aria-label="anchor" href="#arg-font"></a></dt>
-<dd><p><strong><code>go_table_cells()</code></strong>: Named list or
-  <code>go_table_cells_font()</code> object.</p>
-<p><strong><code>go_table_header()</code></strong>: Named list or
-  <code>go_table_header_font()</code> object.</p>
-<p><strong><code>go_table_hoverlabel()</code></strong>: Sets the font used in hover
-  labels. Named list or <code>go_table_hoverlabel_font()</code> object.</p>
-<p><strong><code>go_table_legendgrouptitle()</code></strong>: Sets this legend group's
-  title font. Named list or
-  <code>go_table_legendgrouptitle_font()</code> object.</p></dd>
-
-
-<dt id="arg-format">format<a class="anchor" aria-label="anchor" href="#arg-format"></a></dt>
-<dd><p>Sets the cell value formatting rule using d3 formatting
-mini-languages which are very similar to those in Python. For numbers,
-see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. Data
-array: a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
-
-
-<dt id="arg-height">height<a class="anchor" aria-label="anchor" href="#arg-height"></a></dt>
-<dd><p>The height of cells. Number.</p></dd>
-
-
-<dt id="arg-line">line<a class="anchor" aria-label="anchor" href="#arg-line"></a></dt>
-<dd><p><strong><code>go_table_cells()</code></strong>: Named list or
-  <code>go_table_cells_line()</code> object.</p>
-<p><strong><code>go_table_header()</code></strong>: Named list or
-  <code>go_table_header_line()</code> object.</p></dd>
-
-
-<dt id="arg-prefix">prefix<a class="anchor" aria-label="anchor" href="#arg-prefix"></a></dt>
-<dd><p>Prefix for cell values. String, or a vector of these.</p></dd>
-
-
-<dt id="arg-suffix">suffix<a class="anchor" aria-label="anchor" href="#arg-suffix"></a></dt>
-<dd><p>Suffix for cell values. String, or a vector of these.</p></dd>
-
-
-<dt id="arg-values">values<a class="anchor" aria-label="anchor" href="#arg-values"></a></dt>
-<dd><p><strong><code>go_table_cells()</code></strong>: Cell values.
-  `values[m][n]` represents the value of the `n`th point in column `m`,
-  therefore the `values[m]` vector length for all columns must be the
-  same (longer vectors will be truncated). Each value must be a finite
-  number or a string. Data array: a vector, factor, Date/POSIXct vector,
-  matrix or list.</p>
-<p><strong><code>go_table_header()</code></strong>: Header cell values. `values[m][n]`
-  represents the value of the `n`th point in column `m`, therefore the
-  `values[m]` vector length for all columns must be the same (longer
-  vectors will be truncated). Each value must be a finite number or a
-  string. Data array: a vector, factor, Date/POSIXct vector, matrix or
-  list.</p></dd>
-
-
-<dt id="arg-color">color<a class="anchor" aria-label="anchor" href="#arg-color"></a></dt>
-<dd><p><strong><code>go_table_cells_fill()</code>,
-  <code>go_table_header_fill()</code></strong>: Sets the cell fill color. It accepts
-  either a specific color or an array of colors or a 2D array of colors.
-  Color: a CSS color string or R color name, or a vector of these.</p>
-<p><strong><code>go_table_cells_font()</code>, <code>go_table_cells_line()</code>,
-  <code>go_table_header_font()</code>, <code>go_table_header_line()</code>,
-  <code>go_table_hoverlabel_font()</code></strong>: Color: a CSS color string or R
-  color name, or a vector of these.</p>
-<p><strong><code>go_table_legendgrouptitle_font()</code></strong>: Color: a CSS color
-  string or R color name.</p></dd>
-
-
-<dt id="arg-family">family<a class="anchor" aria-label="anchor" href="#arg-family"></a></dt>
-<dd><p><strong><code>go_table_cells_font()</code>,
-  <code>go_table_header_font()</code>, <code>go_table_hoverlabel_font()</code></strong>:
-  HTML font family - the typeface that will be applied by the web
-  browser. The web browser can only apply a font if it is available on
-  the system where it runs. Provide multiple font families, separated by
-  commas, to indicate the order in which to apply fonts if they aren't
-  available. String, or a vector of these.</p>
-<p><strong><code>go_table_legendgrouptitle_font()</code></strong>: HTML font family -
-  the typeface that will be applied by the web browser. The web browser
-  can only apply a font if it is available on the system where it runs.
-  Provide multiple font families, separated by commas, to indicate the
-  order in which to apply fonts if they aren't available. String.</p></dd>
-
-
-<dt id="arg-lineposition">lineposition<a class="anchor" aria-label="anchor" href="#arg-lineposition"></a></dt>
-<dd><p><strong><code>go_table_cells_font()</code>,
-  <code>go_table_header_font()</code>, <code>go_table_hoverlabel_font()</code></strong>:
-  Sets the kind of decoration line(s) with text, such as an "under",
-  "over" or "through" as well as combinations e.g. "under+over", etc.
-  Any combination of <code>"under"</code>, <code>"over"</code>, <code>"through"</code>
-  joined with <code>"+"</code>, or one of <code>"none"</code>, or a vector of these.</p>
-<p><strong><code>go_table_legendgrouptitle_font()</code></strong>: Sets the kind of
-  decoration line(s) with text, such as an "under", "over" or "through"
-  as well as combinations e.g. "under+over", etc. Any combination of
-  <code>"under"</code>, <code>"over"</code>, <code>"through"</code> joined with
-  <code>"+"</code>, or one of <code>"none"</code>.</p></dd>
-
-
-<dt id="arg-shadow">shadow<a class="anchor" aria-label="anchor" href="#arg-shadow"></a></dt>
-<dd><p><strong><code>go_table_cells_font()</code>,
-  <code>go_table_header_font()</code>, <code>go_table_hoverlabel_font()</code></strong>:
-  Sets the shape and color of the shadow behind text. "auto" places
-  minimal shadow and applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.</p>
-<p><strong><code>go_table_legendgrouptitle_font()</code></strong>: Sets the shape and
-  color of the shadow behind text. "auto" places minimal shadow and
-  applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.</p></dd>
-
-
-<dt id="arg-size">size<a class="anchor" aria-label="anchor" href="#arg-size"></a></dt>
-<dd><p><strong><code>go_table_cells_font()</code>,
-  <code>go_table_header_font()</code>, <code>go_table_hoverlabel_font()</code></strong>:
-  Number in the interval [1, Inf], or a vector of these.</p>
-<p><strong><code>go_table_legendgrouptitle_font()</code></strong>: Number in the
-  interval [1, Inf].</p></dd>
-
-
-<dt id="arg-style">style<a class="anchor" aria-label="anchor" href="#arg-style"></a></dt>
-<dd><p><strong><code>go_table_cells_font()</code>,
-  <code>go_table_header_font()</code>, <code>go_table_hoverlabel_font()</code></strong>:
-  Sets whether a font should be styled with a normal or italic face from
-  its family. One of <code>"normal"</code>, <code>"italic"</code>, or a vector of
-  these.</p>
-<p><strong><code>go_table_legendgrouptitle_font()</code></strong>: Sets whether a font
-  should be styled with a normal or italic face from its family. One of
-  <code>"normal"</code>, <code>"italic"</code>.</p></dd>
-
-
-<dt id="arg-textcase">textcase<a class="anchor" aria-label="anchor" href="#arg-textcase"></a></dt>
-<dd><p><strong><code>go_table_cells_font()</code>,
-  <code>go_table_header_font()</code>, <code>go_table_hoverlabel_font()</code></strong>:
-  Sets capitalization of text. It can be used to make text appear in
-  all-uppercase or all-lowercase, or with each word capitalized. One of
-  <code>"normal"</code>, <code>"word caps"</code>, <code>"upper"</code>, <code>"lower"</code>,
-  or a vector of these.</p>
-<p><strong><code>go_table_legendgrouptitle_font()</code></strong>: Sets capitalization
-  of text. It can be used to make text appear in all-uppercase or
-  all-lowercase, or with each word capitalized. One of <code>"normal"</code>,
-  <code>"word caps"</code>, <code>"upper"</code>, <code>"lower"</code>.</p></dd>
-
-
-<dt id="arg-variant">variant<a class="anchor" aria-label="anchor" href="#arg-variant"></a></dt>
-<dd><p><strong><code>go_table_cells_font()</code>,
-  <code>go_table_header_font()</code>, <code>go_table_hoverlabel_font()</code></strong>:
-  Sets the variant of the font. One of <code>"normal"</code>,
-  <code>"small-caps"</code>, <code>"all-small-caps"</code>,
-  <code>"all-petite-caps"</code>, <code>"petite-caps"</code>, <code>"unicase"</code>, or a
-  vector of these.</p>
-<p><strong><code>go_table_legendgrouptitle_font()</code></strong>: Sets the variant of
-  the font. One of <code>"normal"</code>, <code>"small-caps"</code>,
-  <code>"all-small-caps"</code>, <code>"all-petite-caps"</code>,
-  <code>"petite-caps"</code>, <code>"unicase"</code>.</p></dd>
-
-
-<dt id="arg-weight">weight<a class="anchor" aria-label="anchor" href="#arg-weight"></a></dt>
-<dd><p><strong><code>go_table_cells_font()</code>,
-  <code>go_table_header_font()</code>, <code>go_table_hoverlabel_font()</code></strong>:
-  Sets the weight (or boldness) of the font. Integer in the interval [1,
-  1000], or a vector of these.</p>
-<p><strong><code>go_table_legendgrouptitle_font()</code></strong>: Sets the weight (or
-  boldness) of the font. Integer in the interval [1, 1000].</p></dd>
-
-
-<dt id="arg-width">width<a class="anchor" aria-label="anchor" href="#arg-width"></a></dt>
-<dd><p>Number, or a vector of these.</p></dd>
-
-
-<dt id="arg-column">column<a class="anchor" aria-label="anchor" href="#arg-column"></a></dt>
-<dd><p>If there is a layout grid, use the domain for this column
-in the grid for this table trace. Integer in the interval [0, Inf].</p></dd>
-
-
-<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>Sets the horizontal domain of this table trace (in plot
-fraction). Vector or list of 2 element(s).</p></dd>
-
-
-<dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>Sets the vertical domain of this table trace (in plot
-fraction). Vector or list of 2 element(s).</p></dd>
-
-
-<dt id="arg-bgcolor">bgcolor<a class="anchor" aria-label="anchor" href="#arg-bgcolor"></a></dt>
-<dd><p>Sets the background color of the hover labels for this
-trace Color: a CSS color string or R color name, or a vector of these.</p></dd>
-
-
-<dt id="arg-bordercolor">bordercolor<a class="anchor" aria-label="anchor" href="#arg-bordercolor"></a></dt>
-<dd><p>Sets the border color of the hover labels for this
-trace. Color: a CSS color string or R color name, or a vector of
-these.</p></dd>
-
-
-<dt id="arg-namelength">namelength<a class="anchor" aria-label="anchor" href="#arg-namelength"></a></dt>
-<dd><p>Sets the default length (in number of characters) of
-the trace name in the hover labels for all traces. -1 shows the whole
-name regardless of length. 0-3 shows the first 0-3 characters, and an
-integer &gt;3 will show the whole name if it is less than that many
-characters, but if it is longer, will truncate to `namelength - 3`
-characters and add an ellipsis. Integer in the interval [-1, Inf], or
-a vector of these.</p></dd>
-
-
-<dt id="arg-showarrow">showarrow<a class="anchor" aria-label="anchor" href="#arg-showarrow"></a></dt>
-<dd><p>Sets whether or not to show the hover label
-arrow/triangle pointing to the data point. Logical.</p></dd>
-
-
-<dt id="arg-text">text<a class="anchor" aria-label="anchor" href="#arg-text"></a></dt>
-<dd><p>Sets the title of the legend group. String.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Each <code>go_*()</code> function returns a graph object of the same
-  class as its name; <code>add_*()</code> functions return the modified figure.</p>
+    <p><code>go_*()</code> functions return a graph object;
+  <code>add_*()</code> functions return the modified figure.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>go_table()</code> and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-<code><a href="plotly_obj-modify.html">plotly_obj-modify()</a></code>). <code>add_table()</code> creates an object
-and adds it to a figure.</p>
-<p>Nested objects documented here:</p><dl><dt><code>go_table_cells()</code></dt>
-<dd><p><code>table.cells</code></p></dd>
+    <p><code>go_table()</code> creates a validated graph object (a named list).
+<code>add_table()</code> creates one and adds it to a figure.</p>
 
-<dt><code>go_table_cells_fill()</code></dt>
-<dd><p><code>table.cells.fill</code></p></dd>
-
-<dt><code>go_table_cells_font()</code></dt>
-<dd><p><code>table.cells.font</code></p></dd>
-
-<dt><code>go_table_cells_line()</code></dt>
-<dd><p><code>table.cells.line</code></p></dd>
-
-<dt><code>go_table_domain()</code></dt>
-<dd><p><code>table.domain</code></p></dd>
-
-<dt><code>go_table_header()</code></dt>
-<dd><p><code>table.header</code></p></dd>
-
-<dt><code>go_table_header_fill()</code></dt>
-<dd><p><code>table.header.fill</code></p></dd>
-
-<dt><code>go_table_header_font()</code></dt>
-<dd><p><code>table.header.font</code></p></dd>
-
-<dt><code>go_table_header_line()</code></dt>
-<dd><p><code>table.header.line</code></p></dd>
-
-<dt><code>go_table_hoverlabel()</code></dt>
-<dd><p><code>table.hoverlabel</code></p></dd>
-
-<dt><code>go_table_hoverlabel_font()</code></dt>
-<dd><p><code>table.hoverlabel.font</code>:
-Sets the font used in hover labels.</p></dd>
-
-<dt><code>go_table_legendgrouptitle()</code></dt>
-<dd><p><code>table.legendgrouptitle</code></p></dd>
-
-<dt><code>go_table_legendgrouptitle_font()</code></dt>
-<dd><p><code>table.legendgrouptitle.font</code>:
-Sets this legend group's title font.</p></dd>
-
-
-</dl></div>
+<p>Nested objects are given as named lists or with their constructors, which
+are linked from the arguments below. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+<code><a href="plotly_obj-modify.html">plotly_obj-modify</a></code>). One-sided formulas (<code>~col</code>) are
+evaluated in the data, and then checked, when the trace is added with
+<code>add_&lt;trace&gt;()</code> or <code><a href="add_traces.html">add_trace()</a></code>.</p>
+    </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="go_figure.html">go_figure()</a></code>, <code><a href="add_traces.html">add_trace()</a></code></p></div>
@@ -722,12 +318,13 @@ Sets this legend group's title font.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">go_table</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;go_table&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   "type": "table"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">d</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="go_figure.html">go_figure</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">add_table</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    header <span class="op">=</span> <span class="fu"><a href="go_table_header.html">go_table_header</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    cells <span class="op">=</span> <span class="fu"><a href="go_table_cells.html">go_table_cells</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">d</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

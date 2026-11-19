@@ -60,12 +60,12 @@ for_each_yaxis(
 - patch:
 
   A named list or
-  [`go_layout_yaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_yaxis.md)
+  [`go_yaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_yaxis.md)
   object of property updates.
 
 - ...:
 
-  Further named updates (names may use magic underscores).
+  Further named updates, by their full names.
 
 - overwrite:
 
@@ -78,6 +78,10 @@ for_each_yaxis(
 
 ## Value
 
-`select_yaxes()` returns a named list of
-[`go_layout_yaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_yaxis.md)
-objects; the others return the modified figure.
+`select_yaxes()` returns a named list of yaxis objects; the others
+return the modified figure.
+
+## See also
+
+[`go_yaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_yaxis.md)
+for the properties of yaxis objects.

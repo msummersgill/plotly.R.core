@@ -48,12 +48,12 @@ for_each_coloraxis(fig, fn, selector = NULL, row = NULL, col = NULL)
 - patch:
 
   A named list or
-  [`go_layout_coloraxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_coloraxis.md)
+  [`go_coloraxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_coloraxis.md)
   object of property updates.
 
 - ...:
 
-  Further named updates (names may use magic underscores).
+  Further named updates, by their full names.
 
 - overwrite:
 
@@ -66,6 +66,10 @@ for_each_coloraxis(fig, fn, selector = NULL, row = NULL, col = NULL)
 
 ## Value
 
-`select_coloraxes()` returns a named list of
-[`go_layout_coloraxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_coloraxis.md)
-objects; the others return the modified figure.
+`select_coloraxes()` returns a named list of coloraxis objects; the
+others return the modified figure.
+
+## See also
+
+[`go_coloraxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_coloraxis.md)
+for the properties of coloraxis objects.

@@ -1,6 +1,8 @@
 # Layout title objects
 
-Properties of `layout.title`.
+The object for the figure layout's `title`. `go_layout_title()` creates
+one, with exactly its properties; a named list with the same properties
+works too.
 
 ## Usage
 
@@ -21,54 +23,6 @@ go_layout_title(
   yref = NULL,
   skip_invalid = FALSE
 )
-
-go_layout_title_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_layout_title_pad(
-  arg = NULL,
-  ...,
-  b = NULL,
-  l = NULL,
-  r = NULL,
-  t = NULL,
-  skip_invalid = FALSE
-)
-
-go_layout_title_subtitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_layout_title_subtitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
 ```
 
 ## Arguments
@@ -76,14 +30,11 @@ go_layout_title_subtitle_font(
 - arg:
 
   Optional named list, or graph object of the same type, to initialise
-  properties from (constructors). Named arguments take precedence.
+  properties from. Named arguments take precedence.
 
 - ...:
 
-  Further properties, including nested properties in "magic underscore"
-  form, e.g. `marker_size = 10` for `marker = list(size = 10)`. Property
-  values may be one-sided formulas, evaluated in `data` for `add_*()`
-  functions.
+  Not used: properties must be named in full.
 
 - automargin:
 
@@ -100,11 +51,12 @@ go_layout_title_subtitle_font(
 
 - font:
 
-  **`go_layout_title()`**: Sets the title font. Named list or
-  `go_layout_title_font()` object.
-
-  **`go_layout_title_subtitle()`**: Sets the subtitle font. Named list
-  or `go_layout_title_subtitle_font()` object.
+  Sets the title font. A
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)
+  object or named list, with properties `color`, `family`,
+  `lineposition`, `shadow`, `size`, `style`, `textcase`, `variant` and
+  `weight` (see
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)).
 
 - pad:
 
@@ -113,17 +65,21 @@ go_layout_title_subtitle_font(
   E.g. for left padding to take effect, \`xanchor\` must be set to
   "left". The same rule applies if \`xanchor\`/\`yanchor\` is determined
   automatically. Padding is muted if the respective anchor value is
-  "middle"/"center". Named list or `go_layout_title_pad()` object.
+  "middle"/"center". A
+  [`go_title_pad()`](https://msummersgill.github.io/plotly.R.core/reference/go_title_pad.md)
+  object or named list, with properties `b`, `l`, `r` and `t` (see
+  [`go_title_pad()`](https://msummersgill.github.io/plotly.R.core/reference/go_title_pad.md)).
 
 - subtitle:
 
-  Named list or `go_layout_title_subtitle()` object.
+  A
+  [`go_title_subtitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_title_subtitle.md)
+  object or named list, with properties `font` and `text` (see
+  [`go_title_subtitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_title_subtitle.md)).
 
 - text:
 
-  **`go_layout_title()`**: Sets the plot's title. String.
-
-  **`go_layout_title_subtitle()`**: Sets the plot's subtitle. String.
+  Sets the plot's title. String.
 
 - x:
 
@@ -172,111 +128,24 @@ go_layout_title_subtitle_font(
   If `TRUE`, silently drop invalid properties instead of raising an
   error.
 
-- color:
-
-  Color: a CSS color string or R color name.
-
-- family:
-
-  HTML font family - the typeface that will be applied by the web
-  browser. The web browser can only apply a font if it is available on
-  the system where it runs. Provide multiple font families, separated by
-  commas, to indicate the order in which to apply fonts if they aren't
-  available. String.
-
-- lineposition:
-
-  Sets the kind of decoration line(s) with text, such as an "under",
-  "over" or "through" as well as combinations e.g. "under+over", etc.
-  Any combination of `"under"`, `"over"`, `"through"` joined with `"+"`,
-  or one of `"none"`.
-
-- shadow:
-
-  Sets the shape and color of the shadow behind text. "auto" places
-  minimal shadow and applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.
-
-- size:
-
-  Number in the interval \[1, Inf\].
-
-- style:
-
-  Sets whether a font should be styled with a normal or italic face from
-  its family. One of `"normal"`, `"italic"`.
-
-- textcase:
-
-  Sets capitalization of text. It can be used to make text appear in
-  all-uppercase or all-lowercase, or with each word capitalized. One of
-  `"normal"`, `"word caps"`, `"upper"`, `"lower"`.
-
-- variant:
-
-  Sets the variant of the font. One of `"normal"`, `"small-caps"`,
-  `"all-small-caps"`, `"all-petite-caps"`, `"petite-caps"`, `"unicase"`.
-
-- weight:
-
-  Sets the weight (or boldness) of the font. Integer in the interval
-  \[1, 1000\].
-
-- b:
-
-  The amount of padding (in px) along the bottom of the component.
-  Number.
-
-- l:
-
-  The amount of padding (in px) on the left side of the component.
-  Number.
-
-- r:
-
-  The amount of padding (in px) on the right side of the component.
-  Number.
-
-- t:
-
-  The amount of padding (in px) along the top of the component. Number.
-
 ## Value
 
-Each `go_*()` function returns a graph object of the same class as its
-name; `add_*()` functions return the modified figure.
+A `go_layout_title` object (a named list).
 
 ## Details
 
-`go_layout_title()` and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-[`plotly_obj-modify()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
+Nested objects are named lists, or objects of the constructors their
+arguments name. Every property is checked against the plotly.js schema
+when the object is created or modified. A property may be a one-sided
+formula (`color = ~col`): it is kept, and evaluated in the data (then
+checked) when its trace is added to a figure with `add_<trace>()` or
+[`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md).
 
-Nested objects documented here:
+## Examples
 
-- `go_layout_title_font()`:
-
-  `layout.title.font`: Sets the title font.
-
-- `go_layout_title_pad()`:
-
-  `layout.title.pad`: Sets the padding of the title. Each padding value
-  only applies when the corresponding \`xanchor\`/\`yanchor\` value is
-  set accordingly. E.g. for left padding to take effect, \`xanchor\`
-  must be set to "left". The same rule applies if
-  \`xanchor\`/\`yanchor\` is determined automatically. Padding is muted
-  if the respective anchor value is "middle"/"center".
-
-- `go_layout_title_subtitle()`:
-
-  `layout.title.subtitle`
-
-- `go_layout_title_subtitle_font()`:
-
-  `layout.title.subtitle.font`: Sets the subtitle font.
-
-## See also
-
-[`go_layout()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout.md)
+``` r
+mtcars |>
+  go_figure() |>
+  add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
+  update_layout(title = go_layout_title(text = "title"))
+```

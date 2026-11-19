@@ -59,7 +59,7 @@ tpl$layout$font
 #> [1] 18
 #> 
 
-register_template("big_font", list(layout = list(font = list(size = 20))))
+register_template("big_font", list(layout = go_layout(font = go_font(size = 20))))
 old <- default_template("plotly+big_font")
 default_template(old)
 ```

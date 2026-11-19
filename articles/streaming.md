@@ -37,7 +37,7 @@ server <- function(input, output, session) {
     go_figure() |>
       add_scatter(x = stamp(t), y = sin(as.numeric(t)), mode = "lines", name = "sin(t)") |>
       add_scatter(x = stamp(t), y = cos(as.numeric(t)), mode = "lines", name = "cos(t)") |>
-      update_layout(yaxis_range = c(-1.1, 1.1))
+      update_layout(yaxis = go_yaxis(range = c(-1.1, 1.1)))
   })
 
   proxy <- plotlyProxy("stream", session)
@@ -88,7 +88,7 @@ library(plotly.core)
 fig <- go_figure() |>
   add_scatter(x = character(), y = numeric(), mode = "lines", name = "sin(t)") |>
   add_scatter(x = character(), y = numeric(), mode = "lines", name = "cos(t)") |>
-  update_layout(height = 350, yaxis_range = c(-1.1, 1.1), xaxis_type = "date")
+  update_layout(height = 350, yaxis = go_yaxis(range = c(-1.1, 1.1)), xaxis = go_xaxis(type = "date"))
 htmlwidgets::onRender(as_widget(fig), "
 function(el) {
   var n = 600, step = 100;
@@ -144,10 +144,10 @@ server <- function(input, output, session) {
                        mode = "lines", name = "t mod 2π") |>
       add_scatterpolar(r = s - t0, theta = (s + pi / 2) %% (2 * pi), thetaunit = "radians",
                        mode = "lines", name = "(t + π/2) mod 2π") |>
-      update_layout(
-        polar_angularaxis_thetaunit = "radians", # axis labels in radians too
-        polar_radialaxis_rangemode = "normal" # not from 0: the last 60 seconds
-      )
+      update_layout(polar = go_polar(
+        angularaxis = go_polar_angularaxis(thetaunit = "radians"), # axis labels in radians too
+        radialaxis = go_polar_radialaxis(rangemode = "normal") # not from 0: the last 60 seconds
+      ))
   })
 
   proxy <- plotlyProxy("spiral", session)
@@ -182,8 +182,10 @@ spiral <- go_figure() |>
                    name = "t mod 2π") |>
   add_scatterpolar(r = numeric(), theta = numeric(), thetaunit = "radians", mode = "lines",
                    name = "(t + π/2) mod 2π") |>
-  update_layout(height = 500, polar_angularaxis_thetaunit = "radians",
-                polar_radialaxis_rangemode = "normal")
+  update_layout(height = 500, polar = go_polar(
+    angularaxis = go_polar_angularaxis(thetaunit = "radians"),
+    radialaxis = go_polar_radialaxis(rangemode = "normal")
+  ))
 htmlwidgets::onRender(as_widget(spiral), "
 function(el) {
   var n = 600, step = 100, t0 = Date.now() / 1000 - 60, tau = 2 * Math.PI;
@@ -256,16 +258,16 @@ server <- function(input, output, session) {
     go_figure() |>
       add_scatter3d(x = p$x, y = p$y, z = p$z, mode = "lines", name = "path") |>
       add_scatter3d(x = I(sin(last)), y = I(cos(last)), z = I(tan(last)),
-                    mode = "markers", marker = list(size = 6), name = "tip") |>
+                    mode = "markers", marker = go_scatter3d_marker(size = 6), name = "tip") |>
       update_layout(
-        scene = list(
-          xaxis = list(range = c(-1.1, 1.1)),
-          yaxis = list(range = c(-1.1, 1.1)),
-          zaxis = list(range = c(-10, 10)),
+        scene = go_scene(
+          xaxis = go_scene_axis(range = c(-1.1, 1.1)),
+          yaxis = go_scene_axis(range = c(-1.1, 1.1)),
+          zaxis = go_scene_axis(range = c(-10, 10)),
           aspectmode = "cube"
         ),
-        legend = list(orientation = "h", y = 1, yanchor = "bottom"), # above the plot
-        margin = list(l = 0, r = 0, t = 30, b = 0)
+        legend = go_legend(orientation = "h", y = 1, yanchor = "bottom"), # above the plot
+        margin = go_margin(l = 0, r = 0, t = 30, b = 0)
       )
   })
 
@@ -303,15 +305,15 @@ Show the code: the same update in JavaScript
 path3d <- go_figure() |>
   add_scatter3d(x = numeric(), y = numeric(), z = numeric(), mode = "lines", name = "path") |>
   add_scatter3d(x = numeric(), y = numeric(), z = numeric(), mode = "markers",
-                marker = list(size = 6), name = "tip") |>
+                marker = go_scatter3d_marker(size = 6), name = "tip") |>
   update_layout(
     height = 700,
-    legend = list(orientation = "h", y = 1, yanchor = "bottom"),
-    margin = list(l = 0, r = 0, t = 30, b = 0),
-    scene = list(
-      xaxis = list(range = c(-1.1, 1.1)),
-      yaxis = list(range = c(-1.1, 1.1)),
-      zaxis = list(range = c(-10, 10)),
+    legend = go_legend(orientation = "h", y = 1, yanchor = "bottom"),
+    margin = go_margin(l = 0, r = 0, t = 30, b = 0),
+    scene = go_scene(
+      xaxis = go_scene_axis(range = c(-1.1, 1.1)),
+      yaxis = go_scene_axis(range = c(-1.1, 1.1)),
+      zaxis = go_scene_axis(range = c(-10, 10)),
       aspectmode = "cube"
     )
   )
@@ -393,7 +395,7 @@ server <- function(input, output, session) {
         zmax = 1,
         colorscale = "RdBu"
       ) |>
-      update_layout(yaxis_title = "y (radians)")
+      update_layout(yaxis = go_yaxis(title = "y (radians)"))
   })
 
   proxy <- plotlyProxy("heat", session)
@@ -426,7 +428,7 @@ Show the code: the same update in JavaScript
 heat <- go_figure() |>
   add_heatmap(x = character(), y = seq(0, 2 * pi, length.out = 61), z = list(),
               transpose = TRUE, zmin = -1, zmax = 1, colorscale = "RdBu") |>
-  update_layout(height = 400, yaxis_title = "y (radians)", xaxis_type = "date")
+  update_layout(height = 400, yaxis = go_yaxis(title = "y (radians)"), xaxis = go_xaxis(type = "date"))
 htmlwidgets::onRender(as_widget(heat), "
 function(el) {
   var n = 600, step = 100, tau = 2 * Math.PI, y = [];

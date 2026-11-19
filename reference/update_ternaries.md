@@ -48,12 +48,12 @@ for_each_ternary(fig, fn, selector = NULL, row = NULL, col = NULL)
 - patch:
 
   A named list or
-  [`go_layout_ternary()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
+  [`go_ternary()`](https://msummersgill.github.io/plotly.R.core/reference/go_ternary.md)
   object of property updates.
 
 - ...:
 
-  Further named updates (names may use magic underscores).
+  Further named updates, by their full names.
 
 - overwrite:
 
@@ -66,6 +66,10 @@ for_each_ternary(fig, fn, selector = NULL, row = NULL, col = NULL)
 
 ## Value
 
-`select_ternaries()` returns a named list of
-[`go_layout_ternary()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-objects; the others return the modified figure.
+`select_ternaries()` returns a named list of ternary objects; the others
+return the modified figure.
+
+## See also
+
+[`go_ternary()`](https://msummersgill.github.io/plotly.R.core/reference/go_ternary.md)
+for the properties of ternary objects.

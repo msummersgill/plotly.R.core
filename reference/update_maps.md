@@ -48,12 +48,12 @@ for_each_map(fig, fn, selector = NULL, row = NULL, col = NULL)
 - patch:
 
   A named list or
-  [`go_layout_map()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_map.md)
+  [`go_map()`](https://msummersgill.github.io/plotly.R.core/reference/go_map.md)
   object of property updates.
 
 - ...:
 
-  Further named updates (names may use magic underscores).
+  Further named updates, by their full names.
 
 - overwrite:
 
@@ -66,6 +66,10 @@ for_each_map(fig, fn, selector = NULL, row = NULL, col = NULL)
 
 ## Value
 
-`select_maps()` returns a named list of
-[`go_layout_map()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_map.md)
-objects; the others return the modified figure.
+`select_maps()` returns a named list of map objects; the others return
+the modified figure.
+
+## See also
+
+[`go_map()`](https://msummersgill.github.io/plotly.R.core/reference/go_map.md)
+for the properties of map objects.

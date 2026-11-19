@@ -1,0 +1,109 @@
+# Scatter line objects
+
+The object for the `line` of a scatter trace
+([`go_scatter()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)).
+`go_scatter_line()` creates one, with exactly its properties; a named
+list with the same properties works too.
+
+## Usage
+
+``` r
+go_scatter_line(
+  arg = NULL,
+  ...,
+  backoff = NULL,
+  color = NULL,
+  dash = NULL,
+  shape = NULL,
+  simplify = NULL,
+  smoothing = NULL,
+  width = NULL,
+  skip_invalid = FALSE
+)
+```
+
+## Arguments
+
+- arg:
+
+  Optional named list, or graph object of the same type, to initialise
+  properties from. Named arguments take precedence.
+
+- ...:
+
+  Not used: properties must be named in full.
+
+- backoff:
+
+  Sets the line back off from the end point of the nth line segment (in
+  px). This option is useful e.g. to avoid overlap with arrowhead
+  markers. With "auto" the lines would trim before markers if
+  \`marker.angleref\` is set to "previous". Number in the interval \[0,
+  Inf\], or a vector of these.
+
+- color:
+
+  Sets the line color. Color: a CSS color string or R color name.
+
+- dash:
+
+  Sets the dash style of lines. Set to a dash type string ("solid",
+  "dot", "dash", "longdash", "dashdot", or "longdashdot") or a dash
+  length list in px (eg "5px,10px,2px,2px"). One of `"solid"`, `"dot"`,
+  `"dash"`, `"longdash"`, `"dashdot"`, `"longdashdot"`, or a string
+  matching
+  `"^\\d+(\\.\\d+)?(px|%)?((,|\\s)\\s*\\d+(\\.\\d+)?(px|%)?)*$"`.
+
+- shape:
+
+  Determines the line shape. With "spline" the lines are drawn using
+  spline interpolation. The other available values correspond to
+  step-wise line shapes. One of `"linear"`, `"spline"`, `"hv"`, `"vh"`,
+  `"hvh"`, `"vhv"`.
+
+- simplify:
+
+  Simplifies lines by removing nearly-collinear points. When
+  transitioning lines, it may be desirable to disable this so that the
+  number of points along the resulting SVG path is unaffected. Logical.
+
+- smoothing:
+
+  Has an effect only if \`shape\` is set to "spline" Sets the amount of
+  smoothing. 0 corresponds to no smoothing (equivalent to a "linear"
+  shape). Number in the interval \[0, 1.3\].
+
+- width:
+
+  Sets the line width (in px). Number in the interval \[0, Inf\].
+
+- skip_invalid:
+
+  If `TRUE`, silently drop invalid properties instead of raising an
+  error.
+
+## Value
+
+A `go_scatter_line` object (a named list).
+
+## Details
+
+Nested objects are named lists, or objects of the constructors their
+arguments name. Every property is checked against the plotly.js schema
+when the object is created or modified. A property may be a one-sided
+formula (`color = ~col`): it is kept, and evaluated in the data (then
+checked) when its trace is added to a figure with `add_<trace>()` or
+[`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md).
+
+## Examples
+
+``` r
+mtcars |>
+  go_figure() |>
+  add_scatter(
+    x = ~wt,
+    y = ~mpg,
+    mode = "markers",
+    line = go_scatter_line(color = "red")
+  )
+```

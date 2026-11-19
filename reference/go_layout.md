@@ -110,28 +110,31 @@ go_layout(
 
 - ...:
 
-  Further properties, including nested properties in "magic underscore"
-  form, e.g. `marker_size = 10` for `marker = list(size = 10)`. Property
-  values may be one-sided formulas, evaluated in `data` for `add_*()`
-  functions.
+  Further properties, by their full names (e.g. numbered subplots such
+  as `xaxis2` in `go_layout()`).
 
 - activeselection:
 
-  Named list or
-  [`go_layout_activeselection()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_activeselection.md)
-  object.
+  A
+  [`go_activeselection()`](https://msummersgill.github.io/plotly.R.core/reference/go_activeselection.md)
+  object or named list, with properties `fillcolor` and `opacity` (see
+  [`go_activeselection()`](https://msummersgill.github.io/plotly.R.core/reference/go_activeselection.md)).
 
 - activeshape:
 
-  Named list or
-  [`go_layout_activeshape()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_activeshape.md)
-  object.
+  A
+  [`go_activeshape()`](https://msummersgill.github.io/plotly.R.core/reference/go_activeshape.md)
+  object or named list, with properties `fillcolor` and `opacity` (see
+  [`go_activeshape()`](https://msummersgill.github.io/plotly.R.core/reference/go_activeshape.md)).
 
 - annotations:
 
-  List of named lists or
-  [`go_layout_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_annotation.md)
-  objects.
+  List, each element a
+  [`go_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/go_annotation.md)
+  object or named list, with properties `align`, `arrowcolor`,
+  `arrowhead`, `arrowside`, `arrowsize`, `arrowwidth`, `ax`, `axref`,
+  `ay`, `ayref`, `bgcolor`, `bordercolor` and 31 more (see
+  [`go_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/go_annotation.md)).
 
 - autosize:
 
@@ -237,15 +240,20 @@ go_layout(
 
 - coloraxis:
 
-  Named list or
-  [`go_layout_coloraxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_coloraxis.md)
-  object.
+  A
+  [`go_coloraxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_coloraxis.md)
+  object or named list, with properties `autocolorscale`, `cauto`,
+  `cmax`, `cmid`, `cmin`, `colorbar`, `colorscale`, `reversescale` and
+  `showscale` (see
+  [`go_coloraxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_coloraxis.md)).
 
 - colorscale:
 
-  Named list or
+  A
   [`go_layout_colorscale()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_colorscale.md)
-  object.
+  object or named list, with properties `diverging`, `sequential` and
+  `sequentialminus` (see
+  [`go_layout_colorscale()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_colorscale.md)).
 
 - colorway:
 
@@ -333,9 +341,12 @@ go_layout(
 - font:
 
   Sets the global font. Note that fonts used in traces and other layout
-  components inherit from the global font. Named list or
-  [`go_layout_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_font.md)
-  object.
+  components inherit from the global font. A
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)
+  object or named list, with properties `color`, `family`,
+  `lineposition`, `shadow`, `size`, `style`, `textcase`, `variant` and
+  `weight` (see
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)).
 
 - funnelareacolorway:
 
@@ -365,15 +376,22 @@ go_layout(
 
 - geo:
 
-  Named list or
-  [`go_layout_geo()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_geo.md)
-  object.
+  A
+  [`go_geo()`](https://msummersgill.github.io/plotly.R.core/reference/go_geo.md)
+  object or named list, with properties `bgcolor`, `center`,
+  `coastlinecolor`, `coastlinewidth`, `countrycolor`, `countrywidth`,
+  `domain`, `fitbounds`, `framecolor`, `framewidth`, `lakecolor`,
+  `landcolor` and 20 more (see
+  [`go_geo()`](https://msummersgill.github.io/plotly.R.core/reference/go_geo.md)).
 
 - grid:
 
-  Named list or
-  [`go_layout_grid()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_grid.md)
-  object.
+  A
+  [`go_grid()`](https://msummersgill.github.io/plotly.R.core/reference/go_grid.md)
+  object or named list, with properties `columns`, `domain`, `pattern`,
+  `roworder`, `rows`, `subplots`, `xaxes`, `xgap`, `xside`, `yaxes`,
+  `ygap` and `yside` (see
+  [`go_grid()`](https://msummersgill.github.io/plotly.R.core/reference/go_grid.md)).
 
 - height:
 
@@ -408,9 +426,12 @@ go_layout(
 
 - hoverlabel:
 
-  Named list or
-  [`go_layout_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_hoverlabel.md)
-  object.
+  A
+  [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md)
+  object or named list, with properties `align`, `bgcolor`,
+  `bordercolor`, `font`, `grouptitlefont`, `namelength` and `showarrow`
+  (see
+  [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md)).
 
 - hovermode:
 
@@ -455,27 +476,39 @@ go_layout(
 
 - images:
 
-  List of named lists or
+  List, each element a
   [`go_layout_image()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_image.md)
-  objects.
+  object or named list, with properties `layer`, `name`, `opacity`,
+  `sizex`, `sizey`, `sizing`, `source`, `templateitemname`, `visible`,
+  `x`, `xanchor`, `xref`, `y`, `yanchor` and `yref` (see
+  [`go_layout_image()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_image.md)).
 
 - legend:
 
-  Named list or
-  [`go_layout_legend()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_legend.md)
-  object.
+  A
+  [`go_legend()`](https://msummersgill.github.io/plotly.R.core/reference/go_legend.md)
+  object or named list, with properties `bgcolor`, `bordercolor`,
+  `borderwidth`, `entrywidth`, `entrywidthmode`, `font`, `groupclick`,
+  `groupdoubleclick`, `grouptitlefont`, `indentation`, `itemclick`,
+  `itemdoubleclick` and 19 more (see
+  [`go_legend()`](https://msummersgill.github.io/plotly.R.core/reference/go_legend.md)).
 
 - map:
 
-  Named list or
-  [`go_layout_map()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_map.md)
-  object.
+  A
+  [`go_map()`](https://msummersgill.github.io/plotly.R.core/reference/go_map.md)
+  object or named list, with properties `bearing`, `bounds`, `center`,
+  `domain`, `fitbounds`, `layers`, `pitch`, `style`, `uirevision` and
+  `zoom` (see
+  [`go_map()`](https://msummersgill.github.io/plotly.R.core/reference/go_map.md)).
 
 - margin:
 
-  Named list or
-  [`go_layout_margin()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_margin.md)
-  object.
+  A
+  [`go_margin()`](https://msummersgill.github.io/plotly.R.core/reference/go_margin.md)
+  object or named list, with properties `autoexpand`, `b`, `l`, `pad`,
+  `r` and `t` (see
+  [`go_margin()`](https://msummersgill.github.io/plotly.R.core/reference/go_margin.md)).
 
 - meta:
 
@@ -500,21 +533,28 @@ go_layout(
 
 - modebar:
 
-  Named list or
-  [`go_layout_modebar()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_modebar.md)
-  object.
+  A
+  [`go_modebar()`](https://msummersgill.github.io/plotly.R.core/reference/go_modebar.md)
+  object or named list, with properties `activecolor`, `add`, `bgcolor`,
+  `color`, `orientation`, `remove` and `uirevision` (see
+  [`go_modebar()`](https://msummersgill.github.io/plotly.R.core/reference/go_modebar.md)).
 
 - newselection:
 
-  Named list or
-  [`go_layout_newselection()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_newselection.md)
-  object.
+  A
+  [`go_newselection()`](https://msummersgill.github.io/plotly.R.core/reference/go_newselection.md)
+  object or named list, with properties `line` and `mode` (see
+  [`go_newselection()`](https://msummersgill.github.io/plotly.R.core/reference/go_newselection.md)).
 
 - newshape:
 
-  Named list or
-  [`go_layout_newshape()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_newshape.md)
-  object.
+  A
+  [`go_newshape()`](https://msummersgill.github.io/plotly.R.core/reference/go_newshape.md)
+  object or named list, with properties `drawdirection`, `fillcolor`,
+  `fillrule`, `label`, `layer`, `legend`, `legendgroup`,
+  `legendgrouptitle`, `legendrank`, `legendwidth`, `line`, `name`,
+  `opacity`, `showlegend` and `visible` (see
+  [`go_newshape()`](https://msummersgill.github.io/plotly.R.core/reference/go_newshape.md)).
 
 - paper_bgcolor:
 
@@ -535,9 +575,12 @@ go_layout(
 
 - polar:
 
-  Named list or
-  [`go_layout_polar()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_polar.md)
-  object.
+  A
+  [`go_polar()`](https://msummersgill.github.io/plotly.R.core/reference/go_polar.md)
+  object or named list, with properties `angularaxis`, `bargap`,
+  `barmode`, `bgcolor`, `domain`, `gridshape`, `hole`, `radialaxis`,
+  `sector` and `uirevision` (see
+  [`go_polar()`](https://msummersgill.github.io/plotly.R.core/reference/go_polar.md)).
 
 - scattergap:
 
@@ -556,9 +599,12 @@ go_layout(
 
 - scene:
 
-  Named list or
-  [`go_layout_scene()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  object.
+  A
+  [`go_scene()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene.md)
+  object or named list, with properties `annotations`, `aspectmode`,
+  `aspectratio`, `bgcolor`, `camera`, `domain`, `dragmode`, `hovermode`,
+  `uirevision`, `xaxis`, `yaxis` and `zaxis` (see
+  [`go_scene()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene.md)).
 
 - selectdirection:
 
@@ -574,9 +620,12 @@ go_layout(
 
 - selections:
 
-  List of named lists or
-  [`go_layout_selection()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_selection.md)
-  objects.
+  List, each element a
+  [`go_selection()`](https://msummersgill.github.io/plotly.R.core/reference/go_selection.md)
+  object or named list, with properties `line`, `name`, `opacity`,
+  `path`, `templateitemname`, `type`, `x0`, `x1`, `xref`, `y0`, `y1` and
+  `yref` (see
+  [`go_selection()`](https://msummersgill.github.io/plotly.R.core/reference/go_selection.md)).
 
 - separators:
 
@@ -586,9 +635,13 @@ go_layout(
 
 - shapes:
 
-  List of named lists or
-  [`go_layout_shape()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_shape.md)
-  objects.
+  List, each element a
+  [`go_shape()`](https://msummersgill.github.io/plotly.R.core/reference/go_shape.md)
+  object or named list, with properties `editable`, `fillcolor`,
+  `fillrule`, `label`, `layer`, `legend`, `legendgroup`,
+  `legendgrouptitle`, `legendrank`, `legendwidth`, `line`, `name` and 20
+  more (see
+  [`go_shape()`](https://msummersgill.github.io/plotly.R.core/reference/go_shape.md)).
 
 - showlegend:
 
@@ -600,15 +653,20 @@ go_layout(
 
 - sliders:
 
-  List of named lists or
-  [`go_layout_slider()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_slider.md)
-  objects.
+  List, each element a
+  [`go_slider()`](https://msummersgill.github.io/plotly.R.core/reference/go_slider.md)
+  object or named list, with properties `active`, `activebgcolor`,
+  `bgcolor`, `bordercolor`, `borderwidth`, `currentvalue`, `font`,
+  `len`, `lenmode`, `minorticklen`, `name`, `pad` and 11 more (see
+  [`go_slider()`](https://msummersgill.github.io/plotly.R.core/reference/go_slider.md)).
 
 - smith:
 
-  Named list or
-  [`go_layout_smith()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_smith.md)
-  object.
+  A
+  [`go_smith()`](https://msummersgill.github.io/plotly.R.core/reference/go_smith.md)
+  object or named list, with properties `bgcolor`, `domain`,
+  `imaginaryaxis` and `realaxis` (see
+  [`go_smith()`](https://msummersgill.github.io/plotly.R.core/reference/go_smith.md)).
 
 - spikedistance:
 
@@ -647,22 +705,28 @@ go_layout(
 
 - ternary:
 
-  Named list or
-  [`go_layout_ternary()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-  object.
+  A
+  [`go_ternary()`](https://msummersgill.github.io/plotly.R.core/reference/go_ternary.md)
+  object or named list, with properties `aaxis`, `baxis`, `bgcolor`,
+  `caxis`, `domain`, `sum` and `uirevision` (see
+  [`go_ternary()`](https://msummersgill.github.io/plotly.R.core/reference/go_ternary.md)).
 
 - title:
 
-  String (the title text), named list or
+  String (the title text), or a
   [`go_layout_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_title.md)
-  object.
+  object or named list, with properties `automargin`, `font`, `pad`,
+  `subtitle`, `text`, `x`, `xanchor`, `xref`, `y`, `yanchor` and `yref`
+  (see
+  [`go_layout_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_title.md)).
 
 - transition:
 
-  Sets transition options used during Plotly.react updates. Named list
-  or
+  Sets transition options used during Plotly.react updates. A
   [`go_layout_transition()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_transition.md)
-  object.
+  object or named list, with properties `duration`, `easing` and
+  `ordering` (see
+  [`go_layout_transition()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_transition.md)).
 
 - treemapcolorway:
 
@@ -691,15 +755,19 @@ go_layout(
 
 - uniformtext:
 
-  Named list or
-  [`go_layout_uniformtext()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_uniformtext.md)
-  object.
+  A
+  [`go_uniformtext()`](https://msummersgill.github.io/plotly.R.core/reference/go_uniformtext.md)
+  object or named list, with properties `minsize` and `mode` (see
+  [`go_uniformtext()`](https://msummersgill.github.io/plotly.R.core/reference/go_uniformtext.md)).
 
 - updatemenus:
 
-  List of named lists or
-  [`go_layout_updatemenu()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_updatemenu.md)
-  objects.
+  List, each element a
+  [`go_updatemenu()`](https://msummersgill.github.io/plotly.R.core/reference/go_updatemenu.md)
+  object or named list, with properties `active`, `bgcolor`,
+  `bordercolor`, `borderwidth`, `buttons`, `direction`, `font`, `name`,
+  `pad`, `showactive`, `templateitemname`, `type` and 5 more (see
+  [`go_updatemenu()`](https://msummersgill.github.io/plotly.R.core/reference/go_updatemenu.md)).
 
 - violingap:
 
@@ -746,15 +814,23 @@ go_layout(
 
 - xaxis:
 
-  Named list or
-  [`go_layout_xaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md)
-  object.
+  A
+  [`go_xaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis.md)
+  object or named list, with properties `anchor`, `automargin`,
+  `autorange`, `autorangeoptions`, `autotickangles`, `autotypenumbers`,
+  `calendar`, `categoryarray`, `categoryorder`, `color`, `constrain`,
+  `constraintoward` and 80 more (see
+  [`go_xaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis.md)).
 
 - yaxis:
 
-  Named list or
-  [`go_layout_yaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_yaxis.md)
-  object.
+  A
+  [`go_yaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_yaxis.md)
+  object or named list, with properties `anchor`, `automargin`,
+  `autorange`, `autorangeoptions`, `autoshift`, `autotickangles`,
+  `autotypenumbers`, `calendar`, `categoryarray`, `categoryorder`,
+  `color`, `constrain` and 80 more (see
+  [`go_yaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_yaxis.md)).
 
 - skip_invalid:
 
@@ -763,15 +839,20 @@ go_layout(
 
 ## Value
 
-Each `go_*()` function returns a graph object of the same class as its
-name; `add_*()` functions return the modified figure.
+`go_*()` functions return a graph object; `add_*()` functions return the
+modified figure.
 
 ## Details
 
-`go_layout()` create validated graph objects (named lists). Every
-property is checked against the plotly.js schema when an object is
-created or modified (see
-[`plotly_obj-modify()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
+`go_layout()` creates a validated graph object (a named list).
+
+Nested objects are given as named lists or with their constructors,
+which are linked from the arguments below. Every property is checked
+against the plotly.js schema when the object is created or modified (see
+[`plotly_obj-modify`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
+One-sided formulas (`~col`) are evaluated in the data, and then checked,
+when the trace is added with `add_<trace>()` or
+[`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md).
 
 ## See also
 
@@ -781,20 +862,20 @@ created or modified (see
 ## Examples
 
 ``` r
-go_layout(title = "My plot", xaxis = list(title = "x", range = c(0, 10)))
+go_layout(title = "My plot", xaxis = go_xaxis(title = "x", range = c(0, 10)))
 #> <go_layout>
 #> {
 #>   "title": {
 #>     "text": "My plot"
 #>   },
 #>   "xaxis": {
-#>     "title": {
-#>       "text": "x"
-#>     },
 #>     "range": [
 #>       0,
 #>       10
-#>     ]
+#>     ],
+#>     "title": {
+#>       "text": "x"
+#>     }
 #>   }
 #> }
 #> 

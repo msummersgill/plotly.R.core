@@ -54,11 +54,11 @@ for_each_shape(
 - patch:
 
   A named list of property updates (see
-  [`go_layout_shape()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_shape.md)).
+  [`add_shape()`](https://msummersgill.github.io/plotly.R.core/reference/add_shape.md)).
 
 - ...:
 
-  Further named updates (names may use magic underscores).
+  Further named updates, by their full names.
 
 - overwrite:
 
@@ -71,10 +71,9 @@ for_each_shape(
 
 ## Value
 
-`select_shapes()` returns a list of
-[`go_layout_shape()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_shape.md)
-objects; the others return the modified figure.
+`select_shapes()` returns a list of shape objects; the others return the
+modified figure.
 
 ## See also
 
-[`add_shape()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_shape.md)
+[`add_shape()`](https://msummersgill.github.io/plotly.R.core/reference/add_shape.md)

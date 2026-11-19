@@ -47,7 +47,7 @@ print_grid(fig)
 #> [ (1,1) x,y   ]  [ (1,2) polar ]
 #> [ (2,1) x2,y2           -      ]
 get_subplot(fig, 1, 2)
-#> <go_layout_polar>
+#> <layout.polar>
 #> {
 #>   "domain": {
 #>     "x": [

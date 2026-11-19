@@ -48,12 +48,12 @@ for_each_legend(fig, fn, selector = NULL, row = NULL, col = NULL)
 - patch:
 
   A named list or
-  [`go_layout_legend()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_legend.md)
+  [`go_legend()`](https://msummersgill.github.io/plotly.R.core/reference/go_legend.md)
   object of property updates.
 
 - ...:
 
-  Further named updates (names may use magic underscores).
+  Further named updates, by their full names.
 
 - overwrite:
 
@@ -66,6 +66,10 @@ for_each_legend(fig, fn, selector = NULL, row = NULL, col = NULL)
 
 ## Value
 
-`select_legends()` returns a named list of
-[`go_layout_legend()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_legend.md)
-objects; the others return the modified figure.
+`select_legends()` returns a named list of legend objects; the others
+return the modified figure.
+
+## See also
+
+[`go_legend()`](https://msummersgill.github.io/plotly.R.core/reference/go_legend.md)
+for the properties of legend objects.

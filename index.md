@@ -14,13 +14,20 @@ stand-alone.
   precision floats allows up to 2x reduction of browser memory. *(See
   the render-performance vignette for more details)*
 - **Machine-generated code and documentation from the plotly.js
-  schema.** All 47 trace types and every layout object have a
-  machine-generated `go_*()` constructor
-  *([`go_scatter()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md),[`go_layout_xaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md),
-  … 979 in total)* and comprehensive R documentation of arguments and
-  thorough validation generated from the schema. Future changes to the
-  plotly.js schema can be ported to the R implementation without
-  hand-writing any R code or documentation.
+  schema.** Every object in the schema has a machine-generated `go_*()`
+  constructor with exactly its properties: traces
+  ([`go_scatter()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)),
+  the layout, objects shared across the schema
+  ([`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md),
+  [`go_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_colorbar.md),
+  …) and every other nested object
+  ([`go_scatter_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter_marker.md),
+  [`go_xaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis.md),
+  [`go_sankey_link()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey_link.md),
+  …), with comprehensive R documentation and thorough validation
+  generated from the schema. Future changes to the plotly.js schema can
+  be ported to the R implementation without hand-writing any R code or
+  documentation.
 - **Full backwards compatibility with the plotly R package.** plotly’s
   `plot_ly()` and `ggplotly()` plots are rendered by plotly.core, so
   existing plotly R code gets the same performance work and plotly.js
@@ -84,18 +91,18 @@ mtcars |>
     y = ~mpg,
     mode = "markers",
     text = rownames(mtcars),
-    marker = list(
+    marker = go_scatter_marker(
       size = 12,
       color = ~cyl,
       colorscale = "Viridis",
       showscale = TRUE,
-      colorbar = list(title = "Cylinders")
+      colorbar = go_colorbar(title = "Cylinders")
     ),
     hovertemplate = "%{text}<br>Weight: %{x} (1000 lbs)<br>MPG: %{y}<extra></extra>"
   ) |>
   update_layout(title = "Fuel economy vs. weight (mtcars)") |>
-  update_xaxes(title_text = "Weight (1000 lbs)") |>
-  update_yaxes(title_text = "Miles per gallon")
+  update_xaxes(title = "Weight (1000 lbs)") |>
+  update_yaxes(title = "Miles per gallon")
 ```
 
 ![](reference/figures/README-mtcars-scatter.png)
@@ -117,7 +124,7 @@ fig <- make_subplots(
               row = 1, col = 1, secondary_y = TRUE) |>
   add_pie(labels = c("4", "6", "8"), values = as.vector(table(mtcars$cyl)), row = 1, col = 2) |>
   add_bar(x = rownames(mtcars), y = mtcars$qsec, name = "qsec", row = 2, col = 1) |>
-  update_yaxes(title_text = "hp", row = 1, col = 1, secondary_y = TRUE) |>
+  update_yaxes(title = "hp", row = 1, col = 1, secondary_y = TRUE) |>
   update_layout(showlegend = FALSE)
 ```
 
@@ -130,9 +137,52 @@ chart, and a bar chart spanning the bottom row
 
 ## Graph objects and validation
 
-Nested properties can also be written with “magic underscores”, as in
-plotly.py: `marker_size = 12` is the same as `marker = list(size = 12)`.
-Invalid values are caught immediately:
+Every object in the plotly.js schema has a `go_*()` constructor with
+exactly its properties, so autocomplete shows only what is valid there:
+
+- traces and the layout:
+  [`go_scatter()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md),
+  [`go_bar()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md),
+  …,
+  [`go_layout()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout.md);
+- objects nested in them, named after their path:
+  [`go_scatter_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter_marker.md),
+  [`go_scatter_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter_marker_line.md),
+  [`go_xaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis.md),
+  [`go_scene_camera()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene_camera.md),
+  [`go_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/go_annotation.md),
+  [`go_slider_step()`](https://msummersgill.github.io/plotly.R.core/reference/go_slider_step.md),
+  …;
+- objects that appear in many places, with one constructor for all of
+  them:
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md),
+  [`go_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_colorbar.md),
+  [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md),
+  [`go_error_bar()`](https://msummersgill.github.io/plotly.R.core/reference/go_error_bar.md),
+  [`go_scene_axis()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene_axis.md),
+  [`go_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_selected.md),
+  ….
+
+Named lists work wherever a constructor does
+(`marker = list(size = 12)`). One-sided formulas such as `color = ~cyl`
+are kept by constructors and evaluated in the figure’s data when the
+trace is added:
+
+``` r
+
+mtcars |>
+  go_figure() |>
+  add_bar(
+    x = ~factor(cyl), y = ~mpg,
+    marker = go_bar_marker(color = ~hp, line = go_bar_marker_line(width = 1)),
+    textfont = go_font(size = 14)
+  ) |>
+  update_layout(xaxis = go_xaxis(title = "Cylinders"))
+```
+
+Every property is checked against the plotly.js schema when an object is
+created, and again when it is placed in a figure, so mistakes are caught
+immediately:
 
 ``` r
 
@@ -143,6 +193,20 @@ add_scatter(fig, x = mtcars$wt, y = mtcars$mpg, mode = "dots")
 #>     The 'mode' property is a flaglist and may be specified as a string containing:
 #>       - Any combination of "lines", "markers", "text" joined with '+' characters (e.g. 'lines+markers')
 #>         OR exactly one of "none"
+
+add_bar(fig, x = mtcars$cyl, y = mtcars$mpg, marker = go_font(size = 3))
+#> Error: A go_font() object can't be used for bar.marker, which is an object (a named list)
+```
+
+plotly.py’s “magic underscore” names are not supported; the error shows
+the nested call instead:
+
+``` r
+
+add_scatter(fig, x = mtcars$wt, y = mtcars$mpg, marker_size = 12)
+#> Error: Invalid property specified for go_scatter(): 'marker_size'
+#>
+#> Nested properties are set with their objects: marker = go_scatter_marker(size = ...)
 ```
 
 ## Shiny

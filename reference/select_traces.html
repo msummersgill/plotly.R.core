@@ -92,9 +92,9 @@ result of <code>fn</code>.</p>
 <dt id="arg-selector">selector<a class="anchor" aria-label="anchor" href="#arg-selector"></a></dt>
 <dd><p>Which traces to use: <code>NULL</code> (all), a trace type such as
 <code>"scatter"</code>, indices into the matching traces, a named list of property
-values that must all match (names may use magic underscores, e.g.
-<code>list(marker_color = "red")</code>), or a function that takes a trace and
-returns <code>TRUE</code> or <code>FALSE</code>.</p></dd>
+values that must all match (nested lists match nested properties, e.g.
+<code>list(marker = list(color = "red"))</code>), or a function that takes a trace
+and returns <code>TRUE</code> or <code>FALSE</code>.</p></dd>
 
 
 <dt id="arg-row-col">row, col<a class="anchor" aria-label="anchor" href="#arg-row-col"></a></dt>
@@ -149,7 +149,11 @@ modified figure.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="fu">update_traces</span><span class="op">(</span><span class="va">fig</span>, marker_size <span class="op">=</span> <span class="fl">12</span>, selector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"markers"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="fu">update_traces</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">fig</span>,</span></span>
+<span class="r-in"><span>  marker <span class="op">=</span> <span class="fu"><a href="go_scatter_marker.html">go_scatter_marker</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  selector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"markers"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="fu">for_each_trace</span><span class="op">(</span><span class="va">fig</span>, <span class="kw">function</span><span class="op">(</span><span class="va">tr</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">tr</span><span class="op">$</span><span class="va">name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper</a></span><span class="op">(</span><span class="va">tr</span><span class="op">$</span><span class="va">name</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">tr</span></span></span>

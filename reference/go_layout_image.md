@@ -1,36 +1,13 @@
 # Layout image objects
 
-Properties of `layout.image`.
+The object for an element of the figure layout's `images` list (or use
+[`add_layout_image()`](https://msummersgill.github.io/plotly.R.core/reference/add_layout_image.md)).
+`go_layout_image()` creates one, with exactly its properties; a named
+list with the same properties works too.
 
 ## Usage
 
 ``` r
-add_layout_image(
-  fig,
-  arg = NULL,
-  ...,
-  layer = NULL,
-  name = NULL,
-  opacity = NULL,
-  sizex = NULL,
-  sizey = NULL,
-  sizing = NULL,
-  source = NULL,
-  templateitemname = NULL,
-  visible = NULL,
-  x = NULL,
-  xanchor = NULL,
-  xref = NULL,
-  y = NULL,
-  yanchor = NULL,
-  yref = NULL,
-  row = NULL,
-  col = NULL,
-  secondary_y = NULL,
-  exclude_empty_subplots = FALSE,
-  skip_invalid = FALSE
-)
-
 go_layout_image(
   arg = NULL,
   ...,
@@ -55,21 +32,14 @@ go_layout_image(
 
 ## Arguments
 
-- fig:
-
-  A `go_figure` object.
-
 - arg:
 
   Optional named list, or graph object of the same type, to initialise
-  properties from (constructors). Named arguments take precedence.
+  properties from. Named arguments take precedence.
 
 - ...:
 
-  Further properties, including nested properties in "magic underscore"
-  form, e.g. `marker_size = 10` for `marker = list(size = 10)`. Property
-  values may be one-sided formulas, evaluated in `data` for `add_*()`
-  functions.
+  Not used: properties must be named in full.
 
 - layer:
 
@@ -181,26 +151,6 @@ go_layout_image(
   axis. One of `"paper"`, or a string matching
   `"^y([2-9]|[1-9][0-9]+)?( domain)?$"`.
 
-- row:
-
-  Subplot grid row (figures created with
-  [`make_subplots()`](https://msummersgill.github.io/plotly.R.core/reference/make_subplots.md)
-  only). May be `"all"` or a vector to address several cells.
-
-- col:
-
-  Subplot grid column (figures created with
-  [`make_subplots()`](https://msummersgill.github.io/plotly.R.core/reference/make_subplots.md)
-  only). May be `"all"` or a vector to address several cells.
-
-- secondary_y:
-
-  If `TRUE`, use the secondary y axis of the subplot.
-
-- exclude_empty_subplots:
-
-  If `TRUE`, skip subplots that have no traces or layout objects.
-
 - skip_invalid:
 
   If `TRUE`, silently drop invalid properties instead of raising an
@@ -208,17 +158,22 @@ go_layout_image(
 
 ## Value
 
-Each `go_*()` function returns a graph object of the same class as its
-name; `add_*()` functions return the modified figure.
+A `go_layout_image` object (a named list).
 
 ## Details
 
-`go_layout_image()` create validated graph objects (named lists). Every
-property is checked against the plotly.js schema when an object is
-created or modified (see
-[`plotly_obj-modify()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
-`add_layout_image()` creates an object and adds it to a figure.
+Nested objects are named lists, or objects of the constructors their
+arguments name. Every property is checked against the plotly.js schema
+when the object is created or modified. A property may be a one-sided
+formula (`color = ~col`): it is kept, and evaluated in the data (then
+checked) when its trace is added to a figure with `add_<trace>()` or
+[`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md).
 
-## See also
+## Examples
 
-[`go_layout()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout.md)
+``` r
+mtcars |>
+  go_figure() |>
+  add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
+  update_layout(images = list(go_layout_image(opacity = 0.5)))
+```

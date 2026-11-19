@@ -154,25 +154,29 @@ initialise properties from (constructors). Named arguments take precedence.</p><
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Further properties, including nested properties in
-"magic underscore" form, e.g. <code>marker_size = 10</code> for
-<code>marker = list(size = 10)</code>. Property values may be one-sided
-formulas, evaluated in <code>data</code> for <code>add_*()</code> functions.</p></dd>
+<dd><p>Further properties, by their full names (e.g. numbered subplots
+such as <code>xaxis2</code> in <code>go_layout()</code>).</p></dd>
 
 
 <dt id="arg-activeselection">activeselection<a class="anchor" aria-label="anchor" href="#arg-activeselection"></a></dt>
-<dd><p>Named list or
-<code><a href="go_layout_activeselection.html">go_layout_activeselection()</a></code> object.</p></dd>
+<dd><p>A <code><a href="go_activeselection.html">go_activeselection()</a></code> object or
+named list, with properties <code>fillcolor</code> and <code>opacity</code> (see
+<code><a href="go_activeselection.html">go_activeselection()</a></code>).</p></dd>
 
 
 <dt id="arg-activeshape">activeshape<a class="anchor" aria-label="anchor" href="#arg-activeshape"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_activeshape.html">go_layout_activeshape()</a></code>
-object.</p></dd>
+<dd><p>A <code><a href="go_activeshape.html">go_activeshape()</a></code> object or named
+list, with properties <code>fillcolor</code> and <code>opacity</code> (see
+<code><a href="go_activeshape.html">go_activeshape()</a></code>).</p></dd>
 
 
 <dt id="arg-annotations">annotations<a class="anchor" aria-label="anchor" href="#arg-annotations"></a></dt>
-<dd><p>List of named lists or
-<code><a href="go_layout_annotation.html">go_layout_annotation()</a></code> objects.</p></dd>
+<dd><p>List, each element a <code><a href="go_annotation.html">go_annotation()</a></code>
+object or named list, with properties <code>align</code>, <code>arrowcolor</code>,
+<code>arrowhead</code>, <code>arrowside</code>, <code>arrowsize</code>,
+<code>arrowwidth</code>, <code>ax</code>, <code>axref</code>, <code>ay</code>, <code>ayref</code>,
+<code>bgcolor</code>, <code>bordercolor</code> and 31 more (see
+<code><a href="go_annotation.html">go_annotation()</a></code>).</p></dd>
 
 
 <dt id="arg-autosize">autosize<a class="anchor" aria-label="anchor" href="#arg-autosize"></a></dt>
@@ -285,13 +289,17 @@ or one of <code>"none"</code>.</p></dd>
 
 
 <dt id="arg-coloraxis">coloraxis<a class="anchor" aria-label="anchor" href="#arg-coloraxis"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_coloraxis.html">go_layout_coloraxis()</a></code>
-object.</p></dd>
+<dd><p>A <code><a href="go_coloraxis.html">go_coloraxis()</a></code> object or named list,
+with properties <code>autocolorscale</code>, <code>cauto</code>, <code>cmax</code>,
+<code>cmid</code>, <code>cmin</code>, <code>colorbar</code>, <code>colorscale</code>,
+<code>reversescale</code> and <code>showscale</code> (see
+<code><a href="go_coloraxis.html">go_coloraxis()</a></code>).</p></dd>
 
 
 <dt id="arg-colorscale">colorscale<a class="anchor" aria-label="anchor" href="#arg-colorscale"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_colorscale.html">go_layout_colorscale()</a></code>
-object.</p></dd>
+<dd><p>A <code><a href="go_layout_colorscale.html">go_layout_colorscale()</a></code> object or named
+list, with properties <code>diverging</code>, <code>sequential</code> and
+<code>sequentialminus</code> (see <code><a href="go_layout_colorscale.html">go_layout_colorscale()</a></code>).</p></dd>
 
 
 <dt id="arg-colorway">colorway<a class="anchor" aria-label="anchor" href="#arg-colorway"></a></dt>
@@ -381,8 +389,11 @@ trace, using `marker.colors`, are never extended. Logical.</p></dd>
 
 <dt id="arg-font">font<a class="anchor" aria-label="anchor" href="#arg-font"></a></dt>
 <dd><p>Sets the global font. Note that fonts used in traces and
-other layout components inherit from the global font. Named list or
-<code><a href="go_layout_font.html">go_layout_font()</a></code> object.</p></dd>
+other layout components inherit from the global font. A
+<code><a href="go_font.html">go_font()</a></code> object or named list, with properties
+<code>color</code>, <code>family</code>, <code>lineposition</code>, <code>shadow</code>,
+<code>size</code>, <code>style</code>, <code>textcase</code>, <code>variant</code> and
+<code>weight</code> (see <code><a href="go_font.html">go_font()</a></code>).</p></dd>
 
 
 <dt id="arg-funnelareacolorway">funnelareacolorway<a class="anchor" aria-label="anchor" href="#arg-funnelareacolorway"></a></dt>
@@ -413,11 +424,20 @@ multiple bars. One of <code>"stack"</code>, <code>"group"</code>,
 
 
 <dt id="arg-geo">geo<a class="anchor" aria-label="anchor" href="#arg-geo"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_geo.html">go_layout_geo()</a></code> object.</p></dd>
+<dd><p>A <code><a href="go_geo.html">go_geo()</a></code> object or named list, with
+properties <code>bgcolor</code>, <code>center</code>, <code>coastlinecolor</code>,
+<code>coastlinewidth</code>, <code>countrycolor</code>, <code>countrywidth</code>,
+<code>domain</code>, <code>fitbounds</code>, <code>framecolor</code>, <code>framewidth</code>,
+<code>lakecolor</code>, <code>landcolor</code> and 20 more (see
+<code><a href="go_geo.html">go_geo()</a></code>).</p></dd>
 
 
 <dt id="arg-grid">grid<a class="anchor" aria-label="anchor" href="#arg-grid"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_grid.html">go_layout_grid()</a></code> object.</p></dd>
+<dd><p>A <code><a href="go_grid.html">go_grid()</a></code> object or named list, with
+properties <code>columns</code>, <code>domain</code>, <code>pattern</code>,
+<code>roworder</code>, <code>rows</code>, <code>subplots</code>, <code>xaxes</code>,
+<code>xgap</code>, <code>xside</code>, <code>yaxes</code>, <code>ygap</code> and <code>yside</code>
+(see <code><a href="go_grid.html">go_grid()</a></code>).</p></dd>
 
 
 <dt id="arg-height">height<a class="anchor" aria-label="anchor" href="#arg-height"></a></dt>
@@ -454,8 +474,10 @@ conflict. Integer in the interval [-1, Inf].</p></dd>
 
 
 <dt id="arg-hoverlabel">hoverlabel<a class="anchor" aria-label="anchor" href="#arg-hoverlabel"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_hoverlabel.html">go_layout_hoverlabel()</a></code>
-object.</p></dd>
+<dd><p>A <code><a href="go_hoverlabel.html">go_hoverlabel()</a></code> object or named list,
+with properties <code>align</code>, <code>bgcolor</code>, <code>bordercolor</code>,
+<code>font</code>, <code>grouptitlefont</code>, <code>namelength</code> and
+<code>showarrow</code> (see <code><a href="go_hoverlabel.html">go_hoverlabel()</a></code>).</p></dd>
 
 
 <dt id="arg-hovermode">hovermode<a class="anchor" aria-label="anchor" href="#arg-hovermode"></a></dt>
@@ -501,20 +523,35 @@ here it can still be extended with lighter and darker colors, see
 
 
 <dt id="arg-images">images<a class="anchor" aria-label="anchor" href="#arg-images"></a></dt>
-<dd><p>List of named lists or <code><a href="go_layout_image.html">go_layout_image()</a></code>
-objects.</p></dd>
+<dd><p>List, each element a <code><a href="go_layout_image.html">go_layout_image()</a></code>
+object or named list, with properties <code>layer</code>, <code>name</code>,
+<code>opacity</code>, <code>sizex</code>, <code>sizey</code>, <code>sizing</code>,
+<code>source</code>, <code>templateitemname</code>, <code>visible</code>, <code>x</code>,
+<code>xanchor</code>, <code>xref</code>, <code>y</code>, <code>yanchor</code> and <code>yref</code>
+(see <code><a href="go_layout_image.html">go_layout_image()</a></code>).</p></dd>
 
 
 <dt id="arg-legend">legend<a class="anchor" aria-label="anchor" href="#arg-legend"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_legend.html">go_layout_legend()</a></code> object.</p></dd>
+<dd><p>A <code><a href="go_legend.html">go_legend()</a></code> object or named list, with
+properties <code>bgcolor</code>, <code>bordercolor</code>, <code>borderwidth</code>,
+<code>entrywidth</code>, <code>entrywidthmode</code>, <code>font</code>,
+<code>groupclick</code>, <code>groupdoubleclick</code>, <code>grouptitlefont</code>,
+<code>indentation</code>, <code>itemclick</code>, <code>itemdoubleclick</code> and 19
+more (see <code><a href="go_legend.html">go_legend()</a></code>).</p></dd>
 
 
 <dt id="arg-map">map<a class="anchor" aria-label="anchor" href="#arg-map"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_map.html">go_layout_map()</a></code> object.</p></dd>
+<dd><p>A <code><a href="go_map.html">go_map()</a></code> object or named list, with
+properties <code>bearing</code>, <code>bounds</code>, <code>center</code>,
+<code>domain</code>, <code>fitbounds</code>, <code>layers</code>, <code>pitch</code>,
+<code>style</code>, <code>uirevision</code> and <code>zoom</code> (see
+<code><a href="go_map.html">go_map()</a></code>).</p></dd>
 
 
 <dt id="arg-margin">margin<a class="anchor" aria-label="anchor" href="#arg-margin"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_margin.html">go_layout_margin()</a></code> object.</p></dd>
+<dd><p>A <code><a href="go_margin.html">go_margin()</a></code> object or named list, with
+properties <code>autoexpand</code>, <code>b</code>, <code>l</code>, <code>pad</code>, <code>r</code>
+and <code>t</code> (see <code><a href="go_margin.html">go_margin()</a></code>).</p></dd>
 
 
 <dt id="arg-meta">meta<a class="anchor" aria-label="anchor" href="#arg-meta"></a></dt>
@@ -539,16 +576,25 @@ applied (in px) Number in the interval [2, Inf].</p></dd>
 
 
 <dt id="arg-modebar">modebar<a class="anchor" aria-label="anchor" href="#arg-modebar"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_modebar.html">go_layout_modebar()</a></code> object.</p></dd>
+<dd><p>A <code><a href="go_modebar.html">go_modebar()</a></code> object or named list, with
+properties <code>activecolor</code>, <code>add</code>, <code>bgcolor</code>,
+<code>color</code>, <code>orientation</code>, <code>remove</code> and <code>uirevision</code>
+(see <code><a href="go_modebar.html">go_modebar()</a></code>).</p></dd>
 
 
 <dt id="arg-newselection">newselection<a class="anchor" aria-label="anchor" href="#arg-newselection"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_newselection.html">go_layout_newselection()</a></code>
-object.</p></dd>
+<dd><p>A <code><a href="go_newselection.html">go_newselection()</a></code> object or named
+list, with properties <code>line</code> and <code>mode</code> (see
+<code><a href="go_newselection.html">go_newselection()</a></code>).</p></dd>
 
 
 <dt id="arg-newshape">newshape<a class="anchor" aria-label="anchor" href="#arg-newshape"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_newshape.html">go_layout_newshape()</a></code> object.</p></dd>
+<dd><p>A <code><a href="go_newshape.html">go_newshape()</a></code> object or named list, with
+properties <code>drawdirection</code>, <code>fillcolor</code>, <code>fillrule</code>,
+<code>label</code>, <code>layer</code>, <code>legend</code>, <code>legendgroup</code>,
+<code>legendgrouptitle</code>, <code>legendrank</code>, <code>legendwidth</code>,
+<code>line</code>, <code>name</code>, <code>opacity</code>, <code>showlegend</code> and
+<code>visible</code> (see <code><a href="go_newshape.html">go_newshape()</a></code>).</p></dd>
 
 
 <dt id="arg-paper-bgcolor">paper_bgcolor<a class="anchor" aria-label="anchor" href="#arg-paper-bgcolor"></a></dt>
@@ -569,7 +615,11 @@ in-between x and y axes. Color: a CSS color string or R color name.</p></dd>
 
 
 <dt id="arg-polar">polar<a class="anchor" aria-label="anchor" href="#arg-polar"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_polar.html">go_layout_polar()</a></code> object.</p></dd>
+<dd><p>A <code><a href="go_polar.html">go_polar()</a></code> object or named list, with
+properties <code>angularaxis</code>, <code>bargap</code>, <code>barmode</code>,
+<code>bgcolor</code>, <code>domain</code>, <code>gridshape</code>, <code>hole</code>,
+<code>radialaxis</code>, <code>sector</code> and <code>uirevision</code> (see
+<code><a href="go_polar.html">go_polar()</a></code>).</p></dd>
 
 
 <dt id="arg-scattergap">scattergap<a class="anchor" aria-label="anchor" href="#arg-scattergap"></a></dt>
@@ -588,7 +638,11 @@ points. One of <code>"group"</code>, <code>"overlay"</code>.</p></dd>
 
 
 <dt id="arg-scene">scene<a class="anchor" aria-label="anchor" href="#arg-scene"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_scene.html">go_layout_scene()</a></code> object.</p></dd>
+<dd><p>A <code><a href="go_scene.html">go_scene()</a></code> object or named list, with
+properties <code>annotations</code>, <code>aspectmode</code>, <code>aspectratio</code>,
+<code>bgcolor</code>, <code>camera</code>, <code>domain</code>, <code>dragmode</code>,
+<code>hovermode</code>, <code>uirevision</code>, <code>xaxis</code>, <code>yaxis</code> and
+<code>zaxis</code> (see <code><a href="go_scene.html">go_scene()</a></code>).</p></dd>
 
 
 <dt id="arg-selectdirection">selectdirection<a class="anchor" aria-label="anchor" href="#arg-selectdirection"></a></dt>
@@ -605,8 +659,11 @@ selected points from all traces. Any value.</p></dd>
 
 
 <dt id="arg-selections">selections<a class="anchor" aria-label="anchor" href="#arg-selections"></a></dt>
-<dd><p>List of named lists or
-<code><a href="go_layout_selection.html">go_layout_selection()</a></code> objects.</p></dd>
+<dd><p>List, each element a <code><a href="go_selection.html">go_selection()</a></code>
+object or named list, with properties <code>line</code>, <code>name</code>,
+<code>opacity</code>, <code>path</code>, <code>templateitemname</code>, <code>type</code>,
+<code>x0</code>, <code>x1</code>, <code>xref</code>, <code>y0</code>, <code>y1</code> and
+<code>yref</code> (see <code><a href="go_selection.html">go_selection()</a></code>).</p></dd>
 
 
 <dt id="arg-separators">separators<a class="anchor" aria-label="anchor" href="#arg-separators"></a></dt>
@@ -617,8 +674,12 @@ default. String.</p></dd>
 
 
 <dt id="arg-shapes">shapes<a class="anchor" aria-label="anchor" href="#arg-shapes"></a></dt>
-<dd><p>List of named lists or <code><a href="go_layout_shape.html">go_layout_shape()</a></code>
-objects.</p></dd>
+<dd><p>List, each element a <code><a href="go_shape.html">go_shape()</a></code> object or
+named list, with properties <code>editable</code>, <code>fillcolor</code>,
+<code>fillrule</code>, <code>label</code>, <code>layer</code>, <code>legend</code>,
+<code>legendgroup</code>, <code>legendgrouptitle</code>, <code>legendrank</code>,
+<code>legendwidth</code>, <code>line</code>, <code>name</code> and 20 more (see
+<code><a href="go_shape.html">go_shape()</a></code>).</p></dd>
 
 
 <dt id="arg-showlegend">showlegend<a class="anchor" aria-label="anchor" href="#arg-showlegend"></a></dt>
@@ -630,12 +691,18 @@ shown in the legend. c) One trace is explicitly given with
 
 
 <dt id="arg-sliders">sliders<a class="anchor" aria-label="anchor" href="#arg-sliders"></a></dt>
-<dd><p>List of named lists or <code><a href="go_layout_slider.html">go_layout_slider()</a></code>
-objects.</p></dd>
+<dd><p>List, each element a <code><a href="go_slider.html">go_slider()</a></code> object or
+named list, with properties <code>active</code>, <code>activebgcolor</code>,
+<code>bgcolor</code>, <code>bordercolor</code>, <code>borderwidth</code>,
+<code>currentvalue</code>, <code>font</code>, <code>len</code>, <code>lenmode</code>,
+<code>minorticklen</code>, <code>name</code>, <code>pad</code> and 11 more (see
+<code><a href="go_slider.html">go_slider()</a></code>).</p></dd>
 
 
 <dt id="arg-smith">smith<a class="anchor" aria-label="anchor" href="#arg-smith"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_smith.html">go_layout_smith()</a></code> object.</p></dd>
+<dd><p>A <code><a href="go_smith.html">go_smith()</a></code> object or named list, with
+properties <code>bgcolor</code>, <code>domain</code>, <code>imaginaryaxis</code> and
+<code>realaxis</code> (see <code><a href="go_smith.html">go_smith()</a></code>).</p></dd>
 
 
 <dt id="arg-spikedistance">spikedistance<a class="anchor" aria-label="anchor" href="#arg-spikedistance"></a></dt>
@@ -674,17 +741,25 @@ one of these items on the plot, make an item with matching
 
 
 <dt id="arg-ternary">ternary<a class="anchor" aria-label="anchor" href="#arg-ternary"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_ternary.html">go_layout_ternary()</a></code> object.</p></dd>
+<dd><p>A <code><a href="go_ternary.html">go_ternary()</a></code> object or named list, with
+properties <code>aaxis</code>, <code>baxis</code>, <code>bgcolor</code>, <code>caxis</code>,
+<code>domain</code>, <code>sum</code> and <code>uirevision</code> (see
+<code><a href="go_ternary.html">go_ternary()</a></code>).</p></dd>
 
 
 <dt id="arg-title">title<a class="anchor" aria-label="anchor" href="#arg-title"></a></dt>
-<dd><p>String (the title text), named list or
-<code><a href="go_layout_title.html">go_layout_title()</a></code> object.</p></dd>
+<dd><p>String (the title text), or a
+<code><a href="go_layout_title.html">go_layout_title()</a></code> object or named list, with properties
+<code>automargin</code>, <code>font</code>, <code>pad</code>, <code>subtitle</code>,
+<code>text</code>, <code>x</code>, <code>xanchor</code>, <code>xref</code>, <code>y</code>,
+<code>yanchor</code> and <code>yref</code> (see <code><a href="go_layout_title.html">go_layout_title()</a></code>).</p></dd>
 
 
 <dt id="arg-transition">transition<a class="anchor" aria-label="anchor" href="#arg-transition"></a></dt>
 <dd><p>Sets transition options used during Plotly.react
-updates. Named list or <code><a href="go_layout_transition.html">go_layout_transition()</a></code> object.</p></dd>
+updates. A <code><a href="go_layout_transition.html">go_layout_transition()</a></code> object or named list,
+with properties <code>duration</code>, <code>easing</code> and <code>ordering</code>
+(see <code><a href="go_layout_transition.html">go_layout_transition()</a></code>).</p></dd>
 
 
 <dt id="arg-treemapcolorway">treemapcolorway<a class="anchor" aria-label="anchor" href="#arg-treemapcolorway"></a></dt>
@@ -713,13 +788,18 @@ user-driven zoom. Any value.</p></dd>
 
 
 <dt id="arg-uniformtext">uniformtext<a class="anchor" aria-label="anchor" href="#arg-uniformtext"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_uniformtext.html">go_layout_uniformtext()</a></code>
-object.</p></dd>
+<dd><p>A <code><a href="go_uniformtext.html">go_uniformtext()</a></code> object or named
+list, with properties <code>minsize</code> and <code>mode</code> (see
+<code><a href="go_uniformtext.html">go_uniformtext()</a></code>).</p></dd>
 
 
 <dt id="arg-updatemenus">updatemenus<a class="anchor" aria-label="anchor" href="#arg-updatemenus"></a></dt>
-<dd><p>List of named lists or
-<code><a href="go_layout_updatemenu.html">go_layout_updatemenu()</a></code> objects.</p></dd>
+<dd><p>List, each element a <code><a href="go_updatemenu.html">go_updatemenu()</a></code>
+object or named list, with properties <code>active</code>, <code>bgcolor</code>,
+<code>bordercolor</code>, <code>borderwidth</code>, <code>buttons</code>,
+<code>direction</code>, <code>font</code>, <code>name</code>, <code>pad</code>,
+<code>showactive</code>, <code>templateitemname</code>, <code>type</code> and 5 more
+(see <code><a href="go_updatemenu.html">go_updatemenu()</a></code>).</p></dd>
 
 
 <dt id="arg-violingap">violingap<a class="anchor" aria-label="anchor" href="#arg-violingap"></a></dt>
@@ -767,11 +847,21 @@ Inf].</p></dd>
 
 
 <dt id="arg-xaxis">xaxis<a class="anchor" aria-label="anchor" href="#arg-xaxis"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_xaxis.html">go_layout_xaxis()</a></code> object.</p></dd>
+<dd><p>A <code><a href="go_xaxis.html">go_xaxis()</a></code> object or named list, with
+properties <code>anchor</code>, <code>automargin</code>, <code>autorange</code>,
+<code>autorangeoptions</code>, <code>autotickangles</code>,
+<code>autotypenumbers</code>, <code>calendar</code>, <code>categoryarray</code>,
+<code>categoryorder</code>, <code>color</code>, <code>constrain</code>,
+<code>constraintoward</code> and 80 more (see <code><a href="go_xaxis.html">go_xaxis()</a></code>).</p></dd>
 
 
 <dt id="arg-yaxis">yaxis<a class="anchor" aria-label="anchor" href="#arg-yaxis"></a></dt>
-<dd><p>Named list or <code><a href="go_layout_yaxis.html">go_layout_yaxis()</a></code> object.</p></dd>
+<dd><p>A <code><a href="go_yaxis.html">go_yaxis()</a></code> object or named list, with
+properties <code>anchor</code>, <code>automargin</code>, <code>autorange</code>,
+<code>autorangeoptions</code>, <code>autoshift</code>, <code>autotickangles</code>,
+<code>autotypenumbers</code>, <code>calendar</code>, <code>categoryarray</code>,
+<code>categoryorder</code>, <code>color</code>, <code>constrain</code> and 80 more (see
+<code><a href="go_yaxis.html">go_yaxis()</a></code>).</p></dd>
 
 
 <dt id="arg-skip-invalid">skip_invalid<a class="anchor" aria-label="anchor" href="#arg-skip-invalid"></a></dt>
@@ -781,14 +871,19 @@ instead of raising an error.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Each <code>go_*()</code> function returns a graph object of the same
-  class as its name; <code>add_*()</code> functions return the modified figure.</p>
+    <p><code>go_*()</code> functions return a graph object;
+  <code>add_*()</code> functions return the modified figure.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>go_layout()</code> create validated graph objects (named lists). Every
-property is checked against the plotly.js schema when an object is
-created or modified (see <code><a href="plotly_obj-modify.html">plotly_obj-modify()</a></code>).</p>
+    <p><code>go_layout()</code> creates a validated graph object (a named list).</p>
+
+<p>Nested objects are given as named lists or with their constructors, which
+are linked from the arguments below. Every property is checked against
+the plotly.js schema when the object is created or modified (see
+<code><a href="plotly_obj-modify.html">plotly_obj-modify</a></code>). One-sided formulas (<code>~col</code>) are
+evaluated in the data, and then checked, when the trace is added with
+<code>add_&lt;trace&gt;()</code> or <code><a href="add_traces.html">add_trace()</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -797,20 +892,20 @@ created or modified (see <code><a href="plotly_obj-modify.html">plotly_obj-modif
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">go_layout</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"My plot"</span>, xaxis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"x"</span>, range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">go_layout</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"My plot"</span>, xaxis <span class="op">=</span> <span class="fu"><a href="go_xaxis.html">go_xaxis</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"x"</span>, range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;go_layout&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   "title": {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     "text": "My plot"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   },</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   "xaxis": {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     "title": {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       "text": "x"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     },</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     "range": [</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       0,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     ],</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     "title": {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       "text": "x"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

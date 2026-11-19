@@ -59,6 +59,10 @@ with
 `chromote::chrome_versions_add("latest-stable", "chrome-headless-shell")`.
 
 The browser is started on the first export and reused for later ones.
+Fonts are the ones installed on this computer: `save_image()` warns when
+a font a figure asks for is not installed (see
+[`available_fonts()`](https://msummersgill.github.io/plotly.R.core/reference/available_fonts.md)).
+
 Large figures can take a while to draw: an export waits up to
 `getOption("plotly.core.export_timeout", 300)` seconds. LaTeX (see
 [`TeX()`](https://msummersgill.github.io/plotly.R.core/reference/TeX.md))

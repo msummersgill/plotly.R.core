@@ -48,12 +48,12 @@ for_each_geo(fig, fn, selector = NULL, row = NULL, col = NULL)
 - patch:
 
   A named list or
-  [`go_layout_geo()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_geo.md)
+  [`go_geo()`](https://msummersgill.github.io/plotly.R.core/reference/go_geo.md)
   object of property updates.
 
 - ...:
 
-  Further named updates (names may use magic underscores).
+  Further named updates, by their full names.
 
 - overwrite:
 
@@ -66,6 +66,10 @@ for_each_geo(fig, fn, selector = NULL, row = NULL, col = NULL)
 
 ## Value
 
-`select_geos()` returns a named list of
-[`go_layout_geo()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_geo.md)
-objects; the others return the modified figure.
+`select_geos()` returns a named list of geo objects; the others return
+the modified figure.
+
+## See also
+
+[`go_geo()`](https://msummersgill.github.io/plotly.R.core/reference/go_geo.md)
+for the properties of geo objects.

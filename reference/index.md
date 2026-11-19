@@ -93,1118 +93,700 @@
   [`for_each_yaxis()`](https://msummersgill.github.io/plotly.R.core/reference/update_yaxes.md)
   : Select, update or modify yaxis objects
 
-## Trace constructors
+## Traces
+
+One constructor per trace type; add\_() adds one to a figure.
 
 - [`go_bar()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_error_x()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_error_y()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_insidetextfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_marker_pattern()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_outsidetextfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_selected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
-  [`go_bar_unselected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
   [`add_bar()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
   : Bar traces
 - [`go_barpolar()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
-  [`go_barpolar_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
-  [`go_barpolar_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
-  [`go_barpolar_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
-  [`go_barpolar_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
-  [`go_barpolar_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
-  [`go_barpolar_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
-  [`go_barpolar_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
-  [`go_barpolar_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
-  [`go_barpolar_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
-  [`go_barpolar_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
-  [`go_barpolar_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
-  [`go_barpolar_marker_pattern()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
-  [`go_barpolar_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
-  [`go_barpolar_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
-  [`go_barpolar_selected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
-  [`go_barpolar_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
-  [`go_barpolar_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
-  [`go_barpolar_unselected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
   [`add_barpolar()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar.md)
   : Barpolar traces
 - [`go_box()`](https://msummersgill.github.io/plotly.R.core/reference/go_box.md)
-  [`go_box_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_box.md)
-  [`go_box_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_box.md)
-  [`go_box_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_box.md)
-  [`go_box_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_box.md)
-  [`go_box_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_box.md)
-  [`go_box_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_box.md)
-  [`go_box_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_box.md)
-  [`go_box_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_box.md)
-  [`go_box_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_box.md)
-  [`go_box_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_box.md)
-  [`go_box_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_box.md)
   [`add_box()`](https://msummersgill.github.io/plotly.R.core/reference/go_box.md)
   : Box traces
 - [`go_candlestick()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick.md)
-  [`go_candlestick_decreasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick.md)
-  [`go_candlestick_decreasing_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick.md)
-  [`go_candlestick_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick.md)
-  [`go_candlestick_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick.md)
-  [`go_candlestick_increasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick.md)
-  [`go_candlestick_increasing_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick.md)
-  [`go_candlestick_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick.md)
-  [`go_candlestick_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick.md)
-  [`go_candlestick_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick.md)
   [`add_candlestick()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick.md)
   : Candlestick traces
 - [`go_carpet()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet.md)
-  [`go_carpet_aaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet.md)
-  [`go_carpet_aaxis_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet.md)
-  [`go_carpet_aaxis_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet.md)
-  [`go_carpet_aaxis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet.md)
-  [`go_carpet_aaxis_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet.md)
-  [`go_carpet_baxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet.md)
-  [`go_carpet_baxis_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet.md)
-  [`go_carpet_baxis_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet.md)
-  [`go_carpet_baxis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet.md)
-  [`go_carpet_baxis_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet.md)
-  [`go_carpet_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet.md)
-  [`go_carpet_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet.md)
-  [`go_carpet_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet.md)
   [`add_carpet()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet.md)
   : Carpet traces
 - [`go_choropleth()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth.md)
-  [`go_choropleth_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth.md)
-  [`go_choropleth_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth.md)
-  [`go_choropleth_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth.md)
-  [`go_choropleth_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth.md)
-  [`go_choropleth_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth.md)
-  [`go_choropleth_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth.md)
-  [`go_choropleth_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth.md)
-  [`go_choropleth_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth.md)
-  [`go_choropleth_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth.md)
-  [`go_choropleth_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth.md)
-  [`go_choropleth_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth.md)
-  [`go_choropleth_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth.md)
-  [`go_choropleth_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth.md)
-  [`go_choropleth_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth.md)
-  [`go_choropleth_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth.md)
   [`add_choropleth()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth.md)
   : Choropleth traces
 - [`go_choroplethmap()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md)
-  [`go_choroplethmap_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md)
-  [`go_choroplethmap_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md)
-  [`go_choroplethmap_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md)
-  [`go_choroplethmap_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md)
-  [`go_choroplethmap_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md)
-  [`go_choroplethmap_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md)
-  [`go_choroplethmap_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md)
-  [`go_choroplethmap_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md)
-  [`go_choroplethmap_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md)
-  [`go_choroplethmap_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md)
-  [`go_choroplethmap_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md)
-  [`go_choroplethmap_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md)
-  [`go_choroplethmap_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md)
-  [`go_choroplethmap_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md)
-  [`go_choroplethmap_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md)
   [`add_choroplethmap()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md)
   : Choroplethmap traces
 - [`go_cone()`](https://msummersgill.github.io/plotly.R.core/reference/go_cone.md)
-  [`go_cone_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_cone.md)
-  [`go_cone_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_cone.md)
-  [`go_cone_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_cone.md)
-  [`go_cone_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_cone.md)
-  [`go_cone_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_cone.md)
-  [`go_cone_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_cone.md)
-  [`go_cone_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_cone.md)
-  [`go_cone_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_cone.md)
-  [`go_cone_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_cone.md)
-  [`go_cone_lighting()`](https://msummersgill.github.io/plotly.R.core/reference/go_cone.md)
-  [`go_cone_lightposition()`](https://msummersgill.github.io/plotly.R.core/reference/go_cone.md)
   [`add_cone()`](https://msummersgill.github.io/plotly.R.core/reference/go_cone.md)
   : Cone traces
 - [`go_contour()`](https://msummersgill.github.io/plotly.R.core/reference/go_contour.md)
-  [`go_contour_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_contour.md)
-  [`go_contour_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_contour.md)
-  [`go_contour_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_contour.md)
-  [`go_contour_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_contour.md)
-  [`go_contour_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_contour.md)
-  [`go_contour_contours()`](https://msummersgill.github.io/plotly.R.core/reference/go_contour.md)
-  [`go_contour_contours_labelfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_contour.md)
-  [`go_contour_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_contour.md)
-  [`go_contour_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_contour.md)
-  [`go_contour_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_contour.md)
-  [`go_contour_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_contour.md)
-  [`go_contour_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_contour.md)
-  [`go_contour_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_contour.md)
   [`add_contour()`](https://msummersgill.github.io/plotly.R.core/reference/go_contour.md)
   : Contour traces
 - [`go_contourcarpet()`](https://msummersgill.github.io/plotly.R.core/reference/go_contourcarpet.md)
-  [`go_contourcarpet_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_contourcarpet.md)
-  [`go_contourcarpet_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_contourcarpet.md)
-  [`go_contourcarpet_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_contourcarpet.md)
-  [`go_contourcarpet_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_contourcarpet.md)
-  [`go_contourcarpet_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_contourcarpet.md)
-  [`go_contourcarpet_contours()`](https://msummersgill.github.io/plotly.R.core/reference/go_contourcarpet.md)
-  [`go_contourcarpet_contours_labelfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_contourcarpet.md)
-  [`go_contourcarpet_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_contourcarpet.md)
-  [`go_contourcarpet_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_contourcarpet.md)
-  [`go_contourcarpet_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_contourcarpet.md)
   [`add_contourcarpet()`](https://msummersgill.github.io/plotly.R.core/reference/go_contourcarpet.md)
   : Contourcarpet traces
 - [`go_densitymap()`](https://msummersgill.github.io/plotly.R.core/reference/go_densitymap.md)
-  [`go_densitymap_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_densitymap.md)
-  [`go_densitymap_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_densitymap.md)
-  [`go_densitymap_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_densitymap.md)
-  [`go_densitymap_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_densitymap.md)
-  [`go_densitymap_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_densitymap.md)
-  [`go_densitymap_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_densitymap.md)
-  [`go_densitymap_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_densitymap.md)
-  [`go_densitymap_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_densitymap.md)
-  [`go_densitymap_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_densitymap.md)
   [`add_densitymap()`](https://msummersgill.github.io/plotly.R.core/reference/go_densitymap.md)
   : Densitymap traces
 - [`add_funnel()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel.md)
   [`go_funnel()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel.md)
-  [`go_funnel_connector()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel.md)
-  [`go_funnel_connector_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel.md)
-  [`go_funnel_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel.md)
-  [`go_funnel_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel.md)
-  [`go_funnel_insidetextfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel.md)
-  [`go_funnel_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel.md)
-  [`go_funnel_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel.md)
-  [`go_funnel_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel.md)
-  [`go_funnel_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel.md)
-  [`go_funnel_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel.md)
-  [`go_funnel_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel.md)
-  [`go_funnel_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel.md)
-  [`go_funnel_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel.md)
-  [`go_funnel_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel.md)
-  [`go_funnel_outsidetextfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel.md)
-  [`go_funnel_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel.md)
   : Funnel traces
 - [`add_funnelarea()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea.md)
   [`go_funnelarea()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea.md)
-  [`go_funnelarea_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea.md)
-  [`go_funnelarea_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea.md)
-  [`go_funnelarea_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea.md)
-  [`go_funnelarea_insidetextfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea.md)
-  [`go_funnelarea_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea.md)
-  [`go_funnelarea_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea.md)
-  [`go_funnelarea_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea.md)
-  [`go_funnelarea_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea.md)
-  [`go_funnelarea_marker_pattern()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea.md)
-  [`go_funnelarea_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea.md)
-  [`go_funnelarea_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea.md)
-  [`go_funnelarea_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea.md)
   : Funnelarea traces
 - [`add_heatmap()`](https://msummersgill.github.io/plotly.R.core/reference/go_heatmap.md)
   [`go_heatmap()`](https://msummersgill.github.io/plotly.R.core/reference/go_heatmap.md)
-  [`go_heatmap_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_heatmap.md)
-  [`go_heatmap_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_heatmap.md)
-  [`go_heatmap_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_heatmap.md)
-  [`go_heatmap_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_heatmap.md)
-  [`go_heatmap_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_heatmap.md)
-  [`go_heatmap_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_heatmap.md)
-  [`go_heatmap_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_heatmap.md)
-  [`go_heatmap_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_heatmap.md)
-  [`go_heatmap_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_heatmap.md)
-  [`go_heatmap_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_heatmap.md)
   : Heatmap traces
 - [`add_histogram()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
   [`go_histogram()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_cumulative()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_error_x()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_error_y()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_insidetextfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_marker_pattern()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_outsidetextfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_selected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_unselected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_xbins()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
-  [`go_histogram_ybins()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram.md)
   : Histogram traces
 - [`add_histogram2d()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2d.md)
   [`go_histogram2d()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2d.md)
-  [`go_histogram2d_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2d.md)
-  [`go_histogram2d_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2d.md)
-  [`go_histogram2d_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2d.md)
-  [`go_histogram2d_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2d.md)
-  [`go_histogram2d_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2d.md)
-  [`go_histogram2d_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2d.md)
-  [`go_histogram2d_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2d.md)
-  [`go_histogram2d_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2d.md)
-  [`go_histogram2d_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2d.md)
-  [`go_histogram2d_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2d.md)
-  [`go_histogram2d_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2d.md)
-  [`go_histogram2d_xbins()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2d.md)
-  [`go_histogram2d_ybins()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2d.md)
   : Histogram2d traces
 - [`add_histogram2dcontour()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour.md)
   [`go_histogram2dcontour()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour.md)
-  [`go_histogram2dcontour_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour.md)
-  [`go_histogram2dcontour_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour.md)
-  [`go_histogram2dcontour_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour.md)
-  [`go_histogram2dcontour_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour.md)
-  [`go_histogram2dcontour_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour.md)
-  [`go_histogram2dcontour_contours()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour.md)
-  [`go_histogram2dcontour_contours_labelfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour.md)
-  [`go_histogram2dcontour_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour.md)
-  [`go_histogram2dcontour_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour.md)
-  [`go_histogram2dcontour_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour.md)
-  [`go_histogram2dcontour_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour.md)
-  [`go_histogram2dcontour_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour.md)
-  [`go_histogram2dcontour_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour.md)
-  [`go_histogram2dcontour_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour.md)
-  [`go_histogram2dcontour_xbins()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour.md)
-  [`go_histogram2dcontour_ybins()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour.md)
   : Histogram2dcontour traces
 - [`add_icicle()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
   [`go_icicle()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_insidetextfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_leaf()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_marker_pattern()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_outsidetextfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_pathbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_pathbar_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_root()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
-  [`go_icicle_tiling()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle.md)
   : Icicle traces
 - [`add_image()`](https://msummersgill.github.io/plotly.R.core/reference/go_image.md)
   [`go_image()`](https://msummersgill.github.io/plotly.R.core/reference/go_image.md)
-  [`go_image_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_image.md)
-  [`go_image_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_image.md)
-  [`go_image_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_image.md)
-  [`go_image_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_image.md)
   : Image traces
 - [`add_indicator()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
   [`go_indicator()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_delta()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_delta_decreasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_delta_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_delta_increasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_gauge()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_gauge_axis()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_gauge_axis_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_gauge_axis_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_gauge_bar()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_gauge_bar_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_gauge_step()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_gauge_step_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_gauge_threshold()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_gauge_threshold_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_number()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_number_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
-  [`go_indicator_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator.md)
   : Indicator traces
 - [`add_isosurface()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
   [`go_isosurface()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_caps()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_caps_x()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_caps_y()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_caps_z()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_contour()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_lighting()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_lightposition()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_slices()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_slices_x()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_slices_y()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_slices_z()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_spaceframe()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
-  [`go_isosurface_surface()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface.md)
   : Isosurface traces
 - [`add_mesh3d()`](https://msummersgill.github.io/plotly.R.core/reference/go_mesh3d.md)
   [`go_mesh3d()`](https://msummersgill.github.io/plotly.R.core/reference/go_mesh3d.md)
-  [`go_mesh3d_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_mesh3d.md)
-  [`go_mesh3d_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_mesh3d.md)
-  [`go_mesh3d_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_mesh3d.md)
-  [`go_mesh3d_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_mesh3d.md)
-  [`go_mesh3d_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_mesh3d.md)
-  [`go_mesh3d_contour()`](https://msummersgill.github.io/plotly.R.core/reference/go_mesh3d.md)
-  [`go_mesh3d_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_mesh3d.md)
-  [`go_mesh3d_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_mesh3d.md)
-  [`go_mesh3d_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_mesh3d.md)
-  [`go_mesh3d_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_mesh3d.md)
-  [`go_mesh3d_lighting()`](https://msummersgill.github.io/plotly.R.core/reference/go_mesh3d.md)
-  [`go_mesh3d_lightposition()`](https://msummersgill.github.io/plotly.R.core/reference/go_mesh3d.md)
   : Mesh3d traces
 - [`add_ohlc()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc.md)
   [`go_ohlc()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc.md)
-  [`go_ohlc_decreasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc.md)
-  [`go_ohlc_decreasing_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc.md)
-  [`go_ohlc_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc.md)
-  [`go_ohlc_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc.md)
-  [`go_ohlc_increasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc.md)
-  [`go_ohlc_increasing_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc.md)
-  [`go_ohlc_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc.md)
-  [`go_ohlc_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc.md)
-  [`go_ohlc_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc.md)
   : Ohlc traces
 - [`add_parcats()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats.md)
   [`go_parcats()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats.md)
-  [`go_parcats_dimension()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats.md)
-  [`go_parcats_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats.md)
-  [`go_parcats_labelfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats.md)
-  [`go_parcats_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats.md)
-  [`go_parcats_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats.md)
-  [`go_parcats_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats.md)
-  [`go_parcats_line_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats.md)
-  [`go_parcats_line_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats.md)
-  [`go_parcats_line_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats.md)
-  [`go_parcats_line_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats.md)
-  [`go_parcats_line_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats.md)
-  [`go_parcats_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats.md)
   : Parcats traces
 - [`add_parcoords()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords.md)
   [`go_parcoords()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords.md)
-  [`go_parcoords_dimension()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords.md)
-  [`go_parcoords_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords.md)
-  [`go_parcoords_labelfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords.md)
-  [`go_parcoords_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords.md)
-  [`go_parcoords_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords.md)
-  [`go_parcoords_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords.md)
-  [`go_parcoords_line_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords.md)
-  [`go_parcoords_line_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords.md)
-  [`go_parcoords_line_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords.md)
-  [`go_parcoords_line_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords.md)
-  [`go_parcoords_line_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords.md)
-  [`go_parcoords_rangefont()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords.md)
-  [`go_parcoords_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords.md)
-  [`go_parcoords_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords.md)
-  [`go_parcoords_unselected_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords.md)
   : Parcoords traces
 - [`add_pie()`](https://msummersgill.github.io/plotly.R.core/reference/go_pie.md)
   [`go_pie()`](https://msummersgill.github.io/plotly.R.core/reference/go_pie.md)
-  [`go_pie_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_pie.md)
-  [`go_pie_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_pie.md)
-  [`go_pie_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_pie.md)
-  [`go_pie_insidetextfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_pie.md)
-  [`go_pie_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_pie.md)
-  [`go_pie_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_pie.md)
-  [`go_pie_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_pie.md)
-  [`go_pie_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_pie.md)
-  [`go_pie_marker_pattern()`](https://msummersgill.github.io/plotly.R.core/reference/go_pie.md)
-  [`go_pie_outsidetextfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_pie.md)
-  [`go_pie_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_pie.md)
-  [`go_pie_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_pie.md)
-  [`go_pie_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_pie.md)
   : Pie traces
 - [`add_quiver()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
   [`go_quiver()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_selected_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_selected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_unselected_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
-  [`go_quiver_unselected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver.md)
   : Quiver traces
 - [`add_sankey()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey.md)
   [`go_sankey()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey.md)
-  [`go_sankey_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey.md)
-  [`go_sankey_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey.md)
-  [`go_sankey_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey.md)
-  [`go_sankey_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey.md)
-  [`go_sankey_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey.md)
-  [`go_sankey_link()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey.md)
-  [`go_sankey_link_concentrationscales()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey.md)
-  [`go_sankey_link_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey.md)
-  [`go_sankey_link_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey.md)
-  [`go_sankey_link_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey.md)
-  [`go_sankey_node()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey.md)
-  [`go_sankey_node_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey.md)
-  [`go_sankey_node_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey.md)
-  [`go_sankey_node_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey.md)
-  [`go_sankey_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey.md)
   : Sankey traces
 - [`add_scatter()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
   [`go_scatter()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_error_x()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_error_y()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_fillgradient()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_fillpattern()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_marker_gradient()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_selected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
-  [`go_scatter_unselected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)
   : Scatter traces
 - [`add_scatter3d()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
   [`go_scatter3d()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_error_x()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_error_y()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_error_z()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_line_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_line_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_line_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_line_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_line_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_projection()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_projection_x()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_projection_y()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_projection_z()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
-  [`go_scatter3d_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d.md)
   : Scatter3d traces
 - [`add_scattercarpet()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
   [`go_scattercarpet()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_marker_gradient()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_selected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
-  [`go_scattercarpet_unselected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet.md)
   : Scattercarpet traces
 - [`add_scattergeo()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
   [`go_scattergeo()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_marker_gradient()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_selected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
-  [`go_scattergeo_unselected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo.md)
   : Scattergeo traces
 - [`add_scattergl()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
   [`go_scattergl()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_error_x()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_error_y()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_selected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
-  [`go_scattergl_unselected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl.md)
   : Scattergl traces
 - [`add_scattermap()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
   [`go_scattermap()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
-  [`go_scattermap_cluster()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
-  [`go_scattermap_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
-  [`go_scattermap_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
-  [`go_scattermap_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
-  [`go_scattermap_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
-  [`go_scattermap_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
-  [`go_scattermap_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
-  [`go_scattermap_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
-  [`go_scattermap_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
-  [`go_scattermap_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
-  [`go_scattermap_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
-  [`go_scattermap_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
-  [`go_scattermap_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
-  [`go_scattermap_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
-  [`go_scattermap_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
-  [`go_scattermap_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
-  [`go_scattermap_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
   : Scattermap traces
 - [`add_scatterpolar()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
   [`go_scatterpolar()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_marker_gradient()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_selected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
-  [`go_scatterpolar_unselected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
   : Scatterpolar traces
 - [`add_scatterpolargl()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
   [`go_scatterpolargl()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_selected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
-  [`go_scatterpolargl_unselected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl.md)
   : Scatterpolargl traces
 - [`add_scattersmith()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
   [`go_scattersmith()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_marker_gradient()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_selected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
-  [`go_scattersmith_unselected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith.md)
   : Scattersmith traces
 - [`add_scatterternary()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
   [`go_scatterternary()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_marker_gradient()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_selected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
-  [`go_scatterternary_unselected_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
   : Scatterternary traces
 - [`add_splom()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
   [`go_splom()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
-  [`go_splom_diagonal()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
-  [`go_splom_dimension()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
-  [`go_splom_dimension_axis()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
-  [`go_splom_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
-  [`go_splom_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
-  [`go_splom_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
-  [`go_splom_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
-  [`go_splom_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
-  [`go_splom_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
-  [`go_splom_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
-  [`go_splom_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
-  [`go_splom_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
-  [`go_splom_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
-  [`go_splom_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
-  [`go_splom_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
-  [`go_splom_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
-  [`go_splom_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
-  [`go_splom_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom.md)
   : Splom traces
 - [`add_streamtube()`](https://msummersgill.github.io/plotly.R.core/reference/go_streamtube.md)
   [`go_streamtube()`](https://msummersgill.github.io/plotly.R.core/reference/go_streamtube.md)
-  [`go_streamtube_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_streamtube.md)
-  [`go_streamtube_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_streamtube.md)
-  [`go_streamtube_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_streamtube.md)
-  [`go_streamtube_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_streamtube.md)
-  [`go_streamtube_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_streamtube.md)
-  [`go_streamtube_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_streamtube.md)
-  [`go_streamtube_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_streamtube.md)
-  [`go_streamtube_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_streamtube.md)
-  [`go_streamtube_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_streamtube.md)
-  [`go_streamtube_lighting()`](https://msummersgill.github.io/plotly.R.core/reference/go_streamtube.md)
-  [`go_streamtube_lightposition()`](https://msummersgill.github.io/plotly.R.core/reference/go_streamtube.md)
-  [`go_streamtube_starts()`](https://msummersgill.github.io/plotly.R.core/reference/go_streamtube.md)
   : Streamtube traces
 - [`add_sunburst()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
   [`go_sunburst()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
-  [`go_sunburst_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
-  [`go_sunburst_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
-  [`go_sunburst_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
-  [`go_sunburst_insidetextfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
-  [`go_sunburst_leaf()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
-  [`go_sunburst_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
-  [`go_sunburst_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
-  [`go_sunburst_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
-  [`go_sunburst_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
-  [`go_sunburst_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
-  [`go_sunburst_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
-  [`go_sunburst_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
-  [`go_sunburst_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
-  [`go_sunburst_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
-  [`go_sunburst_marker_pattern()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
-  [`go_sunburst_outsidetextfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
-  [`go_sunburst_root()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
-  [`go_sunburst_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
   : Sunburst traces
 - [`add_surface()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
   [`go_surface()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
-  [`go_surface_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
-  [`go_surface_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
-  [`go_surface_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
-  [`go_surface_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
-  [`go_surface_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
-  [`go_surface_contours()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
-  [`go_surface_contours_x()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
-  [`go_surface_contours_x_project()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
-  [`go_surface_contours_y()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
-  [`go_surface_contours_y_project()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
-  [`go_surface_contours_z()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
-  [`go_surface_contours_z_project()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
-  [`go_surface_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
-  [`go_surface_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
-  [`go_surface_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
-  [`go_surface_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
-  [`go_surface_lighting()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
-  [`go_surface_lightposition()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface.md)
   : Surface traces
 - [`add_table()`](https://msummersgill.github.io/plotly.R.core/reference/go_table.md)
   [`go_table()`](https://msummersgill.github.io/plotly.R.core/reference/go_table.md)
-  [`go_table_cells()`](https://msummersgill.github.io/plotly.R.core/reference/go_table.md)
-  [`go_table_cells_fill()`](https://msummersgill.github.io/plotly.R.core/reference/go_table.md)
-  [`go_table_cells_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_table.md)
-  [`go_table_cells_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_table.md)
-  [`go_table_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_table.md)
-  [`go_table_header()`](https://msummersgill.github.io/plotly.R.core/reference/go_table.md)
-  [`go_table_header_fill()`](https://msummersgill.github.io/plotly.R.core/reference/go_table.md)
-  [`go_table_header_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_table.md)
-  [`go_table_header_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_table.md)
-  [`go_table_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_table.md)
-  [`go_table_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_table.md)
-  [`go_table_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_table.md)
-  [`go_table_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_table.md)
   : Table traces
 - [`add_treemap()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
   [`go_treemap()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_insidetextfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_marker_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_marker_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_marker_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_marker_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_marker_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_marker_pad()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_marker_pattern()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_outsidetextfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_pathbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_pathbar_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_root()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
-  [`go_treemap_tiling()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap.md)
   : Treemap traces
 - [`add_violin()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin.md)
   [`go_violin()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin.md)
-  [`go_violin_box()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin.md)
-  [`go_violin_box_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin.md)
-  [`go_violin_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin.md)
-  [`go_violin_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin.md)
-  [`go_violin_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin.md)
-  [`go_violin_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin.md)
-  [`go_violin_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin.md)
-  [`go_violin_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin.md)
-  [`go_violin_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin.md)
-  [`go_violin_meanline()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin.md)
-  [`go_violin_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin.md)
-  [`go_violin_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin.md)
-  [`go_violin_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin.md)
-  [`go_violin_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin.md)
   : Violin traces
 - [`add_volume()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
   [`go_volume()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_caps()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_caps_x()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_caps_y()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_caps_z()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_contour()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_lighting()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_lightposition()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_slices()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_slices_x()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_slices_y()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_slices_z()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_spaceframe()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
-  [`go_volume_surface()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume.md)
   : Volume traces
 - [`add_waterfall()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
   [`go_waterfall()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
-  [`go_waterfall_connector()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
-  [`go_waterfall_connector_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
-  [`go_waterfall_decreasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
-  [`go_waterfall_decreasing_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
-  [`go_waterfall_decreasing_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
-  [`go_waterfall_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
-  [`go_waterfall_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
-  [`go_waterfall_increasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
-  [`go_waterfall_increasing_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
-  [`go_waterfall_increasing_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
-  [`go_waterfall_insidetextfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
-  [`go_waterfall_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
-  [`go_waterfall_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
-  [`go_waterfall_outsidetextfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
-  [`go_waterfall_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
-  [`go_waterfall_totals()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
-  [`go_waterfall_totals_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
-  [`go_waterfall_totals_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall.md)
   : Waterfall traces
 
-## Layout constructors
+## Trace objects
 
+Objects nested in traces, named after their path.
+
+- [`go_bar_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar_marker.md)
+  : Bar marker objects
+- [`go_bar_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar_marker_line.md)
+  : Bar marker line objects
+- [`go_barpolar_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar_marker.md)
+  : Barpolar marker objects
+- [`go_barpolar_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_barpolar_marker_line.md)
+  : Barpolar marker line objects
+- [`go_box_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_box_line.md)
+  : Box line objects
+- [`go_box_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_box_marker.md)
+  : Box marker objects
+- [`go_box_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_box_marker_line.md)
+  : Box marker line objects
+- [`go_candlestick_decreasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick_decreasing.md)
+  : Candlestick decreasing objects
+- [`go_candlestick_decreasing_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick_decreasing_line.md)
+  : Candlestick decreasing line objects
+- [`go_candlestick_increasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick_increasing.md)
+  : Candlestick increasing objects
+- [`go_candlestick_increasing_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick_increasing_line.md)
+  : Candlestick increasing line objects
+- [`go_candlestick_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick_line.md)
+  : Candlestick line objects
+- [`go_carpet_aaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet_aaxis.md)
+  : Carpet aaxis objects
+- [`go_carpet_aaxis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet_aaxis_title.md)
+  : Carpet aaxis title objects
+- [`go_carpet_baxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet_baxis.md)
+  : Carpet baxis objects
+- [`go_carpet_baxis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet_baxis_title.md)
+  : Carpet baxis title objects
+- [`go_choropleth_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth_marker.md)
+  : Choropleth marker objects
+- [`go_choropleth_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_choropleth_marker_line.md)
+  : Choropleth marker line objects
+- [`go_choroplethmap_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap_marker.md)
+  : Choroplethmap marker objects
+- [`go_choroplethmap_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap_marker_line.md)
+  : Choroplethmap marker line objects
+- [`go_cone_lighting()`](https://msummersgill.github.io/plotly.R.core/reference/go_cone_lighting.md)
+  : Cone lighting objects
+- [`go_contour_contours()`](https://msummersgill.github.io/plotly.R.core/reference/go_contour_contours.md)
+  : Contour contours objects
+- [`go_contour_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_contour_line.md)
+  : Contour line objects
+- [`go_contourcarpet_contours()`](https://msummersgill.github.io/plotly.R.core/reference/go_contourcarpet_contours.md)
+  : Contourcarpet contours objects
+- [`go_contourcarpet_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_contourcarpet_line.md)
+  : Contourcarpet line objects
+- [`go_funnel_connector()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel_connector.md)
+  : Funnel connector objects
+- [`go_funnel_connector_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel_connector_line.md)
+  : Funnel connector line objects
+- [`go_funnel_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel_marker.md)
+  : Funnel marker objects
+- [`go_funnel_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnel_marker_line.md)
+  : Funnel marker line objects
+- [`go_funnelarea_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea_marker.md)
+  : Funnelarea marker objects
+- [`go_funnelarea_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea_marker_line.md)
+  : Funnelarea marker line objects
+- [`go_funnelarea_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_funnelarea_title.md)
+  : Funnelarea title objects
+- [`go_histogram2d_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2d_marker.md)
+  : Histogram2d marker objects
+- [`go_histogram2dcontour_contours()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour_contours.md)
+  : Histogram2dcontour contours objects
+- [`go_histogram2dcontour_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour_line.md)
+  : Histogram2dcontour line objects
+- [`go_histogram2dcontour_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram2dcontour_marker.md)
+  : Histogram2dcontour marker objects
+- [`go_histogram_cumulative()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram_cumulative.md)
+  : Histogram cumulative objects
+- [`go_histogram_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram_marker.md)
+  : Histogram marker objects
+- [`go_histogram_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram_marker_line.md)
+  : Histogram marker line objects
+- [`go_icicle_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle_marker.md)
+  : Icicle marker objects
+- [`go_icicle_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle_marker_line.md)
+  : Icicle marker line objects
+- [`go_icicle_tiling()`](https://msummersgill.github.io/plotly.R.core/reference/go_icicle_tiling.md)
+  : Icicle tiling objects
+- [`go_indicator_delta()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator_delta.md)
+  : Indicator delta objects
+- [`go_indicator_delta_decreasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator_delta_decreasing.md)
+  : Indicator delta decreasing objects
+- [`go_indicator_delta_increasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator_delta_increasing.md)
+  : Indicator delta increasing objects
+- [`go_indicator_gauge()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator_gauge.md)
+  : Indicator gauge objects
+- [`go_indicator_gauge_axis()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator_gauge_axis.md)
+  : Indicator gauge axis objects
+- [`go_indicator_gauge_bar()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator_gauge_bar.md)
+  : Indicator gauge bar objects
+- [`go_indicator_gauge_bar_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator_gauge_bar_line.md)
+  : Indicator gauge bar line objects
+- [`go_indicator_gauge_step()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator_gauge_step.md)
+  : Indicator gauge step objects
+- [`go_indicator_gauge_step_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator_gauge_step_line.md)
+  : Indicator gauge step line objects
+- [`go_indicator_gauge_threshold()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator_gauge_threshold.md)
+  : Indicator gauge threshold objects
+- [`go_indicator_gauge_threshold_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator_gauge_threshold_line.md)
+  : Indicator gauge threshold line objects
+- [`go_indicator_number()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator_number.md)
+  : Indicator number objects
+- [`go_indicator_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_indicator_title.md)
+  : Indicator title objects
+- [`go_isosurface_contour()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface_contour.md)
+  : Isosurface contour objects
+- [`go_isosurface_lighting()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface_lighting.md)
+  : Isosurface lighting objects
+- [`go_isosurface_surface()`](https://msummersgill.github.io/plotly.R.core/reference/go_isosurface_surface.md)
+  : Isosurface surface objects
+- [`go_mesh3d_contour()`](https://msummersgill.github.io/plotly.R.core/reference/go_mesh3d_contour.md)
+  : Mesh3d contour objects
+- [`go_mesh3d_lighting()`](https://msummersgill.github.io/plotly.R.core/reference/go_mesh3d_lighting.md)
+  : Mesh3d lighting objects
+- [`go_ohlc_decreasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc_decreasing.md)
+  : Ohlc decreasing objects
+- [`go_ohlc_decreasing_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc_decreasing_line.md)
+  : Ohlc decreasing line objects
+- [`go_ohlc_increasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc_increasing.md)
+  : Ohlc increasing objects
+- [`go_ohlc_increasing_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc_increasing_line.md)
+  : Ohlc increasing line objects
+- [`go_ohlc_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc_line.md)
+  : Ohlc line objects
+- [`go_parcats_dimension()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats_dimension.md)
+  : Parcats dimension objects
+- [`go_parcats_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats_line.md)
+  : Parcats line objects
+- [`go_parcoords_dimension()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords_dimension.md)
+  : Parcoords dimension objects
+- [`go_parcoords_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords_line.md)
+  : Parcoords line objects
+- [`go_pie_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_pie_marker.md)
+  : Pie marker objects
+- [`go_pie_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_pie_marker_line.md)
+  : Pie marker line objects
+- [`go_pie_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_pie_title.md)
+  : Pie title objects
+- [`go_quiver_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver_marker.md)
+  : Quiver marker objects
+- [`go_quiver_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_quiver_marker_line.md)
+  : Quiver marker line objects
+- [`go_sankey_link()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey_link.md)
+  : Sankey link objects
+- [`go_sankey_link_concentrationscales()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey_link_concentrationscales.md)
+  : Sankey link concentrationscales objects
+- [`go_sankey_link_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey_link_line.md)
+  : Sankey link line objects
+- [`go_sankey_node()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey_node.md)
+  : Sankey node objects
+- [`go_sankey_node_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey_node_line.md)
+  : Sankey node line objects
+- [`go_scatter3d_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d_line.md)
+  : Scatter3d line objects
+- [`go_scatter3d_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d_marker.md)
+  : Scatter3d marker objects
+- [`go_scatter3d_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d_marker_line.md)
+  : Scatter3d marker line objects
+- [`go_scatter3d_projection()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d_projection.md)
+  : Scatter3d projection objects
+- [`go_scatter_fillgradient()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter_fillgradient.md)
+  : Scatter fillgradient objects
+- [`go_scatter_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter_line.md)
+  : Scatter line objects
+- [`go_scatter_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter_marker.md)
+  : Scatter marker objects
+- [`go_scatter_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter_marker_line.md)
+  : Scatter marker line objects
+- [`go_scattercarpet_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet_line.md)
+  : Scattercarpet line objects
+- [`go_scattercarpet_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet_marker.md)
+  : Scattercarpet marker objects
+- [`go_scattercarpet_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattercarpet_marker_line.md)
+  : Scattercarpet marker line objects
+- [`go_scattergeo_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo_line.md)
+  : Scattergeo line objects
+- [`go_scattergeo_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo_marker.md)
+  : Scattergeo marker objects
+- [`go_scattergeo_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergeo_marker_line.md)
+  : Scattergeo marker line objects
+- [`go_scattergl_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl_line.md)
+  : Scattergl line objects
+- [`go_scattergl_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl_marker.md)
+  : Scattergl marker objects
+- [`go_scattergl_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattergl_marker_line.md)
+  : Scattergl marker line objects
+- [`go_scattermap_cluster()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap_cluster.md)
+  : Scattermap cluster objects
+- [`go_scattermap_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap_line.md)
+  : Scattermap line objects
+- [`go_scattermap_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap_marker.md)
+  : Scattermap marker objects
+- [`go_scatterpolar_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar_line.md)
+  : Scatterpolar line objects
+- [`go_scatterpolar_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar_marker.md)
+  : Scatterpolar marker objects
+- [`go_scatterpolar_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar_marker_line.md)
+  : Scatterpolar marker line objects
+- [`go_scatterpolargl_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl_line.md)
+  : Scatterpolargl line objects
+- [`go_scatterpolargl_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl_marker.md)
+  : Scatterpolargl marker objects
+- [`go_scatterpolargl_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolargl_marker_line.md)
+  : Scatterpolargl marker line objects
+- [`go_scattersmith_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith_line.md)
+  : Scattersmith line objects
+- [`go_scattersmith_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith_marker.md)
+  : Scattersmith marker objects
+- [`go_scattersmith_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattersmith_marker_line.md)
+  : Scattersmith marker line objects
+- [`go_scatterternary_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary_line.md)
+  : Scatterternary line objects
+- [`go_scatterternary_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary_marker.md)
+  : Scatterternary marker objects
+- [`go_scatterternary_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary_marker_line.md)
+  : Scatterternary marker line objects
+- [`go_splom_diagonal()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom_diagonal.md)
+  : Splom diagonal objects
+- [`go_splom_dimension()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom_dimension.md)
+  : Splom dimension objects
+- [`go_splom_dimension_axis()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom_dimension_axis.md)
+  : Splom dimension axis objects
+- [`go_splom_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom_marker.md)
+  : Splom marker objects
+- [`go_splom_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom_marker_line.md)
+  : Splom marker line objects
+- [`go_streamtube_lighting()`](https://msummersgill.github.io/plotly.R.core/reference/go_streamtube_lighting.md)
+  : Streamtube lighting objects
+- [`go_streamtube_starts()`](https://msummersgill.github.io/plotly.R.core/reference/go_streamtube_starts.md)
+  : Streamtube starts objects
+- [`go_sunburst_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst_marker.md)
+  : Sunburst marker objects
+- [`go_sunburst_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst_marker_line.md)
+  : Sunburst marker line objects
+- [`go_surface_contours()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface_contours.md)
+  : Surface contours objects
+- [`go_surface_lighting()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface_lighting.md)
+  : Surface lighting objects
+- [`go_table_cells()`](https://msummersgill.github.io/plotly.R.core/reference/go_table_cells.md)
+  : Table cells objects
+- [`go_table_cells_fill()`](https://msummersgill.github.io/plotly.R.core/reference/go_table_cells_fill.md)
+  : Table cells fill objects
+- [`go_table_cells_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_table_cells_line.md)
+  : Table cells line objects
+- [`go_table_header()`](https://msummersgill.github.io/plotly.R.core/reference/go_table_header.md)
+  : Table header objects
+- [`go_table_header_fill()`](https://msummersgill.github.io/plotly.R.core/reference/go_table_header_fill.md)
+  : Table header fill objects
+- [`go_table_header_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_table_header_line.md)
+  : Table header line objects
+- [`go_treemap_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap_marker.md)
+  : Treemap marker objects
+- [`go_treemap_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap_marker_line.md)
+  : Treemap marker line objects
+- [`go_treemap_marker_pad()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap_marker_pad.md)
+  : Treemap marker pad objects
+- [`go_treemap_tiling()`](https://msummersgill.github.io/plotly.R.core/reference/go_treemap_tiling.md)
+  : Treemap tiling objects
+- [`go_violin_box()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin_box.md)
+  : Violin box objects
+- [`go_violin_box_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin_box_line.md)
+  : Violin box line objects
+- [`go_violin_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin_line.md)
+  : Violin line objects
+- [`go_violin_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin_marker.md)
+  : Violin marker objects
+- [`go_violin_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin_marker_line.md)
+  : Violin marker line objects
+- [`go_violin_meanline()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin_meanline.md)
+  : Violin meanline objects
+- [`go_volume_contour()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume_contour.md)
+  : Volume contour objects
+- [`go_volume_lighting()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume_lighting.md)
+  : Volume lighting objects
+- [`go_volume_surface()`](https://msummersgill.github.io/plotly.R.core/reference/go_volume_surface.md)
+  : Volume surface objects
+- [`go_waterfall_connector()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_connector.md)
+  : Waterfall connector objects
+- [`go_waterfall_connector_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_connector_line.md)
+  : Waterfall connector line objects
+- [`go_waterfall_decreasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_decreasing.md)
+  : Waterfall decreasing objects
+- [`go_waterfall_decreasing_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_decreasing_marker.md)
+  : Waterfall decreasing marker objects
+- [`go_waterfall_decreasing_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_decreasing_marker_line.md)
+  : Waterfall decreasing marker line objects
+- [`go_waterfall_increasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_increasing.md)
+  : Waterfall increasing objects
+- [`go_waterfall_increasing_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_increasing_marker.md)
+  : Waterfall increasing marker objects
+- [`go_waterfall_increasing_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_increasing_marker_line.md)
+  : Waterfall increasing marker line objects
+- [`go_waterfall_totals()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_totals.md)
+  : Waterfall totals objects
+- [`go_waterfall_totals_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_totals_marker.md)
+  : Waterfall totals marker objects
+- [`go_waterfall_totals_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_totals_marker_line.md)
+  : Waterfall totals marker line objects
+
+## Layout
+
+The layout and the objects in it.
+
+- [`add_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/add_annotation.md)
+  : Add a layout annotation
+- [`add_layout_image()`](https://msummersgill.github.io/plotly.R.core/reference/add_layout_image.md)
+  : Add a layout image
+- [`add_selection()`](https://msummersgill.github.io/plotly.R.core/reference/add_selection.md)
+  : Add a layout selection
+- [`add_shape()`](https://msummersgill.github.io/plotly.R.core/reference/add_shape.md)
+  : Add a layout shape
+- [`go_activeselection()`](https://msummersgill.github.io/plotly.R.core/reference/go_activeselection.md)
+  : Layout activeselection objects
+- [`go_activeshape()`](https://msummersgill.github.io/plotly.R.core/reference/go_activeshape.md)
+  : Layout activeshape objects
+- [`go_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/go_annotation.md)
+  : Layout annotation objects
+- [`go_coloraxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_coloraxis.md)
+  : Layout coloraxis objects
+- [`go_geo()`](https://msummersgill.github.io/plotly.R.core/reference/go_geo.md)
+  : Layout geo objects
+- [`go_geo_center()`](https://msummersgill.github.io/plotly.R.core/reference/go_geo_center.md)
+  : Layout geo center objects
+- [`go_geo_lataxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_geo_lataxis.md)
+  : Layout geo lataxis objects
+- [`go_geo_lonaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_geo_lonaxis.md)
+  : Layout geo lonaxis objects
+- [`go_geo_projection()`](https://msummersgill.github.io/plotly.R.core/reference/go_geo_projection.md)
+  : Layout geo projection objects
+- [`go_geo_projection_rotation()`](https://msummersgill.github.io/plotly.R.core/reference/go_geo_projection_rotation.md)
+  : Layout geo projection rotation objects
+- [`go_grid()`](https://msummersgill.github.io/plotly.R.core/reference/go_grid.md)
+  : Layout grid objects
 - [`go_layout()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout.md)
   : Figure layout
-- [`go_layout_activeselection()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_activeselection.md)
-  : Layout activeselection objects
-- [`go_layout_activeshape()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_activeshape.md)
-  : Layout activeshape objects
-- [`add_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_annotation.md)
-  [`go_layout_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_annotation.md)
-  [`go_layout_annotation_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_annotation.md)
-  [`go_layout_annotation_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_annotation.md)
-  [`go_layout_annotation_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_annotation.md)
-  : Layout annotation objects
-- [`go_layout_coloraxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_coloraxis.md)
-  [`go_layout_coloraxis_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_coloraxis.md)
-  [`go_layout_coloraxis_colorbar_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_coloraxis.md)
-  [`go_layout_coloraxis_colorbar_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_coloraxis.md)
-  [`go_layout_coloraxis_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_coloraxis.md)
-  [`go_layout_coloraxis_colorbar_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_coloraxis.md)
-  : Layout coloraxis objects
 - [`go_layout_colorscale()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_colorscale.md)
   : Layout colorscale objects
-- [`go_layout_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_font.md)
-  : Layout font objects
-- [`go_layout_geo()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_geo.md)
-  [`go_layout_geo_center()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_geo.md)
-  [`go_layout_geo_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_geo.md)
-  [`go_layout_geo_lataxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_geo.md)
-  [`go_layout_geo_lonaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_geo.md)
-  [`go_layout_geo_projection()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_geo.md)
-  [`go_layout_geo_projection_rotation()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_geo.md)
-  : Layout geo objects
-- [`go_layout_grid()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_grid.md)
-  [`go_layout_grid_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_grid.md)
-  : Layout grid objects
-- [`go_layout_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_hoverlabel.md)
-  [`go_layout_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_hoverlabel.md)
-  [`go_layout_hoverlabel_grouptitlefont()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_hoverlabel.md)
-  : Layout hoverlabel objects
-- [`add_layout_image()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_image.md)
-  [`go_layout_image()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_image.md)
+- [`go_layout_image()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_image.md)
   : Layout image objects
-- [`go_layout_legend()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_legend.md)
-  [`go_layout_legend_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_legend.md)
-  [`go_layout_legend_grouptitlefont()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_legend.md)
-  [`go_layout_legend_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_legend.md)
-  [`go_layout_legend_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_legend.md)
-  : Layout legend objects
-- [`go_layout_map()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_map.md)
-  [`go_layout_map_bounds()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_map.md)
-  [`go_layout_map_center()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_map.md)
-  [`go_layout_map_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_map.md)
-  [`go_layout_map_layer()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_map.md)
-  [`go_layout_map_layer_circle()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_map.md)
-  [`go_layout_map_layer_fill()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_map.md)
-  [`go_layout_map_layer_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_map.md)
-  [`go_layout_map_layer_symbol()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_map.md)
-  [`go_layout_map_layer_symbol_textfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_map.md)
-  : Layout map objects
-- [`go_layout_margin()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_margin.md)
-  : Layout margin objects
-- [`go_layout_modebar()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_modebar.md)
-  : Layout modebar objects
-- [`go_layout_newselection()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_newselection.md)
-  [`go_layout_newselection_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_newselection.md)
-  : Layout newselection objects
-- [`go_layout_newshape()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_newshape.md)
-  [`go_layout_newshape_label()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_newshape.md)
-  [`go_layout_newshape_label_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_newshape.md)
-  [`go_layout_newshape_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_newshape.md)
-  [`go_layout_newshape_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_newshape.md)
-  [`go_layout_newshape_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_newshape.md)
-  : Layout newshape objects
-- [`go_layout_polar()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_polar.md)
-  [`go_layout_polar_angularaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_polar.md)
-  [`go_layout_polar_angularaxis_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_polar.md)
-  [`go_layout_polar_angularaxis_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_polar.md)
-  [`go_layout_polar_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_polar.md)
-  [`go_layout_polar_radialaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_polar.md)
-  [`go_layout_polar_radialaxis_autorangeoptions()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_polar.md)
-  [`go_layout_polar_radialaxis_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_polar.md)
-  [`go_layout_polar_radialaxis_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_polar.md)
-  [`go_layout_polar_radialaxis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_polar.md)
-  [`go_layout_polar_radialaxis_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_polar.md)
-  : Layout polar objects
-- [`go_layout_scene()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_annotation_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_annotation_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_annotation_hoverlabel_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_aspectratio()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_camera()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_camera_center()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_camera_eye()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_camera_projection()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_camera_up()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_xaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_xaxis_autorangeoptions()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_xaxis_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_xaxis_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_xaxis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_xaxis_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_yaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_yaxis_autorangeoptions()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_yaxis_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_yaxis_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_yaxis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_yaxis_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_zaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_zaxis_autorangeoptions()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_zaxis_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_zaxis_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_zaxis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  [`go_layout_scene_zaxis_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_scene.md)
-  : Layout scene objects
-- [`add_selection()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_selection.md)
-  [`go_layout_selection()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_selection.md)
-  [`go_layout_selection_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_selection.md)
-  : Layout selection objects
-- [`add_shape()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_shape.md)
-  [`go_layout_shape()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_shape.md)
-  [`go_layout_shape_label()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_shape.md)
-  [`go_layout_shape_label_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_shape.md)
-  [`go_layout_shape_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_shape.md)
-  [`go_layout_shape_legendgrouptitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_shape.md)
-  [`go_layout_shape_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_shape.md)
-  : Layout shape objects
-- [`go_layout_slider()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_slider.md)
-  [`go_layout_slider_currentvalue()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_slider.md)
-  [`go_layout_slider_currentvalue_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_slider.md)
-  [`go_layout_slider_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_slider.md)
-  [`go_layout_slider_pad()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_slider.md)
-  [`go_layout_slider_step()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_slider.md)
-  [`go_layout_slider_transition()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_slider.md)
-  : Layout slider objects
-- [`go_layout_smith()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_smith.md)
-  [`go_layout_smith_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_smith.md)
-  [`go_layout_smith_imaginaryaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_smith.md)
-  [`go_layout_smith_imaginaryaxis_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_smith.md)
-  [`go_layout_smith_realaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_smith.md)
-  [`go_layout_smith_realaxis_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_smith.md)
-  : Layout smith objects
-- [`go_layout_ternary()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-  [`go_layout_ternary_aaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-  [`go_layout_ternary_aaxis_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-  [`go_layout_ternary_aaxis_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-  [`go_layout_ternary_aaxis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-  [`go_layout_ternary_aaxis_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-  [`go_layout_ternary_baxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-  [`go_layout_ternary_baxis_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-  [`go_layout_ternary_baxis_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-  [`go_layout_ternary_baxis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-  [`go_layout_ternary_baxis_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-  [`go_layout_ternary_caxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-  [`go_layout_ternary_caxis_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-  [`go_layout_ternary_caxis_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-  [`go_layout_ternary_caxis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-  [`go_layout_ternary_caxis_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-  [`go_layout_ternary_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_ternary.md)
-  : Layout ternary objects
 - [`go_layout_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_title.md)
-  [`go_layout_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_title.md)
-  [`go_layout_title_pad()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_title.md)
-  [`go_layout_title_subtitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_title.md)
-  [`go_layout_title_subtitle_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_title.md)
   : Layout title objects
 - [`go_layout_transition()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_transition.md)
   : Layout transition objects
-- [`go_layout_uniformtext()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_uniformtext.md)
+- [`go_legend()`](https://msummersgill.github.io/plotly.R.core/reference/go_legend.md)
+  : Layout legend objects
+- [`go_legend_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_legend_title.md)
+  : Layout legend title objects
+- [`go_map()`](https://msummersgill.github.io/plotly.R.core/reference/go_map.md)
+  : Layout map objects
+- [`go_map_bounds()`](https://msummersgill.github.io/plotly.R.core/reference/go_map_bounds.md)
+  : Layout map bounds objects
+- [`go_map_center()`](https://msummersgill.github.io/plotly.R.core/reference/go_map_center.md)
+  : Layout map center objects
+- [`go_map_layer()`](https://msummersgill.github.io/plotly.R.core/reference/go_map_layer.md)
+  : Layout map layer objects
+- [`go_map_layer_circle()`](https://msummersgill.github.io/plotly.R.core/reference/go_map_layer_circle.md)
+  : Layout map layer circle objects
+- [`go_map_layer_fill()`](https://msummersgill.github.io/plotly.R.core/reference/go_map_layer_fill.md)
+  : Layout map layer fill objects
+- [`go_map_layer_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_map_layer_line.md)
+  : Layout map layer line objects
+- [`go_map_layer_symbol()`](https://msummersgill.github.io/plotly.R.core/reference/go_map_layer_symbol.md)
+  : Layout map layer symbol objects
+- [`go_margin()`](https://msummersgill.github.io/plotly.R.core/reference/go_margin.md)
+  : Layout margin objects
+- [`go_modebar()`](https://msummersgill.github.io/plotly.R.core/reference/go_modebar.md)
+  : Layout modebar objects
+- [`go_newselection()`](https://msummersgill.github.io/plotly.R.core/reference/go_newselection.md)
+  : Layout newselection objects
+- [`go_newselection_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_newselection_line.md)
+  : Layout newselection line objects
+- [`go_newshape()`](https://msummersgill.github.io/plotly.R.core/reference/go_newshape.md)
+  : Layout newshape objects
+- [`go_newshape_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_newshape_line.md)
+  : Layout newshape line objects
+- [`go_polar()`](https://msummersgill.github.io/plotly.R.core/reference/go_polar.md)
+  : Layout polar objects
+- [`go_polar_angularaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_polar_angularaxis.md)
+  : Layout polar angularaxis objects
+- [`go_polar_radialaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_polar_radialaxis.md)
+  : Layout polar radialaxis objects
+- [`go_polar_radialaxis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_polar_radialaxis_title.md)
+  : Layout polar radialaxis title objects
+- [`go_scene()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene.md)
+  : Layout scene objects
+- [`go_scene_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene_annotation.md)
+  : Layout scene annotation objects
+- [`go_scene_aspectratio()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene_aspectratio.md)
+  : Layout scene aspectratio objects
+- [`go_scene_camera()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene_camera.md)
+  : Layout scene camera objects
+- [`go_scene_camera_center()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene_camera_center.md)
+  : Layout scene camera center objects
+- [`go_scene_camera_eye()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene_camera_eye.md)
+  : Layout scene camera eye objects
+- [`go_scene_camera_projection()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene_camera_projection.md)
+  : Layout scene camera projection objects
+- [`go_scene_camera_up()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene_camera_up.md)
+  : Layout scene camera up objects
+- [`go_selection()`](https://msummersgill.github.io/plotly.R.core/reference/go_selection.md)
+  : Layout selection objects
+- [`go_selection_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_selection_line.md)
+  : Layout selection line objects
+- [`go_shape()`](https://msummersgill.github.io/plotly.R.core/reference/go_shape.md)
+  : Layout shape objects
+- [`go_shape_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_shape_line.md)
+  : Layout shape line objects
+- [`go_slider()`](https://msummersgill.github.io/plotly.R.core/reference/go_slider.md)
+  : Layout slider objects
+- [`go_slider_currentvalue()`](https://msummersgill.github.io/plotly.R.core/reference/go_slider_currentvalue.md)
+  : Layout slider currentvalue objects
+- [`go_slider_pad()`](https://msummersgill.github.io/plotly.R.core/reference/go_slider_pad.md)
+  : Layout slider pad objects
+- [`go_slider_step()`](https://msummersgill.github.io/plotly.R.core/reference/go_slider_step.md)
+  : Layout slider step objects
+- [`go_slider_transition()`](https://msummersgill.github.io/plotly.R.core/reference/go_slider_transition.md)
+  : Layout slider transition objects
+- [`go_smith()`](https://msummersgill.github.io/plotly.R.core/reference/go_smith.md)
+  : Layout smith objects
+- [`go_smith_imaginaryaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_smith_imaginaryaxis.md)
+  : Layout smith imaginaryaxis objects
+- [`go_smith_realaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_smith_realaxis.md)
+  : Layout smith realaxis objects
+- [`go_ternary()`](https://msummersgill.github.io/plotly.R.core/reference/go_ternary.md)
+  : Layout ternary objects
+- [`go_title_pad()`](https://msummersgill.github.io/plotly.R.core/reference/go_title_pad.md)
+  : Layout title pad objects
+- [`go_title_subtitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_title_subtitle.md)
+  : Layout title subtitle objects
+- [`go_uniformtext()`](https://msummersgill.github.io/plotly.R.core/reference/go_uniformtext.md)
   : Layout uniformtext objects
-- [`go_layout_updatemenu()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_updatemenu.md)
-  [`go_layout_updatemenu_button()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_updatemenu.md)
-  [`go_layout_updatemenu_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_updatemenu.md)
-  [`go_layout_updatemenu_pad()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_updatemenu.md)
+- [`go_updatemenu()`](https://msummersgill.github.io/plotly.R.core/reference/go_updatemenu.md)
   : Layout updatemenu objects
-- [`go_layout_xaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md)
-  [`go_layout_xaxis_autorangeoptions()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md)
-  [`go_layout_xaxis_domainpad()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md)
-  [`go_layout_xaxis_minor()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md)
-  [`go_layout_xaxis_rangebreak()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md)
-  [`go_layout_xaxis_rangeselector()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md)
-  [`go_layout_xaxis_rangeselector_button()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md)
-  [`go_layout_xaxis_rangeselector_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md)
-  [`go_layout_xaxis_rangeslider()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md)
-  [`go_layout_xaxis_rangeslider_yaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md)
-  [`go_layout_xaxis_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md)
-  [`go_layout_xaxis_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md)
-  [`go_layout_xaxis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md)
-  [`go_layout_xaxis_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md)
-  [`go_layout_xaxis_unifiedhovertitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_xaxis.md)
+- [`go_updatemenu_button()`](https://msummersgill.github.io/plotly.R.core/reference/go_updatemenu_button.md)
+  : Layout updatemenu button objects
+- [`go_updatemenu_pad()`](https://msummersgill.github.io/plotly.R.core/reference/go_updatemenu_pad.md)
+  : Layout updatemenu pad objects
+- [`go_xaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis.md)
   : Layout xaxis objects
-- [`go_layout_yaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_yaxis.md)
-  [`go_layout_yaxis_autorangeoptions()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_yaxis.md)
-  [`go_layout_yaxis_domainpad()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_yaxis.md)
-  [`go_layout_yaxis_minor()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_yaxis.md)
-  [`go_layout_yaxis_rangebreak()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_yaxis.md)
-  [`go_layout_yaxis_tickfont()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_yaxis.md)
-  [`go_layout_yaxis_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_yaxis.md)
-  [`go_layout_yaxis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_yaxis.md)
-  [`go_layout_yaxis_title_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_yaxis.md)
-  [`go_layout_yaxis_unifiedhovertitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_yaxis.md)
+- [`go_xaxis_rangeselector()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis_rangeselector.md)
+  : Layout xaxis rangeselector objects
+- [`go_xaxis_rangeselector_button()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis_rangeselector_button.md)
+  : Layout xaxis rangeselector button objects
+- [`go_xaxis_rangeslider()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis_rangeslider.md)
+  : Layout xaxis rangeslider objects
+- [`go_xaxis_rangeslider_yaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis_rangeslider_yaxis.md)
+  : Layout xaxis rangeslider yaxis objects
+- [`go_xaxis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis_title.md)
+  : Layout xaxis title objects
+- [`go_yaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_yaxis.md)
   : Layout yaxis objects
+- [`go_yaxis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_yaxis_title.md)
+  : Layout yaxis title objects
+
+## Shared object types
+
+Objects used in several places in traces and layouts.
+
+- [`go_autorangeoptions()`](https://msummersgill.github.io/plotly.R.core/reference/go_autorangeoptions.md)
+  : Autorangeoptions objects
+- [`go_bins()`](https://msummersgill.github.io/plotly.R.core/reference/go_bins.md)
+  : Bins objects
+- [`go_caps()`](https://msummersgill.github.io/plotly.R.core/reference/go_caps.md)
+  : Caps objects
+- [`go_caps_axis()`](https://msummersgill.github.io/plotly.R.core/reference/go_caps_axis.md)
+  : Caps axis objects
+- [`go_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_colorbar.md)
+  : Colorbar objects
+- [`go_colorbar_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_colorbar_title.md)
+  : Colorbar title objects
+- [`go_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_domain.md)
+  : Domain objects
+- [`go_domainpad()`](https://msummersgill.github.io/plotly.R.core/reference/go_domainpad.md)
+  : Domainpad objects
+- [`go_error_bar()`](https://msummersgill.github.io/plotly.R.core/reference/go_error_bar.md)
+  : Error bar objects
+- [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)
+  : Font objects
+- [`go_gradient()`](https://msummersgill.github.io/plotly.R.core/reference/go_gradient.md)
+  : Gradient objects
+- [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md)
+  : Hoverlabel objects
+- [`go_label()`](https://msummersgill.github.io/plotly.R.core/reference/go_label.md)
+  : Label objects
+- [`go_leaf()`](https://msummersgill.github.io/plotly.R.core/reference/go_leaf.md)
+  : Leaf objects
+- [`go_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_legendgrouptitle.md)
+  : Legendgrouptitle objects
+- [`go_lightposition()`](https://msummersgill.github.io/plotly.R.core/reference/go_lightposition.md)
+  : Lightposition objects
+- [`go_minor()`](https://msummersgill.github.io/plotly.R.core/reference/go_minor.md)
+  : Minor objects
+- [`go_pathbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_pathbar.md)
+  : Pathbar objects
+- [`go_pattern()`](https://msummersgill.github.io/plotly.R.core/reference/go_pattern.md)
+  : Pattern objects
+- [`go_project()`](https://msummersgill.github.io/plotly.R.core/reference/go_project.md)
+  : Project objects
+- [`go_rangebreak()`](https://msummersgill.github.io/plotly.R.core/reference/go_rangebreak.md)
+  : Rangebreak objects
+- [`go_root()`](https://msummersgill.github.io/plotly.R.core/reference/go_root.md)
+  : Root objects
+- [`go_scatter3d_projection_axis()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter3d_projection_axis.md)
+  : Scatter3d projection axis objects
+- [`go_scene_axis()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene_axis.md)
+  : Scene axis objects
+- [`go_scene_axis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene_axis_title.md)
+  : Scene axis title objects
+- [`go_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_selected.md)
+  : Selected objects
+- [`go_selected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_selected_marker.md)
+  : Selected marker objects
+- [`go_selected_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_selected_marker_line.md)
+  : Selected marker line objects
+- [`go_slices()`](https://msummersgill.github.io/plotly.R.core/reference/go_slices.md)
+  : Slices objects
+- [`go_slices_axis()`](https://msummersgill.github.io/plotly.R.core/reference/go_slices_axis.md)
+  : Slices axis objects
+- [`go_spaceframe()`](https://msummersgill.github.io/plotly.R.core/reference/go_spaceframe.md)
+  : Spaceframe objects
+- [`go_surface_contours_axis()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface_contours_axis.md)
+  : Surface contours axis objects
+- [`go_ternary_axis()`](https://msummersgill.github.io/plotly.R.core/reference/go_ternary_axis.md)
+  : Ternary axis objects
+- [`go_ternary_axis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_ternary_axis_title.md)
+  : Ternary axis title objects
+- [`go_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_tickformatstop.md)
+  : Tickformatstop objects
+- [`go_unifiedhovertitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_unifiedhovertitle.md)
+  : Unifiedhovertitle objects
+- [`go_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_unselected.md)
+  : Unselected objects
+- [`go_unselected_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_unselected_line.md)
+  : Unselected line objects
+- [`go_unselected_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_unselected_marker.md)
+  : Unselected marker objects
+- [`go_unselected_marker_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_unselected_marker_line.md)
+  : Unselected marker line objects
 
 ## Plotly Express
 
@@ -1320,6 +902,8 @@
 - [`chrome_exporter()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
   [`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
   : Save a figure as a static image
+- [`available_fonts()`](https://msummersgill.github.io/plotly.R.core/reference/available_fonts.md)
+  : Fonts installed on this computer
 - [`install_chrome()`](https://msummersgill.github.io/plotly.R.core/reference/install_chrome.md)
   [`remove_chrome()`](https://msummersgill.github.io/plotly.R.core/reference/install_chrome.md)
   : Set up Chrome for static image export

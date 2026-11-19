@@ -1,0 +1,98 @@
+# Scatter fillgradient objects
+
+Sets a fill gradient. If not specified, the fillcolor is used instead.
+The object for the `fillgradient` of a scatter trace
+([`go_scatter()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md)).
+`go_scatter_fillgradient()` creates one, with exactly its properties; a
+named list with the same properties works too.
+
+## Usage
+
+``` r
+go_scatter_fillgradient(
+  arg = NULL,
+  ...,
+  colorscale = NULL,
+  start = NULL,
+  stop = NULL,
+  type = NULL,
+  skip_invalid = FALSE
+)
+```
+
+## Arguments
+
+- arg:
+
+  Optional named list, or graph object of the same type, to initialise
+  properties from. Named arguments take precedence.
+
+- ...:
+
+  Not used: properties must be named in full.
+
+- colorscale:
+
+  Sets the fill gradient colors as a color scale. The color scale is
+  interpreted as a gradient applied in the direction specified by
+  "orientation", from the lowest to the highest value of the scatter
+  plot along that axis, or from the center to the most distant point
+  from it, if orientation is "radial". Colorscale: a vector of colors, a
+  two-column data.frame of (value, color), or the name of a sequential,
+  diverging or cyclical scale in
+  [`px_colors()`](https://msummersgill.github.io/plotly.R.core/reference/px_colors.md)
+  (append `"_r"` to reverse).
+
+- start:
+
+  Sets the gradient start value. It is given as the absolute position on
+  the axis determined by the orientiation. E.g., if orientation is
+  "horizontal", the gradient will be horizontal and start from the
+  x-position given by start. If omitted, the gradient starts at the
+  lowest value of the trace along the respective axis. Ignored if
+  orientation is "radial". Number.
+
+- stop:
+
+  Sets the gradient end value. It is given as the absolute position on
+  the axis determined by the orientiation. E.g., if orientation is
+  "horizontal", the gradient will be horizontal and end at the
+  x-position given by end. If omitted, the gradient ends at the highest
+  value of the trace along the respective axis. Ignored if orientation
+  is "radial". Number.
+
+- type:
+
+  Sets the type/orientation of the color gradient for the fill. Defaults
+  to "none". One of `"radial"`, `"horizontal"`, `"vertical"`, `"none"`.
+
+- skip_invalid:
+
+  If `TRUE`, silently drop invalid properties instead of raising an
+  error.
+
+## Value
+
+A `go_scatter_fillgradient` object (a named list).
+
+## Details
+
+Nested objects are named lists, or objects of the constructors their
+arguments name. Every property is checked against the plotly.js schema
+when the object is created or modified. A property may be a one-sided
+formula (`color = ~col`): it is kept, and evaluated in the data (then
+checked) when its trace is added to a figure with `add_<trace>()` or
+[`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md).
+
+## Examples
+
+``` r
+mtcars |>
+  go_figure() |>
+  add_scatter(
+    x = ~wt,
+    y = ~mpg,
+    mode = "markers",
+    fillgradient = go_scatter_fillgradient()
+  )
+```

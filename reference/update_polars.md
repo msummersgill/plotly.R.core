@@ -48,12 +48,12 @@ for_each_polar(fig, fn, selector = NULL, row = NULL, col = NULL)
 - patch:
 
   A named list or
-  [`go_layout_polar()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_polar.md)
+  [`go_polar()`](https://msummersgill.github.io/plotly.R.core/reference/go_polar.md)
   object of property updates.
 
 - ...:
 
-  Further named updates (names may use magic underscores).
+  Further named updates, by their full names.
 
 - overwrite:
 
@@ -66,6 +66,10 @@ for_each_polar(fig, fn, selector = NULL, row = NULL, col = NULL)
 
 ## Value
 
-`select_polars()` returns a named list of
-[`go_layout_polar()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_polar.md)
-objects; the others return the modified figure.
+`select_polars()` returns a named list of polar objects; the others
+return the modified figure.
+
+## See also
+
+[`go_polar()`](https://msummersgill.github.io/plotly.R.core/reference/go_polar.md)
+for the properties of polar objects.

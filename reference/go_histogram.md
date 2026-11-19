@@ -142,364 +142,6 @@ go_histogram(
   zorder = NULL,
   skip_invalid = FALSE
 )
-
-go_histogram_cumulative(
-  arg = NULL,
-  ...,
-  currentbin = NULL,
-  direction = NULL,
-  enabled = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_error_x(
-  arg = NULL,
-  ...,
-  array = NULL,
-  arrayminus = NULL,
-  color = NULL,
-  copy_ystyle = NULL,
-  symmetric = NULL,
-  thickness = NULL,
-  traceref = NULL,
-  tracerefminus = NULL,
-  type = NULL,
-  value = NULL,
-  valueminus = NULL,
-  visible = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_error_y(
-  arg = NULL,
-  ...,
-  array = NULL,
-  arrayminus = NULL,
-  color = NULL,
-  symmetric = NULL,
-  thickness = NULL,
-  traceref = NULL,
-  tracerefminus = NULL,
-  type = NULL,
-  value = NULL,
-  valueminus = NULL,
-  visible = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_insidetextfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_marker(
-  arg = NULL,
-  ...,
-  autocolorscale = NULL,
-  cauto = NULL,
-  cmax = NULL,
-  cmid = NULL,
-  cmin = NULL,
-  color = NULL,
-  coloraxis = NULL,
-  colorbar = NULL,
-  colorscale = NULL,
-  cornerradius = NULL,
-  line = NULL,
-  opacity = NULL,
-  pattern = NULL,
-  reversescale = NULL,
-  showscale = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_marker_colorbar(
-  arg = NULL,
-  ...,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  borderwidth = NULL,
-  dtick = NULL,
-  exponentformat = NULL,
-  labelalias = NULL,
-  len = NULL,
-  lenmode = NULL,
-  minexponent = NULL,
-  nticks = NULL,
-  orientation = NULL,
-  outlinecolor = NULL,
-  outlinewidth = NULL,
-  separatethousands = NULL,
-  showexponent = NULL,
-  showticklabels = NULL,
-  showtickprefix = NULL,
-  showticksuffix = NULL,
-  thickness = NULL,
-  thicknessmode = NULL,
-  tick0 = NULL,
-  tickangle = NULL,
-  tickcolor = NULL,
-  tickfont = NULL,
-  tickformat = NULL,
-  tickformatstops = NULL,
-  ticklabeloverflow = NULL,
-  ticklabelposition = NULL,
-  ticklabelstep = NULL,
-  ticklen = NULL,
-  tickmode = NULL,
-  tickprefix = NULL,
-  ticks = NULL,
-  ticksuffix = NULL,
-  ticktext = NULL,
-  tickvals = NULL,
-  tickwidth = NULL,
-  title = NULL,
-  x = NULL,
-  xanchor = NULL,
-  xpad = NULL,
-  xref = NULL,
-  y = NULL,
-  yanchor = NULL,
-  ypad = NULL,
-  yref = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_marker_colorbar_tickfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_marker_colorbar_tickformatstop(
-  arg = NULL,
-  ...,
-  dtickrange = NULL,
-  enabled = NULL,
-  name = NULL,
-  templateitemname = NULL,
-  value = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_marker_colorbar_title(
-  arg = NULL,
-  ...,
-  font = NULL,
-  side = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_marker_colorbar_title_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_marker_line(
-  arg = NULL,
-  ...,
-  autocolorscale = NULL,
-  cauto = NULL,
-  cmax = NULL,
-  cmid = NULL,
-  cmin = NULL,
-  color = NULL,
-  coloraxis = NULL,
-  colorscale = NULL,
-  reversescale = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_marker_pattern(
-  arg = NULL,
-  ...,
-  bgcolor = NULL,
-  fgcolor = NULL,
-  fgopacity = NULL,
-  fillmode = NULL,
-  path = NULL,
-  shape = NULL,
-  size = NULL,
-  solidity = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_outsidetextfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_selected(
-  arg = NULL,
-  ...,
-  marker = NULL,
-  textfont = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_selected_marker(
-  arg = NULL,
-  ...,
-  color = NULL,
-  opacity = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_selected_textfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_textfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_unselected(
-  arg = NULL,
-  ...,
-  marker = NULL,
-  textfont = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_unselected_marker(
-  arg = NULL,
-  ...,
-  color = NULL,
-  opacity = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_unselected_textfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_xbins(
-  arg = NULL,
-  ...,
-  end = NULL,
-  size = NULL,
-  start = NULL,
-  skip_invalid = FALSE
-)
-
-go_histogram_ybins(
-  arg = NULL,
-  ...,
-  end = NULL,
-  size = NULL,
-  start = NULL,
-  skip_invalid = FALSE
-)
 ```
 
 ## Arguments
@@ -510,15 +152,14 @@ go_histogram_ybins(
 
 - ...:
 
-  Further properties, including nested properties in "magic underscore"
-  form, e.g. `marker_size = 10` for `marker = list(size = 10)`. Property
-  values may be one-sided formulas, evaluated in `data` for `add_*()`
-  functions.
+  Not used: properties must be named in full.
 
 - data:
 
   A data frame in which formula properties (e.g. `x = ~col`,
-  `marker_size = ~col`) are evaluated. Default: the data given to
+  `marker = list(size = ~col)`,
+  `marker = go_scatter_marker(size = ~col)`) are evaluated. Default: the
+  data given to
   [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md).
   Only the evaluated values are added to the trace. A
   [`crosstalk::SharedData`](https://rdrr.io/pkg/crosstalk/man/SharedData.html)
@@ -569,7 +210,11 @@ go_histogram_ybins(
 
 - cumulative:
 
-  Named list or `go_histogram_cumulative()` object.
+  A
+  [`go_histogram_cumulative()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram_cumulative.md)
+  object or named list, with properties `currentbin`, `direction` and
+  `enabled` (see
+  [`go_histogram_cumulative()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram_cumulative.md)).
 
 - customdata:
 
@@ -580,11 +225,21 @@ go_histogram_ybins(
 
 - error_x:
 
-  Named list or `go_histogram_error_x()` object.
+  A
+  [`go_error_bar()`](https://msummersgill.github.io/plotly.R.core/reference/go_error_bar.md)
+  object or named list, with properties `array`, `arrayminus`, `color`,
+  `copy_ystyle`, `symmetric`, `thickness`, `traceref`, `tracerefminus`,
+  `type`, `value`, `valueminus`, `visible` and `width` (see
+  [`go_error_bar()`](https://msummersgill.github.io/plotly.R.core/reference/go_error_bar.md)).
 
 - error_y:
 
-  Named list or `go_histogram_error_y()` object.
+  A
+  [`go_error_bar()`](https://msummersgill.github.io/plotly.R.core/reference/go_error_bar.md)
+  object or named list, with properties `array`, `arrayminus`, `color`,
+  `symmetric`, `thickness`, `traceref`, `tracerefminus`, `type`,
+  `value`, `valueminus`, `visible` and `width` (see
+  [`go_error_bar()`](https://msummersgill.github.io/plotly.R.core/reference/go_error_bar.md)).
 
 - histfunc:
 
@@ -621,7 +276,11 @@ go_histogram_ybins(
 
 - hoverlabel:
 
-  Named list or `go_histogram_hoverlabel()` object.
+  A
+  [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md)
+  object or named list, with properties `align`, `bgcolor`,
+  `bordercolor`, `font`, `namelength` and `showarrow` (see
+  [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md)).
 
 - hovertemplate:
 
@@ -678,8 +337,12 @@ go_histogram_ybins(
 
 - insidetextfont:
 
-  Sets the font used for \`text\` lying inside the bar. Named list or
-  `go_histogram_insidetextfont()` object.
+  Sets the font used for \`text\` lying inside the bar. A
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)
+  object or named list, with properties `color`, `family`,
+  `lineposition`, `shadow`, `size`, `style`, `textcase`, `variant` and
+  `weight` (see
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)).
 
 - legend:
 
@@ -697,7 +360,10 @@ go_histogram_ybins(
 
 - legendgrouptitle:
 
-  Named list or `go_histogram_legendgrouptitle()` object.
+  A
+  [`go_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_legendgrouptitle.md)
+  object or named list, with properties `font` and `text` (see
+  [`go_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_legendgrouptitle.md)).
 
 - legendrank:
 
@@ -717,13 +383,13 @@ go_histogram_ybins(
 
 - marker:
 
-  **`go_histogram()`**: Named list or `go_histogram_marker()` object.
-
-  **`go_histogram_selected()`**: Named list or
-  `go_histogram_selected_marker()` object.
-
-  **`go_histogram_unselected()`**: Named list or
-  `go_histogram_unselected_marker()` object.
+  A
+  [`go_histogram_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram_marker.md)
+  object or named list, with properties `autocolorscale`, `cauto`,
+  `cmax`, `cmid`, `cmin`, `color`, `coloraxis`, `colorbar`,
+  `colorscale`, `cornerradius`, `line`, `opacity`, `pattern`,
+  `reversescale` and `showscale` (see
+  [`go_histogram_marker()`](https://msummersgill.github.io/plotly.R.core/reference/go_histogram_marker.md)).
 
 - meta:
 
@@ -740,16 +406,8 @@ go_histogram_ybins(
 
 - name:
 
-  **`go_histogram()`**: Sets the trace name. The trace name appears as
-  the legend item and on hover. String.
-
-  **`go_histogram_marker_colorbar_tickformatstop()`**: When used in a
-  template, named items are created in the output figure in addition to
-  any items the figure already has in this array. You can modify these
-  items in the output figure by making your own item with
-  \`templateitemname\` matching this \`name\` alongside your
-  modifications (including \`visible: false\` or \`enabled: false\` to
-  hide it). Has no effect outside of a template. String.
+  Sets the trace name. The trace name appears as the legend item and on
+  hover. String.
 
 - nbinsx:
 
@@ -773,36 +431,28 @@ go_histogram_ybins(
 
 - opacity:
 
-  **`go_histogram()`**: Sets the opacity of the trace. Number in the
-  interval \[0, 1\].
-
-  **`go_histogram_marker()`**: Sets the opacity of the bars. Number in
-  the interval \[0, 1\], or a vector of these.
-
-  **`go_histogram_selected_marker()`**: Sets the marker opacity of
-  selected points. Number in the interval \[0, 1\].
-
-  **`go_histogram_unselected_marker()`**: Sets the marker opacity of
-  unselected points, applied only when a selection exists. Number in the
-  interval \[0, 1\].
+  Sets the opacity of the trace. Number in the interval \[0, 1\].
 
 - orientation:
 
-  **`go_histogram()`**: Sets the orientation of the bars. With "v"
-  ("h"), the value of the each bar spans along the vertical
-  (horizontal). One of `"v"`, `"h"`.
-
-  **`go_histogram_marker_colorbar()`**: Sets the orientation of the
-  colorbar. One of `"h"`, `"v"`.
+  Sets the orientation of the bars. With "v" ("h"), the value of the
+  each bar spans along the vertical (horizontal). One of `"v"`, `"h"`.
 
 - outsidetextfont:
 
-  Sets the font used for \`text\` lying outside the bar. Named list or
-  `go_histogram_outsidetextfont()` object.
+  Sets the font used for \`text\` lying outside the bar. A
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)
+  object or named list, with properties `color`, `family`,
+  `lineposition`, `shadow`, `size`, `style`, `textcase`, `variant` and
+  `weight` (see
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)).
 
 - selected:
 
-  Named list or `go_histogram_selected()` object.
+  A
+  [`go_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_selected.md)
+  object or named list, with properties `marker` and `textfont` (see
+  [`go_selected()`](https://msummersgill.github.io/plotly.R.core/reference/go_selected.md)).
 
 - selectedpoints:
 
@@ -820,16 +470,10 @@ go_histogram_ybins(
 
 - text:
 
-  **`go_histogram()`**: Sets hover text elements associated with each
-  bar. If a single string, the same string appears over all bars. If an
-  array of string, the items are mapped in order to the this trace's
-  coordinates. String, or a vector of these.
-
-  **`go_histogram_legendgrouptitle()`**: Sets the title of the legend
-  group. String.
-
-  **`go_histogram_marker_colorbar_title()`**: Sets the title of the
-  color bar. String.
+  Sets hover text elements associated with each bar. If a single string,
+  the same string appears over all bars. If an array of string, the
+  items are mapped in order to the this trace's coordinates. String, or
+  a vector of these.
 
 - textangle:
 
@@ -840,14 +484,12 @@ go_histogram_ybins(
 
 - textfont:
 
-  **`go_histogram()`**: Sets the text font. Named list or
-  `go_histogram_textfont()` object.
-
-  **`go_histogram_selected()`**: Named list or
-  `go_histogram_selected_textfont()` object.
-
-  **`go_histogram_unselected()`**: Named list or
-  `go_histogram_unselected_textfont()` object.
+  Sets the text font. A
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)
+  object or named list, with properties `color`, `family`,
+  `lineposition`, `shadow`, `size`, `style`, `textcase`, `variant` and
+  `weight` (see
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)).
 
 - textposition:
 
@@ -912,30 +554,21 @@ go_histogram_ybins(
 
 - unselected:
 
-  Named list or `go_histogram_unselected()` object.
+  A
+  [`go_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_unselected.md)
+  object or named list, with properties `marker` and `textfont` (see
+  [`go_unselected()`](https://msummersgill.github.io/plotly.R.core/reference/go_unselected.md)).
 
 - visible:
 
-  **`go_histogram()`**: Determines whether or not this trace is visible.
-  If "legendonly", the trace is not drawn, but can appear as a legend
-  item (provided that the legend itself is visible). One of
-  `"legendonly"`, `TRUE`, `FALSE`.
-
-  **`go_histogram_error_x()`, `go_histogram_error_y()`**: Determines
-  whether or not this set of error bars is visible. Logical.
+  Determines whether or not this trace is visible. If "legendonly", the
+  trace is not drawn, but can appear as a legend item (provided that the
+  legend itself is visible). One of `"legendonly"`, `TRUE`, `FALSE`.
 
 - x:
 
-  **`go_histogram()`**: Sets the sample data to be binned on the x axis.
-  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-
-  **`go_histogram_marker_colorbar()`**: Sets the x position with respect
-  to \`xref\` of the color bar (in plot fraction). When \`xref\` is
-  "paper", defaults to 1.02 when \`orientation\` is "v" and 0.5 when
-  \`orientation\` is "h". When \`xref\` is "container", defaults to 1
-  when \`orientation\` is "v" and 0.5 when \`orientation\` is "h". Must
-  be between 0 and 1 if \`xref\` is "container" and between "-2" and 3
-  if \`xref\` is "paper". Number.
+  Sets the sample data to be binned on the x axis. Data array: a vector,
+  factor, Date/POSIXct vector, matrix or list.
 
 - xaxis:
 
@@ -946,7 +579,10 @@ go_histogram_ybins(
 
 - xbins:
 
-  Named list or `go_histogram_xbins()` object.
+  A
+  [`go_bins()`](https://msummersgill.github.io/plotly.R.core/reference/go_bins.md)
+  object or named list, with properties `end`, `size` and `start` (see
+  [`go_bins()`](https://msummersgill.github.io/plotly.R.core/reference/go_bins.md)).
 
 - xcalendar:
 
@@ -971,16 +607,8 @@ go_histogram_ybins(
 
 - y:
 
-  **`go_histogram()`**: Sets the sample data to be binned on the y axis.
-  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-
-  **`go_histogram_marker_colorbar()`**: Sets the y position with respect
-  to \`yref\` of the color bar (in plot fraction). When \`yref\` is
-  "paper", defaults to 0.5 when \`orientation\` is "v" and 1.02 when
-  \`orientation\` is "h". When \`yref\` is "container", defaults to 0.5
-  when \`orientation\` is "v" and 1 when \`orientation\` is "h". Must be
-  between 0 and 1 if \`yref\` is "container" and between "-2" and 3 if
-  \`yref\` is "paper". Number.
+  Sets the sample data to be binned on the y axis. Data array: a vector,
+  factor, Date/POSIXct vector, matrix or list.
 
 - yaxis:
 
@@ -991,7 +619,10 @@ go_histogram_ybins(
 
 - ybins:
 
-  Named list or `go_histogram_ybins()` object.
+  A
+  [`go_bins()`](https://msummersgill.github.io/plotly.R.core/reference/go_bins.md)
+  object or named list, with properties `end`, `size` and `start` (see
+  [`go_bins()`](https://msummersgill.github.io/plotly.R.core/reference/go_bins.md)).
 
 - ycalendar:
 
@@ -1046,1022 +677,23 @@ go_histogram_ybins(
   Optional named list, or graph object of the same type, to initialise
   properties from (constructors). Named arguments take precedence.
 
-- currentbin:
-
-  Only applies if cumulative is enabled. Sets whether the current bin is
-  included, excluded, or has half of its value included in the current
-  cumulative value. "include" is the default for compatibility with
-  various other tools, however it introduces a half-bin bias to the
-  results. "exclude" makes the opposite half-bin bias, and "half"
-  removes it. One of `"include"`, `"exclude"`, `"half"`.
-
-- direction:
-
-  Only applies if cumulative is enabled. If "increasing" (default) we
-  sum all prior bins, so the result increases from left to right. If
-  "decreasing" we sum later bins so the result decreases from left to
-  right. One of `"increasing"`, `"decreasing"`.
-
-- enabled:
-
-  **`go_histogram_cumulative()`**: If true, display the cumulative
-  distribution by summing the binned values. Use the \`direction\` and
-  \`centralbin\` attributes to tune the accumulation method. Note: in
-  this mode, the "density" \`histnorm\` settings behave the same as
-  their equivalents without "density": \*" and "density" both rise to
-  the number of data points, and "probability" and "probability
-  density\* both rise to the number of sample points. Logical.
-
-  **`go_histogram_marker_colorbar_tickformatstop()`**: Determines
-  whether or not this stop is used. If \`false\`, this stop is ignored
-  even within its \`dtickrange\`. Logical.
-
-- array:
-
-  Sets the data corresponding the length of each error bar. Values are
-  plotted relative to the underlying data. Data array: a vector, factor,
-  Date/POSIXct vector, matrix or list.
-
-- arrayminus:
-
-  Sets the data corresponding the length of each error bar in the bottom
-  (left) direction for vertical (horizontal) bars Values are plotted
-  relative to the underlying data. Data array: a vector, factor,
-  Date/POSIXct vector, matrix or list.
-
-- color:
-
-  **`go_histogram_error_x()`, `go_histogram_error_y()`**: Sets the
-  stroke color of the error bars. Color: a CSS color string or R color
-  name.
-
-  **`go_histogram_hoverlabel_font()`**: Color: a CSS color string or R
-  color name, or a vector of these.
-
-  **`go_histogram_insidetextfont()`,
-  `go_histogram_legendgrouptitle_font()`,
-  `go_histogram_marker_colorbar_tickfont()`,
-  `go_histogram_marker_colorbar_title_font()`,
-  `go_histogram_outsidetextfont()`, `go_histogram_textfont()`**: Color:
-  a CSS color string or R color name.
-
-  **`go_histogram_marker()`**: Sets the marker color. It accepts either
-  a specific color or an array of numbers that are mapped to the
-  colorscale relative to the max and min values of the array or relative
-  to \`marker.cmin\` and \`marker.cmax\` if set. Color: a CSS color
-  string or R color name, or a number mapped to a color by
-  `histogram.marker.colorscale`, or a vector of these.
-
-  **`go_histogram_marker_line()`**: Sets the marker.line color. It
-  accepts either a specific color or an array of numbers that are mapped
-  to the colorscale relative to the max and min values of the array or
-  relative to \`marker.line.cmin\` and \`marker.line.cmax\` if set.
-  Color: a CSS color string or R color name, or a number mapped to a
-  color by `histogram.marker.line.colorscale`, or a vector of these.
-
-  **`go_histogram_selected_marker()`**: Sets the marker color of
-  selected points. Color: a CSS color string or R color name.
-
-  **`go_histogram_selected_textfont()`**: Sets the text font color of
-  selected points. Color: a CSS color string or R color name.
-
-  **`go_histogram_unselected_marker()`**: Sets the marker color of
-  unselected points, applied only when a selection exists. Color: a CSS
-  color string or R color name.
-
-  **`go_histogram_unselected_textfont()`**: Sets the text font color of
-  unselected points, applied only when a selection exists. Color: a CSS
-  color string or R color name.
-
-- copy_ystyle:
-
-  Logical.
-
-- symmetric:
-
-  Determines whether or not the error bars have the same length in both
-  direction (top/bottom for vertical bars, left/right for horizontal
-  bars. Logical.
-
-- thickness:
-
-  **`go_histogram_error_x()`, `go_histogram_error_y()`**: Sets the
-  thickness (in px) of the error bars. Number in the interval \[0,
-  Inf\].
-
-  **`go_histogram_marker_colorbar()`**: Sets the thickness of the color
-  bar This measure excludes the size of the padding, ticks and labels.
-  Number in the interval \[0, Inf\].
-
-- traceref:
-
-  Integer in the interval \[0, Inf\].
-
-- tracerefminus:
-
-  Integer in the interval \[0, Inf\].
-
-- type:
-
-  Determines the rule used to generate the error bars. If "constant",
-  the bar lengths are of a constant value. Set this constant in
-  \`value\`. If "percent", the bar lengths correspond to a percentage of
-  underlying data. Set this percentage in \`value\`. If "sqrt", the bar
-  lengths correspond to the square of the underlying data. If "data",
-  the bar lengths are set with data set \`array\`. One of `"percent"`,
-  `"constant"`, `"sqrt"`, `"data"`.
-
-- value:
-
-  **`go_histogram_error_x()`, `go_histogram_error_y()`**: Sets the value
-  of either the percentage (if \`type\` is set to "percent") or the
-  constant (if \`type\` is set to "constant") corresponding to the
-  lengths of the error bars. Number in the interval \[0, Inf\].
-
-  **`go_histogram_marker_colorbar_tickformatstop()`**: string -
-  dtickformat for described zoom level, the same as "tickformat" String.
-
-- valueminus:
-
-  Sets the value of either the percentage (if \`type\` is set to
-  "percent") or the constant (if \`type\` is set to "constant")
-  corresponding to the lengths of the error bars in the bottom (left)
-  direction for vertical (horizontal) bars Number in the interval \[0,
-  Inf\].
-
-- width:
-
-  **`go_histogram_error_x()`, `go_histogram_error_y()`**: Sets the width
-  (in px) of the cross-bar at both ends of the error bars. Number in the
-  interval \[0, Inf\].
-
-  **`go_histogram_marker_line()`**: Sets the width (in px) of the lines
-  bounding the marker points. Number in the interval \[0, Inf\], or a
-  vector of these.
-
-- align:
-
-  Sets the horizontal alignment of the text content within hover label
-  box. Has an effect only if the hover label text spans two or more
-  lines One of `"left"`, `"right"`, `"auto"`, or a vector of these.
-
-- bgcolor:
-
-  **`go_histogram_hoverlabel()`**: Sets the background color of the
-  hover labels for this trace Color: a CSS color string or R color name,
-  or a vector of these.
-
-  **`go_histogram_marker_colorbar()`**: Sets the color of padded area.
-  Color: a CSS color string or R color name.
-
-  **`go_histogram_marker_pattern()`**: When there is no colorscale sets
-  the color of background pattern fill. Defaults to a \`marker.color\`
-  background when \`fillmode\` is "overlay". Otherwise, defaults to a
-  transparent background. Color: a CSS color string or R color name, or
-  a vector of these.
-
-- bordercolor:
-
-  **`go_histogram_hoverlabel()`**: Sets the border color of the hover
-  labels for this trace. Color: a CSS color string or R color name, or a
-  vector of these.
-
-  **`go_histogram_marker_colorbar()`**: Sets the axis line color. Color:
-  a CSS color string or R color name.
-
-- font:
-
-  **`go_histogram_hoverlabel()`**: Sets the font used in hover labels.
-  Named list or `go_histogram_hoverlabel_font()` object.
-
-  **`go_histogram_legendgrouptitle()`**: Sets this legend group's title
-  font. Named list or `go_histogram_legendgrouptitle_font()` object.
-
-  **`go_histogram_marker_colorbar_title()`**: Sets this color bar's
-  title font. Named list or `go_histogram_marker_colorbar_title_font()`
-  object.
-
-- namelength:
-
-  Sets the default length (in number of characters) of the trace name in
-  the hover labels for all traces. -1 shows the whole name regardless of
-  length. 0-3 shows the first 0-3 characters, and an integer \>3 will
-  show the whole name if it is less than that many characters, but if it
-  is longer, will truncate to \`namelength - 3\` characters and add an
-  ellipsis. Integer in the interval \[-1, Inf\], or a vector of these.
-
-- showarrow:
-
-  Sets whether or not to show the hover label arrow/triangle pointing to
-  the data point. Logical.
-
-- family:
-
-  **`go_histogram_hoverlabel_font()`**: HTML font family - the typeface
-  that will be applied by the web browser. The web browser can only
-  apply a font if it is available on the system where it runs. Provide
-  multiple font families, separated by commas, to indicate the order in
-  which to apply fonts if they aren't available. String, or a vector of
-  these.
-
-  **`go_histogram_insidetextfont()`,
-  `go_histogram_legendgrouptitle_font()`,
-  `go_histogram_marker_colorbar_tickfont()`,
-  `go_histogram_marker_colorbar_title_font()`,
-  `go_histogram_outsidetextfont()`, `go_histogram_textfont()`**: HTML
-  font family - the typeface that will be applied by the web browser.
-  The web browser can only apply a font if it is available on the system
-  where it runs. Provide multiple font families, separated by commas, to
-  indicate the order in which to apply fonts if they aren't available.
-  String.
-
-- lineposition:
-
-  **`go_histogram_hoverlabel_font()`**: Sets the kind of decoration
-  line(s) with text, such as an "under", "over" or "through" as well as
-  combinations e.g. "under+over", etc. Any combination of `"under"`,
-  `"over"`, `"through"` joined with `"+"`, or one of `"none"`, or a
-  vector of these.
-
-  **`go_histogram_insidetextfont()`,
-  `go_histogram_legendgrouptitle_font()`,
-  `go_histogram_marker_colorbar_tickfont()`,
-  `go_histogram_marker_colorbar_title_font()`,
-  `go_histogram_outsidetextfont()`, `go_histogram_textfont()`**: Sets
-  the kind of decoration line(s) with text, such as an "under", "over"
-  or "through" as well as combinations e.g. "under+over", etc. Any
-  combination of `"under"`, `"over"`, `"through"` joined with `"+"`, or
-  one of `"none"`.
-
-- shadow:
-
-  **`go_histogram_hoverlabel_font()`**: Sets the shape and color of the
-  shadow behind text. "auto" places minimal shadow and applies contrast
-  text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.
-
-  **`go_histogram_insidetextfont()`,
-  `go_histogram_legendgrouptitle_font()`,
-  `go_histogram_marker_colorbar_tickfont()`,
-  `go_histogram_marker_colorbar_title_font()`,
-  `go_histogram_outsidetextfont()`, `go_histogram_textfont()`**: Sets
-  the shape and color of the shadow behind text. "auto" places minimal
-  shadow and applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.
-
-- size:
-
-  **`go_histogram_hoverlabel_font()`**: Number in the interval \[1,
-  Inf\], or a vector of these.
-
-  **`go_histogram_insidetextfont()`,
-  `go_histogram_legendgrouptitle_font()`,
-  `go_histogram_marker_colorbar_tickfont()`,
-  `go_histogram_marker_colorbar_title_font()`,
-  `go_histogram_outsidetextfont()`, `go_histogram_textfont()`**: Number
-  in the interval \[1, Inf\].
-
-  **`go_histogram_marker_pattern()`**: Sets the size of unit squares of
-  the pattern fill in pixels, which corresponds to the interval of
-  repetition of the pattern. Number in the interval \[0, Inf\], or a
-  vector of these.
-
-  **`go_histogram_xbins()`**: Sets the size of each x axis bin. Default
-  behavior: If \`nbinsx\` is 0 or omitted, we choose a nice round bin
-  size such that the number of bins is about the same as the typical
-  number of samples in each bin. If \`nbinsx\` is provided, we choose a
-  nice round bin size giving no more than that many bins. For date data,
-  use milliseconds or "M\<n\>" for months, as in \`axis.dtick\`. For
-  category data, the number of categories to bin together (always
-  defaults to 1). If multiple non-overlaying histograms share a subplot,
-  the first explicit \`size\` is used and all others discarded. If no
-  \`size\` is provided, the sample data from all traces is combined to
-  determine \`size\` as described above. Any value.
-
-  **`go_histogram_ybins()`**: Sets the size of each y axis bin. Default
-  behavior: If \`nbinsy\` is 0 or omitted, we choose a nice round bin
-  size such that the number of bins is about the same as the typical
-  number of samples in each bin. If \`nbinsy\` is provided, we choose a
-  nice round bin size giving no more than that many bins. For date data,
-  use milliseconds or "M\<n\>" for months, as in \`axis.dtick\`. For
-  category data, the number of categories to bin together (always
-  defaults to 1). If multiple non-overlaying histograms share a subplot,
-  the first explicit \`size\` is used and all others discarded. If no
-  \`size\` is provided, the sample data from all traces is combined to
-  determine \`size\` as described above. Any value.
-
-- style:
-
-  **`go_histogram_hoverlabel_font()`**: Sets whether a font should be
-  styled with a normal or italic face from its family. One of
-  `"normal"`, `"italic"`, or a vector of these.
-
-  **`go_histogram_insidetextfont()`,
-  `go_histogram_legendgrouptitle_font()`,
-  `go_histogram_marker_colorbar_tickfont()`,
-  `go_histogram_marker_colorbar_title_font()`,
-  `go_histogram_outsidetextfont()`, `go_histogram_textfont()`**: Sets
-  whether a font should be styled with a normal or italic face from its
-  family. One of `"normal"`, `"italic"`.
-
-- textcase:
-
-  **`go_histogram_hoverlabel_font()`**: Sets capitalization of text. It
-  can be used to make text appear in all-uppercase or all-lowercase, or
-  with each word capitalized. One of `"normal"`, `"word caps"`,
-  `"upper"`, `"lower"`, or a vector of these.
-
-  **`go_histogram_insidetextfont()`,
-  `go_histogram_legendgrouptitle_font()`,
-  `go_histogram_marker_colorbar_tickfont()`,
-  `go_histogram_marker_colorbar_title_font()`,
-  `go_histogram_outsidetextfont()`, `go_histogram_textfont()`**: Sets
-  capitalization of text. It can be used to make text appear in
-  all-uppercase or all-lowercase, or with each word capitalized. One of
-  `"normal"`, `"word caps"`, `"upper"`, `"lower"`.
-
-- variant:
-
-  **`go_histogram_hoverlabel_font()`**: Sets the variant of the font.
-  One of `"normal"`, `"small-caps"`, `"all-small-caps"`,
-  `"all-petite-caps"`, `"petite-caps"`, `"unicase"`, or a vector of
-  these.
-
-  **`go_histogram_insidetextfont()`,
-  `go_histogram_legendgrouptitle_font()`,
-  `go_histogram_marker_colorbar_tickfont()`,
-  `go_histogram_marker_colorbar_title_font()`,
-  `go_histogram_outsidetextfont()`, `go_histogram_textfont()`**: Sets
-  the variant of the font. One of `"normal"`, `"small-caps"`,
-  `"all-small-caps"`, `"all-petite-caps"`, `"petite-caps"`, `"unicase"`.
-
-- weight:
-
-  **`go_histogram_hoverlabel_font()`**: Sets the weight (or boldness) of
-  the font. Integer in the interval \[1, 1000\], or a vector of these.
-
-  **`go_histogram_insidetextfont()`,
-  `go_histogram_legendgrouptitle_font()`,
-  `go_histogram_marker_colorbar_tickfont()`,
-  `go_histogram_marker_colorbar_title_font()`,
-  `go_histogram_outsidetextfont()`, `go_histogram_textfont()`**: Sets
-  the weight (or boldness) of the font. Integer in the interval \[1,
-  1000\].
-
-- autocolorscale:
-
-  **`go_histogram_marker()`**: Determines whether the colorscale is a
-  default palette (\`autocolorscale: true\`) or the palette determined
-  by \`marker.colorscale\`. Has an effect only if in \`marker.color\` is
-  set to a numerical array. In case \`colorscale\` is unspecified or
-  \`autocolorscale\` is true, the default palette will be chosen
-  according to whether numbers in the \`color\` array are all positive,
-  all negative or mixed. Logical.
-
-  **`go_histogram_marker_line()`**: Determines whether the colorscale is
-  a default palette (\`autocolorscale: true\`) or the palette determined
-  by \`marker.line.colorscale\`. Has an effect only if in
-  \`marker.line.color\` is set to a numerical array. In case
-  \`colorscale\` is unspecified or \`autocolorscale\` is true, the
-  default palette will be chosen according to whether numbers in the
-  \`color\` array are all positive, all negative or mixed. Logical.
-
-- cauto:
-
-  **`go_histogram_marker()`**: Determines whether or not the color
-  domain is computed with respect to the input data (here in
-  \`marker.color\`) or the bounds set in \`marker.cmin\` and
-  \`marker.cmax\` Has an effect only if in \`marker.color\` is set to a
-  numerical array. Defaults to \`false\` when \`marker.cmin\` and
-  \`marker.cmax\` are set by the user. Logical.
-
-  **`go_histogram_marker_line()`**: Determines whether or not the color
-  domain is computed with respect to the input data (here in
-  \`marker.line.color\`) or the bounds set in \`marker.line.cmin\` and
-  \`marker.line.cmax\` Has an effect only if in \`marker.line.color\` is
-  set to a numerical array. Defaults to \`false\` when
-  \`marker.line.cmin\` and \`marker.line.cmax\` are set by the user.
-  Logical.
-
-- cmax:
-
-  **`go_histogram_marker()`**: Sets the upper bound of the color domain.
-  Has an effect only if in \`marker.color\` is set to a numerical array.
-  Value should have the same units as in \`marker.color\` and if set,
-  \`marker.cmin\` must be set as well. Number.
-
-  **`go_histogram_marker_line()`**: Sets the upper bound of the color
-  domain. Has an effect only if in \`marker.line.color\` is set to a
-  numerical array. Value should have the same units as in
-  \`marker.line.color\` and if set, \`marker.line.cmin\` must be set as
-  well. Number.
-
-- cmid:
-
-  **`go_histogram_marker()`**: Sets the mid-point of the color domain by
-  scaling \`marker.cmin\` and/or \`marker.cmax\` to be equidistant to
-  this point. Has an effect only if in \`marker.color\` is set to a
-  numerical array. Value should have the same units as in
-  \`marker.color\`. Has no effect when \`marker.cauto\` is \`false\`.
-  Number.
-
-  **`go_histogram_marker_line()`**: Sets the mid-point of the color
-  domain by scaling \`marker.line.cmin\` and/or \`marker.line.cmax\` to
-  be equidistant to this point. Has an effect only if in
-  \`marker.line.color\` is set to a numerical array. Value should have
-  the same units as in \`marker.line.color\`. Has no effect when
-  \`marker.line.cauto\` is \`false\`. Number.
-
-- cmin:
-
-  **`go_histogram_marker()`**: Sets the lower bound of the color domain.
-  Has an effect only if in \`marker.color\` is set to a numerical array.
-  Value should have the same units as in \`marker.color\` and if set,
-  \`marker.cmax\` must be set as well. Number.
-
-  **`go_histogram_marker_line()`**: Sets the lower bound of the color
-  domain. Has an effect only if in \`marker.line.color\` is set to a
-  numerical array. Value should have the same units as in
-  \`marker.line.color\` and if set, \`marker.line.cmax\` must be set as
-  well. Number.
-
-- coloraxis:
-
-  Sets a reference to a shared color axis. References to these shared
-  color axes are "coloraxis", "coloraxis2", "coloraxis3", etc. Settings
-  for these shared color axes are set in the layout, under
-  \`layout.coloraxis\`, \`layout.coloraxis2\`, etc. Note that multiple
-  color scales can be linked to the same color axis. Subplot id:
-  `"coloraxis"`, `"coloraxis2"`, `"coloraxis3"`, ....
-
-- colorbar:
-
-  Named list or `go_histogram_marker_colorbar()` object.
-
-- colorscale:
-
-  **`go_histogram_marker()`**: Sets the colorscale. Has an effect only
-  if in \`marker.color\` is set to a numerical array. The colorscale
-  must be an array containing arrays mapping a normalized value to an
-  rgb, rgba, hex, hsl, hsla, hwb, or named color string. At minimum, a
-  mapping for the lowest (0) and highest (1) values are required. For
-  example, \`\[\[0, 'rgb(0,0,255)'\], \[1, 'rgb(255,0,0)'\]\]\`. To
-  control the bounds of the colorscale in color space, use
-  \`marker.cmin\` and \`marker.cmax\`. Alternatively, \`colorscale\` may
-  be a palette name string of the following list:
-  Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-  Colorscale: a vector of colors, a two-column data.frame of (value,
-  color), or the name of a sequential, diverging or cyclical scale in
-  [`px_colors()`](https://msummersgill.github.io/plotly.R.core/reference/px_colors.md)
-  (append `"_r"` to reverse).
-
-  **`go_histogram_marker_line()`**: Sets the colorscale. Has an effect
-  only if in \`marker.line.color\` is set to a numerical array. The
-  colorscale must be an array containing arrays mapping a normalized
-  value to an rgb, rgba, hex, hsl, hsla, hwb, or named color string. At
-  minimum, a mapping for the lowest (0) and highest (1) values are
-  required. For example, \`\[\[0, 'rgb(0,0,255)'\], \[1,
-  'rgb(255,0,0)'\]\]\`. To control the bounds of the colorscale in color
-  space, use \`marker.line.cmin\` and \`marker.line.cmax\`.
-  Alternatively, \`colorscale\` may be a palette name string of the
-  following list:
-  Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
-  Colorscale: a vector of colors, a two-column data.frame of (value,
-  color), or the name of a sequential, diverging or cyclical scale in
-  [`px_colors()`](https://msummersgill.github.io/plotly.R.core/reference/px_colors.md)
-  (append `"_r"` to reverse).
-
-- cornerradius:
-
-  Sets the rounding of corners. May be an integer number of pixels, or a
-  percentage of bar width (as a string ending in %). Defaults to
-  \`layout.barcornerradius\`. In stack or relative barmode, the first
-  trace to set cornerradius is used for the whole stack. Any value.
-
-- line:
-
-  Named list or `go_histogram_marker_line()` object.
-
-- pattern:
-
-  Sets the pattern within the marker. Named list or
-  `go_histogram_marker_pattern()` object.
-
-- reversescale:
-
-  **`go_histogram_marker()`**: Reverses the color mapping if true. Has
-  an effect only if in \`marker.color\` is set to a numerical array. If
-  true, \`marker.cmin\` will correspond to the last color in the array
-  and \`marker.cmax\` will correspond to the first color. Logical.
-
-  **`go_histogram_marker_line()`**: Reverses the color mapping if true.
-  Has an effect only if in \`marker.line.color\` is set to a numerical
-  array. If true, \`marker.line.cmin\` will correspond to the last color
-  in the array and \`marker.line.cmax\` will correspond to the first
-  color. Logical.
-
-- showscale:
-
-  Determines whether or not a colorbar is displayed for this trace. Has
-  an effect only if in \`marker.color\` is set to a numerical array.
-  Logical.
-
-- borderwidth:
-
-  Sets the width (in px) or the border enclosing this color bar. Number
-  in the interval \[0, Inf\].
-
-- dtick:
-
-  Sets the step in-between ticks on this color bar. Use with \`tick0\`.
-  Must be a positive number. Note: unlike on x/y axes, the special "log"
-  and "date" string forms ("L\<f\>", "D1", "D2", "M\<n\>") are not
-  supported here: this axis is always linear, so such strings are
-  silently ignored and the step is set to 1. Any value.
-
-- exponentformat:
-
-  Determines a formatting rule for the tick exponents. For example,
-  consider the number 1,000,000,000. If "none", it appears as
-  1,000,000,000. If "e", 1e+9. If "E", 1E+9. If "power", 1x10^9 (with 9
-  in a super script). If "SI", 1G. If "B", 1B. "SI" uses prefixes from
-  "femto" f (10^-15) to "tera" T (10^12). "SI extended" covers instead
-  the full SI range from "quecto" q (10^-30) to "quetta" Q (10^30). If
-  "SI" or "SI extended" is used and the exponent is beyond the above
-  ranges, the formatting rule will automatically be switched to the
-  power notation. One of `"none"`, `"e"`, `"E"`, `"power"`, `"SI"`,
-  `"B"`, `"SI extended"`.
-
-- labelalias:
-
-  Replacement text for specific tick or hover labels. For example using
-  {US: 'USA', CA: 'Canada'} changes US to USA and CA to Canada. The
-  labels we would have shown must match the keys exactly, after adding
-  any tickprefix or ticksuffix. For negative numbers the minus sign
-  symbol used (U+2212) is wider than the regular ascii dash. That means
-  you need to use -1 instead of -1. labelalias can be used with any axis
-  type, and both keys (if needed) and values (if desired) can include
-  html-like tags or MathJax. Any value.
-
-- len:
-
-  Sets the length of the color bar This measure excludes the padding of
-  both ends. That is, the color bar length is this length minus the
-  padding on both ends. Number in the interval \[0, Inf\].
-
-- lenmode:
-
-  Determines whether this color bar's length (i.e. the measure in the
-  color variation direction) is set in units of plot "fraction" or in
-  \*pixels. Use \`len\` to set the value. One of `"fraction"`,
-  `"pixels"`.
-
-- minexponent:
-
-  Hide SI prefix for 10^n if \|n\| is below this number. This only has
-  an effect when \`tickformat\` is "SI" or "B". Number in the interval
-  \[0, Inf\].
-
-- nticks:
-
-  Specifies the maximum number of ticks for the particular axis. The
-  actual number of ticks will be chosen automatically to be less than or
-  equal to \`nticks\`. Has an effect only if \`tickmode\` is set to
-  "auto". Integer in the interval \[0, Inf\].
-
-- outlinecolor:
-
-  Sets the axis line color. Color: a CSS color string or R color name.
-
-- outlinewidth:
-
-  Sets the width (in px) of the axis line. Number in the interval \[0,
-  Inf\].
-
-- separatethousands:
-
-  If "true", even 4-digit integers are separated Logical.
-
-- showexponent:
-
-  If "all", all exponents are shown besides their significands. If
-  "first", only the exponent of the first tick is shown. If "last", only
-  the exponent of the last tick is shown. If "none", no exponents
-  appear. One of `"all"`, `"first"`, `"last"`, `"none"`.
-
-- showticklabels:
-
-  Determines whether or not the tick labels are drawn. Logical.
-
-- showtickprefix:
-
-  If "all", all tick labels are displayed with a prefix. If "first",
-  only the first tick is displayed with a prefix. If "last", only the
-  last tick is displayed with a suffix. If "none", tick prefixes are
-  hidden. One of `"all"`, `"first"`, `"last"`, `"none"`.
-
-- showticksuffix:
-
-  Same as \`showtickprefix\` but for tick suffixes. One of `"all"`,
-  `"first"`, `"last"`, `"none"`.
-
-- thicknessmode:
-
-  Determines whether this color bar's thickness (i.e. the measure in the
-  constant color direction) is set in units of plot "fraction" or in
-  "pixels". Use \`thickness\` to set the value. One of `"fraction"`,
-  `"pixels"`.
-
-- tick0:
-
-  Sets the placement of the first tick on this axis. Use with \`dtick\`.
-  If the axis \`type\` is "log", then you must take the log of your
-  starting tick (e.g. to set the starting tick to 100, set the \`tick0\`
-  to 2) except when \`dtick\`="L\<f\>" (see \`dtick\` for more info). If
-  the axis \`type\` is "date", it should be a date string, like date
-  data. If the axis \`type\` is "category", it should be a number, using
-  the scale where each category is assigned a serial number from zero in
-  the order it appears. Any value.
-
-- tickangle:
-
-  Sets the angle of the tick labels with respect to the horizontal. For
-  example, a \`tickangle\` of -90 draws the tick labels vertically.
-  Angle in degrees.
-
-- tickcolor:
-
-  Sets the tick color. Color: a CSS color string or R color name.
-
-- tickfont:
-
-  Sets the color bar's tick label font Named list or
-  `go_histogram_marker_colorbar_tickfont()` object.
-
-- tickformat:
-
-  Sets the tick label formatting rule using d3 formatting mini-languages
-  which are very similar to those in Python. For numbers, see:
-  https://github.com/d3/d3-format/tree/v1.4.5#d3-format. And for dates
-  see: https://github.com/d3/d3-time-format/tree/v2.2.3#locale_format.
-  We add two items to d3's date formatter: "%h" for half of the year as
-  a decimal number as well as "%{n}f" for fractional seconds with n
-  digits. For example, "2016-10-13 09:15:23.456" with tickformat
-  "%H~%M~%S.%2f" would display "09~15~23.46" String.
-
-- tickformatstops:
-
-  List of named lists or `go_histogram_marker_colorbar_tickformatstop()`
-  objects.
-
-- ticklabeloverflow:
-
-  Determines how we handle tick labels that would overflow either the
-  graph div or the domain of the axis. The default value for inside tick
-  labels is "hide past domain". In other cases the default is "hide past
-  div". One of `"allow"`, `"hide past div"`, `"hide past domain"`.
-
-- ticklabelposition:
-
-  Determines where tick labels are drawn relative to the ticks. Left and
-  right options are used when \`orientation\` is "h", top and bottom
-  when \`orientation\` is "v". One of `"outside"`, `"inside"`,
-  `"outside top"`, `"inside top"`, `"outside left"`, `"inside left"`,
-  `"outside right"`, `"inside right"`, `"outside bottom"`,
-  `"inside bottom"`.
-
-- ticklabelstep:
-
-  Sets the spacing between tick labels as compared to the spacing
-  between ticks. A value of 1 (default) means each tick gets a label. A
-  value of 2 means shows every 2nd label. A larger value n means only
-  every nth tick is labeled. \`tick0\` determines which labels are
-  shown. Not implemented for axes with \`type\` "log" or
-  "multicategory", or when \`tickmode\` is "array". Integer in the
-  interval \[1, Inf\].
-
-- ticklen:
-
-  Sets the tick length (in px). Number in the interval \[0, Inf\].
-
-- tickmode:
-
-  Sets the tick mode for this axis. If "auto", the number of ticks is
-  set via \`nticks\`. If "linear", the placement of the ticks is
-  determined by a starting position \`tick0\` and a tick step \`dtick\`
-  ("linear" is the default value if \`tick0\` and \`dtick\` are
-  provided). If "array", the placement of the ticks is set via
-  \`tickvals\` and the tick text is \`ticktext\`. ("array" is the
-  default value if \`tickvals\` is provided). One of `"auto"`,
-  `"linear"`, `"array"`.
-
-- tickprefix:
-
-  Sets a tick label prefix. String.
-
-- ticks:
-
-  Determines whether ticks are drawn or not. If \*\*, this axis' ticks
-  are not drawn. If "outside" ("inside"), this axis' are drawn outside
-  (inside) the axis lines. One of `"outside"`, `"inside"`, `""`.
-
-- ticksuffix:
-
-  Sets a tick label suffix. String.
-
-- ticktext:
-
-  Sets the text displayed at the ticks position via \`tickvals\`. Only
-  has an effect if \`tickmode\` is set to "array". Used with
-  \`tickvals\`. Data array: a vector, factor, Date/POSIXct vector,
-  matrix or list.
-
-- tickvals:
-
-  Sets the values at which ticks on this axis appear. Only has an effect
-  if \`tickmode\` is set to "array". Used with \`ticktext\`. Data array:
-  a vector, factor, Date/POSIXct vector, matrix or list.
-
-- tickwidth:
-
-  Sets the tick width (in px). Number in the interval \[0, Inf\].
-
-- title:
-
-  String (the title text), named list or
-  `go_histogram_marker_colorbar_title()` object.
-
-- xanchor:
-
-  Sets this color bar's horizontal position anchor. This anchor binds
-  the \`x\` position to the "left", "center" or "right" of the color
-  bar. Defaults to "left" when \`orientation\` is "v" and "center" when
-  \`orientation\` is "h". One of `"left"`, `"center"`, `"right"`.
-
-- xpad:
-
-  Sets the amount of padding (in px) along the x direction. Number in
-  the interval \[0, Inf\].
-
-- xref:
-
-  Sets the container \`x\` refers to. "container" spans the entire
-  \`width\` of the plot. "paper" refers to the width of the plotting
-  area only. One of `"container"`, `"paper"`.
-
-- yanchor:
-
-  Sets this color bar's vertical position anchor This anchor binds the
-  \`y\` position to the "top", "middle" or "bottom" of the color bar.
-  Defaults to "middle" when \`orientation\` is "v" and "bottom" when
-  \`orientation\` is "h". One of `"top"`, `"middle"`, `"bottom"`.
-
-- ypad:
-
-  Sets the amount of padding (in px) along the y direction. Number in
-  the interval \[0, Inf\].
-
-- yref:
-
-  Sets the container \`y\` refers to. "container" spans the entire
-  \`height\` of the plot. "paper" refers to the height of the plotting
-  area only. One of `"container"`, `"paper"`.
-
-- dtickrange:
-
-  range \["min", "max"\], where "min", "max" - dtick values which
-  describe some zoom level, it is possible to omit "min" or "max" value
-  by passing "null" Vector or list of 2 element(s).
-
-- templateitemname:
-
-  Used to refer to a named item in this array in the template. Named
-  items from the template will be created even without a matching item
-  in the input figure, but you can modify one by making an item with
-  \`templateitemname\` matching its \`name\`, alongside your
-  modifications (including \`visible: false\` or \`enabled: false\` to
-  hide it). If there is no template or no matching item, this item will
-  be hidden unless you explicitly show it with \`visible: true\`.
-  String.
-
-- side:
-
-  Determines the location of color bar's title with respect to the color
-  bar. Defaults to "top" when \`orientation\` is "v" and defaults to
-  "right" when \`orientation\` is "h". One of `"right"`, `"top"`,
-  `"bottom"`.
-
-- fgcolor:
-
-  When there is no colorscale sets the color of foreground pattern fill.
-  Defaults to a \`marker.color\` background when \`fillmode\` is
-  "replace". Otherwise, defaults to dark grey or white to increase
-  contrast with the \`bgcolor\`. Color: a CSS color string or R color
-  name, or a vector of these.
-
-- fgopacity:
-
-  Sets the opacity of the foreground pattern fill. Defaults to a 0.5
-  when \`fillmode\` is "overlay". Otherwise, defaults to 1. Number in
-  the interval \[0, 1\].
-
-- fillmode:
-
-  Determines whether \`marker.color\` should be used as a default to
-  \`bgcolor\` or a \`fgcolor\`. One of `"replace"`, `"overlay"`.
-
-- path:
-
-  Sets a custom path for pattern fill. Use with no \`shape\` or
-  \`solidity\`, provide an SVG path string for the regions of the square
-  from (0,0) to (\`size\`,\`size\`) to color. String, or a vector of
-  these.
-
-- shape:
-
-  Sets the shape of the pattern fill. By default, no pattern is used for
-  filling the area. One of `""`, `"/"`, `"\\"`, `"x"`, `"-"`, `"|"`,
-  `"+"`, `"."`, or a vector of these.
-
-- solidity:
-
-  Sets the solidity of the pattern fill. Solidity is roughly the
-  fraction of the area filled by the pattern. Solidity of 0 shows only
-  the background color without pattern and solidty of 1 shows only the
-  foreground color without pattern. Number in the interval \[0, 1\], or
-  a vector of these.
-
-- end:
-
-  **`go_histogram_xbins()`**: Sets the end value for the x axis bins.
-  The last bin may not end exactly at this value, we increment the bin
-  edge by \`size\` from \`start\` until we reach or exceed \`end\`.
-  Defaults to the maximum data value. Like \`start\`, for dates use a
-  date string, and for category data \`end\` is based on the category
-  serial numbers. Any value.
-
-  **`go_histogram_ybins()`**: Sets the end value for the y axis bins.
-  The last bin may not end exactly at this value, we increment the bin
-  edge by \`size\` from \`start\` until we reach or exceed \`end\`.
-  Defaults to the maximum data value. Like \`start\`, for dates use a
-  date string, and for category data \`end\` is based on the category
-  serial numbers. Any value.
-
-- start:
-
-  **`go_histogram_xbins()`**: Sets the starting value for the x axis
-  bins. Defaults to the minimum data value, shifted down if necessary to
-  make nice round values and to remove ambiguous bin edges. For example,
-  if most of the data is integers we shift the bin edges 0.5 down, so a
-  \`size\` of 5 would have a default \`start\` of -0.5, so it is clear
-  that 0-4 are in the first bin, 5-9 in the second, but continuous data
-  gets a start of 0 and bins \[0,5), \[5,10) etc. Dates behave
-  similarly, and \`start\` should be a date string. For category data,
-  \`start\` is based on the category serial numbers, and defaults to
-  -0.5. If multiple non-overlaying histograms share a subplot, the first
-  explicit \`start\` is used exactly and all others are shifted down (if
-  necessary) to differ from that one by an integer number of bins. Any
-  value.
-
-  **`go_histogram_ybins()`**: Sets the starting value for the y axis
-  bins. Defaults to the minimum data value, shifted down if necessary to
-  make nice round values and to remove ambiguous bin edges. For example,
-  if most of the data is integers we shift the bin edges 0.5 down, so a
-  \`size\` of 5 would have a default \`start\` of -0.5, so it is clear
-  that 0-4 are in the first bin, 5-9 in the second, but continuous data
-  gets a start of 0 and bins \[0,5), \[5,10) etc. Dates behave
-  similarly, and \`start\` should be a date string. For category data,
-  \`start\` is based on the category serial numbers, and defaults to
-  -0.5. If multiple non-overlaying histograms share a subplot, the first
-  explicit \`start\` is used exactly and all others are shifted down (if
-  necessary) to differ from that one by an integer number of bins. Any
-  value.
-
 ## Value
 
-Each `go_*()` function returns a graph object of the same class as its
-name; `add_*()` functions return the modified figure.
+`go_*()` functions return a graph object; `add_*()` functions return the
+modified figure.
 
 ## Details
 
-`go_histogram()` and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-[`plotly_obj-modify()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
-`add_histogram()` creates an object and adds it to a figure.
+`go_histogram()` creates a validated graph object (a named list).
+`add_histogram()` creates one and adds it to a figure.
 
-Nested objects documented here:
-
-- `go_histogram_cumulative()`:
-
-  `histogram.cumulative`
-
-- `go_histogram_error_x()`:
-
-  `histogram.error_x`
-
-- `go_histogram_error_y()`:
-
-  `histogram.error_y`
-
-- `go_histogram_hoverlabel()`:
-
-  `histogram.hoverlabel`
-
-- `go_histogram_hoverlabel_font()`:
-
-  `histogram.hoverlabel.font`: Sets the font used in hover labels.
-
-- `go_histogram_insidetextfont()`:
-
-  `histogram.insidetextfont`: Sets the font used for \`text\` lying
-  inside the bar.
-
-- `go_histogram_legendgrouptitle()`:
-
-  `histogram.legendgrouptitle`
-
-- `go_histogram_legendgrouptitle_font()`:
-
-  `histogram.legendgrouptitle.font`: Sets this legend group's title
-  font.
-
-- `go_histogram_marker()`:
-
-  `histogram.marker`
-
-- `go_histogram_marker_colorbar()`:
-
-  `histogram.marker.colorbar`
-
-- `go_histogram_marker_colorbar_tickfont()`:
-
-  `histogram.marker.colorbar.tickfont`: Sets the color bar's tick label
-  font
-
-- `go_histogram_marker_colorbar_tickformatstop()`:
-
-  `histogram.marker.colorbar.tickformatstop`
-
-- `go_histogram_marker_colorbar_title()`:
-
-  `histogram.marker.colorbar.title`
-
-- `go_histogram_marker_colorbar_title_font()`:
-
-  `histogram.marker.colorbar.title.font`: Sets this color bar's title
-  font.
-
-- `go_histogram_marker_line()`:
-
-  `histogram.marker.line`
-
-- `go_histogram_marker_pattern()`:
-
-  `histogram.marker.pattern`: Sets the pattern within the marker.
-
-- `go_histogram_outsidetextfont()`:
-
-  `histogram.outsidetextfont`: Sets the font used for \`text\` lying
-  outside the bar.
-
-- `go_histogram_selected()`:
-
-  `histogram.selected`
-
-- `go_histogram_selected_marker()`:
-
-  `histogram.selected.marker`
-
-- `go_histogram_selected_textfont()`:
-
-  `histogram.selected.textfont`
-
-- `go_histogram_textfont()`:
-
-  `histogram.textfont`: Sets the text font.
-
-- `go_histogram_unselected()`:
-
-  `histogram.unselected`
-
-- `go_histogram_unselected_marker()`:
-
-  `histogram.unselected.marker`
-
-- `go_histogram_unselected_textfont()`:
-
-  `histogram.unselected.textfont`
-
-- `go_histogram_xbins()`:
-
-  `histogram.xbins`
-
-- `go_histogram_ybins()`:
-
-  `histogram.ybins`
+Nested objects are given as named lists or with their constructors,
+which are linked from the arguments below. Every property is checked
+against the plotly.js schema when the object is created or modified (see
+[`plotly_obj-modify`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
+One-sided formulas (`~col`) are evaluated in the data, and then checked,
+when the trace is added with `add_<trace>()` or
+[`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md).
 
 ## See also
 
@@ -2071,23 +703,7 @@ Nested objects documented here:
 ## Examples
 
 ``` r
-go_histogram(x = 1:3, y = c(2, 1, 3), marker_color = "red")
-#> <go_histogram>
-#> {
-#>   "type": "histogram",
-#>   "x": [
-#>     1,
-#>     2,
-#>     3
-#>   ],
-#>   "y": [
-#>     2,
-#>     1,
-#>     3
-#>   ],
-#>   "marker": {
-#>     "color": "red"
-#>   }
-#> }
-#> 
+mtcars |>
+  go_figure() |>
+  add_histogram(x = ~mpg)
 ```

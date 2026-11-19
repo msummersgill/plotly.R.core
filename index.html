@@ -63,7 +63,7 @@
 <strong>Faster plots, less browser memory</strong> plotly.core leverages advances in plotly.js to improve browser rendering performance, and implements optimizations to on the R backend to cut down plot generation time and size in memory. Rendering large time series plots and heatmaps is 10-100x faster. DateTime optimizations and support for single precision floats allows up to 2x reduction of browser memory. <em>(See the render-performance vignette for more details)</em>
 </li>
 <li>
-<strong>Machine-generated code and documentation from the plotly.js schema.</strong> All 47 trace types and every layout object have a machine-generated <code>go_*()</code> constructor <em>(<code><a href="reference/go_scatter.html">go_scatter()</a></code>,<code><a href="reference/go_layout_xaxis.html">go_layout_xaxis()</a></code>, … 979 in total)</em> and comprehensive R documentation of arguments and thorough validation generated from the schema. Future changes to the plotly.js schema can be ported to the R implementation without hand-writing any R code or documentation.</li>
+<strong>Machine-generated code and documentation from the plotly.js schema.</strong> Every object in the schema has a machine-generated <code>go_*()</code> constructor with exactly its properties: traces (<code><a href="reference/go_scatter.html">go_scatter()</a></code>), the layout, objects shared across the schema (<code><a href="reference/go_font.html">go_font()</a></code>, <code><a href="reference/go_colorbar.html">go_colorbar()</a></code>, …) and every other nested object (<code><a href="reference/go_scatter_marker.html">go_scatter_marker()</a></code>, <code><a href="reference/go_xaxis.html">go_xaxis()</a></code>, <code><a href="reference/go_sankey_link.html">go_sankey_link()</a></code>, …), with comprehensive R documentation and thorough validation generated from the schema. Future changes to the plotly.js schema can be ported to the R implementation without hand-writing any R code or documentation.</li>
 <li>
 <strong>Full backwards compatibility with the plotly R package.</strong> plotly’s <code>plot_ly()</code> and <code>ggplotly()</code> plots are rendered by plotly.core, so existing plotly R code gets the same performance work and plotly.js version. <em>(<a href="https://github.com/msummersgill/plotly/tree/plotly-core-render" class="external-link">Working branch: msummersgill/plotly@plotly-core-render</a>)</em> Helper functions in the plotly package back-port functionality for features and behavior deprecated between the last CRAN release plotly.js/2.25.2 and plotly-js/latest</li>
 <li>
@@ -108,18 +108,18 @@
 <span>    y <span class="op">=</span> <span class="op">~</span><span class="va">mpg</span>,</span>
 <span>    mode <span class="op">=</span> <span class="st">"markers"</span>,</span>
 <span>    text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>,</span>
-<span>    marker <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    marker <span class="op">=</span> <span class="fu"><a href="reference/go_scatter_marker.html">go_scatter_marker</a></span><span class="op">(</span></span>
 <span>      size <span class="op">=</span> <span class="fl">12</span>,</span>
 <span>      color <span class="op">=</span> <span class="op">~</span><span class="va">cyl</span>,</span>
 <span>      colorscale <span class="op">=</span> <span class="st">"Viridis"</span>,</span>
 <span>      showscale <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>      colorbar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Cylinders"</span><span class="op">)</span></span>
+<span>      colorbar <span class="op">=</span> <span class="fu"><a href="reference/go_colorbar.html">go_colorbar</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Cylinders"</span><span class="op">)</span></span>
 <span>    <span class="op">)</span>,</span>
 <span>    hovertemplate <span class="op">=</span> <span class="st">"%{text}&lt;br&gt;Weight: %{x} (1000 lbs)&lt;br&gt;MPG: %{y}&lt;extra&gt;&lt;/extra&gt;"</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/update_layout.html">update_layout</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Fuel economy vs. weight (mtcars)"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/update_xaxes.html">update_xaxes</a></span><span class="op">(</span>title_text <span class="op">=</span> <span class="st">"Weight (1000 lbs)"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/update_yaxes.html">update_yaxes</a></span><span class="op">(</span>title_text <span class="op">=</span> <span class="st">"Miles per gallon"</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="reference/update_xaxes.html">update_xaxes</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Weight (1000 lbs)"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/update_yaxes.html">update_yaxes</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Miles per gallon"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-mtcars-scatter.png"></p>
 </div>
 <div class="section level2">
@@ -139,7 +139,7 @@
 <span>              row <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fl">1</span>, secondary_y <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/go_pie.html">add_pie</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"4"</span>, <span class="st">"6"</span>, <span class="st">"8"</span><span class="op">)</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span>, row <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/go_bar.html">add_bar</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">qsec</span>, name <span class="op">=</span> <span class="st">"qsec"</span>, row <span class="op">=</span> <span class="fl">2</span>, col <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/update_yaxes.html">update_yaxes</a></span><span class="op">(</span>title_text <span class="op">=</span> <span class="st">"hp"</span>, row <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fl">1</span>, secondary_y <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/update_yaxes.html">update_yaxes</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"hp"</span>, row <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fl">1</span>, secondary_y <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/update_layout.html">update_layout</a></span><span class="op">(</span>showlegend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <div class="float">
 <img src="reference/figures/README-subplots.png" alt="A 2x2 subplot grid with a scatter plot and secondary y axis, a pie chart, and a bar chart spanning the bottom row"><div class="figcaption">A 2x2 subplot grid with a scatter plot and secondary y axis, a pie chart, and a bar chart spanning the bottom row</div>
@@ -148,20 +148,45 @@
 <div class="section level2">
 <h2 id="graph-objects-and-validation">Graph objects and validation<a class="anchor" aria-label="anchor" href="#graph-objects-and-validation"></a>
 </h2>
-<p>Nested properties can also be written with “magic underscores”, as in plotly.py: <code>marker_size = 12</code> is the same as <code>marker = list(size = 12)</code>. Invalid values are caught immediately:</p>
+<p>Every object in the plotly.js schema has a <code>go_*()</code> constructor with exactly its properties, so autocomplete shows only what is valid there:</p>
+<ul>
+<li>traces and the layout: <code><a href="reference/go_scatter.html">go_scatter()</a></code>, <code><a href="reference/go_bar.html">go_bar()</a></code>, …, <code><a href="reference/go_layout.html">go_layout()</a></code>;</li>
+<li>objects nested in them, named after their path: <code><a href="reference/go_scatter_marker.html">go_scatter_marker()</a></code>, <code><a href="reference/go_scatter_marker_line.html">go_scatter_marker_line()</a></code>, <code><a href="reference/go_xaxis.html">go_xaxis()</a></code>, <code><a href="reference/go_scene_camera.html">go_scene_camera()</a></code>, <code><a href="reference/go_annotation.html">go_annotation()</a></code>, <code><a href="reference/go_slider_step.html">go_slider_step()</a></code>, …;</li>
+<li>objects that appear in many places, with one constructor for all of them: <code><a href="reference/go_font.html">go_font()</a></code>, <code><a href="reference/go_colorbar.html">go_colorbar()</a></code>, <code><a href="reference/go_hoverlabel.html">go_hoverlabel()</a></code>, <code><a href="reference/go_error_bar.html">go_error_bar()</a></code>, <code><a href="reference/go_scene_axis.html">go_scene_axis()</a></code>, <code><a href="reference/go_selected.html">go_selected()</a></code>, ….</li>
+</ul>
+<p>Named lists work wherever a constructor does (<code>marker = list(size = 12)</code>). One-sided formulas such as <code>color = ~cyl</code> are kept by constructors and evaluated in the figure’s data when the trace is added:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/go_figure.html">go_figure</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/go_bar.html">add_bar</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, y <span class="op">=</span> <span class="op">~</span><span class="va">mpg</span>,</span>
+<span>    marker <span class="op">=</span> <span class="fu"><a href="reference/go_bar_marker.html">go_bar_marker</a></span><span class="op">(</span>color <span class="op">=</span> <span class="op">~</span><span class="va">hp</span>, line <span class="op">=</span> <span class="fu"><a href="reference/go_bar_marker_line.html">go_bar_marker_line</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    textfont <span class="op">=</span> <span class="fu"><a href="reference/go_font.html">go_font</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/update_layout.html">update_layout</a></span><span class="op">(</span>xaxis <span class="op">=</span> <span class="fu"><a href="reference/go_xaxis.html">go_xaxis</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Cylinders"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Every property is checked against the plotly.js schema when an object is created, and again when it is placed in a figure, so mistakes are caught immediately:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/go_scatter.html">add_scatter</a></span><span class="op">(</span><span class="va">fig</span>, x <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span>, y <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span>, mode <span class="op">=</span> <span class="st">"dots"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error: Invalid value of type 'character' received for the 'mode' property of scatter</span></span>
 <span><span class="co">#&gt;     Received value: "dots"</span></span>
 <span><span class="co">#&gt;</span></span>
 <span><span class="co">#&gt;     The 'mode' property is a flaglist and may be specified as a string containing:</span></span>
 <span><span class="co">#&gt;       - Any combination of "lines", "markers", "text" joined with '+' characters (e.g. 'lines+markers')</span></span>
-<span><span class="co">#&gt;         OR exactly one of "none"</span></span></code></pre></div>
+<span><span class="co">#&gt;         OR exactly one of "none"</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/go_bar.html">add_bar</a></span><span class="op">(</span><span class="va">fig</span>, x <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span>, y <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span>, marker <span class="op">=</span> <span class="fu"><a href="reference/go_font.html">go_font</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error: A go_font() object can't be used for bar.marker, which is an object (a named list)</span></span></code></pre></div>
+<p>plotly.py’s “magic underscore” names are not supported; the error shows the nested call instead:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/go_scatter.html">add_scatter</a></span><span class="op">(</span><span class="va">fig</span>, x <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span>, y <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span>, marker_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error: Invalid property specified for go_scatter(): 'marker_size'</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; Nested properties are set with their objects: marker = go_scatter_marker(size = ...)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="shiny">Shiny<a class="anchor" aria-label="anchor" href="#shiny"></a>
 </h2>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
 <span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span><span class="fu"><a href="reference/plotlyOutput.html">plotlyOutput</a></span><span class="op">(</span><span class="st">"plot"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"click"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
@@ -174,7 +199,7 @@
 <div class="section level2">
 <h2 id="static-images">Static images<a class="anchor" aria-label="anchor" href="#static-images"></a>
 </h2>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># uses headless Chrome via chromote; offers to download Chrome Headless Shell</span></span>
 <span><span class="co"># if no browser is installed</span></span>
 <span><span class="fu"><a href="reference/save_image.html">save_image</a></span><span class="op">(</span><span class="va">fig</span>, <span class="st">"figure.png"</span>, width <span class="op">=</span> <span class="fl">800</span>, height <span class="op">=</span> <span class="fl">500</span>, scale <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -192,10 +217,10 @@
 </h2>
 <p>Code in this repository was generated by an LLM (Claude) directed to follow the directory structure of plotly.py and test support and backwards compatibility with the R plotly package. C code leverages optimizations pioneered in <code><a href="https://rdrr.io/pkg/data.table/man/fwrite.html" class="external-link">data.table::fwrite</a></code>/<code><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">data.table::fread</a></code>. Authors of the “inspiration” code are included as contributors to this package as such.</p>
 <p>Code generation follows plotly.py’s <code>commands.py</code> and <code>codegen/</code>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="ex">Rscript</span> commands.R updateplotlyjs        <span class="co"># bundle the latest plotly.js from npm</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="ex">Rscript</span> commands.R codegen               <span class="co"># regenerate validators, go_*() constructors and figure functions</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">-e</span> <span class="st">'roxygen2::roxygenise()'</span>      <span class="co"># rebuild documentation</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="ex">R</span> CMD build . <span class="kw">&amp;&amp;</span> <span class="ex">R</span> CMD check <span class="at">--as-cran</span> plotly.core_<span class="pp">*</span>.tar.gz</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="ex">Rscript</span> commands.R updateplotlyjs        <span class="co"># bundle the latest plotly.js from npm</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="ex">Rscript</span> commands.R codegen               <span class="co"># regenerate validators, go_*() constructors and figure functions</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">-e</span> <span class="st">'roxygen2::roxygenise()'</span>      <span class="co"># rebuild documentation</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="ex">R</span> CMD build . <span class="kw">&amp;&amp;</span> <span class="ex">R</span> CMD check <span class="at">--as-cran</span> plotly.core_<span class="pp">*</span>.tar.gz</span></code></pre></div>
 <p>Generated files (<code>R/zz-gen-*.R</code>, <code>R/sysdata.rda</code>) are committed and must not be edited by hand. Tests are plain R scripts in <code>tests/</code>.</p>
 </div>
 </div>

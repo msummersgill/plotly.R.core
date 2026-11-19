@@ -6,7 +6,7 @@ cell with the `row` and `col` arguments of
 [`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md),
 the `add_<trace>()` functions,
 [`update_xaxes()`](https://msummersgill.github.io/plotly.R.core/reference/update_xaxes.md),
-[`add_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_annotation.md)
+[`add_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/add_annotation.md)
 and similar functions.
 
 ## Usage
@@ -112,7 +112,7 @@ make_subplots(
 - font:
 
   Font for the subplot, column, row and x/y titles: a named list or
-  [`go_layout_annotation_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_annotation.md)
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)
   object. Default `list(size = 16)`.
 
 ## Value
@@ -130,7 +130,7 @@ A `go_figure` with the subplot grid in its layout.
 fig <- make_subplots(rows = 1, cols = 2, subplot_titles = c("Left", "Right")) |>
   add_scatter(x = 1:3, y = c(4, 5, 6), row = 1, col = 1) |>
   add_scatter(x = 20:22, y = c(50, 60, 70), row = 1, col = 2) |>
-  update_yaxes(title_text = "y", row = 1, col = 1)
+  update_yaxes(title = "y", row = 1, col = 1)
 
 # Mixed subplot types and a secondary y axis
 fig <- make_subplots(

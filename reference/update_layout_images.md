@@ -61,11 +61,11 @@ for_each_layout_image(
 - patch:
 
   A named list of property updates (see
-  [`go_layout_image()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_image.md)).
+  [`add_layout_image()`](https://msummersgill.github.io/plotly.R.core/reference/add_layout_image.md)).
 
 - ...:
 
-  Further named updates (names may use magic underscores).
+  Further named updates, by their full names.
 
 - overwrite:
 
@@ -78,10 +78,9 @@ for_each_layout_image(
 
 ## Value
 
-`select_layout_images()` returns a list of
-[`go_layout_image()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_image.md)
-objects; the others return the modified figure.
+`select_layout_images()` returns a list of image objects; the others
+return the modified figure.
 
 ## See also
 
-[`add_layout_image()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_image.md)
+[`add_layout_image()`](https://msummersgill.github.io/plotly.R.core/reference/add_layout_image.md)

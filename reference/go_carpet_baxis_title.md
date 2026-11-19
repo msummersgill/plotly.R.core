@@ -1,0 +1,83 @@
+# Carpet baxis title objects
+
+The object for the `baxis.title` of a carpet trace
+([`go_carpet_baxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet_baxis.md)).
+`go_carpet_baxis_title()` creates one, with exactly its properties; a
+named list with the same properties works too.
+
+## Usage
+
+``` r
+go_carpet_baxis_title(
+  arg = NULL,
+  ...,
+  font = NULL,
+  offset = NULL,
+  text = NULL,
+  skip_invalid = FALSE
+)
+```
+
+## Arguments
+
+- arg:
+
+  Optional named list, or graph object of the same type, to initialise
+  properties from. Named arguments take precedence.
+
+- ...:
+
+  Not used: properties must be named in full.
+
+- font:
+
+  Sets this axis' title font. A
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)
+  object or named list, with properties `color`, `family`,
+  `lineposition`, `shadow`, `size`, `style`, `textcase`, `variant` and
+  `weight` (see
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)).
+
+- offset:
+
+  An additional amount by which to offset the title from the tick
+  labels, given in pixels. Number.
+
+- text:
+
+  Sets the title of this axis. String.
+
+- skip_invalid:
+
+  If `TRUE`, silently drop invalid properties instead of raising an
+  error.
+
+## Value
+
+A `go_carpet_baxis_title` object (a named list).
+
+## Details
+
+Nested objects are named lists, or objects of the constructors their
+arguments name. Every property is checked against the plotly.js schema
+when the object is created or modified. A property may be a one-sided
+formula (`color = ~col`): it is kept, and evaluated in the data (then
+checked) when its trace is added to a figure with `add_<trace>()` or
+[`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md).
+
+## Examples
+
+``` r
+d <- expand.grid(a = c(4, 5, 6), b = c(1, 2, 3))
+d$y <- d$a * d$b
+d |>
+  go_figure() |>
+  add_carpet(
+    a = ~a,
+    b = ~b,
+    y = ~y,
+    baxis = go_carpet_baxis(
+      title = go_carpet_baxis_title(text = "title")
+    )
+  )
+```

@@ -1,0 +1,78 @@
+# Slices axis objects
+
+Used for `x`, `y`, `z` in 6 places in the schema. `go_slices_axis()`
+creates one; a named list with the same properties works too.
+
+## Usage
+
+``` r
+go_slices_axis(
+  arg = NULL,
+  ...,
+  fill = NULL,
+  locations = NULL,
+  show = NULL,
+  skip_invalid = FALSE
+)
+```
+
+## Arguments
+
+- arg:
+
+  Optional named list, or graph object of the same type, to initialise
+  properties from. Named arguments take precedence.
+
+- ...:
+
+  Not used: properties must be named in full.
+
+- fill:
+
+  Sets the fill ratio of the \`slices\`. The default fill value of the
+  \`slices\` is 1 meaning that they are entirely shaded. On the other
+  hand Applying a \`fill\` ratio less than one would allow the creation
+  of openings parallel to the edges. Number in the interval \[0, 1\].
+
+- locations:
+
+  Specifies the location(s) of slices on the axis. When not specified
+  slices would be created for all points of the axis x except start and
+  end. Data array: a vector, factor, Date/POSIXct vector, matrix or
+  list.
+
+- show:
+
+  Determines whether or not slice planes about the x dimension are
+  drawn. Logical.
+
+- skip_invalid:
+
+  If `TRUE`, silently drop invalid properties instead of raising an
+  error.
+
+## Value
+
+A `go_slices_axis` object (a named list).
+
+## Details
+
+These objects appear in 6 places in the plotly.js schema (properties
+named `x`, `y`, `z`), all with the same properties and rules.
+
+## Examples
+
+``` r
+d <- expand.grid(x = 1:5, y = 1:5, z = 1:5)
+d |>
+  go_figure() |>
+  add_isosurface(
+    x = ~x,
+    y = ~y,
+    z = ~z,
+    value = ~x * y * z,
+    isomin = 10,
+    isomax = 50,
+    slices = go_slices(x = go_slices_axis(show = TRUE))
+  )
+```

@@ -41,7 +41,7 @@ carries its row’s key.
 SharedData$new(gap, key = ~country) |>
   go_figure() |>
   add_scatter(x = ~gdpPercap, y = ~lifeExp, text = ~country, mode = "markers") |>
-  update_layout(xaxis_type = "log") |>
+  update_layout(xaxis = go_xaxis(type = "log")) |>
   highlight(color = "red")
 ```
 
@@ -75,7 +75,7 @@ all_years <- SharedData$new(gap, key = ~country, group = "countries")
 latest <- in_2007 |>
   go_figure() |>
   add_scatter(x = ~gdpPercap, y = ~lifeExp, text = ~country, mode = "markers") |>
-  update_layout(height = 350, xaxis_type = "log", title = "Wealth and life expectancy, 2007") |>
+  update_layout(height = 350, xaxis = go_xaxis(type = "log"), title = "Wealth and life expectancy, 2007") |>
   highlight(on = "plotly_selected", color = "red")
 
 history <- all_years |>
@@ -137,13 +137,13 @@ countries <- gap[year == 2007, .N, by = continent]
 continent_bars <- go_figure() |>
   add_bar(x = countries$continent, y = countries$N) |>
   set_crosstalk_keys(countries$continent, group = by_continent$groupName()) |>
-  update_layout(height = 300, yaxis_title = "countries") |>
+  update_layout(height = 300, yaxis = go_yaxis(title = "countries")) |>
   highlight(color = "red")
 
 continent_points <- by_continent |>
   go_figure() |>
   add_scatter(x = ~gdpPercap, y = ~lifeExp, text = ~country, mode = "markers") |>
-  update_layout(height = 350, xaxis_type = "log") |>
+  update_layout(height = 350, xaxis = go_xaxis(type = "log")) |>
   highlight(color = "red")
 
 htmltools::tagList(as_widget(continent_bars), as_widget(continent_points))
@@ -234,7 +234,7 @@ htmltools::tagList(
   filtered |>
     go_figure() |>
     add_scatter(x = ~gdpPercap, y = ~lifeExp, text = ~country, mode = "markers") |>
-    update_layout(height = 350, xaxis_type = "log") |>
+    update_layout(height = 350, xaxis = go_xaxis(type = "log")) |>
     as_widget()
 )
 ```

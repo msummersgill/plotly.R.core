@@ -147,173 +147,6 @@ go_waterfall(
   zorder = NULL,
   skip_invalid = FALSE
 )
-
-go_waterfall_connector(
-  arg = NULL,
-  ...,
-  line = NULL,
-  mode = NULL,
-  visible = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_connector_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  dash = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_decreasing(arg = NULL, ..., marker = NULL, skip_invalid = FALSE)
-
-go_waterfall_decreasing_marker(
-  arg = NULL,
-  ...,
-  color = NULL,
-  line = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_decreasing_marker_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_hoverlabel(
-  arg = NULL,
-  ...,
-  align = NULL,
-  bgcolor = NULL,
-  bordercolor = NULL,
-  font = NULL,
-  namelength = NULL,
-  showarrow = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_hoverlabel_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_increasing(arg = NULL, ..., marker = NULL, skip_invalid = FALSE)
-
-go_waterfall_increasing_marker(
-  arg = NULL,
-  ...,
-  color = NULL,
-  line = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_increasing_marker_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_insidetextfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_legendgrouptitle_font(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_outsidetextfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_textfont(
-  arg = NULL,
-  ...,
-  color = NULL,
-  family = NULL,
-  lineposition = NULL,
-  shadow = NULL,
-  size = NULL,
-  style = NULL,
-  textcase = NULL,
-  variant = NULL,
-  weight = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_totals(arg = NULL, ..., marker = NULL, skip_invalid = FALSE)
-
-go_waterfall_totals_marker(
-  arg = NULL,
-  ...,
-  color = NULL,
-  line = NULL,
-  skip_invalid = FALSE
-)
-
-go_waterfall_totals_marker_line(
-  arg = NULL,
-  ...,
-  color = NULL,
-  width = NULL,
-  skip_invalid = FALSE
-)
 ```
 
 ## Arguments
@@ -324,15 +157,14 @@ go_waterfall_totals_marker_line(
 
 - ...:
 
-  Further properties, including nested properties in "magic underscore"
-  form, e.g. `marker_size = 10` for `marker = list(size = 10)`. Property
-  values may be one-sided formulas, evaluated in `data` for `add_*()`
-  functions.
+  Not used: properties must be named in full.
 
 - data:
 
   A data frame in which formula properties (e.g. `x = ~col`,
-  `marker_size = ~col`) are evaluated. Default: the data given to
+  `marker = list(size = ~col)`,
+  `marker = go_scatter_marker(size = ~col)`) are evaluated. Default: the
+  data given to
   [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md).
   Only the evaluated values are added to the trace. A
   [`crosstalk::SharedData`](https://rdrr.io/pkg/crosstalk/man/SharedData.html)
@@ -357,7 +189,11 @@ go_waterfall_totals_marker_line(
 
 - connector:
 
-  Named list or `go_waterfall_connector()` object.
+  A
+  [`go_waterfall_connector()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_connector.md)
+  object or named list, with properties `line`, `mode` and `visible`
+  (see
+  [`go_waterfall_connector()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_connector.md)).
 
 - constraintext:
 
@@ -374,7 +210,10 @@ go_waterfall_totals_marker_line(
 
 - decreasing:
 
-  Named list or `go_waterfall_decreasing()` object.
+  A
+  [`go_waterfall_decreasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_decreasing.md)
+  object or named list, with properties `marker` (see
+  [`go_waterfall_decreasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_decreasing.md)).
 
 - dx:
 
@@ -395,7 +234,11 @@ go_waterfall_totals_marker_line(
 
 - hoverlabel:
 
-  Named list or `go_waterfall_hoverlabel()` object.
+  A
+  [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md)
+  object or named list, with properties `align`, `bgcolor`,
+  `bordercolor`, `font`, `namelength` and `showarrow` (see
+  [`go_hoverlabel()`](https://msummersgill.github.io/plotly.R.core/reference/go_hoverlabel.md)).
 
 - hovertemplate:
 
@@ -451,7 +294,10 @@ go_waterfall_totals_marker_line(
 
 - increasing:
 
-  Named list or `go_waterfall_increasing()` object.
+  A
+  [`go_waterfall_increasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_increasing.md)
+  object or named list, with properties `marker` (see
+  [`go_waterfall_increasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_increasing.md)).
 
 - insidetextanchor:
 
@@ -460,8 +306,12 @@ go_waterfall_totals_marker_line(
 
 - insidetextfont:
 
-  Sets the font used for \`text\` lying inside the bar. Named list or
-  `go_waterfall_insidetextfont()` object.
+  Sets the font used for \`text\` lying inside the bar. A
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)
+  object or named list, with properties `color`, `family`,
+  `lineposition`, `shadow`, `size`, `style`, `textcase`, `variant` and
+  `weight` (see
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)).
 
 - legend:
 
@@ -479,7 +329,10 @@ go_waterfall_totals_marker_line(
 
 - legendgrouptitle:
 
-  Named list or `go_waterfall_legendgrouptitle()` object.
+  A
+  [`go_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_legendgrouptitle.md)
+  object or named list, with properties `font` and `text` (see
+  [`go_legendgrouptitle()`](https://msummersgill.github.io/plotly.R.core/reference/go_legendgrouptitle.md)).
 
 - legendrank:
 
@@ -546,8 +399,12 @@ go_waterfall_totals_marker_line(
 
 - outsidetextfont:
 
-  Sets the font used for \`text\` lying outside the bar. Named list or
-  `go_waterfall_outsidetextfont()` object.
+  Sets the font used for \`text\` lying outside the bar. A
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)
+  object or named list, with properties `color`, `family`,
+  `lineposition`, `shadow`, `size`, `style`, `textcase`, `variant` and
+  `weight` (see
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)).
 
 - selectedpoints:
 
@@ -565,15 +422,12 @@ go_waterfall_totals_marker_line(
 
 - text:
 
-  **`go_waterfall()`**: Sets text elements associated with each (x,y)
-  pair. If a single string, the same string appears over all the data
-  points. If an array of string, the items are mapped in order to the
-  this trace's (x,y) coordinates. If trace \`hoverinfo\` contains a
-  "text" flag and "hovertext" is not set, these elements will be seen in
-  the hover labels. String, or a vector of these.
-
-  **`go_waterfall_legendgrouptitle()`**: Sets the title of the legend
-  group. String.
+  Sets text elements associated with each (x,y) pair. If a single
+  string, the same string appears over all the data points. If an array
+  of string, the items are mapped in order to the this trace's (x,y)
+  coordinates. If trace \`hoverinfo\` contains a "text" flag and
+  "hovertext" is not set, these elements will be seen in the hover
+  labels. String, or a vector of these.
 
 - textangle:
 
@@ -584,8 +438,12 @@ go_waterfall_totals_marker_line(
 
 - textfont:
 
-  Sets the font used for \`text\`. Named list or
-  `go_waterfall_textfont()` object.
+  Sets the font used for \`text\`. A
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)
+  object or named list, with properties `color`, `family`,
+  `lineposition`, `shadow`, `size`, `style`, `textcase`, `variant` and
+  `weight` (see
+  [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)).
 
 - textinfo:
 
@@ -637,7 +495,10 @@ go_waterfall_totals_marker_line(
 
 - totals:
 
-  Named list or `go_waterfall_totals()` object.
+  A
+  [`go_waterfall_totals()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_totals.md)
+  object or named list, with properties `marker` (see
+  [`go_waterfall_totals()`](https://msummersgill.github.io/plotly.R.core/reference/go_waterfall_totals.md)).
 
 - uid:
 
@@ -664,30 +525,14 @@ go_waterfall_totals_marker_line(
 
 - visible:
 
-  **`go_waterfall()`**: Determines whether or not this trace is visible.
-  If "legendonly", the trace is not drawn, but can appear as a legend
-  item (provided that the legend itself is visible). One of
-  `"legendonly"`, `TRUE`, `FALSE`.
-
-  **`go_waterfall_connector()`**: Determines if connector lines are
-  drawn. Logical.
+  Determines whether or not this trace is visible. If "legendonly", the
+  trace is not drawn, but can appear as a legend item (provided that the
+  legend itself is visible). One of `"legendonly"`, `TRUE`, `FALSE`.
 
 - width:
 
-  **`go_waterfall()`**: Sets the bar width (in position axis units).
-  Number in the interval \[0, Inf\], or a vector of these.
-
-  **`go_waterfall_connector_line()`**: Sets the line width (in px).
-  Number in the interval \[0, Inf\].
-
-  **`go_waterfall_decreasing_marker_line()`**: Sets the line width of
-  all decreasing values. Number in the interval \[0, Inf\].
-
-  **`go_waterfall_increasing_marker_line()`**: Sets the line width of
-  all increasing values. Number in the interval \[0, Inf\].
-
-  **`go_waterfall_totals_marker_line()`**: Sets the line width of all
-  intermediate sums and total values. Number in the interval \[0, Inf\].
+  Sets the bar width (in position axis units). Number in the interval
+  \[0, Inf\], or a vector of these.
 
 - x:
 
@@ -823,304 +668,23 @@ go_waterfall_totals_marker_line(
   Optional named list, or graph object of the same type, to initialise
   properties from (constructors). Named arguments take precedence.
 
-- line:
-
-  **`go_waterfall_connector()`**: Named list or
-  `go_waterfall_connector_line()` object.
-
-  **`go_waterfall_decreasing_marker()`**: Named list or
-  `go_waterfall_decreasing_marker_line()` object.
-
-  **`go_waterfall_increasing_marker()`**: Named list or
-  `go_waterfall_increasing_marker_line()` object.
-
-  **`go_waterfall_totals_marker()`**: Named list or
-  `go_waterfall_totals_marker_line()` object.
-
-- mode:
-
-  Sets the shape of connector lines. One of `"spanning"`, `"between"`.
-
-- color:
-
-  **`go_waterfall_connector_line()`**: Sets the line color. Color: a CSS
-  color string or R color name.
-
-  **`go_waterfall_decreasing_marker()`**: Sets the marker color of all
-  decreasing values. Color: a CSS color string or R color name.
-
-  **`go_waterfall_decreasing_marker_line()`**: Sets the line color of
-  all decreasing values. Color: a CSS color string or R color name.
-
-  **`go_waterfall_hoverlabel_font()`, `go_waterfall_insidetextfont()`,
-  `go_waterfall_outsidetextfont()`, `go_waterfall_textfont()`**: Color:
-  a CSS color string or R color name, or a vector of these.
-
-  **`go_waterfall_increasing_marker()`**: Sets the marker color of all
-  increasing values. Color: a CSS color string or R color name.
-
-  **`go_waterfall_increasing_marker_line()`**: Sets the line color of
-  all increasing values. Color: a CSS color string or R color name.
-
-  **`go_waterfall_legendgrouptitle_font()`**: Color: a CSS color string
-  or R color name.
-
-  **`go_waterfall_totals_marker()`**: Sets the marker color of all
-  intermediate sums and total values. Color: a CSS color string or R
-  color name.
-
-  **`go_waterfall_totals_marker_line()`**: Sets the line color of all
-  intermediate sums and total values. Color: a CSS color string or R
-  color name.
-
-- dash:
-
-  Sets the dash style of lines. Set to a dash type string ("solid",
-  "dot", "dash", "longdash", "dashdot", or "longdashdot") or a dash
-  length list in px (eg "5px,10px,2px,2px"). One of `"solid"`, `"dot"`,
-  `"dash"`, `"longdash"`, `"dashdot"`, `"longdashdot"`, or a string
-  matching
-  `"^\\d+(\\.\\d+)?(px|%)?((,|\\s)\\s*\\d+(\\.\\d+)?(px|%)?)*$"`.
-
-- marker:
-
-  **`go_waterfall_decreasing()`**: Named list or
-  `go_waterfall_decreasing_marker()` object.
-
-  **`go_waterfall_increasing()`**: Named list or
-  `go_waterfall_increasing_marker()` object.
-
-  **`go_waterfall_totals()`**: Named list or
-  `go_waterfall_totals_marker()` object.
-
-- align:
-
-  Sets the horizontal alignment of the text content within hover label
-  box. Has an effect only if the hover label text spans two or more
-  lines One of `"left"`, `"right"`, `"auto"`, or a vector of these.
-
-- bgcolor:
-
-  Sets the background color of the hover labels for this trace Color: a
-  CSS color string or R color name, or a vector of these.
-
-- bordercolor:
-
-  Sets the border color of the hover labels for this trace. Color: a CSS
-  color string or R color name, or a vector of these.
-
-- font:
-
-  **`go_waterfall_hoverlabel()`**: Sets the font used in hover labels.
-  Named list or `go_waterfall_hoverlabel_font()` object.
-
-  **`go_waterfall_legendgrouptitle()`**: Sets this legend group's title
-  font. Named list or `go_waterfall_legendgrouptitle_font()` object.
-
-- namelength:
-
-  Sets the default length (in number of characters) of the trace name in
-  the hover labels for all traces. -1 shows the whole name regardless of
-  length. 0-3 shows the first 0-3 characters, and an integer \>3 will
-  show the whole name if it is less than that many characters, but if it
-  is longer, will truncate to \`namelength - 3\` characters and add an
-  ellipsis. Integer in the interval \[-1, Inf\], or a vector of these.
-
-- showarrow:
-
-  Sets whether or not to show the hover label arrow/triangle pointing to
-  the data point. Logical.
-
-- family:
-
-  **`go_waterfall_hoverlabel_font()`, `go_waterfall_insidetextfont()`,
-  `go_waterfall_outsidetextfont()`, `go_waterfall_textfont()`**: HTML
-  font family - the typeface that will be applied by the web browser.
-  The web browser can only apply a font if it is available on the system
-  where it runs. Provide multiple font families, separated by commas, to
-  indicate the order in which to apply fonts if they aren't available.
-  String, or a vector of these.
-
-  **`go_waterfall_legendgrouptitle_font()`**: HTML font family - the
-  typeface that will be applied by the web browser. The web browser can
-  only apply a font if it is available on the system where it runs.
-  Provide multiple font families, separated by commas, to indicate the
-  order in which to apply fonts if they aren't available. String.
-
-- lineposition:
-
-  **`go_waterfall_hoverlabel_font()`, `go_waterfall_insidetextfont()`,
-  `go_waterfall_outsidetextfont()`, `go_waterfall_textfont()`**: Sets
-  the kind of decoration line(s) with text, such as an "under", "over"
-  or "through" as well as combinations e.g. "under+over", etc. Any
-  combination of `"under"`, `"over"`, `"through"` joined with `"+"`, or
-  one of `"none"`, or a vector of these.
-
-  **`go_waterfall_legendgrouptitle_font()`**: Sets the kind of
-  decoration line(s) with text, such as an "under", "over" or "through"
-  as well as combinations e.g. "under+over", etc. Any combination of
-  `"under"`, `"over"`, `"through"` joined with `"+"`, or one of
-  `"none"`.
-
-- shadow:
-
-  **`go_waterfall_hoverlabel_font()`, `go_waterfall_insidetextfont()`,
-  `go_waterfall_outsidetextfont()`, `go_waterfall_textfont()`**: Sets
-  the shape and color of the shadow behind text. "auto" places minimal
-  shadow and applies contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String, or a vector of these.
-
-  **`go_waterfall_legendgrouptitle_font()`**: Sets the shape and color
-  of the shadow behind text. "auto" places minimal shadow and applies
-  contrast text font color. See
-  https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow for
-  additional options. String.
-
-- size:
-
-  **`go_waterfall_hoverlabel_font()`, `go_waterfall_insidetextfont()`,
-  `go_waterfall_outsidetextfont()`, `go_waterfall_textfont()`**: Number
-  in the interval \[1, Inf\], or a vector of these.
-
-  **`go_waterfall_legendgrouptitle_font()`**: Number in the interval
-  \[1, Inf\].
-
-- style:
-
-  **`go_waterfall_hoverlabel_font()`, `go_waterfall_insidetextfont()`,
-  `go_waterfall_outsidetextfont()`, `go_waterfall_textfont()`**: Sets
-  whether a font should be styled with a normal or italic face from its
-  family. One of `"normal"`, `"italic"`, or a vector of these.
-
-  **`go_waterfall_legendgrouptitle_font()`**: Sets whether a font should
-  be styled with a normal or italic face from its family. One of
-  `"normal"`, `"italic"`.
-
-- textcase:
-
-  **`go_waterfall_hoverlabel_font()`, `go_waterfall_insidetextfont()`,
-  `go_waterfall_outsidetextfont()`, `go_waterfall_textfont()`**: Sets
-  capitalization of text. It can be used to make text appear in
-  all-uppercase or all-lowercase, or with each word capitalized. One of
-  `"normal"`, `"word caps"`, `"upper"`, `"lower"`, or a vector of these.
-
-  **`go_waterfall_legendgrouptitle_font()`**: Sets capitalization of
-  text. It can be used to make text appear in all-uppercase or
-  all-lowercase, or with each word capitalized. One of `"normal"`,
-  `"word caps"`, `"upper"`, `"lower"`.
-
-- variant:
-
-  **`go_waterfall_hoverlabel_font()`, `go_waterfall_insidetextfont()`,
-  `go_waterfall_outsidetextfont()`, `go_waterfall_textfont()`**: Sets
-  the variant of the font. One of `"normal"`, `"small-caps"`,
-  `"all-small-caps"`, `"all-petite-caps"`, `"petite-caps"`, `"unicase"`,
-  or a vector of these.
-
-  **`go_waterfall_legendgrouptitle_font()`**: Sets the variant of the
-  font. One of `"normal"`, `"small-caps"`, `"all-small-caps"`,
-  `"all-petite-caps"`, `"petite-caps"`, `"unicase"`.
-
-- weight:
-
-  **`go_waterfall_hoverlabel_font()`, `go_waterfall_insidetextfont()`,
-  `go_waterfall_outsidetextfont()`, `go_waterfall_textfont()`**: Sets
-  the weight (or boldness) of the font. Integer in the interval \[1,
-  1000\], or a vector of these.
-
-  **`go_waterfall_legendgrouptitle_font()`**: Sets the weight (or
-  boldness) of the font. Integer in the interval \[1, 1000\].
-
 ## Value
 
-Each `go_*()` function returns a graph object of the same class as its
-name; `add_*()` functions return the modified figure.
+`go_*()` functions return a graph object; `add_*()` functions return the
+modified figure.
 
 ## Details
 
-`go_waterfall()` and the nested object constructors below create
-validated graph objects (named lists). Every property is checked against
-the plotly.js schema when an object is created or modified (see
-[`plotly_obj-modify()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
-`add_waterfall()` creates an object and adds it to a figure.
+`go_waterfall()` creates a validated graph object (a named list).
+`add_waterfall()` creates one and adds it to a figure.
 
-Nested objects documented here:
-
-- `go_waterfall_connector()`:
-
-  `waterfall.connector`
-
-- `go_waterfall_connector_line()`:
-
-  `waterfall.connector.line`
-
-- `go_waterfall_decreasing()`:
-
-  `waterfall.decreasing`
-
-- `go_waterfall_decreasing_marker()`:
-
-  `waterfall.decreasing.marker`
-
-- `go_waterfall_decreasing_marker_line()`:
-
-  `waterfall.decreasing.marker.line`
-
-- `go_waterfall_hoverlabel()`:
-
-  `waterfall.hoverlabel`
-
-- `go_waterfall_hoverlabel_font()`:
-
-  `waterfall.hoverlabel.font`: Sets the font used in hover labels.
-
-- `go_waterfall_increasing()`:
-
-  `waterfall.increasing`
-
-- `go_waterfall_increasing_marker()`:
-
-  `waterfall.increasing.marker`
-
-- `go_waterfall_increasing_marker_line()`:
-
-  `waterfall.increasing.marker.line`
-
-- `go_waterfall_insidetextfont()`:
-
-  `waterfall.insidetextfont`: Sets the font used for \`text\` lying
-  inside the bar.
-
-- `go_waterfall_legendgrouptitle()`:
-
-  `waterfall.legendgrouptitle`
-
-- `go_waterfall_legendgrouptitle_font()`:
-
-  `waterfall.legendgrouptitle.font`: Sets this legend group's title
-  font.
-
-- `go_waterfall_outsidetextfont()`:
-
-  `waterfall.outsidetextfont`: Sets the font used for \`text\` lying
-  outside the bar.
-
-- `go_waterfall_textfont()`:
-
-  `waterfall.textfont`: Sets the font used for \`text\`.
-
-- `go_waterfall_totals()`:
-
-  `waterfall.totals`
-
-- `go_waterfall_totals_marker()`:
-
-  `waterfall.totals.marker`
-
-- `go_waterfall_totals_marker_line()`:
-
-  `waterfall.totals.marker.line`
+Nested objects are given as named lists or with their constructors,
+which are linked from the arguments below. Every property is checked
+against the plotly.js schema when the object is created or modified (see
+[`plotly_obj-modify`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)).
+One-sided formulas (`~col`) are evaluated in the data, and then checked,
+when the trace is added with `add_<trace>()` or
+[`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md).
 
 ## See also
 
@@ -1130,20 +694,7 @@ Nested objects documented here:
 ## Examples
 
 ``` r
-go_waterfall(x = 1:3, y = c(2, 1, 3))
-#> <go_waterfall>
-#> {
-#>   "type": "waterfall",
-#>   "x": [
-#>     1,
-#>     2,
-#>     3
-#>   ],
-#>   "y": [
-#>     2,
-#>     1,
-#>     3
-#>   ]
-#> }
-#> 
+mtcars |>
+  go_figure() |>
+  add_waterfall(x = ~factor(cyl), y = ~mpg)
 ```

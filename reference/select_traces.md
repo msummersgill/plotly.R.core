@@ -44,9 +44,9 @@ for_each_trace(
 
   Which traces to use: `NULL` (all), a trace type such as `"scatter"`,
   indices into the matching traces, a named list of property values that
-  must all match (names may use magic underscores, e.g.
-  `list(marker_color = "red")`), or a function that takes a trace and
-  returns `TRUE` or `FALSE`.
+  must all match (nested lists match nested properties, e.g.
+  `list(marker = list(color = "red"))`), or a function that takes a
+  trace and returns `TRUE` or `FALSE`.
 
 - row, col:
 
@@ -99,7 +99,11 @@ select_traces(fig, list(name = "b"))
 #> }
 #> 
 #> 
-fig <- update_traces(fig, marker_size = 12, selector = list(mode = "markers"))
+fig <- update_traces(
+  fig,
+  marker = go_scatter_marker(size = 12),
+  selector = list(mode = "markers")
+)
 fig <- for_each_trace(fig, function(tr) {
   tr$name <- toupper(tr$name)
   tr
