@@ -68,14 +68,13 @@
   [`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md).
   plotly.py’s “magic underscore” property names (`marker_size = 10`) are
   not supported.
-- Plotly Express: all of plotly.py’s `px.*` functions as
-  [`px_scatter()`](https://msummersgill.github.io/plotly.R.core/reference/px_scatter.md),
-  [`px_line()`](https://msummersgill.github.io/plotly.R.core/reference/px_line.md),
-  [`px_bar()`](https://msummersgill.github.io/plotly.R.core/reference/px_bar.md),
-  … plus
-  [`px_imshow()`](https://msummersgill.github.io/plotly.R.core/reference/px_imshow.md),
-  with faceting, marginals, trendlines, animation, the `px.data`
-  datasets and templates.
+- Plotly Express (`px_scatter()`, `px_bar()`, …) is in the separate
+  plotly.express package, which builds on plotly.core; plotly.core
+  exports the functions it uses (see
+  [`?"plotly.core-extending"`](https://msummersgill.github.io/plotly.R.core/reference/plotly.core-extending.md)).
+  plotly.py’s colour sequences and scales are `plotly_colors`.
+  plotly.core no longer imports data.table
+  ([\#4](https://github.com/msummersgill/plotly.R.core/issues/4)).
 - [`make_subplots()`](https://msummersgill.github.io/plotly.R.core/reference/make_subplots.md),
   templates
   ([`default_template()`](https://msummersgill.github.io/plotly.R.core/reference/get_template.md),
@@ -139,12 +138,12 @@
   [`ggplotly()`](https://rdrr.io/pkg/plotly/man/ggplotly.html) figures,
   including its crosstalk linking
   ([`highlight()`](https://msummersgill.github.io/plotly.R.core/reference/highlight.md)).
-- Linked views with crosstalk: `px_*()` functions accept a
-  [`crosstalk::SharedData`](https://rdrr.io/pkg/crosstalk/man/SharedData.html)
-  as `data_frame`,
+- Linked views with crosstalk:
   [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
-  and `add_<trace>()` accept one as the data for formulas
-  (`add_scatter(x = ~col)`) and link the traces of its rows,
+  and `add_<trace>()` accept a
+  [`crosstalk::SharedData`](https://rdrr.io/pkg/crosstalk/man/SharedData.html)
+  as the data for formulas (`add_scatter(x = ~col)`) and link the traces
+  of its rows,
   [`set_crosstalk_keys()`](https://msummersgill.github.io/plotly.R.core/reference/set_crosstalk_keys.md)
   links the traces of any figure, and
   [`highlight()`](https://msummersgill.github.io/plotly.R.core/reference/highlight.md)

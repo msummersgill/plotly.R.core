@@ -3,9 +3,9 @@
 Create interactive web graphics with the 'plotly.js' JavaScript library.
 Graph objects, their validation and their documentation are generated
 from the 'plotly.js' plot schema, following the design of the 'plotly'
-Python package. Includes an 'express' interface for quick figures,
-'htmlwidgets' rendering, 'shiny' and 'quarto' integration, and static
-image export with headless 'Chrome'.
+Python package. Includes 'htmlwidgets' rendering, 'shiny' and 'quarto'
+integration, and static image export with headless 'Chrome'. High-level
+'plotly express' figures are in the 'plotly.express' package.
 
 ## See also
 
@@ -62,7 +62,7 @@ Other contributors:
 - @badasahog (GitHub user; 'data.table' fread.c and fwrite.c)
   \[contributor\]
 
-- Plotly Technologies Inc. (Bundled 'plotly.js' library; templates and
-  datasets from 'plotly.py') \[copyright holder\]
+- Plotly Technologies Inc. (Bundled 'plotly.js' library; templates from
+  'plotly.py') \[copyright holder\]
 
 - Dean Attali (Bundled 'colourpicker' library) \[copyright holder\]

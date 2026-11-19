@@ -4,7 +4,6 @@ Gives traces of a figure the keys of a
 [crosstalk::SharedData](https://rdrr.io/pkg/crosstalk/man/SharedData.html),
 so that selecting their points selects the same rows in other views of
 the crosstalk group (and the reverse). This happens by itself for
-`px_*()` functions given a SharedData as `data_frame`, and for
 `add_<trace>()` traces whose formula properties are evaluated in a
 SharedData (piped into
 [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
@@ -54,10 +53,9 @@ set_crosstalk_keys(fig, key, group = NULL, traces = NULL, simple = FALSE)
 ## Examples
 
 ``` r
-sd <- crosstalk::SharedData$new(px_data_iris())
-iris <- sd$origData()
+sd <- crosstalk::SharedData$new(iris)
 go_figure() |>
-  add_scatter(x = iris$sepal_width, y = iris$sepal_length, mode = "markers") |>
+  add_scatter(x = iris$Sepal.Width, y = iris$Sepal.Length, mode = "markers") |>
   set_crosstalk_keys(sd) |>
   highlight(on = "plotly_selected")
 ```

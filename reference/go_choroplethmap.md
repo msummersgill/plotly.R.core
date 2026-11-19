@@ -163,7 +163,7 @@ add_choroplethmap(
   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
   Colorscale: a vector of colors, a two-column data.frame of (value,
   color), or the name of a sequential, diverging or cyclical scale in
-  [`px_colors()`](https://msummersgill.github.io/plotly.R.core/reference/px_colors.md)
+  [`plotly_colors()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_colors.md)
   (append `"_r"` to reverse).
 
 - customdata:
@@ -481,3 +481,14 @@ when the trace is added with `add_<trace>()` or
 
 [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md),
 [`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md)
+
+## Examples
+
+``` r
+go_choroplethmap()
+#> <go_choroplethmap>
+#> {
+#>   "type": "choroplethmap"
+#> }
+#> 
+```

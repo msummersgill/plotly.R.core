@@ -49,7 +49,7 @@
   GitHub user; 'data.table' fread.c and fwrite.c
 
 - **Plotly Technologies Inc.**. Copyright holder.  
-  Bundled 'plotly.js' library; templates and datasets from 'plotly.py'
+  Bundled 'plotly.js' library; templates from 'plotly.py'
 
 - **Dean Attali**. Copyright holder.  
   Bundled 'colourpicker' library

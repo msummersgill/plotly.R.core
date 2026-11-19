@@ -66,8 +66,8 @@ Chrome (driven by the chromote package). No Python is needed.</p>
 
 
 <dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
-<dd><p>A <code><a href="go_figure.html">go_figure()</a></code>, a figure from a <code>px_*()</code> function or a
-plotly htmlwidget (anything <code><a href="plotly_widget.html">as_widget()</a></code> accepts).</p></dd>
+<dd><p>A <code><a href="go_figure.html">go_figure()</a></code> or a plotly htmlwidget (anything <code><a href="plotly_widget.html">as_widget()</a></code>
+accepts).</p></dd>
 
 
 <dt id="arg-file">file<a class="anchor" aria-label="anchor" href="#arg-file"></a></dt>
@@ -130,7 +130,7 @@ function when done.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="fu"><a href="px_data.html">px_data_iris</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="px_scatter.html">px_scatter</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">~</span><span class="va">sepal_width</span>, y <span class="op">=</span> <span class="op">~</span><span class="va">sepal_length</span>, color <span class="op">=</span> <span class="op">~</span><span class="va">species</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="go_figure.html">go_figure</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="go_scatter.html">add_scatter</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">~</span><span class="va">Sepal.Width</span>, y <span class="op">=</span> <span class="op">~</span><span class="va">Sepal.Length</span>, mode <span class="op">=</span> <span class="st">"markers"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">save_image</span><span class="op">(</span><span class="va">fig</span>, <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".png"</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">800</span>, height <span class="op">=</span> <span class="fl">500</span>, scale <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">save_image</span><span class="op">(</span><span class="va">fig</span>, <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".svg"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>

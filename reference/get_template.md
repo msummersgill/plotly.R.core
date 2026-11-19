@@ -41,7 +41,7 @@ and returns the previous one invisibly. `register_template()` returns
 ## Details
 
 Figures without a `layout$template` use the default template when they
-are rendered. Plotly Express functions add their template to the figure.
+are rendered.
 
 ## Examples
 

@@ -2,9 +2,8 @@
 
 `plotlyOutput()` creates a plot output element in a Shiny UI;
 `renderPlotly()` renders a
-[`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md),
-a figure from a `px_*()` function or a plotly htmlwidget (or a promise
-of one) into it.
+[`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
+or a plotly htmlwidget (or a promise of one) into it.
 
 ## Usage
 

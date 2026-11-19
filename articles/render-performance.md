@@ -42,31 +42,37 @@ metric_chart <- function(col, label) {
   d <- res[, .(variant, case, label, value = get(col))]
   # "10 × 100,000" on two lines, so the labels stay horizontal
   d[, label := sub("10 × ", "10 ×<br>", label, fixed = TRUE)]
-  fig <- px_bar(
-    d, x = "label", y = "value", color = "variant", facet_col = "case", barmode = "group",
-    category_orders = list(variant = variants, case = levels(res$case)),
-    # R in blues, Python in oranges; the darkest of each is the float32 variant
-    color_discrete_map = list(release = "#6baed6", core_backend = "#2171b5", go_figure_f32 = "#08306b",
-                              plotly_py = "#fd8d3c", plotly_py_f32 = "#a63603"),
-    labels = list(label = "", value = label, variant = ""),
-    facet_col_spacing = 0.02,
-    template = "plotly_white"
-  )
+  cases <- levels(res$case)
+  # R in blues, Python in oranges; the darkest of each is the float32 variant
+  colors <- c(release = "#6baed6", core_backend = "#2171b5", go_figure_f32 = "#08306b",
+              plotly_py = "#fd8d3c", plotly_py_f32 = "#a63603")
+  fig <- make_subplots(rows = 1, cols = length(cases), subplot_titles = cases,
+                       horizontal_spacing = 0.02)
+  for (j in seq_along(cases)) {
+    for (v in variants) {
+      dv <- d[case == cases[[j]] & variant == v]
+      if (!nrow(dv)) next
+      fig <- add_bar(
+        fig, x = dv$label, y = dv$value, name = v, legendgroup = v,
+        showlegend = j == 1, marker = go_bar_marker(color = colors[[v]]),
+        row = 1, col = j
+      )
+    }
+  }
   fig |>
-    for_each_annotation(function(a) {
-      a$text <- sub("^[^=]*=", "", a$text) # "case=heatmap" -> "heatmap"
-      a
-    }) |>
     # little margin around the panels (room below for the labels' descenders),
     # legend above them
     update_layout(
+      barmode = "group",
+      template = get_template("plotly_white"),
       margin = go_margin(l = 65, r = 5, t = 25, b = 20),
       legend = go_legend(orientation = "h", y = 1.08, yanchor = "bottom", x = 0)
     ) |>
     # each panel its own sizes, as categories: every bar the same width
-    update_xaxes(matches = NULL, type = "category") |>
+    update_xaxes(type = "category") |>
     # one y axis shared by the panels, from 0
     update_yaxes(matches = "y", rangemode = "tozero") |>
+    update_yaxes(title = label, row = 1, col = 1) |>
     partial_bundle("auto")
 }
 ```

@@ -5,8 +5,7 @@ the browser, with no Shiny server: selecting points in one figure
 selects the same rows in every other view of the data. This page shows
 how to do it with
 [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
-and `add_<trace>()`; `px_*()` functions work the same way when given a
-`SharedData` as `data_frame`.
+and `add_<trace>()`.
 
 ``` r
 
@@ -19,7 +18,9 @@ library(data.table)
 #> 
 #>     %notin%
 
-gap <- px_data_gapminder()  # one row per country and year (1952-2007)
+# one row per country and year (1952-2007), from the gapminder package
+gap <- as.data.table(gapminder::gapminder)
+gap[, `:=`(country = as.character(country), continent = as.character(continent))]
 ```
 
 The examples use the gapminder data, with a row for each country every
@@ -259,8 +260,9 @@ Year
   (`add_scatter(..., row = 1, col = "all")`) are each linked.
   [`set_crosstalk_keys()`](https://msummersgill.github.io/plotly.R.core/reference/set_crosstalk_keys.md)
   uses trace indices, so call it after adding the traces it links.
-- **Animation**: frames made by `px_*()` functions are linked frame by
-  frame.
+- **Animation**: each animation frame’s traces carry their own keys, set
+  with
+  [`set_crosstalk_keys()`](https://msummersgill.github.io/plotly.R.core/reference/set_crosstalk_keys.md).
 - **Other widgets**: any crosstalk-compatible widget, such as DT tables
   and leaflet maps, can share the group.
 - **Trace types**: selection events need traces with points (scatter,

@@ -27,9 +27,7 @@ write_html(
 - fig:
 
   A figure (e.g. from
-  [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
-  or
-  [`px_scatter()`](https://msummersgill.github.io/plotly.R.core/reference/px_scatter.md))
+  [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md))
   or a plotly.core widget (e.g. from
   [`plotly_widget()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_widget.md),
   or a figure from plotly's `plot_ly()`).

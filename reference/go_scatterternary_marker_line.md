@@ -110,7 +110,7 @@ go_scatterternary_marker_line(
   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
   Colorscale: a vector of colors, a two-column data.frame of (value,
   color), or the name of a sequential, diverging or cyclical scale in
-  [`px_colors()`](https://msummersgill.github.io/plotly.R.core/reference/px_colors.md)
+  [`plotly_colors()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_colors.md)
   (append `"_r"` to reverse).
 
 - dash:

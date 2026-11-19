@@ -69,8 +69,8 @@ fig <- fig |>
 if (interactive()) print(fig)
 
 # pipe in a data frame and refer to its columns with formulas
-px_data_iris() |>
+iris |>
   go_figure() |>
-  add_scatter(x = ~sepal_length, y = ~sepal_width, mode = "markers", name = "sepal") |>
-  add_scatter(x = ~petal_length, y = ~petal_width, mode = "markers", name = "petal")
+  add_scatter(x = ~Sepal.Length, y = ~Sepal.Width, mode = "markers", name = "sepal") |>
+  add_scatter(x = ~Petal.Length, y = ~Petal.Width, mode = "markers", name = "petal")
 ```

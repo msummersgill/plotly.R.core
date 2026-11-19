@@ -3,7 +3,7 @@
 Sets how a figure responds to, and shows, selections of points linked
 with crosstalk. A figure is linked when its data come from a
 [crosstalk::SharedData](https://rdrr.io/pkg/crosstalk/man/SharedData.html)
-(give one as the `data_frame` of a `px_*()` function, pipe one into
+(pipe one into
 [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
 and add traces with formulas such as `add_scatter(x = ~col)`, or link
 traces with
@@ -41,7 +41,7 @@ attrs_selected(opacity = 1, ...)
 
   A
   [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
-  (e.g. from a `px_*()` function) or a plotly htmlwidget.
+  or a plotly htmlwidget.
 
 - on:
 
@@ -118,7 +118,8 @@ also works on plotly htmlwidgets.
 ## Examples
 
 ``` r
-sd <- crosstalk::SharedData$new(px_data_iris())
-px_scatter(sd, x = ~sepal_width, y = ~sepal_length, color = ~species) |>
+crosstalk::SharedData$new(iris) |>
+  go_figure() |>
+  add_scatter(x = ~Sepal.Width, y = ~Sepal.Length, mode = "markers") |>
   highlight(on = "plotly_selected", color = "red")
 ```

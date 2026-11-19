@@ -21,8 +21,8 @@ save_image(p, file, ..., width = NULL, height = NULL, scale = NULL)
 - p:
 
   A
-  [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md),
-  a figure from a `px_*()` function or a plotly htmlwidget (anything
+  [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
+  or a plotly htmlwidget (anything
   [`as_widget()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_widget.md)
   accepts).
 
@@ -92,7 +92,7 @@ function when done.
 
 ``` r
 if (FALSE) { # \dontrun{
-fig <- px_data_iris() |> px_scatter(x = ~sepal_width, y = ~sepal_length, color = ~species)
+fig <- iris |> go_figure() |> add_scatter(x = ~Sepal.Width, y = ~Sepal.Length, mode = "markers")
 save_image(fig, tempfile(fileext = ".png"), width = 800, height = 500, scale = 2)
 save_image(fig, tempfile(fileext = ".svg"))
 } # }

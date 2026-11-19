@@ -26,8 +26,8 @@ as_widget(x, ...)
 
   A
   [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md),
-  a figure from a `px_*()` function, or a list with `data` (list of
-  traces), `layout`, `frames` and `config` elements.
+  or a list with `data` (list of traces), `layout`, `frames` and
+  `config` elements.
 
 - width, height:
 
