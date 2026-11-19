@@ -46,11 +46,6 @@ stand-alone.
   output.[`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
   exports PNG, JPEG, WebP, SVG, PDF and EPS with headless Chrome (no
   Python needed).
-- **Plotly Express** High-level `px_*()` functions ported from
-  plotly.py, which make a whole figure from a data frame in one call,
-  are in the separate
-  [plotly.express](https://github.com/msummersgill/plotly.R.express)
-  package, built on plotly.core.
 
 ## Installation
 

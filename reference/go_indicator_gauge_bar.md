@@ -10,7 +10,6 @@ named list with the same properties works too.
 
 ``` r
 go_indicator_gauge_bar(
-  arg = NULL,
   ...,
   color = NULL,
   line = NULL,
@@ -21,14 +20,10 @@ go_indicator_gauge_bar(
 
 ## Arguments
 
-- arg:
-
-  Optional named list, or graph object of the same type, to initialise
-  properties from. Named arguments take precedence.
-
 - ...:
 
-  Not used: properties must be named in full.
+  Not for properties, which must be named in full: an abbreviated or
+  unknown name is an error that suggests the right one.
 
 - color:
 

@@ -7,25 +7,15 @@ properties works too.
 ## Usage
 
 ``` r
-go_legendgrouptitle(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
+go_legendgrouptitle(..., font = NULL, text = NULL, skip_invalid = FALSE)
 ```
 
 ## Arguments
 
-- arg:
-
-  Optional named list, or graph object of the same type, to initialise
-  properties from. Named arguments take precedence.
-
 - ...:
 
-  Not used: properties must be named in full.
+  Not for properties, which must be named in full: an abbreviated or
+  unknown name is an error that suggests the right one.
 
 - font:
 

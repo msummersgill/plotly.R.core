@@ -44,7 +44,8 @@ add_selection(
 
 - ...:
 
-  Further properties, by their full names.
+  Not for properties, which must be named in full: an abbreviated or
+  unknown name is an error that suggests the right one.
 
 - line:
 

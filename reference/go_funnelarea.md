@@ -57,7 +57,6 @@ add_funnelarea(
 )
 
 go_funnelarea(
-  arg = NULL,
   ...,
   aspectratio = NULL,
   baseratio = NULL,
@@ -107,7 +106,8 @@ go_funnelarea(
 
 - ...:
 
-  Not used: properties must be named in full.
+  Not for properties, which must be named in full: an abbreviated or
+  unknown name is an error that suggests the right one.
 
 - data:
 
@@ -437,11 +437,6 @@ go_funnelarea(
 
   If `TRUE`, silently drop invalid properties instead of raising an
   error.
-
-- arg:
-
-  Optional named list, or graph object of the same type, to initialise
-  properties from (constructors). Named arguments take precedence.
 
 ## Value
 

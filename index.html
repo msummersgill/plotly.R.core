@@ -68,8 +68,6 @@
 <strong>Full backwards compatibility with the plotly R package.</strong> plotly’s <code>plot_ly()</code> and <code>ggplotly()</code> plots are rendered by plotly.core, so existing plotly R code gets the same performance work and plotly.js version. <em>(<a href="https://github.com/msummersgill/plotly/tree/plotly-core-render" class="external-link">Working branch: msummersgill/plotly@plotly-core-render</a>)</em> Helper functions in the plotly package back-port functionality for features and behavior deprecated between the last CRAN release plotly.js/2.25.2 and plotly-js/latest</li>
 <li>
 <strong>Shiny, R Markdown, Quarto, and static image export</strong> <code><a href="reference/plotlyOutput.html">plotlyOutput()</a></code>/<code><a href="reference/plotlyOutput.html">renderPlotly()</a></code>, <code><a href="reference/event_data.html">event_data()</a></code> and <code><a href="reference/plotlyProxy.html">plotlyProxy()</a></code> work as in the plotly R package; figures render inline in documents, as static images in PDF/Word output.<code><a href="reference/save_image.html">save_image()</a></code> exports PNG, JPEG, WebP, SVG, PDF and EPS with headless Chrome (no Python needed).</li>
-<li>
-<strong>Plotly Express</strong> High-level <code>px_*()</code> functions ported from plotly.py, which make a whole figure from a data frame in one call, are in the separate <a href="https://github.com/msummersgill/plotly.R.express" class="external-link">plotly.express</a> package, built on plotly.core.</li>
 </ul>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>

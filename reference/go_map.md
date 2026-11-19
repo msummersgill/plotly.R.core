@@ -9,7 +9,6 @@ the same properties works too.
 
 ``` r
 go_map(
-  arg = NULL,
   ...,
   bearing = NULL,
   bounds = NULL,
@@ -27,14 +26,10 @@ go_map(
 
 ## Arguments
 
-- arg:
-
-  Optional named list, or graph object of the same type, to initialise
-  properties from. Named arguments take precedence.
-
 - ...:
 
-  Not used: properties must be named in full.
+  Not for properties, which must be named in full: an abbreviated or
+  unknown name is an error that suggests the right one.
 
 - bearing:
 

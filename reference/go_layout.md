@@ -7,7 +7,6 @@ other settings that are not specific to a trace.
 
 ``` r
 go_layout(
-  arg = NULL,
   ...,
   activeselection = NULL,
   activeshape = NULL,
@@ -103,15 +102,11 @@ go_layout(
 
 ## Arguments
 
-- arg:
-
-  Optional named list, or graph object of the same type, to initialise
-  properties from (constructors). Named arguments take precedence.
-
 - ...:
 
-  Further properties, by their full names (e.g. numbered subplots such
-  as `xaxis2` in `go_layout()`).
+  Not for properties, which must be named in full: an abbreviated or
+  unknown name is an error that suggests the right one. Numbered
+  subplots (`xaxis2`, `scene3`, ...) are given here.
 
 - activeselection:
 

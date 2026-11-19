@@ -103,7 +103,6 @@ and in "parents".</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">go_sunburst</span><span class="op">(</span></span>
-<span>  arg <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  branchvalues <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  count <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -156,7 +155,8 @@ and in "parents".</p>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Not used: properties must be named in full.</p></dd>
+<dd><p>Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.</p></dd>
 
 
 <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
@@ -516,11 +516,6 @@ to address several cells.</p></dd>
 <dt id="arg-skip-invalid">skip_invalid<a class="anchor" aria-label="anchor" href="#arg-skip-invalid"></a></dt>
 <dd><p>If <code>TRUE</code>, silently drop invalid properties
 instead of raising an error.</p></dd>
-
-
-<dt id="arg-arg">arg<a class="anchor" aria-label="anchor" href="#arg-arg"></a></dt>
-<dd><p>Optional named list, or graph object of the same type, to
-initialise properties from (constructors). Named arguments take precedence.</p></dd>
 
 </dl></div>
     <div class="section level2">

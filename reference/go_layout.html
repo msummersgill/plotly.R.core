@@ -50,7 +50,6 @@ other settings that are not specific to a trace.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">go_layout</span><span class="op">(</span></span>
-<span>  arg <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  activeselection <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  activeshape <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -148,14 +147,10 @@ other settings that are not specific to a trace.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-arg">arg<a class="anchor" aria-label="anchor" href="#arg-arg"></a></dt>
-<dd><p>Optional named list, or graph object of the same type, to
-initialise properties from (constructors). Named arguments take precedence.</p></dd>
-
-
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Further properties, by their full names (e.g. numbered subplots
-such as <code>xaxis2</code> in <code>go_layout()</code>).</p></dd>
+<dl><dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.
+Numbered subplots (<code>xaxis2</code>, <code>scene3</code>, ...) are given here.</p></dd>
 
 
 <dt id="arg-activeselection">activeselection<a class="anchor" aria-label="anchor" href="#arg-activeselection"></a></dt>

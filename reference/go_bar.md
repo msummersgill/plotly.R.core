@@ -8,7 +8,6 @@ The data visualized by the span of the bars is set in \`y\` if
 
 ``` r
 go_bar(
-  arg = NULL,
   ...,
   alignmentgroup = NULL,
   base = NULL,
@@ -151,14 +150,10 @@ add_bar(
 
 ## Arguments
 
-- arg:
-
-  Optional named list, or graph object of the same type, to initialise
-  properties from (constructors). Named arguments take precedence.
-
 - ...:
 
-  Not used: properties must be named in full.
+  Not for properties, which must be named in full: an abbreviated or
+  unknown name is an error that suggests the right one.
 
 - alignmentgroup:
 

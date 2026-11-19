@@ -60,7 +60,6 @@ add_scattergeo(
 )
 
 go_scattergeo(
-  arg = NULL,
   ...,
   connectgaps = NULL,
   customdata = NULL,
@@ -114,7 +113,8 @@ go_scattergeo(
 
 - ...:
 
-  Not used: properties must be named in full.
+  Not for properties, which must be named in full: an abbreviated or
+  unknown name is an error that suggests the right one.
 
 - data:
 
@@ -483,11 +483,6 @@ go_scattergeo(
 
   If `TRUE`, silently drop invalid properties instead of raising an
   error.
-
-- arg:
-
-  Optional named list, or graph object of the same type, to initialise
-  properties from (constructors). Named arguments take precedence.
 
 ## Value
 

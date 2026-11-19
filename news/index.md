@@ -61,10 +61,13 @@
     [`go_layout_transition()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_transition.md)
     where the path name would be ambiguous or is a trace’s.
 
-  Named lists work wherever an object does. One-sided formulas
-  (`go_scatter_marker(color = ~cyl)`) are kept by constructors and
-  evaluated in the data, then checked, when the trace is added with
-  `add_<trace>()` or
+  Constructors take properties by name only (no positional `arg`; start
+  from a list with [`do.call()`](https://rdrr.io/r/base/do.call.html)),
+  so names are never partially matched and unknown ones get an error
+  that suggests the right name. Named lists work wherever an object
+  does. One-sided formulas (`go_scatter_marker(color = ~cyl)`) are kept
+  by constructors and evaluated in the data, then checked, when the
+  trace is added with `add_<trace>()` or
   [`add_trace()`](https://msummersgill.github.io/plotly.R.core/reference/add_traces.md).
   plotly.py’s “magic underscore” property names (`marker_size = 10`) are
   not supported.
