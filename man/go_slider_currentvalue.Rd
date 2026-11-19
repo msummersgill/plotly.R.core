@@ -5,7 +5,6 @@
 \title{Layout slider currentvalue objects}
 \usage{
 go_slider_currentvalue(
-  arg = NULL,
   ...,
   font = NULL,
   offset = NULL,
@@ -17,10 +16,8 @@ go_slider_currentvalue(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{font}{Sets the font of the current value label text. A
 \code{\link{go_font}()} object or named list, with properties

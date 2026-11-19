@@ -2027,7 +2027,8 @@ for_each_yaxis <- function(fig, fn, selector = NULL, row = NULL, col = NULL, sec
 #'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
 #' @param yshift Shifts the position of the whole annotation and arrow up
 #'   (positive) or down (negative) by this many pixels. Number.
-#' @param ... Further properties, by their full names.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return The modified figure.
@@ -2182,7 +2183,8 @@ for_each_annotation <- function(fig, fn, selector = NULL, row = NULL, col = NULL
 #'   point between the bottom and the top of the domain of the second y
 #'   axis. One of \code{"paper"}, or a string matching
 #'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
-#' @param ... Further properties, by their full names.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return The modified figure.
@@ -2317,7 +2319,8 @@ for_each_layout_image <- function(fig, fn, selector = NULL, row = NULL, col = NU
 #'   the point between the bottom and the top of the domain of the second y
 #'   axis. One of \code{"paper"}, or a string matching
 #'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
-#' @param ... Further properties, by their full names.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return The modified figure.
@@ -2568,7 +2571,8 @@ for_each_selection <- function(fig, fn, selector = NULL, row = NULL, col = NULL,
 #'   can have a fixed height while maintaining a position relative to data
 #'   or plot fraction. Note: `ysizemode` "pixel" is not supported when
 #'   `yref` is an array. One of \code{"scaled"}, \code{"pixel"}.
-#' @param ... Further properties, by their full names.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return The modified figure.

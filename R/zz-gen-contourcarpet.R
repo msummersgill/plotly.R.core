@@ -17,8 +17,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param a Sets the x coordinates. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
 #' @param a0 Alternate to `x`. Builds a linear space of x coordinates. Use
@@ -211,7 +209,8 @@
 #' @param zorder Sets the layer on which this trace is displayed, relative
 #'   to other SVG traces on the same subplot. SVG traces with higher
 #'   `zorder` appear in front of those with lower `zorder`. Integer.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -229,20 +228,19 @@
 #'   add_carpet(a = ~a, b = ~b, y = ~y, carpet = "c") |>
 #'   add_contourcarpet(a = ~a, b = ~b, z = ~y, carpet = "c")
 go_contourcarpet <- function(
-    arg = NULL, ..., a = NULL, a0 = NULL, atype = NULL,
-    autocolorscale = NULL, autocontour = NULL, b = NULL, b0 = NULL,
-    btype = NULL, carpet = NULL, coloraxis = NULL, colorbar = NULL,
-    colorscale = NULL, contours = NULL, customdata = NULL, da = NULL,
-    db = NULL, fillcolor = NULL, hovertext = NULL, ids = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, line = NULL, meta = NULL,
-    name = NULL, ncontours = NULL, opacity = NULL, reversescale = NULL,
-    showlegend = NULL, showscale = NULL, text = NULL, transpose = NULL,
-    uid = NULL, uirevision = NULL, visible = NULL, xaxis = NULL,
-    yaxis = NULL, z = NULL, zauto = NULL, zmax = NULL, zmid = NULL,
-    zmin = NULL, zorder = NULL, skip_invalid = FALSE
+    ..., a = NULL, a0 = NULL, atype = NULL, autocolorscale = NULL,
+    autocontour = NULL, b = NULL, b0 = NULL, btype = NULL, carpet = NULL,
+    coloraxis = NULL, colorbar = NULL, colorscale = NULL, contours = NULL,
+    customdata = NULL, da = NULL, db = NULL, fillcolor = NULL,
+    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    line = NULL, meta = NULL, name = NULL, ncontours = NULL, opacity = NULL,
+    reversescale = NULL, showlegend = NULL, showscale = NULL, text = NULL,
+    transpose = NULL, uid = NULL, uirevision = NULL, visible = NULL,
+    xaxis = NULL, yaxis = NULL, z = NULL, zauto = NULL, zmax = NULL,
+    zmid = NULL, zmin = NULL, zorder = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("contourcarpet", arg, environment(), list(...), skip_invalid)
+  plotly_object("contourcarpet", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Contourcarpet contours objects
@@ -260,8 +258,6 @@ go_contourcarpet <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param coloring Determines the coloring method showing the contour
 #'   values. If "fill", coloring is done evenly between each contour level
 #'   If "lines", coloring is done on the contour lines. If "none", no
@@ -308,7 +304,8 @@ go_contourcarpet <- function(
 #'   the interval values (`[],(),[),(],][,)(,](,)[`) "value" is expected to
 #'   be an array of two numbers where the first is the lower bound and the
 #'   second is the upper bound. Any value.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_contourcarpet_contours} object (a named list).
@@ -330,12 +327,11 @@ go_contourcarpet <- function(
 #'     contours = go_contourcarpet_contours(size = 10)
 #'   )
 go_contourcarpet_contours <- function(
-    arg = NULL, ..., coloring = NULL, end = NULL, labelfont = NULL,
-    labelformat = NULL, operation = NULL, showlabels = NULL,
-    showlines = NULL, size = NULL, start = NULL, type = NULL, value = NULL,
-    skip_invalid = FALSE
+    ..., coloring = NULL, end = NULL, labelfont = NULL, labelformat = NULL,
+    operation = NULL, showlabels = NULL, showlines = NULL, size = NULL,
+    start = NULL, type = NULL, value = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("contourcarpet.contours", arg, environment(), list(...), skip_invalid)
+  plotly_object("contourcarpet.contours", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Contourcarpet line objects
@@ -353,8 +349,6 @@ go_contourcarpet_contours <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color of the contour level. Has no effect if
 #'   `contours.coloring` is set to "lines". Color: a CSS color string or R
 #'   color name.
@@ -369,7 +363,8 @@ go_contourcarpet_contours <- function(
 #' @param width Sets the contour line width (in px) Defaults to 0.5 when
 #'   `contours.type` is "levels". Defaults to 2 when `contours.type` is
 #'   "constraint". Number in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_contourcarpet_line} object (a named list).
@@ -391,9 +386,9 @@ go_contourcarpet_contours <- function(
 #'     line = go_contourcarpet_line(color = "red")
 #'   )
 go_contourcarpet_line <- function(
-    arg = NULL, ..., color = NULL, dash = NULL, smoothing = NULL,
-    width = NULL, skip_invalid = FALSE
+    ..., color = NULL, dash = NULL, smoothing = NULL, width = NULL,
+    skip_invalid = FALSE
 ) {
-  plotly_object("contourcarpet.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("contourcarpet.line", NULL, environment(), list(...), skip_invalid)
 }
 

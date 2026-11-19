@@ -5,7 +5,6 @@
 \title{Violin meanline objects}
 \usage{
 go_violin_meanline(
-  arg = NULL,
   ...,
   color = NULL,
   visible = NULL,
@@ -14,10 +13,8 @@ go_violin_meanline(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{color}{Sets the mean line color. Color: a CSS color string or R
 color name.}

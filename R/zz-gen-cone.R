@@ -18,8 +18,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param anchor Sets the cones' anchor with respect to their x/y/z
 #'   positions. Note that "cm" denote the cone's center of mass which
 #'   corresponds to 1/4 from the tail to tip. One of \code{"tip"},
@@ -289,7 +287,8 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `zaxis.hoverformat`. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -305,9 +304,9 @@
 #'   go_figure() |>
 #'   add_cone(x = ~x, y = ~y, z = ~z, u = ~y, v = ~-x, w = ~z)
 go_cone <- function(
-    arg = NULL, ..., anchor = NULL, autocolorscale = NULL, cauto = NULL,
-    cmax = NULL, cmid = NULL, cmin = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, customdata = NULL, hoverinfo = NULL,
+    ..., anchor = NULL, autocolorscale = NULL, cauto = NULL, cmax = NULL,
+    cmid = NULL, cmin = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, customdata = NULL, hoverinfo = NULL,
     hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
     hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
     legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
@@ -319,7 +318,7 @@ go_cone <- function(
     x = NULL, xhoverformat = NULL, y = NULL, yhoverformat = NULL, z = NULL,
     zhoverformat = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("cone", arg, environment(), list(...), skip_invalid)
+  plotly_object("cone", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Cone lighting objects
@@ -336,8 +335,6 @@ go_cone <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param ambient Ambient light increases overall color visibility but can
 #'   wash out the image. Number in the interval [0, 1].
 #' @param diffuse Represents the extent that incident rays are reflected in
@@ -356,7 +353,8 @@ go_cone <- function(
 #' @param vertexnormalsepsilon Epsilon for vertex normals calculation
 #'   avoids math issues arising from degenerate geometry. Number in the
 #'   interval [0, 1].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_cone_lighting} object (a named list).
@@ -378,10 +376,10 @@ go_cone <- function(
 #'     lighting = go_cone_lighting()
 #'   )
 go_cone_lighting <- function(
-    arg = NULL, ..., ambient = NULL, diffuse = NULL,
-    facenormalsepsilon = NULL, fresnel = NULL, roughness = NULL,
-    specular = NULL, vertexnormalsepsilon = NULL, skip_invalid = FALSE
+    ..., ambient = NULL, diffuse = NULL, facenormalsepsilon = NULL,
+    fresnel = NULL, roughness = NULL, specular = NULL,
+    vertexnormalsepsilon = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("cone.lighting", arg, environment(), list(...), skip_invalid)
+  plotly_object("cone.lighting", NULL, environment(), list(...), skip_invalid)
 }
 

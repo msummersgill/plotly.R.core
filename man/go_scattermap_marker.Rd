@@ -5,7 +5,6 @@
 \title{Scattermap marker objects}
 \usage{
 go_scattermap_marker(
-  arg = NULL,
   ...,
   allowoverlap = NULL,
   angle = NULL,
@@ -30,10 +29,8 @@ go_scattermap_marker(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{allowoverlap}{Flag to draw all symbols, even if they overlap.
 Logical.}

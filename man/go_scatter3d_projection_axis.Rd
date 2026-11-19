@@ -5,7 +5,6 @@
 \title{Scatter3d projection axis objects}
 \usage{
 go_scatter3d_projection_axis(
-  arg = NULL,
   ...,
   opacity = NULL,
   scale = NULL,
@@ -14,10 +13,8 @@ go_scatter3d_projection_axis(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{opacity}{Sets the projection color. Number in the interval [0, 1].}
 

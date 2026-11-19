@@ -770,10 +770,18 @@ nested_details <- function() {
   )
 }
 
-DOTS_DOC <- c(
-  "#' @param ... Further properties, by their full names (e.g. numbered subplots",
-  "#'   such as \\code{xaxis2} in \\code{go_layout()})."
-)
+# `...` of constructors: it comes before the properties so that they must be
+# named in full (R would partially match "mark" to "marker"), and unknown or
+# abbreviated names get plotly.core's errors, with suggestions.
+dots_doc <- function(layout = FALSE) {
+  c(
+    "#' @param ... Not for properties, which must be named in full: an",
+    "#'   abbreviated or unknown name is an error that suggests the right one.",
+    if (layout) {
+      "#'   Numbered subplots (\\code{xaxis2}, \\code{scene3}, ...) are given here."
+    }
+  )
+}
 
 page_title <- function(page, kind) {
   if (kind == "trace") {
@@ -823,13 +831,11 @@ page_doc <- function(page, ctx, figure_fns) {
     "#' @details",
     roxygen_lines(nested_details()),
     "#'",
-    "#' @param arg Optional named list, or graph object of the same type, to",
-    "#'   initialise properties from (constructors). Named arguments take precedence.",
     property_params(page, page, ctx, fig_docs),
     if (kind == "trace") {
-      "#' @param ... Not used: properties must be named in full."
+      dots_doc()
     } else {
-      DOTS_DOC
+      dots_doc(layout = TRUE)
     },
     "#' @param skip_invalid If \\code{TRUE}, silently drop invalid properties",
     "#'   instead of raising an error.",
@@ -958,12 +964,10 @@ shared_doc <- function(type, ctx) {
       }
     ),
     "#'",
-    "#' @param arg Optional named list, or graph object of the same type, to",
-    "#'   initialise properties from. Named arguments take precedence.",
     unlist(lapply(fam$fields, function(f) {
       param_block(f, shared_param_text(type, f, ctx))
     })),
-    "#' @param ... Not used: properties must be named in full.",
+    dots_doc(),
     "#' @param skip_invalid If \\code{TRUE}, silently drop invalid properties",
     "#'   instead of raising an error.",
     sprintf("#' @return A \\code{%s} object (a named list).", fn),
@@ -1184,10 +1188,8 @@ object_doc <- function(key, ctx) {
       "\\code{add_<trace>()} or \\code{add_trace()}."
     )),
     "#'",
-    "#' @param arg Optional named list, or graph object of the same type, to",
-    "#'   initialise properties from. Named arguments take precedence.",
     property_params(key, key, ctx),
-    "#' @param ... Not used: properties must be named in full.",
+    dots_doc(),
     "#' @param skip_invalid If \\code{TRUE}, silently drop invalid properties",
     "#'   instead of raising an error.",
     sprintf(
@@ -1210,7 +1212,6 @@ object_doc <- function(key, ctx) {
 shared_constructor_code <- function(type, ctx) {
   fields <- ctx$families[[type]]$fields
   args <- c(
-    "arg = NULL",
     "...",
     paste0(fields, " = NULL"),
     "skip_invalid = FALSE"
@@ -1220,7 +1221,7 @@ shared_constructor_code <- function(type, ctx) {
     wrap_args(args),
     ") {",
     sprintf(
-      '  shared_object("%s", arg, environment(), list(...), skip_invalid)',
+      '  shared_object("%s", NULL, environment(), list(...), skip_invalid)',
       type
     ),
     "}",
@@ -1237,7 +1238,6 @@ constructor_code <- function(
   ch <- child_nodes(key, nodes)
   # Properties come after `...` so they must be named in full (no partial matching).
   args <- c(
-    "arg = NULL",
     "...",
     paste0(ch$name, " = NULL"),
     "skip_invalid = FALSE"
@@ -1247,7 +1247,7 @@ constructor_code <- function(
     wrap_args(args),
     ") {",
     sprintf(
-      '  plotly_object("%s", arg, environment(), list(...), skip_invalid)',
+      '  plotly_object("%s", NULL, environment(), list(...), skip_invalid)',
       key
     ),
     "}",

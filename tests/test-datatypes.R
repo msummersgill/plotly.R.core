@@ -93,16 +93,23 @@ stopifnot(
 )
 stopifnot(json(go_layout()) == "{}", json(go_scatter()) == '{"type":"scatter"}')
 
-# arg and named arguments ----------------------------------------------------------
+# named arguments only: constructors take no positional arguments --------------------
 base <- list(x = 1:2, marker = list(size = 5, color = "blue"))
-t3 <- go_scatter(base, marker = list(size = 9)) # named args take precedence
+t3 <- do.call(
+  go_scatter,
+  utils::modifyList(base, list(marker = list(size = 9)))
+)
 stopifnot(
   identical(t3$marker$size, 9),
-  is.null(t3$marker$color),
+  identical(t3$marker$color, "blue"),
   identical(t3$x, 1:2)
 )
-t5 <- go_scatter(go_scatter(y = 1:2), x = 3:4) # arg may be a graph object
-stopifnot(identical(t5$y, 1:2), identical(t5$x, 3:4))
+stopifnot(
+  !"arg" %in% names(formals(go_scatter)),
+  !"arg" %in% names(formals(go_font))
+)
+# partial names aren't matched: `mark` is reported, not taken as `marker`
+expect_error(go_scatter(mark = list(size = 1)), "Invalid property .* 'mark'")
 t6 <- go_scatter(error_x = list(value = 5)) # property names with underscores
 stopifnot(identical(t6$error_x$value, 5))
 l <- go_layout(
@@ -117,7 +124,7 @@ stopifnot(
   identical(l$paper_bgcolor, "white")
 )
 
-expect_error(go_scatter(1:3), "must be a named list")
+expect_error(go_scatter(1:3), "must be named: properties are given by name")
 expect_error(
   go_scatter(colour = "red"),
   "Invalid property .* go_scatter\\(\\): 'colour'"
@@ -138,11 +145,13 @@ expect_error(go_layout(scen = list()), "Did you mean \"scene\"")
 
 # skip_invalid drops bad properties at every level
 t7 <- go_scatter(
-  list(x = 1, bogus = 2, marker = list(size = -1, color = "red")),
+  x = 1,
+  bogus = 2,
+  marker = list(size = -1, color = "red"),
   skip_invalid = TRUE
 )
 stopifnot(
-  identical(names(t7), c("type", "x", "marker")),
+  setequal(names(t7), c("type", "x", "marker")),
   identical(names(t7$marker), "color")
 )
 

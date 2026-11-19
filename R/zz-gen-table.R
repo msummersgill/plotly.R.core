@@ -18,8 +18,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param cells A \code{\link{go_table_cells}()} object or named list, with
 #'   properties \code{align}, \code{fill}, \code{font}, \code{format},
 #'   \code{height}, \code{line}, \code{prefix}, \code{suffix} and
@@ -120,7 +118,8 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -139,13 +138,13 @@
 #'     cells = go_table_cells(values = d)
 #'   )
 go_table <- function(
-    arg = NULL, ..., cells = NULL, columnorder = NULL, columnwidth = NULL,
+    ..., cells = NULL, columnorder = NULL, columnwidth = NULL,
     customdata = NULL, domain = NULL, header = NULL, hoverinfo = NULL,
     hoverlabel = NULL, ids = NULL, legend = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, meta = NULL, name = NULL,
     uid = NULL, uirevision = NULL, visible = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("table", arg, environment(), list(...), skip_invalid)
+  plotly_object("table", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Table cells objects
@@ -162,8 +161,6 @@ go_table <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param align Sets the horizontal alignment of the `text` within the box.
 #'   Has an effect only if `text` spans two or more lines (i.e. `text`
 #'   contains one or more <br> HTML tags) or if an explicit width is set to
@@ -191,7 +188,8 @@ go_table <- function(
 #'   all columns must be the same (longer vectors will be truncated). Each
 #'   value must be a finite number or a string. Data array: a vector,
 #'   factor, Date/POSIXct vector, matrix or list.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_table_cells} object (a named list).
@@ -204,11 +202,11 @@ go_table <- function(
 #'   cells = go_table_cells()
 #' )
 go_table_cells <- function(
-    arg = NULL, ..., align = NULL, fill = NULL, font = NULL, format = NULL,
+    ..., align = NULL, fill = NULL, font = NULL, format = NULL,
     height = NULL, line = NULL, prefix = NULL, suffix = NULL, values = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("table.cells", arg, environment(), list(...), skip_invalid)
+  plotly_object("table.cells", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Table cells fill objects
@@ -226,12 +224,11 @@ go_table_cells <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the cell fill color. It accepts either a specific
 #'   color or an array of colors or a 2D array of colors. Color: a CSS
 #'   color string or R color name, or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_table_cells_fill} object (a named list).
@@ -246,9 +243,9 @@ go_table_cells <- function(
 #'   )
 #' )
 go_table_cells_fill <- function(
-    arg = NULL, ..., color = NULL, skip_invalid = FALSE
+    ..., color = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("table.cells.fill", arg, environment(), list(...), skip_invalid)
+  plotly_object("table.cells.fill", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Table cells line objects
@@ -266,12 +263,11 @@ go_table_cells_fill <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Color: a CSS color string or R color name, or a vector of
 #'   these.
 #' @param width Number, or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_table_cells_line} object (a named list).
@@ -286,9 +282,9 @@ go_table_cells_fill <- function(
 #'   )
 #' )
 go_table_cells_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("table.cells.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("table.cells.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Table header objects
@@ -305,8 +301,6 @@ go_table_cells_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param align Sets the horizontal alignment of the `text` within the box.
 #'   Has an effect only if `text` spans two or more lines (i.e. `text`
 #'   contains one or more <br> HTML tags) or if an explicit width is set to
@@ -334,7 +328,8 @@ go_table_cells_line <- function(
 #'   for all columns must be the same (longer vectors will be truncated).
 #'   Each value must be a finite number or a string. Data array: a vector,
 #'   factor, Date/POSIXct vector, matrix or list.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_table_header} object (a named list).
@@ -347,11 +342,11 @@ go_table_cells_line <- function(
 #'   header = go_table_header()
 #' )
 go_table_header <- function(
-    arg = NULL, ..., align = NULL, fill = NULL, font = NULL, format = NULL,
+    ..., align = NULL, fill = NULL, font = NULL, format = NULL,
     height = NULL, line = NULL, prefix = NULL, suffix = NULL, values = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("table.header", arg, environment(), list(...), skip_invalid)
+  plotly_object("table.header", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Table header fill objects
@@ -369,12 +364,11 @@ go_table_header <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the cell fill color. It accepts either a specific
 #'   color or an array of colors or a 2D array of colors. Color: a CSS
 #'   color string or R color name, or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_table_header_fill} object (a named list).
@@ -389,9 +383,9 @@ go_table_header <- function(
 #'   )
 #' )
 go_table_header_fill <- function(
-    arg = NULL, ..., color = NULL, skip_invalid = FALSE
+    ..., color = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("table.header.fill", arg, environment(), list(...), skip_invalid)
+  plotly_object("table.header.fill", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Table header line objects
@@ -409,12 +403,11 @@ go_table_header_fill <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Color: a CSS color string or R color name, or a vector of
 #'   these.
 #' @param width Number, or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_table_header_line} object (a named list).
@@ -429,8 +422,8 @@ go_table_header_fill <- function(
 #'   )
 #' )
 go_table_header_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("table.header.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("table.header.line", NULL, environment(), list(...), skip_invalid)
 }
 

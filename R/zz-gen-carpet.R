@@ -20,8 +20,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param a An array containing values of the first parameter value Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param a0 Alternate to `a`. Builds a linear space of a coordinates. Use
@@ -154,7 +152,8 @@
 #' @param zorder Sets the layer on which this trace is displayed, relative
 #'   to other SVG traces on the same subplot. SVG traces with higher
 #'   `zorder` appear in front of those with lower `zorder`. Integer.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -171,7 +170,7 @@
 #'   go_figure() |>
 #'   add_carpet(a = ~a, b = ~b, y = ~y)
 go_carpet <- function(
-    arg = NULL, ..., a = NULL, a0 = NULL, aaxis = NULL, b = NULL, b0 = NULL,
+    ..., a = NULL, a0 = NULL, aaxis = NULL, b = NULL, b0 = NULL,
     baxis = NULL, carpet = NULL, cheaterslope = NULL, color = NULL,
     customdata = NULL, da = NULL, db = NULL, font = NULL, ids = NULL,
     legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
@@ -179,7 +178,7 @@ go_carpet <- function(
     uid = NULL, uirevision = NULL, visible = NULL, x = NULL, xaxis = NULL,
     y = NULL, yaxis = NULL, zorder = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("carpet", arg, environment(), list(...), skip_invalid)
+  plotly_object("carpet", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Carpet aaxis objects
@@ -196,8 +195,6 @@ go_carpet <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param arraydtick The stride between grid lines along the axis Integer
 #'   in the interval [1, Inf].
 #' @param arraytick0 The starting index of grid lines along the axis
@@ -374,7 +371,8 @@ go_carpet <- function(
 #'   determined the axis type by looking into the data of the traces that
 #'   referenced the axis in question. One of \code{"-"}, \code{"linear"},
 #'   \code{"date"}, \code{"category"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_carpet_aaxis} object (a named list).
@@ -394,7 +392,7 @@ go_carpet <- function(
 #'     aaxis = go_carpet_aaxis(color = "red")
 #'   )
 go_carpet_aaxis <- function(
-    arg = NULL, ..., arraydtick = NULL, arraytick0 = NULL, autorange = NULL,
+    ..., arraydtick = NULL, arraytick0 = NULL, autorange = NULL,
     autotypenumbers = NULL, categoryarray = NULL, categoryorder = NULL,
     cheatertype = NULL, color = NULL, dtick = NULL, endline = NULL,
     endlinecolor = NULL, endlinewidth = NULL, exponentformat = NULL,
@@ -412,7 +410,7 @@ go_carpet_aaxis <- function(
     tickprefix = NULL, ticksuffix = NULL, ticktext = NULL, tickvals = NULL,
     title = NULL, type = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("carpet.aaxis", arg, environment(), list(...), skip_invalid)
+  plotly_object("carpet.aaxis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Carpet aaxis title objects
@@ -430,8 +428,6 @@ go_carpet_aaxis <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param font Sets this axis' title font. A \code{\link{go_font}()} object
 #'   or named list, with properties \code{color}, \code{family},
 #'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
@@ -440,7 +436,8 @@ go_carpet_aaxis <- function(
 #' @param offset An additional amount by which to offset the title from the
 #'   tick labels, given in pixels. Number.
 #' @param text Sets the title of this axis. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_carpet_aaxis_title} object (a named list).
@@ -462,10 +459,9 @@ go_carpet_aaxis <- function(
 #'     )
 #'   )
 go_carpet_aaxis_title <- function(
-    arg = NULL, ..., font = NULL, offset = NULL, text = NULL,
-    skip_invalid = FALSE
+    ..., font = NULL, offset = NULL, text = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("carpet.aaxis.title", arg, environment(), list(...), skip_invalid)
+  plotly_object("carpet.aaxis.title", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Carpet baxis objects
@@ -482,8 +478,6 @@ go_carpet_aaxis_title <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param arraydtick The stride between grid lines along the axis Integer
 #'   in the interval [1, Inf].
 #' @param arraytick0 The starting index of grid lines along the axis
@@ -660,7 +654,8 @@ go_carpet_aaxis_title <- function(
 #'   determined the axis type by looking into the data of the traces that
 #'   referenced the axis in question. One of \code{"-"}, \code{"linear"},
 #'   \code{"date"}, \code{"category"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_carpet_baxis} object (a named list).
@@ -680,7 +675,7 @@ go_carpet_aaxis_title <- function(
 #'     baxis = go_carpet_baxis(color = "red")
 #'   )
 go_carpet_baxis <- function(
-    arg = NULL, ..., arraydtick = NULL, arraytick0 = NULL, autorange = NULL,
+    ..., arraydtick = NULL, arraytick0 = NULL, autorange = NULL,
     autotypenumbers = NULL, categoryarray = NULL, categoryorder = NULL,
     cheatertype = NULL, color = NULL, dtick = NULL, endline = NULL,
     endlinecolor = NULL, endlinewidth = NULL, exponentformat = NULL,
@@ -698,7 +693,7 @@ go_carpet_baxis <- function(
     tickprefix = NULL, ticksuffix = NULL, ticktext = NULL, tickvals = NULL,
     title = NULL, type = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("carpet.baxis", arg, environment(), list(...), skip_invalid)
+  plotly_object("carpet.baxis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Carpet baxis title objects
@@ -716,8 +711,6 @@ go_carpet_baxis <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param font Sets this axis' title font. A \code{\link{go_font}()} object
 #'   or named list, with properties \code{color}, \code{family},
 #'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
@@ -726,7 +719,8 @@ go_carpet_baxis <- function(
 #' @param offset An additional amount by which to offset the title from the
 #'   tick labels, given in pixels. Number.
 #' @param text Sets the title of this axis. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_carpet_baxis_title} object (a named list).
@@ -748,9 +742,8 @@ go_carpet_baxis <- function(
 #'     )
 #'   )
 go_carpet_baxis_title <- function(
-    arg = NULL, ..., font = NULL, offset = NULL, text = NULL,
-    skip_invalid = FALSE
+    ..., font = NULL, offset = NULL, text = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("carpet.baxis.title", arg, environment(), list(...), skip_invalid)
+  plotly_object("carpet.baxis.title", NULL, environment(), list(...), skip_invalid)
 }
 

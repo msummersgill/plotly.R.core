@@ -4,13 +4,11 @@
 \alias{go_caps_axis}
 \title{Caps axis objects}
 \usage{
-go_caps_axis(arg = NULL, ..., fill = NULL, show = NULL, skip_invalid = FALSE)
+go_caps_axis(..., fill = NULL, show = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{fill}{Sets the fill ratio of the `caps`. The default fill value of
 the `caps` is 1 meaning that they are entirely shaded. On the other

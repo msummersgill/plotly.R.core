@@ -5,7 +5,6 @@
 \title{Treemap marker objects}
 \usage{
 go_treemap_marker(
-  arg = NULL,
   ...,
   autocolorscale = NULL,
   cauto = NULL,
@@ -27,10 +26,8 @@ go_treemap_marker(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{autocolorscale}{Determines whether the colorscale is a default
 palette (`autocolorscale: true`) or the palette determined by

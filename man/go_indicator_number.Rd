@@ -5,7 +5,6 @@
 \title{Indicator number objects}
 \usage{
 go_indicator_number(
-  arg = NULL,
   ...,
   font = NULL,
   prefix = NULL,
@@ -15,10 +14,8 @@ go_indicator_number(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{font}{Set the font used to display main number A
 \code{\link{go_font}()} object or named list, with properties

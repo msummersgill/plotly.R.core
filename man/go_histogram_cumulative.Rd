@@ -5,7 +5,6 @@
 \title{Histogram cumulative objects}
 \usage{
 go_histogram_cumulative(
-  arg = NULL,
   ...,
   currentbin = NULL,
   direction = NULL,
@@ -14,10 +13,8 @@ go_histogram_cumulative(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{currentbin}{Only applies if cumulative is enabled. Sets whether
 the current bin is included, excluded, or has half of its value

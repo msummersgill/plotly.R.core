@@ -5,7 +5,6 @@
 \title{Table header objects}
 \usage{
 go_table_header(
-  arg = NULL,
   ...,
   align = NULL,
   fill = NULL,
@@ -20,10 +19,8 @@ go_table_header(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{align}{Sets the horizontal alignment of the `text` within the box.
 Has an effect only if `text` spans two or more lines (i.e. `text`

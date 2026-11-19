@@ -5,7 +5,6 @@
 \title{Layout xaxis rangeslider yaxis objects}
 \usage{
 go_xaxis_rangeslider_yaxis(
-  arg = NULL,
   ...,
   range = NULL,
   rangemode = NULL,
@@ -13,10 +12,8 @@ go_xaxis_rangeslider_yaxis(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{range}{Sets the range of this axis for the rangeslider. Vector or
 list of 2 element(s).}

@@ -4,13 +4,11 @@
 \alias{go_leaf}
 \title{Leaf objects}
 \usage{
-go_leaf(arg = NULL, ..., opacity = NULL, skip_invalid = FALSE)
+go_leaf(..., opacity = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{opacity}{Sets the opacity of the leaves. With colorscale it is
 defaulted to 1; otherwise it is defaulted to 0.7 Number in the

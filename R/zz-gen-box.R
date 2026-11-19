@@ -34,8 +34,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param alignmentgroup Set several traces linked to the same position
 #'   axis or matching axes to the same alignmentgroup. This controls
 #'   whether bars compute their positional range dependently or
@@ -386,7 +384,8 @@
 #' @param zorder Sets the layer on which this trace is displayed, relative
 #'   to other SVG traces on the same subplot. SVG traces with higher
 #'   `zorder` appear in front of those with lower `zorder`. Integer.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -401,9 +400,9 @@
 #'   go_figure() |>
 #'   add_box(x = ~factor(cyl), y = ~mpg)
 go_box <- function(
-    arg = NULL, ..., alignmentgroup = NULL, boxmean = NULL,
-    boxpoints = NULL, customdata = NULL, dx = NULL, dy = NULL,
-    fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
+    ..., alignmentgroup = NULL, boxmean = NULL, boxpoints = NULL,
+    customdata = NULL, dx = NULL, dy = NULL, fillcolor = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, jitter = NULL, legend = NULL, legendgroup = NULL,
     legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
@@ -421,7 +420,7 @@ go_box <- function(
     ycalendar = NULL, yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
     yperiodalignment = NULL, zorder = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("box", arg, environment(), list(...), skip_invalid)
+  plotly_object("box", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Box line objects
@@ -438,13 +437,12 @@ go_box <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color of line bounding the box(es). Color: a CSS
 #'   color string or R color name.
 #' @param width Sets the width (in px) of line bounding the box(es). Number
 #'   in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_box_line} object (a named list).
@@ -457,9 +455,9 @@ go_box <- function(
 #'   go_figure() |>
 #'   add_box(x = ~factor(cyl), y = ~mpg, line = go_box_line(color = "red"))
 go_box_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("box.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("box.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Box marker objects
@@ -476,8 +474,6 @@ go_box_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param angle Sets the marker angle in respect to `angleref`. Angle in
 #'   degrees.
 #' @param color Sets the marker color. It accepts either a specific color
@@ -625,7 +621,8 @@ go_box_line <- function(
 #'   \code{147}, \code{48}, \code{148}, \code{49}, \code{149}, \code{50},
 #'   \code{150}, \code{51}, \code{151}, \code{52}, \code{152}, \code{53},
 #'   \code{153}, \code{54}, \code{154}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_box_marker} object (a named list).
@@ -642,11 +639,10 @@ go_box_line <- function(
 #'     marker = go_box_marker(color = "red")
 #'   )
 go_box_marker <- function(
-    arg = NULL, ..., angle = NULL, color = NULL, line = NULL,
-    opacity = NULL, outliercolor = NULL, size = NULL, symbol = NULL,
-    skip_invalid = FALSE
+    ..., angle = NULL, color = NULL, line = NULL, opacity = NULL,
+    outliercolor = NULL, size = NULL, symbol = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("box.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("box.marker", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Box marker line objects
@@ -664,8 +660,6 @@ go_box_marker <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the marker.line color. It accepts either a specific
 #'   color or an array of numbers that are mapped to the colorscale
 #'   relative to the max and min values of the array or relative to
@@ -678,7 +672,8 @@ go_box_marker <- function(
 #'   sample points. Number in the interval [0, Inf].
 #' @param width Sets the width (in px) of the lines bounding the marker
 #'   points. Number in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_box_marker_line} object (a named list).
@@ -695,9 +690,9 @@ go_box_marker <- function(
 #'     marker = go_box_marker(line = go_box_marker_line(color = "red"))
 #'   )
 go_box_marker_line <- function(
-    arg = NULL, ..., color = NULL, outliercolor = NULL, outlierwidth = NULL,
+    ..., color = NULL, outliercolor = NULL, outlierwidth = NULL,
     width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("box.marker.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("box.marker.line", NULL, environment(), list(...), skip_invalid)
 }
 

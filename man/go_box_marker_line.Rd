@@ -5,7 +5,6 @@
 \title{Box marker line objects}
 \usage{
 go_box_marker_line(
-  arg = NULL,
   ...,
   color = NULL,
   outliercolor = NULL,
@@ -15,10 +14,8 @@ go_box_marker_line(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{color}{Sets the marker.line color. It accepts either a specific
 color or an array of numbers that are mapped to the colorscale

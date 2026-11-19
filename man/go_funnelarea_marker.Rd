@@ -5,7 +5,6 @@
 \title{Funnelarea marker objects}
 \usage{
 go_funnelarea_marker(
-  arg = NULL,
   ...,
   colors = NULL,
   line = NULL,
@@ -14,10 +13,8 @@ go_funnelarea_marker(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{colors}{Sets the color of each sector. If not specified, the
 default trace color set is used to pick the sector colors. Data array:

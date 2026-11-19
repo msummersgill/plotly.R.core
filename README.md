@@ -27,10 +27,6 @@ plotly.core is a rendering engine for the [plotly R package](https://github.com/
   `event_data()` and `plotlyProxy()` work as in the plotly R package; figures
   render inline in documents, as static images in PDF/Word output.`save_image()`
   exports PNG, JPEG, WebP, SVG, PDF and EPS with headless Chrome (no Python needed).
-- **Plotly Express** High-level `px_*()` functions ported from plotly.py, which
-  make a whole figure from a data frame in one call, are in the separate
-  [plotly.express](https://github.com/msummersgill/plotly.R.express) package,
-  built on plotly.core.
 
 ## Installation
 

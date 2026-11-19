@@ -20,8 +20,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param autobinx Obsolete: since v1.42 each bin attribute is
 #'   auto-determined separately and `autobinx` is not needed. However, we
 #'   accept `autobinx: true` or `false` and will update `xbins` accordingly
@@ -349,7 +347,8 @@
 #' @param zmin Sets the lower bound of the color domain. Value should have
 #'   the same units as in `z` and if set, `zmax` must be set as well.
 #'   Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -364,12 +363,12 @@
 #'   go_figure() |>
 #'   add_histogram2dcontour(x = ~eruptions, y = ~waiting)
 go_histogram2dcontour <- function(
-    arg = NULL, ..., autobinx = NULL, autobiny = NULL,
-    autocolorscale = NULL, autocontour = NULL, bingroup = NULL,
-    coloraxis = NULL, colorbar = NULL, colorscale = NULL, contours = NULL,
-    customdata = NULL, histfunc = NULL, histnorm = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    ..., autobinx = NULL, autobiny = NULL, autocolorscale = NULL,
+    autocontour = NULL, bingroup = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, contours = NULL, customdata = NULL, histfunc = NULL,
+    histnorm = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, ids = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
     meta = NULL, name = NULL, nbinsx = NULL, nbinsy = NULL,
     ncontours = NULL, opacity = NULL, reversescale = NULL,
@@ -382,7 +381,7 @@ go_histogram2dcontour <- function(
     zhoverformat = NULL, zmax = NULL, zmid = NULL, zmin = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("histogram2dcontour", arg, environment(), list(...), skip_invalid)
+  plotly_object("histogram2dcontour", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Histogram2dcontour contours objects
@@ -400,8 +399,6 @@ go_histogram2dcontour <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param coloring Determines the coloring method showing the contour
 #'   values. If "fill", coloring is done evenly between each contour level
 #'   If "heatmap", a heatmap gradient coloring is applied between each
@@ -449,7 +446,8 @@ go_histogram2dcontour <- function(
 #'   the interval values (`[],(),[),(],][,)(,](,)[`) "value" is expected to
 #'   be an array of two numbers where the first is the lower bound and the
 #'   second is the upper bound. Any value.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_histogram2dcontour_contours} object (a named list).
@@ -466,12 +464,11 @@ go_histogram2dcontour <- function(
 #'     contours = go_histogram2dcontour_contours(size = 10)
 #'   )
 go_histogram2dcontour_contours <- function(
-    arg = NULL, ..., coloring = NULL, end = NULL, labelfont = NULL,
-    labelformat = NULL, operation = NULL, showlabels = NULL,
-    showlines = NULL, size = NULL, start = NULL, type = NULL, value = NULL,
-    skip_invalid = FALSE
+    ..., coloring = NULL, end = NULL, labelfont = NULL, labelformat = NULL,
+    operation = NULL, showlabels = NULL, showlines = NULL, size = NULL,
+    start = NULL, type = NULL, value = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("histogram2dcontour.contours", arg, environment(), list(...), skip_invalid)
+  plotly_object("histogram2dcontour.contours", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Histogram2dcontour line objects
@@ -489,8 +486,6 @@ go_histogram2dcontour_contours <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color of the contour level. Has no effect if
 #'   `contours.coloring` is set to "lines". Color: a CSS color string or R
 #'   color name.
@@ -504,7 +499,8 @@ go_histogram2dcontour_contours <- function(
 #'   where 0 corresponds to no smoothing. Number in the interval [0, 1.3].
 #' @param width Sets the contour line width in (in px) Number in the
 #'   interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_histogram2dcontour_line} object (a named list).
@@ -521,10 +517,10 @@ go_histogram2dcontour_contours <- function(
 #'     line = go_histogram2dcontour_line(color = "red")
 #'   )
 go_histogram2dcontour_line <- function(
-    arg = NULL, ..., color = NULL, dash = NULL, smoothing = NULL,
-    width = NULL, skip_invalid = FALSE
+    ..., color = NULL, dash = NULL, smoothing = NULL, width = NULL,
+    skip_invalid = FALSE
 ) {
-  plotly_object("histogram2dcontour.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("histogram2dcontour.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Histogram2dcontour marker objects
@@ -542,11 +538,10 @@ go_histogram2dcontour_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the aggregation data. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_histogram2dcontour_marker} object (a named list).
@@ -563,8 +558,8 @@ go_histogram2dcontour_line <- function(
 #'     marker = go_histogram2dcontour_marker(color = "red")
 #'   )
 go_histogram2dcontour_marker <- function(
-    arg = NULL, ..., color = NULL, skip_invalid = FALSE
+    ..., color = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("histogram2dcontour.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("histogram2dcontour.marker", NULL, environment(), list(...), skip_invalid)
 }
 

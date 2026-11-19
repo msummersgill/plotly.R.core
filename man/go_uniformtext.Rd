@@ -4,19 +4,11 @@
 \alias{go_uniformtext}
 \title{Layout uniformtext objects}
 \usage{
-go_uniformtext(
-  arg = NULL,
-  ...,
-  minsize = NULL,
-  mode = NULL,
-  skip_invalid = FALSE
-)
+go_uniformtext(..., minsize = NULL, mode = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{minsize}{Sets the minimum text size between traces of the same
 type. Number in the interval [0, Inf].}

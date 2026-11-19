@@ -5,7 +5,6 @@
 \title{Slices axis objects}
 \usage{
 go_slices_axis(
-  arg = NULL,
   ...,
   fill = NULL,
   locations = NULL,
@@ -14,10 +13,8 @@ go_slices_axis(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{fill}{Sets the fill ratio of the `slices`. The default fill value
 of the `slices` is 1 meaning that they are entirely shaded. On the

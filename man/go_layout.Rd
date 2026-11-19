@@ -5,7 +5,6 @@
 \title{Figure layout}
 \usage{
 go_layout(
-  arg = NULL,
   ...,
   activeselection = NULL,
   activeshape = NULL,
@@ -99,11 +98,9 @@ go_layout(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from (constructors). Named arguments take precedence.}
-
-\item{...}{Further properties, by their full names (e.g. numbered subplots
-such as \code{xaxis2} in \code{go_layout()}).}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.
+Numbered subplots (\code{xaxis2}, \code{scene3}, ...) are given here.}
 
 \item{activeselection}{A \code{\link{go_activeselection}()} object or
 named list, with properties \code{fillcolor} and \code{opacity} (see

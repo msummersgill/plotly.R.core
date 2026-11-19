@@ -17,8 +17,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param a Sets the quantity of component `a` in each data point. If `a`,
 #'   `b`, and `c` are all provided, they need not be normalized, only the
 #'   relative values matter. If only two arrays are provided they must be
@@ -258,7 +256,8 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -277,7 +276,7 @@
 #'     c = ~Petal.Length
 #'   )
 go_scatterternary <- function(
-    arg = NULL, ..., a = NULL, b = NULL, c = NULL, cliponaxis = NULL,
+    ..., a = NULL, b = NULL, c = NULL, cliponaxis = NULL,
     connectgaps = NULL, customdata = NULL, fill = NULL, fillcolor = NULL,
     hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
@@ -289,7 +288,7 @@ go_scatterternary <- function(
     texttemplatefallback = NULL, uid = NULL, uirevision = NULL,
     unselected = NULL, visible = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("scatterternary", arg, environment(), list(...), skip_invalid)
+  plotly_object("scatterternary", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Scatterternary line objects
@@ -307,8 +306,6 @@ go_scatterternary <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param backoff Sets the line back off from the end point of the nth line
 #'   segment (in px). This option is useful e.g. to avoid overlap with
 #'   arrowhead markers. With "auto" the lines would trim before markers if
@@ -331,7 +328,8 @@ go_scatterternary <- function(
 #'   a "linear" shape). Number in the interval [0, 1.3].
 #' @param width Sets the line width (in px). Number in the interval [0,
 #'   Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_scatterternary_line} object (a named list).
@@ -349,10 +347,10 @@ go_scatterternary <- function(
 #'     line = go_scatterternary_line(color = "red")
 #'   )
 go_scatterternary_line <- function(
-    arg = NULL, ..., backoff = NULL, color = NULL, dash = NULL,
-    shape = NULL, smoothing = NULL, width = NULL, skip_invalid = FALSE
+    ..., backoff = NULL, color = NULL, dash = NULL, shape = NULL,
+    smoothing = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("scatterternary.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("scatterternary.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Scatterternary marker objects
@@ -370,8 +368,6 @@ go_scatterternary_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param angle Sets the marker angle in respect to `angleref`. Angle in
 #'   degrees, or a vector of these.
 #' @param angleref Sets the reference for marker angle. With "previous",
@@ -601,7 +597,8 @@ go_scatterternary_line <- function(
 #'   \code{147}, \code{48}, \code{148}, \code{49}, \code{149}, \code{50},
 #'   \code{150}, \code{51}, \code{151}, \code{52}, \code{152}, \code{53},
 #'   \code{153}, \code{54}, \code{154}, or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_scatterternary_marker} object (a named list).
@@ -619,14 +616,14 @@ go_scatterternary_line <- function(
 #'     marker = go_scatterternary_marker(color = "red")
 #'   )
 go_scatterternary_marker <- function(
-    arg = NULL, ..., angle = NULL, angleref = NULL, autocolorscale = NULL,
-    cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL, color = NULL,
-    coloraxis = NULL, colorbar = NULL, colorscale = NULL, gradient = NULL,
-    line = NULL, maxdisplayed = NULL, opacity = NULL, reversescale = NULL,
+    ..., angle = NULL, angleref = NULL, autocolorscale = NULL, cauto = NULL,
+    cmax = NULL, cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
+    colorbar = NULL, colorscale = NULL, gradient = NULL, line = NULL,
+    maxdisplayed = NULL, opacity = NULL, reversescale = NULL,
     showscale = NULL, size = NULL, sizemin = NULL, sizemode = NULL,
     sizeref = NULL, standoff = NULL, symbol = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("scatterternary.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("scatterternary.marker", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Scatterternary marker line objects
@@ -644,8 +641,6 @@ go_scatterternary_marker <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `marker.line.colorscale`. Has an effect only if in `marker.line.color`
@@ -711,7 +706,8 @@ go_scatterternary_marker <- function(
 #'   `marker.line.cmax` will correspond to the first color. Logical.
 #' @param width Sets the width (in px) of the lines bounding the marker
 #'   points. Number in the interval [0, Inf], or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_scatterternary_marker_line} object (a named list).
@@ -731,11 +727,10 @@ go_scatterternary_marker <- function(
 #'     )
 #'   )
 go_scatterternary_marker_line <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
-    colorscale = NULL, dash = NULL, reversescale = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    cmin = NULL, color = NULL, coloraxis = NULL, colorscale = NULL,
+    dash = NULL, reversescale = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("scatterternary.marker.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("scatterternary.marker.line", NULL, environment(), list(...), skip_invalid)
 }
 

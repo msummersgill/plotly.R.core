@@ -5,7 +5,6 @@
 \title{Layout scene objects}
 \usage{
 go_scene(
-  arg = NULL,
   ...,
   annotations = NULL,
   aspectmode = NULL,
@@ -23,10 +22,8 @@ go_scene(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{annotations}{List, each element a
 \code{\link{go_scene_annotation}()} object or named list, with

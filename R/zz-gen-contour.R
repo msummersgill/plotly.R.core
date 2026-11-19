@@ -20,8 +20,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `colorscale`. In case `colorscale` is unspecified or `autocolorscale`
@@ -349,7 +347,8 @@
 #' @param zorder Sets the layer on which this trace is displayed, relative
 #'   to other SVG traces on the same subplot. SVG traces with higher
 #'   `zorder` appear in front of those with lower `zorder`. Integer.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -364,26 +363,25 @@
 #'   go_figure() |>
 #'   add_contour(x = ~Day, y = ~Month, z = ~Temp)
 go_contour <- function(
-    arg = NULL, ..., autocolorscale = NULL, autocontour = NULL,
-    coloraxis = NULL, colorbar = NULL, colorscale = NULL,
-    connectgaps = NULL, contours = NULL, customdata = NULL, dx = NULL,
-    dy = NULL, fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hoverongaps = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    line = NULL, meta = NULL, name = NULL, ncontours = NULL, opacity = NULL,
-    reversescale = NULL, showlegend = NULL, showscale = NULL, text = NULL,
-    textfont = NULL, texttemplate = NULL, texttemplatefallback = NULL,
-    transpose = NULL, uid = NULL, uirevision = NULL, visible = NULL,
-    x = NULL, x0 = NULL, xaxis = NULL, xcalendar = NULL,
-    xhoverformat = NULL, xperiod = NULL, xperiod0 = NULL,
-    xperiodalignment = NULL, xtype = NULL, y = NULL, y0 = NULL,
-    yaxis = NULL, ycalendar = NULL, yhoverformat = NULL, yperiod = NULL,
-    yperiod0 = NULL, yperiodalignment = NULL, ytype = NULL, z = NULL,
-    zauto = NULL, zhoverformat = NULL, zmax = NULL, zmid = NULL,
+    ..., autocolorscale = NULL, autocontour = NULL, coloraxis = NULL,
+    colorbar = NULL, colorscale = NULL, connectgaps = NULL, contours = NULL,
+    customdata = NULL, dx = NULL, dy = NULL, fillcolor = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hoverongaps = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, line = NULL, meta = NULL,
+    name = NULL, ncontours = NULL, opacity = NULL, reversescale = NULL,
+    showlegend = NULL, showscale = NULL, text = NULL, textfont = NULL,
+    texttemplate = NULL, texttemplatefallback = NULL, transpose = NULL,
+    uid = NULL, uirevision = NULL, visible = NULL, x = NULL, x0 = NULL,
+    xaxis = NULL, xcalendar = NULL, xhoverformat = NULL, xperiod = NULL,
+    xperiod0 = NULL, xperiodalignment = NULL, xtype = NULL, y = NULL,
+    y0 = NULL, yaxis = NULL, ycalendar = NULL, yhoverformat = NULL,
+    yperiod = NULL, yperiod0 = NULL, yperiodalignment = NULL, ytype = NULL,
+    z = NULL, zauto = NULL, zhoverformat = NULL, zmax = NULL, zmid = NULL,
     zmin = NULL, zorder = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("contour", arg, environment(), list(...), skip_invalid)
+  plotly_object("contour", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Contour contours objects
@@ -401,8 +399,6 @@ go_contour <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param coloring Determines the coloring method showing the contour
 #'   values. If "fill", coloring is done evenly between each contour level
 #'   If "heatmap", a heatmap gradient coloring is applied between each
@@ -450,7 +446,8 @@ go_contour <- function(
 #'   the interval values (`[],(),[),(],][,)(,](,)[`) "value" is expected to
 #'   be an array of two numbers where the first is the lower bound and the
 #'   second is the upper bound. Any value.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_contour_contours} object (a named list).
@@ -468,12 +465,11 @@ go_contour <- function(
 #'     contours = go_contour_contours(size = 10)
 #'   )
 go_contour_contours <- function(
-    arg = NULL, ..., coloring = NULL, end = NULL, labelfont = NULL,
-    labelformat = NULL, operation = NULL, showlabels = NULL,
-    showlines = NULL, size = NULL, start = NULL, type = NULL, value = NULL,
-    skip_invalid = FALSE
+    ..., coloring = NULL, end = NULL, labelfont = NULL, labelformat = NULL,
+    operation = NULL, showlabels = NULL, showlines = NULL, size = NULL,
+    start = NULL, type = NULL, value = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("contour.contours", arg, environment(), list(...), skip_invalid)
+  plotly_object("contour.contours", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Contour line objects
@@ -490,8 +486,6 @@ go_contour_contours <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color of the contour level. Has no effect if
 #'   `contours.coloring` is set to "lines". Color: a CSS color string or R
 #'   color name.
@@ -506,7 +500,8 @@ go_contour_contours <- function(
 #' @param width Sets the contour line width (in px) Defaults to 0.5 when
 #'   `contours.type` is "levels". Defaults to 2 when `contours.type` is
 #'   "constraint". Number in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_contour_line} object (a named list).
@@ -524,9 +519,9 @@ go_contour_contours <- function(
 #'     line = go_contour_line(color = "red")
 #'   )
 go_contour_line <- function(
-    arg = NULL, ..., color = NULL, dash = NULL, smoothing = NULL,
-    width = NULL, skip_invalid = FALSE
+    ..., color = NULL, dash = NULL, smoothing = NULL, width = NULL,
+    skip_invalid = FALSE
 ) {
-  plotly_object("contour.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("contour.line", NULL, environment(), list(...), skip_invalid)
 }
 

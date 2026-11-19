@@ -21,8 +21,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param close Sets the close values. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
 #' @param col Subplot grid column (figures created with
@@ -229,7 +227,8 @@
 #' @param zorder Sets the layer on which this trace is displayed, relative
 #'   to other SVG traces on the same subplot. SVG traces with higher
 #'   `zorder` appear in front of those with lower `zorder`. Integer.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -254,8 +253,8 @@
 #'     close = ~close
 #'   )
 go_ohlc <- function(
-    arg = NULL, ..., close = NULL, customdata = NULL, decreasing = NULL,
-    high = NULL, hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    ..., close = NULL, customdata = NULL, decreasing = NULL, high = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
     hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
     increasing = NULL, legend = NULL, legendgroup = NULL,
     legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
@@ -266,7 +265,7 @@ go_ohlc <- function(
     xperiod = NULL, xperiod0 = NULL, xperiodalignment = NULL, yaxis = NULL,
     yhoverformat = NULL, zorder = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("ohlc", arg, environment(), list(...), skip_invalid)
+  plotly_object("ohlc", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Ohlc decreasing objects
@@ -283,12 +282,11 @@ go_ohlc <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param line A \code{\link{go_ohlc_decreasing_line}()} object or named
 #'   list, with properties \code{color}, \code{dash} and \code{width} (see
 #'   \code{\link{go_ohlc_decreasing_line}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_ohlc_decreasing} object (a named list).
@@ -312,9 +310,9 @@ go_ohlc <- function(
 #'     decreasing = go_ohlc_decreasing()
 #'   )
 go_ohlc_decreasing <- function(
-    arg = NULL, ..., line = NULL, skip_invalid = FALSE
+    ..., line = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("ohlc.decreasing", arg, environment(), list(...), skip_invalid)
+  plotly_object("ohlc.decreasing", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Ohlc decreasing line objects
@@ -332,8 +330,6 @@ go_ohlc_decreasing <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the line color. Color: a CSS color string or R color
 #'   name.
 #' @param dash Sets the dash style of lines. Set to a dash type string
@@ -344,7 +340,8 @@ go_ohlc_decreasing <- function(
 #'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
 #' @param width Sets the line width (in px). Number in the interval [0,
 #'   Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_ohlc_decreasing_line} object (a named list).
@@ -370,10 +367,9 @@ go_ohlc_decreasing <- function(
 #'     )
 #'   )
 go_ohlc_decreasing_line <- function(
-    arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., color = NULL, dash = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("ohlc.decreasing.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("ohlc.decreasing.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Ohlc increasing objects
@@ -390,12 +386,11 @@ go_ohlc_decreasing_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param line A \code{\link{go_ohlc_increasing_line}()} object or named
 #'   list, with properties \code{color}, \code{dash} and \code{width} (see
 #'   \code{\link{go_ohlc_increasing_line}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_ohlc_increasing} object (a named list).
@@ -419,9 +414,9 @@ go_ohlc_decreasing_line <- function(
 #'     increasing = go_ohlc_increasing()
 #'   )
 go_ohlc_increasing <- function(
-    arg = NULL, ..., line = NULL, skip_invalid = FALSE
+    ..., line = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("ohlc.increasing", arg, environment(), list(...), skip_invalid)
+  plotly_object("ohlc.increasing", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Ohlc increasing line objects
@@ -439,8 +434,6 @@ go_ohlc_increasing <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the line color. Color: a CSS color string or R color
 #'   name.
 #' @param dash Sets the dash style of lines. Set to a dash type string
@@ -451,7 +444,8 @@ go_ohlc_increasing <- function(
 #'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
 #' @param width Sets the line width (in px). Number in the interval [0,
 #'   Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_ohlc_increasing_line} object (a named list).
@@ -477,10 +471,9 @@ go_ohlc_increasing <- function(
 #'     )
 #'   )
 go_ohlc_increasing_line <- function(
-    arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., color = NULL, dash = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("ohlc.increasing.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("ohlc.increasing.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Ohlc line objects
@@ -497,8 +490,6 @@ go_ohlc_increasing_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param dash Sets the dash style of lines. Set to a dash type string
 #'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
 #'   dash length list in px (eg "5px,10px,2px,2px"). Note that this style
@@ -510,7 +501,8 @@ go_ohlc_increasing_line <- function(
 #' @param width Sets the line width (in px). Note that this style setting
 #'   can also be set per direction via `increasing.line.width` and
 #'   `decreasing.line.width`. Number in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_ohlc_line} object (a named list).
@@ -534,8 +526,8 @@ go_ohlc_increasing_line <- function(
 #'     line = go_ohlc_line(width = 2)
 #'   )
 go_ohlc_line <- function(
-    arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE
+    ..., dash = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("ohlc.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("ohlc.line", NULL, environment(), list(...), skip_invalid)
 }
 

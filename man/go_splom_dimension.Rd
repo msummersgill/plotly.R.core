@@ -5,7 +5,6 @@
 \title{Splom dimension objects}
 \usage{
 go_splom_dimension(
-  arg = NULL,
   ...,
   axis = NULL,
   label = NULL,
@@ -17,10 +16,8 @@ go_splom_dimension(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{axis}{A \code{\link{go_splom_dimension_axis}()} object or named
 list, with properties \code{matches} and \code{type} (see

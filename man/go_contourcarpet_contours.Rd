@@ -5,7 +5,6 @@
 \title{Contourcarpet contours objects}
 \usage{
 go_contourcarpet_contours(
-  arg = NULL,
   ...,
   coloring = NULL,
   end = NULL,
@@ -22,10 +21,8 @@ go_contourcarpet_contours(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{coloring}{Determines the coloring method showing the contour
 values. If "fill", coloring is done evenly between each contour level

@@ -4,19 +4,11 @@
 \alias{go_slider_transition}
 \title{Layout slider transition objects}
 \usage{
-go_slider_transition(
-  arg = NULL,
-  ...,
-  duration = NULL,
-  easing = NULL,
-  skip_invalid = FALSE
-)
+go_slider_transition(..., duration = NULL, easing = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{duration}{Sets the duration of the slider transition Number in the
 interval [0, Inf].}

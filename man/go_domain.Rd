@@ -5,7 +5,6 @@
 \title{Domain objects}
 \usage{
 go_domain(
-  arg = NULL,
   ...,
   column = NULL,
   row = NULL,
@@ -15,10 +14,8 @@ go_domain(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{column}{If there is a layout grid, use the domain for this column
 in the grid for this funnelarea trace. Integer in the interval [0,

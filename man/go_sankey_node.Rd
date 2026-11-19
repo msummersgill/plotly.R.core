@@ -5,7 +5,6 @@
 \title{Sankey node objects}
 \usage{
 go_sankey_node(
-  arg = NULL,
   ...,
   align = NULL,
   color = NULL,
@@ -26,10 +25,8 @@ go_sankey_node(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{align}{Sets the alignment method used to position the nodes along
 the horizontal axis. One of \code{"justify"}, \code{"left"},

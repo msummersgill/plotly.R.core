@@ -19,8 +19,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -287,7 +285,8 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `zaxis.hoverformat`. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -302,7 +301,7 @@
 #'   go_figure() |>
 #'   add_scatter3d(x = ~wt, y = ~hp, z = ~mpg)
 go_scatter3d <- function(
-    arg = NULL, ..., connectgaps = NULL, customdata = NULL, error_x = NULL,
+    ..., connectgaps = NULL, customdata = NULL, error_x = NULL,
     error_y = NULL, error_z = NULL, hoverinfo = NULL, hoverlabel = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
@@ -315,7 +314,7 @@ go_scatter3d <- function(
     xhoverformat = NULL, y = NULL, ycalendar = NULL, yhoverformat = NULL,
     z = NULL, zcalendar = NULL, zhoverformat = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("scatter3d", arg, environment(), list(...), skip_invalid)
+  plotly_object("scatter3d", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Scatter3d line objects
@@ -333,8 +332,6 @@ go_scatter3d <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `line.colorscale`. Has an effect only if in `line.color` is set to a
@@ -402,7 +399,8 @@ go_scatter3d <- function(
 #'   numerical array. Logical.
 #' @param width Sets the line width (in px). Number in the interval [0,
 #'   Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_scatter3d_line} object (a named list).
@@ -420,12 +418,12 @@ go_scatter3d <- function(
 #'     line = go_scatter3d_line(color = "red")
 #'   )
 go_scatter3d_line <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, dash = NULL, reversescale = NULL,
-    showscale = NULL, width = NULL, skip_invalid = FALSE
+    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    cmin = NULL, color = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, dash = NULL, reversescale = NULL, showscale = NULL,
+    width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("scatter3d.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("scatter3d.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Scatter3d marker objects
@@ -443,8 +441,6 @@ go_scatter3d_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `marker.colorscale`. Has an effect only if in `marker.color` is set to
@@ -532,7 +528,8 @@ go_scatter3d_line <- function(
 #'   \code{"circle-open"}, \code{"cross"}, \code{"diamond"},
 #'   \code{"diamond-open"}, \code{"square"}, \code{"square-open"},
 #'   \code{"x"}, or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_scatter3d_marker} object (a named list).
@@ -550,13 +547,13 @@ go_scatter3d_line <- function(
 #'     marker = go_scatter3d_marker(color = "red")
 #'   )
 go_scatter3d_marker <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, line = NULL, opacity = NULL,
-    reversescale = NULL, showscale = NULL, size = NULL, sizemin = NULL,
-    sizemode = NULL, sizeref = NULL, symbol = NULL, skip_invalid = FALSE
+    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    cmin = NULL, color = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, line = NULL, opacity = NULL, reversescale = NULL,
+    showscale = NULL, size = NULL, sizemin = NULL, sizemode = NULL,
+    sizeref = NULL, symbol = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("scatter3d.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("scatter3d.marker", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Scatter3d marker line objects
@@ -574,8 +571,6 @@ go_scatter3d_marker <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `marker.line.colorscale`. Has an effect only if in `marker.line.color`
@@ -634,7 +629,8 @@ go_scatter3d_marker <- function(
 #'   `marker.line.cmax` will correspond to the first color. Logical.
 #' @param width Sets the width (in px) of the lines bounding the marker
 #'   points. Number in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_scatter3d_marker_line} object (a named list).
@@ -654,12 +650,11 @@ go_scatter3d_marker <- function(
 #'     )
 #'   )
 go_scatter3d_marker_line <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
-    colorscale = NULL, reversescale = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    cmin = NULL, color = NULL, coloraxis = NULL, colorscale = NULL,
+    reversescale = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("scatter3d.marker.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("scatter3d.marker.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Scatter3d projection objects
@@ -677,8 +672,6 @@ go_scatter3d_marker_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param x A \code{\link{go_scatter3d_projection_axis}()} object or named
 #'   list, with properties \code{opacity}, \code{scale} and \code{show}
 #'   (see \code{\link{go_scatter3d_projection_axis}()}).
@@ -688,7 +681,8 @@ go_scatter3d_marker_line <- function(
 #' @param z A \code{\link{go_scatter3d_projection_axis}()} object or named
 #'   list, with properties \code{opacity}, \code{scale} and \code{show}
 #'   (see \code{\link{go_scatter3d_projection_axis}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_scatter3d_projection} object (a named list).
@@ -706,8 +700,8 @@ go_scatter3d_marker_line <- function(
 #'     projection = go_scatter3d_projection()
 #'   )
 go_scatter3d_projection <- function(
-    arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
+    ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("scatter3d.projection", arg, environment(), list(...), skip_invalid)
+  plotly_object("scatter3d.projection", NULL, environment(), list(...), skip_invalid)
 }
 

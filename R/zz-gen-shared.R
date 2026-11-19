@@ -18,8 +18,6 @@
 #' in; when the object is placed in a figure it is checked again against
 #' that context's rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Color: a CSS color string or R color name. In some
 #'   contexts: Color: a CSS color string or R color name, or a vector of
 #'   these.
@@ -66,7 +64,8 @@
 #'   interval [1, 1000]. In some contexts: Integer in the interval [1,
 #'   1000], or a vector of these; or One of \code{"normal"}, \code{"bold"},
 #'   or a vector of these. Not available in every context.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_font} object (a named list).
@@ -80,11 +79,11 @@
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(font = go_font(color = "red"))
 go_font <- function(
-    arg = NULL, ..., color = NULL, family = NULL, lineposition = NULL,
-    shadow = NULL, size = NULL, style = NULL, textcase = NULL,
-    variant = NULL, weight = NULL, skip_invalid = FALSE
+    ..., color = NULL, family = NULL, lineposition = NULL, shadow = NULL,
+    size = NULL, style = NULL, textcase = NULL, variant = NULL,
+    weight = NULL, skip_invalid = FALSE
 ) {
-  shared_object("font", arg, environment(), list(...), skip_invalid)
+  shared_object("font", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Colorbar objects
@@ -96,8 +95,6 @@ go_font <- function(
 #' These objects appear in 37 places in the plotly.js schema (properties
 #' named \code{colorbar}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param bgcolor Sets the color of padded area. Color: a CSS color string
 #'   or R color name.
 #' @param bordercolor Sets the axis line color. Color: a CSS color string
@@ -281,7 +278,8 @@ go_font <- function(
 #' @param yref Sets the container `y` refers to. "container" spans the
 #'   entire `height` of the plot. "paper" refers to the height of the
 #'   plotting area only. One of \code{"container"}, \code{"paper"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_colorbar} object (a named list).
@@ -299,7 +297,7 @@ go_font <- function(
 #'     colorbar = go_colorbar(bgcolor = "lightyellow")
 #'   )
 go_colorbar <- function(
-    arg = NULL, ..., bgcolor = NULL, bordercolor = NULL, borderwidth = NULL,
+    ..., bgcolor = NULL, bordercolor = NULL, borderwidth = NULL,
     dtick = NULL, exponentformat = NULL, labelalias = NULL, len = NULL,
     lenmode = NULL, minexponent = NULL, nticks = NULL, orientation = NULL,
     outlinecolor = NULL, outlinewidth = NULL, separatethousands = NULL,
@@ -313,7 +311,7 @@ go_colorbar <- function(
     x = NULL, xanchor = NULL, xpad = NULL, xref = NULL, y = NULL,
     yanchor = NULL, ypad = NULL, yref = NULL, skip_invalid = FALSE
 ) {
-  shared_object("colorbar", arg, environment(), list(...), skip_invalid)
+  shared_object("colorbar", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Hoverlabel objects
@@ -330,8 +328,6 @@ go_colorbar <- function(
 #' used in; when the object is placed in a figure it is checked again
 #' against that context's rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param align Sets the horizontal alignment of the text content within
 #'   hover label box. Has an effect only if the hover label text spans two
 #'   or more lines One of \code{"left"}, \code{"right"}, \code{"auto"}, or
@@ -370,7 +366,8 @@ go_colorbar <- function(
 #'   labels, rather than a single unified label. Default: FALSE. When set
 #'   to TRUE, `hovertemplate` is ignored. Logical. Not available in every
 #'   context.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_hoverlabel} object (a named list).
@@ -384,11 +381,11 @@ go_colorbar <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(hoverlabel = go_hoverlabel(bgcolor = "lightyellow"))
 go_hoverlabel <- function(
-    arg = NULL, ..., align = NULL, bgcolor = NULL, bordercolor = NULL,
-    font = NULL, grouptitlefont = NULL, namelength = NULL, showarrow = NULL,
+    ..., align = NULL, bgcolor = NULL, bordercolor = NULL, font = NULL,
+    grouptitlefont = NULL, namelength = NULL, showarrow = NULL,
     split = NULL, skip_invalid = FALSE
 ) {
-  shared_object("hoverlabel", arg, environment(), list(...), skip_invalid)
+  shared_object("hoverlabel", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Legendgrouptitle objects
@@ -401,15 +398,14 @@ go_hoverlabel <- function(
 #' These objects appear in 49 places in the plotly.js schema (properties
 #' named \code{legendgrouptitle}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param font Sets this legend group's title font. A
 #'   \code{\link{go_font}()} object or named list, with properties
 #'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
 #'   \code{size}, \code{style}, \code{textcase}, \code{variant} and
 #'   \code{weight} (see \code{\link{go_font}()}).
 #' @param text Sets the title of the legend group. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_legendgrouptitle} object (a named list).
@@ -427,9 +423,9 @@ go_hoverlabel <- function(
 #'     legendgrouptitle = go_legendgrouptitle(text = "title")
 #'   )
 go_legendgrouptitle <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
+    ..., font = NULL, text = NULL, skip_invalid = FALSE
 ) {
-  shared_object("legendgrouptitle", arg, environment(), list(...), skip_invalid)
+  shared_object("legendgrouptitle", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Tickformatstop objects
@@ -442,8 +438,6 @@ go_legendgrouptitle <- function(
 #' These objects appear in 50 places in the plotly.js schema (properties
 #' named \code{tickformatstop}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param dtickrange range ["min", "max"], where "min", "max" - dtick
 #'   values which describe some zoom level, it is possible to omit "min" or
 #'   "max" value by passing "null" Vector or list of 2 element(s).
@@ -464,7 +458,8 @@ go_legendgrouptitle <- function(
 #'   be hidden unless you explicitly show it with `visible: true`. String.
 #' @param value string - dtickformat for described zoom level, the same as
 #'   "tickformat" String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_tickformatstop} object (a named list).
@@ -483,10 +478,10 @@ go_legendgrouptitle <- function(
 #'     )
 #'   )
 go_tickformatstop <- function(
-    arg = NULL, ..., dtickrange = NULL, enabled = NULL, name = NULL,
+    ..., dtickrange = NULL, enabled = NULL, name = NULL,
     templateitemname = NULL, value = NULL, skip_invalid = FALSE
 ) {
-  shared_object("tickformatstop", arg, environment(), list(...), skip_invalid)
+  shared_object("tickformatstop", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Domain objects
@@ -501,8 +496,6 @@ go_tickformatstop <- function(
 #' values against the contexts it can be used in; when the object is placed
 #' in a figure it is checked again against that context's rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param column If there is a layout grid, use the domain for this column
 #'   in the grid for this funnelarea trace. Integer in the interval [0,
 #'   Inf]. Not available in every context.
@@ -513,7 +506,8 @@ go_tickformatstop <- function(
 #'   fraction). Vector or list of 2 element(s).
 #' @param y Sets the vertical domain of this funnelarea trace (in plot
 #'   fraction). Vector or list of 2 element(s).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_domain} object (a named list).
@@ -527,10 +521,9 @@ go_tickformatstop <- function(
 #'   go_figure() |>
 #'   add_pie(labels = ~cylinders, values = ~Freq, domain = go_domain())
 go_domain <- function(
-    arg = NULL, ..., column = NULL, row = NULL, x = NULL, y = NULL,
-    skip_invalid = FALSE
+    ..., column = NULL, row = NULL, x = NULL, y = NULL, skip_invalid = FALSE
 ) {
-  shared_object("domain", arg, environment(), list(...), skip_invalid)
+  shared_object("domain", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Pattern objects
@@ -544,8 +537,6 @@ go_domain <- function(
 #' named \code{pattern}, \code{fillpattern}), all with the same properties
 #' and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param bgcolor When there is no colorscale sets the color of background
 #'   pattern fill. Defaults to a `marker.color` background when `fillmode`
 #'   is "overlay". Otherwise, defaults to a transparent background. Color:
@@ -576,7 +567,8 @@ go_domain <- function(
 #'   shows only the background color without pattern and solidty of 1 shows
 #'   only the foreground color without pattern. Number in the interval [0,
 #'   1], or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_pattern} object (a named list).
@@ -594,11 +586,11 @@ go_domain <- function(
 #'     fillpattern = go_pattern(size = 10)
 #'   )
 go_pattern <- function(
-    arg = NULL, ..., bgcolor = NULL, fgcolor = NULL, fgopacity = NULL,
-    fillmode = NULL, path = NULL, shape = NULL, size = NULL,
-    solidity = NULL, skip_invalid = FALSE
+    ..., bgcolor = NULL, fgcolor = NULL, fgopacity = NULL, fillmode = NULL,
+    path = NULL, shape = NULL, size = NULL, solidity = NULL,
+    skip_invalid = FALSE
 ) {
-  shared_object("pattern", arg, environment(), list(...), skip_invalid)
+  shared_object("pattern", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Error bar objects
@@ -615,8 +607,6 @@ go_pattern <- function(
 #' contexts it can be used in; when the object is placed in a figure it is
 #' checked again against that context's rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param array Sets the data corresponding the length of each error bar.
 #'   Values are plotted relative to the underlying data. Data array: a
 #'   vector, factor, Date/POSIXct vector, matrix or list.
@@ -655,7 +645,8 @@ go_pattern <- function(
 #'   visible. Logical.
 #' @param width Sets the width (in px) of the cross-bar at both ends of the
 #'   error bars. Number in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_error_bar} object (a named list).
@@ -673,13 +664,12 @@ go_pattern <- function(
 #'     error_x = go_error_bar(color = "red")
 #'   )
 go_error_bar <- function(
-    arg = NULL, ..., array = NULL, arrayminus = NULL, color = NULL,
-    copy_ystyle = NULL, copy_zstyle = NULL, symmetric = NULL,
-    thickness = NULL, traceref = NULL, tracerefminus = NULL, type = NULL,
-    value = NULL, valueminus = NULL, visible = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., array = NULL, arrayminus = NULL, color = NULL, copy_ystyle = NULL,
+    copy_zstyle = NULL, symmetric = NULL, thickness = NULL, traceref = NULL,
+    tracerefminus = NULL, type = NULL, value = NULL, valueminus = NULL,
+    visible = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  shared_object("error_bar", arg, environment(), list(...), skip_invalid)
+  shared_object("error_bar", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Autorangeoptions objects
@@ -692,8 +682,6 @@ go_error_bar <- function(
 #' These objects appear in 6 places in the plotly.js schema (properties
 #' named \code{autorangeoptions}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param clipmax Clip autorange maximum if it goes beyond this value. Has
 #'   no effect when `autorangeoptions.maxallowed` is provided. Any value.
 #' @param clipmin Clip autorange minimum if it goes beyond this value. Has
@@ -707,7 +695,8 @@ go_error_bar <- function(
 #'   value.
 #' @param minallowed Use this value exactly as autorange minimum. Any
 #'   value.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_autorangeoptions} object (a named list).
@@ -727,10 +716,10 @@ go_error_bar <- function(
 #'     )
 #'   )
 go_autorangeoptions <- function(
-    arg = NULL, ..., clipmax = NULL, clipmin = NULL, include = NULL,
-    maxallowed = NULL, minallowed = NULL, skip_invalid = FALSE
+    ..., clipmax = NULL, clipmin = NULL, include = NULL, maxallowed = NULL,
+    minallowed = NULL, skip_invalid = FALSE
 ) {
-  shared_object("autorangeoptions", arg, environment(), list(...), skip_invalid)
+  shared_object("autorangeoptions", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Bins objects
@@ -744,8 +733,6 @@ go_autorangeoptions <- function(
 #' named \code{xbins}, \code{ybins}), all with the same properties and
 #' rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param end Sets the end value for the x axis bins. The last bin may not
 #'   end exactly at this value, we increment the bin edge by `size` from
 #'   `start` until we reach or exceed `end`. Defaults to the maximum data
@@ -774,7 +761,8 @@ go_autorangeoptions <- function(
 #'   non-overlaying histograms share a subplot, the first explicit `start`
 #'   is used exactly and all others are shifted down (if necessary) to
 #'   differ from that one by an integer number of bins. Any value.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_bins} object (a named list).
@@ -787,10 +775,9 @@ go_autorangeoptions <- function(
 #'   go_figure() |>
 #'   add_histogram(x = ~mpg, xbins = go_bins(size = 10))
 go_bins <- function(
-    arg = NULL, ..., end = NULL, size = NULL, start = NULL,
-    skip_invalid = FALSE
+    ..., end = NULL, size = NULL, start = NULL, skip_invalid = FALSE
 ) {
-  shared_object("bins", arg, environment(), list(...), skip_invalid)
+  shared_object("bins", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Caps objects
@@ -802,8 +789,6 @@ go_bins <- function(
 #' These objects appear in 2 places in the plotly.js schema (properties
 #' named \code{caps}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param x A \code{\link{go_caps_axis}()} object or named list, with
 #'   properties \code{fill} and \code{show} (see
 #'   \code{\link{go_caps_axis}()}).
@@ -813,7 +798,8 @@ go_bins <- function(
 #' @param z A \code{\link{go_caps_axis}()} object or named list, with
 #'   properties \code{fill} and \code{show} (see
 #'   \code{\link{go_caps_axis}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_caps} object (a named list).
@@ -835,9 +821,9 @@ go_bins <- function(
 #'     caps = go_caps()
 #'   )
 go_caps <- function(
-    arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
+    ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
-  shared_object("caps", arg, environment(), list(...), skip_invalid)
+  shared_object("caps", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Domainpad objects
@@ -859,8 +845,6 @@ go_caps <- function(
 #' These objects appear in 2 places in the plotly.js schema (properties
 #' named \code{domainpad}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param bottom Sets the space in pixels to reserve inside the bottom edge
 #'   of `domain`. Applies to y axes only. Number in the interval [0, Inf].
 #' @param left Sets the space in pixels to reserve inside the left edge of
@@ -869,7 +853,8 @@ go_caps <- function(
 #'   of `domain`. Applies to x axes only. Number in the interval [0, Inf].
 #' @param top Sets the space in pixels to reserve inside the top edge of
 #'   `domain`. Applies to y axes only. Number in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_domainpad} object (a named list).
@@ -883,10 +868,10 @@ go_caps <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(xaxis = go_xaxis(domainpad = go_domainpad()))
 go_domainpad <- function(
-    arg = NULL, ..., bottom = NULL, left = NULL, right = NULL, top = NULL,
+    ..., bottom = NULL, left = NULL, right = NULL, top = NULL,
     skip_invalid = FALSE
 ) {
-  shared_object("domainpad", arg, environment(), list(...), skip_invalid)
+  shared_object("domainpad", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Gradient objects
@@ -898,15 +883,14 @@ go_domainpad <- function(
 #' These objects appear in 6 places in the plotly.js schema (properties
 #' named \code{gradient}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the final color of the gradient fill: the center color
 #'   for radial, the right for horizontal, or the bottom for vertical.
 #'   Color: a CSS color string or R color name, or a vector of these.
 #' @param type Sets the type of gradient used to fill the markers One of
 #'   \code{"radial"}, \code{"horizontal"}, \code{"vertical"},
 #'   \code{"none"}, or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_gradient} object (a named list).
@@ -924,9 +908,9 @@ go_domainpad <- function(
 #'     marker = go_scatter_marker(gradient = go_gradient(color = "red"))
 #'   )
 go_gradient <- function(
-    arg = NULL, ..., color = NULL, type = NULL, skip_invalid = FALSE
+    ..., color = NULL, type = NULL, skip_invalid = FALSE
 ) {
-  shared_object("gradient", arg, environment(), list(...), skip_invalid)
+  shared_object("gradient", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Label objects
@@ -938,8 +922,6 @@ go_gradient <- function(
 #' These objects appear in 2 places in the plotly.js schema (properties
 #' named \code{label}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param font Sets the new shape label text font. A
 #'   \code{\link{go_font}()} object or named list, with properties
 #'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
@@ -1003,7 +985,8 @@ go_gradient <- function(
 #'   right" and `yanchor` to "top" then the top-most portion of the label
 #'   text lines up with the top-most edge of the new shape. One of
 #'   \code{"top"}, \code{"middle"}, \code{"bottom"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_label} object (a named list).
@@ -1019,12 +1002,11 @@ go_gradient <- function(
 #'     newshape = go_newshape(label = go_label(text = "title"))
 #'   )
 go_label <- function(
-    arg = NULL, ..., font = NULL, padding = NULL, text = NULL,
-    textangle = NULL, textposition = NULL, texttemplate = NULL,
-    texttemplatefallback = NULL, xanchor = NULL, yanchor = NULL,
-    skip_invalid = FALSE
+    ..., font = NULL, padding = NULL, text = NULL, textangle = NULL,
+    textposition = NULL, texttemplate = NULL, texttemplatefallback = NULL,
+    xanchor = NULL, yanchor = NULL, skip_invalid = FALSE
 ) {
-  shared_object("label", arg, environment(), list(...), skip_invalid)
+  shared_object("label", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Leaf objects
@@ -1036,12 +1018,11 @@ go_label <- function(
 #' These objects appear in 2 places in the plotly.js schema (properties
 #' named \code{leaf}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param opacity Sets the opacity of the leaves. With colorscale it is
 #'   defaulted to 1; otherwise it is defaulted to 0.7 Number in the
 #'   interval [0, 1].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_leaf} object (a named list).
@@ -1065,9 +1046,9 @@ go_label <- function(
 #'     leaf = go_leaf(opacity = 0.5)
 #'   )
 go_leaf <- function(
-    arg = NULL, ..., opacity = NULL, skip_invalid = FALSE
+    ..., opacity = NULL, skip_invalid = FALSE
 ) {
-  shared_object("leaf", arg, environment(), list(...), skip_invalid)
+  shared_object("leaf", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Lightposition objects
@@ -1080,15 +1061,14 @@ go_leaf <- function(
 #' These objects appear in 6 places in the plotly.js schema (properties
 #' named \code{lightposition}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param x Numeric vector, representing the X coordinate for each vertex.
 #'   Number in the interval [-100000, 100000].
 #' @param y Numeric vector, representing the Y coordinate for each vertex.
 #'   Number in the interval [-100000, 100000].
 #' @param z Numeric vector, representing the Z coordinate for each vertex.
 #'   Number in the interval [-100000, 100000].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_lightposition} object (a named list).
@@ -1110,9 +1090,9 @@ go_leaf <- function(
 #'     lightposition = go_lightposition()
 #'   )
 go_lightposition <- function(
-    arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
+    ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
-  shared_object("lightposition", arg, environment(), list(...), skip_invalid)
+  shared_object("lightposition", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Minor objects
@@ -1124,8 +1104,6 @@ go_lightposition <- function(
 #' These objects appear in 2 places in the plotly.js schema (properties
 #' named \code{minor}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param dtick Sets the step in-between ticks on this axis. Use with
 #'   `tick0`. Must be a positive number, or special strings available to
 #'   "log" and "date" axes. If the axis `type` is "log", then ticks are set
@@ -1189,7 +1167,8 @@ go_lightposition <- function(
 #'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param tickwidth Sets the tick width (in px). Number in the interval [0,
 #'   Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_minor} object (a named list).
@@ -1203,12 +1182,12 @@ go_lightposition <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(xaxis = go_xaxis(minor = go_minor()))
 go_minor <- function(
-    arg = NULL, ..., dtick = NULL, gridcolor = NULL, griddash = NULL,
-    gridwidth = NULL, nticks = NULL, showgrid = NULL, tick0 = NULL,
-    tickcolor = NULL, ticklen = NULL, tickmode = NULL, ticks = NULL,
-    tickvals = NULL, tickwidth = NULL, skip_invalid = FALSE
+    ..., dtick = NULL, gridcolor = NULL, griddash = NULL, gridwidth = NULL,
+    nticks = NULL, showgrid = NULL, tick0 = NULL, tickcolor = NULL,
+    ticklen = NULL, tickmode = NULL, ticks = NULL, tickvals = NULL,
+    tickwidth = NULL, skip_invalid = FALSE
 ) {
-  shared_object("minor", arg, environment(), list(...), skip_invalid)
+  shared_object("minor", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Pathbar objects
@@ -1220,8 +1199,6 @@ go_minor <- function(
 #' These objects appear in 2 places in the plotly.js schema (properties
 #' named \code{pathbar}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param edgeshape Determines which shape is used for edges between
 #'   `barpath` labels. One of \code{">"}, \code{"<"}, \code{"|"},
 #'   \code{"/"}, \code{"\\\\"}.
@@ -1237,7 +1214,8 @@ go_minor <- function(
 #'   padding on each side. Number in the interval [12, Inf].
 #' @param visible Determines if the path bar is drawn i.e. outside the
 #'   trace `domain` and with one pixel gap. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_pathbar} object (a named list).
@@ -1261,10 +1239,10 @@ go_minor <- function(
 #'     pathbar = go_pathbar(visible = TRUE)
 #'   )
 go_pathbar <- function(
-    arg = NULL, ..., edgeshape = NULL, side = NULL, textfont = NULL,
-    thickness = NULL, visible = NULL, skip_invalid = FALSE
+    ..., edgeshape = NULL, side = NULL, textfont = NULL, thickness = NULL,
+    visible = NULL, skip_invalid = FALSE
 ) {
-  shared_object("pathbar", arg, environment(), list(...), skip_invalid)
+  shared_object("pathbar", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Project objects
@@ -1276,8 +1254,6 @@ go_pathbar <- function(
 #' These objects appear in 3 places in the plotly.js schema (properties
 #' named \code{project}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param x Determines whether or not these contour lines are projected on
 #'   the x plane. If `highlight` is set to TRUE (the default), the
 #'   projected lines are shown on hover. If `show` is set to TRUE, the
@@ -1290,7 +1266,8 @@ go_pathbar <- function(
 #'   the z plane. If `highlight` is set to TRUE (the default), the
 #'   projected lines are shown on hover. If `show` is set to TRUE, the
 #'   projected lines are shown in permanence. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_project} object (a named list).
@@ -1307,9 +1284,9 @@ go_pathbar <- function(
 #'     )
 #'   )
 go_project <- function(
-    arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
+    ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
-  shared_object("project", arg, environment(), list(...), skip_invalid)
+  shared_object("project", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Rangebreak objects
@@ -1322,8 +1299,6 @@ go_project <- function(
 #' These objects appear in 2 places in the plotly.js schema (properties
 #' named \code{rangebreak}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param bounds Sets the lower and upper bounds of this axis rangebreak.
 #'   Can be used with `pattern`. Vector or list of 2 element(s).
 #' @param dvalue Sets the size of each `values` item. The default is one
@@ -1357,7 +1332,8 @@ go_project <- function(
 #' @param values Sets the coordinate values corresponding to the
 #'   rangebreaks. An alternative to `bounds`. Use `dvalue` to set the size
 #'   of the values along the axis. Vector or list of up to 1 element(s).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_rangebreak} object (a named list).
@@ -1371,11 +1347,11 @@ go_project <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(xaxis = go_xaxis(rangebreaks = list(go_rangebreak())))
 go_rangebreak <- function(
-    arg = NULL, ..., bounds = NULL, dvalue = NULL, enabled = NULL,
-    name = NULL, pattern = NULL, templateitemname = NULL, values = NULL,
+    ..., bounds = NULL, dvalue = NULL, enabled = NULL, name = NULL,
+    pattern = NULL, templateitemname = NULL, values = NULL,
     skip_invalid = FALSE
 ) {
-  shared_object("rangebreak", arg, environment(), list(...), skip_invalid)
+  shared_object("rangebreak", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Root objects
@@ -1387,12 +1363,11 @@ go_rangebreak <- function(
 #' These objects appear in 3 places in the plotly.js schema (properties
 #' named \code{root}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color sets the color of the root node for a
 #'   sunburst/treemap/icicle trace. this has no effect when a colorscale is
 #'   used to set the markers. Color: a CSS color string or R color name.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_root} object (a named list).
@@ -1416,9 +1391,9 @@ go_rangebreak <- function(
 #'     root = go_root(color = "red")
 #'   )
 go_root <- function(
-    arg = NULL, ..., color = NULL, skip_invalid = FALSE
+    ..., color = NULL, skip_invalid = FALSE
 ) {
-  shared_object("root", arg, environment(), list(...), skip_invalid)
+  shared_object("root", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Slices objects
@@ -1430,8 +1405,6 @@ go_root <- function(
 #' These objects appear in 2 places in the plotly.js schema (properties
 #' named \code{slices}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param x A \code{\link{go_slices_axis}()} object or named list, with
 #'   properties \code{fill}, \code{locations} and \code{show} (see
 #'   \code{\link{go_slices_axis}()}).
@@ -1441,7 +1414,8 @@ go_root <- function(
 #' @param z A \code{\link{go_slices_axis}()} object or named list, with
 #'   properties \code{fill}, \code{locations} and \code{show} (see
 #'   \code{\link{go_slices_axis}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_slices} object (a named list).
@@ -1463,9 +1437,9 @@ go_root <- function(
 #'     slices = go_slices()
 #'   )
 go_slices <- function(
-    arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
+    ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
-  shared_object("slices", arg, environment(), list(...), skip_invalid)
+  shared_object("slices", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Spaceframe objects
@@ -1478,8 +1452,6 @@ go_slices <- function(
 #' These objects appear in 2 places in the plotly.js schema (properties
 #' named \code{spaceframe}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param fill Sets the fill ratio of the `spaceframe` elements. The
 #'   default fill value is 0.15 meaning that only 15\% of the area of every
 #'   faces of tetras would be shaded. Applying a greater `fill` ratio would
@@ -1489,7 +1461,8 @@ go_slices <- function(
 #' @param show Displays/hides tetrahedron shapes between minimum and
 #'   maximum iso-values. Often useful when either caps or surfaces are
 #'   disabled or filled with values less than 1. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_spaceframe} object (a named list).
@@ -1511,9 +1484,9 @@ go_slices <- function(
 #'     spaceframe = go_spaceframe(show = TRUE)
 #'   )
 go_spaceframe <- function(
-    arg = NULL, ..., fill = NULL, show = NULL, skip_invalid = FALSE
+    ..., fill = NULL, show = NULL, skip_invalid = FALSE
 ) {
-  shared_object("spaceframe", arg, environment(), list(...), skip_invalid)
+  shared_object("spaceframe", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Unifiedhovertitle objects
@@ -1526,8 +1499,6 @@ go_spaceframe <- function(
 #' These objects appear in 2 places in the plotly.js schema (properties
 #' named \code{unifiedhovertitle}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param text Template string used for rendering the title that appear on
 #'   x or y unified hover box. Variables are inserted using \%\{variable\},
 #'   for example "y: \%\{y\}". Numbers are formatted using d3-format's
@@ -1542,7 +1513,8 @@ go_spaceframe <- function(
 #'   \%\{x\}, \%\{y\}" will result in a value of "data: 1, \%\{y\}" if x is
 #'   1 and y is missing. Variables with an undefined value will be replaced
 #'   with the fallback value. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_unifiedhovertitle} object (a named list).
@@ -1560,9 +1532,9 @@ go_spaceframe <- function(
 #'     )
 #'   )
 go_unifiedhovertitle <- function(
-    arg = NULL, ..., text = NULL, skip_invalid = FALSE
+    ..., text = NULL, skip_invalid = FALSE
 ) {
-  shared_object("unifiedhovertitle", arg, environment(), list(...), skip_invalid)
+  shared_object("unifiedhovertitle", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Scene axis objects
@@ -1576,8 +1548,6 @@ go_unifiedhovertitle <- function(
 #' named \code{xaxis}, \code{yaxis}, \code{zaxis}), all with the same
 #' properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autorange Determines whether or not the range of this axis is
 #'   computed in relation to the input data. See `rangemode` for more info.
 #'   If `range` is provided and it has a value for both the lower and upper
@@ -1826,7 +1796,8 @@ go_unifiedhovertitle <- function(
 #' @param zerolinecolor Sets the line color of the zero line. Color: a CSS
 #'   color string or R color name.
 #' @param zerolinewidth Sets the width (in px) of the zero line. Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_scene_axis} object (a named list).
@@ -1840,26 +1811,25 @@ go_unifiedhovertitle <- function(
 #'   add_scatter3d(x = ~wt, y = ~hp, z = ~mpg) |>
 #'   update_layout(scene = go_scene(xaxis = go_scene_axis(color = "red")))
 go_scene_axis <- function(
-    arg = NULL, ..., autorange = NULL, autorangeoptions = NULL,
-    autotypenumbers = NULL, backgroundcolor = NULL, calendar = NULL,
-    categoryarray = NULL, categoryorder = NULL, color = NULL, dtick = NULL,
-    exponentformat = NULL, gridcolor = NULL, gridwidth = NULL,
-    hoverformat = NULL, labelalias = NULL, linecolor = NULL,
-    linewidth = NULL, maxallowed = NULL, minallowed = NULL,
-    minexponent = NULL, mirror = NULL, nticks = NULL, range = NULL,
-    rangemode = NULL, separatethousands = NULL, showaxeslabels = NULL,
-    showbackground = NULL, showexponent = NULL, showgrid = NULL,
-    showline = NULL, showspikes = NULL, showticklabels = NULL,
-    showtickprefix = NULL, showticksuffix = NULL, spikecolor = NULL,
-    spikesides = NULL, spikethickness = NULL, tick0 = NULL,
-    tickangle = NULL, tickcolor = NULL, tickfont = NULL, tickformat = NULL,
-    tickformatstops = NULL, ticklen = NULL, tickmode = NULL,
-    tickprefix = NULL, ticks = NULL, ticksuffix = NULL, ticktext = NULL,
-    tickvals = NULL, tickwidth = NULL, title = NULL, type = NULL,
-    visible = NULL, zeroline = NULL, zerolinecolor = NULL,
+    ..., autorange = NULL, autorangeoptions = NULL, autotypenumbers = NULL,
+    backgroundcolor = NULL, calendar = NULL, categoryarray = NULL,
+    categoryorder = NULL, color = NULL, dtick = NULL, exponentformat = NULL,
+    gridcolor = NULL, gridwidth = NULL, hoverformat = NULL,
+    labelalias = NULL, linecolor = NULL, linewidth = NULL,
+    maxallowed = NULL, minallowed = NULL, minexponent = NULL, mirror = NULL,
+    nticks = NULL, range = NULL, rangemode = NULL, separatethousands = NULL,
+    showaxeslabels = NULL, showbackground = NULL, showexponent = NULL,
+    showgrid = NULL, showline = NULL, showspikes = NULL,
+    showticklabels = NULL, showtickprefix = NULL, showticksuffix = NULL,
+    spikecolor = NULL, spikesides = NULL, spikethickness = NULL,
+    tick0 = NULL, tickangle = NULL, tickcolor = NULL, tickfont = NULL,
+    tickformat = NULL, tickformatstops = NULL, ticklen = NULL,
+    tickmode = NULL, tickprefix = NULL, ticks = NULL, ticksuffix = NULL,
+    ticktext = NULL, tickvals = NULL, tickwidth = NULL, title = NULL,
+    type = NULL, visible = NULL, zeroline = NULL, zerolinecolor = NULL,
     zerolinewidth = NULL, skip_invalid = FALSE
 ) {
-  shared_object("scene_axis", arg, environment(), list(...), skip_invalid)
+  shared_object("scene_axis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Ternary axis objects
@@ -1873,8 +1843,6 @@ go_scene_axis <- function(
 #' named \code{aaxis}, \code{baxis}, \code{caxis}), all with the same
 #' properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets default for all colors associated with this axis all
 #'   at once: line, font, tick, and grid colors. Grid color is lightened by
 #'   blending this with the plot background Individual pieces can override
@@ -2069,7 +2037,8 @@ go_scene_axis <- function(
 #' @param uirevision Controls persistence of user-driven changes in axis
 #'   `min`, and `title` if in `editable: true` configuration. Defaults to
 #'   `ternary<N>.uirevision`. Any value.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_ternary_axis} object (a named list).
@@ -2089,7 +2058,7 @@ go_scene_axis <- function(
 #'     ternary = go_ternary(aaxis = go_ternary_axis(color = "red"))
 #'   )
 go_ternary_axis <- function(
-    arg = NULL, ..., color = NULL, dtick = NULL, exponentformat = NULL,
+    ..., color = NULL, dtick = NULL, exponentformat = NULL,
     gridcolor = NULL, griddash = NULL, gridwidth = NULL, hoverformat = NULL,
     labelalias = NULL, layer = NULL, linecolor = NULL, linewidth = NULL,
     min = NULL, minexponent = NULL, nticks = NULL, separatethousands = NULL,
@@ -2103,7 +2072,7 @@ go_ternary_axis <- function(
     ticktext = NULL, tickvals = NULL, tickwidth = NULL, title = NULL,
     uirevision = NULL, skip_invalid = FALSE
 ) {
-  shared_object("ternary_axis", arg, environment(), list(...), skip_invalid)
+  shared_object("ternary_axis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Scatter3d projection axis objects
@@ -2117,14 +2086,13 @@ go_ternary_axis <- function(
 #' named \code{x}, \code{y}, \code{z}), all with the same properties and
 #' rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param opacity Sets the projection color. Number in the interval [0, 1].
 #' @param scale Sets the scale factor determining the size of the
 #'   projection marker points. Number in the interval [0, 10].
 #' @param show Sets whether or not projections are shown along the x axis.
 #'   Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_scatter3d_projection_axis} object (a named list).
@@ -2144,10 +2112,9 @@ go_ternary_axis <- function(
 #'     )
 #'   )
 go_scatter3d_projection_axis <- function(
-    arg = NULL, ..., opacity = NULL, scale = NULL, show = NULL,
-    skip_invalid = FALSE
+    ..., opacity = NULL, scale = NULL, show = NULL, skip_invalid = FALSE
 ) {
-  shared_object("scatter3d_projection_axis", arg, environment(), list(...), skip_invalid)
+  shared_object("scatter3d_projection_axis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Surface contours axis objects
@@ -2161,8 +2128,6 @@ go_scatter3d_projection_axis <- function(
 #' named \code{x}, \code{y}, \code{z}), all with the same properties and
 #' rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color of the contour lines. Color: a CSS color
 #'   string or R color name.
 #' @param end Sets the end contour level value. Must be more than
@@ -2186,7 +2151,8 @@ go_scatter3d_projection_axis <- function(
 #'   the contour lines are colored using the trace "colorscale". Logical.
 #' @param width Sets the width of the contour lines. Number in the interval
 #'   [1, 16].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_surface_contours_axis} object (a named list).
@@ -2203,12 +2169,11 @@ go_scatter3d_projection_axis <- function(
 #'     )
 #'   )
 go_surface_contours_axis <- function(
-    arg = NULL, ..., color = NULL, end = NULL, highlight = NULL,
-    highlightcolor = NULL, highlightwidth = NULL, project = NULL,
-    show = NULL, size = NULL, start = NULL, usecolormap = NULL,
-    width = NULL, skip_invalid = FALSE
+    ..., color = NULL, end = NULL, highlight = NULL, highlightcolor = NULL,
+    highlightwidth = NULL, project = NULL, show = NULL, size = NULL,
+    start = NULL, usecolormap = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  shared_object("surface_contours_axis", arg, environment(), list(...), skip_invalid)
+  shared_object("surface_contours_axis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Selected objects
@@ -2223,8 +2188,6 @@ go_surface_contours_axis <- function(
 #' the values against the contexts it can be used in; when the object is
 #' placed in a figure it is checked again against that context's rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param marker A \code{\link{go_selected_marker}()} object or named list,
 #'   with properties \code{color}, \code{opacity} and \code{size} (see
 #'   \code{\link{go_selected_marker}()}). In some contexts: A
@@ -2239,7 +2202,8 @@ go_surface_contours_axis <- function(
 #' @param textfont A \code{\link{go_font}()} object or named list, with
 #'   properties \code{color} (see \code{\link{go_font}()}). Not available
 #'   in every context.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_selected} object (a named list).
@@ -2257,9 +2221,9 @@ go_surface_contours_axis <- function(
 #'     selected = go_selected()
 #'   )
 go_selected <- function(
-    arg = NULL, ..., marker = NULL, textfont = NULL, skip_invalid = FALSE
+    ..., marker = NULL, textfont = NULL, skip_invalid = FALSE
 ) {
-  shared_object("selected", arg, environment(), list(...), skip_invalid)
+  shared_object("selected", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Unselected objects
@@ -2276,8 +2240,6 @@ go_selected <- function(
 #' used in; when the object is placed in a figure it is checked again
 #' against that context's rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param line A \code{\link{go_unselected_line}()} object or named list,
 #'   with properties \code{color} and \code{opacity} (see
 #'   \code{\link{go_unselected_line}()}). Not available in every context.
@@ -2295,7 +2257,8 @@ go_selected <- function(
 #' @param textfont A \code{\link{go_font}()} object or named list, with
 #'   properties \code{color} (see \code{\link{go_font}()}). Not available
 #'   in every context.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_unselected} object (a named list).
@@ -2313,10 +2276,9 @@ go_selected <- function(
 #'     unselected = go_unselected()
 #'   )
 go_unselected <- function(
-    arg = NULL, ..., line = NULL, marker = NULL, textfont = NULL,
-    skip_invalid = FALSE
+    ..., line = NULL, marker = NULL, textfont = NULL, skip_invalid = FALSE
 ) {
-  shared_object("unselected", arg, environment(), list(...), skip_invalid)
+  shared_object("unselected", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Caps axis objects
@@ -2330,8 +2292,6 @@ go_unselected <- function(
 #' named \code{x}, \code{y}, \code{z}), all with the same properties and
 #' rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param fill Sets the fill ratio of the `caps`. The default fill value of
 #'   the `caps` is 1 meaning that they are entirely shaded. On the other
 #'   hand Applying a `fill` ratio less than one would allow the creation of
@@ -2340,7 +2300,8 @@ go_unselected <- function(
 #'   of the x `slices` is 1 meaning that they are entirely shaded. On the
 #'   other hand Applying a `fill` ratio less than one would allow the
 #'   creation of openings parallel to the edges. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_caps_axis} object (a named list).
@@ -2362,9 +2323,9 @@ go_unselected <- function(
 #'     caps = go_caps(x = go_caps_axis(show = TRUE))
 #'   )
 go_caps_axis <- function(
-    arg = NULL, ..., fill = NULL, show = NULL, skip_invalid = FALSE
+    ..., fill = NULL, show = NULL, skip_invalid = FALSE
 ) {
-  shared_object("caps_axis", arg, environment(), list(...), skip_invalid)
+  shared_object("caps_axis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Colorbar title objects
@@ -2377,8 +2338,6 @@ go_caps_axis <- function(
 #' These objects appear in 37 places in the plotly.js schema (properties
 #' named \code{title}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param font Sets this color bar's title font. A \code{\link{go_font}()}
 #'   object or named list, with properties \code{color}, \code{family},
 #'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
@@ -2389,7 +2348,8 @@ go_caps_axis <- function(
 #'   defaults to "right" when `orientation` is "h". One of \code{"right"},
 #'   \code{"top"}, \code{"bottom"}.
 #' @param text Sets the title of the color bar. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_colorbar_title} object (a named list).
@@ -2408,10 +2368,9 @@ go_caps_axis <- function(
 #'     )
 #'   )
 go_colorbar_title <- function(
-    arg = NULL, ..., font = NULL, side = NULL, text = NULL,
-    skip_invalid = FALSE
+    ..., font = NULL, side = NULL, text = NULL, skip_invalid = FALSE
 ) {
-  shared_object("colorbar_title", arg, environment(), list(...), skip_invalid)
+  shared_object("colorbar_title", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Scene axis title objects
@@ -2424,15 +2383,14 @@ go_colorbar_title <- function(
 #' These objects appear in 3 places in the plotly.js schema (properties
 #' named \code{title}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param font Sets this axis' title font. A \code{\link{go_font}()} object
 #'   or named list, with properties \code{color}, \code{family},
 #'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
 #'   \code{textcase}, \code{variant} and \code{weight} (see
 #'   \code{\link{go_font}()}).
 #' @param text Sets the title of this axis. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_scene_axis_title} object (a named list).
@@ -2450,9 +2408,9 @@ go_colorbar_title <- function(
 #'     )
 #'   )
 go_scene_axis_title <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
+    ..., font = NULL, text = NULL, skip_invalid = FALSE
 ) {
-  shared_object("scene_axis_title", arg, environment(), list(...), skip_invalid)
+  shared_object("scene_axis_title", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Selected marker objects
@@ -2468,8 +2426,6 @@ go_scene_axis_title <- function(
 #' checks the values against the contexts it can be used in; when the object
 #' is placed in a figure it is checked again against that context's rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the marker color of selected points. Color: a CSS
 #'   color string or R color name. Not available in every context.
 #' @param line A \code{\link{go_selected_marker_line}()} object or named
@@ -2480,7 +2436,8 @@ go_scene_axis_title <- function(
 #'   interval [0, 1]. Not available in every context.
 #' @param size Sets the marker size of selected points. Number in the
 #'   interval [0, Inf]. Not available in every context.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_selected_marker} object (a named list).
@@ -2497,10 +2454,10 @@ go_scene_axis_title <- function(
 #'     selected = go_selected(marker = go_selected_marker(color = "red"))
 #'   )
 go_selected_marker <- function(
-    arg = NULL, ..., color = NULL, line = NULL, opacity = NULL, size = NULL,
+    ..., color = NULL, line = NULL, opacity = NULL, size = NULL,
     skip_invalid = FALSE
 ) {
-  shared_object("selected_marker", arg, environment(), list(...), skip_invalid)
+  shared_object("selected_marker", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Selected marker line objects
@@ -2513,11 +2470,10 @@ go_selected_marker <- function(
 #' These objects appear in 1 places in the plotly.js schema (properties
 #' named \code{line}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param width Sets the line width of selected points. Number in the
 #'   interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_selected_marker_line} object (a named list).
@@ -2541,9 +2497,9 @@ go_selected_marker <- function(
 #'     )
 #'   )
 go_selected_marker_line <- function(
-    arg = NULL, ..., width = NULL, skip_invalid = FALSE
+    ..., width = NULL, skip_invalid = FALSE
 ) {
-  shared_object("selected_marker_line", arg, environment(), list(...), skip_invalid)
+  shared_object("selected_marker_line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Slices axis objects
@@ -2557,8 +2513,6 @@ go_selected_marker_line <- function(
 #' named \code{x}, \code{y}, \code{z}), all with the same properties and
 #' rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param fill Sets the fill ratio of the `slices`. The default fill value
 #'   of the `slices` is 1 meaning that they are entirely shaded. On the
 #'   other hand Applying a `fill` ratio less than one would allow the
@@ -2570,7 +2524,8 @@ go_selected_marker_line <- function(
 #'   vector, matrix or list.
 #' @param show Determines whether or not slice planes about the x dimension
 #'   are drawn. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_slices_axis} object (a named list).
@@ -2592,10 +2547,9 @@ go_selected_marker_line <- function(
 #'     slices = go_slices(x = go_slices_axis(show = TRUE))
 #'   )
 go_slices_axis <- function(
-    arg = NULL, ..., fill = NULL, locations = NULL, show = NULL,
-    skip_invalid = FALSE
+    ..., fill = NULL, locations = NULL, show = NULL, skip_invalid = FALSE
 ) {
-  shared_object("slices_axis", arg, environment(), list(...), skip_invalid)
+  shared_object("slices_axis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Ternary axis title objects
@@ -2608,15 +2562,14 @@ go_slices_axis <- function(
 #' These objects appear in 3 places in the plotly.js schema (properties
 #' named \code{title}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param font Sets this axis' title font. A \code{\link{go_font}()} object
 #'   or named list, with properties \code{color}, \code{family},
 #'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
 #'   \code{textcase}, \code{variant} and \code{weight} (see
 #'   \code{\link{go_font}()}).
 #' @param text Sets the title of this axis. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_ternary_axis_title} object (a named list).
@@ -2640,9 +2593,9 @@ go_slices_axis <- function(
 #'     )
 #'   )
 go_ternary_axis_title <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
+    ..., font = NULL, text = NULL, skip_invalid = FALSE
 ) {
-  shared_object("ternary_axis_title", arg, environment(), list(...), skip_invalid)
+  shared_object("ternary_axis_title", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Unselected line objects
@@ -2655,15 +2608,14 @@ go_ternary_axis_title <- function(
 #' These objects appear in 1 places in the plotly.js schema (properties
 #' named \code{line}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the base color of unselected lines. in connection with
 #'   `unselected.line.opacity`. Color: a CSS color string or R color name.
 #' @param opacity Sets the opacity of unselected lines. The default "auto"
 #'   decreases the opacity smoothly as the number of lines increases. Use 1
 #'   to achieve exact `unselected.line.color`. Number in the interval [0,
 #'   1].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_unselected_line} object (a named list).
@@ -2683,9 +2635,9 @@ go_ternary_axis_title <- function(
 #'     unselected = go_unselected(line = go_unselected_line(color = "red"))
 #'   )
 go_unselected_line <- function(
-    arg = NULL, ..., color = NULL, opacity = NULL, skip_invalid = FALSE
+    ..., color = NULL, opacity = NULL, skip_invalid = FALSE
 ) {
-  shared_object("unselected_line", arg, environment(), list(...), skip_invalid)
+  shared_object("unselected_line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Unselected marker objects
@@ -2701,8 +2653,6 @@ go_unselected_line <- function(
 #' checks the values against the contexts it can be used in; when the object
 #' is placed in a figure it is checked again against that context's rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the marker color of unselected points, applied only
 #'   when a selection exists. Color: a CSS color string or R color name.
 #'   Not available in every context.
@@ -2716,7 +2666,8 @@ go_unselected_line <- function(
 #' @param size Sets the marker size of unselected points, applied only when
 #'   a selection exists. Number in the interval [0, Inf]. Not available in
 #'   every context.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_unselected_marker} object (a named list).
@@ -2733,10 +2684,10 @@ go_unselected_line <- function(
 #'     unselected = go_unselected(marker = go_unselected_marker(color = "red"))
 #'   )
 go_unselected_marker <- function(
-    arg = NULL, ..., color = NULL, line = NULL, opacity = NULL, size = NULL,
+    ..., color = NULL, line = NULL, opacity = NULL, size = NULL,
     skip_invalid = FALSE
 ) {
-  shared_object("unselected_marker", arg, environment(), list(...), skip_invalid)
+  shared_object("unselected_marker", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Unselected marker line objects
@@ -2749,11 +2700,10 @@ go_unselected_marker <- function(
 #' These objects appear in 1 places in the plotly.js schema (properties
 #' named \code{line}), all with the same properties and rules.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param width Sets the line width of unselected points, applied only when
 #'   a selection exists. Number in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_unselected_marker_line} object (a named list).
@@ -2777,8 +2727,8 @@ go_unselected_marker <- function(
 #'     )
 #'   )
 go_unselected_marker_line <- function(
-    arg = NULL, ..., width = NULL, skip_invalid = FALSE
+    ..., width = NULL, skip_invalid = FALSE
 ) {
-  shared_object("unselected_marker_line", arg, environment(), list(...), skip_invalid)
+  shared_object("unselected_marker_line", NULL, environment(), list(...), skip_invalid)
 }
 

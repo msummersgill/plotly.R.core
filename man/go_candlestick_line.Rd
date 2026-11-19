@@ -4,13 +4,11 @@
 \alias{go_candlestick_line}
 \title{Candlestick line objects}
 \usage{
-go_candlestick_line(arg = NULL, ..., width = NULL, skip_invalid = FALSE)
+go_candlestick_line(..., width = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{width}{Sets the width (in px) of line bounding the box(es). Note
 that this style setting can also be set per direction via

@@ -5,7 +5,6 @@
 \title{Parcoords dimension objects}
 \usage{
 go_parcoords_dimension(
-  arg = NULL,
   ...,
   constraintrange = NULL,
   label = NULL,
@@ -22,10 +21,8 @@ go_parcoords_dimension(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{constraintrange}{The domain range to which the filter on the
 dimension is constrained. Must be an array of `[fromValue, toValue]`

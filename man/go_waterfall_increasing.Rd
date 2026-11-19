@@ -4,13 +4,11 @@
 \alias{go_waterfall_increasing}
 \title{Waterfall increasing objects}
 \usage{
-go_waterfall_increasing(arg = NULL, ..., marker = NULL, skip_invalid = FALSE)
+go_waterfall_increasing(..., marker = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{marker}{A \code{\link{go_waterfall_increasing_marker}()} object or
 named list, with properties \code{color} and \code{line} (see

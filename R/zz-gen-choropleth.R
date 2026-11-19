@@ -17,8 +17,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `colorscale`. In case `colorscale` is unspecified or `autocolorscale`
@@ -225,7 +223,8 @@
 #' @param zmin Sets the lower bound of the color domain. Value should have
 #'   the same units as in `z` and if set, `zmax` must be set as well.
 #'   Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -245,20 +244,20 @@
 #'   ) |>
 #'   update_layout(geo = go_geo(scope = "usa"))
 go_choropleth <- function(
-    arg = NULL, ..., autocolorscale = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, customdata = NULL,
-    featureidkey = NULL, geo = NULL, geojson = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    locationmode = NULL, locations = NULL, marker = NULL, meta = NULL,
-    name = NULL, reversescale = NULL, selected = NULL,
-    selectedpoints = NULL, showlegend = NULL, showscale = NULL, text = NULL,
-    uid = NULL, uirevision = NULL, unselected = NULL, visible = NULL,
-    z = NULL, zauto = NULL, zmax = NULL, zmid = NULL, zmin = NULL,
+    ..., autocolorscale = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, customdata = NULL, featureidkey = NULL, geo = NULL,
+    geojson = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, locationmode = NULL,
+    locations = NULL, marker = NULL, meta = NULL, name = NULL,
+    reversescale = NULL, selected = NULL, selectedpoints = NULL,
+    showlegend = NULL, showscale = NULL, text = NULL, uid = NULL,
+    uirevision = NULL, unselected = NULL, visible = NULL, z = NULL,
+    zauto = NULL, zmax = NULL, zmid = NULL, zmin = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("choropleth", arg, environment(), list(...), skip_invalid)
+  plotly_object("choropleth", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Choropleth marker objects
@@ -276,14 +275,13 @@ go_choropleth <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param line A \code{\link{go_choropleth_marker_line}()} object or named
 #'   list, with properties \code{color} and \code{width} (see
 #'   \code{\link{go_choropleth_marker_line}()}).
 #' @param opacity Sets the opacity of the locations. Number in the interval
 #'   [0, 1], or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_choropleth_marker} object (a named list).
@@ -302,9 +300,9 @@ go_choropleth <- function(
 #'   ) |>
 #'   update_layout(geo = go_geo(scope = "usa"))
 go_choropleth_marker <- function(
-    arg = NULL, ..., line = NULL, opacity = NULL, skip_invalid = FALSE
+    ..., line = NULL, opacity = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("choropleth.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("choropleth.marker", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Choropleth marker line objects
@@ -322,8 +320,6 @@ go_choropleth_marker <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the marker.line color. It accepts either a specific
 #'   color or an array of numbers that are mapped to the colorscale
 #'   relative to the max and min values of the array or relative to
@@ -331,7 +327,8 @@ go_choropleth_marker <- function(
 #'   string or R color name, or a vector of these.
 #' @param width Sets the width (in px) of the lines bounding the marker
 #'   points. Number in the interval [0, Inf], or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_choropleth_marker_line} object (a named list).
@@ -352,8 +349,8 @@ go_choropleth_marker <- function(
 #'   ) |>
 #'   update_layout(geo = go_geo(scope = "usa"))
 go_choropleth_marker_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("choropleth.marker.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("choropleth.marker.line", NULL, environment(), list(...), skip_invalid)
 }
 

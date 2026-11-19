@@ -5,7 +5,6 @@
 \title{Layout geo projection rotation objects}
 \usage{
 go_geo_projection_rotation(
-  arg = NULL,
   ...,
   lat = NULL,
   lon = NULL,
@@ -14,10 +13,8 @@ go_geo_projection_rotation(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{lat}{Rotates the map along meridians (in degrees North). Number.}
 

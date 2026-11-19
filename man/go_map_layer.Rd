@@ -5,7 +5,6 @@
 \title{Layout map layer objects}
 \usage{
 go_map_layer(
-  arg = NULL,
   ...,
   below = NULL,
   circle = NULL,
@@ -29,10 +28,8 @@ go_map_layer(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{below}{Determines if the layer will be inserted before the layer
 with the specified ID. If omitted or set to '', the layer will be

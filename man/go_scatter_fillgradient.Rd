@@ -5,7 +5,6 @@
 \title{Scatter fillgradient objects}
 \usage{
 go_scatter_fillgradient(
-  arg = NULL,
   ...,
   colorscale = NULL,
   start = NULL,
@@ -15,10 +14,8 @@ go_scatter_fillgradient(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{colorscale}{Sets the fill gradient colors as a color scale. The
 color scale is interpreted as a gradient applied in the direction

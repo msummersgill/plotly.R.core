@@ -5,7 +5,6 @@
 \title{Scattercarpet line objects}
 \usage{
 go_scattercarpet_line(
-  arg = NULL,
   ...,
   backoff = NULL,
   color = NULL,
@@ -17,10 +16,8 @@ go_scattercarpet_line(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{backoff}{Sets the line back off from the end point of the nth line
 segment (in px). This option is useful e.g. to avoid overlap with

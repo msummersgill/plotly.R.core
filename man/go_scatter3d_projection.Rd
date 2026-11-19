@@ -5,7 +5,6 @@
 \title{Scatter3d projection objects}
 \usage{
 go_scatter3d_projection(
-  arg = NULL,
   ...,
   x = NULL,
   y = NULL,
@@ -14,10 +13,8 @@ go_scatter3d_projection(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{x}{A \code{\link{go_scatter3d_projection_axis}()} object or named
 list, with properties \code{opacity}, \code{scale} and \code{show}

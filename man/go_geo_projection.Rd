@@ -5,7 +5,6 @@
 \title{Layout geo projection objects}
 \usage{
 go_geo_projection(
-  arg = NULL,
   ...,
   distance = NULL,
   maxscale = NULL,
@@ -19,10 +18,8 @@ go_geo_projection(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{distance}{For satellite projection type only. Sets the distance
 from the center of the sphere to the point of view as a proportion of

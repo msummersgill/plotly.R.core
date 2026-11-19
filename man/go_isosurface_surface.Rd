@@ -5,7 +5,6 @@
 \title{Isosurface surface objects}
 \usage{
 go_isosurface_surface(
-  arg = NULL,
   ...,
   count = NULL,
   fill = NULL,
@@ -15,10 +14,8 @@ go_isosurface_surface(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{count}{Sets the number of iso-surfaces between minimum and maximum
 iso-values. By default this value is 2 meaning that only minimum and

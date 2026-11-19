@@ -5,7 +5,6 @@
 \title{Layout polar angularaxis objects}
 \usage{
 go_polar_angularaxis(
-  arg = NULL,
   ...,
   autotypenumbers = NULL,
   categoryarray = NULL,
@@ -57,10 +56,8 @@ go_polar_angularaxis(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{autotypenumbers}{Using "strict" a numeric string in trace data is
 not converted to a number. Using "convert types" a numeric string in

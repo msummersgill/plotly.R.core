@@ -5,7 +5,6 @@
 \title{Pattern objects}
 \usage{
 go_pattern(
-  arg = NULL,
   ...,
   bgcolor = NULL,
   fgcolor = NULL,
@@ -19,10 +18,8 @@ go_pattern(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{bgcolor}{When there is no colorscale sets the color of background
 pattern fill. Defaults to a `marker.color` background when `fillmode`

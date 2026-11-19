@@ -17,8 +17,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -317,7 +315,8 @@
 #' @param yperiodalignment Only relevant when the axis `type` is "date".
 #'   Sets the alignment of data points on the y axis. One of
 #'   \code{"start"}, \code{"middle"}, \code{"end"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -332,11 +331,11 @@
 #'   go_figure() |>
 #'   add_scattergl(x = ~wt, y = ~mpg, mode = "markers")
 go_scattergl <- function(
-    arg = NULL, ..., connectgaps = NULL, customdata = NULL, dx = NULL,
-    dy = NULL, error_x = NULL, error_y = NULL, fill = NULL,
-    fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    ..., connectgaps = NULL, customdata = NULL, dx = NULL, dy = NULL,
+    error_x = NULL, error_y = NULL, fill = NULL, fillcolor = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
     meta = NULL, mode = NULL, name = NULL, opacity = NULL, selected = NULL,
     selectedpoints = NULL, showlegend = NULL, text = NULL, textfont = NULL,
@@ -348,7 +347,7 @@ go_scattergl <- function(
     ycalendar = NULL, yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
     yperiodalignment = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("scattergl", arg, environment(), list(...), skip_invalid)
+  plotly_object("scattergl", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Scattergl line objects
@@ -366,8 +365,6 @@ go_scattergl <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the line color. Color: a CSS color string or R color
 #'   name.
 #' @param dash Sets the style of the lines. One of \code{"dash"},
@@ -378,7 +375,8 @@ go_scattergl <- function(
 #'   \code{"vh"}, \code{"hvh"}, \code{"vhv"}.
 #' @param width Sets the line width (in px). Number in the interval [0,
 #'   Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_scattergl_line} object (a named list).
@@ -396,10 +394,10 @@ go_scattergl <- function(
 #'     line = go_scattergl_line(color = "red")
 #'   )
 go_scattergl_line <- function(
-    arg = NULL, ..., color = NULL, dash = NULL, shape = NULL, width = NULL,
+    ..., color = NULL, dash = NULL, shape = NULL, width = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("scattergl.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("scattergl.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Scattergl marker objects
@@ -417,8 +415,6 @@ go_scattergl_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param angle Sets the marker angle in respect to `angleref`. Angle in
 #'   degrees, or a vector of these.
 #' @param autocolorscale Determines whether the colorscale is a default
@@ -634,7 +630,8 @@ go_scattergl_line <- function(
 #'   \code{147}, \code{48}, \code{148}, \code{49}, \code{149}, \code{50},
 #'   \code{150}, \code{51}, \code{151}, \code{52}, \code{152}, \code{53},
 #'   \code{153}, \code{54}, \code{154}, or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_scattergl_marker} object (a named list).
@@ -652,13 +649,13 @@ go_scattergl_line <- function(
 #'     marker = go_scattergl_marker(color = "red")
 #'   )
 go_scattergl_marker <- function(
-    arg = NULL, ..., angle = NULL, autocolorscale = NULL, cauto = NULL,
-    cmax = NULL, cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
+    ..., angle = NULL, autocolorscale = NULL, cauto = NULL, cmax = NULL,
+    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
     colorbar = NULL, colorscale = NULL, line = NULL, opacity = NULL,
     reversescale = NULL, showscale = NULL, size = NULL, sizemin = NULL,
     sizemode = NULL, sizeref = NULL, symbol = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("scattergl.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("scattergl.marker", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Scattergl marker line objects
@@ -676,8 +673,6 @@ go_scattergl_marker <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `marker.line.colorscale`. Has an effect only if in `marker.line.color`
@@ -736,7 +731,8 @@ go_scattergl_marker <- function(
 #'   `marker.line.cmax` will correspond to the first color. Logical.
 #' @param width Sets the width (in px) of the lines bounding the marker
 #'   points. Number in the interval [0, Inf], or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_scattergl_marker_line} object (a named list).
@@ -756,11 +752,10 @@ go_scattergl_marker <- function(
 #'     )
 #'   )
 go_scattergl_marker_line <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
-    colorscale = NULL, reversescale = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    cmin = NULL, color = NULL, coloraxis = NULL, colorscale = NULL,
+    reversescale = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("scattergl.marker.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("scattergl.marker.line", NULL, environment(), list(...), skip_invalid)
 }
 

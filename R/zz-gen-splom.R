@@ -20,8 +20,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -205,7 +203,8 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `yaxis.hoverformat`. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -226,7 +225,7 @@
 #'     )
 #'   )
 go_splom <- function(
-    arg = NULL, ..., customdata = NULL, diagonal = NULL, dimensions = NULL,
+    ..., customdata = NULL, diagonal = NULL, dimensions = NULL,
     hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
     hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
     legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
@@ -237,7 +236,7 @@ go_splom <- function(
     visible = NULL, xaxes = NULL, xhoverformat = NULL, yaxes = NULL,
     yhoverformat = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("splom", arg, environment(), list(...), skip_invalid)
+  plotly_object("splom", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Splom diagonal objects
@@ -254,11 +253,10 @@ go_splom <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param visible Determines whether or not subplots on the diagonal are
 #'   displayed. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_splom_diagonal} object (a named list).
@@ -278,9 +276,9 @@ go_splom <- function(
 #'     diagonal = go_splom_diagonal(visible = TRUE)
 #'   )
 go_splom_diagonal <- function(
-    arg = NULL, ..., visible = NULL, skip_invalid = FALSE
+    ..., visible = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("splom.diagonal", arg, environment(), list(...), skip_invalid)
+  plotly_object("splom.diagonal", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Splom dimension objects
@@ -297,8 +295,6 @@ go_splom_diagonal <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param axis A \code{\link{go_splom_dimension_axis}()} object or named
 #'   list, with properties \code{matches} and \code{type} (see
 #'   \code{\link{go_splom_dimension_axis}()}).
@@ -322,7 +318,8 @@ go_splom_diagonal <- function(
 #' @param visible Determines whether or not this dimension is shown on the
 #'   graph. Note that even visible false dimension contribute to the
 #'   default grid generate by this splom trace. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_splom_dimension} object (a named list).
@@ -335,11 +332,10 @@ go_splom_diagonal <- function(
 #'   dimensions = list(go_splom_dimension(visible = TRUE))
 #' )
 go_splom_dimension <- function(
-    arg = NULL, ..., axis = NULL, label = NULL, name = NULL,
-    templateitemname = NULL, values = NULL, visible = NULL,
-    skip_invalid = FALSE
+    ..., axis = NULL, label = NULL, name = NULL, templateitemname = NULL,
+    values = NULL, visible = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("splom.dimension", arg, environment(), list(...), skip_invalid)
+  plotly_object("splom.dimension", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Splom dimension axis objects
@@ -357,8 +353,6 @@ go_splom_dimension <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param matches Determines whether or not the x & y axes generated by
 #'   this dimension match. Equivalent to setting the `matches` axis
 #'   attribute in the layout with the correct axis id. Logical.
@@ -366,7 +360,8 @@ go_splom_dimension <- function(
 #'   axes. Note that the axis `type` values set in layout take precedence
 #'   over this attribute. One of \code{"linear"}, \code{"log"},
 #'   \code{"date"}, \code{"category"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_splom_dimension_axis} object (a named list).
@@ -381,9 +376,9 @@ go_splom_dimension <- function(
 #'   ))
 #' )
 go_splom_dimension_axis <- function(
-    arg = NULL, ..., matches = NULL, type = NULL, skip_invalid = FALSE
+    ..., matches = NULL, type = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("splom.dimension.axis", arg, environment(), list(...), skip_invalid)
+  plotly_object("splom.dimension.axis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Splom marker objects
@@ -400,8 +395,6 @@ go_splom_dimension_axis <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param angle Sets the marker angle in respect to `angleref`. Angle in
 #'   degrees, or a vector of these.
 #' @param autocolorscale Determines whether the colorscale is a default
@@ -617,7 +610,8 @@ go_splom_dimension_axis <- function(
 #'   \code{147}, \code{48}, \code{148}, \code{49}, \code{149}, \code{50},
 #'   \code{150}, \code{51}, \code{151}, \code{52}, \code{152}, \code{53},
 #'   \code{153}, \code{54}, \code{154}, or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_splom_marker} object (a named list).
@@ -637,13 +631,13 @@ go_splom_dimension_axis <- function(
 #'     marker = go_splom_marker(color = "red")
 #'   )
 go_splom_marker <- function(
-    arg = NULL, ..., angle = NULL, autocolorscale = NULL, cauto = NULL,
-    cmax = NULL, cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
+    ..., angle = NULL, autocolorscale = NULL, cauto = NULL, cmax = NULL,
+    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
     colorbar = NULL, colorscale = NULL, line = NULL, opacity = NULL,
     reversescale = NULL, showscale = NULL, size = NULL, sizemin = NULL,
     sizemode = NULL, sizeref = NULL, symbol = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("splom.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("splom.marker", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Splom marker line objects
@@ -661,8 +655,6 @@ go_splom_marker <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `marker.line.colorscale`. Has an effect only if in `marker.line.color`
@@ -721,7 +713,8 @@ go_splom_marker <- function(
 #'   `marker.line.cmax` will correspond to the first color. Logical.
 #' @param width Sets the width (in px) of the lines bounding the marker
 #'   points. Number in the interval [0, Inf], or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_splom_marker_line} object (a named list).
@@ -741,11 +734,10 @@ go_splom_marker <- function(
 #'     marker = go_splom_marker(line = go_splom_marker_line(color = "red"))
 #'   )
 go_splom_marker_line <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
-    colorscale = NULL, reversescale = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    cmin = NULL, color = NULL, coloraxis = NULL, colorscale = NULL,
+    reversescale = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("splom.marker.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("splom.marker.line", NULL, environment(), list(...), skip_invalid)
 }
 

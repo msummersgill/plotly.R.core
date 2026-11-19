@@ -4,13 +4,11 @@
 \alias{go_root}
 \title{Root objects}
 \usage{
-go_root(arg = NULL, ..., color = NULL, skip_invalid = FALSE)
+go_root(..., color = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{color}{sets the color of the root node for a
 sunburst/treemap/icicle trace. this has no effect when a colorscale is

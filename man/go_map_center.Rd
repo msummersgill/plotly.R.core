@@ -4,13 +4,11 @@
 \alias{go_map_center}
 \title{Layout map center objects}
 \usage{
-go_map_center(arg = NULL, ..., lat = NULL, lon = NULL, skip_invalid = FALSE)
+go_map_center(..., lat = NULL, lon = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{lat}{Sets the latitude of the center of the map (in degrees
 North). Number.}

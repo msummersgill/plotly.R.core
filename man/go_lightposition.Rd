@@ -4,20 +4,11 @@
 \alias{go_lightposition}
 \title{Lightposition objects}
 \usage{
-go_lightposition(
-  arg = NULL,
-  ...,
-  x = NULL,
-  y = NULL,
-  z = NULL,
-  skip_invalid = FALSE
-)
+go_lightposition(..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{x}{Numeric vector, representing the X coordinate for each vertex.
 Number in the interval [-100000, 100000].}

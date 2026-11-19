@@ -18,8 +18,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param alignmentgroup Set several traces linked to the same position
 #'   axis or matching axes to the same alignmentgroup. This controls
 #'   whether bars compute their positional range dependently or
@@ -347,7 +345,8 @@
 #' @param zorder Sets the layer on which this trace is displayed, relative
 #'   to other SVG traces on the same subplot. SVG traces with higher
 #'   `zorder` appear in front of those with lower `zorder`. Integer.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -362,26 +361,25 @@
 #'   go_figure() |>
 #'   add_histogram(x = ~mpg)
 go_histogram <- function(
-    arg = NULL, ..., alignmentgroup = NULL, autobinx = NULL,
-    autobiny = NULL, bingroup = NULL, cliponaxis = NULL,
-    constraintext = NULL, cumulative = NULL, customdata = NULL,
-    error_x = NULL, error_y = NULL, histfunc = NULL, histnorm = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
-    insidetextanchor = NULL, insidetextfont = NULL, legend = NULL,
-    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, marker = NULL, meta = NULL, name = NULL,
-    nbinsx = NULL, nbinsy = NULL, offsetgroup = NULL, opacity = NULL,
-    orientation = NULL, outsidetextfont = NULL, selected = NULL,
-    selectedpoints = NULL, showlegend = NULL, text = NULL, textangle = NULL,
-    textfont = NULL, textposition = NULL, texttemplate = NULL,
-    texttemplatefallback = NULL, uid = NULL, uirevision = NULL,
-    unselected = NULL, visible = NULL, x = NULL, xaxis = NULL, xbins = NULL,
-    xcalendar = NULL, xhoverformat = NULL, y = NULL, yaxis = NULL,
-    ybins = NULL, ycalendar = NULL, yhoverformat = NULL, zorder = NULL,
-    skip_invalid = FALSE
+    ..., alignmentgroup = NULL, autobinx = NULL, autobiny = NULL,
+    bingroup = NULL, cliponaxis = NULL, constraintext = NULL,
+    cumulative = NULL, customdata = NULL, error_x = NULL, error_y = NULL,
+    histfunc = NULL, histnorm = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, insidetextanchor = NULL, insidetextfont = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
+    name = NULL, nbinsx = NULL, nbinsy = NULL, offsetgroup = NULL,
+    opacity = NULL, orientation = NULL, outsidetextfont = NULL,
+    selected = NULL, selectedpoints = NULL, showlegend = NULL, text = NULL,
+    textangle = NULL, textfont = NULL, textposition = NULL,
+    texttemplate = NULL, texttemplatefallback = NULL, uid = NULL,
+    uirevision = NULL, unselected = NULL, visible = NULL, x = NULL,
+    xaxis = NULL, xbins = NULL, xcalendar = NULL, xhoverformat = NULL,
+    y = NULL, yaxis = NULL, ybins = NULL, ycalendar = NULL,
+    yhoverformat = NULL, zorder = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("histogram", arg, environment(), list(...), skip_invalid)
+  plotly_object("histogram", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Histogram cumulative objects
@@ -399,8 +397,6 @@ go_histogram <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param currentbin Only applies if cumulative is enabled. Sets whether
 #'   the current bin is included, excluded, or has half of its value
 #'   included in the current cumulative value. "include" is the default for
@@ -419,7 +415,8 @@ go_histogram <- function(
 #'   "density": *" and "density" both rise to the number of data points,
 #'   and "probability" and "probability density* both rise to the number of
 #'   sample points. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_histogram_cumulative} object (a named list).
@@ -432,10 +429,10 @@ go_histogram <- function(
 #'   go_figure() |>
 #'   add_histogram(x = ~mpg, cumulative = go_histogram_cumulative())
 go_histogram_cumulative <- function(
-    arg = NULL, ..., currentbin = NULL, direction = NULL, enabled = NULL,
+    ..., currentbin = NULL, direction = NULL, enabled = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("histogram.cumulative", arg, environment(), list(...), skip_invalid)
+  plotly_object("histogram.cumulative", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Histogram marker objects
@@ -453,8 +450,6 @@ go_histogram_cumulative <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `marker.colorscale`. Has an effect only if in `marker.color` is set to
@@ -534,7 +529,8 @@ go_histogram_cumulative <- function(
 #' @param showscale Determines whether or not a colorbar is displayed for
 #'   this trace. Has an effect only if in `marker.color` is set to a
 #'   numerical array. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_histogram_marker} object (a named list).
@@ -547,13 +543,13 @@ go_histogram_cumulative <- function(
 #'   go_figure() |>
 #'   add_histogram(x = ~mpg, marker = go_histogram_marker(color = "red"))
 go_histogram_marker <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, cornerradius = NULL, line = NULL,
-    opacity = NULL, pattern = NULL, reversescale = NULL, showscale = NULL,
+    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    cmin = NULL, color = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, cornerradius = NULL, line = NULL, opacity = NULL,
+    pattern = NULL, reversescale = NULL, showscale = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("histogram.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("histogram.marker", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Histogram marker line objects
@@ -571,8 +567,6 @@ go_histogram_marker <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `marker.line.colorscale`. Has an effect only if in `marker.line.color`
@@ -631,7 +625,8 @@ go_histogram_marker <- function(
 #'   `marker.line.cmax` will correspond to the first color. Logical.
 #' @param width Sets the width (in px) of the lines bounding the marker
 #'   points. Number in the interval [0, Inf], or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_histogram_marker_line} object (a named list).
@@ -649,11 +644,10 @@ go_histogram_marker <- function(
 #'     )
 #'   )
 go_histogram_marker_line <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
-    colorscale = NULL, reversescale = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    cmin = NULL, color = NULL, coloraxis = NULL, colorscale = NULL,
+    reversescale = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("histogram.marker.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("histogram.marker.line", NULL, environment(), list(...), skip_invalid)
 }
 

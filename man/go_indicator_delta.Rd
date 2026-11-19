@@ -5,7 +5,6 @@
 \title{Indicator delta objects}
 \usage{
 go_indicator_delta(
-  arg = NULL,
   ...,
   decreasing = NULL,
   font = NULL,
@@ -20,10 +19,8 @@ go_indicator_delta(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{decreasing}{A \code{\link{go_indicator_delta_decreasing}()} object
 or named list, with properties \code{color} and \code{symbol} (see

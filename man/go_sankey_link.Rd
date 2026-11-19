@@ -5,7 +5,6 @@
 \title{Sankey link objects}
 \usage{
 go_sankey_link(
-  arg = NULL,
   ...,
   arrowlen = NULL,
   color = NULL,
@@ -26,10 +25,8 @@ go_sankey_link(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{arrowlen}{Sets the length (in px) of the links arrow, if 0 no
 arrow will be drawn. Number in the interval [0, Inf].}

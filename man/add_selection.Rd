@@ -33,7 +33,8 @@ add_selection(
 \item{arg}{Optional named list of properties to start from. Named
 arguments take precedence.}
 
-\item{...}{Further properties, by their full names.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{line}{A \code{\link{go_selection_line}()} object or named list,
 with properties \code{color}, \code{dash} and \code{width} (see

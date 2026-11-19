@@ -5,7 +5,6 @@
 \title{Layout newshape objects}
 \usage{
 go_newshape(
-  arg = NULL,
   ...,
   drawdirection = NULL,
   fillcolor = NULL,
@@ -26,10 +25,8 @@ go_newshape(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{drawdirection}{When `dragmode` is set to "drawrect", "drawline" or
 "drawcircle" this limits the drag to be horizontal, vertical or

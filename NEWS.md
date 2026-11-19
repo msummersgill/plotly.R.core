@@ -25,6 +25,9 @@
     `go_layout_colorscale()` and `go_layout_transition()` where the path name
     would be ambiguous or is a trace's.
 
+  Constructors take properties by name only (no positional `arg`; start
+  from a list with `do.call()`), so names are never partially matched and
+  unknown ones get an error that suggests the right name.
   Named lists work wherever an object does. One-sided formulas
   (`go_scatter_marker(color = ~cyl)`) are kept by constructors and evaluated
   in the data, then checked, when the trace is added with `add_<trace>()` or

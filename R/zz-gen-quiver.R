@@ -19,8 +19,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param anchor Sets the vector arrows' anchor with respect to their (x,y)
 #'   positions. Use "tail" to place (x,y) at the base, "tip" to place (x,y)
 #'   at the head, or "center" to center the vector arrow on (x,y). One of
@@ -247,7 +245,8 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `yaxis.hoverformat`. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -263,19 +262,19 @@
 #'   go_figure() |>
 #'   add_quiver(x = ~x, y = ~y, u = ~y / 10, v = ~-x / 10)
 go_quiver <- function(
-    arg = NULL, ..., anchor = NULL, arrowref = NULL, customdata = NULL,
-    dx = NULL, dy = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    lengthfactor = NULL, lengthmode = NULL, marker = NULL, meta = NULL,
-    name = NULL, opacity = NULL, selected = NULL, selectedpoints = NULL,
+    ..., anchor = NULL, arrowref = NULL, customdata = NULL, dx = NULL,
+    dy = NULL, hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, lengthfactor = NULL,
+    lengthmode = NULL, marker = NULL, meta = NULL, name = NULL,
+    opacity = NULL, selected = NULL, selectedpoints = NULL,
     showlegend = NULL, text = NULL, textfont = NULL, textposition = NULL,
     u = NULL, uhoverformat = NULL, uid = NULL, uirevision = NULL,
     unselected = NULL, v = NULL, vhoverformat = NULL, visible = NULL,
     x = NULL, x0 = NULL, xaxis = NULL, xhoverformat = NULL, y = NULL,
     y0 = NULL, yaxis = NULL, yhoverformat = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("quiver", arg, environment(), list(...), skip_invalid)
+  plotly_object("quiver", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Quiver marker objects
@@ -292,8 +291,6 @@ go_quiver <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param arrowsize Sets the size of the vector arrowhead relative to
 #'   `marker.line.width`. A value of 1 (default) gives a head about 3x as
 #'   wide as the line. Number in the interval [0.3, Inf].
@@ -362,7 +359,8 @@ go_quiver <- function(
 #' @param showscale Determines whether or not a colorbar is displayed for
 #'   this trace. Has an effect only if in `marker.color` is set to a
 #'   numerical array. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_quiver_marker} object (a named list).
@@ -382,12 +380,12 @@ go_quiver <- function(
 #'     marker = go_quiver_marker(color = "red")
 #'   )
 go_quiver_marker <- function(
-    arg = NULL, ..., arrowsize = NULL, autocolorscale = NULL, cauto = NULL,
-    cmax = NULL, cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
+    ..., arrowsize = NULL, autocolorscale = NULL, cauto = NULL, cmax = NULL,
+    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
     colorbar = NULL, colorscale = NULL, line = NULL, reversescale = NULL,
     showscale = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("quiver.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("quiver.marker", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Quiver marker line objects
@@ -405,8 +403,6 @@ go_quiver_marker <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param dash Sets the dash style of lines. Set to a dash type string
 #'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
 #'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},
@@ -415,7 +411,8 @@ go_quiver_marker <- function(
 #'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
 #' @param width Sets the width (in px) of the vector arrow lines. Number in
 #'   the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_quiver_marker_line} object (a named list).
@@ -435,8 +432,8 @@ go_quiver_marker <- function(
 #'     marker = go_quiver_marker(line = go_quiver_marker_line(width = 2))
 #'   )
 go_quiver_marker_line <- function(
-    arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE
+    ..., dash = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("quiver.marker.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("quiver.marker.line", NULL, environment(), list(...), skip_invalid)
 }
 

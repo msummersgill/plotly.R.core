@@ -4,13 +4,11 @@
 \alias{go_project}
 \title{Project objects}
 \usage{
-go_project(arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE)
+go_project(..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{x}{Determines whether or not these contour lines are projected on
 the x plane. If `highlight` is set to TRUE (the default), the

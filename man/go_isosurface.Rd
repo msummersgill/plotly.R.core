@@ -67,7 +67,6 @@ add_isosurface(fig, ...)
 )
 
 go_isosurface(
-  arg = NULL,
   ...,
   autocolorscale = NULL,
   caps = NULL,
@@ -124,7 +123,8 @@ go_isosurface(
 \arguments{
 \item{fig}{A \code{go_figure} object.}
 
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
 ~col}, \code{marker = list(size = ~col)}, \code{marker =
@@ -429,9 +429,6 @@ to address several cells.}
 
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
-
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from (constructors). Named arguments take precedence.}
 }
 \value{
 \code{go_*()} functions return a graph object;

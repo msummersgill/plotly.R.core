@@ -4,20 +4,11 @@
 \alias{go_streamtube_starts}
 \title{Streamtube starts objects}
 \usage{
-go_streamtube_starts(
-  arg = NULL,
-  ...,
-  x = NULL,
-  y = NULL,
-  z = NULL,
-  skip_invalid = FALSE
-)
+go_streamtube_starts(..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{x}{Sets the x components of the starting position of the
 streamtubes Data array: a vector, factor, Date/POSIXct vector, matrix

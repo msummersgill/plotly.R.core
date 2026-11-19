@@ -19,8 +19,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param alignmentgroup Set several traces linked to the same position
 #'   axis or matching axes to the same alignmentgroup. This controls
 #'   whether bars compute their positional range dependently or
@@ -299,7 +297,8 @@
 #' @param zorder Sets the layer on which this trace is displayed, relative
 #'   to other SVG traces on the same subplot. SVG traces with higher
 #'   `zorder` appear in front of those with lower `zorder`. Integer.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -314,7 +313,7 @@
 #'   go_figure() |>
 #'   add_violin(x = ~factor(cyl), y = ~mpg)
 go_violin <- function(
-    arg = NULL, ..., alignmentgroup = NULL, bandwidth = NULL, box = NULL,
+    ..., alignmentgroup = NULL, bandwidth = NULL, box = NULL,
     customdata = NULL, fillcolor = NULL, hoverinfo = NULL,
     hoverlabel = NULL, hoveron = NULL, hovertemplate = NULL,
     hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
@@ -330,7 +329,7 @@ go_violin <- function(
     xhoverformat = NULL, y = NULL, y0 = NULL, yaxis = NULL,
     yhoverformat = NULL, zorder = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("violin", arg, environment(), list(...), skip_invalid)
+  plotly_object("violin", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Violin box objects
@@ -347,8 +346,6 @@ go_violin <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param fillcolor Sets the inner box plot fill color. Color: a CSS color
 #'   string or R color name.
 #' @param line A \code{\link{go_violin_box_line}()} object or named list,
@@ -359,7 +356,8 @@ go_violin <- function(
 #' @param width Sets the width of the inner box plots relative to the
 #'   violins' width. For example, with 1, the inner box plots are as wide
 #'   as the violins. Number in the interval [0, 1].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_violin_box} object (a named list).
@@ -376,10 +374,10 @@ go_violin <- function(
 #'     box = go_violin_box(width = 0.5)
 #'   )
 go_violin_box <- function(
-    arg = NULL, ..., fillcolor = NULL, line = NULL, visible = NULL,
-    width = NULL, skip_invalid = FALSE
+    ..., fillcolor = NULL, line = NULL, visible = NULL, width = NULL,
+    skip_invalid = FALSE
 ) {
-  plotly_object("violin.box", arg, environment(), list(...), skip_invalid)
+  plotly_object("violin.box", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Violin box line objects
@@ -397,13 +395,12 @@ go_violin_box <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the inner box plot bounding line color. Color: a CSS
 #'   color string or R color name.
 #' @param width Sets the inner box plot bounding line width. Number in the
 #'   interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_violin_box_line} object (a named list).
@@ -420,9 +417,9 @@ go_violin_box <- function(
 #'     box = go_violin_box(line = go_violin_box_line(color = "red"))
 #'   )
 go_violin_box_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("violin.box.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("violin.box.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Violin line objects
@@ -439,13 +436,12 @@ go_violin_box_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color of line bounding the violin(s). Color: a CSS
 #'   color string or R color name.
 #' @param width Sets the width (in px) of line bounding the violin(s).
 #'   Number in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_violin_line} object (a named list).
@@ -462,9 +458,9 @@ go_violin_box_line <- function(
 #'     line = go_violin_line(color = "red")
 #'   )
 go_violin_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("violin.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("violin.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Violin marker objects
@@ -481,8 +477,6 @@ go_violin_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param angle Sets the marker angle in respect to `angleref`. Angle in
 #'   degrees.
 #' @param color Sets the marker color. It accepts either a specific color
@@ -631,7 +625,8 @@ go_violin_line <- function(
 #'   \code{147}, \code{48}, \code{148}, \code{49}, \code{149}, \code{50},
 #'   \code{150}, \code{51}, \code{151}, \code{52}, \code{152}, \code{53},
 #'   \code{153}, \code{54}, \code{154}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_violin_marker} object (a named list).
@@ -648,11 +643,10 @@ go_violin_line <- function(
 #'     marker = go_violin_marker(color = "red")
 #'   )
 go_violin_marker <- function(
-    arg = NULL, ..., angle = NULL, color = NULL, line = NULL,
-    opacity = NULL, outliercolor = NULL, size = NULL, symbol = NULL,
-    skip_invalid = FALSE
+    ..., angle = NULL, color = NULL, line = NULL, opacity = NULL,
+    outliercolor = NULL, size = NULL, symbol = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("violin.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("violin.marker", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Violin marker line objects
@@ -670,8 +664,6 @@ go_violin_marker <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the marker.line color. It accepts either a specific
 #'   color or an array of numbers that are mapped to the colorscale
 #'   relative to the max and min values of the array or relative to
@@ -684,7 +676,8 @@ go_violin_marker <- function(
 #'   sample points. Number in the interval [0, Inf].
 #' @param width Sets the width (in px) of the lines bounding the marker
 #'   points. Number in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_violin_marker_line} object (a named list).
@@ -703,10 +696,10 @@ go_violin_marker <- function(
 #'     )
 #'   )
 go_violin_marker_line <- function(
-    arg = NULL, ..., color = NULL, outliercolor = NULL, outlierwidth = NULL,
+    ..., color = NULL, outliercolor = NULL, outlierwidth = NULL,
     width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("violin.marker.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("violin.marker.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Violin meanline objects
@@ -724,8 +717,6 @@ go_violin_marker_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the mean line color. Color: a CSS color string or R
 #'   color name.
 #' @param visible Determines if a line corresponding to the sample's mean
@@ -733,7 +724,8 @@ go_violin_marker_line <- function(
 #'   line is drawn inside the inner box. Otherwise, the mean line is drawn
 #'   from one side of the violin to other. Logical.
 #' @param width Sets the mean line width. Number in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_violin_meanline} object (a named list).
@@ -750,9 +742,8 @@ go_violin_marker_line <- function(
 #'     meanline = go_violin_meanline(color = "red")
 #'   )
 go_violin_meanline <- function(
-    arg = NULL, ..., color = NULL, visible = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., color = NULL, visible = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("violin.meanline", arg, environment(), list(...), skip_invalid)
+  plotly_object("violin.meanline", NULL, environment(), list(...), skip_invalid)
 }
 

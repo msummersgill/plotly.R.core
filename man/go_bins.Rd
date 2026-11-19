@@ -4,20 +4,11 @@
 \alias{go_bins}
 \title{Bins objects}
 \usage{
-go_bins(
-  arg = NULL,
-  ...,
-  end = NULL,
-  size = NULL,
-  start = NULL,
-  skip_invalid = FALSE
-)
+go_bins(..., end = NULL, size = NULL, start = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{end}{Sets the end value for the x axis bins. The last bin may not
 end exactly at this value, we increment the bin edge by `size` from

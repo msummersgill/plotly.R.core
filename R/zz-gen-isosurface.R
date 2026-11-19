@@ -19,8 +19,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `colorscale`. In case `colorscale` is unspecified or `autocolorscale`
@@ -271,7 +269,8 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `zaxis.hoverformat`. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -294,9 +293,9 @@
 #'     isomax = 50
 #'   )
 go_isosurface <- function(
-    arg = NULL, ..., autocolorscale = NULL, caps = NULL, cauto = NULL,
-    cmax = NULL, cmid = NULL, cmin = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, contour = NULL, customdata = NULL,
+    ..., autocolorscale = NULL, caps = NULL, cauto = NULL, cmax = NULL,
+    cmid = NULL, cmin = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, contour = NULL, customdata = NULL,
     flatshading = NULL, hoverinfo = NULL, hoverlabel = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, isomax = NULL, isomin = NULL, legend = NULL,
@@ -309,7 +308,7 @@ go_isosurface <- function(
     xhoverformat = NULL, y = NULL, yhoverformat = NULL, z = NULL,
     zhoverformat = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("isosurface", arg, environment(), list(...), skip_invalid)
+  plotly_object("isosurface", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Isosurface contour objects
@@ -327,15 +326,14 @@ go_isosurface <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color of the contour lines. Color: a CSS color
 #'   string or R color name.
 #' @param show Sets whether or not dynamic contours are shown on hover
 #'   Logical.
 #' @param width Sets the width of the contour lines. Number in the interval
 #'   [1, 16].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_isosurface_contour} object (a named list).
@@ -357,10 +355,9 @@ go_isosurface <- function(
 #'     contour = go_isosurface_contour(color = "red")
 #'   )
 go_isosurface_contour <- function(
-    arg = NULL, ..., color = NULL, show = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., color = NULL, show = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("isosurface.contour", arg, environment(), list(...), skip_invalid)
+  plotly_object("isosurface.contour", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Isosurface lighting objects
@@ -378,8 +375,6 @@ go_isosurface_contour <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param ambient Ambient light increases overall color visibility but can
 #'   wash out the image. Number in the interval [0, 1].
 #' @param diffuse Represents the extent that incident rays are reflected in
@@ -398,7 +393,8 @@ go_isosurface_contour <- function(
 #' @param vertexnormalsepsilon Epsilon for vertex normals calculation
 #'   avoids math issues arising from degenerate geometry. Number in the
 #'   interval [0, 1].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_isosurface_lighting} object (a named list).
@@ -420,11 +416,11 @@ go_isosurface_contour <- function(
 #'     lighting = go_isosurface_lighting()
 #'   )
 go_isosurface_lighting <- function(
-    arg = NULL, ..., ambient = NULL, diffuse = NULL,
-    facenormalsepsilon = NULL, fresnel = NULL, roughness = NULL,
-    specular = NULL, vertexnormalsepsilon = NULL, skip_invalid = FALSE
+    ..., ambient = NULL, diffuse = NULL, facenormalsepsilon = NULL,
+    fresnel = NULL, roughness = NULL, specular = NULL,
+    vertexnormalsepsilon = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("isosurface.lighting", arg, environment(), list(...), skip_invalid)
+  plotly_object("isosurface.lighting", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Isosurface surface objects
@@ -442,8 +438,6 @@ go_isosurface_lighting <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param count Sets the number of iso-surfaces between minimum and maximum
 #'   iso-values. By default this value is 2 meaning that only minimum and
 #'   maximum surfaces would be drawn. Integer in the interval [1, Inf].
@@ -463,7 +457,8 @@ go_isosurface_lighting <- function(
 #'   or one of \code{"all"}, \code{"odd"}, \code{"even"}.
 #' @param show Hides/displays surfaces between minimum and maximum
 #'   iso-values. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_isosurface_surface} object (a named list).
@@ -485,9 +480,9 @@ go_isosurface_lighting <- function(
 #'     surface = go_isosurface_surface(show = TRUE)
 #'   )
 go_isosurface_surface <- function(
-    arg = NULL, ..., count = NULL, fill = NULL, pattern = NULL, show = NULL,
+    ..., count = NULL, fill = NULL, pattern = NULL, show = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("isosurface.surface", arg, environment(), list(...), skip_invalid)
+  plotly_object("isosurface.surface", NULL, environment(), list(...), skip_invalid)
 }
 

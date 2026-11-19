@@ -19,8 +19,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param align Sets the horizontal alignment of the `text` within the box.
 #'   Note that this attribute has no effect if an angular gauge is
 #'   displayed: in this case, it is always centered One of \code{"left"},
@@ -122,7 +120,8 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -141,14 +140,13 @@
 #'     title = go_indicator_title(text = "mean mpg")
 #'   )
 go_indicator <- function(
-    arg = NULL, ..., align = NULL, customdata = NULL, delta = NULL,
-    domain = NULL, gauge = NULL, ids = NULL, legend = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    meta = NULL, mode = NULL, name = NULL, number = NULL, title = NULL,
-    uid = NULL, uirevision = NULL, value = NULL, visible = NULL,
-    skip_invalid = FALSE
+    ..., align = NULL, customdata = NULL, delta = NULL, domain = NULL,
+    gauge = NULL, ids = NULL, legend = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, meta = NULL, mode = NULL,
+    name = NULL, number = NULL, title = NULL, uid = NULL, uirevision = NULL,
+    value = NULL, visible = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("indicator", arg, environment(), list(...), skip_invalid)
+  plotly_object("indicator", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Indicator delta objects
@@ -166,8 +164,6 @@ go_indicator <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param decreasing A \code{\link{go_indicator_delta_decreasing}()} object
 #'   or named list, with properties \code{color} and \code{symbol} (see
 #'   \code{\link{go_indicator_delta_decreasing}()}).
@@ -189,7 +185,8 @@ go_indicator <- function(
 #' @param valueformat Sets the value formatting rule using d3 formatting
 #'   mini-languages which are very similar to those in Python. For numbers,
 #'   see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_indicator_delta} object (a named list).
@@ -207,11 +204,11 @@ go_indicator <- function(
 #'     delta = go_indicator_delta()
 #'   )
 go_indicator_delta <- function(
-    arg = NULL, ..., decreasing = NULL, font = NULL, increasing = NULL,
-    position = NULL, prefix = NULL, reference = NULL, relative = NULL,
-    suffix = NULL, valueformat = NULL, skip_invalid = FALSE
+    ..., decreasing = NULL, font = NULL, increasing = NULL, position = NULL,
+    prefix = NULL, reference = NULL, relative = NULL, suffix = NULL,
+    valueformat = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("indicator.delta", arg, environment(), list(...), skip_invalid)
+  plotly_object("indicator.delta", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Indicator delta decreasing objects
@@ -229,12 +226,11 @@ go_indicator_delta <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color for increasing value. Color: a CSS color
 #'   string or R color name.
 #' @param symbol Sets the symbol to display for increasing value String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_indicator_delta_decreasing} object (a named list).
@@ -254,9 +250,9 @@ go_indicator_delta <- function(
 #'     )
 #'   )
 go_indicator_delta_decreasing <- function(
-    arg = NULL, ..., color = NULL, symbol = NULL, skip_invalid = FALSE
+    ..., color = NULL, symbol = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("indicator.delta.decreasing", arg, environment(), list(...), skip_invalid)
+  plotly_object("indicator.delta.decreasing", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Indicator delta increasing objects
@@ -274,12 +270,11 @@ go_indicator_delta_decreasing <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color for increasing value. Color: a CSS color
 #'   string or R color name.
 #' @param symbol Sets the symbol to display for increasing value String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_indicator_delta_increasing} object (a named list).
@@ -299,9 +294,9 @@ go_indicator_delta_decreasing <- function(
 #'     )
 #'   )
 go_indicator_delta_increasing <- function(
-    arg = NULL, ..., color = NULL, symbol = NULL, skip_invalid = FALSE
+    ..., color = NULL, symbol = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("indicator.delta.increasing", arg, environment(), list(...), skip_invalid)
+  plotly_object("indicator.delta.increasing", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Indicator gauge objects
@@ -319,8 +314,6 @@ go_indicator_delta_increasing <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param axis A \code{\link{go_indicator_gauge_axis}()} object or named
 #'   list, with properties \code{dtick}, \code{exponentformat},
 #'   \code{labelalias}, \code{minexponent}, \code{nticks}, \code{range},
@@ -347,7 +340,8 @@ go_indicator_delta_increasing <- function(
 #' @param threshold A \code{\link{go_indicator_gauge_threshold}()} object
 #'   or named list, with properties \code{line}, \code{thickness} and
 #'   \code{value} (see \code{\link{go_indicator_gauge_threshold}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_indicator_gauge} object (a named list).
@@ -365,11 +359,11 @@ go_indicator_delta_increasing <- function(
 #'     gauge = go_indicator_gauge(bgcolor = "lightyellow")
 #'   )
 go_indicator_gauge <- function(
-    arg = NULL, ..., axis = NULL, bar = NULL, bgcolor = NULL,
-    bordercolor = NULL, borderwidth = NULL, shape = NULL, steps = NULL,
-    threshold = NULL, skip_invalid = FALSE
+    ..., axis = NULL, bar = NULL, bgcolor = NULL, bordercolor = NULL,
+    borderwidth = NULL, shape = NULL, steps = NULL, threshold = NULL,
+    skip_invalid = FALSE
 ) {
-  plotly_object("indicator.gauge", arg, environment(), list(...), skip_invalid)
+  plotly_object("indicator.gauge", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Indicator gauge axis objects
@@ -387,8 +381,6 @@ go_indicator_gauge <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param dtick Sets the step in-between ticks on this axis. Use with
 #'   `tick0`. Must be a positive number, or special strings available to
 #'   "log" and "date" axes. If the axis `type` is "log", then ticks are set
@@ -517,7 +509,8 @@ go_indicator_gauge <- function(
 #' @param visible A single toggle to hide the axis while preserving
 #'   interaction like dragging. Default is true when a cheater plot is
 #'   present on the axis, otherwise false Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_indicator_gauge_axis} object (a named list).
@@ -537,7 +530,7 @@ go_indicator_gauge <- function(
 #'     )
 #'   )
 go_indicator_gauge_axis <- function(
-    arg = NULL, ..., dtick = NULL, exponentformat = NULL, labelalias = NULL,
+    ..., dtick = NULL, exponentformat = NULL, labelalias = NULL,
     minexponent = NULL, nticks = NULL, range = NULL,
     separatethousands = NULL, showexponent = NULL, showticklabels = NULL,
     showtickprefix = NULL, showticksuffix = NULL, tick0 = NULL,
@@ -547,7 +540,7 @@ go_indicator_gauge_axis <- function(
     ticktext = NULL, tickvals = NULL, tickwidth = NULL, visible = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("indicator.gauge.axis", arg, environment(), list(...), skip_invalid)
+  plotly_object("indicator.gauge.axis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Indicator gauge bar objects
@@ -566,8 +559,6 @@ go_indicator_gauge_axis <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the background color of the arc. Color: a CSS color
 #'   string or R color name.
 #' @param line A \code{\link{go_indicator_gauge_bar_line}()} object or
@@ -575,7 +566,8 @@ go_indicator_gauge_axis <- function(
 #'   \code{\link{go_indicator_gauge_bar_line}()}).
 #' @param thickness Sets the thickness of the bar as a fraction of the
 #'   total thickness of the gauge. Number in the interval [0, 1].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_indicator_gauge_bar} object (a named list).
@@ -595,10 +587,9 @@ go_indicator_gauge_axis <- function(
 #'     )
 #'   )
 go_indicator_gauge_bar <- function(
-    arg = NULL, ..., color = NULL, line = NULL, thickness = NULL,
-    skip_invalid = FALSE
+    ..., color = NULL, line = NULL, thickness = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("indicator.gauge.bar", arg, environment(), list(...), skip_invalid)
+  plotly_object("indicator.gauge.bar", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Indicator gauge bar line objects
@@ -616,13 +607,12 @@ go_indicator_gauge_bar <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color of the line enclosing each sector. Color: a
 #'   CSS color string or R color name.
 #' @param width Sets the width (in px) of the line enclosing each sector.
 #'   Number in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_indicator_gauge_bar_line} object (a named list).
@@ -644,9 +634,9 @@ go_indicator_gauge_bar <- function(
 #'     )
 #'   )
 go_indicator_gauge_bar_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("indicator.gauge.bar.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("indicator.gauge.bar.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Indicator gauge step objects
@@ -664,8 +654,6 @@ go_indicator_gauge_bar_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the background color of the arc. Color: a CSS color
 #'   string or R color name.
 #' @param line A \code{\link{go_indicator_gauge_step_line}()} object or
@@ -688,7 +676,8 @@ go_indicator_gauge_bar_line <- function(
 #'   be hidden unless you explicitly show it with `visible: true`. String.
 #' @param thickness Sets the thickness of the bar as a fraction of the
 #'   total thickness of the gauge. Number in the interval [0, 1].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_indicator_gauge_step} object (a named list).
@@ -710,10 +699,10 @@ go_indicator_gauge_bar_line <- function(
 #'     )
 #'   )
 go_indicator_gauge_step <- function(
-    arg = NULL, ..., color = NULL, line = NULL, name = NULL, range = NULL,
+    ..., color = NULL, line = NULL, name = NULL, range = NULL,
     templateitemname = NULL, thickness = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("indicator.gauge.step", arg, environment(), list(...), skip_invalid)
+  plotly_object("indicator.gauge.step", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Indicator gauge step line objects
@@ -731,13 +720,12 @@ go_indicator_gauge_step <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color of the line enclosing each sector. Color: a
 #'   CSS color string or R color name.
 #' @param width Sets the width (in px) of the line enclosing each sector.
 #'   Number in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_indicator_gauge_step_line} object (a named list).
@@ -761,9 +749,9 @@ go_indicator_gauge_step <- function(
 #'     )
 #'   )
 go_indicator_gauge_step_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("indicator.gauge.step.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("indicator.gauge.step.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Indicator gauge threshold objects
@@ -781,15 +769,14 @@ go_indicator_gauge_step_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param line A \code{\link{go_indicator_gauge_threshold_line}()} object
 #'   or named list, with properties \code{color} and \code{width} (see
 #'   \code{\link{go_indicator_gauge_threshold_line}()}).
 #' @param thickness Sets the thickness of the threshold line as a fraction
 #'   of the thickness of the gauge. Number in the interval [0, 1].
 #' @param value Sets a treshold value drawn as a line. Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_indicator_gauge_threshold} object (a named list).
@@ -809,10 +796,9 @@ go_indicator_gauge_step_line <- function(
 #'     )
 #'   )
 go_indicator_gauge_threshold <- function(
-    arg = NULL, ..., line = NULL, thickness = NULL, value = NULL,
-    skip_invalid = FALSE
+    ..., line = NULL, thickness = NULL, value = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("indicator.gauge.threshold", arg, environment(), list(...), skip_invalid)
+  plotly_object("indicator.gauge.threshold", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Indicator gauge threshold line objects
@@ -830,13 +816,12 @@ go_indicator_gauge_threshold <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color of the threshold line. Color: a CSS color
 #'   string or R color name.
 #' @param width Sets the width (in px) of the threshold line. Number in the
 #'   interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_indicator_gauge_threshold_line} object (a named list).
@@ -858,9 +843,9 @@ go_indicator_gauge_threshold <- function(
 #'     )
 #'   )
 go_indicator_gauge_threshold_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("indicator.gauge.threshold.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("indicator.gauge.threshold.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Indicator number objects
@@ -878,8 +863,6 @@ go_indicator_gauge_threshold_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param font Set the font used to display main number A
 #'   \code{\link{go_font}()} object or named list, with properties
 #'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
@@ -890,7 +873,8 @@ go_indicator_gauge_threshold_line <- function(
 #' @param valueformat Sets the value formatting rule using d3 formatting
 #'   mini-languages which are very similar to those in Python. For numbers,
 #'   see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_indicator_number} object (a named list).
@@ -908,10 +892,10 @@ go_indicator_gauge_threshold_line <- function(
 #'     number = go_indicator_number()
 #'   )
 go_indicator_number <- function(
-    arg = NULL, ..., font = NULL, prefix = NULL, suffix = NULL,
-    valueformat = NULL, skip_invalid = FALSE
+    ..., font = NULL, prefix = NULL, suffix = NULL, valueformat = NULL,
+    skip_invalid = FALSE
 ) {
-  plotly_object("indicator.number", arg, environment(), list(...), skip_invalid)
+  plotly_object("indicator.number", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Indicator title objects
@@ -929,8 +913,6 @@ go_indicator_number <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param align Sets the horizontal alignment of the title. It defaults to
 #'   `center` except for bullet charts for which it defaults to right. One
 #'   of \code{"left"}, \code{"center"}, \code{"right"}.
@@ -940,7 +922,8 @@ go_indicator_number <- function(
 #'   \code{size}, \code{style}, \code{textcase}, \code{variant} and
 #'   \code{weight} (see \code{\link{go_font}()}).
 #' @param text Sets the title of this indicator. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_indicator_title} object (a named list).
@@ -953,9 +936,8 @@ go_indicator_number <- function(
 #'   title = go_indicator_title(text = "title")
 #' )
 go_indicator_title <- function(
-    arg = NULL, ..., align = NULL, font = NULL, text = NULL,
-    skip_invalid = FALSE
+    ..., align = NULL, font = NULL, text = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("indicator.title", arg, environment(), list(...), skip_invalid)
+  plotly_object("indicator.title", NULL, environment(), list(...), skip_invalid)
 }
 

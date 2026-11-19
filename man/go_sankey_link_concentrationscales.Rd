@@ -5,7 +5,6 @@
 \title{Sankey link concentrationscales objects}
 \usage{
 go_sankey_link_concentrationscales(
-  arg = NULL,
   ...,
   cmax = NULL,
   cmin = NULL,
@@ -17,10 +16,8 @@ go_sankey_link_concentrationscales(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{cmax}{Sets the upper bound of the color domain. Number.}
 

@@ -19,8 +19,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param alignmentgroup Set several traces linked to the same position
 #'   axis or matching axes to the same alignmentgroup. This controls
 #'   whether bars compute their positional range dependently or
@@ -332,7 +330,8 @@
 #' @param zorder Sets the layer on which this trace is displayed, relative
 #'   to other SVG traces on the same subplot. SVG traces with higher
 #'   `zorder` appear in front of those with lower `zorder`. Integer.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -347,7 +346,7 @@
 #'   go_figure() |>
 #'   add_waterfall(x = ~factor(cyl), y = ~mpg)
 go_waterfall <- function(
-    arg = NULL, ..., alignmentgroup = NULL, base = NULL, cliponaxis = NULL,
+    ..., alignmentgroup = NULL, base = NULL, cliponaxis = NULL,
     connector = NULL, constraintext = NULL, customdata = NULL,
     decreasing = NULL, dx = NULL, dy = NULL, hoverinfo = NULL,
     hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
@@ -366,7 +365,7 @@ go_waterfall <- function(
     yperiod0 = NULL, yperiodalignment = NULL, zorder = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("waterfall", arg, environment(), list(...), skip_invalid)
+  plotly_object("waterfall", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Waterfall connector objects
@@ -384,15 +383,14 @@ go_waterfall <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param line A \code{\link{go_waterfall_connector_line}()} object or
 #'   named list, with properties \code{color}, \code{dash} and \code{width}
 #'   (see \code{\link{go_waterfall_connector_line}()}).
 #' @param mode Sets the shape of connector lines. One of \code{"spanning"},
 #'   \code{"between"}.
 #' @param visible Determines if connector lines are drawn.  Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_waterfall_connector} object (a named list).
@@ -409,10 +407,9 @@ go_waterfall <- function(
 #'     connector = go_waterfall_connector(visible = TRUE)
 #'   )
 go_waterfall_connector <- function(
-    arg = NULL, ..., line = NULL, mode = NULL, visible = NULL,
-    skip_invalid = FALSE
+    ..., line = NULL, mode = NULL, visible = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("waterfall.connector", arg, environment(), list(...), skip_invalid)
+  plotly_object("waterfall.connector", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Waterfall connector line objects
@@ -430,8 +427,6 @@ go_waterfall_connector <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the line color. Color: a CSS color string or R color
 #'   name.
 #' @param dash Sets the dash style of lines. Set to a dash type string
@@ -442,7 +437,8 @@ go_waterfall_connector <- function(
 #'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
 #' @param width Sets the line width (in px). Number in the interval [0,
 #'   Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_waterfall_connector_line} object (a named list).
@@ -461,10 +457,9 @@ go_waterfall_connector <- function(
 #'     )
 #'   )
 go_waterfall_connector_line <- function(
-    arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., color = NULL, dash = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("waterfall.connector.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("waterfall.connector.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Waterfall decreasing objects
@@ -482,12 +477,11 @@ go_waterfall_connector_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param marker A \code{\link{go_waterfall_decreasing_marker}()} object or
 #'   named list, with properties \code{color} and \code{line} (see
 #'   \code{\link{go_waterfall_decreasing_marker}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_waterfall_decreasing} object (a named list).
@@ -504,9 +498,9 @@ go_waterfall_connector_line <- function(
 #'     decreasing = go_waterfall_decreasing()
 #'   )
 go_waterfall_decreasing <- function(
-    arg = NULL, ..., marker = NULL, skip_invalid = FALSE
+    ..., marker = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("waterfall.decreasing", arg, environment(), list(...), skip_invalid)
+  plotly_object("waterfall.decreasing", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Waterfall decreasing marker objects
@@ -524,14 +518,13 @@ go_waterfall_decreasing <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the marker color of all decreasing values. Color: a
 #'   CSS color string or R color name.
 #' @param line A \code{\link{go_waterfall_decreasing_marker_line}()} object
 #'   or named list, with properties \code{color} and \code{width} (see
 #'   \code{\link{go_waterfall_decreasing_marker_line}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_waterfall_decreasing_marker} object (a named list).
@@ -550,9 +543,9 @@ go_waterfall_decreasing <- function(
 #'     )
 #'   )
 go_waterfall_decreasing_marker <- function(
-    arg = NULL, ..., color = NULL, line = NULL, skip_invalid = FALSE
+    ..., color = NULL, line = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("waterfall.decreasing.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("waterfall.decreasing.marker", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Waterfall decreasing marker line objects
@@ -570,13 +563,12 @@ go_waterfall_decreasing_marker <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the line color of all decreasing values. Color: a CSS
 #'   color string or R color name.
 #' @param width Sets the line width of all decreasing values. Number in the
 #'   interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_waterfall_decreasing_marker_line} object (a named list).
@@ -597,9 +589,9 @@ go_waterfall_decreasing_marker <- function(
 #'     )
 #'   )
 go_waterfall_decreasing_marker_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("waterfall.decreasing.marker.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("waterfall.decreasing.marker.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Waterfall increasing objects
@@ -617,12 +609,11 @@ go_waterfall_decreasing_marker_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param marker A \code{\link{go_waterfall_increasing_marker}()} object or
 #'   named list, with properties \code{color} and \code{line} (see
 #'   \code{\link{go_waterfall_increasing_marker}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_waterfall_increasing} object (a named list).
@@ -639,9 +630,9 @@ go_waterfall_decreasing_marker_line <- function(
 #'     increasing = go_waterfall_increasing()
 #'   )
 go_waterfall_increasing <- function(
-    arg = NULL, ..., marker = NULL, skip_invalid = FALSE
+    ..., marker = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("waterfall.increasing", arg, environment(), list(...), skip_invalid)
+  plotly_object("waterfall.increasing", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Waterfall increasing marker objects
@@ -659,14 +650,13 @@ go_waterfall_increasing <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the marker color of all increasing values. Color: a
 #'   CSS color string or R color name.
 #' @param line A \code{\link{go_waterfall_increasing_marker_line}()} object
 #'   or named list, with properties \code{color} and \code{width} (see
 #'   \code{\link{go_waterfall_increasing_marker_line}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_waterfall_increasing_marker} object (a named list).
@@ -685,9 +675,9 @@ go_waterfall_increasing <- function(
 #'     )
 #'   )
 go_waterfall_increasing_marker <- function(
-    arg = NULL, ..., color = NULL, line = NULL, skip_invalid = FALSE
+    ..., color = NULL, line = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("waterfall.increasing.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("waterfall.increasing.marker", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Waterfall increasing marker line objects
@@ -705,13 +695,12 @@ go_waterfall_increasing_marker <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the line color of all increasing values. Color: a CSS
 #'   color string or R color name.
 #' @param width Sets the line width of all increasing values. Number in the
 #'   interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_waterfall_increasing_marker_line} object (a named list).
@@ -732,9 +721,9 @@ go_waterfall_increasing_marker <- function(
 #'     )
 #'   )
 go_waterfall_increasing_marker_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("waterfall.increasing.marker.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("waterfall.increasing.marker.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Waterfall totals objects
@@ -752,12 +741,11 @@ go_waterfall_increasing_marker_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param marker A \code{\link{go_waterfall_totals_marker}()} object or
 #'   named list, with properties \code{color} and \code{line} (see
 #'   \code{\link{go_waterfall_totals_marker}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_waterfall_totals} object (a named list).
@@ -774,9 +762,9 @@ go_waterfall_increasing_marker_line <- function(
 #'     totals = go_waterfall_totals()
 #'   )
 go_waterfall_totals <- function(
-    arg = NULL, ..., marker = NULL, skip_invalid = FALSE
+    ..., marker = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("waterfall.totals", arg, environment(), list(...), skip_invalid)
+  plotly_object("waterfall.totals", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Waterfall totals marker objects
@@ -794,14 +782,13 @@ go_waterfall_totals <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the marker color of all intermediate sums and total
 #'   values. Color: a CSS color string or R color name.
 #' @param line A \code{\link{go_waterfall_totals_marker_line}()} object or
 #'   named list, with properties \code{color} and \code{width} (see
 #'   \code{\link{go_waterfall_totals_marker_line}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_waterfall_totals_marker} object (a named list).
@@ -820,9 +807,9 @@ go_waterfall_totals <- function(
 #'     )
 #'   )
 go_waterfall_totals_marker <- function(
-    arg = NULL, ..., color = NULL, line = NULL, skip_invalid = FALSE
+    ..., color = NULL, line = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("waterfall.totals.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("waterfall.totals.marker", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Waterfall totals marker line objects
@@ -840,13 +827,12 @@ go_waterfall_totals_marker <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the line color of all intermediate sums and total
 #'   values. Color: a CSS color string or R color name.
 #' @param width Sets the line width of all intermediate sums and total
 #'   values. Number in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_waterfall_totals_marker_line} object (a named list).
@@ -867,8 +853,8 @@ go_waterfall_totals_marker <- function(
 #'     )
 #'   )
 go_waterfall_totals_marker_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("waterfall.totals.marker.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("waterfall.totals.marker.line", NULL, environment(), list(...), skip_invalid)
 }
 

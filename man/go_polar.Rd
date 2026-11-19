@@ -5,7 +5,6 @@
 \title{Layout polar objects}
 \usage{
 go_polar(
-  arg = NULL,
   ...,
   angularaxis = NULL,
   bargap = NULL,
@@ -21,10 +20,8 @@ go_polar(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{angularaxis}{A \code{\link{go_polar_angularaxis}()} object or
 named list, with properties \code{autotypenumbers},

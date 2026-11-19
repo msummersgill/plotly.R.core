@@ -4,19 +4,11 @@
 \alias{go_scene_axis_title}
 \title{Scene axis title objects}
 \usage{
-go_scene_axis_title(
-  arg = NULL,
-  ...,
-  font = NULL,
-  text = NULL,
-  skip_invalid = FALSE
-)
+go_scene_axis_title(..., font = NULL, text = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{font}{Sets this axis' title font. A \code{\link{go_font}()} object
 or named list, with properties \code{color}, \code{family},

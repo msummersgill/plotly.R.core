@@ -4,13 +4,11 @@
 \alias{go_scene_camera_projection}
 \title{Layout scene camera projection objects}
 \usage{
-go_scene_camera_projection(arg = NULL, ..., type = NULL, skip_invalid = FALSE)
+go_scene_camera_projection(..., type = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{type}{Sets the projection type. The projection type could be
 either "perspective" or "orthographic". The default is "perspective".

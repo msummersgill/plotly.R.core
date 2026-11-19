@@ -301,7 +301,7 @@ layout_array_source <- function(array_key, ctx) {
       ctx,
       fig_docs
     ),
-    "#' @param ... Further properties, by their full names.",
+    dots_doc(),
     "#' @param skip_invalid If \\code{TRUE}, silently drop invalid properties",
     "#'   instead of raising an error.",
     "#' @return The modified figure.",

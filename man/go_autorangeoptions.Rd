@@ -5,7 +5,6 @@
 \title{Autorangeoptions objects}
 \usage{
 go_autorangeoptions(
-  arg = NULL,
   ...,
   clipmax = NULL,
   clipmin = NULL,
@@ -16,10 +15,8 @@ go_autorangeoptions(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{clipmax}{Clip autorange maximum if it goes beyond this value. Has
 no effect when `autorangeoptions.maxallowed` is provided. Any value.}

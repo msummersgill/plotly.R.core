@@ -19,8 +19,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -193,7 +191,8 @@
 #' @param zsmooth Picks a smoothing algorithm used to smooth `z` data. This
 #'   only applies for image traces that use the `source` attribute. One of
 #'   \code{"fast"}, \code{FALSE}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -209,8 +208,8 @@
 #' go_figure() |>
 #'   add_image(z = z)
 go_image <- function(
-    arg = NULL, ..., colormodel = NULL, customdata = NULL, dx = NULL,
-    dy = NULL, hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    ..., colormodel = NULL, customdata = NULL, dx = NULL, dy = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
     hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
     legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
     legendwidth = NULL, meta = NULL, name = NULL, opacity = NULL,
@@ -219,6 +218,6 @@ go_image <- function(
     z = NULL, zmax = NULL, zmin = NULL, zorder = NULL, zsmooth = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("image", arg, environment(), list(...), skip_invalid)
+  plotly_object("image", NULL, environment(), list(...), skip_invalid)
 }
 

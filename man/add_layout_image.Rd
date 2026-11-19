@@ -36,7 +36,8 @@ add_layout_image(
 \item{arg}{Optional named list of properties to start from. Named
 arguments take precedence.}
 
-\item{...}{Further properties, by their full names.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{layer}{Specifies whether images are drawn below or above traces.
 When `xref` and `yref` are both set to `paper`, image is drawn below

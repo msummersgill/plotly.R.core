@@ -21,8 +21,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `colorscale`. In case `colorscale` is unspecified or `autocolorscale`
@@ -283,7 +281,8 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `zaxis.hoverformat`. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -297,22 +296,22 @@
 #' go_figure() |>
 #'   add_surface(z = volcano)
 go_surface <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, coloraxis = NULL, colorbar = NULL,
-    colorscale = NULL, connectgaps = NULL, contours = NULL,
-    customdata = NULL, hidesurface = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    lighting = NULL, lightposition = NULL, meta = NULL, name = NULL,
-    opacity = NULL, opacityscale = NULL, reversescale = NULL, scene = NULL,
+    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    cmin = NULL, coloraxis = NULL, colorbar = NULL, colorscale = NULL,
+    connectgaps = NULL, contours = NULL, customdata = NULL,
+    hidesurface = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, lighting = NULL,
+    lightposition = NULL, meta = NULL, name = NULL, opacity = NULL,
+    opacityscale = NULL, reversescale = NULL, scene = NULL,
     showlegend = NULL, showscale = NULL, surfacecolor = NULL, text = NULL,
     uid = NULL, uirevision = NULL, visible = NULL, x = NULL,
     xcalendar = NULL, xhoverformat = NULL, y = NULL, ycalendar = NULL,
     yhoverformat = NULL, z = NULL, zcalendar = NULL, zhoverformat = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("surface", arg, environment(), list(...), skip_invalid)
+  plotly_object("surface", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Surface contours objects
@@ -330,8 +329,6 @@ go_surface <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param x A \code{\link{go_surface_contours_axis}()} object or named
 #'   list, with properties \code{color}, \code{end}, \code{highlight},
 #'   \code{highlightcolor}, \code{highlightwidth}, \code{project},
@@ -347,7 +344,8 @@ go_surface <- function(
 #'   \code{highlightcolor}, \code{highlightwidth}, \code{project},
 #'   \code{show}, \code{size}, \code{start}, \code{usecolormap} and
 #'   \code{width} (see \code{\link{go_surface_contours_axis}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_surface_contours} object (a named list).
@@ -359,9 +357,9 @@ go_surface <- function(
 #' go_figure() |>
 #'   add_surface(z = volcano, contours = go_surface_contours())
 go_surface_contours <- function(
-    arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
+    ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("surface.contours", arg, environment(), list(...), skip_invalid)
+  plotly_object("surface.contours", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Surface lighting objects
@@ -379,8 +377,6 @@ go_surface_contours <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param ambient Ambient light increases overall color visibility but can
 #'   wash out the image. Number in the interval [0, 1].
 #' @param diffuse Represents the extent that incident rays are reflected in
@@ -393,7 +389,8 @@ go_surface_contours <- function(
 #'   the wider and less contrasty the shine. Number in the interval [0, 1].
 #' @param specular Represents the level that incident rays are reflected in
 #'   a single direction, causing shine. Number in the interval [0, 2].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_surface_lighting} object (a named list).
@@ -405,9 +402,9 @@ go_surface_contours <- function(
 #' go_figure() |>
 #'   add_surface(z = volcano, lighting = go_surface_lighting())
 go_surface_lighting <- function(
-    arg = NULL, ..., ambient = NULL, diffuse = NULL, fresnel = NULL,
-    roughness = NULL, specular = NULL, skip_invalid = FALSE
+    ..., ambient = NULL, diffuse = NULL, fresnel = NULL, roughness = NULL,
+    specular = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("surface.lighting", arg, environment(), list(...), skip_invalid)
+  plotly_object("surface.lighting", NULL, environment(), list(...), skip_invalid)
 }
 

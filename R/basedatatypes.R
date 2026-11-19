@@ -25,7 +25,12 @@ plotly_object <- function(
 ) {
   entry <- get_validator(key)
   defer <- missing(data)
-  if (inherits(arg, "go_figure")) {
+  # a figure piped into a constructor (fig |> go_scatter()) arrives in `...`
+  # (or `arg`, for add_annotation() and the like)
+  if (
+    inherits(arg, "go_figure") ||
+      any(vapply(dots, inherits, NA, "go_figure"))
+  ) {
     figure_as_arg(sys.call(-1L)[[1L]], key, entry)
   }
   problems <- list()
@@ -59,7 +64,10 @@ plotly_object <- function(
   if (length(dots)) {
     if (is.null(names(dots)) || any(!nzchar(names(dots)))) {
       stop(
-        sprintf("All arguments to %s() must be named", entry$data_class),
+        sprintf(
+          "All arguments to %s() must be named: properties are given by name",
+          entry$data_class
+        ),
         call. = FALSE
       )
     }
@@ -268,7 +276,10 @@ shared_object <- function(
 ) {
   info <- shared_types()[[type]]
   fn <- paste0("go_", type)
-  if (inherits(arg, "go_figure")) {
+  if (
+    inherits(arg, "go_figure") ||
+      any(vapply(dots, inherits, NA, "go_figure"))
+  ) {
     figure_as_arg(fn, NULL, NULL)
   }
   props <- if (is.null(arg)) {
@@ -295,7 +306,13 @@ shared_object <- function(
   }
   if (length(dots)) {
     if (is.null(names(dots)) || any(!nzchar(names(dots)))) {
-      stop(sprintf("All arguments to %s() must be named", fn), call. = FALSE)
+      stop(
+        sprintf(
+          "All arguments to %s() must be named: properties are given by name",
+          fn
+        ),
+        call. = FALSE
+      )
     }
     props[names(dots)] <- dots
   }

@@ -5,7 +5,6 @@
 \title{Isosurface contour objects}
 \usage{
 go_isosurface_contour(
-  arg = NULL,
   ...,
   color = NULL,
   show = NULL,
@@ -14,10 +13,8 @@ go_isosurface_contour(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{color}{Sets the color of the contour lines. Color: a CSS color
 string or R color name.}

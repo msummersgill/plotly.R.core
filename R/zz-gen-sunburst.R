@@ -17,8 +17,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param branchvalues Determines how the items in `values` are summed.
 #'   When set to "total", items in `values` are taken to be value of all
 #'   its descendants. When set to "remainder", items in `values`
@@ -251,7 +249,8 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -272,7 +271,7 @@
 #'   go_figure() |>
 #'   add_sunburst(labels = ~labels, parents = ~parents, values = ~values)
 go_sunburst <- function(
-    arg = NULL, ..., branchvalues = NULL, count = NULL, customdata = NULL,
+    ..., branchvalues = NULL, count = NULL, customdata = NULL,
     domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, insidetextfont = NULL, insidetextorientation = NULL,
@@ -284,7 +283,7 @@ go_sunburst <- function(
     texttemplate = NULL, texttemplatefallback = NULL, uid = NULL,
     uirevision = NULL, values = NULL, visible = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("sunburst", arg, environment(), list(...), skip_invalid)
+  plotly_object("sunburst", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Sunburst marker objects
@@ -302,8 +301,6 @@ go_sunburst <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `marker.colorscale`. Has an effect only if colors is set to a
@@ -370,7 +367,8 @@ go_sunburst <- function(
 #' @param showscale Determines whether or not a colorbar is displayed for
 #'   this trace. Has an effect only if colors is set to a numerical array.
 #'   Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_sunburst_marker} object (a named list).
@@ -394,12 +392,12 @@ go_sunburst <- function(
 #'     marker = go_sunburst_marker(colors = c("red", "blue"))
 #'   )
 go_sunburst_marker <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, coloraxis = NULL, colorbar = NULL,
-    colors = NULL, colorscale = NULL, line = NULL, pattern = NULL,
-    reversescale = NULL, showscale = NULL, skip_invalid = FALSE
+    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    cmin = NULL, coloraxis = NULL, colorbar = NULL, colors = NULL,
+    colorscale = NULL, line = NULL, pattern = NULL, reversescale = NULL,
+    showscale = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("sunburst.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("sunburst.marker", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Sunburst marker line objects
@@ -417,14 +415,13 @@ go_sunburst_marker <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color of the line enclosing each sector. Defaults
 #'   to the `paper_bgcolor` value. Color: a CSS color string or R color
 #'   name, or a vector of these.
 #' @param width Sets the width (in px) of the line enclosing each sector.
 #'   Number in the interval [0, Inf], or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_sunburst_marker_line} object (a named list).
@@ -450,8 +447,8 @@ go_sunburst_marker <- function(
 #'     )
 #'   )
 go_sunburst_marker_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("sunburst.marker.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("sunburst.marker.line", NULL, environment(), list(...), skip_invalid)
 }
 

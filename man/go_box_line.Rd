@@ -4,13 +4,11 @@
 \alias{go_box_line}
 \title{Box line objects}
 \usage{
-go_box_line(arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE)
+go_box_line(..., color = NULL, width = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{color}{Sets the color of line bounding the box(es). Color: a CSS
 color string or R color name.}

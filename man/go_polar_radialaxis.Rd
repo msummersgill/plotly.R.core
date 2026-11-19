@@ -5,7 +5,6 @@
 \title{Layout polar radialaxis objects}
 \usage{
 go_polar_radialaxis(
-  arg = NULL,
   ...,
   angle = NULL,
   autorange = NULL,
@@ -64,10 +63,8 @@ go_polar_radialaxis(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{angle}{Sets the angle (in degrees) from which the radial axis is
 drawn. Note that by default, radial axis line on the theta=0 line

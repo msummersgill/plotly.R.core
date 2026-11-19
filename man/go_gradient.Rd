@@ -4,13 +4,11 @@
 \alias{go_gradient}
 \title{Gradient objects}
 \usage{
-go_gradient(arg = NULL, ..., color = NULL, type = NULL, skip_invalid = FALSE)
+go_gradient(..., color = NULL, type = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{color}{Sets the final color of the gradient fill: the center color
 for radial, the right for horizontal, or the bottom for vertical.

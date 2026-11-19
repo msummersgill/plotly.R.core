@@ -5,7 +5,6 @@
 \title{Layout xaxis objects}
 \usage{
 go_xaxis(
-  arg = NULL,
   ...,
   anchor = NULL,
   automargin = NULL,
@@ -103,10 +102,8 @@ go_xaxis(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{anchor}{If set to an opposite-letter axis id (e.g. `x2`, `y`),
 this axis is bound to the corresponding opposite-letter axis. If set

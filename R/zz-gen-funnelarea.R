@@ -18,8 +18,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param aspectratio Sets the ratio between height and width Number in the
 #'   interval [0, Inf].
 #' @param baseratio Sets the ratio between bottom length and maximum top
@@ -220,7 +218,8 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -236,19 +235,19 @@
 #'   go_figure() |>
 #'   add_funnelarea(labels = ~cylinders, values = ~Freq)
 go_funnelarea <- function(
-    arg = NULL, ..., aspectratio = NULL, baseratio = NULL,
-    customdata = NULL, dlabel = NULL, domain = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    hovertext = NULL, ids = NULL, insidetextfont = NULL, label0 = NULL,
-    labels = NULL, legend = NULL, legendgroup = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    marker = NULL, meta = NULL, name = NULL, opacity = NULL,
-    scalegroup = NULL, showlegend = NULL, text = NULL, textfont = NULL,
-    textinfo = NULL, textposition = NULL, texttemplate = NULL,
-    texttemplatefallback = NULL, title = NULL, uid = NULL,
-    uirevision = NULL, values = NULL, visible = NULL, skip_invalid = FALSE
+    ..., aspectratio = NULL, baseratio = NULL, customdata = NULL,
+    dlabel = NULL, domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, insidetextfont = NULL, label0 = NULL, labels = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
+    name = NULL, opacity = NULL, scalegroup = NULL, showlegend = NULL,
+    text = NULL, textfont = NULL, textinfo = NULL, textposition = NULL,
+    texttemplate = NULL, texttemplatefallback = NULL, title = NULL,
+    uid = NULL, uirevision = NULL, values = NULL, visible = NULL,
+    skip_invalid = FALSE
 ) {
-  plotly_object("funnelarea", arg, environment(), list(...), skip_invalid)
+  plotly_object("funnelarea", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Funnelarea marker objects
@@ -266,8 +265,6 @@ go_funnelarea <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param colors Sets the color of each sector. If not specified, the
 #'   default trace color set is used to pick the sector colors. Data array:
 #'   a vector, factor, Date/POSIXct vector, matrix or list.
@@ -279,7 +276,8 @@ go_funnelarea <- function(
 #'   \code{bgcolor}, \code{fgcolor}, \code{fgopacity}, \code{fillmode},
 #'   \code{path}, \code{shape}, \code{size} and \code{solidity} (see
 #'   \code{\link{go_pattern}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_funnelarea_marker} object (a named list).
@@ -297,10 +295,9 @@ go_funnelarea <- function(
 #'     marker = go_funnelarea_marker(colors = c("red", "blue"))
 #'   )
 go_funnelarea_marker <- function(
-    arg = NULL, ..., colors = NULL, line = NULL, pattern = NULL,
-    skip_invalid = FALSE
+    ..., colors = NULL, line = NULL, pattern = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("funnelarea.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("funnelarea.marker", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Funnelarea marker line objects
@@ -318,14 +315,13 @@ go_funnelarea_marker <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color of the line enclosing each sector. Defaults
 #'   to the `paper_bgcolor` value. Color: a CSS color string or R color
 #'   name, or a vector of these.
 #' @param width Sets the width (in px) of the line enclosing each sector.
 #'   Number in the interval [0, Inf], or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_funnelarea_marker_line} object (a named list).
@@ -345,9 +341,9 @@ go_funnelarea_marker <- function(
 #'     )
 #'   )
 go_funnelarea_marker_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("funnelarea.marker.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("funnelarea.marker.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Funnelarea title objects
@@ -365,8 +361,6 @@ go_funnelarea_marker_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param font Sets the font used for `title`. A \code{\link{go_font}()}
 #'   object or named list, with properties \code{color}, \code{family},
 #'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
@@ -376,7 +370,8 @@ go_funnelarea_marker_line <- function(
 #'   left"}, \code{"top center"}, \code{"top right"}.
 #' @param text Sets the title of the chart. If it is empty, no title is
 #'   displayed. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_funnelarea_title} object (a named list).
@@ -394,9 +389,8 @@ go_funnelarea_marker_line <- function(
 #'     title = go_funnelarea_title(text = "title")
 #'   )
 go_funnelarea_title <- function(
-    arg = NULL, ..., font = NULL, position = NULL, text = NULL,
-    skip_invalid = FALSE
+    ..., font = NULL, position = NULL, text = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("funnelarea.title", arg, environment(), list(...), skip_invalid)
+  plotly_object("funnelarea.title", NULL, environment(), list(...), skip_invalid)
 }
 

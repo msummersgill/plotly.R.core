@@ -19,8 +19,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param autobinx Obsolete: since v1.42 each bin attribute is
 #'   auto-determined separately and `autobinx` is not needed. However, we
 #'   accept `autobinx: true` or `false` and will update `xbins` accordingly
@@ -333,7 +331,8 @@
 #'   Number.
 #' @param zsmooth Picks a smoothing algorithm use to smooth `z` data. One
 #'   of \code{"fast"}, \code{"best"}, \code{FALSE}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -348,12 +347,11 @@
 #'   go_figure() |>
 #'   add_histogram2d(x = ~eruptions, y = ~waiting)
 go_histogram2d <- function(
-    arg = NULL, ..., autobinx = NULL, autobiny = NULL,
-    autocolorscale = NULL, bingroup = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, customdata = NULL, histfunc = NULL,
-    histnorm = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, ids = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    ..., autobinx = NULL, autobiny = NULL, autocolorscale = NULL,
+    bingroup = NULL, coloraxis = NULL, colorbar = NULL, colorscale = NULL,
+    customdata = NULL, histfunc = NULL, histnorm = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
     name = NULL, nbinsx = NULL, nbinsy = NULL, opacity = NULL,
     reversescale = NULL, showlegend = NULL, showscale = NULL,
@@ -365,7 +363,7 @@ go_histogram2d <- function(
     z = NULL, zauto = NULL, zhoverformat = NULL, zmax = NULL, zmid = NULL,
     zmin = NULL, zsmooth = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("histogram2d", arg, environment(), list(...), skip_invalid)
+  plotly_object("histogram2d", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Histogram2d marker objects
@@ -383,11 +381,10 @@ go_histogram2d <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the aggregation data. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_histogram2d_marker} object (a named list).
@@ -404,8 +401,8 @@ go_histogram2d <- function(
 #'     marker = go_histogram2d_marker(color = "red")
 #'   )
 go_histogram2d_marker <- function(
-    arg = NULL, ..., color = NULL, skip_invalid = FALSE
+    ..., color = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("histogram2d.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("histogram2d.marker", NULL, environment(), list(...), skip_invalid)
 }
 

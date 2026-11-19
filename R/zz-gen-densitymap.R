@@ -16,8 +16,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `colorscale`. In case `colorscale` is unspecified or `autocolorscale`
@@ -212,7 +210,8 @@
 #' @param zmin Sets the lower bound of the color domain. Value should have
 #'   the same units as in `z` and if set, `zmax` must be set as well.
 #'   Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -227,7 +226,7 @@
 #'   go_figure() |>
 #'   add_densitymap(lat = ~lat, lon = ~long, z = ~mag)
 go_densitymap <- function(
-    arg = NULL, ..., autocolorscale = NULL, below = NULL, coloraxis = NULL,
+    ..., autocolorscale = NULL, below = NULL, coloraxis = NULL,
     colorbar = NULL, colorscale = NULL, customdata = NULL, hoverinfo = NULL,
     hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
     hovertext = NULL, ids = NULL, lat = NULL, legend = NULL,
@@ -238,6 +237,6 @@ go_densitymap <- function(
     uirevision = NULL, visible = NULL, z = NULL, zauto = NULL, zmax = NULL,
     zmid = NULL, zmin = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("densitymap", arg, environment(), list(...), skip_invalid)
+  plotly_object("densitymap", NULL, environment(), list(...), skip_invalid)
 }
 

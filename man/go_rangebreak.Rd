@@ -5,7 +5,6 @@
 \title{Rangebreak objects}
 \usage{
 go_rangebreak(
-  arg = NULL,
   ...,
   bounds = NULL,
   dvalue = NULL,
@@ -18,10 +17,8 @@ go_rangebreak(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{bounds}{Sets the lower and upper bounds of this axis rangebreak.
 Can be used with `pattern`. Vector or list of 2 element(s).}

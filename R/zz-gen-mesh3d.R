@@ -18,8 +18,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param alphahull Determines how the mesh surface triangles are derived
 #'   from the set of vertices (points) represented by the `x`, `y` and `z`
 #'   arrays, if the `i`, `j`, `k` arrays are not supplied. For general use
@@ -334,7 +332,8 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `zaxis.hoverformat`. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -349,8 +348,8 @@
 #'   go_figure() |>
 #'   add_mesh3d(x = ~wt, y = ~hp, z = ~mpg)
 go_mesh3d <- function(
-    arg = NULL, ..., alphahull = NULL, autocolorscale = NULL, cauto = NULL,
-    cmax = NULL, cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
+    ..., alphahull = NULL, autocolorscale = NULL, cauto = NULL, cmax = NULL,
+    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
     colorbar = NULL, colorscale = NULL, contour = NULL, customdata = NULL,
     delaunayaxis = NULL, facecolor = NULL, flatshading = NULL,
     hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
@@ -365,7 +364,7 @@ go_mesh3d <- function(
     y = NULL, ycalendar = NULL, yhoverformat = NULL, z = NULL,
     zcalendar = NULL, zhoverformat = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("mesh3d", arg, environment(), list(...), skip_invalid)
+  plotly_object("mesh3d", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Mesh3d contour objects
@@ -382,15 +381,14 @@ go_mesh3d <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color of the contour lines. Color: a CSS color
 #'   string or R color name.
 #' @param show Sets whether or not dynamic contours are shown on hover
 #'   Logical.
 #' @param width Sets the width of the contour lines. Number in the interval
 #'   [1, 16].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_mesh3d_contour} object (a named list).
@@ -408,10 +406,9 @@ go_mesh3d <- function(
 #'     contour = go_mesh3d_contour(color = "red")
 #'   )
 go_mesh3d_contour <- function(
-    arg = NULL, ..., color = NULL, show = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., color = NULL, show = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("mesh3d.contour", arg, environment(), list(...), skip_invalid)
+  plotly_object("mesh3d.contour", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Mesh3d lighting objects
@@ -429,8 +426,6 @@ go_mesh3d_contour <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param ambient Ambient light increases overall color visibility but can
 #'   wash out the image. Number in the interval [0, 1].
 #' @param diffuse Represents the extent that incident rays are reflected in
@@ -449,7 +444,8 @@ go_mesh3d_contour <- function(
 #' @param vertexnormalsepsilon Epsilon for vertex normals calculation
 #'   avoids math issues arising from degenerate geometry. Number in the
 #'   interval [0, 1].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_mesh3d_lighting} object (a named list).
@@ -467,10 +463,10 @@ go_mesh3d_contour <- function(
 #'     lighting = go_mesh3d_lighting()
 #'   )
 go_mesh3d_lighting <- function(
-    arg = NULL, ..., ambient = NULL, diffuse = NULL,
-    facenormalsepsilon = NULL, fresnel = NULL, roughness = NULL,
-    specular = NULL, vertexnormalsepsilon = NULL, skip_invalid = FALSE
+    ..., ambient = NULL, diffuse = NULL, facenormalsepsilon = NULL,
+    fresnel = NULL, roughness = NULL, specular = NULL,
+    vertexnormalsepsilon = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("mesh3d.lighting", arg, environment(), list(...), skip_invalid)
+  plotly_object("mesh3d.lighting", NULL, environment(), list(...), skip_invalid)
 }
 

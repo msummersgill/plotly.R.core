@@ -4,13 +4,11 @@
 \alias{go_table_cells_fill}
 \title{Table cells fill objects}
 \usage{
-go_table_cells_fill(arg = NULL, ..., color = NULL, skip_invalid = FALSE)
+go_table_cells_fill(..., color = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{color}{Sets the cell fill color. It accepts either a specific
 color or an array of colors or a 2D array of colors. Color: a CSS

@@ -20,8 +20,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param alignmentgroup Set several traces linked to the same position
 #'   axis or matching axes to the same alignmentgroup. This controls
 #'   whether bars compute their positional range dependently or
@@ -327,7 +325,8 @@
 #' @param zorder Sets the layer on which this trace is displayed, relative
 #'   to other SVG traces on the same subplot. SVG traces with higher
 #'   `zorder` appear in front of those with lower `zorder`. Integer.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -342,9 +341,9 @@
 #'   go_figure() |>
 #'   add_funnel(x = ~factor(cyl), y = ~mpg)
 go_funnel <- function(
-    arg = NULL, ..., alignmentgroup = NULL, cliponaxis = NULL,
-    connector = NULL, constraintext = NULL, customdata = NULL, dx = NULL,
-    dy = NULL, hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    ..., alignmentgroup = NULL, cliponaxis = NULL, connector = NULL,
+    constraintext = NULL, customdata = NULL, dx = NULL, dy = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
     hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
     insidetextanchor = NULL, insidetextfont = NULL, legend = NULL,
     legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
@@ -359,7 +358,7 @@ go_funnel <- function(
     yaxis = NULL, yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
     yperiodalignment = NULL, zorder = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("funnel", arg, environment(), list(...), skip_invalid)
+  plotly_object("funnel", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Funnel connector objects
@@ -377,8 +376,6 @@ go_funnel <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param fillcolor Sets the fill color. Color: a CSS color string or R
 #'   color name.
 #' @param line A \code{\link{go_funnel_connector_line}()} object or named
@@ -386,7 +383,8 @@ go_funnel <- function(
 #'   \code{\link{go_funnel_connector_line}()}).
 #' @param visible Determines if connector regions and lines are drawn.
 #'   Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_funnel_connector} object (a named list).
@@ -403,10 +401,9 @@ go_funnel <- function(
 #'     connector = go_funnel_connector(visible = TRUE)
 #'   )
 go_funnel_connector <- function(
-    arg = NULL, ..., fillcolor = NULL, line = NULL, visible = NULL,
-    skip_invalid = FALSE
+    ..., fillcolor = NULL, line = NULL, visible = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("funnel.connector", arg, environment(), list(...), skip_invalid)
+  plotly_object("funnel.connector", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Funnel connector line objects
@@ -424,8 +421,6 @@ go_funnel_connector <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the line color. Color: a CSS color string or R color
 #'   name.
 #' @param dash Sets the dash style of lines. Set to a dash type string
@@ -436,7 +431,8 @@ go_funnel_connector <- function(
 #'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
 #' @param width Sets the line width (in px). Number in the interval [0,
 #'   Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_funnel_connector_line} object (a named list).
@@ -455,10 +451,9 @@ go_funnel_connector <- function(
 #'     )
 #'   )
 go_funnel_connector_line <- function(
-    arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., color = NULL, dash = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("funnel.connector.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("funnel.connector.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Funnel marker objects
@@ -475,8 +470,6 @@ go_funnel_connector_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `marker.colorscale`. Has an effect only if in `marker.color` is set to
@@ -546,7 +539,8 @@ go_funnel_connector_line <- function(
 #' @param showscale Determines whether or not a colorbar is displayed for
 #'   this trace. Has an effect only if in `marker.color` is set to a
 #'   numerical array. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_funnel_marker} object (a named list).
@@ -563,12 +557,12 @@ go_funnel_connector_line <- function(
 #'     marker = go_funnel_marker(color = "red")
 #'   )
 go_funnel_marker <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, line = NULL, opacity = NULL,
-    reversescale = NULL, showscale = NULL, skip_invalid = FALSE
+    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    cmin = NULL, color = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, line = NULL, opacity = NULL, reversescale = NULL,
+    showscale = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("funnel.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("funnel.marker", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Funnel marker line objects
@@ -586,8 +580,6 @@ go_funnel_marker <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `marker.line.colorscale`. Has an effect only if in `marker.line.color`
@@ -646,7 +638,8 @@ go_funnel_marker <- function(
 #'   `marker.line.cmax` will correspond to the first color. Logical.
 #' @param width Sets the width (in px) of the lines bounding the marker
 #'   points. Number in the interval [0, Inf], or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_funnel_marker_line} object (a named list).
@@ -665,11 +658,10 @@ go_funnel_marker <- function(
 #'     )
 #'   )
 go_funnel_marker_line <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
-    colorscale = NULL, reversescale = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    cmin = NULL, color = NULL, coloraxis = NULL, colorscale = NULL,
+    reversescale = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("funnel.marker.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("funnel.marker.line", NULL, environment(), list(...), skip_invalid)
 }
 

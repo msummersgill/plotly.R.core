@@ -5,7 +5,6 @@
 \title{Layout xaxis rangeselector button objects}
 \usage{
 go_xaxis_rangeselector_button(
-  arg = NULL,
   ...,
   count = NULL,
   label = NULL,
@@ -18,10 +17,8 @@ go_xaxis_rangeselector_button(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{count}{Sets the number of steps to take to update the range. Use
 with `step` to specify the update interval. Number in the interval [0,

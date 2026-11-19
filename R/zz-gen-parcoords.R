@@ -17,8 +17,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -131,7 +129,8 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -152,14 +151,14 @@
 #'     )
 #'   )
 go_parcoords <- function(
-    arg = NULL, ..., customdata = NULL, dimensions = NULL, domain = NULL,
-    ids = NULL, labelangle = NULL, labelfont = NULL, labelside = NULL,
-    legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, line = NULL, meta = NULL, name = NULL,
-    rangefont = NULL, tickfont = NULL, uid = NULL, uirevision = NULL,
-    unselected = NULL, visible = NULL, skip_invalid = FALSE
+    ..., customdata = NULL, dimensions = NULL, domain = NULL, ids = NULL,
+    labelangle = NULL, labelfont = NULL, labelside = NULL, legend = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    line = NULL, meta = NULL, name = NULL, rangefont = NULL,
+    tickfont = NULL, uid = NULL, uirevision = NULL, unselected = NULL,
+    visible = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("parcoords", arg, environment(), list(...), skip_invalid)
+  plotly_object("parcoords", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Parcoords dimension objects
@@ -179,8 +178,6 @@ go_parcoords <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param constraintrange The domain range to which the filter on the
 #'   dimension is constrained. Must be an array of `[fromValue, toValue]`
 #'   with `fromValue <= toValue`, or if `multiselect` is not disabled, you
@@ -227,7 +224,8 @@ go_parcoords <- function(
 #'   Date/POSIXct vector, matrix or list.
 #' @param visible Shows the dimension when set to `true` (the default).
 #'   Hides the dimension for `false`. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_parcoords_dimension} object (a named list).
@@ -240,12 +238,12 @@ go_parcoords <- function(
 #'   dimensions = list(go_parcoords_dimension(visible = TRUE))
 #' )
 go_parcoords_dimension <- function(
-    arg = NULL, ..., constraintrange = NULL, label = NULL,
-    multiselect = NULL, name = NULL, range = NULL, templateitemname = NULL,
-    tickformat = NULL, ticktext = NULL, tickvals = NULL, values = NULL,
-    visible = NULL, skip_invalid = FALSE
+    ..., constraintrange = NULL, label = NULL, multiselect = NULL,
+    name = NULL, range = NULL, templateitemname = NULL, tickformat = NULL,
+    ticktext = NULL, tickvals = NULL, values = NULL, visible = NULL,
+    skip_invalid = FALSE
 ) {
-  plotly_object("parcoords.dimension", arg, environment(), list(...), skip_invalid)
+  plotly_object("parcoords.dimension", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Parcoords line objects
@@ -263,8 +261,6 @@ go_parcoords_dimension <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `line.colorscale`. Has an effect only if in `line.color` is set to a
@@ -327,7 +323,8 @@ go_parcoords_dimension <- function(
 #' @param showscale Determines whether or not a colorbar is displayed for
 #'   this trace. Has an effect only if in `line.color` is set to a
 #'   numerical array. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_parcoords_line} object (a named list).
@@ -347,11 +344,11 @@ go_parcoords_dimension <- function(
 #'     line = go_parcoords_line(color = "red")
 #'   )
 go_parcoords_line <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, reversescale = NULL,
-    showscale = NULL, skip_invalid = FALSE
+    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    cmin = NULL, color = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, reversescale = NULL, showscale = NULL,
+    skip_invalid = FALSE
 ) {
-  plotly_object("parcoords.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("parcoords.line", NULL, environment(), list(...), skip_invalid)
 }
 

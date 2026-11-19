@@ -5,7 +5,6 @@
 \title{Layout legend title objects}
 \usage{
 go_legend_title(
-  arg = NULL,
   ...,
   font = NULL,
   side = NULL,
@@ -14,10 +13,8 @@ go_legend_title(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{font}{Sets this legend's title font. Defaults to `legend.font`
 with its size increased about 20\%. A \code{\link{go_font}()} object

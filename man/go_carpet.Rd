@@ -7,7 +7,6 @@
 \title{Carpet traces}
 \usage{
 go_carpet(
-  arg = NULL,
   ...,
   a = NULL,
   a0 = NULL,
@@ -83,10 +82,8 @@ add_carpet(fig, ...)
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from (constructors). Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{a}{An array containing values of the first parameter value Data
 array: a vector, factor, Date/POSIXct vector, matrix or list.}

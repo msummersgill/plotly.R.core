@@ -7,7 +7,6 @@
 \title{Bar traces}
 \usage{
 go_bar(
-  arg = NULL,
   ...,
   alignmentgroup = NULL,
   base = NULL,
@@ -147,10 +146,8 @@ add_bar(fig, ...)
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from (constructors). Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{alignmentgroup}{Set several traces linked to the same position
 axis or matching axes to the same alignmentgroup. This controls

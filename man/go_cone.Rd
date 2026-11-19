@@ -7,7 +7,6 @@
 \title{Cone traces}
 \usage{
 go_cone(
-  arg = NULL,
   ...,
   anchor = NULL,
   autocolorscale = NULL,
@@ -120,10 +119,8 @@ add_cone(fig, ...)
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from (constructors). Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{anchor}{Sets the cones' anchor with respect to their x/y/z
 positions. Note that "cm" denote the cone's center of mass which

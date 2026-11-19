@@ -15,8 +15,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param base Sets where the bar base is drawn (in radial axis units). In
 #'   "stack" barmode, traces that set "base" will be excluded and drawn in
 #'   "overlay" mode instead. Any value.
@@ -187,7 +185,8 @@
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
 #' @param width Sets the bar angular width (in "thetaunit" units). Number
 #'   in the interval [0, Inf], or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -202,10 +201,10 @@
 #'   go_figure() |>
 #'   add_barpolar(r = ~mpg, theta = ~hp)
 go_barpolar <- function(
-    arg = NULL, ..., base = NULL, customdata = NULL, dr = NULL,
-    dtheta = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    ..., base = NULL, customdata = NULL, dr = NULL, dtheta = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
     name = NULL, offset = NULL, opacity = NULL, r = NULL, r0 = NULL,
     selected = NULL, selectedpoints = NULL, showlegend = NULL,
@@ -213,7 +212,7 @@ go_barpolar <- function(
     thetaunit = NULL, uid = NULL, uirevision = NULL, unselected = NULL,
     visible = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("barpolar", arg, environment(), list(...), skip_invalid)
+  plotly_object("barpolar", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Barpolar marker objects
@@ -231,8 +230,6 @@ go_barpolar <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `marker.colorscale`. Has an effect only if in `marker.color` is set to
@@ -307,7 +304,8 @@ go_barpolar <- function(
 #' @param showscale Determines whether or not a colorbar is displayed for
 #'   this trace. Has an effect only if in `marker.color` is set to a
 #'   numerical array. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_barpolar_marker} object (a named list).
@@ -324,13 +322,12 @@ go_barpolar <- function(
 #'     marker = go_barpolar_marker(color = "red")
 #'   )
 go_barpolar_marker <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, line = NULL, opacity = NULL,
-    pattern = NULL, reversescale = NULL, showscale = NULL,
-    skip_invalid = FALSE
+    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    cmin = NULL, color = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, line = NULL, opacity = NULL, pattern = NULL,
+    reversescale = NULL, showscale = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("barpolar.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("barpolar.marker", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Barpolar marker line objects
@@ -348,8 +345,6 @@ go_barpolar_marker <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `marker.line.colorscale`. Has an effect only if in `marker.line.color`
@@ -408,7 +403,8 @@ go_barpolar_marker <- function(
 #'   `marker.line.cmax` will correspond to the first color. Logical.
 #' @param width Sets the width (in px) of the lines bounding the marker
 #'   points. Number in the interval [0, Inf], or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_barpolar_marker_line} object (a named list).
@@ -427,11 +423,10 @@ go_barpolar_marker <- function(
 #'     )
 #'   )
 go_barpolar_marker_line <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
-    colorscale = NULL, reversescale = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    cmin = NULL, color = NULL, coloraxis = NULL, colorscale = NULL,
+    reversescale = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("barpolar.marker.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("barpolar.marker.line", NULL, environment(), list(...), skip_invalid)
 }
 

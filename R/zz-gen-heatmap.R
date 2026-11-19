@@ -29,8 +29,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `colorscale`. In case `colorscale` is unspecified or `autocolorscale`
@@ -340,7 +338,8 @@
 #'   `zorder` appear in front of those with lower `zorder`. Integer.
 #' @param zsmooth Picks a smoothing algorithm use to smooth `z` data. One
 #'   of \code{"fast"}, \code{"best"}, \code{FALSE}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -355,12 +354,11 @@
 #'   go_figure() |>
 #'   add_heatmap(x = ~Day, y = ~Month, z = ~Temp)
 go_heatmap <- function(
-    arg = NULL, ..., autocolorscale = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, connectgaps = NULL,
-    customdata = NULL, dx = NULL, dy = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hoverongaps = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    ..., autocolorscale = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, connectgaps = NULL, customdata = NULL, dx = NULL,
+    dy = NULL, hoverinfo = NULL, hoverlabel = NULL, hoverongaps = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, meta = NULL, name = NULL,
     opacity = NULL, reversescale = NULL, showlegend = NULL,
     showscale = NULL, text = NULL, textfont = NULL, texttemplate = NULL,
@@ -374,6 +372,6 @@ go_heatmap <- function(
     zhoverformat = NULL, zmax = NULL, zmid = NULL, zmin = NULL,
     zorder = NULL, zsmooth = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("heatmap", arg, environment(), list(...), skip_invalid)
+  plotly_object("heatmap", NULL, environment(), list(...), skip_invalid)
 }
 

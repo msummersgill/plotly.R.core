@@ -5,7 +5,6 @@
 \title{Layout map layer symbol objects}
 \usage{
 go_map_layer_symbol(
-  arg = NULL,
   ...,
   icon = NULL,
   iconsize = NULL,
@@ -17,10 +16,8 @@ go_map_layer_symbol(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{icon}{Sets the symbol icon image (map.layer.layout.icon-image).
 Full list: https://www.mapbox.com/maki-icons/ String.}

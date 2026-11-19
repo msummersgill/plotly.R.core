@@ -4,13 +4,11 @@
 \alias{go_slices}
 \title{Slices objects}
 \usage{
-go_slices(arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE)
+go_slices(..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{x}{A \code{\link{go_slices_axis}()} object or named list, with
 properties \code{fill}, \code{locations} and \code{show} (see

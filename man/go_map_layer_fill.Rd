@@ -4,13 +4,11 @@
 \alias{go_map_layer_fill}
 \title{Layout map layer fill objects}
 \usage{
-go_map_layer_fill(arg = NULL, ..., outlinecolor = NULL, skip_invalid = FALSE)
+go_map_layer_fill(..., outlinecolor = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{outlinecolor}{Sets the fill outline color
 (map.layer.paint.fill-outline-color). Has an effect only when `type`

@@ -4,13 +4,11 @@
 \alias{go_geo_center}
 \title{Layout geo center objects}
 \usage{
-go_geo_center(arg = NULL, ..., lat = NULL, lon = NULL, skip_invalid = FALSE)
+go_geo_center(..., lat = NULL, lon = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{lat}{Sets the latitude of the map's center. For all projection
 types, the map's latitude center lies at the middle of the latitude

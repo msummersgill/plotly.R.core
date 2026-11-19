@@ -5,7 +5,6 @@
 \title{Indicator title objects}
 \usage{
 go_indicator_title(
-  arg = NULL,
   ...,
   align = NULL,
   font = NULL,
@@ -14,10 +13,8 @@ go_indicator_title(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{align}{Sets the horizontal alignment of the title. It defaults to
 `center` except for bullet charts for which it defaults to right. One

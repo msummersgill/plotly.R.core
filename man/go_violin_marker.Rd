@@ -5,7 +5,6 @@
 \title{Violin marker objects}
 \usage{
 go_violin_marker(
-  arg = NULL,
   ...,
   angle = NULL,
   color = NULL,
@@ -18,10 +17,8 @@ go_violin_marker(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{angle}{Sets the marker angle in respect to `angleref`. Angle in
 degrees.}

@@ -15,8 +15,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param activeselection A \code{\link{go_activeselection}()} object or
 #'   named list, with properties \code{fillcolor} and \code{opacity} (see
 #'   \code{\link{go_activeselection}()}).
@@ -459,8 +457,9 @@
 #'   \code{autotypenumbers}, \code{calendar}, \code{categoryarray},
 #'   \code{categoryorder}, \code{color}, \code{constrain} and 80 more (see
 #'   \code{\link{go_yaxis}()}).
-#' @param ... Further properties, by their full names (e.g. numbered subplots
-#'   such as \code{xaxis2} in \code{go_layout()}).
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
+#'   Numbered subplots (\code{xaxis2}, \code{scene3}, ...) are given here.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -473,12 +472,12 @@
 #' @examples
 #' go_layout(title = "My plot", xaxis = go_xaxis(title = "x", range = c(0, 10)))
 go_layout <- function(
-    arg = NULL, ..., activeselection = NULL, activeshape = NULL,
-    annotations = NULL, autosize = NULL, autotypenumbers = NULL,
-    barcornerradius = NULL, bargap = NULL, bargroupgap = NULL,
-    barmode = NULL, barnorm = NULL, boxgap = NULL, boxgroupgap = NULL,
-    boxmode = NULL, calendar = NULL, clickanywhere = NULL, clickmode = NULL,
-    coloraxis = NULL, colorscale = NULL, colorway = NULL, computed = NULL,
+    ..., activeselection = NULL, activeshape = NULL, annotations = NULL,
+    autosize = NULL, autotypenumbers = NULL, barcornerradius = NULL,
+    bargap = NULL, bargroupgap = NULL, barmode = NULL, barnorm = NULL,
+    boxgap = NULL, boxgroupgap = NULL, boxmode = NULL, calendar = NULL,
+    clickanywhere = NULL, clickmode = NULL, coloraxis = NULL,
+    colorscale = NULL, colorway = NULL, computed = NULL,
     datarevision = NULL, dragmode = NULL, editrevision = NULL,
     extendfunnelareacolors = NULL, extendiciclecolors = NULL,
     extendpiecolors = NULL, extendsunburstcolors = NULL,
@@ -502,7 +501,7 @@ go_layout <- function(
     waterfallmode = NULL, width = NULL, xaxis = NULL, yaxis = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("layout", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout activeselection objects
@@ -519,13 +518,12 @@ go_layout <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param fillcolor Sets the color filling the active selection' interior.
 #'   Color: a CSS color string or R color name.
 #' @param opacity Sets the opacity of the active selection. Number in the
 #'   interval [0, 1].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_activeselection} object (a named list).
@@ -539,9 +537,9 @@ go_layout <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(activeselection = go_activeselection(opacity = 0.5))
 go_activeselection <- function(
-    arg = NULL, ..., fillcolor = NULL, opacity = NULL, skip_invalid = FALSE
+    ..., fillcolor = NULL, opacity = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.activeselection", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.activeselection", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout activeshape objects
@@ -558,13 +556,12 @@ go_activeselection <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param fillcolor Sets the color filling the active shape' interior.
 #'   Color: a CSS color string or R color name.
 #' @param opacity Sets the opacity of the active shape. Number in the
 #'   interval [0, 1].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_activeshape} object (a named list).
@@ -578,9 +575,9 @@ go_activeselection <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(activeshape = go_activeshape(opacity = 0.5))
 go_activeshape <- function(
-    arg = NULL, ..., fillcolor = NULL, opacity = NULL, skip_invalid = FALSE
+    ..., fillcolor = NULL, opacity = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.activeshape", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.activeshape", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout annotation objects
@@ -598,8 +595,6 @@ go_activeshape <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param align Sets the horizontal alignment of the `text` within the box.
 #'   Has an effect only if `text` spans two or more lines (i.e. `text`
 #'   contains one or more <br> HTML tags) or if an explicit width is set to
@@ -825,7 +820,8 @@ go_activeshape <- function(
 #'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
 #' @param yshift Shifts the position of the whole annotation and arrow up
 #'   (positive) or down (negative) by this many pixels. Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_annotation} object (a named list).
@@ -839,7 +835,7 @@ go_activeshape <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(annotations = list(go_annotation(text = "title")))
 go_annotation <- function(
-    arg = NULL, ..., align = NULL, arrowcolor = NULL, arrowhead = NULL,
+    ..., align = NULL, arrowcolor = NULL, arrowhead = NULL,
     arrowside = NULL, arrowsize = NULL, arrowwidth = NULL, ax = NULL,
     axref = NULL, ay = NULL, ayref = NULL, bgcolor = NULL,
     bordercolor = NULL, borderpad = NULL, borderwidth = NULL,
@@ -852,7 +848,7 @@ go_annotation <- function(
     xshift = NULL, y = NULL, yanchor = NULL, yclick = NULL, yref = NULL,
     yshift = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.annotation", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.annotation", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout coloraxis objects
@@ -871,8 +867,6 @@ go_annotation <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `colorscale`. In case `colorscale` is unspecified or `autocolorscale`
@@ -914,7 +908,8 @@ go_annotation <- function(
 #'   correspond to the first color. Logical.
 #' @param showscale Determines whether or not a colorbar is displayed for
 #'   this trace. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_coloraxis} object (a named list).
@@ -928,11 +923,11 @@ go_annotation <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(coloraxis = go_coloraxis())
 go_coloraxis <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, colorbar = NULL, colorscale = NULL,
-    reversescale = NULL, showscale = NULL, skip_invalid = FALSE
+    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    cmin = NULL, colorbar = NULL, colorscale = NULL, reversescale = NULL,
+    showscale = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.coloraxis", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.coloraxis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout colorscale objects
@@ -949,8 +944,6 @@ go_coloraxis <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param diverging Sets the default diverging colorscale. Note that
 #'   `autocolorscale` must be true for this attribute to work. Colorscale:
 #'   a vector of colors, a two-column data.frame of (value, color), or the
@@ -968,7 +961,8 @@ go_coloraxis <- function(
 #'   data.frame of (value, color), or the name of a sequential, diverging
 #'   or cyclical scale in \code{\link{plotly_colors}()} (append \code{"_r"}
 #'   to reverse).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_colorscale} object (a named list).
@@ -982,10 +976,10 @@ go_coloraxis <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(colorscale = go_layout_colorscale())
 go_layout_colorscale <- function(
-    arg = NULL, ..., diverging = NULL, sequential = NULL,
-    sequentialminus = NULL, skip_invalid = FALSE
+    ..., diverging = NULL, sequential = NULL, sequentialminus = NULL,
+    skip_invalid = FALSE
 ) {
-  plotly_object("layout.colorscale", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.colorscale", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout geo objects
@@ -1003,8 +997,6 @@ go_layout_colorscale <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param bgcolor Set the background color of the map Color: a CSS color
 #'   string or R color name.
 #' @param center A \code{\link{go_geo_center}()} object or named list, with
@@ -1090,7 +1082,8 @@ go_layout_colorscale <- function(
 #'   view (projection and center). Defaults to `layout.uirevision`. Any
 #'   value.
 #' @param visible Sets the default visibility of the base layers. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_geo} object (a named list).
@@ -1104,7 +1097,7 @@ go_layout_colorscale <- function(
 #'   add_scattergeo(lat = ~lat, lon = ~long) |>
 #'   update_layout(geo = go_geo(visible = TRUE))
 go_geo <- function(
-    arg = NULL, ..., bgcolor = NULL, center = NULL, coastlinecolor = NULL,
+    ..., bgcolor = NULL, center = NULL, coastlinecolor = NULL,
     coastlinewidth = NULL, countrycolor = NULL, countrywidth = NULL,
     domain = NULL, fitbounds = NULL, framecolor = NULL, framewidth = NULL,
     lakecolor = NULL, landcolor = NULL, lataxis = NULL, lonaxis = NULL,
@@ -1115,7 +1108,7 @@ go_geo <- function(
     showsubunits = NULL, subunitcolor = NULL, subunitwidth = NULL,
     uirevision = NULL, visible = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.geo", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.geo", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout geo center objects
@@ -1132,15 +1125,14 @@ go_geo <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param lat Sets the latitude of the map's center. For all projection
 #'   types, the map's latitude center lies at the middle of the latitude
 #'   range by default. Number.
 #' @param lon Sets the longitude of the map's center. By default, the map's
 #'   longitude center lies at the middle of the longitude range for scoped
 #'   projection and above `projection.rotation.lon` otherwise. Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_geo_center} object (a named list).
@@ -1154,9 +1146,9 @@ go_geo <- function(
 #'   add_scattergeo(lat = ~lat, lon = ~long) |>
 #'   update_layout(geo = go_geo(center = go_geo_center()))
 go_geo_center <- function(
-    arg = NULL, ..., lat = NULL, lon = NULL, skip_invalid = FALSE
+    ..., lat = NULL, lon = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.geo.center", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.geo.center", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout geo lataxis objects
@@ -1173,8 +1165,6 @@ go_geo_center <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param dtick Sets the graticule's longitude/latitude tick step. Number.
 #' @param gridcolor Sets the graticule's stroke color. Color: a CSS color
 #'   string or R color name.
@@ -1192,7 +1182,8 @@ go_geo_center <- function(
 #'   Logical.
 #' @param tick0 Sets the graticule's starting tick longitude/latitude.
 #'   Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_geo_lataxis} object (a named list).
@@ -1206,11 +1197,10 @@ go_geo_center <- function(
 #'   add_scattergeo(lat = ~lat, lon = ~long) |>
 #'   update_layout(geo = go_geo(lataxis = go_geo_lataxis()))
 go_geo_lataxis <- function(
-    arg = NULL, ..., dtick = NULL, gridcolor = NULL, griddash = NULL,
-    gridwidth = NULL, range = NULL, showgrid = NULL, tick0 = NULL,
-    skip_invalid = FALSE
+    ..., dtick = NULL, gridcolor = NULL, griddash = NULL, gridwidth = NULL,
+    range = NULL, showgrid = NULL, tick0 = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.geo.lataxis", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.geo.lataxis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout geo lonaxis objects
@@ -1227,8 +1217,6 @@ go_geo_lataxis <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param dtick Sets the graticule's longitude/latitude tick step. Number.
 #' @param gridcolor Sets the graticule's stroke color. Color: a CSS color
 #'   string or R color name.
@@ -1246,7 +1234,8 @@ go_geo_lataxis <- function(
 #'   Logical.
 #' @param tick0 Sets the graticule's starting tick longitude/latitude.
 #'   Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_geo_lonaxis} object (a named list).
@@ -1260,11 +1249,10 @@ go_geo_lataxis <- function(
 #'   add_scattergeo(lat = ~lat, lon = ~long) |>
 #'   update_layout(geo = go_geo(lonaxis = go_geo_lonaxis()))
 go_geo_lonaxis <- function(
-    arg = NULL, ..., dtick = NULL, gridcolor = NULL, griddash = NULL,
-    gridwidth = NULL, range = NULL, showgrid = NULL, tick0 = NULL,
-    skip_invalid = FALSE
+    ..., dtick = NULL, gridcolor = NULL, griddash = NULL, gridwidth = NULL,
+    range = NULL, showgrid = NULL, tick0 = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.geo.lonaxis", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.geo.lonaxis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout geo projection objects
@@ -1281,8 +1269,6 @@ go_geo_lonaxis <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param distance For satellite projection type only. Sets the distance
 #'   from the center of the sphere to the point of view as a proportion of
 #'   the sphere's radius. Number in the interval [1.001, Inf].
@@ -1337,7 +1323,8 @@ go_geo_lonaxis <- function(
 #'   grinten"}, \code{"van der grinten2"}, \code{"van der grinten3"},
 #'   \code{"van der grinten4"}, \code{"wagner4"}, \code{"wagner6"},
 #'   \code{"wiechel"}, \code{"winkel tripel"}, \code{"winkel3"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_geo_projection} object (a named list).
@@ -1351,11 +1338,11 @@ go_geo_lonaxis <- function(
 #'   add_scattergeo(lat = ~lat, lon = ~long) |>
 #'   update_layout(geo = go_geo(projection = go_geo_projection()))
 go_geo_projection <- function(
-    arg = NULL, ..., distance = NULL, maxscale = NULL, minscale = NULL,
+    ..., distance = NULL, maxscale = NULL, minscale = NULL,
     parallels = NULL, rotation = NULL, scale = NULL, tilt = NULL,
     type = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.geo.projection", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.geo.projection", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout geo projection rotation objects
@@ -1373,14 +1360,13 @@ go_geo_projection <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param lat Rotates the map along meridians (in degrees North). Number.
 #' @param lon Rotates the map along parallels (in degrees East). Defaults
 #'   to the center of the `lonaxis.range` values. Number.
 #' @param roll Roll the map (in degrees) For example, a roll of 180 makes
 #'   the map appear upside down. Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_geo_projection_rotation} object (a named list).
@@ -1398,10 +1384,9 @@ go_geo_projection <- function(
 #'     )
 #'   )
 go_geo_projection_rotation <- function(
-    arg = NULL, ..., lat = NULL, lon = NULL, roll = NULL,
-    skip_invalid = FALSE
+    ..., lat = NULL, lon = NULL, roll = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.geo.projection.rotation", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.geo.projection.rotation", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout grid objects
@@ -1418,8 +1403,6 @@ go_geo_projection_rotation <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param columns The number of columns in the grid. If you provide a 2D
 #'   `subplots` array, the length of its longest row is used as the
 #'   default. If you give an `xaxes` array, its length is used as the
@@ -1479,7 +1462,8 @@ go_geo_projection_rotation <- function(
 #'   each y axis is used in. "right" and "right plot" are similar. One of
 #'   \code{"left"}, \code{"left plot"}, \code{"right plot"},
 #'   \code{"right"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_grid} object (a named list).
@@ -1493,12 +1477,11 @@ go_geo_projection_rotation <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(grid = go_grid())
 go_grid <- function(
-    arg = NULL, ..., columns = NULL, domain = NULL, pattern = NULL,
-    roworder = NULL, rows = NULL, subplots = NULL, xaxes = NULL,
-    xgap = NULL, xside = NULL, yaxes = NULL, ygap = NULL, yside = NULL,
-    skip_invalid = FALSE
+    ..., columns = NULL, domain = NULL, pattern = NULL, roworder = NULL,
+    rows = NULL, subplots = NULL, xaxes = NULL, xgap = NULL, xside = NULL,
+    yaxes = NULL, ygap = NULL, yside = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.grid", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.grid", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout image objects
@@ -1516,8 +1499,6 @@ go_grid <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param layer Specifies whether images are drawn below or above traces.
 #'   When `xref` and `yref` are both set to `paper`, image is drawn below
 #'   the entire plot area. One of \code{"below"}, \code{"above"}.
@@ -1584,7 +1565,8 @@ go_grid <- function(
 #'   point between the bottom and the top of the domain of the second y
 #'   axis. One of \code{"paper"}, or a string matching
 #'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_image} object (a named list).
@@ -1598,12 +1580,12 @@ go_grid <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(images = list(go_layout_image(opacity = 0.5)))
 go_layout_image <- function(
-    arg = NULL, ..., layer = NULL, name = NULL, opacity = NULL,
-    sizex = NULL, sizey = NULL, sizing = NULL, source = NULL,
-    templateitemname = NULL, visible = NULL, x = NULL, xanchor = NULL,
-    xref = NULL, y = NULL, yanchor = NULL, yref = NULL, skip_invalid = FALSE
+    ..., layer = NULL, name = NULL, opacity = NULL, sizex = NULL,
+    sizey = NULL, sizing = NULL, source = NULL, templateitemname = NULL,
+    visible = NULL, x = NULL, xanchor = NULL, xref = NULL, y = NULL,
+    yanchor = NULL, yref = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.image", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.image", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout legend objects
@@ -1621,8 +1603,6 @@ go_layout_image <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param bgcolor Sets the legend background color. Defaults to
 #'   `layout.paper_bgcolor`. Color: a CSS color string or R color name.
 #' @param bordercolor Sets the color of the border enclosing the legend.
@@ -1758,7 +1738,8 @@ go_layout_image <- function(
 #' @param yref Sets the container `y` refers to. "container" spans the
 #'   entire `height` of the plot. "paper" refers to the height of the
 #'   plotting area only. One of \code{"container"}, \code{"paper"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_legend} object (a named list).
@@ -1772,7 +1753,7 @@ go_layout_image <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(legend = go_legend(visible = TRUE))
 go_legend <- function(
-    arg = NULL, ..., bgcolor = NULL, bordercolor = NULL, borderwidth = NULL,
+    ..., bgcolor = NULL, bordercolor = NULL, borderwidth = NULL,
     entrywidth = NULL, entrywidthmode = NULL, font = NULL,
     groupclick = NULL, groupdoubleclick = NULL, grouptitlefont = NULL,
     indentation = NULL, itemclick = NULL, itemdoubleclick = NULL,
@@ -1783,7 +1764,7 @@ go_legend <- function(
     xanchor = NULL, xref = NULL, y = NULL, yanchor = NULL, yref = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("layout.legend", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.legend", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout legend title objects
@@ -1800,8 +1781,6 @@ go_legend <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param font Sets this legend's title font. Defaults to `legend.font`
 #'   with its size increased about 20\%. A \code{\link{go_font}()} object
 #'   or named list, with properties \code{color}, \code{family},
@@ -1816,7 +1795,8 @@ go_legend <- function(
 #'   \code{"left"}, \code{"top left"}, \code{"top center"}, \code{"top
 #'   right"}.
 #' @param text Sets the title of the legend. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_legend_title} object (a named list).
@@ -1832,10 +1812,9 @@ go_legend <- function(
 #'     legend = go_legend(title = go_legend_title(text = "title"))
 #'   )
 go_legend_title <- function(
-    arg = NULL, ..., font = NULL, side = NULL, text = NULL,
-    skip_invalid = FALSE
+    ..., font = NULL, side = NULL, text = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.legend.title", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.legend.title", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout map objects
@@ -1853,8 +1832,6 @@ go_legend_title <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param bearing Sets the bearing angle of the map in degrees
 #'   counter-clockwise from North (map.bearing). Number.
 #' @param bounds A \code{\link{go_map_bounds}()} object or named list, with
@@ -1899,7 +1876,8 @@ go_legend_title <- function(
 #'   view: `center`, `zoom`, `bearing`, `pitch`. Defaults to
 #'   `layout.uirevision`. Any value.
 #' @param zoom Sets the zoom level of the map (map.zoom). Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_map} object (a named list).
@@ -1913,11 +1891,11 @@ go_legend_title <- function(
 #'   add_scattermap(lat = ~lat, lon = ~long) |>
 #'   update_layout(map = go_map())
 go_map <- function(
-    arg = NULL, ..., bearing = NULL, bounds = NULL, center = NULL,
-    domain = NULL, fitbounds = NULL, layers = NULL, pitch = NULL,
-    style = NULL, uirevision = NULL, zoom = NULL, skip_invalid = FALSE
+    ..., bearing = NULL, bounds = NULL, center = NULL, domain = NULL,
+    fitbounds = NULL, layers = NULL, pitch = NULL, style = NULL,
+    uirevision = NULL, zoom = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.map", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.map", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout map bounds objects
@@ -1934,8 +1912,6 @@ go_map <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param east Sets the maximum longitude of the map (in degrees East) if
 #'   `west`, `south` and `north` are declared. Number.
 #' @param north Sets the maximum latitude of the map (in degrees North) if
@@ -1944,7 +1920,8 @@ go_map <- function(
 #'   `east`, `west` and `north` are declared. Number.
 #' @param west Sets the minimum longitude of the map (in degrees East) if
 #'   `east`, `south` and `north` are declared. Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_map_bounds} object (a named list).
@@ -1958,10 +1935,10 @@ go_map <- function(
 #'   add_scattermap(lat = ~lat, lon = ~long) |>
 #'   update_layout(map = go_map(bounds = go_map_bounds()))
 go_map_bounds <- function(
-    arg = NULL, ..., east = NULL, north = NULL, south = NULL, west = NULL,
+    ..., east = NULL, north = NULL, south = NULL, west = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("layout.map.bounds", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.map.bounds", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout map center objects
@@ -1978,13 +1955,12 @@ go_map_bounds <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param lat Sets the latitude of the center of the map (in degrees
 #'   North). Number.
 #' @param lon Sets the longitude of the center of the map (in degrees
 #'   East). Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_map_center} object (a named list).
@@ -1998,9 +1974,9 @@ go_map_bounds <- function(
 #'   add_scattermap(lat = ~lat, lon = ~long) |>
 #'   update_layout(map = go_map(center = go_map_center()))
 go_map_center <- function(
-    arg = NULL, ..., lat = NULL, lon = NULL, skip_invalid = FALSE
+    ..., lat = NULL, lon = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.map.center", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.map.center", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout map layer objects
@@ -2018,8 +1994,6 @@ go_map_center <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param below Determines if the layer will be inserted before the layer
 #'   with the specified ID. If omitted or set to '', the layer will be
 #'   inserted above every existing layer. String.
@@ -2097,7 +2071,8 @@ go_map_center <- function(
 #'   \code{"circle"}, \code{"line"}, \code{"fill"}, \code{"symbol"},
 #'   \code{"raster"}.
 #' @param visible Determines whether this layer is displayed Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_map_layer} object (a named list).
@@ -2113,14 +2088,14 @@ go_map_center <- function(
 #'     map = go_map(layers = list(go_map_layer(color = "red")))
 #'   )
 go_map_layer <- function(
-    arg = NULL, ..., below = NULL, circle = NULL, color = NULL,
-    coordinates = NULL, fill = NULL, line = NULL, maxzoom = NULL,
-    minzoom = NULL, name = NULL, opacity = NULL, source = NULL,
-    sourceattribution = NULL, sourcelayer = NULL, sourcetype = NULL,
-    symbol = NULL, templateitemname = NULL, type = NULL, visible = NULL,
+    ..., below = NULL, circle = NULL, color = NULL, coordinates = NULL,
+    fill = NULL, line = NULL, maxzoom = NULL, minzoom = NULL, name = NULL,
+    opacity = NULL, source = NULL, sourceattribution = NULL,
+    sourcelayer = NULL, sourcetype = NULL, symbol = NULL,
+    templateitemname = NULL, type = NULL, visible = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("layout.map.layer", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.map.layer", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout map layer circle objects
@@ -2138,11 +2113,10 @@ go_map_layer <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param radius Sets the circle radius (map.layer.paint.circle-radius).
 #'   Has an effect only when `type` is set to "circle". Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_map_layer_circle} object (a named list).
@@ -2160,9 +2134,9 @@ go_map_layer <- function(
 #'     )
 #'   )
 go_map_layer_circle <- function(
-    arg = NULL, ..., radius = NULL, skip_invalid = FALSE
+    ..., radius = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.map.layer.circle", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.map.layer.circle", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout map layer fill objects
@@ -2180,12 +2154,11 @@ go_map_layer_circle <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param outlinecolor Sets the fill outline color
 #'   (map.layer.paint.fill-outline-color). Has an effect only when `type`
 #'   is set to "fill". Color: a CSS color string or R color name.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_map_layer_fill} object (a named list).
@@ -2203,9 +2176,9 @@ go_map_layer_circle <- function(
 #'     )
 #'   )
 go_map_layer_fill <- function(
-    arg = NULL, ..., outlinecolor = NULL, skip_invalid = FALSE
+    ..., outlinecolor = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.map.layer.fill", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.map.layer.fill", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout map layer line objects
@@ -2223,15 +2196,14 @@ go_map_layer_fill <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param dash Sets the length of dashes and gaps
 #'   (map.layer.paint.line-dasharray). Has an effect only when `type` is
 #'   set to "line". Data array: a vector, factor, Date/POSIXct vector,
 #'   matrix or list.
 #' @param width Sets the line width (map.layer.paint.line-width). Has an
 #'   effect only when `type` is set to "line". Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_map_layer_line} object (a named list).
@@ -2249,9 +2221,9 @@ go_map_layer_fill <- function(
 #'     )
 #'   )
 go_map_layer_line <- function(
-    arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE
+    ..., dash = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.map.layer.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.map.layer.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout map layer symbol objects
@@ -2269,8 +2241,6 @@ go_map_layer_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param icon Sets the symbol icon image (map.layer.layout.icon-image).
 #'   Full list: https://www.mapbox.com/maki-icons/ String.
 #' @param iconsize Sets the symbol icon size (map.layer.layout.icon-size).
@@ -2293,7 +2263,8 @@ go_map_layer_line <- function(
 #'   \code{"top center"}, \code{"top right"}, \code{"middle left"},
 #'   \code{"middle center"}, \code{"middle right"}, \code{"bottom left"},
 #'   \code{"bottom center"}, \code{"bottom right"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_map_layer_symbol} object (a named list).
@@ -2313,10 +2284,10 @@ go_map_layer_line <- function(
 #'     )
 #'   )
 go_map_layer_symbol <- function(
-    arg = NULL, ..., icon = NULL, iconsize = NULL, placement = NULL,
-    text = NULL, textfont = NULL, textposition = NULL, skip_invalid = FALSE
+    ..., icon = NULL, iconsize = NULL, placement = NULL, text = NULL,
+    textfont = NULL, textposition = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.map.layer.symbol", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.map.layer.symbol", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout margin objects
@@ -2333,8 +2304,6 @@ go_map_layer_symbol <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autoexpand Turns on/off margin expansion computations. Legends,
 #'   colorbars, updatemenus, sliders, axis rangeselector and rangeslider
 #'   are allowed to push the margins by defaults. Logical.
@@ -2345,7 +2314,8 @@ go_map_layer_symbol <- function(
 #'   and the axis lines Number in the interval [0, Inf].
 #' @param r Sets the right margin (in px). Number in the interval [0, Inf].
 #' @param t Sets the top margin (in px). Number in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_margin} object (a named list).
@@ -2359,10 +2329,10 @@ go_map_layer_symbol <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(margin = go_margin())
 go_margin <- function(
-    arg = NULL, ..., autoexpand = NULL, b = NULL, l = NULL, pad = NULL,
-    r = NULL, t = NULL, skip_invalid = FALSE
+    ..., autoexpand = NULL, b = NULL, l = NULL, pad = NULL, r = NULL,
+    t = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.margin", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.margin", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout modebar objects
@@ -2379,8 +2349,6 @@ go_margin <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param activecolor Sets the color of the active or hovered on icons in
 #'   the modebar. Color: a CSS color string or R color name.
 #' @param add Determines which predefined modebar buttons to add. Please
@@ -2415,7 +2383,8 @@ go_margin <- function(
 #'   the modebar, including `hovermode`, `dragmode`, and `showspikes` at
 #'   both the root level and inside subplots. Defaults to
 #'   `layout.uirevision`. Any value.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_modebar} object (a named list).
@@ -2429,11 +2398,11 @@ go_margin <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(modebar = go_modebar(color = "red"))
 go_modebar <- function(
-    arg = NULL, ..., activecolor = NULL, add = NULL, bgcolor = NULL,
-    color = NULL, orientation = NULL, remove = NULL, uirevision = NULL,
+    ..., activecolor = NULL, add = NULL, bgcolor = NULL, color = NULL,
+    orientation = NULL, remove = NULL, uirevision = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("layout.modebar", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.modebar", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout newselection objects
@@ -2450,8 +2419,6 @@ go_modebar <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param line A \code{\link{go_newselection_line}()} object or named list,
 #'   with properties \code{color}, \code{dash} and \code{width} (see
 #'   \code{\link{go_newselection_line}()}).
@@ -2461,7 +2428,8 @@ go_modebar <- function(
 #'   subtracting from the initial selection, this option allows declaring
 #'   extra outlines of the selection. One of \code{"immediate"},
 #'   \code{"gradual"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_newselection} object (a named list).
@@ -2475,9 +2443,9 @@ go_modebar <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(newselection = go_newselection())
 go_newselection <- function(
-    arg = NULL, ..., line = NULL, mode = NULL, skip_invalid = FALSE
+    ..., line = NULL, mode = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.newselection", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.newselection", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout newselection line objects
@@ -2495,8 +2463,6 @@ go_newselection <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the line color. By default uses either dark grey or
 #'   white to increase contrast with background color. Color: a CSS color
 #'   string or R color name.
@@ -2508,7 +2474,8 @@ go_newselection <- function(
 #'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
 #' @param width Sets the line width (in px). Number in the interval [1,
 #'   Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_newselection_line} object (a named list).
@@ -2524,10 +2491,9 @@ go_newselection <- function(
 #'     newselection = go_newselection(line = go_newselection_line(color = "red"))
 #'   )
 go_newselection_line <- function(
-    arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., color = NULL, dash = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.newselection.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.newselection.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout newshape objects
@@ -2544,8 +2510,6 @@ go_newselection_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param drawdirection When `dragmode` is set to "drawrect", "drawline" or
 #'   "drawcircle" this limits the drag to be horizontal, vertical or
 #'   diagonal. Using "diagonal" there is no limit e.g. in drawing lines in
@@ -2601,7 +2565,8 @@ go_newselection_line <- function(
 #'   "legendonly", the shape is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_newshape} object (a named list).
@@ -2615,13 +2580,13 @@ go_newselection_line <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(newshape = go_newshape(opacity = 0.5))
 go_newshape <- function(
-    arg = NULL, ..., drawdirection = NULL, fillcolor = NULL,
-    fillrule = NULL, label = NULL, layer = NULL, legend = NULL,
-    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, line = NULL, name = NULL, opacity = NULL,
-    showlegend = NULL, visible = NULL, skip_invalid = FALSE
+    ..., drawdirection = NULL, fillcolor = NULL, fillrule = NULL,
+    label = NULL, layer = NULL, legend = NULL, legendgroup = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    line = NULL, name = NULL, opacity = NULL, showlegend = NULL,
+    visible = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.newshape", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.newshape", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout newshape line objects
@@ -2639,8 +2604,6 @@ go_newshape <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the line color. By default uses either dark grey or
 #'   white to increase contrast with background color. Color: a CSS color
 #'   string or R color name.
@@ -2652,7 +2615,8 @@ go_newshape <- function(
 #'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
 #' @param width Sets the line width (in px). Number in the interval [0,
 #'   Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_newshape_line} object (a named list).
@@ -2668,10 +2632,9 @@ go_newshape <- function(
 #'     newshape = go_newshape(line = go_newshape_line(color = "red"))
 #'   )
 go_newshape_line <- function(
-    arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., color = NULL, dash = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.newshape.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.newshape.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout polar objects
@@ -2689,8 +2652,6 @@ go_newshape_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param angularaxis A \code{\link{go_polar_angularaxis}()} object or
 #'   named list, with properties \code{autotypenumbers},
 #'   \code{categoryarray}, \code{categoryorder}, \code{color},
@@ -2735,7 +2696,8 @@ go_newshape_line <- function(
 #' @param uirevision Controls persistence of user-driven changes in axis
 #'   attributes, if not overridden in the individual axes. Defaults to
 #'   `layout.uirevision`. Any value.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_polar} object (a named list).
@@ -2749,12 +2711,11 @@ go_newshape_line <- function(
 #'   add_scatterpolar(r = ~mpg, theta = ~hp) |>
 #'   update_layout(polar = go_polar(bgcolor = "lightyellow"))
 go_polar <- function(
-    arg = NULL, ..., angularaxis = NULL, bargap = NULL, barmode = NULL,
-    bgcolor = NULL, domain = NULL, gridshape = NULL, hole = NULL,
-    radialaxis = NULL, sector = NULL, uirevision = NULL,
-    skip_invalid = FALSE
+    ..., angularaxis = NULL, bargap = NULL, barmode = NULL, bgcolor = NULL,
+    domain = NULL, gridshape = NULL, hole = NULL, radialaxis = NULL,
+    sector = NULL, uirevision = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.polar", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.polar", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout polar angularaxis objects
@@ -2772,8 +2733,6 @@ go_polar <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autotypenumbers Using "strict" a numeric string in trace data is
 #'   not converted to a number. Using "convert types" a numeric string in
 #'   trace data may be treated as a number during automatic axis `type`
@@ -2991,7 +2950,8 @@ go_polar <- function(
 #' @param visible A single toggle to hide the axis while preserving
 #'   interaction like dragging. Default is true when a cheater plot is
 #'   present on the axis, otherwise false Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_polar_angularaxis} object (a named list).
@@ -3007,22 +2967,21 @@ go_polar <- function(
 #'     polar = go_polar(angularaxis = go_polar_angularaxis(color = "red"))
 #'   )
 go_polar_angularaxis <- function(
-    arg = NULL, ..., autotypenumbers = NULL, categoryarray = NULL,
-    categoryorder = NULL, color = NULL, direction = NULL, dtick = NULL,
-    exponentformat = NULL, gridcolor = NULL, griddash = NULL,
-    gridwidth = NULL, hoverformat = NULL, labelalias = NULL, layer = NULL,
-    linecolor = NULL, linewidth = NULL, minexponent = NULL,
-    minorloglabels = NULL, nticks = NULL, period = NULL, rotation = NULL,
-    separatethousands = NULL, showexponent = NULL, showgrid = NULL,
-    showline = NULL, showticklabels = NULL, showtickprefix = NULL,
-    showticksuffix = NULL, thetaunit = NULL, tick0 = NULL, tickangle = NULL,
-    tickcolor = NULL, tickfont = NULL, tickformat = NULL,
-    tickformatstops = NULL, ticklabelstep = NULL, ticklen = NULL,
-    tickmode = NULL, tickprefix = NULL, ticks = NULL, ticksuffix = NULL,
-    ticktext = NULL, tickvals = NULL, tickwidth = NULL, type = NULL,
-    uirevision = NULL, visible = NULL, skip_invalid = FALSE
+    ..., autotypenumbers = NULL, categoryarray = NULL, categoryorder = NULL,
+    color = NULL, direction = NULL, dtick = NULL, exponentformat = NULL,
+    gridcolor = NULL, griddash = NULL, gridwidth = NULL, hoverformat = NULL,
+    labelalias = NULL, layer = NULL, linecolor = NULL, linewidth = NULL,
+    minexponent = NULL, minorloglabels = NULL, nticks = NULL, period = NULL,
+    rotation = NULL, separatethousands = NULL, showexponent = NULL,
+    showgrid = NULL, showline = NULL, showticklabels = NULL,
+    showtickprefix = NULL, showticksuffix = NULL, thetaunit = NULL,
+    tick0 = NULL, tickangle = NULL, tickcolor = NULL, tickfont = NULL,
+    tickformat = NULL, tickformatstops = NULL, ticklabelstep = NULL,
+    ticklen = NULL, tickmode = NULL, tickprefix = NULL, ticks = NULL,
+    ticksuffix = NULL, ticktext = NULL, tickvals = NULL, tickwidth = NULL,
+    type = NULL, uirevision = NULL, visible = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.polar.angularaxis", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.polar.angularaxis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout polar radialaxis objects
@@ -3040,8 +2999,6 @@ go_polar_angularaxis <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param angle Sets the angle (in degrees) from which the radial axis is
 #'   drawn. Note that by default, radial axis line on the theta=0 line
 #'   corresponds to a line pointing right (like what mathematicians
@@ -3300,7 +3257,8 @@ go_polar_angularaxis <- function(
 #' @param visible A single toggle to hide the axis while preserving
 #'   interaction like dragging. Default is true when a cheater plot is
 #'   present on the axis, otherwise false Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_polar_radialaxis} object (a named list).
@@ -3316,24 +3274,24 @@ go_polar_angularaxis <- function(
 #'     polar = go_polar(radialaxis = go_polar_radialaxis(color = "red"))
 #'   )
 go_polar_radialaxis <- function(
-    arg = NULL, ..., angle = NULL, autorange = NULL,
-    autorangeoptions = NULL, autotickangles = NULL, autotypenumbers = NULL,
-    calendar = NULL, categoryarray = NULL, categoryorder = NULL,
-    color = NULL, dtick = NULL, exponentformat = NULL, gridcolor = NULL,
-    griddash = NULL, gridwidth = NULL, hoverformat = NULL,
-    labelalias = NULL, layer = NULL, linecolor = NULL, linewidth = NULL,
-    maxallowed = NULL, minallowed = NULL, minexponent = NULL,
-    minorloglabels = NULL, nticks = NULL, range = NULL, rangemode = NULL,
-    separatethousands = NULL, showexponent = NULL, showgrid = NULL,
-    showline = NULL, showticklabels = NULL, showtickprefix = NULL,
-    showticksuffix = NULL, side = NULL, tick0 = NULL, tickangle = NULL,
-    tickcolor = NULL, tickfont = NULL, tickformat = NULL,
-    tickformatstops = NULL, ticklabelstep = NULL, ticklen = NULL,
-    tickmode = NULL, tickprefix = NULL, ticks = NULL, ticksuffix = NULL,
-    ticktext = NULL, tickvals = NULL, tickwidth = NULL, title = NULL,
-    type = NULL, uirevision = NULL, visible = NULL, skip_invalid = FALSE
+    ..., angle = NULL, autorange = NULL, autorangeoptions = NULL,
+    autotickangles = NULL, autotypenumbers = NULL, calendar = NULL,
+    categoryarray = NULL, categoryorder = NULL, color = NULL, dtick = NULL,
+    exponentformat = NULL, gridcolor = NULL, griddash = NULL,
+    gridwidth = NULL, hoverformat = NULL, labelalias = NULL, layer = NULL,
+    linecolor = NULL, linewidth = NULL, maxallowed = NULL,
+    minallowed = NULL, minexponent = NULL, minorloglabels = NULL,
+    nticks = NULL, range = NULL, rangemode = NULL, separatethousands = NULL,
+    showexponent = NULL, showgrid = NULL, showline = NULL,
+    showticklabels = NULL, showtickprefix = NULL, showticksuffix = NULL,
+    side = NULL, tick0 = NULL, tickangle = NULL, tickcolor = NULL,
+    tickfont = NULL, tickformat = NULL, tickformatstops = NULL,
+    ticklabelstep = NULL, ticklen = NULL, tickmode = NULL,
+    tickprefix = NULL, ticks = NULL, ticksuffix = NULL, ticktext = NULL,
+    tickvals = NULL, tickwidth = NULL, title = NULL, type = NULL,
+    uirevision = NULL, visible = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.polar.radialaxis", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.polar.radialaxis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout polar radialaxis title objects
@@ -3351,15 +3309,14 @@ go_polar_radialaxis <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param font Sets this axis' title font. A \code{\link{go_font}()} object
 #'   or named list, with properties \code{color}, \code{family},
 #'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
 #'   \code{textcase}, \code{variant} and \code{weight} (see
 #'   \code{\link{go_font}()}).
 #' @param text Sets the title of this axis. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_polar_radialaxis_title} object (a named list).
@@ -3379,9 +3336,9 @@ go_polar_radialaxis <- function(
 #'     )
 #'   )
 go_polar_radialaxis_title <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
+    ..., font = NULL, text = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.polar.radialaxis.title", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.polar.radialaxis.title", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout scene objects
@@ -3399,8 +3356,6 @@ go_polar_radialaxis_title <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param annotations List, each element a
 #'   \code{\link{go_scene_annotation}()} object or named list, with
 #'   properties \code{align}, \code{arrowcolor}, \code{arrowhead},
@@ -3453,7 +3408,8 @@ go_polar_radialaxis_title <- function(
 #'   \code{categoryarray}, \code{categoryorder}, \code{color},
 #'   \code{dtick}, \code{exponentformat}, \code{gridcolor},
 #'   \code{gridwidth} and 44 more (see \code{\link{go_scene_axis}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_scene} object (a named list).
@@ -3467,12 +3423,12 @@ go_polar_radialaxis_title <- function(
 #'   add_scatter3d(x = ~wt, y = ~hp, z = ~mpg) |>
 #'   update_layout(scene = go_scene(bgcolor = "lightyellow"))
 go_scene <- function(
-    arg = NULL, ..., annotations = NULL, aspectmode = NULL,
-    aspectratio = NULL, bgcolor = NULL, camera = NULL, domain = NULL,
-    dragmode = NULL, hovermode = NULL, uirevision = NULL, xaxis = NULL,
-    yaxis = NULL, zaxis = NULL, skip_invalid = FALSE
+    ..., annotations = NULL, aspectmode = NULL, aspectratio = NULL,
+    bgcolor = NULL, camera = NULL, domain = NULL, dragmode = NULL,
+    hovermode = NULL, uirevision = NULL, xaxis = NULL, yaxis = NULL,
+    zaxis = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.scene", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.scene", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout scene annotation objects
@@ -3490,8 +3446,6 @@ go_scene <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param align Sets the horizontal alignment of the `text` within the box.
 #'   Has an effect only if `text` spans two or more lines (i.e. `text`
 #'   contains one or more <br> HTML tags) or if an explicit width is set to
@@ -3616,7 +3570,8 @@ go_scene <- function(
 #' @param yshift Shifts the position of the whole annotation and arrow up
 #'   (positive) or down (negative) by this many pixels. Number.
 #' @param z Sets the annotation's z position. Any value.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_scene_annotation} object (a named list).
@@ -3634,7 +3589,7 @@ go_scene <- function(
 #'     )
 #'   )
 go_scene_annotation <- function(
-    arg = NULL, ..., align = NULL, arrowcolor = NULL, arrowhead = NULL,
+    ..., align = NULL, arrowcolor = NULL, arrowhead = NULL,
     arrowside = NULL, arrowsize = NULL, arrowwidth = NULL, ax = NULL,
     ay = NULL, bgcolor = NULL, bordercolor = NULL, borderpad = NULL,
     borderwidth = NULL, captureevents = NULL, font = NULL, height = NULL,
@@ -3645,7 +3600,7 @@ go_scene_annotation <- function(
     width = NULL, x = NULL, xanchor = NULL, xshift = NULL, y = NULL,
     yanchor = NULL, yshift = NULL, z = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.scene.annotation", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.scene.annotation", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout scene aspectratio objects
@@ -3663,12 +3618,11 @@ go_scene_annotation <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param x Number in the interval [0, Inf].
 #' @param y Number in the interval [0, Inf].
 #' @param z Number in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_scene_aspectratio} object (a named list).
@@ -3682,9 +3636,9 @@ go_scene_annotation <- function(
 #'   add_scatter3d(x = ~wt, y = ~hp, z = ~mpg) |>
 #'   update_layout(scene = go_scene(aspectratio = go_scene_aspectratio()))
 go_scene_aspectratio <- function(
-    arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
+    ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.scene.aspectratio", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.scene.aspectratio", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout scene camera objects
@@ -3701,8 +3655,6 @@ go_scene_aspectratio <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param center Sets the (x,y,z) components of the 'center' camera vector
 #'   This vector determines the translation (x,y,z) space about the center
 #'   of this scene. By default, there is no such translation. A
@@ -3723,7 +3675,8 @@ go_scene_aspectratio <- function(
 #'   axis points up. A \code{\link{go_scene_camera_up}()} object or named
 #'   list, with properties \code{x}, \code{y} and \code{z} (see
 #'   \code{\link{go_scene_camera_up}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_scene_camera} object (a named list).
@@ -3737,10 +3690,10 @@ go_scene_aspectratio <- function(
 #'   add_scatter3d(x = ~wt, y = ~hp, z = ~mpg) |>
 #'   update_layout(scene = go_scene(camera = go_scene_camera()))
 go_scene_camera <- function(
-    arg = NULL, ..., center = NULL, eye = NULL, projection = NULL,
-    up = NULL, skip_invalid = FALSE
+    ..., center = NULL, eye = NULL, projection = NULL, up = NULL,
+    skip_invalid = FALSE
 ) {
-  plotly_object("layout.scene.camera", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.scene.camera", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout scene camera center objects
@@ -3760,12 +3713,11 @@ go_scene_camera <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param x Number.
 #' @param y Number.
 #' @param z Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_scene_camera_center} object (a named list).
@@ -3783,9 +3735,9 @@ go_scene_camera <- function(
 #'     )
 #'   )
 go_scene_camera_center <- function(
-    arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
+    ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.scene.camera.center", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.scene.camera.center", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout scene camera eye objects
@@ -3804,12 +3756,11 @@ go_scene_camera_center <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param x Number.
 #' @param y Number.
 #' @param z Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_scene_camera_eye} object (a named list).
@@ -3827,9 +3778,9 @@ go_scene_camera_center <- function(
 #'     )
 #'   )
 go_scene_camera_eye <- function(
-    arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
+    ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.scene.camera.eye", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.scene.camera.eye", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout scene camera projection objects
@@ -3847,12 +3798,11 @@ go_scene_camera_eye <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param type Sets the projection type. The projection type could be
 #'   either "perspective" or "orthographic". The default is "perspective".
 #'   One of \code{"perspective"}, \code{"orthographic"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_scene_camera_projection} object (a named list).
@@ -3870,9 +3820,9 @@ go_scene_camera_eye <- function(
 #'     )
 #'   )
 go_scene_camera_projection <- function(
-    arg = NULL, ..., type = NULL, skip_invalid = FALSE
+    ..., type = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.scene.camera.projection", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.scene.camera.projection", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout scene camera up objects
@@ -3893,12 +3843,11 @@ go_scene_camera_projection <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param x Number.
 #' @param y Number.
 #' @param z Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_scene_camera_up} object (a named list).
@@ -3916,9 +3865,9 @@ go_scene_camera_projection <- function(
 #'     )
 #'   )
 go_scene_camera_up <- function(
-    arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
+    ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.scene.camera.up", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.scene.camera.up", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout selection objects
@@ -3936,8 +3885,6 @@ go_scene_camera_up <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param line A \code{\link{go_selection_line}()} object or named list,
 #'   with properties \code{color}, \code{dash} and \code{width} (see
 #'   \code{\link{go_selection_line}()}).
@@ -3991,7 +3938,8 @@ go_scene_camera_up <- function(
 #'   the point between the bottom and the top of the domain of the second y
 #'   axis. One of \code{"paper"}, or a string matching
 #'   \code{"^y([2-9]|[1-9][0-9]+)?( domain)?$"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_selection} object (a named list).
@@ -4005,11 +3953,11 @@ go_scene_camera_up <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(selections = list(go_selection(opacity = 0.5)))
 go_selection <- function(
-    arg = NULL, ..., line = NULL, name = NULL, opacity = NULL, path = NULL,
+    ..., line = NULL, name = NULL, opacity = NULL, path = NULL,
     templateitemname = NULL, type = NULL, x0 = NULL, x1 = NULL, xref = NULL,
     y0 = NULL, y1 = NULL, yref = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.selection", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.selection", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout selection line objects
@@ -4027,8 +3975,6 @@ go_selection <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the line color. Color: a CSS color string or R color
 #'   name.
 #' @param dash Sets the dash style of lines. Set to a dash type string
@@ -4039,7 +3985,8 @@ go_selection <- function(
 #'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
 #' @param width Sets the line width (in px). Number in the interval [1,
 #'   Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_selection_line} object (a named list).
@@ -4055,10 +4002,9 @@ go_selection <- function(
 #'     selections = list(go_selection(line = go_selection_line(color = "red")))
 #'   )
 go_selection_line <- function(
-    arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., color = NULL, dash = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.selection.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.selection.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout shape objects
@@ -4075,8 +4021,6 @@ go_selection_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param editable Determines whether the shape could be activated for edit
 #'   or not. Has no effect when the older editable shapes mode is enabled
 #'   via `config.editable` or `config.edits.shapePosition`. Logical.
@@ -4248,7 +4192,8 @@ go_selection_line <- function(
 #'   can have a fixed height while maintaining a position relative to data
 #'   or plot fraction. Note: `ysizemode` "pixel" is not supported when
 #'   `yref` is an array. One of \code{"scaled"}, \code{"pixel"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_shape} object (a named list).
@@ -4262,8 +4207,8 @@ go_selection_line <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(shapes = list(go_shape(opacity = 0.5)))
 go_shape <- function(
-    arg = NULL, ..., editable = NULL, fillcolor = NULL, fillrule = NULL,
-    label = NULL, layer = NULL, legend = NULL, legendgroup = NULL,
+    ..., editable = NULL, fillcolor = NULL, fillrule = NULL, label = NULL,
+    layer = NULL, legend = NULL, legendgroup = NULL,
     legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
     line = NULL, name = NULL, opacity = NULL, path = NULL,
     showlegend = NULL, templateitemname = NULL, type = NULL, visible = NULL,
@@ -4272,7 +4217,7 @@ go_shape <- function(
     y1shift = NULL, yanchor = NULL, yref = NULL, ysizemode = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("layout.shape", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.shape", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout shape line objects
@@ -4289,8 +4234,6 @@ go_shape <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the line color. Color: a CSS color string or R color
 #'   name.
 #' @param dash Sets the dash style of lines. Set to a dash type string
@@ -4301,7 +4244,8 @@ go_shape <- function(
 #'   \code{"^\\\\d+(\\\\.\\\\d+)?(px|\%)?((,|\\\\s)\\\\s*\\\\d+(\\\\.\\\\d+)?(px|\%)?)*$"}.
 #' @param width Sets the line width (in px). Number in the interval [0,
 #'   Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_shape_line} object (a named list).
@@ -4317,10 +4261,9 @@ go_shape <- function(
 #'     shapes = list(go_shape(line = go_shape_line(color = "red")))
 #'   )
 go_shape_line <- function(
-    arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
-    skip_invalid = FALSE
+    ..., color = NULL, dash = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.shape.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.shape.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout slider objects
@@ -4337,8 +4280,6 @@ go_shape_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param active Determines which button (by index starting from 0) is
 #'   considered active. Number in the interval [0, Inf].
 #' @param activebgcolor Sets the background color of the slider grip while
@@ -4409,7 +4350,8 @@ go_shape_line <- function(
 #'   binds the `y` position to the "top", "middle" or "bottom" of the range
 #'   selector. One of \code{"auto"}, \code{"top"}, \code{"middle"},
 #'   \code{"bottom"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_slider} object (a named list).
@@ -4423,7 +4365,7 @@ go_shape_line <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(sliders = list(go_slider(visible = TRUE)))
 go_slider <- function(
-    arg = NULL, ..., active = NULL, activebgcolor = NULL, bgcolor = NULL,
+    ..., active = NULL, activebgcolor = NULL, bgcolor = NULL,
     bordercolor = NULL, borderwidth = NULL, currentvalue = NULL,
     font = NULL, len = NULL, lenmode = NULL, minorticklen = NULL,
     name = NULL, pad = NULL, steps = NULL, templateitemname = NULL,
@@ -4431,7 +4373,7 @@ go_slider <- function(
     visible = NULL, x = NULL, xanchor = NULL, y = NULL, yanchor = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("layout.slider", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.slider", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout slider currentvalue objects
@@ -4449,8 +4391,6 @@ go_slider <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param font Sets the font of the current value label text. A
 #'   \code{\link{go_font}()} object or named list, with properties
 #'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
@@ -4466,7 +4406,8 @@ go_slider <- function(
 #'   Logical.
 #' @param xanchor The alignment of the value readout relative to the length
 #'   of the slider. One of \code{"left"}, \code{"center"}, \code{"right"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_slider_currentvalue} object (a named list).
@@ -4486,10 +4427,10 @@ go_slider <- function(
 #'     )
 #'   )
 go_slider_currentvalue <- function(
-    arg = NULL, ..., font = NULL, offset = NULL, prefix = NULL,
-    suffix = NULL, visible = NULL, xanchor = NULL, skip_invalid = FALSE
+    ..., font = NULL, offset = NULL, prefix = NULL, suffix = NULL,
+    visible = NULL, xanchor = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.slider.currentvalue", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.slider.currentvalue", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout slider pad objects
@@ -4507,8 +4448,6 @@ go_slider_currentvalue <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param b The amount of padding (in px) along the bottom of the
 #'   component. Number.
 #' @param l The amount of padding (in px) on the left side of the
@@ -4517,7 +4456,8 @@ go_slider_currentvalue <- function(
 #'   component. Number.
 #' @param t The amount of padding (in px) along the top of the component.
 #'   Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_slider_pad} object (a named list).
@@ -4531,10 +4471,9 @@ go_slider_currentvalue <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(sliders = list(go_slider(pad = go_slider_pad())))
 go_slider_pad <- function(
-    arg = NULL, ..., b = NULL, l = NULL, r = NULL, t = NULL,
-    skip_invalid = FALSE
+    ..., b = NULL, l = NULL, r = NULL, t = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.slider.pad", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.slider.pad", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout slider step objects
@@ -4552,8 +4491,6 @@ go_slider_pad <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param args Sets the arguments values to be passed to the Plotly method
 #'   set in `method` on slide. Vector or list of up to 3 element(s).
 #' @param execute When true, the API method is executed. When false, all
@@ -4589,7 +4526,8 @@ go_slider_pad <- function(
 #'   String.
 #' @param visible Determines whether or not this step is included in the
 #'   slider. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_slider_step} object (a named list).
@@ -4607,11 +4545,11 @@ go_slider_pad <- function(
 #'     )
 #'   )
 go_slider_step <- function(
-    arg = NULL, ..., args = NULL, execute = NULL, label = NULL,
-    method = NULL, name = NULL, templateitemname = NULL, value = NULL,
-    visible = NULL, skip_invalid = FALSE
+    ..., args = NULL, execute = NULL, label = NULL, method = NULL,
+    name = NULL, templateitemname = NULL, value = NULL, visible = NULL,
+    skip_invalid = FALSE
 ) {
-  plotly_object("layout.slider.step", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.slider.step", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout slider transition objects
@@ -4629,8 +4567,6 @@ go_slider_step <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param duration Sets the duration of the slider transition Number in the
 #'   interval [0, Inf].
 #' @param easing Sets the easing function of the slider transition One of
@@ -4646,7 +4582,8 @@ go_slider_step <- function(
 #'   \code{"cubic-in-out"}, \code{"sin-in-out"}, \code{"exp-in-out"},
 #'   \code{"circle-in-out"}, \code{"elastic-in-out"}, \code{"back-in-out"},
 #'   \code{"bounce-in-out"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_slider_transition} object (a named list).
@@ -4662,9 +4599,9 @@ go_slider_step <- function(
 #'     sliders = list(go_slider(transition = go_slider_transition()))
 #'   )
 go_slider_transition <- function(
-    arg = NULL, ..., duration = NULL, easing = NULL, skip_invalid = FALSE
+    ..., duration = NULL, easing = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.slider.transition", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.slider.transition", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout smith objects
@@ -4682,8 +4619,6 @@ go_slider_transition <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param bgcolor Set the background color of the subplot Color: a CSS
 #'   color string or R color name.
 #' @param domain A \code{\link{go_domain}()} object or named list, with
@@ -4701,7 +4636,8 @@ go_slider_transition <- function(
 #'   \code{linecolor}, \code{linewidth}, \code{showgrid}, \code{showline},
 #'   \code{showticklabels} and 14 more (see
 #'   \code{\link{go_smith_realaxis}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_smith} object (a named list).
@@ -4715,10 +4651,10 @@ go_slider_transition <- function(
 #'   add_scattersmith(real = ~wt, imag = ~drat) |>
 #'   update_layout(smith = go_smith(bgcolor = "lightyellow"))
 go_smith <- function(
-    arg = NULL, ..., bgcolor = NULL, domain = NULL, imaginaryaxis = NULL,
+    ..., bgcolor = NULL, domain = NULL, imaginaryaxis = NULL,
     realaxis = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.smith", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.smith", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout smith imaginaryaxis objects
@@ -4736,8 +4672,6 @@ go_smith <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets default for all colors associated with this axis all
 #'   at once: line, font, tick, and grid colors. Grid color is lightened by
 #'   blending this with the plot background Individual pieces can override
@@ -4825,7 +4759,8 @@ go_smith <- function(
 #' @param visible A single toggle to hide the axis while preserving
 #'   interaction like dragging. Default is true when a cheater plot is
 #'   present on the axis, otherwise false Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_smith_imaginaryaxis} object (a named list).
@@ -4843,15 +4778,15 @@ go_smith <- function(
 #'     )
 #'   )
 go_smith_imaginaryaxis <- function(
-    arg = NULL, ..., color = NULL, gridcolor = NULL, griddash = NULL,
-    gridwidth = NULL, hoverformat = NULL, labelalias = NULL, layer = NULL,
-    linecolor = NULL, linewidth = NULL, showgrid = NULL, showline = NULL,
+    ..., color = NULL, gridcolor = NULL, griddash = NULL, gridwidth = NULL,
+    hoverformat = NULL, labelalias = NULL, layer = NULL, linecolor = NULL,
+    linewidth = NULL, showgrid = NULL, showline = NULL,
     showticklabels = NULL, showtickprefix = NULL, showticksuffix = NULL,
     tickcolor = NULL, tickfont = NULL, tickformat = NULL, ticklen = NULL,
     tickprefix = NULL, ticks = NULL, ticksuffix = NULL, tickvals = NULL,
     tickwidth = NULL, visible = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.smith.imaginaryaxis", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.smith.imaginaryaxis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout smith realaxis objects
@@ -4868,8 +4803,6 @@ go_smith_imaginaryaxis <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets default for all colors associated with this axis all
 #'   at once: line, font, tick, and grid colors. Grid color is lightened by
 #'   blending this with the plot background Individual pieces can override
@@ -4961,7 +4894,8 @@ go_smith_imaginaryaxis <- function(
 #' @param visible A single toggle to hide the axis while preserving
 #'   interaction like dragging. Default is true when a cheater plot is
 #'   present on the axis, otherwise false Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_smith_realaxis} object (a named list).
@@ -4977,16 +4911,16 @@ go_smith_imaginaryaxis <- function(
 #'     smith = go_smith(realaxis = go_smith_realaxis(color = "red"))
 #'   )
 go_smith_realaxis <- function(
-    arg = NULL, ..., color = NULL, gridcolor = NULL, griddash = NULL,
-    gridwidth = NULL, hoverformat = NULL, labelalias = NULL, layer = NULL,
-    linecolor = NULL, linewidth = NULL, showgrid = NULL, showline = NULL,
+    ..., color = NULL, gridcolor = NULL, griddash = NULL, gridwidth = NULL,
+    hoverformat = NULL, labelalias = NULL, layer = NULL, linecolor = NULL,
+    linewidth = NULL, showgrid = NULL, showline = NULL,
     showticklabels = NULL, showtickprefix = NULL, showticksuffix = NULL,
     side = NULL, tickangle = NULL, tickcolor = NULL, tickfont = NULL,
     tickformat = NULL, ticklen = NULL, tickprefix = NULL, ticks = NULL,
     ticksuffix = NULL, tickvals = NULL, tickwidth = NULL, visible = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("layout.smith.realaxis", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.smith.realaxis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout ternary objects
@@ -5004,8 +4938,6 @@ go_smith_realaxis <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param aaxis A \code{\link{go_ternary_axis}()} object or named list,
 #'   with properties \code{color}, \code{dtick}, \code{exponentformat},
 #'   \code{gridcolor}, \code{griddash}, \code{gridwidth},
@@ -5034,7 +4966,8 @@ go_smith_realaxis <- function(
 #' @param uirevision Controls persistence of user-driven changes in axis
 #'   `min` and `title`, if not overridden in the individual axes. Defaults
 #'   to `layout.uirevision`. Any value.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_ternary} object (a named list).
@@ -5052,11 +4985,10 @@ go_smith_realaxis <- function(
 #'   ) |>
 #'   update_layout(ternary = go_ternary(bgcolor = "lightyellow"))
 go_ternary <- function(
-    arg = NULL, ..., aaxis = NULL, baxis = NULL, bgcolor = NULL,
-    caxis = NULL, domain = NULL, sum = NULL, uirevision = NULL,
-    skip_invalid = FALSE
+    ..., aaxis = NULL, baxis = NULL, bgcolor = NULL, caxis = NULL,
+    domain = NULL, sum = NULL, uirevision = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.ternary", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.ternary", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout title objects
@@ -5073,8 +5005,6 @@ go_ternary <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param automargin Determines whether the title can automatically push
 #'   the figure margins. If `yref='paper'` then the margin will expand to
 #'   ensure that the title doesn't overlap with the edges of the container.
@@ -5126,7 +5056,8 @@ go_ternary <- function(
 #' @param yref Sets the container `y` refers to. "container" spans the
 #'   entire `height` of the plot. "paper" refers to the height of the
 #'   plotting area only. One of \code{"container"}, \code{"paper"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_title} object (a named list).
@@ -5140,11 +5071,11 @@ go_ternary <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(title = go_layout_title(text = "title"))
 go_layout_title <- function(
-    arg = NULL, ..., automargin = NULL, font = NULL, pad = NULL,
-    subtitle = NULL, text = NULL, x = NULL, xanchor = NULL, xref = NULL,
-    y = NULL, yanchor = NULL, yref = NULL, skip_invalid = FALSE
+    ..., automargin = NULL, font = NULL, pad = NULL, subtitle = NULL,
+    text = NULL, x = NULL, xanchor = NULL, xref = NULL, y = NULL,
+    yanchor = NULL, yref = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.title", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.title", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout title pad objects
@@ -5166,8 +5097,6 @@ go_layout_title <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param b The amount of padding (in px) along the bottom of the
 #'   component. Number.
 #' @param l The amount of padding (in px) on the left side of the
@@ -5176,7 +5105,8 @@ go_layout_title <- function(
 #'   component. Number.
 #' @param t The amount of padding (in px) along the top of the component.
 #'   Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_title_pad} object (a named list).
@@ -5190,10 +5120,9 @@ go_layout_title <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(title = go_layout_title(pad = go_title_pad()))
 go_title_pad <- function(
-    arg = NULL, ..., b = NULL, l = NULL, r = NULL, t = NULL,
-    skip_invalid = FALSE
+    ..., b = NULL, l = NULL, r = NULL, t = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.title.pad", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.title.pad", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout title subtitle objects
@@ -5211,15 +5140,14 @@ go_title_pad <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param font Sets the subtitle font. A \code{\link{go_font}()} object or
 #'   named list, with properties \code{color}, \code{family},
 #'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
 #'   \code{textcase}, \code{variant} and \code{weight} (see
 #'   \code{\link{go_font}()}).
 #' @param text Sets the plot's subtitle. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_title_subtitle} object (a named list).
@@ -5237,9 +5165,9 @@ go_title_pad <- function(
 #'     )
 #'   )
 go_title_subtitle <- function(
-    arg = NULL, ..., font = NULL, text = NULL, skip_invalid = FALSE
+    ..., font = NULL, text = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.title.subtitle", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.title.subtitle", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout transition objects
@@ -5257,8 +5185,6 @@ go_title_subtitle <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param duration The duration of the transition, in milliseconds. If
 #'   equal to zero, updates are synchronous. Number in the interval [0,
 #'   Inf].
@@ -5278,7 +5204,8 @@ go_title_subtitle <- function(
 #' @param ordering Determines whether the figure's layout or traces
 #'   smoothly transitions during updates that make both traces and layout
 #'   change. One of \code{"layout first"}, \code{"traces first"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_transition} object (a named list).
@@ -5292,10 +5219,10 @@ go_title_subtitle <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(transition = go_layout_transition())
 go_layout_transition <- function(
-    arg = NULL, ..., duration = NULL, easing = NULL, ordering = NULL,
+    ..., duration = NULL, easing = NULL, ordering = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("layout.transition", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.transition", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout uniformtext objects
@@ -5312,8 +5239,6 @@ go_layout_transition <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param minsize Sets the minimum text size between traces of the same
 #'   type. Number in the interval [0, Inf].
 #' @param mode Determines how the font size for various text elements are
@@ -5323,7 +5248,8 @@ go_layout_transition <- function(
 #'   without further downscaling. Please note that if the size defined by
 #'   `minsize` is greater than the font size defined by trace, then the
 #'   `minsize` is used. One of \code{"hide"}, \code{"show"}, \code{FALSE}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_uniformtext} object (a named list).
@@ -5337,9 +5263,9 @@ go_layout_transition <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(uniformtext = go_uniformtext())
 go_uniformtext <- function(
-    arg = NULL, ..., minsize = NULL, mode = NULL, skip_invalid = FALSE
+    ..., minsize = NULL, mode = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.uniformtext", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.uniformtext", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout updatemenu objects
@@ -5356,8 +5282,6 @@ go_uniformtext <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param active Determines which button (by index starting from 0) is
 #'   considered active. Integer in the interval [-1, Inf].
 #' @param bgcolor Sets the background color of the update menu buttons.
@@ -5417,7 +5341,8 @@ go_uniformtext <- function(
 #'   anchor binds the `y` position to the "top", "middle" or "bottom" of
 #'   the range selector. One of \code{"auto"}, \code{"top"},
 #'   \code{"middle"}, \code{"bottom"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_updatemenu} object (a named list).
@@ -5431,13 +5356,13 @@ go_uniformtext <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(updatemenus = list(go_updatemenu(visible = TRUE)))
 go_updatemenu <- function(
-    arg = NULL, ..., active = NULL, bgcolor = NULL, bordercolor = NULL,
+    ..., active = NULL, bgcolor = NULL, bordercolor = NULL,
     borderwidth = NULL, buttons = NULL, direction = NULL, font = NULL,
     name = NULL, pad = NULL, showactive = NULL, templateitemname = NULL,
     type = NULL, visible = NULL, x = NULL, xanchor = NULL, y = NULL,
     yanchor = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.updatemenu", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.updatemenu", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout updatemenu button objects
@@ -5455,8 +5380,6 @@ go_updatemenu <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param args Sets the arguments values to be passed to the Plotly method
 #'   set in `method` on click. Vector or list of up to 3 element(s).
 #' @param args2 Sets a 2nd set of `args`, these arguments values are passed
@@ -5492,7 +5415,8 @@ go_updatemenu <- function(
 #'   be hidden unless you explicitly show it with `visible: true`. String.
 #' @param visible Determines whether or not this button is visible.
 #'   Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_updatemenu_button} object (a named list).
@@ -5512,11 +5436,11 @@ go_updatemenu <- function(
 #'     )
 #'   )
 go_updatemenu_button <- function(
-    arg = NULL, ..., args = NULL, args2 = NULL, execute = NULL,
-    label = NULL, method = NULL, name = NULL, templateitemname = NULL,
-    visible = NULL, skip_invalid = FALSE
+    ..., args = NULL, args2 = NULL, execute = NULL, label = NULL,
+    method = NULL, name = NULL, templateitemname = NULL, visible = NULL,
+    skip_invalid = FALSE
 ) {
-  plotly_object("layout.updatemenu.button", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.updatemenu.button", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout updatemenu pad objects
@@ -5534,8 +5458,6 @@ go_updatemenu_button <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param b The amount of padding (in px) along the bottom of the
 #'   component. Number.
 #' @param l The amount of padding (in px) on the left side of the
@@ -5544,7 +5466,8 @@ go_updatemenu_button <- function(
 #'   component. Number.
 #' @param t The amount of padding (in px) along the top of the component.
 #'   Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_updatemenu_pad} object (a named list).
@@ -5560,10 +5483,9 @@ go_updatemenu_button <- function(
 #'     updatemenus = list(go_updatemenu(pad = go_updatemenu_pad()))
 #'   )
 go_updatemenu_pad <- function(
-    arg = NULL, ..., b = NULL, l = NULL, r = NULL, t = NULL,
-    skip_invalid = FALSE
+    ..., b = NULL, l = NULL, r = NULL, t = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.updatemenu.pad", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.updatemenu.pad", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout xaxis objects
@@ -5581,8 +5503,6 @@ go_updatemenu_pad <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param anchor If set to an opposite-letter axis id (e.g. `x2`, `y`),
 #'   this axis is bound to the corresponding opposite-letter axis. If set
 #'   to "free", this axis' position is determined by `position`. One of
@@ -6055,7 +5975,8 @@ go_updatemenu_pad <- function(
 #'   "zerolinelayer" currently has no effect if the "zorder" property is
 #'   set on any trace. One of \code{"above traces"}, \code{"below traces"}.
 #' @param zerolinewidth Sets the width (in px) of the zero line. Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_xaxis} object (a named list).
@@ -6069,7 +5990,7 @@ go_updatemenu_pad <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(xaxis = go_xaxis(color = "red"))
 go_xaxis <- function(
-    arg = NULL, ..., anchor = NULL, automargin = NULL, autorange = NULL,
+    ..., anchor = NULL, automargin = NULL, autorange = NULL,
     autorangeoptions = NULL, autotickangles = NULL, autotypenumbers = NULL,
     calendar = NULL, categoryarray = NULL, categoryorder = NULL,
     color = NULL, constrain = NULL, constraintoward = NULL,
@@ -6099,7 +6020,7 @@ go_xaxis <- function(
     zerolinecolor = NULL, zerolinelayer = NULL, zerolinewidth = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("layout.xaxis", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.xaxis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout xaxis rangeselector objects
@@ -6117,8 +6038,6 @@ go_xaxis <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param activecolor Sets the background color of the active range
 #'   selector button. Color: a CSS color string or R color name.
 #' @param bgcolor Sets the background color of the range selector buttons.
@@ -6152,7 +6071,8 @@ go_xaxis <- function(
 #'   anchor binds the `y` position to the "top", "middle" or "bottom" of
 #'   the range selector. One of \code{"auto"}, \code{"top"},
 #'   \code{"middle"}, \code{"bottom"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_xaxis_rangeselector} object (a named list).
@@ -6170,11 +6090,11 @@ go_xaxis <- function(
 #'     )
 #'   )
 go_xaxis_rangeselector <- function(
-    arg = NULL, ..., activecolor = NULL, bgcolor = NULL, bordercolor = NULL,
+    ..., activecolor = NULL, bgcolor = NULL, bordercolor = NULL,
     borderwidth = NULL, buttons = NULL, font = NULL, visible = NULL,
     x = NULL, xanchor = NULL, y = NULL, yanchor = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.xaxis.rangeselector", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.xaxis.rangeselector", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout xaxis rangeselector button objects
@@ -6194,8 +6114,6 @@ go_xaxis_rangeselector <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param count Sets the number of steps to take to update the range. Use
 #'   with `step` to specify the update interval. Number in the interval [0,
 #'   Inf].
@@ -6227,7 +6145,8 @@ go_xaxis_rangeselector <- function(
 #'   be hidden unless you explicitly show it with `visible: true`. String.
 #' @param visible Determines whether or not this button is visible.
 #'   Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_xaxis_rangeselector_button} object (a named list).
@@ -6247,11 +6166,11 @@ go_xaxis_rangeselector <- function(
 #'     )
 #'   )
 go_xaxis_rangeselector_button <- function(
-    arg = NULL, ..., count = NULL, label = NULL, name = NULL, step = NULL,
+    ..., count = NULL, label = NULL, name = NULL, step = NULL,
     stepmode = NULL, templateitemname = NULL, visible = NULL,
     skip_invalid = FALSE
 ) {
-  plotly_object("layout.xaxis.rangeselector.button", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.xaxis.rangeselector.button", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout xaxis rangeslider objects
@@ -6269,8 +6188,6 @@ go_xaxis_rangeselector_button <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autorange Determines whether or not the range slider range is
 #'   computed in relation to the input data. If `range` is provided, then
 #'   `autorange` is set to FALSE. Logical.
@@ -6296,7 +6213,8 @@ go_xaxis_rangeselector_button <- function(
 #' @param yaxis A \code{\link{go_xaxis_rangeslider_yaxis}()} object or
 #'   named list, with properties \code{range} and \code{rangemode} (see
 #'   \code{\link{go_xaxis_rangeslider_yaxis}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_xaxis_rangeslider} object (a named list).
@@ -6312,11 +6230,11 @@ go_xaxis_rangeselector_button <- function(
 #'     xaxis = go_xaxis(rangeslider = go_xaxis_rangeslider(visible = TRUE))
 #'   )
 go_xaxis_rangeslider <- function(
-    arg = NULL, ..., autorange = NULL, bgcolor = NULL, bordercolor = NULL,
+    ..., autorange = NULL, bgcolor = NULL, bordercolor = NULL,
     borderwidth = NULL, range = NULL, thickness = NULL, visible = NULL,
     yaxis = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.xaxis.rangeslider", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.xaxis.rangeslider", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout xaxis rangeslider yaxis objects
@@ -6334,8 +6252,6 @@ go_xaxis_rangeslider <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param range Sets the range of this axis for the rangeslider. Vector or
 #'   list of 2 element(s).
 #' @param rangemode Determines whether or not the range of this axis in the
@@ -6344,7 +6260,8 @@ go_xaxis_rangeslider <- function(
 #'   is used. If "match", the current range of the corresponding y-axis on
 #'   the main subplot is used. One of \code{"auto"}, \code{"fixed"},
 #'   \code{"match"}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_xaxis_rangeslider_yaxis} object (a named list).
@@ -6362,9 +6279,9 @@ go_xaxis_rangeslider <- function(
 #'     )
 #'   )
 go_xaxis_rangeslider_yaxis <- function(
-    arg = NULL, ..., range = NULL, rangemode = NULL, skip_invalid = FALSE
+    ..., range = NULL, rangemode = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.xaxis.rangeslider.yaxis", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.xaxis.rangeslider.yaxis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout xaxis title objects
@@ -6381,8 +6298,6 @@ go_xaxis_rangeslider_yaxis <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param font Sets this axis' title font. A \code{\link{go_font}()} object
 #'   or named list, with properties \code{color}, \code{family},
 #'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
@@ -6397,7 +6312,8 @@ go_xaxis_rangeslider_yaxis <- function(
 #'   will push the margins to fit the axis title at given standoff
 #'   distance. Number in the interval [0, Inf].
 #' @param text Sets the title of this axis. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_xaxis_title} object (a named list).
@@ -6413,10 +6329,9 @@ go_xaxis_rangeslider_yaxis <- function(
 #'     xaxis = go_xaxis(title = go_xaxis_title(text = "title"))
 #'   )
 go_xaxis_title <- function(
-    arg = NULL, ..., font = NULL, standoff = NULL, text = NULL,
-    skip_invalid = FALSE
+    ..., font = NULL, standoff = NULL, text = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.xaxis.title", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.xaxis.title", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout yaxis objects
@@ -6434,8 +6349,6 @@ go_xaxis_title <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param anchor If set to an opposite-letter axis id (e.g. `x2`, `y`),
 #'   this axis is bound to the corresponding opposite-letter axis. If set
 #'   to "free", this axis' position is determined by `position`. One of
@@ -6910,7 +6823,8 @@ go_xaxis_title <- function(
 #'   "zerolinelayer" currently has no effect if the "zorder" property is
 #'   set on any trace. One of \code{"above traces"}, \code{"below traces"}.
 #' @param zerolinewidth Sets the width (in px) of the zero line. Number.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_yaxis} object (a named list).
@@ -6924,7 +6838,7 @@ go_xaxis_title <- function(
 #'   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
 #'   update_layout(yaxis = go_yaxis(color = "red"))
 go_yaxis <- function(
-    arg = NULL, ..., anchor = NULL, automargin = NULL, autorange = NULL,
+    ..., anchor = NULL, automargin = NULL, autorange = NULL,
     autorangeoptions = NULL, autoshift = NULL, autotickangles = NULL,
     autotypenumbers = NULL, calendar = NULL, categoryarray = NULL,
     categoryorder = NULL, color = NULL, constrain = NULL,
@@ -6953,7 +6867,7 @@ go_yaxis <- function(
     visible = NULL, zeroline = NULL, zerolinecolor = NULL,
     zerolinelayer = NULL, zerolinewidth = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.yaxis", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.yaxis", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Layout yaxis title objects
@@ -6970,8 +6884,6 @@ go_yaxis <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param font Sets this axis' title font. A \code{\link{go_font}()} object
 #'   or named list, with properties \code{color}, \code{family},
 #'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
@@ -6986,7 +6898,8 @@ go_yaxis <- function(
 #'   will push the margins to fit the axis title at given standoff
 #'   distance. Number in the interval [0, Inf].
 #' @param text Sets the title of this axis. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_layout_yaxis_title} object (a named list).
@@ -7002,9 +6915,8 @@ go_yaxis <- function(
 #'     yaxis = go_yaxis(title = go_yaxis_title(text = "title"))
 #'   )
 go_yaxis_title <- function(
-    arg = NULL, ..., font = NULL, standoff = NULL, text = NULL,
-    skip_invalid = FALSE
+    ..., font = NULL, standoff = NULL, text = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("layout.yaxis.title", arg, environment(), list(...), skip_invalid)
+  plotly_object("layout.yaxis.title", NULL, environment(), list(...), skip_invalid)
 }
 

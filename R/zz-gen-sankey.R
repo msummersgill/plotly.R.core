@@ -18,8 +18,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param arrangement If value is `snap` (the default), the node
 #'   arrangement is assisted by automatic snapping of elements to preserve
 #'   space between nodes specified via `nodepad`. If value is
@@ -152,7 +150,8 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -174,15 +173,15 @@
 #'     link = go_sankey_link(source = ~source, target = ~target, value = ~Freq)
 #'   )
 go_sankey <- function(
-    arg = NULL, ..., arrangement = NULL, customdata = NULL,
-    direction = NULL, domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    ids = NULL, legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    ..., arrangement = NULL, customdata = NULL, direction = NULL,
+    domain = NULL, hoverinfo = NULL, hoverlabel = NULL, ids = NULL,
+    legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
     legendwidth = NULL, link = NULL, meta = NULL, name = NULL, node = NULL,
     orientation = NULL, selectedpoints = NULL, textfont = NULL, uid = NULL,
     uirevision = NULL, valueformat = NULL, valuesuffix = NULL,
     visible = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("sankey", arg, environment(), list(...), skip_invalid)
+  plotly_object("sankey", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Sankey link objects
@@ -200,8 +199,6 @@ go_sankey <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param arrowlen Sets the length (in px) of the links arrow, if 0 no
 #'   arrow will be drawn. Number in the interval [0, Inf].
 #' @param color Sets the `link` color. It can be a single value, or an
@@ -277,7 +274,8 @@ go_sankey <- function(
 #'   matrix or list.
 #' @param value A numeric value representing the flow volume value. Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_sankey_link} object (a named list).
@@ -290,13 +288,13 @@ go_sankey <- function(
 #'   link = go_sankey_link(color = "red")
 #' )
 go_sankey_link <- function(
-    arg = NULL, ..., arrowlen = NULL, color = NULL, colorscales = NULL,
+    ..., arrowlen = NULL, color = NULL, colorscales = NULL,
     customdata = NULL, hovercolor = NULL, hoverinfo = NULL,
     hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
     label = NULL, line = NULL, sort = NULL, source = NULL, target = NULL,
     value = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("sankey.link", arg, environment(), list(...), skip_invalid)
+  plotly_object("sankey.link", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Sankey link concentrationscales objects
@@ -314,8 +312,6 @@ go_sankey_link <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param cmax Sets the upper bound of the color domain. Number.
 #' @param cmin Sets the lower bound of the color domain. Number.
 #' @param colorscale Sets the colorscale. The colorscale must be an array
@@ -344,7 +340,8 @@ go_sankey_link <- function(
 #'   your modifications (including `visible: false` or `enabled: false` to
 #'   hide it). If there is no template or no matching item, this item will
 #'   be hidden unless you explicitly show it with `visible: true`. String.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_sankey_link_concentrationscales} object (a named list).
@@ -359,10 +356,10 @@ go_sankey_link <- function(
 #'   )
 #' )
 go_sankey_link_concentrationscales <- function(
-    arg = NULL, ..., cmax = NULL, cmin = NULL, colorscale = NULL,
-    label = NULL, name = NULL, templateitemname = NULL, skip_invalid = FALSE
+    ..., cmax = NULL, cmin = NULL, colorscale = NULL, label = NULL,
+    name = NULL, templateitemname = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("sankey.link.concentrationscales", arg, environment(), list(...), skip_invalid)
+  plotly_object("sankey.link.concentrationscales", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Sankey link line objects
@@ -380,13 +377,12 @@ go_sankey_link_concentrationscales <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color of the `line` around each `link`. Color: a
 #'   CSS color string or R color name, or a vector of these.
 #' @param width Sets the width (in px) of the `line` around each `link`.
 #'   Number in the interval [0, Inf], or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_sankey_link_line} object (a named list).
@@ -401,9 +397,9 @@ go_sankey_link_concentrationscales <- function(
 #'   )
 #' )
 go_sankey_link_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("sankey.link.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("sankey.link.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Sankey node objects
@@ -421,8 +417,6 @@ go_sankey_link_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param align Sets the alignment method used to position the nodes along
 #'   the horizontal axis. One of \code{"justify"}, \code{"left"},
 #'   \code{"right"}, \code{"center"}.
@@ -494,7 +488,8 @@ go_sankey_link_line <- function(
 #'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param y The normalized vertical position of the node. Data array: a
 #'   vector, factor, Date/POSIXct vector, matrix or list.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_sankey_node} object (a named list).
@@ -507,13 +502,12 @@ go_sankey_link_line <- function(
 #'   node = go_sankey_node(color = "red")
 #' )
 go_sankey_node <- function(
-    arg = NULL, ..., align = NULL, color = NULL, customdata = NULL,
-    groups = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, label = NULL,
-    line = NULL, pad = NULL, sort = NULL, thickness = NULL, x = NULL,
-    y = NULL, skip_invalid = FALSE
+    ..., align = NULL, color = NULL, customdata = NULL, groups = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, label = NULL, line = NULL, pad = NULL,
+    sort = NULL, thickness = NULL, x = NULL, y = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("sankey.node", arg, environment(), list(...), skip_invalid)
+  plotly_object("sankey.node", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Sankey node line objects
@@ -531,13 +525,12 @@ go_sankey_node <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color of the `line` around each `node`. Color: a
 #'   CSS color string or R color name, or a vector of these.
 #' @param width Sets the width (in px) of the `line` around each `node`.
 #'   Number in the interval [0, Inf], or a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_sankey_node_line} object (a named list).
@@ -552,8 +545,8 @@ go_sankey_node <- function(
 #'   )
 #' )
 go_sankey_node_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("sankey.node.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("sankey.node.line", NULL, environment(), list(...), skip_invalid)
 }
 

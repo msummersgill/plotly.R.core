@@ -4,19 +4,11 @@
 \alias{go_activeselection}
 \title{Layout activeselection objects}
 \usage{
-go_activeselection(
-  arg = NULL,
-  ...,
-  fillcolor = NULL,
-  opacity = NULL,
-  skip_invalid = FALSE
-)
+go_activeselection(..., fillcolor = NULL, opacity = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{fillcolor}{Sets the color filling the active selection' interior.
 Color: a CSS color string or R color name.}

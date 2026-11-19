@@ -5,7 +5,6 @@
 \title{Selected marker objects}
 \usage{
 go_selected_marker(
-  arg = NULL,
   ...,
   color = NULL,
   line = NULL,
@@ -15,10 +14,8 @@ go_selected_marker(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{color}{Sets the marker color of selected points. Color: a CSS
 color string or R color name. Not available in every context.}

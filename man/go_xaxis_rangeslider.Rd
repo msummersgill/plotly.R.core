@@ -5,7 +5,6 @@
 \title{Layout xaxis rangeslider objects}
 \usage{
 go_xaxis_rangeslider(
-  arg = NULL,
   ...,
   autorange = NULL,
   bgcolor = NULL,
@@ -19,10 +18,8 @@ go_xaxis_rangeslider(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{autorange}{Determines whether or not the range slider range is
 computed in relation to the input data. If `range` is provided, then

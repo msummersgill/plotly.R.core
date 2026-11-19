@@ -5,7 +5,6 @@
 \title{Histogram2dcontour line objects}
 \usage{
 go_histogram2dcontour_line(
-  arg = NULL,
   ...,
   color = NULL,
   dash = NULL,
@@ -15,10 +14,8 @@ go_histogram2dcontour_line(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{color}{Sets the color of the contour level. Has no effect if
 `contours.coloring` is set to "lines". Color: a CSS color string or R

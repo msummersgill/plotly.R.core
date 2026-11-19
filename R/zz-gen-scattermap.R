@@ -17,8 +17,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param below Determines if this scattermap trace's layers are to be
 #'   inserted before the layer with the specified ID. By default,
 #'   scattermap layers are inserted above all the base layers. To place the
@@ -232,7 +230,8 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -247,7 +246,7 @@
 #'   go_figure() |>
 #'   add_scattermap(lat = ~lat, lon = ~long)
 go_scattermap <- function(
-    arg = NULL, ..., below = NULL, cluster = NULL, connectgaps = NULL,
+    ..., below = NULL, cluster = NULL, connectgaps = NULL,
     customdata = NULL, fill = NULL, fillcolor = NULL, hoverinfo = NULL,
     hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
     hovertext = NULL, ids = NULL, lat = NULL, legend = NULL,
@@ -259,7 +258,7 @@ go_scattermap <- function(
     texttemplatefallback = NULL, uid = NULL, uirevision = NULL,
     unselected = NULL, visible = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("scattermap", arg, environment(), list(...), skip_invalid)
+  plotly_object("scattermap", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Scattermap cluster objects
@@ -277,8 +276,6 @@ go_scattermap <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color for each cluster step. Color: a CSS color
 #'   string or R color name, or a vector of these.
 #' @param enabled Determines whether clustering is enabled or disabled.
@@ -296,7 +293,8 @@ go_scattermap <- function(
 #'   this number. If an array, each step extends from the given value until
 #'   one less than the next value. Number in the interval [-1, Inf], or a
 #'   vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_scattermap_cluster} object (a named list).
@@ -313,10 +311,10 @@ go_scattermap <- function(
 #'     cluster = go_scattermap_cluster(color = "red")
 #'   )
 go_scattermap_cluster <- function(
-    arg = NULL, ..., color = NULL, enabled = NULL, maxzoom = NULL,
-    opacity = NULL, size = NULL, step = NULL, skip_invalid = FALSE
+    ..., color = NULL, enabled = NULL, maxzoom = NULL, opacity = NULL,
+    size = NULL, step = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("scattermap.cluster", arg, environment(), list(...), skip_invalid)
+  plotly_object("scattermap.cluster", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Scattermap line objects
@@ -334,13 +332,12 @@ go_scattermap_cluster <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the line color. Color: a CSS color string or R color
 #'   name.
 #' @param width Sets the line width (in px). Number in the interval [0,
 #'   Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_scattermap_line} object (a named list).
@@ -357,9 +354,9 @@ go_scattermap_cluster <- function(
 #'     line = go_scattermap_line(color = "red")
 #'   )
 go_scattermap_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("scattermap.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("scattermap.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Scattermap marker objects
@@ -377,8 +374,6 @@ go_scattermap_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param allowoverlap Flag to draw all symbols, even if they overlap.
 #'   Logical.
 #' @param angle Sets the marker orientation from true North, in degrees
@@ -464,7 +459,8 @@ go_scattermap_line <- function(
 #'   https://www.mapbox.com/maki-icons/ Note that the array `marker.color`
 #'   and `marker.size` are only available for "circle" symbols. String, or
 #'   a vector of these.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_scattermap_marker} object (a named list).
@@ -481,13 +477,12 @@ go_scattermap_line <- function(
 #'     marker = go_scattermap_marker(color = "red")
 #'   )
 go_scattermap_marker <- function(
-    arg = NULL, ..., allowoverlap = NULL, angle = NULL,
-    autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
-    cmin = NULL, color = NULL, coloraxis = NULL, colorbar = NULL,
-    colorscale = NULL, opacity = NULL, reversescale = NULL,
-    showscale = NULL, size = NULL, sizemin = NULL, sizemode = NULL,
-    sizeref = NULL, symbol = NULL, skip_invalid = FALSE
+    ..., allowoverlap = NULL, angle = NULL, autocolorscale = NULL,
+    cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL, color = NULL,
+    coloraxis = NULL, colorbar = NULL, colorscale = NULL, opacity = NULL,
+    reversescale = NULL, showscale = NULL, size = NULL, sizemin = NULL,
+    sizemode = NULL, sizeref = NULL, symbol = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("scattermap.marker", arg, environment(), list(...), skip_invalid)
+  plotly_object("scattermap.marker", NULL, environment(), list(...), skip_invalid)
 }
 

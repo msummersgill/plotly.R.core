@@ -5,7 +5,6 @@
 \title{Waterfall connector objects}
 \usage{
 go_waterfall_connector(
-  arg = NULL,
   ...,
   line = NULL,
   mode = NULL,
@@ -14,10 +13,8 @@ go_waterfall_connector(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{line}{A \code{\link{go_waterfall_connector_line}()} object or
 named list, with properties \code{color}, \code{dash} and \code{width}

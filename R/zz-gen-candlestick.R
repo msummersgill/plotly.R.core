@@ -21,8 +21,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param close Sets the close values. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
 #' @param col Subplot grid column (figures created with
@@ -230,7 +228,8 @@
 #' @param zorder Sets the layer on which this trace is displayed, relative
 #'   to other SVG traces on the same subplot. SVG traces with higher
 #'   `zorder` appear in front of those with lower `zorder`. Integer.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -255,8 +254,8 @@
 #'     close = ~close
 #'   )
 go_candlestick <- function(
-    arg = NULL, ..., close = NULL, customdata = NULL, decreasing = NULL,
-    high = NULL, hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    ..., close = NULL, customdata = NULL, decreasing = NULL, high = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
     hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
     increasing = NULL, legend = NULL, legendgroup = NULL,
     legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
@@ -267,7 +266,7 @@ go_candlestick <- function(
     xperiod = NULL, xperiod0 = NULL, xperiodalignment = NULL, yaxis = NULL,
     yhoverformat = NULL, zorder = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("candlestick", arg, environment(), list(...), skip_invalid)
+  plotly_object("candlestick", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Candlestick decreasing objects
@@ -285,15 +284,14 @@ go_candlestick <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param fillcolor Sets the fill color. Defaults to a half-transparent
 #'   variant of the line color, marker color, or marker line color,
 #'   whichever is available. Color: a CSS color string or R color name.
 #' @param line A \code{\link{go_candlestick_decreasing_line}()} object or
 #'   named list, with properties \code{color} and \code{width} (see
 #'   \code{\link{go_candlestick_decreasing_line}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_candlestick_decreasing} object (a named list).
@@ -317,9 +315,9 @@ go_candlestick <- function(
 #'     decreasing = go_candlestick_decreasing()
 #'   )
 go_candlestick_decreasing <- function(
-    arg = NULL, ..., fillcolor = NULL, line = NULL, skip_invalid = FALSE
+    ..., fillcolor = NULL, line = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("candlestick.decreasing", arg, environment(), list(...), skip_invalid)
+  plotly_object("candlestick.decreasing", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Candlestick decreasing line objects
@@ -337,13 +335,12 @@ go_candlestick_decreasing <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color of line bounding the box(es). Color: a CSS
 #'   color string or R color name.
 #' @param width Sets the width (in px) of line bounding the box(es). Number
 #'   in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_candlestick_decreasing_line} object (a named list).
@@ -369,9 +366,9 @@ go_candlestick_decreasing <- function(
 #'     )
 #'   )
 go_candlestick_decreasing_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("candlestick.decreasing.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("candlestick.decreasing.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Candlestick increasing objects
@@ -389,15 +386,14 @@ go_candlestick_decreasing_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param fillcolor Sets the fill color. Defaults to a half-transparent
 #'   variant of the line color, marker color, or marker line color,
 #'   whichever is available. Color: a CSS color string or R color name.
 #' @param line A \code{\link{go_candlestick_increasing_line}()} object or
 #'   named list, with properties \code{color} and \code{width} (see
 #'   \code{\link{go_candlestick_increasing_line}()}).
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_candlestick_increasing} object (a named list).
@@ -421,9 +417,9 @@ go_candlestick_decreasing_line <- function(
 #'     increasing = go_candlestick_increasing()
 #'   )
 go_candlestick_increasing <- function(
-    arg = NULL, ..., fillcolor = NULL, line = NULL, skip_invalid = FALSE
+    ..., fillcolor = NULL, line = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("candlestick.increasing", arg, environment(), list(...), skip_invalid)
+  plotly_object("candlestick.increasing", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Candlestick increasing line objects
@@ -441,13 +437,12 @@ go_candlestick_increasing <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param color Sets the color of line bounding the box(es). Color: a CSS
 #'   color string or R color name.
 #' @param width Sets the width (in px) of line bounding the box(es). Number
 #'   in the interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_candlestick_increasing_line} object (a named list).
@@ -473,9 +468,9 @@ go_candlestick_increasing <- function(
 #'     )
 #'   )
 go_candlestick_increasing_line <- function(
-    arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
+    ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("candlestick.increasing.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("candlestick.increasing.line", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Candlestick line objects
@@ -493,13 +488,12 @@ go_candlestick_increasing_line <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param width Sets the width (in px) of line bounding the box(es). Note
 #'   that this style setting can also be set per direction via
 #'   `increasing.line.width` and `decreasing.line.width`. Number in the
 #'   interval [0, Inf].
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_candlestick_line} object (a named list).
@@ -523,8 +517,8 @@ go_candlestick_increasing_line <- function(
 #'     line = go_candlestick_line(width = 2)
 #'   )
 go_candlestick_line <- function(
-    arg = NULL, ..., width = NULL, skip_invalid = FALSE
+    ..., width = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("candlestick.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("candlestick.line", NULL, environment(), list(...), skip_invalid)
 }
 

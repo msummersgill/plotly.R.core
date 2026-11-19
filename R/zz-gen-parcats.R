@@ -15,8 +15,6 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from (constructors). Named arguments take precedence.
 #' @param arrangement Sets the drag interaction mode for categories and
 #'   dimensions. If `perpendicular`, the categories can only move along a
 #'   line perpendicular to the paths. If `freeform`, the categories can
@@ -148,7 +146,8 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return \code{go_*()} functions return a graph object;
@@ -169,14 +168,14 @@
 #'     )
 #'   )
 go_parcats <- function(
-    arg = NULL, ..., arrangement = NULL, bundlecolors = NULL, counts = NULL,
+    ..., arrangement = NULL, bundlecolors = NULL, counts = NULL,
     dimensions = NULL, domain = NULL, hoverinfo = NULL, hoveron = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, labelfont = NULL,
     legendgrouptitle = NULL, legendwidth = NULL, line = NULL, meta = NULL,
     name = NULL, sortpaths = NULL, tickfont = NULL, uid = NULL,
     uirevision = NULL, visible = NULL, skip_invalid = FALSE
 ) {
-  plotly_object("parcats", arg, environment(), list(...), skip_invalid)
+  plotly_object("parcats", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Parcats dimension objects
@@ -195,8 +194,6 @@ go_parcats <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param categoryarray Sets the order in which categories in this
 #'   dimension appear. Only has an effect if `categoryorder` is set to
 #'   "array". Used with `categoryorder`. Data array: a vector, factor,
@@ -227,7 +224,8 @@ go_parcats <- function(
 #'   or list.
 #' @param visible Shows the dimension when set to `true` (the default).
 #'   Hides the dimension for `false`. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_parcats_dimension} object (a named list).
@@ -240,11 +238,11 @@ go_parcats <- function(
 #'   dimensions = list(go_parcats_dimension(visible = TRUE))
 #' )
 go_parcats_dimension <- function(
-    arg = NULL, ..., categoryarray = NULL, categoryorder = NULL,
-    displayindex = NULL, label = NULL, ticktext = NULL, values = NULL,
-    visible = NULL, skip_invalid = FALSE
+    ..., categoryarray = NULL, categoryorder = NULL, displayindex = NULL,
+    label = NULL, ticktext = NULL, values = NULL, visible = NULL,
+    skip_invalid = FALSE
 ) {
-  plotly_object("parcats.dimension", arg, environment(), list(...), skip_invalid)
+  plotly_object("parcats.dimension", NULL, environment(), list(...), skip_invalid)
 }
 
 #' Parcats line objects
@@ -261,8 +259,6 @@ go_parcats_dimension <- function(
 #' (then checked) when its trace is added to a figure with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
-#' @param arg Optional named list, or graph object of the same type, to
-#'   initialise properties from. Named arguments take precedence.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `line.colorscale`. Has an effect only if in `line.color` is set to a
@@ -359,7 +355,8 @@ go_parcats_dimension <- function(
 #' @param showscale Determines whether or not a colorbar is displayed for
 #'   this trace. Has an effect only if in `line.color` is set to a
 #'   numerical array. Logical.
-#' @param ... Not used: properties must be named in full.
+#' @param ... Not for properties, which must be named in full: an
+#'   abbreviated or unknown name is an error that suggests the right one.
 #' @param skip_invalid If \code{TRUE}, silently drop invalid properties
 #'   instead of raising an error.
 #' @return A \code{go_parcats_line} object (a named list).
@@ -379,12 +376,12 @@ go_parcats_dimension <- function(
 #'     line = go_parcats_line(color = "red")
 #'   )
 go_parcats_line <- function(
-    arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, reversescale = NULL, shape = NULL,
-    showscale = NULL, skip_invalid = FALSE
+    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    cmin = NULL, color = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    reversescale = NULL, shape = NULL, showscale = NULL,
+    skip_invalid = FALSE
 ) {
-  plotly_object("parcats.line", arg, environment(), list(...), skip_invalid)
+  plotly_object("parcats.line", NULL, environment(), list(...), skip_invalid)
 }
 

@@ -5,7 +5,6 @@
 \title{Indicator gauge axis objects}
 \usage{
 go_indicator_gauge_axis(
-  arg = NULL,
   ...,
   dtick = NULL,
   exponentformat = NULL,
@@ -38,10 +37,8 @@ go_indicator_gauge_axis(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{dtick}{Sets the step in-between ticks on this axis. Use with
 `tick0`. Must be a positive number, or special strings available to

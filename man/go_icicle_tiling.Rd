@@ -5,7 +5,6 @@
 \title{Icicle tiling objects}
 \usage{
 go_icicle_tiling(
-  arg = NULL,
   ...,
   flip = NULL,
   orientation = NULL,
@@ -14,10 +13,8 @@ go_icicle_tiling(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{flip}{Determines if the positions obtained from solver are flipped
 on each axis. Any combination of \code{"x"}, \code{"y"} joined with

@@ -4,13 +4,11 @@
 \alias{go_map_layer_circle}
 \title{Layout map layer circle objects}
 \usage{
-go_map_layer_circle(arg = NULL, ..., radius = NULL, skip_invalid = FALSE)
+go_map_layer_circle(..., radius = NULL, skip_invalid = FALSE)
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{radius}{Sets the circle radius (map.layer.paint.circle-radius).
 Has an effect only when `type` is set to "circle". Number.}

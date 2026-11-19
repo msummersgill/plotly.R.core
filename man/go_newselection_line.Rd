@@ -5,7 +5,6 @@
 \title{Layout newselection line objects}
 \usage{
 go_newselection_line(
-  arg = NULL,
   ...,
   color = NULL,
   dash = NULL,
@@ -14,10 +13,8 @@ go_newselection_line(
 )
 }
 \arguments{
-\item{arg}{Optional named list, or graph object of the same type, to
-initialise properties from. Named arguments take precedence.}
-
-\item{...}{Not used: properties must be named in full.}
+\item{...}{Not for properties, which must be named in full: an
+abbreviated or unknown name is an error that suggests the right one.}
 
 \item{color}{Sets the line color. By default uses either dark grey or
 white to increase contrast with background color. Color: a CSS color
