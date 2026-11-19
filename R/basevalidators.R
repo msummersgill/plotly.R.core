@@ -292,7 +292,7 @@ describe_validator <- function(entry, name) {
       " a colorscale and may be specified as:\n",
       "      - A vector of colors, spaced evenly from 0 to 1\n",
       "      - A list of c(value, color) pairs, or a two-column data.frame, with values from 0 to 1\n",
-      "      - The name of a sequential, diverging or cyclical scale in px_colors (case-insensitive;\n",
+      "      - The name of a sequential, diverging or cyclical scale in plotly_colors (case-insensitive;\n",
       "        append \"_r\" to reverse), e.g. \"Viridis\", \"RdBu_r\""
     ),
     AngleValidator = paste0(
@@ -760,10 +760,16 @@ vc_colorscale <- function(v, key, entry) {
 }
 
 # Named colorscales: the sequential, diverging and cyclical scales of
-# px_colors, matched case-insensitively ("_r" reverses), as in plotly.py.
+# plotly_colors, matched case-insensitively ("_r" reverses), as in plotly.py.
+#' @rdname plotly.core-extending
+#' @export
 named_colorscale <- function(name) {
   if (is.null(the$named_colorscales)) {
-    scales <- c(px_colors$sequential, px_colors$diverging, px_colors$cyclical)
+    scales <- c(
+      plotly_colors$sequential,
+      plotly_colors$diverging,
+      plotly_colors$cyclical
+    )
     names(scales) <- tolower(names(scales))
     the$named_colorscales <- scales[!duplicated(names(scales), fromLast = TRUE)]
   }
@@ -969,6 +975,8 @@ raise_invalid_prop <- function(name, key, entry) {
   ))
 }
 
+#' @rdname plotly.core-extending
+#' @export
 empty_object <- function() structure(list(), names = character())
 
 # Compound values are returned as graph objects: named lists classed
@@ -1196,6 +1204,8 @@ available_trace_types <- function() {
 }
 
 # Validate one trace (a named list with an optional `type`, default "scatter").
+#' @rdname plotly.core-extending
+#' @export
 validate_trace <- function(trace, skip_invalid = FALSE) {
   if (!is.list(trace) || is.data.frame(trace)) {
     stop("A trace must be a named list, not ", value_type(trace), call. = FALSE)

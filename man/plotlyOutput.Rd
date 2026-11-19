@@ -41,8 +41,8 @@ Shiny render function.
 }
 \description{
 \code{plotlyOutput()} creates a plot output element in a Shiny UI;
-\code{renderPlotly()} renders a \code{\link[=go_figure]{go_figure()}}, a figure from a \verb{px_*()}
-function or a plotly htmlwidget (or a promise of one) into it.
+\code{renderPlotly()} renders a \code{\link[=go_figure]{go_figure()}} or a plotly htmlwidget (or a
+promise of one) into it.
 }
 \seealso{
 \code{\link[=event_data]{event_data()}}, \code{\link[=plotlyProxy]{plotlyProxy()}}

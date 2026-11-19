@@ -47,9 +47,6 @@ reference:
     desc: Objects used in several places in traces and layouts.
     contents:
       - has_concept("shared object types")
-  - title: Plotly Express
-    contents:
-      - starts_with("px_")
   - title: Rendering and export
     contents:
       - plotly_widget
@@ -77,3 +74,4 @@ reference:
     contents:
       - get_template
       - schema
+      - plotly_colors

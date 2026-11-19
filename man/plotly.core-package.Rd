@@ -6,7 +6,7 @@
 \alias{plotly.core-package}
 \title{plotly.core: Create Interactive Web Graphics via 'plotly.js'}
 \description{
-Create interactive web graphics with the 'plotly.js' JavaScript library. Graph objects, their validation and their documentation are generated from the 'plotly.js' plot schema, following the design of the 'plotly' Python package. Includes an 'express' interface for quick figures, 'htmlwidgets' rendering, 'shiny' and 'quarto' integration, and static image export with headless 'Chrome'.
+Create interactive web graphics with the 'plotly.js' JavaScript library. Graph objects, their validation and their documentation are generated from the 'plotly.js' plot schema, following the design of the 'plotly' Python package. Includes 'htmlwidgets' rendering, 'shiny' and 'quarto' integration, and static image export with headless 'Chrome'. High-level 'plotly express' figures are in the 'plotly.express' package.
 }
 \seealso{
 Useful links:
@@ -40,7 +40,7 @@ Other contributors:
   \item Benjamin Schwendinger (\href{https://orcid.org/0000-0003-3315-8114}{ORCID}) ('data.table' fread.c and fwrite.c) [contributor]
   \item Ivan Krylov (\href{https://orcid.org/0000-0002-0172-3812}{ORCID}) ('data.table' fread.c and fwrite.c) [contributor]
   \item @badasahog (GitHub user; 'data.table' fread.c and fwrite.c) [contributor]
-  \item Plotly Technologies Inc. (Bundled 'plotly.js' library; templates and datasets from 'plotly.py') [copyright holder]
+  \item Plotly Technologies Inc. (Bundled 'plotly.js' library; templates from 'plotly.py') [copyright holder]
   \item Dean Attali (Bundled 'colourpicker' library) [copyright holder]
 }
 

@@ -3,10 +3,10 @@
 #' Color sequences and scales
 #'
 #' The named color sequences and scales of plotly.py's \code{plotly.colors} module:
-#' \code{px_colors$qualitative} (discrete color sequences, e.g. \code{Plotly},
-#' \code{D3}, \code{Set1}), \code{px_colors$sequential} (e.g. \code{Viridis},
-#' \code{Plasma}, \code{Blues}), \code{px_colors$diverging} (e.g. \code{RdBu}) and
-#' \code{px_colors$cyclical} (e.g. \code{Twilight}). Each is a character vector
+#' \code{plotly_colors$qualitative} (discrete color sequences, e.g. \code{Plotly},
+#' \code{D3}, \code{Set1}), \code{plotly_colors$sequential} (e.g. \code{Viridis},
+#' \code{Plasma}, \code{Blues}), \code{plotly_colors$diverging} (e.g. \code{RdBu}) and
+#' \code{plotly_colors$cyclical} (e.g. \code{Twilight}). Each is a character vector
 #' of colors; use \code{rev()} to reverse one.
 #'
 #' Sequential, diverging and cyclical scales can also be given by name
@@ -17,10 +17,10 @@
 #' @noMd
 #' @export
 #' @examples
-#' names(px_colors$qualitative)
-#' px_colors$qualitative$Plotly
-#' rev(px_colors$sequential$Viridis)
-px_colors <- list(
+#' names(plotly_colors$qualitative)
+#' plotly_colors$qualitative$Plotly
+#' rev(plotly_colors$sequential$Viridis)
+plotly_colors <- list(
   qualitative = list(
     Alphabet = c("#AA0DFE", "#3283FE", "#85660D", "#782AB6", "#565656", "#1C8356", "#16FF32", "#F7E1A0", "#E2E2E2", "#1CBE4F", "#C4451C", "#DEA0FD", "#FE00FA", "#325A9B", "#FEAF16", "#F8A19F", "#90AD1C", "#F6222E", "#1CFFCE", "#2ED9FF", "#B10DA1", "#C075A6", "#FC1CBF", "#B00068", "#FBE426", "#FA0087"),
     Antique = c("rgb(133, 92, 117)", "rgb(217, 175, 107)", "rgb(175, 100, 88)", "rgb(115, 111, 76)", "rgb(82, 106, 131)", "rgb(98, 83, 119)", "rgb(104, 133, 92)", "rgb(156, 156, 94)", "rgb(160, 97, 119)", "rgb(140, 120, 93)", "rgb(124, 124, 124)"),

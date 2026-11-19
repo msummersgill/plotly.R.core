@@ -12,7 +12,7 @@
 #' and so on) are embedded as base64 data URIs by `write_html()` itself,
 #' without needing pandoc.
 #'
-#' @param fig A figure (e.g. from [go_figure()] or [px_scatter()]) or a
+#' @param fig A figure (e.g. from [go_figure()]) or a
 #'   plotly.core widget (e.g. from [plotly_widget()], or a figure from
 #'   plotly's `plot_ly()`).
 #' @param file Path of the HTML file to write.

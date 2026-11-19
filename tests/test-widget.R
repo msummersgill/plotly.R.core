@@ -140,13 +140,13 @@ stopifnot(
     fixed = TRUE
   )
 )
-d <- px_data_iris()
-d$sepal_length <- as_float32(d$sepal_length)
+d <- iris
+d$Sepal.Length <- as_float32(d$Sepal.Length)
 stopifnot(
   inherits(
-    px_scatter(d, x = ~sepal_length, y = ~sepal_width, color = ~species)$data[[
-      1
-    ]]$x,
+    go_figure(d) |>
+      add_scatter(x = ~Sepal.Length, y = ~Sepal.Width) |>
+      (\(f) f$data[[1]]$x)(),
     "plotly_float32"
   )
 )

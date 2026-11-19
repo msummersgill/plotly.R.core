@@ -27,7 +27,7 @@ the scatter plot along that axis, or from the center to the most
 distant point from it, if orientation is "radial". Colorscale: a
 vector of colors, a two-column data.frame of (value, color), or the
 name of a sequential, diverging or cyclical scale in
-\code{\link{px_colors}()} (append \code{"_r"} to reverse).}
+\code{\link{plotly_colors}()} (append \code{"_r"} to reverse).}
 
 \item{start}{Sets the gradient start value. It is given as the absolute
 position on the axis determined by the orientiation. E.g., if

@@ -14,7 +14,7 @@
 #' `"plotly_white+presentation"`; later templates take precedence.
 #'
 #' Figures without a `layout$template` use the default template when they
-#' are rendered. Plotly Express functions add their template to the figure.
+#' are rendered.
 #'
 #' @param name Template name, or several joined with `"+"`.
 #' @param template A named list with `layout` and/or `data` elements, e.g.
@@ -114,6 +114,8 @@ load_template <- function(name) {
   tpl
 }
 
+#' @rdname plotly.core-extending
+#' @export
 check_template <- function(template) {
   if (is.character(template) && length(template) == 1L) {
     return(get_template(template))
@@ -159,6 +161,8 @@ merge_templates <- function(t1, t2) {
 gcd <- function(a, b) if (b == 0) a else gcd(b, a %% b)
 
 # Recursive merge of named lists; values in `b` win.
+#' @rdname plotly.core-extending
+#' @export
 deep_merge <- function(a, b) {
   if (is.null(a)) {
     return(b)
@@ -176,6 +180,8 @@ deep_merge <- function(a, b) {
 }
 
 # Value at a path inside a template's layout, e.g. c("colorscale", "sequential").
+#' @rdname plotly.core-extending
+#' @export
 template_layout_value <- function(template, path) {
   x <- template[["layout"]]
   for (p in path) {

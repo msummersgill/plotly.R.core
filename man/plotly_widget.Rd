@@ -17,7 +17,7 @@ plotly_widget(
 as_widget(x, ...)
 }
 \arguments{
-\item{fig}{A \code{\link[=go_figure]{go_figure()}}, a figure from a \verb{px_*()} function, or a list
+\item{fig}{A \code{\link[=go_figure]{go_figure()}}, or a list
 with \code{data} (list of traces), \code{layout}, \code{frames} and \code{config} elements.}
 
 \item{width, height}{Widget size in CSS units, or \code{NULL} for the layout's

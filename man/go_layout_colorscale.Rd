@@ -23,20 +23,21 @@ initialise properties from. Named arguments take precedence.}
 `autocolorscale` must be true for this attribute to work. Colorscale:
 a vector of colors, a two-column data.frame of (value, color), or the
 name of a sequential, diverging or cyclical scale in
-\code{\link{px_colors}()} (append \code{"_r"} to reverse).}
+\code{\link{plotly_colors}()} (append \code{"_r"} to reverse).}
 
 \item{sequential}{Sets the default sequential colorscale for positive
 values. Note that `autocolorscale` must be true for this attribute to
 work. Colorscale: a vector of colors, a two-column data.frame of
 (value, color), or the name of a sequential, diverging or cyclical
-scale in \code{\link{px_colors}()} (append \code{"_r"} to reverse).}
+scale in \code{\link{plotly_colors}()} (append \code{"_r"} to
+reverse).}
 
 \item{sequentialminus}{Sets the default sequential colorscale for
 negative values. Note that `autocolorscale` must be true for this
 attribute to work. Colorscale: a vector of colors, a two-column
 data.frame of (value, color), or the name of a sequential, diverging
-or cyclical scale in \code{\link{px_colors}()} (append \code{"_r"} to
-reverse).}
+or cyclical scale in \code{\link{plotly_colors}()} (append \code{"_r"}
+to reverse).}
 
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}

@@ -518,12 +518,10 @@ if (
   }
 
   # one marker per trace: length-1 arrays must survive the export
-  fig <- px_scatter(
-    data.frame(x = c(1, 2, 3), y = c(3, 1, 2), g = c("a", "b", "c")),
-    x = ~x,
-    y = ~y,
-    color = ~g
-  )
+  fig <- go_figure() |>
+    add_scatter(x = 1, y = 3, mode = "markers", name = "a") |>
+    add_scatter(x = 2, y = 1, mode = "markers", name = "b") |>
+    add_scatter(x = 3, y = 2, mode = "markers", name = "c")
   save_image(fig, path("f.svg"))
   svg <- paste(readLines(path("f.svg"), warn = FALSE), collapse = "\n")
   stopifnot(lengths(regmatches(svg, gregexpr('class="point"', svg))) == 3)

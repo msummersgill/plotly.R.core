@@ -557,6 +557,8 @@ subplot_ref <- function(type, layout_keys, trace_kwargs) {
 
 # Subplot type used by a trace type ("bar" -> "xy", "pie" -> "domain", ...),
 # from the trace's properties as in plotly.py's _subplot_type_for_trace_type.
+#' @rdname plotly.core-extending
+#' @export
 subplot_type_for_trace_type <- function(trace_type) {
   entry <- get_validator(trace_type)
   if (is.null(entry$trace_type)) {
@@ -1103,6 +1105,8 @@ is_multi_cell <- function(row, col) {
 
 # Set a trace's subplot reference properties (xaxis/yaxis, scene, domain, ...)
 # for grid cell (row, col) (plotly.py _set_trace_grid_reference).
+#' @rdname plotly.core-extending
+#' @export
 set_trace_grid_reference <- function(
   trace,
   grid_ref,

@@ -145,7 +145,7 @@ expect_error(
   "Invalid elements include: \"nope\""
 )
 expect_error(vc(1, "scatter.line.color"), "type 'numeric'") # no colorscale sibling
-expect_error(vc("Nonexistent", "scatter.marker.colorscale"), "px_colors")
+expect_error(vc("Nonexistent", "scatter.marker.colorscale"), "plotly_colors")
 expect_error(
   vc(list(c(0, "red"), c(2, "blue")), "scatter.marker.colorscale"),
   "colorscale"

@@ -16,8 +16,8 @@ as_float32(x)
 Marks a numeric vector or matrix to be sent to plotly.js as a float32
 typed array: 4 bytes per value instead of 8, halving the size of the
 widget's data and of plotly.js's copy of it. Use it in trace properties,
-or on data frame columns used by \code{\link[=px_scatter]{px_scatter()}} and the other \verb{px_*()}
-functions. Set \code{options(plotly.core.float32 = TRUE)} to send all
+or on data frame columns used in formula properties (\code{x = ~col}). Set
+\code{options(plotly.core.float32 = TRUE)} to send all
 numeric arrays in single precision.
 }
 \details{

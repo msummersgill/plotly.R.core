@@ -84,7 +84,7 @@ string of the following list:
 Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
 Colorscale: a vector of colors, a two-column data.frame of (value,
 color), or the name of a sequential, diverging or cyclical scale in
-\code{\link{px_colors}()} (append \code{"_r"} to reverse).}
+\code{\link{plotly_colors}()} (append \code{"_r"} to reverse).}
 
 \item{reversescale}{Reverses the color mapping if true. Has an effect
 only if in `marker.line.color` is set to a numerical array. If true,

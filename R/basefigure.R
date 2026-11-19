@@ -47,10 +47,10 @@
 #' if (interactive()) print(fig)
 #'
 #' # pipe in a data frame and refer to its columns with formulas
-#' px_data_iris() |>
+#' iris |>
 #'   go_figure() |>
-#'   add_scatter(x = ~sepal_length, y = ~sepal_width, mode = "markers", name = "sepal") |>
-#'   add_scatter(x = ~petal_length, y = ~petal_width, mode = "markers", name = "petal")
+#'   add_scatter(x = ~Sepal.Length, y = ~Sepal.Width, mode = "markers", name = "sepal") |>
+#'   add_scatter(x = ~Petal.Length, y = ~Petal.Width, mode = "markers", name = "petal")
 go_figure <- function(
   data = NULL,
   layout = NULL,
@@ -84,6 +84,8 @@ go_figure <- function(
 
 # Data for add_<trace>()'s formula properties: its `data` argument or the
 # figure's (go_figure(<data frame>)).
+#' @rdname plotly.core-extending
+#' @export
 trace_data <- function(fig, data = NULL) {
   data <- data %||% attr(fig, "plotly_data", exact = TRUE)
   if (inherits(data, "SharedData")) {

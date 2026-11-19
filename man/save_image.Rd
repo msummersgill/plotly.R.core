@@ -12,8 +12,8 @@ save_image(p, file, ..., width = NULL, height = NULL, scale = NULL)
 \arguments{
 \item{...}{Unused.}
 
-\item{p}{A \code{\link[=go_figure]{go_figure()}}, a figure from a \verb{px_*()} function or a
-plotly htmlwidget (anything \code{\link[=as_widget]{as_widget()}} accepts).}
+\item{p}{A \code{\link[=go_figure]{go_figure()}} or a plotly htmlwidget (anything \code{\link[=as_widget]{as_widget()}}
+accepts).}
 
 \item{file}{Output file; the format is taken from the extension (\code{.png},
 \code{.jpeg}, \code{.jpg}, \code{.webp}, \code{.svg}, \code{.pdf} or \code{.eps}).}
@@ -72,7 +72,7 @@ function when done.
 
 \examples{
 \dontrun{
-fig <- px_data_iris() |> px_scatter(x = ~sepal_width, y = ~sepal_length, color = ~species)
+fig <- iris |> go_figure() |> add_scatter(x = ~Sepal.Width, y = ~Sepal.Length, mode = "markers")
 save_image(fig, tempfile(fileext = ".png"), width = 800, height = 500, scale = 2)
 save_image(fig, tempfile(fileext = ".svg"))
 }

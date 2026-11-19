@@ -41,8 +41,8 @@
 #' `transform(p, file, ...)` function writes images; call its `shutdown()`
 #' function when done.
 #'
-#' @param p A [go_figure()], a figure from a `px_*()` function or a
-#'   plotly htmlwidget (anything [as_widget()] accepts).
+#' @param p A [go_figure()] or a plotly htmlwidget (anything [as_widget()]
+#'   accepts).
 #' @param file Output file; the format is taken from the extension (`.png`,
 #'   `.jpeg`, `.jpg`, `.webp`, `.svg`, `.pdf` or `.eps`).
 #' @param ... Unused.
@@ -55,7 +55,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' fig <- px_data_iris() |> px_scatter(x = ~sepal_width, y = ~sepal_length, color = ~species)
+#' fig <- iris |> go_figure() |> add_scatter(x = ~Sepal.Width, y = ~Sepal.Length, mode = "markers")
 #' save_image(fig, tempfile(fileext = ".png"), width = 800, height = 500, scale = 2)
 #' save_image(fig, tempfile(fileext = ".svg"))
 #' }

@@ -27,18 +27,17 @@ trace selects them all, and it is highlighted when all are selected.}
 \description{
 Gives traces of a figure the keys of a \link[crosstalk:SharedData]{crosstalk::SharedData}, so that
 selecting their points selects the same rows in other views of the
-crosstalk group (and the reverse). This happens by itself for \verb{px_*()}
-functions given a SharedData as \code{data_frame}, and for \verb{add_<trace>()}
-traces whose formula properties are evaluated in a SharedData (piped into
-\code{\link[=go_figure]{go_figure()}} or given as \code{data}); use this for other traces. See \code{\link[=highlight]{highlight()}} for how selections are
+crosstalk group (and the reverse). This happens by itself for
+\verb{add_<trace>()} traces whose formula properties are evaluated in a
+SharedData (piped into \code{\link[=go_figure]{go_figure()}} or given as \code{data}); use this for
+other traces. See \code{\link[=highlight]{highlight()}} for how selections are
 made and shown.
 }
 \examples{
 \dontshow{if (requireNamespace("crosstalk", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-sd <- crosstalk::SharedData$new(px_data_iris())
-iris <- sd$origData()
+sd <- crosstalk::SharedData$new(iris)
 go_figure() |>
-  add_scatter(x = iris$sepal_width, y = iris$sepal_length, mode = "markers") |>
+  add_scatter(x = iris$Sepal.Width, y = iris$Sepal.Length, mode = "markers") |>
   set_crosstalk_keys(sd) |>
   highlight(on = "plotly_selected")
 \dontshow{\}) # examplesIf}

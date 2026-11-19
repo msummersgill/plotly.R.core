@@ -38,7 +38,7 @@ The built-in templates are those of plotly.py: \code{"plotly"} (the default),
 }
 \details{
 Figures without a \code{layout$template} use the default template when they
-are rendered. Plotly Express functions add their template to the figure.
+are rendered.
 }
 \examples{
 template_names()

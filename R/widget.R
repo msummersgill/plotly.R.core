@@ -4,7 +4,7 @@
 #' which is what printing a figure does. Use them to embed figures with
 #' htmltools or [htmlwidgets::saveWidget()].
 #'
-#' @param fig A [go_figure()], a figure from a `px_*()` function, or a list
+#' @param fig A [go_figure()], or a list
 #'   with `data` (list of traces), `layout`, `frames` and `config` elements.
 #' @param x A figure or htmlwidget. `as_widget()` is an S3 generic: the
 #'   plotly package adds a method for its `plot_ly()` objects.
@@ -784,8 +784,8 @@ typed_array_spec <- function(
 #' Marks a numeric vector or matrix to be sent to plotly.js as a float32
 #' typed array: 4 bytes per value instead of 8, halving the size of the
 #' widget's data and of plotly.js's copy of it. Use it in trace properties,
-#' or on data frame columns used by [px_scatter()] and the other `px_*()`
-#' functions. Set `options(plotly.core.float32 = TRUE)` to send all
+#' or on data frame columns used in formula properties (`x = ~col`). Set
+#' `options(plotly.core.float32 = TRUE)` to send all
 #' numeric arrays in single precision.
 #'
 #' Single precision keeps about 7 significant digits: values shown in hover
@@ -907,6 +907,8 @@ num_json <- function(x, f32 = FALSE) {
 # zone (plotly.js has no time zones). Microseconds are rounded, not truncated
 # as format(x, "%OS6") does; trailing zeros of the fraction are dropped, and
 # the fraction is omitted when zero.
+#' @rdname plotly.core-extending
+#' @export
 format_datetime <- function(x) {
   x <- as.POSIXct(x)
   tz <- attr(x, "tzone")[1L] %||% ""
