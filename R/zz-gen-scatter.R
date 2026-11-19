@@ -454,7 +454,7 @@ go_scatter <- function(
 #'   distant point from it, if orientation is "radial". Colorscale: a
 #'   vector of colors, a two-column data.frame of (value, color), or the
 #'   name of a sequential, diverging or cyclical scale in
-#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
+#'   \code{\link{plotly_colors}()} (append \code{"_r"} to reverse).
 #' @param start Sets the gradient start value. It is given as the absolute
 #'   position on the axis determined by the orientiation. E.g., if
 #'   orientation is "horizontal", the gradient will be horizontal and start
@@ -638,7 +638,7 @@ go_scatter_line <- function(
 #'   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
 #'   Colorscale: a vector of colors, a two-column data.frame of (value,
 #'   color), or the name of a sequential, diverging or cyclical scale in
-#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
+#'   \code{\link{plotly_colors}()} (append \code{"_r"} to reverse).
 #' @param gradient A \code{\link{go_gradient}()} object or named list, with
 #'   properties \code{color} and \code{type} (see
 #'   \code{\link{go_gradient}()}).
@@ -903,7 +903,7 @@ go_scatter_marker <- function(
 #'   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
 #'   Colorscale: a vector of colors, a two-column data.frame of (value,
 #'   color), or the name of a sequential, diverging or cyclical scale in
-#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
+#'   \code{\link{plotly_colors}()} (append \code{"_r"} to reverse).
 #' @param dash Sets the dash style of lines. Set to a dash type string
 #'   ("solid", "dot", "dash", "longdash", "dashdot", or "longdashdot") or a
 #'   dash length list in px (eg "5px,10px,2px,2px"). One of \code{"solid"},

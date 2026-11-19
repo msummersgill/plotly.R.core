@@ -100,7 +100,7 @@ following list:
 Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
 Colorscale: a vector of colors, a two-column data.frame of (value,
 color), or the name of a sequential, diverging or cyclical scale in
-\code{\link{px_colors}()} (append \code{"_r"} to reverse).}
+\code{\link{plotly_colors}()} (append \code{"_r"} to reverse).}
 
 \item{line}{A \code{\link{go_scatterpolargl_marker_line}()} object or
 named list, with properties \code{autocolorscale}, \code{cauto},

@@ -138,7 +138,7 @@ type_doc <- function(e) {
     ColorscaleValidator = paste0(
       "Colorscale: a vector of colors, a two-column data.frame of (value, color), ",
       "or the name of a sequential, diverging or cyclical scale in ",
-      rd_link("px_colors"),
+      rd_link("plotly_colors"),
       " (append ",
       rd_code_str("_r"),
       " to reverse)"
@@ -853,7 +853,7 @@ page_doc <- function(page, ctx, figure_fns) {
     "#' @export",
     "#' @examples",
     if (kind == "trace") {
-      paste0("#' ", figure_example(page, ctx))
+      paste0("#' ", figure_example(page, ctx) %||% paste0(root_fn, "()"))
     } else {
       sprintf(
         "#' %s(title = \"My plot\", xaxis = go_xaxis(title = \"x\", range = c(0, 10)))",

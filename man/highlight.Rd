@@ -23,8 +23,7 @@ highlight(
 attrs_selected(opacity = 1, ...)
 }
 \arguments{
-\item{p}{A \code{\link[=go_figure]{go_figure()}} (e.g. from a \verb{px_*()} function) or a plotly
-htmlwidget.}
+\item{p}{A \code{\link[=go_figure]{go_figure()}} or a plotly htmlwidget.}
 
 \item{on}{The event that selects points: \code{"plotly_click"},
 \code{"plotly_hover"}, \code{"plotly_selected"} (box or lasso selection) or
@@ -69,9 +68,9 @@ list of trace attributes.
 \description{
 Sets how a figure responds to, and shows, selections of points linked with
 crosstalk. A figure is linked when its data come from a
-\link[crosstalk:SharedData]{crosstalk::SharedData} (give one as the \code{data_frame} of a \verb{px_*()}
-function, pipe one into \code{\link[=go_figure]{go_figure()}} and add traces with formulas such as
-\code{add_scatter(x = ~col)}, or link traces with \code{\link[=set_crosstalk_keys]{set_crosstalk_keys()}}):
+\link[crosstalk:SharedData]{crosstalk::SharedData} (pipe one into \code{\link[=go_figure]{go_figure()}} and add traces with
+formulas such as \code{add_scatter(x = ~col)}, or link traces with
+\code{\link[=set_crosstalk_keys]{set_crosstalk_keys()}}):
 selecting points then selects the rows with the same keys in every view of the same
 crosstalk group, such as other plots, \code{\link[crosstalk:filter_select]{crosstalk::filter_select()}} inputs,
 DT tables or leaflet maps. Linked figures highlight on click by default;
@@ -83,8 +82,9 @@ also works on plotly htmlwidgets.
 }
 \examples{
 \dontshow{if (requireNamespace("crosstalk", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-sd <- crosstalk::SharedData$new(px_data_iris())
-px_scatter(sd, x = ~sepal_width, y = ~sepal_length, color = ~species) |>
+crosstalk::SharedData$new(iris) |>
+  go_figure() |>
+  add_scatter(x = ~Sepal.Width, y = ~Sepal.Length, mode = "markers") |>
   highlight(on = "plotly_selected", color = "red")
 \dontshow{\}) # examplesIf}
 }

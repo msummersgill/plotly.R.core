@@ -509,7 +509,7 @@ go_histogram_cumulative <- function(
 #'   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
 #'   Colorscale: a vector of colors, a two-column data.frame of (value,
 #'   color), or the name of a sequential, diverging or cyclical scale in
-#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
+#'   \code{\link{plotly_colors}()} (append \code{"_r"} to reverse).
 #' @param cornerradius Sets the rounding of corners. May be an integer
 #'   number of pixels, or a percentage of bar width (as a string ending in
 #'   \%). Defaults to `layout.barcornerradius`. In stack or relative
@@ -624,7 +624,7 @@ go_histogram_marker <- function(
 #'   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
 #'   Colorscale: a vector of colors, a two-column data.frame of (value,
 #'   color), or the name of a sequential, diverging or cyclical scale in
-#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
+#'   \code{\link{plotly_colors}()} (append \code{"_r"} to reverse).
 #' @param reversescale Reverses the color mapping if true. Has an effect
 #'   only if in `marker.line.color` is set to a numerical array. If true,
 #'   `marker.line.cmin` will correspond to the last color in the array and

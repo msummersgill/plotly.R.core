@@ -1,27 +1,43 @@
 library(plotly.core)
 
 if (requireNamespace("crosstalk", quietly = TRUE)) {
-  iris <- px_data_iris()
   sd <- crosstalk::SharedData$new(iris, group = "iris")
 
-  # px_*() with a SharedData: per-point keys, the group as each trace's set,
-  # trendlines standing for all their keys
-  fig <- px_scatter(
-    sd,
-    x = ~sepal_width,
-    y = ~sepal_length,
-    color = ~species,
-    trendline = "ols"
-  )
+  # A figure linked per trace: each species' points carry their rows' keys;
+  # a fitted line stands for all of them
+  fig <- go_figure()
+  for (i in seq_along(levels(iris$Species))) {
+    rows <- which(iris$Species == levels(iris$Species)[[i]])
+    fig <- fig |>
+      add_scatter(
+        x = iris$Sepal.Width[rows],
+        y = iris$Sepal.Length[rows],
+        mode = "markers"
+      ) |>
+      set_crosstalk_keys(
+        sd$key()[rows],
+        group = "iris",
+        traces = 2L * i - 1L
+      ) |>
+      add_scatter(
+        x = range(iris$Sepal.Width[rows]),
+        y = range(iris$Sepal.Length[rows]),
+        mode = "lines"
+      ) |>
+      set_crosstalk_keys(
+        sd$key()[rows],
+        group = "iris",
+        traces = 2L * i,
+        simple = TRUE
+      )
+  }
   keys <- attr(fig, "plotly_keys")
   stopifnot(
     length(fig$data) == 6L,
     identical(unlist(attr(fig, "plotly_sets")), rep("iris", 6L)),
     identical(keys[[1]], as.character(1:50)),
     identical(keys[[2]], list(simple = as.character(1:50))),
-    identical(keys[[3]], as.character(51:100)),
-    # the key column isn't plotted or shown
-    !any(grepl("crosstalk", unlist(fig$data[[1]]$hovertemplate)))
+    identical(keys[[3]], as.character(51:100))
   )
 
   # The widget: highlight defaults, keys as JSON arrays, crosstalk libraries
@@ -170,47 +186,10 @@ if (requireNamespace("crosstalk", quietly = TRUE)) {
     inherits(try(set_crosstalk_keys(g, 1:3), silent = TRUE), "try-error")
   )
 
-  # Keys follow the rows: histograms, wide-form data (a key per row and
-  # variable), animation frames
-  h <- px_histogram(sd, x = ~petal_length, color = ~species)
-  stopifnot(identical(attr(h, "plotly_keys")[[2]], as.character(51:100)))
-  wide <- px_line(crosstalk::SharedData$new(data.frame(a = 1:3, b = 4:6)))
-  stopifnot(identical(
-    attr(wide, "plotly_keys"),
-    list(as.character(1:3), as.character(1:3))
-  ))
-  gm <- px_data_gapminder()
-  a <- px_scatter(
-    crosstalk::SharedData$new(gm, key = ~country),
-    x = ~gdpPercap,
-    y = ~lifeExp,
-    animation_frame = ~year
-  )
-  fk <- attr(a, "plotly_frameKeys")
-  stopifnot(
-    length(fk) == length(unique(gm$year)),
-    identical(
-      fk[[2]]$keys[[1]],
-      as.character(gm$country[gm$year == sort(unique(gm$year))[2]])
-    )
-  )
-
-  # Aggregating figures can't be linked
-  pie <- withCallingHandlers(
-    px_pie(
-      crosstalk::SharedData$new(data.frame(n = c("a", "b"), v = 1:2)),
-      names = ~n,
-      values = ~v
-    ),
-    warning = function(w) {
-      stopifnot(grepl("can't be linked", conditionMessage(w)))
-      invokeRestart("muffleWarning")
-    }
-  )
-  stopifnot(is.null(attr(pie, "plotly_keys")))
-
   # Unlinked figures carry no crosstalk settings
-  w0 <- as_widget(px_scatter(iris, x = ~sepal_width, y = ~sepal_length))
+  w0 <- as_widget(
+    go_figure(iris) |> add_scatter(x = ~Sepal.Width, y = ~Sepal.Length)
+  )
   stopifnot(is.null(w0$x$highlight), is.null(w0$x$sets))
 }
 

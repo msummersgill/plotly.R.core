@@ -30,9 +30,11 @@
   in the data, then checked, when the trace is added with `add_<trace>()` or
   `add_trace()`. plotly.py's "magic underscore"
   property names (`marker_size = 10`) are not supported.
-* Plotly Express: all of plotly.py's `px.*` functions as `px_scatter()`,
-  `px_line()`, `px_bar()`, ... plus `px_imshow()`, with faceting, marginals,
-  trendlines, animation, the `px.data` datasets and templates.
+* Plotly Express (`px_scatter()`, `px_bar()`, ...) is in the separate
+  plotly.express package, which builds on plotly.core; plotly.core exports the
+  functions it uses (see `?"plotly.core-extending"`). plotly.py's colour
+  sequences and scales are `plotly_colors`. plotly.core no longer imports
+  data.table (#4).
 * `make_subplots()`, templates (`default_template()`, `register_template()`).
 * htmlwidget rendering: numeric arrays are sent as base64 typed arrays, arrays
   repeated in a figure are sent once, `as_float32()` sends data in single
@@ -68,9 +70,8 @@
   Startup failures show Chrome's own output.
 * Renders the plotly R package's `plot_ly()` and `ggplotly()` figures,
   including its crosstalk linking (`highlight()`).
-* Linked views with crosstalk: `px_*()` functions accept a
-  `crosstalk::SharedData` as `data_frame`, `go_figure()` and `add_<trace>()`
-  accept one as the data for formulas (`add_scatter(x = ~col)`) and link
+* Linked views with crosstalk: `go_figure()` and `add_<trace>()`
+  accept a `crosstalk::SharedData` as the data for formulas (`add_scatter(x = ~col)`) and link
   the traces of its rows, `set_crosstalk_keys()` links the traces of any
   figure, and `highlight()` sets how selections are made and
   shown (the same options as the plotly package's `highlight()`).

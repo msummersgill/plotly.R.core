@@ -142,7 +142,7 @@ colorscale in color space, use `zmin` and `zmax`. Alternatively,
 Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
 Colorscale: a vector of colors, a two-column data.frame of (value,
 color), or the name of a sequential, diverging or cyclical scale in
-\code{\link{px_colors}()} (append \code{"_r"} to reverse).}
+\code{\link{plotly_colors}()} (append \code{"_r"} to reverse).}
 
 \item{customdata}{Assigns extra data each datum. This may be useful when
 listening to hover, click and selection events. Note that, "scatter"
@@ -373,6 +373,9 @@ the plotly.js schema when the object is created or modified (see
 \code{\link{plotly_obj-modify}}). One-sided formulas (\code{~col}) are
 evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
+}
+\examples{
+go_choroplethmap()
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

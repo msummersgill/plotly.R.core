@@ -13,6 +13,8 @@ get_widget_setting <- function(p, name) {
   }
 }
 
+#' @rdname plotly.core-extending
+#' @export
 set_widget_setting <- function(p, name, value) {
   if (inherits(p, "htmlwidget")) {
     p$x[[name]] <- value
@@ -252,7 +254,9 @@ event_source <- function(p, source) {
 #' if (interactive() && requireNamespace("shiny", quietly = TRUE)) {
 #'   ui <- shiny::fluidPage(plotlyOutput("plot"), shiny::verbatimTextOutput("click"))
 #'   server <- function(input, output, session) {
-#'     output$plot <- renderPlotly(px_data_iris() |> px_scatter(x = ~sepal_width, y = ~sepal_length))
+#'     output$plot <- renderPlotly(
+#'       iris |> go_figure() |> add_scatter(x = ~Sepal.Width, y = ~Sepal.Length, mode = "markers")
+#'     )
 #'     output$click <- shiny::renderPrint(event_data("plotly_click"))
 #'   }
 #'   shiny::shinyApp(ui, server)
@@ -342,8 +346,8 @@ event_data <- function(
 #' Shiny bindings for plotly figures
 #'
 #' `plotlyOutput()` creates a plot output element in a Shiny UI;
-#' `renderPlotly()` renders a [go_figure()], a figure from a `px_*()`
-#' function or a plotly htmlwidget (or a promise of one) into it.
+#' `renderPlotly()` renders a [go_figure()] or a plotly htmlwidget (or a
+#' promise of one) into it.
 #'
 #' @param outputId Output variable to read the plot from.
 #' @param width,height Size of the plot output, as a valid CSS unit (e.g.

@@ -328,7 +328,7 @@ go_sankey_link <- function(
 #'   Blackbody,Bluered,Blues,Cividis,Earth,Electric,Greens,Greys,Hot,Jet,Picnic,Portland,Rainbow,RdBu,Reds,Viridis,YlGnBu,YlOrRd.
 #'   Colorscale: a vector of colors, a two-column data.frame of (value,
 #'   color), or the name of a sequential, diverging or cyclical scale in
-#'   \code{\link{px_colors}()} (append \code{"_r"} to reverse).
+#'   \code{\link{plotly_colors}()} (append \code{"_r"} to reverse).
 #' @param label The label of the links to color based on their
 #'   concentration within a flow. String.
 #' @param name When used in a template, named items are created in the

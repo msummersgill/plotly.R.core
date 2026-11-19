@@ -8,17 +8,17 @@
 # linking: selecting points in one view selects the same keys in every view
 # of the group (other plots, crosstalk filters, DT tables, leaflet maps).
 #
-# px_*() functions accept a SharedData as `data_frame`, and go_figure() and
-# add_<trace>() as their data, and set the keys themselves;
+# go_figure() and add_<trace>() accept a SharedData as their data and set the
+# keys themselves (as do plotly.express's px_*() functions);
 # set_crosstalk_keys() links traces of any figure.
 
 #' Highlight linked selections
 #'
 #' Sets how a figure responds to, and shows, selections of points linked with
 #' crosstalk. A figure is linked when its data come from a
-#' [crosstalk::SharedData] (give one as the `data_frame` of a `px_*()`
-#' function, pipe one into [go_figure()] and add traces with formulas such as
-#' `add_scatter(x = ~col)`, or link traces with [set_crosstalk_keys()]):
+#' [crosstalk::SharedData] (pipe one into [go_figure()] and add traces with
+#' formulas such as `add_scatter(x = ~col)`, or link traces with
+#' [set_crosstalk_keys()]):
 #' selecting points then selects the rows with the same keys in every view of the same
 #' crosstalk group, such as other plots, [crosstalk::filter_select()] inputs,
 #' DT tables or leaflet maps. Linked figures highlight on click by default;
@@ -27,8 +27,7 @@
 #' The options match the plotly package's `highlight()`, and `highlight()`
 #' also works on plotly htmlwidgets.
 #'
-#' @param p A [go_figure()] (e.g. from a `px_*()` function) or a plotly
-#'   htmlwidget.
+#' @param p A [go_figure()] or a plotly htmlwidget.
 #' @param on The event that selects points: `"plotly_click"`,
 #'   `"plotly_hover"`, `"plotly_selected"` (box or lasso selection) or
 #'   `"plotly_selecting"` (selection while dragging). `NULL` turns selecting
@@ -57,8 +56,9 @@
 #' @seealso [set_crosstalk_keys()]
 #' @export
 #' @examplesIf requireNamespace("crosstalk", quietly = TRUE)
-#' sd <- crosstalk::SharedData$new(px_data_iris())
-#' px_scatter(sd, x = ~sepal_width, y = ~sepal_length, color = ~species) |>
+#' crosstalk::SharedData$new(iris) |>
+#'   go_figure() |>
+#'   add_scatter(x = ~Sepal.Width, y = ~Sepal.Length, mode = "markers") |>
 #'   highlight(on = "plotly_selected", color = "red")
 highlight <- function(
   p,
@@ -231,10 +231,10 @@ r_hex_colour <- function(x) {
 #'
 #' Gives traces of a figure the keys of a [crosstalk::SharedData], so that
 #' selecting their points selects the same rows in other views of the
-#' crosstalk group (and the reverse). This happens by itself for `px_*()`
-#' functions given a SharedData as `data_frame`, and for `add_<trace>()`
-#' traces whose formula properties are evaluated in a SharedData (piped into
-#' [go_figure()] or given as `data`); use this for other traces. See [highlight()] for how selections are
+#' crosstalk group (and the reverse). This happens by itself for
+#' `add_<trace>()` traces whose formula properties are evaluated in a
+#' SharedData (piped into [go_figure()] or given as `data`); use this for
+#' other traces. See [highlight()] for how selections are
 #' made and shown.
 #'
 #' @param fig A [go_figure()].
@@ -249,10 +249,9 @@ r_hex_colour <- function(x) {
 #' @return `fig`, linked.
 #' @export
 #' @examplesIf requireNamespace("crosstalk", quietly = TRUE)
-#' sd <- crosstalk::SharedData$new(px_data_iris())
-#' iris <- sd$origData()
+#' sd <- crosstalk::SharedData$new(iris)
 #' go_figure() |>
-#'   add_scatter(x = iris$sepal_width, y = iris$sepal_length, mode = "markers") |>
+#'   add_scatter(x = iris$Sepal.Width, y = iris$Sepal.Length, mode = "markers") |>
 #'   set_crosstalk_keys(sd) |>
 #'   highlight(on = "plotly_selected")
 set_crosstalk_keys <- function(
@@ -347,6 +346,8 @@ trace_has_rows <- function(trace, n) {
   ))
 }
 
+#' @rdname plotly.core-extending
+#' @export
 pad_list <- function(x, n) {
   x <- as.list(x)
   length(x) <- max(length(x), n)
@@ -445,89 +446,4 @@ key_values <- function(k) {
 
 item_values <- function(o) {
   vapply(o$items, function(it) as.character(it$value), "")
-}
-
-# Plotly Express ---------------------------------------------------------------
-
-# Trace types whose points are the data frame's rows, so they can carry its
-# keys (aggregating traces, such as pies, sunbursts and heatmaps, can't)
-PX_KEYED_TYPES <- c(
-  "scatter",
-  "scattergl",
-  "scatter3d",
-  "scatterpolar",
-  "scatterpolargl",
-  "scatterternary",
-  "scattergeo",
-  "scattermap",
-  "bar",
-  "histogram",
-  "box",
-  "violin",
-  "funnel",
-  "choropleth",
-  "choroplethmap",
-  "splom"
-)
-
-# The column of px data frames holding the SharedData's keys
-PX_KEY_COL <- ".plotly_crosstalk_key"
-
-# A SharedData given as `data_frame`: its data, with its keys and group kept
-# in args
-px_shared_data <- function(args) {
-  sd <- args$data_frame
-  if (!inherits(sd, "SharedData")) {
-    return(args)
-  }
-  args$data_frame <- sd$origData()
-  args$crosstalk_key <- as.character(sd$key())
-  args$crosstalk_group <- sd$groupName()
-  args
-}
-
-# Keys of a px trace made from `trace_data`
-px_trace_key <- function(args, ctor, spec, trace_data) {
-  if (is.null(args$crosstalk_key) || !PX_KEY_COL %in% names(trace_data)) {
-    return(NULL)
-  }
-  k <- as.character(trace_data[[PX_KEY_COL]])
-  if ("trendline" %in% spec$attrs) {
-    return(list(simple = unique(k)))
-  }
-  if (!ctor %in% PX_KEYED_TYPES) {
-    return(NULL)
-  }
-  k
-}
-
-# Set the figure's keys from those of the px traces of each frame
-# (`frame_keys`: per frame, a list with each trace's keys or NULL)
-px_set_keys <- function(fig, args, frame_keys) {
-  if (is.null(args$crosstalk_key)) {
-    return(fig)
-  }
-  sets_of <- function(keys) {
-    lapply(keys, function(k) if (!is.null(k)) args$crosstalk_group)
-  }
-  first <- if (length(frame_keys)) frame_keys[[1L]] else list()
-  if (all(vapply(first, is.null, logical(1)))) {
-    warning(
-      "This kind of figure can't be linked with crosstalk: its traces don't ",
-      "show the data frame's rows as points",
-      call. = FALSE
-    )
-    return(fig)
-  }
-  n <- length(fig$data)
-  fig <- set_widget_setting(fig, "keys", pad_list(first, n))
-  fig <- set_widget_setting(fig, "sets", pad_list(sets_of(first), n))
-  if (length(frame_keys) > 1L) {
-    fig <- set_widget_setting(
-      fig,
-      "frameKeys",
-      lapply(frame_keys, function(k) list(keys = k, sets = sets_of(k)))
-    )
-  }
-  fig
 }

@@ -37,10 +37,13 @@ show_png <- function(file) {
 
 ```{r save}
 #| eval: !expr has_chrome
-fig <- px_scatter(
-  px_data_iris(),
-  x = ~sepal_width, y = ~sepal_length, color = ~species
-)
+fig <- go_figure()
+for (species in split(iris, iris$Species)) {
+  fig <- add_scatter(
+    fig, data = species, x = ~Sepal.Width, y = ~Sepal.Length,
+    mode = "markers", name = as.character(species$Species[1])
+  )
+}
 png_file <- tempfile(fileext = ".png")
 save_image(fig, png_file, width = 700, height = 450, scale = 2)
 ```

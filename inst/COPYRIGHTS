@@ -19,12 +19,10 @@ inst/htmlwidgets/lib/colourpicker/
   Copyright 2016 Dean Attali (with Cory LaViska)
   MIT licence: inst/htmlwidgets/lib/colourpicker/LICENSE
 
-inst/templates/, inst/extdata/, inst/schema/
-  Templates and datasets from the plotly Python package (plotly.express.data),
-  and the plotly.js plot schema
+inst/templates/, inst/schema/
+  Templates from the plotly Python package, and the plotly.js plot schema
   Copyright (c) Plotly Technologies Inc.
-  MIT licence. The datasets credit their original sources in plotly.py's
-  documentation.
+  MIT licence.
 
 src/typed_array.c
   Follows the design of data.table's fread.c and fwrite.c

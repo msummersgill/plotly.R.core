@@ -1,8 +1,8 @@
 """Dump plotly.py's color sequences and scales (plotly.colors) to JSON.
 
 Run from the package root with plotly.py installed:
-    python3 codegen/resources/px_colors.py
-Writes codegen/resources/px-colors.json, which codegen/colors.R turns into
+    python3 codegen/resources/plotly_colors.py
+Writes codegen/resources/plotly-colors.json, which codegen/colors.R turns into
 R/zz-gen-colors.R. Reversed ("_r") variants are omitted; use rev().
 """
 import json
@@ -22,5 +22,5 @@ for module_name, module in [("qualitative", qualitative), ("sequential", sequent
             scales[name] = value
     out[module_name] = scales
 
-with open("codegen/resources/px-colors.json", "w", encoding="utf-8") as f:
+with open("codegen/resources/plotly-colors.json", "w", encoding="utf-8") as f:
     json.dump(out, f, indent=1)

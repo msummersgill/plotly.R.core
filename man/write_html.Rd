@@ -14,7 +14,7 @@ write_html(
 )
 }
 \arguments{
-\item{fig}{A figure (e.g. from \code{\link[=go_figure]{go_figure()}} or \code{\link[=px_scatter]{px_scatter()}}) or a
+\item{fig}{A figure (e.g. from \code{\link[=go_figure]{go_figure()}}) or a
 plotly.core widget (e.g. from \code{\link[=plotly_widget]{plotly_widget()}}, or a figure from
 plotly's \code{plot_ly()}).}
 

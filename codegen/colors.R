@@ -1,5 +1,5 @@
-# Color palette codegen: writes R/zz-gen-colors.R (px_colors) from
-# codegen/resources/px-colors.json, which codegen/resources/px_colors.py dumps
+# Color palette codegen: writes R/zz-gen-colors.R (plotly_colors) from
+# codegen/resources/plotly-colors.json, which codegen/resources/plotly_colors.py dumps
 # from plotly.py's plotly.colors modules.
 
 write_colors <- function(outdir = ".") {
@@ -7,7 +7,7 @@ write_colors <- function(outdir = ".") {
     outdir,
     "codegen",
     "resources",
-    "px-colors.json"
+    "plotly-colors.json"
   ))
   fmt_group <- function(group) {
     entries <- vapply(
@@ -30,10 +30,10 @@ write_colors <- function(outdir = ".") {
     "#' Color sequences and scales",
     "#'",
     "#' The named color sequences and scales of plotly.py's \\code{plotly.colors} module:",
-    "#' \\code{px_colors$qualitative} (discrete color sequences, e.g. \\code{Plotly},",
-    "#' \\code{D3}, \\code{Set1}), \\code{px_colors$sequential} (e.g. \\code{Viridis},",
-    "#' \\code{Plasma}, \\code{Blues}), \\code{px_colors$diverging} (e.g. \\code{RdBu}) and",
-    "#' \\code{px_colors$cyclical} (e.g. \\code{Twilight}). Each is a character vector",
+    "#' \\code{plotly_colors$qualitative} (discrete color sequences, e.g. \\code{Plotly},",
+    "#' \\code{D3}, \\code{Set1}), \\code{plotly_colors$sequential} (e.g. \\code{Viridis},",
+    "#' \\code{Plasma}, \\code{Blues}), \\code{plotly_colors$diverging} (e.g. \\code{RdBu}) and",
+    "#' \\code{plotly_colors$cyclical} (e.g. \\code{Twilight}). Each is a character vector",
     "#' of colors; use \\code{rev()} to reverse one.",
     "#'",
     "#' Sequential, diverging and cyclical scales can also be given by name",
@@ -44,10 +44,10 @@ write_colors <- function(outdir = ".") {
     "#' @noMd",
     "#' @export",
     "#' @examples",
-    "#' names(px_colors$qualitative)",
-    "#' px_colors$qualitative$Plotly",
-    "#' rev(px_colors$sequential$Viridis)",
-    "px_colors <- list(",
+    "#' names(plotly_colors$qualitative)",
+    "#' plotly_colors$qualitative$Plotly",
+    "#' rev(plotly_colors$sequential$Viridis)",
+    "plotly_colors <- list(",
     paste0(
       "  ",
       types,
@@ -60,7 +60,7 @@ write_colors <- function(outdir = ".") {
   )
   writeLines(src, file.path(outdir, "R", "zz-gen-colors.R"))
   message(sprintf(
-    "Wrote px_colors: %s",
+    "Wrote plotly_colors: %s",
     paste(sprintf("%d %s", lengths(cols[types]), types), collapse = ", ")
   ))
 }

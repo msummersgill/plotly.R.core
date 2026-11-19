@@ -27,8 +27,10 @@ plotly.core is a rendering engine for the [plotly R package](https://github.com/
   `event_data()` and `plotlyProxy()` work as in the plotly R package; figures
   render inline in documents, as static images in PDF/Word output.`save_image()`
   exports PNG, JPEG, WebP, SVG, PDF and EPS with headless Chrome (no Python needed).
-- **Plotly Express** Ports of functionality from the plotly.py package introduce
-  high-level methods quickly create figures with minimal code.
+- **Plotly Express** High-level `px_*()` functions ported from plotly.py, which
+  make a whole figure from a data frame in one call, are in the separate
+  [plotly.express](https://github.com/msummersgill/plotly.R.express) package,
+  built on plotly.core.
 
 ## Installation
 
@@ -41,21 +43,6 @@ remotes::install_github("msummersgill/plotly.R.core")
 # plotly with plotly.core rendering
 remotes::install_github("msummersgill/plotly@plotly-core-render")
 ```
-
-## Example: Plotly Express
-
-```r
-library(plotly.core)
-
-px_data_gapminder(year = 2007) |>
-  px_scatter(
-    x = ~gdpPercap, y = ~lifeExp, size = ~pop, color = ~continent,
-    hover_name = ~country, log_x = TRUE, size_max = 60, title = "Gapminder 2007"
-  )
-```
-
-![](man/figures/README-px-gapminder.png)
-
 
 ## Example: a 2D scatter plot with graph objects
 
@@ -168,7 +155,9 @@ add_scatter(fig, x = mtcars$wt, y = mtcars$mpg, marker_size = 12)
 library(shiny)
 ui <- fluidPage(plotlyOutput("plot"), verbatimTextOutput("click"))
 server <- function(input, output, session) {
-  output$plot <- renderPlotly(px_data_iris() |> px_scatter(x = ~sepal_width, y = ~sepal_length))
+  output$plot <- renderPlotly(
+    iris |> go_figure() |> add_scatter(x = ~Sepal.Width, y = ~Sepal.Length, mode = "markers")
+  )
   output$click <- renderPrint(event_data("plotly_click"))
 }
 shinyApp(ui, server)
