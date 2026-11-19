@@ -81,7 +81,9 @@
 - [`make_subplots()`](https://msummersgill.github.io/plotly.R.core/reference/make_subplots.md),
   templates
   ([`default_template()`](https://msummersgill.github.io/plotly.R.core/reference/get_template.md),
-  [`register_template()`](https://msummersgill.github.io/plotly.R.core/reference/get_template.md)).
+  [`register_template()`](https://msummersgill.github.io/plotly.R.core/reference/get_template.md));
+  figures use no template (`"none"`, plotly.js’s own defaults) unless
+  one is set, as plotly 4.x does.
 - htmlwidget rendering: numeric arrays are sent as base64 typed arrays,
   arrays repeated in a figure are sent once,
   [`as_float32()`](https://msummersgill.github.io/plotly.R.core/reference/as_float32.md)
