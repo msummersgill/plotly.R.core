@@ -10,7 +10,8 @@
 #' The built-in templates are those of plotly.py: `"plotly"`,
 #' `"plotly_white"`, `"plotly_dark"`, `"ggplot2"`, `"seaborn"`,
 #' `"simple_white"`, `"presentation"`, `"xgridoff"`, `"ygridoff"`,
-#' `"gridon"` and `"none"` (the default). Templates can be combined with `"+"`, e.g.
+#' `"gridon"` and `"none"` (the default: plotly.js's own defaults, with
+#' plotly 4.x's margins when it is the default). Templates can be combined with `"+"`, e.g.
 #' `"plotly_white+presentation"`; later templates take precedence.
 #'
 #' Figures without a `layout$template` use the default template when they
@@ -192,3 +193,7 @@ template_layout_value <- function(template, path) {
   }
   x
 }
+
+# plotly 4.x's default margins (plot_ly()), which figures rendered with the
+# "none" default template get (see plotly_widget()).
+DEFAULT_MARGIN <- list(b = 40, l = 60, t = 25, r = 10)

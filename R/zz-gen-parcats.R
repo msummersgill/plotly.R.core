@@ -29,12 +29,11 @@
 #' @param counts The number of observations represented by each state.
 #'   Defaults to 1 so that each state represents one observation Number in
 #'   the interval [0, Inf], or a vector of these.
-#' @param data A data frame in which formula properties (e.g. \code{x =
-#'   ~col}, \code{marker = list(size = ~col)}, \code{marker =
-#'   go_scatter_marker(size = ~col)}) are evaluated. Default: the data
-#'   given to \code{\link{go_figure}()}. Only the evaluated values are
-#'   added to the trace. A \code{crosstalk::SharedData} works the same way,
-#'   and links the trace to its crosstalk group (see
+#' @param data A data frame in which formula properties (e.g. \code{line =
+#'   go_parcats_line(color = ~col)}) are evaluated. Default: the data given
+#'   to \code{\link{go_figure}()}. Only the evaluated values are added to
+#'   the trace. A \code{crosstalk::SharedData} works the same way, and
+#'   links the trace to its crosstalk group (see
 #'   \code{\link{highlight}()}).
 #' @param dimensions List, each element a
 #'   \code{\link{go_parcats_dimension}()} object or named list, with

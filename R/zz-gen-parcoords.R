@@ -24,13 +24,12 @@
 #'   listening to hover, click and selection events. Note that, "scatter"
 #'   traces also appends customdata items in the markers DOM elements Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param data A data frame in which formula properties (e.g. \code{x =
-#'   ~col}, \code{marker = list(size = ~col)}, \code{marker =
-#'   go_scatter_marker(size = ~col)}) are evaluated. Default: the data
-#'   given to \code{\link{go_figure}()}. Only the evaluated values are
-#'   added to the trace. A \code{crosstalk::SharedData} works the same way,
-#'   and links the trace to its crosstalk group (see
-#'   \code{\link{highlight}()}).
+#' @param data A data frame in which formula properties (e.g. \code{ids =
+#'   ~col}, \code{line = go_parcoords_line(color = ~col)}) are evaluated.
+#'   Default: the data given to \code{\link{go_figure}()}. Only the
+#'   evaluated values are added to the trace. A
+#'   \code{crosstalk::SharedData} works the same way, and links the trace
+#'   to its crosstalk group (see \code{\link{highlight}()}).
 #' @param dimensions List, each element a
 #'   \code{\link{go_parcoords_dimension}()} object or named list, with
 #'   properties \code{constraintrange}, \code{label}, \code{multiselect},

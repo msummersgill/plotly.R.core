@@ -451,8 +451,7 @@ object_roots_for <- function(nodes, shared_of) {
 FIGURE_ARG_DOCS <- list(
   fig = "A \\code{go_figure} object.",
   data = paste(
-    "A data frame in which formula properties (e.g. \\code{x = ~col},",
-    "\\code{marker = list(size = ~col)}, \\code{marker = go_scatter_marker(size = ~col)})",
+    "A data frame in which formula properties (e.g. \\code{x = ~col})",
     "are evaluated. Default: the data given to",
     "\\code{\\link{go_figure}()}. Only the evaluated values are added to the trace.",
     "A \\code{crosstalk::SharedData} works the same way, and links the trace",
@@ -469,6 +468,89 @@ FIGURE_ARG_DOCS <- list(
   secondary_y = "If \\code{TRUE}, use the secondary y axis of the subplot.",
   exclude_empty_subplots = "If \\code{TRUE}, skip subplots that have no traces or layout objects."
 )
+
+# The `data` argument of add_<trace>(), with formula examples for the trace:
+# a data array (x = ~col) and an array property of a nested object
+# (marker = go_bar_marker(color = ~col)).
+DATA_EXAMPLE_ARRAYS <- c(
+  "x",
+  "y",
+  "z",
+  "values",
+  "r",
+  "lat",
+  "a",
+  "real",
+  "labels",
+  "locations",
+  "dimensions",
+  "u",
+  "open",
+  "ids",
+  "parents"
+)
+DATA_EXAMPLE_OBJECTS <- c(
+  "marker",
+  "link",
+  "cells",
+  "line",
+  "textfont",
+  "hoverlabel"
+)
+DATA_EXAMPLE_NESTED <- c(
+  "color",
+  "colors",
+  "value",
+  "values",
+  "size",
+  "width",
+  "family"
+)
+
+data_arg_doc <- function(page, ctx) {
+  v <- ctx$validators
+  kids <- ctx$nodes[ctx$nodes$parent == page, ]
+  is_array <- function(k) identical(v[[k]]$superclass, "DataArrayValidator")
+  arrays <- kids$name[vapply(kids$key, is_array, NA)]
+  top <- c(intersect(DATA_EXAMPLE_ARRAYS, arrays), arrays)[1L]
+  nested <- NULL
+  for (obj in intersect(DATA_EXAMPLE_OBJECTS, kids$name)) {
+    ok <- paste(page, obj, sep = ".")
+    sub <- ctx$nodes[ctx$nodes$parent == ok, ]
+    accepts <- sub$name[vapply(
+      sub$key,
+      function(k) isTRUE(v[[k]]$array_ok) || is_array(k),
+      NA
+    )]
+    prop <- intersect(DATA_EXAMPLE_NESTED, accepts)[1L]
+    if (!is.na(prop)) {
+      fn <- if (ok %in% names(ctx$shared_of)) {
+        paste0("go_", ctx$shared_of[[ok]])
+      } else {
+        ctx$object_fn[[ok]]
+      }
+      nested <- sprintf("%s = %s(%s = ~col)", obj, fn, prop)
+      break
+    }
+  }
+  examples <- c(
+    if (!is.na(top)) sprintf("%s = ~col", top),
+    nested
+  )
+  paste(
+    "A data frame in which formula properties",
+    if (length(examples)) {
+      sprintf(
+        "(e.g. %s)",
+        paste(rd_code(examples), collapse = ", ")
+      )
+    },
+    "are evaluated. Default: the data given to",
+    "\\code{\\link{go_figure}()}. Only the evaluated values are added to the trace.",
+    "A \\code{crosstalk::SharedData} works the same way, and links the trace",
+    "to its crosstalk group (see \\code{\\link{highlight}()})."
+  )
+}
 
 # Visible children (properties) of a compound key.
 child_nodes <- function(key, nodes) {
@@ -805,6 +887,9 @@ page_doc <- function(page, ctx, figure_fns) {
     for (a in f$args) {
       fig_docs[[a]] <- FIGURE_ARG_DOCS[[a]]
     }
+  }
+  if (!is.null(fig_docs$data) && kind == "trace") {
+    fig_docs$data <- data_arg_doc(page, ctx)
   }
   lines <- c(
     paste0("#' ", page_title(page, kind)),

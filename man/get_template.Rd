@@ -33,7 +33,8 @@ Templates (themes) set default layout and trace properties for figures.
 The built-in templates are those of plotly.py: \code{"plotly"},
 \code{"plotly_white"}, \code{"plotly_dark"}, \code{"ggplot2"}, \code{"seaborn"},
 \code{"simple_white"}, \code{"presentation"}, \code{"xgridoff"}, \code{"ygridoff"},
-\code{"gridon"} and \code{"none"} (the default). Templates can be combined with \code{"+"}, e.g.
+\code{"gridon"} and \code{"none"} (the default: plotly.js's own defaults, with
+plotly 4.x's margins when it is the default). Templates can be combined with \code{"+"}, e.g.
 \code{"plotly_white+presentation"}; later templates take precedence.
 }
 \details{

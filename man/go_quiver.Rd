@@ -114,12 +114,11 @@ go_quiver(
 abbreviated or unknown name is an error that suggests the right one.}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
-~col}, \code{marker = list(size = ~col)}, \code{marker =
-go_scatter_marker(size = ~col)}) are evaluated. Default: the data
-given to \code{\link{go_figure}()}. Only the evaluated values are
-added to the trace. A \code{crosstalk::SharedData} works the same way,
-and links the trace to its crosstalk group (see
-\code{\link{highlight}()}).}
+~col}, \code{marker = go_quiver_marker(color = ~col)}) are evaluated.
+Default: the data given to \code{\link{go_figure}()}. Only the
+evaluated values are added to the trace. A
+\code{crosstalk::SharedData} works the same way, and links the trace
+to its crosstalk group (see \code{\link{highlight}()}).}
 
 \item{anchor}{Sets the vector arrows' anchor with respect to their (x,y)
 positions. Use "tail" to place (x,y) at the base, "tip" to place (x,y)

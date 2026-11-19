@@ -91,13 +91,11 @@ go_image(
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
 
-\item{data}{A data frame in which formula properties (e.g. \code{x =
-~col}, \code{marker = list(size = ~col)}, \code{marker =
-go_scatter_marker(size = ~col)}) are evaluated. Default: the data
-given to \code{\link{go_figure}()}. Only the evaluated values are
-added to the trace. A \code{crosstalk::SharedData} works the same way,
-and links the trace to its crosstalk group (see
-\code{\link{highlight}()}).}
+\item{data}{A data frame in which formula properties (e.g. \code{z =
+~col}) are evaluated. Default: the data given to
+\code{\link{go_figure}()}. Only the evaluated values are added to the
+trace. A \code{crosstalk::SharedData} works the same way, and links
+the trace to its crosstalk group (see \code{\link{highlight}()}).}
 
 \item{colormodel}{Color model used to map the numerical color components
 described in `z` into colors. If `source` is specified, this attribute

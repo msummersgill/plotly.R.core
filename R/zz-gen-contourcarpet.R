@@ -84,13 +84,11 @@
 #'   traces also appends customdata items in the markers DOM elements Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param da Sets the x coordinate step. See `x0` for more info. Number.
-#' @param data A data frame in which formula properties (e.g. \code{x =
-#'   ~col}, \code{marker = list(size = ~col)}, \code{marker =
-#'   go_scatter_marker(size = ~col)}) are evaluated. Default: the data
-#'   given to \code{\link{go_figure}()}. Only the evaluated values are
-#'   added to the trace. A \code{crosstalk::SharedData} works the same way,
-#'   and links the trace to its crosstalk group (see
-#'   \code{\link{highlight}()}).
+#' @param data A data frame in which formula properties (e.g. \code{z =
+#'   ~col}) are evaluated. Default: the data given to
+#'   \code{\link{go_figure}()}. Only the evaluated values are added to the
+#'   trace. A \code{crosstalk::SharedData} works the same way, and links
+#'   the trace to its crosstalk group (see \code{\link{highlight}()}).
 #' @param db Sets the y coordinate step. See `y0` for more info. Number.
 #' @param fig A \code{go_figure} object.
 #' @param fillcolor Sets the fill color if `contours.type` is "constraint".

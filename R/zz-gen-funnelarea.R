@@ -29,13 +29,12 @@
 #'   listening to hover, click and selection events. Note that, "scatter"
 #'   traces also appends customdata items in the markers DOM elements Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
-#' @param data A data frame in which formula properties (e.g. \code{x =
-#'   ~col}, \code{marker = list(size = ~col)}, \code{marker =
-#'   go_scatter_marker(size = ~col)}) are evaluated. Default: the data
-#'   given to \code{\link{go_figure}()}. Only the evaluated values are
-#'   added to the trace. A \code{crosstalk::SharedData} works the same way,
-#'   and links the trace to its crosstalk group (see
-#'   \code{\link{highlight}()}).
+#' @param data A data frame in which formula properties (e.g. \code{values
+#'   = ~col}, \code{marker = go_funnelarea_marker(colors = ~col)}) are
+#'   evaluated. Default: the data given to \code{\link{go_figure}()}. Only
+#'   the evaluated values are added to the trace. A
+#'   \code{crosstalk::SharedData} works the same way, and links the trace
+#'   to its crosstalk group (see \code{\link{highlight}()}).
 #' @param dlabel Sets the label step. See `label0` for more info. Number.
 #' @param domain A \code{\link{go_domain}()} object or named list, with
 #'   properties \code{column}, \code{row}, \code{x} and \code{y} (see

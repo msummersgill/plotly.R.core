@@ -41,6 +41,8 @@
 * `make_subplots()`, templates (`default_template()`, `register_template()`);
   figures use no template (`"none"`, plotly.js's own defaults) unless one is
   set, as plotly 4.x does.
+* Figures rendered with the `"none"` default template have plotly 4.x's
+  margins (`l = 60, r = 10, t = 25, b = 40` pixels) unless the layout sets them.
 * htmlwidget rendering: numeric arrays are sent as base64 typed arrays, arrays
   repeated in a figure are sent once, `as_float32()` sends data in single
   precision, and `partial_bundle()` loads a smaller plotly.js bundle.

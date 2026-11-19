@@ -88,12 +88,10 @@
 #'   traces also appends customdata items in the markers DOM elements Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param data A data frame in which formula properties (e.g. \code{x =
-#'   ~col}, \code{marker = list(size = ~col)}, \code{marker =
-#'   go_scatter_marker(size = ~col)}) are evaluated. Default: the data
-#'   given to \code{\link{go_figure}()}. Only the evaluated values are
-#'   added to the trace. A \code{crosstalk::SharedData} works the same way,
-#'   and links the trace to its crosstalk group (see
-#'   \code{\link{highlight}()}).
+#'   ~col}) are evaluated. Default: the data given to
+#'   \code{\link{go_figure}()}. Only the evaluated values are added to the
+#'   trace. A \code{crosstalk::SharedData} works the same way, and links
+#'   the trace to its crosstalk group (see \code{\link{highlight}()}).
 #' @param delaunayaxis Sets the Delaunay axis, which is the axis that is
 #'   perpendicular to the surface of the Delaunay triangulation. It has an
 #'   effect if `i`, `j`, `k` are not provided and `alphahull` is set to

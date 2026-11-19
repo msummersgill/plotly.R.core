@@ -8,7 +8,8 @@ stopifnot(
   identical(w$x$data[[1]]$type, "scatter")
 )
 
-# Serialisation: scalars unboxed, NA -> null; no template by default
+# Serialisation: scalars unboxed, NA -> null; by default no template, only
+# plotly 4.x's margins
 json <- as.character(attr(w$x, "TOJSON_FUNC")(w$x))
 stopifnot(
   grepl('"type":"scatter"', json, fixed = TRUE),
@@ -17,7 +18,11 @@ stopifnot(
     json,
     fixed = TRUE
   ),
-  grepl('"layout":{}', json, fixed = TRUE)
+  grepl(
+    '"layout":{"template":{"layout":{"margin":{"b":40,"l":60,"t":25,"r":10}}}}',
+    json,
+    fixed = TRUE
+  )
 )
 old <- default_template("plotly")
 json <- as.character(attr(plotly_widget(fig)$x, "TOJSON_FUNC")(

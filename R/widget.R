@@ -20,7 +20,10 @@
 #' @param ... Passed to `plotly_widget()`.
 #' @return An object of class `htmlwidget`.
 #' @details If the figure's layout has no `template`, the default template
-#'   (see [default_template()]) is applied.
+#'   (see [default_template()]) is applied. With the `"none"` default,
+#'   figures get plotly 4.x's margins (`l = 60, r = 10, t = 25, b = 40`
+#'   pixels) unless their layout sets them (e.g.
+#'   `update_layout(margin = go_margin(t = 50))`).
 #'
 #'   Numeric arrays in traces are sent to the browser as base64-encoded typed
 #'   arrays (`{dtype, bdata}` objects, as plotly.py does), which are smaller
@@ -46,7 +49,12 @@ plotly_widget <- function(
   layout <- unclass(fig$layout %||% list())
   if (is.null(layout$template)) {
     tpl <- default_template()
-    if (!identical(tpl, "none")) layout$template <- get_template(tpl)
+    layout$template <- if (identical(tpl, "none")) {
+      # plotly 4.x's margins, as defaults the layout can override side by side
+      list(layout = list(margin = DEFAULT_MARGIN))
+    } else {
+      get_template(tpl)
+    }
   }
   if (!length(layout)) {
     layout <- structure(list(), names = character())
