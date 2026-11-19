@@ -62,8 +62,9 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_layout(
-  smith = go_smith()
-)
+mtcars |>
+  go_figure() |>
+  add_scattersmith(real = ~wt, imag = ~drat) |>
+  update_layout(smith = go_smith(bgcolor = "lightyellow"))
 }
 \concept{layout objects}

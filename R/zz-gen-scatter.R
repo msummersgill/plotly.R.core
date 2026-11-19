@@ -402,7 +402,9 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_scatter(x = 1:3, y = c(2, 1, 3), mode = "markers", marker = go_scatter_marker(color = "red"))
+#' mtcars |>
+#'   go_figure() |>
+#'   add_scatter(x = ~wt, y = ~mpg, mode = "markers")
 go_scatter <- function(
     arg = NULL, ..., alignmentgroup = NULL, cliponaxis = NULL,
     connectgaps = NULL, customdata = NULL, dx = NULL, dy = NULL,
@@ -477,9 +479,14 @@ go_scatter <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scatter(
-#'   fillgradient = go_scatter_fillgradient()
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_scatter(
+#'     x = ~wt,
+#'     y = ~mpg,
+#'     mode = "markers",
+#'     fillgradient = go_scatter_fillgradient()
+#'   )
 go_scatter_fillgradient <- function(
     arg = NULL, ..., colorscale = NULL, start = NULL, stop = NULL,
     type = NULL, skip_invalid = FALSE
@@ -538,9 +545,14 @@ go_scatter_fillgradient <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scatter(
-#'   line = go_scatter_line(color = "red")
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_scatter(
+#'     x = ~wt,
+#'     y = ~mpg,
+#'     mode = "markers",
+#'     line = go_scatter_line(color = "red")
+#'   )
 go_scatter_line <- function(
     arg = NULL, ..., backoff = NULL, color = NULL, dash = NULL,
     shape = NULL, simplify = NULL, smoothing = NULL, width = NULL,
@@ -804,9 +816,14 @@ go_scatter_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scatter(
-#'   marker = go_scatter_marker(color = "red")
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_scatter(
+#'     x = ~wt,
+#'     y = ~mpg,
+#'     mode = "markers",
+#'     marker = go_scatter_marker(color = "red")
+#'   )
 go_scatter_marker <- function(
     arg = NULL, ..., angle = NULL, angleref = NULL, autocolorscale = NULL,
     cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL, color = NULL,
@@ -909,11 +926,16 @@ go_scatter_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scatter(
-#'   marker = go_scatter_marker(
-#'     line = go_scatter_marker_line(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_scatter(
+#'     x = ~wt,
+#'     y = ~mpg,
+#'     mode = "markers",
+#'     marker = go_scatter_marker(
+#'       line = go_scatter_marker_line(color = "red")
+#'     )
 #'   )
-#' )
 go_scatter_marker_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

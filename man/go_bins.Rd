@@ -67,8 +67,8 @@ named \code{xbins}, \code{ybins}), all with the same properties and
 rules.
 }
 \examples{
-go_histogram(
-  xbins = go_bins(size = 10)
-)
+mtcars |>
+  go_figure() |>
+  add_histogram(x = ~mpg, xbins = go_bins(size = 10))
 }
 \concept{shared object types}

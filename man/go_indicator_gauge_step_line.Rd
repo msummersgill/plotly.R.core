@@ -45,12 +45,19 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_indicator(
-  gauge = go_indicator_gauge(
-    steps = list(go_indicator_gauge_step(
-      line = go_indicator_gauge_step_line(color = "red")
-    ))
+mtcars |>
+  go_figure() |>
+  add_indicator(
+    mode = "number+gauge",
+    value = mean(mtcars$mpg),
+    title = go_indicator_title(text = "mean mpg"),
+    gauge = go_indicator_gauge(
+      steps = list(
+        go_indicator_gauge_step(
+          range = c(0, 20), line = go_indicator_gauge_step_line(color = "red")
+        )
+      )
+    )
   )
-)
 }
 \concept{trace objects}

@@ -192,6 +192,7 @@ codegen <- function() {
     "utils.R",
     "validators.R",
     "datatypes.R",
+    "examples.R",
     "figure.R",
     "colors.R",
     "generate.R"

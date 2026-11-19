@@ -79,8 +79,13 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_layout(
-  ternary = go_ternary()
-)
+iris |>
+  go_figure() |>
+  add_scatterternary(
+    a = ~Sepal.Length,
+    b = ~Sepal.Width,
+    c = ~Petal.Length
+  ) |>
+  update_layout(ternary = go_ternary(bgcolor = "lightyellow"))
 }
 \concept{layout objects}

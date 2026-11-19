@@ -53,10 +53,12 @@ checks the values against the contexts it can be used in; when the object
 is placed in a figure it is checked again against that context's rules.
 }
 \examples{
-go_box(
-  selected = go_selected(
-    marker = go_selected_marker(color = "red")
+mtcars |>
+  go_figure() |>
+  add_box(
+    x = ~factor(cyl),
+    y = ~mpg,
+    selected = go_selected(marker = go_selected_marker(color = "red"))
   )
-)
 }
 \concept{shared object types}

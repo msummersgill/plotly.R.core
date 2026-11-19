@@ -404,7 +404,15 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_sunburst()
+cyl <- table(paste(mtcars$cyl, "cylinders"))
+d <- data.frame(
+  labels = c("all cars", names(cyl)),
+  parents = c("", rep("all cars", length(cyl))),
+  values = c(0, as.vector(cyl))
+)
+d |>
+  go_figure() |>
+  add_sunburst(labels = ~labels, parents = ~parents, values = ~values)
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

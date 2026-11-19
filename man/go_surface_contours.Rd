@@ -58,8 +58,7 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_surface(
-  contours = go_surface_contours()
-)
+go_figure() |>
+  add_surface(z = volcano, contours = go_surface_contours())
 }
 \concept{trace objects}

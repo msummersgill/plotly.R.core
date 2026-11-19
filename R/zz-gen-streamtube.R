@@ -291,7 +291,10 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_streamtube(x = 1:3, y = c(2, 1, 3))
+#' d <- expand.grid(x = 1:3, y = 1:3, z = 1:3)
+#' d |>
+#'   go_figure() |>
+#'   add_streamtube(x = ~x, y = ~y, z = ~z, u = ~y, v = ~-x, w = ~z)
 go_streamtube <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, coloraxis = NULL, colorbar = NULL,
@@ -354,9 +357,18 @@ go_streamtube <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_streamtube(
-#'   lighting = go_streamtube_lighting()
-#' )
+#' d <- expand.grid(x = 1:3, y = 1:3, z = 1:3)
+#' d |>
+#'   go_figure() |>
+#'   add_streamtube(
+#'     x = ~x,
+#'     y = ~y,
+#'     z = ~z,
+#'     u = ~y,
+#'     v = ~-x,
+#'     w = ~z,
+#'     lighting = go_streamtube_lighting()
+#'   )
 go_streamtube_lighting <- function(
     arg = NULL, ..., ambient = NULL, diffuse = NULL,
     facenormalsepsilon = NULL, fresnel = NULL, roughness = NULL,
@@ -400,9 +412,18 @@ go_streamtube_lighting <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_streamtube(
-#'   starts = go_streamtube_starts()
-#' )
+#' d <- expand.grid(x = 1:3, y = 1:3, z = 1:3)
+#' d |>
+#'   go_figure() |>
+#'   add_streamtube(
+#'     x = ~x,
+#'     y = ~y,
+#'     z = ~z,
+#'     u = ~y,
+#'     v = ~-x,
+#'     w = ~z,
+#'     starts = go_streamtube_starts()
+#'   )
 go_streamtube_starts <- function(
     arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {

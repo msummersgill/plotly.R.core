@@ -165,7 +165,11 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_carpet(x = 1:3, y = c(2, 1, 3))
+#' d <- expand.grid(a = c(4, 5, 6), b = c(1, 2, 3))
+#' d$y <- d$a * d$b
+#' d |>
+#'   go_figure() |>
+#'   add_carpet(a = ~a, b = ~b, y = ~y)
 go_carpet <- function(
     arg = NULL, ..., a = NULL, a0 = NULL, aaxis = NULL, b = NULL, b0 = NULL,
     baxis = NULL, carpet = NULL, cheaterslope = NULL, color = NULL,
@@ -379,9 +383,16 @@ go_carpet <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_carpet(
-#'   aaxis = go_carpet_aaxis(color = "red")
-#' )
+#' d <- expand.grid(a = c(4, 5, 6), b = c(1, 2, 3))
+#' d$y <- d$a * d$b
+#' d |>
+#'   go_figure() |>
+#'   add_carpet(
+#'     a = ~a,
+#'     b = ~b,
+#'     y = ~y,
+#'     aaxis = go_carpet_aaxis(color = "red")
+#'   )
 go_carpet_aaxis <- function(
     arg = NULL, ..., arraydtick = NULL, arraytick0 = NULL, autorange = NULL,
     autotypenumbers = NULL, categoryarray = NULL, categoryorder = NULL,
@@ -438,11 +449,18 @@ go_carpet_aaxis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_carpet(
-#'   aaxis = go_carpet_aaxis(
-#'     title = go_carpet_aaxis_title(text = "title")
+#' d <- expand.grid(a = c(4, 5, 6), b = c(1, 2, 3))
+#' d$y <- d$a * d$b
+#' d |>
+#'   go_figure() |>
+#'   add_carpet(
+#'     a = ~a,
+#'     b = ~b,
+#'     y = ~y,
+#'     aaxis = go_carpet_aaxis(
+#'       title = go_carpet_aaxis_title(text = "title")
+#'     )
 #'   )
-#' )
 go_carpet_aaxis_title <- function(
     arg = NULL, ..., font = NULL, offset = NULL, text = NULL,
     skip_invalid = FALSE
@@ -651,9 +669,16 @@ go_carpet_aaxis_title <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_carpet(
-#'   baxis = go_carpet_baxis(color = "red")
-#' )
+#' d <- expand.grid(a = c(4, 5, 6), b = c(1, 2, 3))
+#' d$y <- d$a * d$b
+#' d |>
+#'   go_figure() |>
+#'   add_carpet(
+#'     a = ~a,
+#'     b = ~b,
+#'     y = ~y,
+#'     baxis = go_carpet_baxis(color = "red")
+#'   )
 go_carpet_baxis <- function(
     arg = NULL, ..., arraydtick = NULL, arraytick0 = NULL, autorange = NULL,
     autotypenumbers = NULL, categoryarray = NULL, categoryorder = NULL,
@@ -710,11 +735,18 @@ go_carpet_baxis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_carpet(
-#'   baxis = go_carpet_baxis(
-#'     title = go_carpet_baxis_title(text = "title")
+#' d <- expand.grid(a = c(4, 5, 6), b = c(1, 2, 3))
+#' d$y <- d$a * d$b
+#' d |>
+#'   go_figure() |>
+#'   add_carpet(
+#'     a = ~a,
+#'     b = ~b,
+#'     y = ~y,
+#'     baxis = go_carpet_baxis(
+#'       title = go_carpet_baxis_title(text = "title")
+#'     )
 #'   )
-#' )
 go_carpet_baxis_title <- function(
     arg = NULL, ..., font = NULL, offset = NULL, text = NULL,
     skip_invalid = FALSE

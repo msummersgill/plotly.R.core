@@ -47,12 +47,13 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_layout(
-  scene = go_scene(
-    camera = go_scene_camera(
-      eye = go_scene_camera_eye()
+mtcars |>
+  go_figure() |>
+  add_scatter3d(x = ~wt, y = ~hp, z = ~mpg) |>
+  update_layout(
+    scene = go_scene(
+      camera = go_scene_camera(eye = go_scene_camera_eye())
     )
   )
-)
 }
 \concept{layout objects}

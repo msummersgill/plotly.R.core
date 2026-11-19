@@ -312,8 +312,13 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_scatterternary(
-  marker = go_scatterternary_marker(color = "red")
-)
+iris |>
+  go_figure() |>
+  add_scatterternary(
+    a = ~Sepal.Length,
+    b = ~Sepal.Width,
+    c = ~Petal.Length,
+    marker = go_scatterternary_marker(color = "red")
+  )
 }
 \concept{trace objects}

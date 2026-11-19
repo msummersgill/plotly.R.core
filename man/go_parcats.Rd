@@ -247,7 +247,15 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_parcats()
+mtcars |>
+  go_figure() |>
+  add_parcats(
+    dimensions = list(
+      go_parcats_dimension(label = "cyl", values = ~cyl),
+      go_parcats_dimension(label = "gear", values = ~gear),
+      go_parcats_dimension(label = "am", values = ~am)
+    )
+  )
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

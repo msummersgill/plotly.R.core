@@ -160,8 +160,15 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_parcats(
-  line = go_parcats_line(color = "red")
-)
+mtcars |>
+  go_figure() |>
+  add_parcats(
+    dimensions = list(
+      go_parcats_dimension(label = "cyl", values = ~cyl),
+      go_parcats_dimension(label = "gear", values = ~gear),
+      go_parcats_dimension(label = "am", values = ~am)
+    ),
+    line = go_parcats_line(color = "red")
+  )
 }
 \concept{trace objects}

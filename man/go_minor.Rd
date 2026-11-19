@@ -120,10 +120,9 @@ These objects appear in 2 places in the plotly.js schema (properties
 named \code{minor}), all with the same properties and rules.
 }
 \examples{
-go_layout(
-  xaxis = go_xaxis(
-    minor = go_minor()
-  )
-)
+mtcars |>
+  go_figure() |>
+  add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
+  update_layout(xaxis = go_xaxis(minor = go_minor()))
 }
 \concept{shared object types}

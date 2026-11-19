@@ -101,8 +101,9 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_layout(
-  map = go_map()
-)
+quakes |>
+  go_figure() |>
+  add_scattermap(lat = ~lat, lon = ~long) |>
+  update_layout(map = go_map())
 }
 \concept{layout objects}

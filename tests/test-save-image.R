@@ -581,6 +581,29 @@ if (
   svg <- paste(readLines(path("tex.svg"), warn = FALSE), collapse = "\n")
   stopifnot(grepl("-math-group", svg), !grepl(">$\\alpha", svg, fixed = TRUE))
 
+  # maps (MapLibre) draw in the export page, which is a local file
+  map_png <- path("map.png")
+  save_image(
+    go_figure() |>
+      add_scattermap(lat = c(45, 46), lon = c(-73, -74)) |>
+      update_layout(map = go_map(style = "white-bg")),
+    map_png
+  )
+  stopifnot(file.size(map_png) > 0)
+
+  # a failed export doesn't break the next ones
+  bad <- tryCatch(
+    plotly.core:::shared_chrome_exporter()$transform(
+      go_figure(),
+      path("never.png"),
+      width = -1
+    ),
+    error = function(e) "failed"
+  )
+  stopifnot(identical(bad, "failed"))
+  save_image(go_figure() |> add_bar(y = 1:3), path("after.png"))
+  stopifnot(file.size(path("after.png")) > 0)
+
   # knitting without pandoc (R's "Run examples" help pages, knitr::knit()):
   # static images, one file per figure, never a PhantomJS screenshot
   if (requireNamespace("knitr", quietly = TRUE)) {

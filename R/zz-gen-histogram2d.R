@@ -344,7 +344,9 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_histogram2d(x = 1:3, y = c(2, 1, 3), marker = go_histogram2d_marker(color = "red"))
+#' faithful |>
+#'   go_figure() |>
+#'   add_histogram2d(x = ~eruptions, y = ~waiting)
 go_histogram2d <- function(
     arg = NULL, ..., autobinx = NULL, autobiny = NULL,
     autocolorscale = NULL, bingroup = NULL, coloraxis = NULL,
@@ -394,9 +396,13 @@ go_histogram2d <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_histogram2d(
-#'   marker = go_histogram2d_marker(color = "red")
-#' )
+#' faithful |>
+#'   go_figure() |>
+#'   add_histogram2d(
+#'     x = ~eruptions,
+#'     y = ~waiting,
+#'     marker = go_histogram2d_marker(color = "red")
+#'   )
 go_histogram2d_marker <- function(
     arg = NULL, ..., color = NULL, skip_invalid = FALSE
 ) {

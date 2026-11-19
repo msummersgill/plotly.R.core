@@ -129,8 +129,9 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_layout(
-  updatemenus = list(go_updatemenu(visible = TRUE))
-)
+mtcars |>
+  go_figure() |>
+  add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
+  update_layout(updatemenus = list(go_updatemenu(visible = TRUE)))
 }
 \concept{layout objects}

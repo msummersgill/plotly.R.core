@@ -351,7 +351,9 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_heatmap(x = 1:3, y = c(2, 1, 3))
+#' airquality |>
+#'   go_figure() |>
+#'   add_heatmap(x = ~Day, y = ~Month, z = ~Temp)
 go_heatmap <- function(
     arg = NULL, ..., autocolorscale = NULL, coloraxis = NULL,
     colorbar = NULL, colorscale = NULL, connectgaps = NULL,

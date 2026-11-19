@@ -235,10 +235,13 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_layout(
-  scene = go_scene(
-    annotations = list(go_scene_annotation(text = "title"))
+mtcars |>
+  go_figure() |>
+  add_scatter3d(x = ~wt, y = ~hp, z = ~mpg) |>
+  update_layout(
+    scene = go_scene(
+      annotations = list(go_scene_annotation(text = "title"))
+    )
   )
-)
 }
 \concept{layout objects}

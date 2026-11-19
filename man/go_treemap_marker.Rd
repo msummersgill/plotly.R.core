@@ -148,8 +148,19 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_treemap(
-  marker = go_treemap_marker(colors = c("red", "blue"))
+cyl <- table(paste(mtcars$cyl, "cylinders"))
+d <- data.frame(
+  labels = c("all cars", names(cyl)),
+  parents = c("", rep("all cars", length(cyl))),
+  values = c(0, as.vector(cyl))
 )
+d |>
+  go_figure() |>
+  add_treemap(
+    labels = ~labels,
+    parents = ~parents,
+    values = ~values,
+    marker = go_treemap_marker(colors = c("red", "blue"))
+  )
 }
 \concept{trace objects}

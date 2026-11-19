@@ -69,8 +69,17 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_volume(
-  lighting = go_volume_lighting()
-)
+d <- expand.grid(x = 1:5, y = 1:5, z = 1:5)
+d |>
+  go_figure() |>
+  add_volume(
+    x = ~x,
+    y = ~y,
+    z = ~z,
+    value = ~x * y * z,
+    isomin = 10,
+    isomax = 50,
+    lighting = go_volume_lighting()
+  )
 }
 \concept{trace objects}

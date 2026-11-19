@@ -67,10 +67,9 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_layout(
-  geo = go_geo(
-    lonaxis = go_geo_lonaxis()
-  )
-)
+quakes |>
+  go_figure() |>
+  add_scattergeo(lat = ~lat, lon = ~long) |>
+  update_layout(geo = go_geo(lonaxis = go_geo_lonaxis()))
 }
 \concept{layout objects}

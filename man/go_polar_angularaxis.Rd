@@ -346,10 +346,11 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_layout(
-  polar = go_polar(
-    angularaxis = go_polar_angularaxis(color = "red")
+mtcars |>
+  go_figure() |>
+  add_scatterpolar(r = ~mpg, theta = ~hp) |>
+  update_layout(
+    polar = go_polar(angularaxis = go_polar_angularaxis(color = "red"))
   )
-)
 }
 \concept{layout objects}

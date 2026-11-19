@@ -561,7 +561,9 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_histogram2dcontour(x = 1:3, y = c(2, 1, 3), marker = go_histogram2dcontour_marker(color = "red"))
+faithful |>
+  go_figure() |>
+  add_histogram2dcontour(x = ~eruptions, y = ~waiting)
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

@@ -50,10 +50,17 @@ named \code{x}, \code{y}, \code{z}), all with the same properties and
 rules.
 }
 \examples{
-go_isosurface(
-  slices = go_slices(
-    x = go_slices_axis(show = TRUE)
+d <- expand.grid(x = 1:5, y = 1:5, z = 1:5)
+d |>
+  go_figure() |>
+  add_isosurface(
+    x = ~x,
+    y = ~y,
+    z = ~z,
+    value = ~x * y * z,
+    isomin = 10,
+    isomax = 50,
+    slices = go_slices(x = go_slices_axis(show = TRUE))
   )
-)
 }
 \concept{shared object types}

@@ -262,7 +262,15 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_sunburst()
+#' cyl <- table(paste(mtcars$cyl, "cylinders"))
+#' d <- data.frame(
+#'   labels = c("all cars", names(cyl)),
+#'   parents = c("", rep("all cars", length(cyl))),
+#'   values = c(0, as.vector(cyl))
+#' )
+#' d |>
+#'   go_figure() |>
+#'   add_sunburst(labels = ~labels, parents = ~parents, values = ~values)
 go_sunburst <- function(
     arg = NULL, ..., branchvalues = NULL, count = NULL, customdata = NULL,
     domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
@@ -371,9 +379,20 @@ go_sunburst <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_sunburst(
-#'   marker = go_sunburst_marker(colors = c("red", "blue"))
+#' cyl <- table(paste(mtcars$cyl, "cylinders"))
+#' d <- data.frame(
+#'   labels = c("all cars", names(cyl)),
+#'   parents = c("", rep("all cars", length(cyl))),
+#'   values = c(0, as.vector(cyl))
 #' )
+#' d |>
+#'   go_figure() |>
+#'   add_sunburst(
+#'     labels = ~labels,
+#'     parents = ~parents,
+#'     values = ~values,
+#'     marker = go_sunburst_marker(colors = c("red", "blue"))
+#'   )
 go_sunburst_marker <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, coloraxis = NULL, colorbar = NULL,
@@ -414,11 +433,22 @@ go_sunburst_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_sunburst(
-#'   marker = go_sunburst_marker(
-#'     line = go_sunburst_marker_line(color = "red")
-#'   )
+#' cyl <- table(paste(mtcars$cyl, "cylinders"))
+#' d <- data.frame(
+#'   labels = c("all cars", names(cyl)),
+#'   parents = c("", rep("all cars", length(cyl))),
+#'   values = c(0, as.vector(cyl))
 #' )
+#' d |>
+#'   go_figure() |>
+#'   add_sunburst(
+#'     labels = ~labels,
+#'     parents = ~parents,
+#'     values = ~values,
+#'     marker = go_sunburst_marker(
+#'       line = go_sunburst_marker_line(color = "red")
+#'     )
+#'   )
 go_sunburst_marker_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {

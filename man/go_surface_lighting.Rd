@@ -59,8 +59,7 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_surface(
-  lighting = go_surface_lighting()
-)
+go_figure() |>
+  add_surface(z = volcano, lighting = go_surface_lighting())
 }
 \concept{trace objects}

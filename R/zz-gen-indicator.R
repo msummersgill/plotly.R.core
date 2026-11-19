@@ -133,7 +133,13 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_indicator()
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg")
+#'   )
 go_indicator <- function(
     arg = NULL, ..., align = NULL, customdata = NULL, delta = NULL,
     domain = NULL, gauge = NULL, ids = NULL, legend = NULL,
@@ -192,9 +198,14 @@ go_indicator <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_indicator(
-#'   delta = go_indicator_delta()
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     delta = go_indicator_delta()
+#'   )
 go_indicator_delta <- function(
     arg = NULL, ..., decreasing = NULL, font = NULL, increasing = NULL,
     position = NULL, prefix = NULL, reference = NULL, relative = NULL,
@@ -232,11 +243,16 @@ go_indicator_delta <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_indicator(
-#'   delta = go_indicator_delta(
-#'     decreasing = go_indicator_delta_decreasing(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     delta = go_indicator_delta(
+#'       decreasing = go_indicator_delta_decreasing(color = "red")
+#'     )
 #'   )
-#' )
 go_indicator_delta_decreasing <- function(
     arg = NULL, ..., color = NULL, symbol = NULL, skip_invalid = FALSE
 ) {
@@ -272,11 +288,16 @@ go_indicator_delta_decreasing <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_indicator(
-#'   delta = go_indicator_delta(
-#'     increasing = go_indicator_delta_increasing(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     delta = go_indicator_delta(
+#'       increasing = go_indicator_delta_increasing(color = "red")
+#'     )
 #'   )
-#' )
 go_indicator_delta_increasing <- function(
     arg = NULL, ..., color = NULL, symbol = NULL, skip_invalid = FALSE
 ) {
@@ -335,9 +356,14 @@ go_indicator_delta_increasing <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_indicator(
-#'   gauge = go_indicator_gauge()
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     gauge = go_indicator_gauge(bgcolor = "lightyellow")
+#'   )
 go_indicator_gauge <- function(
     arg = NULL, ..., axis = NULL, bar = NULL, bgcolor = NULL,
     bordercolor = NULL, borderwidth = NULL, shape = NULL, steps = NULL,
@@ -500,11 +526,16 @@ go_indicator_gauge <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_indicator(
-#'   gauge = go_indicator_gauge(
-#'     axis = go_indicator_gauge_axis(visible = TRUE)
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     gauge = go_indicator_gauge(
+#'       axis = go_indicator_gauge_axis(visible = TRUE)
+#'     )
 #'   )
-#' )
 go_indicator_gauge_axis <- function(
     arg = NULL, ..., dtick = NULL, exponentformat = NULL, labelalias = NULL,
     minexponent = NULL, nticks = NULL, range = NULL,
@@ -553,11 +584,16 @@ go_indicator_gauge_axis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_indicator(
-#'   gauge = go_indicator_gauge(
-#'     bar = go_indicator_gauge_bar(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     gauge = go_indicator_gauge(
+#'       bar = go_indicator_gauge_bar(color = "red")
+#'     )
 #'   )
-#' )
 go_indicator_gauge_bar <- function(
     arg = NULL, ..., color = NULL, line = NULL, thickness = NULL,
     skip_invalid = FALSE
@@ -595,13 +631,18 @@ go_indicator_gauge_bar <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_indicator(
-#'   gauge = go_indicator_gauge(
-#'     bar = go_indicator_gauge_bar(
-#'       line = go_indicator_gauge_bar_line(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     gauge = go_indicator_gauge(
+#'       bar = go_indicator_gauge_bar(
+#'         line = go_indicator_gauge_bar_line(color = "red")
+#'       )
 #'     )
 #'   )
-#' )
 go_indicator_gauge_bar_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -656,11 +697,18 @@ go_indicator_gauge_bar_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_indicator(
-#'   gauge = go_indicator_gauge(
-#'     steps = list(go_indicator_gauge_step(color = "red"))
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     gauge = go_indicator_gauge(
+#'       steps = list(
+#'         go_indicator_gauge_step(range = c(0, 20), color = "red")
+#'       )
+#'     )
 #'   )
-#' )
 go_indicator_gauge_step <- function(
     arg = NULL, ..., color = NULL, line = NULL, name = NULL, range = NULL,
     templateitemname = NULL, thickness = NULL, skip_invalid = FALSE
@@ -698,13 +746,20 @@ go_indicator_gauge_step <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_indicator(
-#'   gauge = go_indicator_gauge(
-#'     steps = list(go_indicator_gauge_step(
-#'       line = go_indicator_gauge_step_line(color = "red")
-#'     ))
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     gauge = go_indicator_gauge(
+#'       steps = list(
+#'         go_indicator_gauge_step(
+#'           range = c(0, 20), line = go_indicator_gauge_step_line(color = "red")
+#'         )
+#'       )
+#'     )
 #'   )
-#' )
 go_indicator_gauge_step_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -743,11 +798,16 @@ go_indicator_gauge_step_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_indicator(
-#'   gauge = go_indicator_gauge(
-#'     threshold = go_indicator_gauge_threshold()
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     gauge = go_indicator_gauge(
+#'       threshold = go_indicator_gauge_threshold(thickness = 0.5)
+#'     )
 #'   )
-#' )
 go_indicator_gauge_threshold <- function(
     arg = NULL, ..., line = NULL, thickness = NULL, value = NULL,
     skip_invalid = FALSE
@@ -785,13 +845,18 @@ go_indicator_gauge_threshold <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_indicator(
-#'   gauge = go_indicator_gauge(
-#'     threshold = go_indicator_gauge_threshold(
-#'       line = go_indicator_gauge_threshold_line(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     gauge = go_indicator_gauge(
+#'       threshold = go_indicator_gauge_threshold(
+#'         line = go_indicator_gauge_threshold_line(color = "red")
+#'       )
 #'     )
 #'   )
-#' )
 go_indicator_gauge_threshold_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -834,9 +899,14 @@ go_indicator_gauge_threshold_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_indicator(
-#'   number = go_indicator_number()
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_indicator(
+#'     mode = "number+gauge",
+#'     value = mean(mtcars$mpg),
+#'     title = go_indicator_title(text = "mean mpg"),
+#'     number = go_indicator_number()
+#'   )
 go_indicator_number <- function(
     arg = NULL, ..., font = NULL, prefix = NULL, suffix = NULL,
     valueformat = NULL, skip_invalid = FALSE

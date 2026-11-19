@@ -425,7 +425,9 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_scatterpolar(mode = "markers", marker = go_scatterpolar_marker(color = "red"))
+mtcars |>
+  go_figure() |>
+  add_scatterpolar(r = ~mpg, theta = ~hp)
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

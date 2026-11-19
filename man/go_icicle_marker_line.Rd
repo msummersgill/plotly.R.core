@@ -46,10 +46,21 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_icicle(
-  marker = go_icicle_marker(
-    line = go_icicle_marker_line(color = "red")
-  )
+cyl <- table(paste(mtcars$cyl, "cylinders"))
+d <- data.frame(
+  labels = c("all cars", names(cyl)),
+  parents = c("", rep("all cars", length(cyl))),
+  values = c(0, as.vector(cyl))
 )
+d |>
+  go_figure() |>
+  add_icicle(
+    labels = ~labels,
+    parents = ~parents,
+    values = ~values,
+    marker = go_icicle_marker(
+      line = go_icicle_marker_line(color = "red")
+    )
+  )
 }
 \concept{trace objects}

@@ -113,8 +113,9 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_layout(
-  scene = go_scene()
-)
+mtcars |>
+  go_figure() |>
+  add_scatter3d(x = ~wt, y = ~hp, z = ~mpg) |>
+  update_layout(scene = go_scene(bgcolor = "lightyellow"))
 }
 \concept{layout objects}

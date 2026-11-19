@@ -236,7 +236,14 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_choropleth()
+#' USArrests |>
+#'   go_figure() |>
+#'   add_choropleth(
+#'     locations = state.abb,
+#'     z = ~Murder,
+#'     locationmode = "USA-states"
+#'   ) |>
+#'   update_layout(geo = go_geo(scope = "usa"))
 go_choropleth <- function(
     arg = NULL, ..., autocolorscale = NULL, coloraxis = NULL,
     colorbar = NULL, colorscale = NULL, customdata = NULL,
@@ -285,9 +292,15 @@ go_choropleth <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_choropleth(
-#'   marker = go_choropleth_marker(opacity = 0.5)
-#' )
+#' USArrests |>
+#'   go_figure() |>
+#'   add_choropleth(
+#'     locations = state.abb,
+#'     z = ~Murder,
+#'     locationmode = "USA-states",
+#'     marker = go_choropleth_marker(opacity = 0.5)
+#'   ) |>
+#'   update_layout(geo = go_geo(scope = "usa"))
 go_choropleth_marker <- function(
     arg = NULL, ..., line = NULL, opacity = NULL, skip_invalid = FALSE
 ) {
@@ -327,11 +340,17 @@ go_choropleth_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_choropleth(
-#'   marker = go_choropleth_marker(
-#'     line = go_choropleth_marker_line(color = "red")
-#'   )
-#' )
+#' USArrests |>
+#'   go_figure() |>
+#'   add_choropleth(
+#'     locations = state.abb,
+#'     z = ~Murder,
+#'     locationmode = "USA-states",
+#'     marker = go_choropleth_marker(
+#'       line = go_choropleth_marker_line(color = "red")
+#'     )
+#'   ) |>
+#'   update_layout(geo = go_geo(scope = "usa"))
 go_choropleth_marker_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {

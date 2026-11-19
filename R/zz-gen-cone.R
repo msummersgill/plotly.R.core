@@ -300,7 +300,10 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_cone(x = 1:3, y = c(2, 1, 3))
+#' d <- expand.grid(x = 1:3, y = 1:3, z = 1:3)
+#' d |>
+#'   go_figure() |>
+#'   add_cone(x = ~x, y = ~y, z = ~z, u = ~y, v = ~-x, w = ~z)
 go_cone <- function(
     arg = NULL, ..., anchor = NULL, autocolorscale = NULL, cauto = NULL,
     cmax = NULL, cmid = NULL, cmin = NULL, coloraxis = NULL,
@@ -362,9 +365,18 @@ go_cone <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_cone(
-#'   lighting = go_cone_lighting()
-#' )
+#' d <- expand.grid(x = 1:3, y = 1:3, z = 1:3)
+#' d |>
+#'   go_figure() |>
+#'   add_cone(
+#'     x = ~x,
+#'     y = ~y,
+#'     z = ~z,
+#'     u = ~y,
+#'     v = ~-x,
+#'     w = ~z,
+#'     lighting = go_cone_lighting()
+#'   )
 go_cone_lighting <- function(
     arg = NULL, ..., ambient = NULL, diffuse = NULL,
     facenormalsepsilon = NULL, fresnel = NULL, roughness = NULL,

@@ -104,10 +104,9 @@ in; when the object is placed in a figure it is checked again against
 that context's rules.
 }
 \examples{
-go_bar(
-  legendgrouptitle = go_legendgrouptitle(
-    font = go_font(color = "red")
-  )
-)
+mtcars |>
+  go_figure() |>
+  add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
+  update_layout(font = go_font(color = "red"))
 }
 \concept{shared object types}

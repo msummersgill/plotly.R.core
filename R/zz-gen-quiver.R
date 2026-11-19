@@ -258,7 +258,10 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_quiver(x = 1:3, y = c(2, 1, 3), marker = go_quiver_marker(color = "red"))
+#' d <- expand.grid(x = 1:5, y = 1:5)
+#' d |>
+#'   go_figure() |>
+#'   add_quiver(x = ~x, y = ~y, u = ~y / 10, v = ~-x / 10)
 go_quiver <- function(
     arg = NULL, ..., anchor = NULL, arrowref = NULL, customdata = NULL,
     dx = NULL, dy = NULL, hoverinfo = NULL, hoverlabel = NULL,
@@ -368,9 +371,16 @@ go_quiver <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_quiver(
-#'   marker = go_quiver_marker(color = "red")
-#' )
+#' d <- expand.grid(x = 1:5, y = 1:5)
+#' d |>
+#'   go_figure() |>
+#'   add_quiver(
+#'     x = ~x,
+#'     y = ~y,
+#'     u = ~y / 10,
+#'     v = ~-x / 10,
+#'     marker = go_quiver_marker(color = "red")
+#'   )
 go_quiver_marker <- function(
     arg = NULL, ..., arrowsize = NULL, autocolorscale = NULL, cauto = NULL,
     cmax = NULL, cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
@@ -414,11 +424,16 @@ go_quiver_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_quiver(
-#'   marker = go_quiver_marker(
-#'     line = go_quiver_marker_line(width = 2)
+#' d <- expand.grid(x = 1:5, y = 1:5)
+#' d |>
+#'   go_figure() |>
+#'   add_quiver(
+#'     x = ~x,
+#'     y = ~y,
+#'     u = ~y / 10,
+#'     v = ~-x / 10,
+#'     marker = go_quiver_marker(line = go_quiver_marker_line(width = 2))
 #'   )
-#' )
 go_quiver_marker_line <- function(
     arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE
 ) {

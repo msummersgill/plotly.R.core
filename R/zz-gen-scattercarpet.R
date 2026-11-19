@@ -261,7 +261,12 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_scattercarpet(mode = "markers", marker = go_scattercarpet_marker(color = "red"))
+#' d <- expand.grid(a = c(4, 5, 6), b = c(1, 2, 3))
+#' d$y <- d$a * d$b
+#' d |>
+#'   go_figure() |>
+#'   add_carpet(a = ~a, b = ~b, y = ~y, carpet = "c") |>
+#'   add_scattercarpet(a = ~a, b = ~b, carpet = "c")
 go_scattercarpet <- function(
     arg = NULL, ..., a = NULL, b = NULL, carpet = NULL, connectgaps = NULL,
     customdata = NULL, fill = NULL, fillcolor = NULL, hoverinfo = NULL,
@@ -326,9 +331,17 @@ go_scattercarpet <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scattercarpet(
-#'   line = go_scattercarpet_line(color = "red")
-#' )
+#' d <- expand.grid(a = c(4, 5, 6), b = c(1, 2, 3))
+#' d$y <- d$a * d$b
+#' d |>
+#'   go_figure() |>
+#'   add_carpet(a = ~a, b = ~b, y = ~y, carpet = "c") |>
+#'   add_scattercarpet(
+#'     a = ~a,
+#'     b = ~b,
+#'     carpet = "c",
+#'     line = go_scattercarpet_line(color = "red")
+#'   )
 go_scattercarpet_line <- function(
     arg = NULL, ..., backoff = NULL, color = NULL, dash = NULL,
     shape = NULL, smoothing = NULL, width = NULL, skip_invalid = FALSE
@@ -591,9 +604,17 @@ go_scattercarpet_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scattercarpet(
-#'   marker = go_scattercarpet_marker(color = "red")
-#' )
+#' d <- expand.grid(a = c(4, 5, 6), b = c(1, 2, 3))
+#' d$y <- d$a * d$b
+#' d |>
+#'   go_figure() |>
+#'   add_carpet(a = ~a, b = ~b, y = ~y, carpet = "c") |>
+#'   add_scattercarpet(
+#'     a = ~a,
+#'     b = ~b,
+#'     carpet = "c",
+#'     marker = go_scattercarpet_marker(color = "red")
+#'   )
 go_scattercarpet_marker <- function(
     arg = NULL, ..., angle = NULL, angleref = NULL, autocolorscale = NULL,
     cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL, color = NULL,
@@ -696,11 +717,19 @@ go_scattercarpet_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scattercarpet(
-#'   marker = go_scattercarpet_marker(
-#'     line = go_scattercarpet_marker_line(color = "red")
+#' d <- expand.grid(a = c(4, 5, 6), b = c(1, 2, 3))
+#' d$y <- d$a * d$b
+#' d |>
+#'   go_figure() |>
+#'   add_carpet(a = ~a, b = ~b, y = ~y, carpet = "c") |>
+#'   add_scattercarpet(
+#'     a = ~a,
+#'     b = ~b,
+#'     carpet = "c",
+#'     marker = go_scattercarpet_marker(
+#'       line = go_scattercarpet_marker_line(color = "red")
+#'     )
 #'   )
-#' )
 go_scattercarpet_marker_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

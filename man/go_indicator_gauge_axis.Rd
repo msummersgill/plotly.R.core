@@ -219,10 +219,15 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_indicator(
-  gauge = go_indicator_gauge(
-    axis = go_indicator_gauge_axis(visible = TRUE)
+mtcars |>
+  go_figure() |>
+  add_indicator(
+    mode = "number+gauge",
+    value = mean(mtcars$mpg),
+    title = go_indicator_title(text = "mean mpg"),
+    gauge = go_indicator_gauge(
+      axis = go_indicator_gauge_axis(visible = TRUE)
+    )
   )
-)
 }
 \concept{trace objects}

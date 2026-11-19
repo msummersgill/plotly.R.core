@@ -35,10 +35,13 @@ These objects appear in 6 places in the plotly.js schema (properties
 named \code{gradient}), all with the same properties and rules.
 }
 \examples{
-go_scatter(
-  marker = go_scatter_marker(
-    gradient = go_gradient(color = "red")
+mtcars |>
+  go_figure() |>
+  add_scatter(
+    x = ~wt,
+    y = ~mpg,
+    mode = "markers",
+    marker = go_scatter_marker(gradient = go_gradient(color = "red"))
   )
-)
 }
 \concept{shared object types}

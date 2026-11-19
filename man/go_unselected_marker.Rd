@@ -56,10 +56,12 @@ checks the values against the contexts it can be used in; when the object
 is placed in a figure it is checked again against that context's rules.
 }
 \examples{
-go_box(
-  unselected = go_unselected(
-    marker = go_unselected_marker(color = "red")
+mtcars |>
+  go_figure() |>
+  add_box(
+    x = ~factor(cyl),
+    y = ~mpg,
+    unselected = go_unselected(marker = go_unselected_marker(color = "red"))
   )
-)
 }
 \concept{shared object types}

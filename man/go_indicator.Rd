@@ -218,7 +218,13 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_indicator()
+mtcars |>
+  go_figure() |>
+  add_indicator(
+    mode = "number+gauge",
+    value = mean(mtcars$mpg),
+    title = go_indicator_title(text = "mean mpg")
+  )
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

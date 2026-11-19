@@ -35,8 +35,15 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_splom(
-  diagonal = go_splom_diagonal(visible = TRUE)
-)
+iris |>
+  go_figure() |>
+  add_splom(
+    dimensions = list(
+      go_splom_dimension(label = "Sepal.Length", values = ~Sepal.Length),
+      go_splom_dimension(label = "Sepal.Width", values = ~Sepal.Width),
+      go_splom_dimension(label = "Petal.Length", values = ~Petal.Length)
+    ),
+    diagonal = go_splom_diagonal(visible = TRUE)
+  )
 }
 \concept{trace objects}

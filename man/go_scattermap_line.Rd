@@ -45,8 +45,12 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_scattermap(
-  line = go_scattermap_line(color = "red")
-)
+quakes |>
+  go_figure() |>
+  add_scattermap(
+    lat = ~lat,
+    lon = ~long,
+    line = go_scattermap_line(color = "red")
+  )
 }
 \concept{trace objects}

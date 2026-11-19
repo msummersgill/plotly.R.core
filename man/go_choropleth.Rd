@@ -381,7 +381,14 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_choropleth()
+USArrests |>
+  go_figure() |>
+  add_choropleth(
+    locations = state.abb,
+    z = ~Murder,
+    locationmode = "USA-states"
+  ) |>
+  update_layout(geo = go_geo(scope = "usa"))
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

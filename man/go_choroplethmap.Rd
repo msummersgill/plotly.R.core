@@ -374,9 +374,6 @@ the plotly.js schema when the object is created or modified (see
 evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
-\examples{
-go_choroplethmap()
-}
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}
 }

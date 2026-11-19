@@ -457,7 +457,17 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_isosurface(x = 1:3, y = c(2, 1, 3))
+d <- expand.grid(x = 1:5, y = 1:5, z = 1:5)
+d |>
+  go_figure() |>
+  add_isosurface(
+    x = ~x,
+    y = ~y,
+    z = ~z,
+    value = ~x * y * z,
+    isomin = 10,
+    isomax = 50
+  )
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

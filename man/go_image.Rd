@@ -327,7 +327,10 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_image()
+rgb <- col2rgb(terrain.colors(100)[cut(volcano, 100)])
+z <- array(t(rgb), c(dim(volcano), 3))
+go_figure() |>
+  add_image(z = z)
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

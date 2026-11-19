@@ -131,7 +131,13 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_table()
+#' d <- head(mtcars)
+#' d |>
+#'   go_figure() |>
+#'   add_table(
+#'     header = go_table_header(values = names(d)),
+#'     cells = go_table_cells(values = d)
+#'   )
 go_table <- function(
     arg = NULL, ..., cells = NULL, columnorder = NULL, columnwidth = NULL,
     customdata = NULL, domain = NULL, header = NULL, hoverinfo = NULL,

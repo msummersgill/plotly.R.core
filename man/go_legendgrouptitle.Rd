@@ -42,8 +42,13 @@ These objects appear in 49 places in the plotly.js schema (properties
 named \code{legendgrouptitle}), all with the same properties and rules.
 }
 \examples{
-go_bar(
-  legendgrouptitle = go_legendgrouptitle(text = "title")
-)
+mtcars |>
+  go_figure() |>
+  add_scatter(
+    x = ~wt,
+    y = ~mpg,
+    mode = "markers",
+    legendgrouptitle = go_legendgrouptitle(text = "title")
+  )
 }
 \concept{shared object types}

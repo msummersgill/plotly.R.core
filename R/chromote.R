@@ -32,7 +32,13 @@ chrome_exporter <- function(...) {
   lib_path <- ensure_chrome_libs(chrome, ask = FALSE)
   browser <- chrome_launch(
     chrome,
-    c(chromote::get_chrome_args(), "--enable-unsafe-swiftshader"),
+    # the export page is a local file, and maps (MapLibre) fail to load in
+    # one unless file pages may load files
+    c(
+      chromote::get_chrome_args(),
+      "--enable-unsafe-swiftshader",
+      "--allow-file-access-from-files"
+    ),
     lib_path
   )
   cm <- chromote::Chromote$new(browser = browser)
@@ -47,6 +53,8 @@ chrome_exporter <- function(...) {
 
   state <- new.env(parent = emptyenv())
   state$mathjax <- FALSE
+  state$page <- file_url(page)
+  state$reload <- FALSE
   res <- list2env(list(
     transform = function(
       p,
@@ -294,6 +302,11 @@ chrome_transform <- function(session, state, p, file, width, height, scale) {
       call. = FALSE
     )
   }
+  # a failed export (an error, or a timeout of a drawing that never finished,
+  # e.g. a map that can't load) can leave the page broken: start afresh
+  if (isTRUE(state$reload)) {
+    chrome_reload_page(session, state)
+  }
   fig <- export_figure(p)
   json <- fig$json
   if (!state$mathjax && uses_mathjax(json)) {
@@ -306,6 +319,7 @@ chrome_transform <- function(session, state, p, file, width, height, scale) {
   # toImage has no PDF or EPS: make an SVG, then print it or convert it
   img_fmt <- if (fmt %in% c("pdf", "eps")) "svg" else fmt
 
+  state$reload <- TRUE
   out <- js_eval(
     session,
     sprintf(
@@ -328,6 +342,7 @@ chrome_transform <- function(session, state, p, file, width, height, scale) {
     )
   )
 
+  state$reload <- FALSE
   file <- normalizePath(file, mustWork = FALSE)
   if (fmt == "pdf") {
     writeBin(chrome_svg_to_pdf(session, out$data, width, height), file)
@@ -344,6 +359,19 @@ chrome_transform <- function(session, state, p, file, width, height, scale) {
     writeLines(enc2utf8(out$data), file, useBytes = TRUE)
   }
   invisible(file)
+}
+
+# Load the export page again, as when the exporter started.
+chrome_reload_page <- function(session, state) {
+  loaded <- session$Page$loadEventFired(wait_ = FALSE)
+  session$Page$navigate(state$page, wait_ = FALSE)
+  session$wait_for(loaded)
+  if (!isTRUE(js_eval(session, "typeof Plotly === 'object'"))) {
+    stop("plotly.js failed to load in Chrome", call. = FALSE)
+  }
+  state$mathjax <- FALSE
+  state$reload <- FALSE
+  invisible()
 }
 
 # plotly.js typesets strings that start and end with "$" (see TeX()) when

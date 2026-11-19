@@ -222,7 +222,12 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_contourcarpet()
+#' d <- expand.grid(a = c(4, 5, 6), b = c(1, 2, 3))
+#' d$y <- d$a * d$b
+#' d |>
+#'   go_figure() |>
+#'   add_carpet(a = ~a, b = ~b, y = ~y, carpet = "c") |>
+#'   add_contourcarpet(a = ~a, b = ~b, z = ~y, carpet = "c")
 go_contourcarpet <- function(
     arg = NULL, ..., a = NULL, a0 = NULL, atype = NULL,
     autocolorscale = NULL, autocontour = NULL, b = NULL, b0 = NULL,
@@ -312,9 +317,18 @@ go_contourcarpet <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_contourcarpet(
-#'   contours = go_contourcarpet_contours(size = 10)
-#' )
+#' d <- expand.grid(a = c(4, 5, 6), b = c(1, 2, 3))
+#' d$y <- d$a * d$b
+#' d |>
+#'   go_figure() |>
+#'   add_carpet(a = ~a, b = ~b, y = ~y, carpet = "c") |>
+#'   add_contourcarpet(
+#'     a = ~a,
+#'     b = ~b,
+#'     z = ~y,
+#'     carpet = "c",
+#'     contours = go_contourcarpet_contours(size = 10)
+#'   )
 go_contourcarpet_contours <- function(
     arg = NULL, ..., coloring = NULL, end = NULL, labelfont = NULL,
     labelformat = NULL, operation = NULL, showlabels = NULL,
@@ -364,9 +378,18 @@ go_contourcarpet_contours <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_contourcarpet(
-#'   line = go_contourcarpet_line(color = "red")
-#' )
+#' d <- expand.grid(a = c(4, 5, 6), b = c(1, 2, 3))
+#' d$y <- d$a * d$b
+#' d |>
+#'   go_figure() |>
+#'   add_carpet(a = ~a, b = ~b, y = ~y, carpet = "c") |>
+#'   add_contourcarpet(
+#'     a = ~a,
+#'     b = ~b,
+#'     z = ~y,
+#'     carpet = "c",
+#'     line = go_contourcarpet_line(color = "red")
+#'   )
 go_contourcarpet_line <- function(
     arg = NULL, ..., color = NULL, dash = NULL, smoothing = NULL,
     width = NULL, skip_invalid = FALSE

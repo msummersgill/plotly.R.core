@@ -145,8 +145,12 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_bar(
-  marker = go_bar_marker(color = "red")
-)
+mtcars |>
+  go_figure() |>
+  add_bar(
+    x = ~factor(cyl),
+    y = ~mpg,
+    marker = go_bar_marker(color = "red")
+  )
 }
 \concept{trace objects}

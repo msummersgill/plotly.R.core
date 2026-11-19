@@ -115,10 +115,15 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_scattergl(
-  marker = go_scattergl_marker(
-    line = go_scattergl_marker_line(color = "red")
+mtcars |>
+  go_figure() |>
+  add_scattergl(
+    x = ~wt,
+    y = ~mpg,
+    mode = "markers",
+    marker = go_scattergl_marker(
+      line = go_scattergl_marker_line(color = "red")
+    )
   )
-)
 }
 \concept{trace objects}

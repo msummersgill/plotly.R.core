@@ -159,7 +159,15 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_parcats()
+#' mtcars |>
+#'   go_figure() |>
+#'   add_parcats(
+#'     dimensions = list(
+#'       go_parcats_dimension(label = "cyl", values = ~cyl),
+#'       go_parcats_dimension(label = "gear", values = ~gear),
+#'       go_parcats_dimension(label = "am", values = ~am)
+#'     )
+#'   )
 go_parcats <- function(
     arg = NULL, ..., arrangement = NULL, bundlecolors = NULL, counts = NULL,
     dimensions = NULL, domain = NULL, hoverinfo = NULL, hoveron = NULL,
@@ -360,9 +368,16 @@ go_parcats_dimension <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_parcats(
-#'   line = go_parcats_line(color = "red")
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_parcats(
+#'     dimensions = list(
+#'       go_parcats_dimension(label = "cyl", values = ~cyl),
+#'       go_parcats_dimension(label = "gear", values = ~gear),
+#'       go_parcats_dimension(label = "am", values = ~am)
+#'     ),
+#'     line = go_parcats_line(color = "red")
+#'   )
 go_parcats_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

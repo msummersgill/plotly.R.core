@@ -458,7 +458,9 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_scatter3d(x = 1:3, y = c(2, 1, 3), mode = "markers", marker = go_scatter3d_marker(color = "red"))
+mtcars |>
+  go_figure() |>
+  add_scatter3d(x = ~wt, y = ~hp, z = ~mpg)
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

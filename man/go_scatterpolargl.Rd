@@ -417,7 +417,9 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_scatterpolargl(mode = "markers", marker = go_scatterpolargl_marker(color = "red"))
+mtcars |>
+  go_figure() |>
+  add_scatterpolargl(r = ~mpg, theta = ~hp)
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

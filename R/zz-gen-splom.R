@@ -216,7 +216,15 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_splom(marker = go_splom_marker(color = "red"))
+#' iris |>
+#'   go_figure() |>
+#'   add_splom(
+#'     dimensions = list(
+#'       go_splom_dimension(label = "Sepal.Length", values = ~Sepal.Length),
+#'       go_splom_dimension(label = "Sepal.Width", values = ~Sepal.Width),
+#'       go_splom_dimension(label = "Petal.Length", values = ~Petal.Length)
+#'     )
+#'   )
 go_splom <- function(
     arg = NULL, ..., customdata = NULL, diagonal = NULL, dimensions = NULL,
     hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
@@ -259,9 +267,16 @@ go_splom <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_splom(
-#'   diagonal = go_splom_diagonal(visible = TRUE)
-#' )
+#' iris |>
+#'   go_figure() |>
+#'   add_splom(
+#'     dimensions = list(
+#'       go_splom_dimension(label = "Sepal.Length", values = ~Sepal.Length),
+#'       go_splom_dimension(label = "Sepal.Width", values = ~Sepal.Width),
+#'       go_splom_dimension(label = "Petal.Length", values = ~Petal.Length)
+#'     ),
+#'     diagonal = go_splom_diagonal(visible = TRUE)
+#'   )
 go_splom_diagonal <- function(
     arg = NULL, ..., visible = NULL, skip_invalid = FALSE
 ) {
@@ -611,9 +626,16 @@ go_splom_dimension_axis <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_splom(
-#'   marker = go_splom_marker(color = "red")
-#' )
+#' iris |>
+#'   go_figure() |>
+#'   add_splom(
+#'     dimensions = list(
+#'       go_splom_dimension(label = "Sepal.Length", values = ~Sepal.Length),
+#'       go_splom_dimension(label = "Sepal.Width", values = ~Sepal.Width),
+#'       go_splom_dimension(label = "Petal.Length", values = ~Petal.Length)
+#'     ),
+#'     marker = go_splom_marker(color = "red")
+#'   )
 go_splom_marker <- function(
     arg = NULL, ..., angle = NULL, autocolorscale = NULL, cauto = NULL,
     cmax = NULL, cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
@@ -708,11 +730,16 @@ go_splom_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_splom(
-#'   marker = go_splom_marker(
-#'     line = go_splom_marker_line(color = "red")
+#' iris |>
+#'   go_figure() |>
+#'   add_splom(
+#'     dimensions = list(
+#'       go_splom_dimension(label = "Sepal.Length", values = ~Sepal.Length),
+#'       go_splom_dimension(label = "Sepal.Width", values = ~Sepal.Width),
+#'       go_splom_dimension(label = "Petal.Length", values = ~Petal.Length)
+#'     ),
+#'     marker = go_splom_marker(line = go_splom_marker_line(color = "red"))
 #'   )
-#' )
 go_splom_marker_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

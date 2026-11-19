@@ -49,10 +49,15 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_indicator(
-  gauge = go_indicator_gauge(
-    threshold = go_indicator_gauge_threshold()
+mtcars |>
+  go_figure() |>
+  add_indicator(
+    mode = "number+gauge",
+    value = mean(mtcars$mpg),
+    title = go_indicator_title(text = "mean mpg"),
+    gauge = go_indicator_gauge(
+      threshold = go_indicator_gauge_threshold(thickness = 0.5)
+    )
   )
-)
 }
 \concept{trace objects}

@@ -42,12 +42,13 @@ These objects appear in 3 places in the plotly.js schema (properties
 named \code{title}), all with the same properties and rules.
 }
 \examples{
-go_layout(
-  scene = go_scene(
-    xaxis = go_scene_axis(
-      title = go_scene_axis_title(text = "title")
+mtcars |>
+  go_figure() |>
+  add_scatter3d(x = ~wt, y = ~hp, z = ~mpg) |>
+  update_layout(
+    scene = go_scene(
+      xaxis = go_scene_axis(title = go_scene_axis_title(text = "title"))
     )
   )
-)
 }
 \concept{shared object types}

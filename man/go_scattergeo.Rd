@@ -409,7 +409,9 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_scattergeo(mode = "markers", marker = go_scattergeo_marker(color = "red"))
+quakes |>
+  go_figure() |>
+  add_scattergeo(lat = ~lat, lon = ~long)
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

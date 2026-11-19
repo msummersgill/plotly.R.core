@@ -230,7 +230,7 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_choroplethmap()
+#' 
 go_choroplethmap <- function(
     arg = NULL, ..., autocolorscale = NULL, below = NULL, coloraxis = NULL,
     colorbar = NULL, colorscale = NULL, customdata = NULL,

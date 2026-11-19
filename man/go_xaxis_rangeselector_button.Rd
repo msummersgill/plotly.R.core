@@ -84,12 +84,15 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_layout(
-  xaxis = go_xaxis(
-    rangeselector = go_xaxis_rangeselector(
-      buttons = list(go_xaxis_rangeselector_button(visible = TRUE))
+mtcars |>
+  go_figure() |>
+  add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
+  update_layout(
+    xaxis = go_xaxis(
+      rangeselector = go_xaxis_rangeselector(
+        buttons = list(go_xaxis_rangeselector_button(visible = TRUE))
+      )
     )
   )
-)
 }
 \concept{layout objects}

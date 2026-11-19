@@ -124,10 +124,18 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_scattercarpet(
-  marker = go_scattercarpet_marker(
-    line = go_scattercarpet_marker_line(color = "red")
+d <- expand.grid(a = c(4, 5, 6), b = c(1, 2, 3))
+d$y <- d$a * d$b
+d |>
+  go_figure() |>
+  add_carpet(a = ~a, b = ~b, y = ~y, carpet = "c") |>
+  add_scattercarpet(
+    a = ~a,
+    b = ~b,
+    carpet = "c",
+    marker = go_scattercarpet_marker(
+      line = go_scattercarpet_marker_line(color = "red")
+    )
   )
-)
 }
 \concept{trace objects}

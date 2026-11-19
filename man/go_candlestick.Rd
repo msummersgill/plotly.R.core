@@ -388,7 +388,19 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_candlestick()
+d <- data.frame(day = 1:30, close = EuStockMarkets[1:30, "DAX"])
+d$open <- c(d$close[1], head(d$close, -1))
+d$high <- pmax(d$open, d$close) + 5
+d$low <- pmin(d$open, d$close) - 5
+d |>
+  go_figure() |>
+  add_candlestick(
+    x = ~day,
+    open = ~open,
+    high = ~high,
+    low = ~low,
+    close = ~close
+  )
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

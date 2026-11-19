@@ -59,8 +59,13 @@ used in; when the object is placed in a figure it is checked again
 against that context's rules.
 }
 \examples{
-go_scatter(
-  unselected = go_unselected()
-)
+mtcars |>
+  go_figure() |>
+  add_scatter(
+    x = ~wt,
+    y = ~mpg,
+    mode = "markers",
+    unselected = go_unselected()
+  )
 }
 \concept{shared object types}

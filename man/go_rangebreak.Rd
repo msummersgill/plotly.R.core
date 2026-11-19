@@ -79,10 +79,9 @@ These objects appear in 2 places in the plotly.js schema (properties
 named \code{rangebreak}), all with the same properties and rules.
 }
 \examples{
-go_layout(
-  xaxis = go_xaxis(
-    rangebreaks = list(go_rangebreak())
-  )
-)
+mtcars |>
+  go_figure() |>
+  add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
+  update_layout(xaxis = go_xaxis(rangebreaks = list(go_rangebreak())))
 }
 \concept{shared object types}

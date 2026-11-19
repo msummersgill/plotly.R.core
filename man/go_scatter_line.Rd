@@ -76,8 +76,13 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_scatter(
-  line = go_scatter_line(color = "red")
-)
+mtcars |>
+  go_figure() |>
+  add_scatter(
+    x = ~wt,
+    y = ~mpg,
+    mode = "markers",
+    line = go_scatter_line(color = "red")
+  )
 }
 \concept{trace objects}

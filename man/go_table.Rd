@@ -213,7 +213,13 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_table()
+d <- head(mtcars)
+d |>
+  go_figure() |>
+  add_table(
+    header = go_table_header(values = names(d)),
+    cells = go_table_cells(values = d)
+  )
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

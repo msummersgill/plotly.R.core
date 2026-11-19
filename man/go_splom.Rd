@@ -340,7 +340,15 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_splom(marker = go_splom_marker(color = "red"))
+iris |>
+  go_figure() |>
+  add_splom(
+    dimensions = list(
+      go_splom_dimension(label = "Sepal.Length", values = ~Sepal.Length),
+      go_splom_dimension(label = "Sepal.Width", values = ~Sepal.Width),
+      go_splom_dimension(label = "Petal.Length", values = ~Petal.Length)
+    )
+  )
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

@@ -198,7 +198,9 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_barpolar(marker = go_barpolar_marker(color = "red"))
+#' mtcars |>
+#'   go_figure() |>
+#'   add_barpolar(r = ~mpg, theta = ~hp)
 go_barpolar <- function(
     arg = NULL, ..., base = NULL, customdata = NULL, dr = NULL,
     dtheta = NULL, hoverinfo = NULL, hoverlabel = NULL,
@@ -314,9 +316,13 @@ go_barpolar <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_barpolar(
-#'   marker = go_barpolar_marker(color = "red")
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_barpolar(
+#'     r = ~mpg,
+#'     theta = ~hp,
+#'     marker = go_barpolar_marker(color = "red")
+#'   )
 go_barpolar_marker <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
@@ -411,11 +417,15 @@ go_barpolar_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_barpolar(
-#'   marker = go_barpolar_marker(
-#'     line = go_barpolar_marker_line(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_barpolar(
+#'     r = ~mpg,
+#'     theta = ~hp,
+#'     marker = go_barpolar_marker(
+#'       line = go_barpolar_marker_line(color = "red")
+#'     )
 #'   )
-#' )
 go_barpolar_marker_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

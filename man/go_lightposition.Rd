@@ -44,8 +44,17 @@ These objects appear in 6 places in the plotly.js schema (properties
 named \code{lightposition}), all with the same properties and rules.
 }
 \examples{
-go_cone(
-  lightposition = go_lightposition()
-)
+d <- expand.grid(x = 1:3, y = 1:3, z = 1:3)
+d |>
+  go_figure() |>
+  add_cone(
+    x = ~x,
+    y = ~y,
+    z = ~z,
+    u = ~y,
+    v = ~-x,
+    w = ~z,
+    lightposition = go_lightposition()
+  )
 }
 \concept{shared object types}

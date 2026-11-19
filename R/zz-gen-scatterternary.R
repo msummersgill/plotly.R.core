@@ -269,7 +269,13 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_scatterternary(mode = "markers", marker = go_scatterternary_marker(color = "red"))
+#' iris |>
+#'   go_figure() |>
+#'   add_scatterternary(
+#'     a = ~Sepal.Length,
+#'     b = ~Sepal.Width,
+#'     c = ~Petal.Length
+#'   )
 go_scatterternary <- function(
     arg = NULL, ..., a = NULL, b = NULL, c = NULL, cliponaxis = NULL,
     connectgaps = NULL, customdata = NULL, fill = NULL, fillcolor = NULL,
@@ -334,9 +340,14 @@ go_scatterternary <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scatterternary(
-#'   line = go_scatterternary_line(color = "red")
-#' )
+#' iris |>
+#'   go_figure() |>
+#'   add_scatterternary(
+#'     a = ~Sepal.Length,
+#'     b = ~Sepal.Width,
+#'     c = ~Petal.Length,
+#'     line = go_scatterternary_line(color = "red")
+#'   )
 go_scatterternary_line <- function(
     arg = NULL, ..., backoff = NULL, color = NULL, dash = NULL,
     shape = NULL, smoothing = NULL, width = NULL, skip_invalid = FALSE
@@ -599,9 +610,14 @@ go_scatterternary_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scatterternary(
-#'   marker = go_scatterternary_marker(color = "red")
-#' )
+#' iris |>
+#'   go_figure() |>
+#'   add_scatterternary(
+#'     a = ~Sepal.Length,
+#'     b = ~Sepal.Width,
+#'     c = ~Petal.Length,
+#'     marker = go_scatterternary_marker(color = "red")
+#'   )
 go_scatterternary_marker <- function(
     arg = NULL, ..., angle = NULL, angleref = NULL, autocolorscale = NULL,
     cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL, color = NULL,
@@ -704,11 +720,16 @@ go_scatterternary_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scatterternary(
-#'   marker = go_scatterternary_marker(
-#'     line = go_scatterternary_marker_line(color = "red")
+#' iris |>
+#'   go_figure() |>
+#'   add_scatterternary(
+#'     a = ~Sepal.Length,
+#'     b = ~Sepal.Width,
+#'     c = ~Petal.Length,
+#'     marker = go_scatterternary_marker(
+#'       line = go_scatterternary_marker_line(color = "red")
+#'     )
 #'   )
-#' )
 go_scatterternary_marker_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

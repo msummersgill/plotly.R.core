@@ -360,7 +360,9 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_histogram2dcontour(x = 1:3, y = c(2, 1, 3), marker = go_histogram2dcontour_marker(color = "red"))
+#' faithful |>
+#'   go_figure() |>
+#'   add_histogram2dcontour(x = ~eruptions, y = ~waiting)
 go_histogram2dcontour <- function(
     arg = NULL, ..., autobinx = NULL, autobiny = NULL,
     autocolorscale = NULL, autocontour = NULL, bingroup = NULL,
@@ -456,9 +458,13 @@ go_histogram2dcontour <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_histogram2dcontour(
-#'   contours = go_histogram2dcontour_contours(size = 10)
-#' )
+#' faithful |>
+#'   go_figure() |>
+#'   add_histogram2dcontour(
+#'     x = ~eruptions,
+#'     y = ~waiting,
+#'     contours = go_histogram2dcontour_contours(size = 10)
+#'   )
 go_histogram2dcontour_contours <- function(
     arg = NULL, ..., coloring = NULL, end = NULL, labelfont = NULL,
     labelformat = NULL, operation = NULL, showlabels = NULL,
@@ -507,9 +513,13 @@ go_histogram2dcontour_contours <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_histogram2dcontour(
-#'   line = go_histogram2dcontour_line(color = "red")
-#' )
+#' faithful |>
+#'   go_figure() |>
+#'   add_histogram2dcontour(
+#'     x = ~eruptions,
+#'     y = ~waiting,
+#'     line = go_histogram2dcontour_line(color = "red")
+#'   )
 go_histogram2dcontour_line <- function(
     arg = NULL, ..., color = NULL, dash = NULL, smoothing = NULL,
     width = NULL, skip_invalid = FALSE
@@ -545,9 +555,13 @@ go_histogram2dcontour_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_histogram2dcontour(
-#'   marker = go_histogram2dcontour_marker(color = "red")
-#' )
+#' faithful |>
+#'   go_figure() |>
+#'   add_histogram2dcontour(
+#'     x = ~eruptions,
+#'     y = ~waiting,
+#'     marker = go_histogram2dcontour_marker(color = "red")
+#'   )
 go_histogram2dcontour_marker <- function(
     arg = NULL, ..., color = NULL, skip_invalid = FALSE
 ) {

@@ -260,7 +260,16 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_sankey()
+d <- aggregate(Freq ~ Class + Survived, as.data.frame(Titanic), sum)
+nodes <- c(levels(d$Class), paste("Survived:", levels(d$Survived)))
+d$source <- as.integer(d$Class) - 1
+d$target <- nlevels(d$Class) + as.integer(d$Survived) - 1
+d |>
+  go_figure() |>
+  add_sankey(
+    node = go_sankey_node(label = nodes),
+    link = go_sankey_link(source = ~source, target = ~target, value = ~Freq)
+  )
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

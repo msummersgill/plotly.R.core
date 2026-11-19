@@ -463,7 +463,8 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_surface(x = 1:3, y = c(2, 1, 3))
+go_figure() |>
+  add_surface(z = volcano)
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

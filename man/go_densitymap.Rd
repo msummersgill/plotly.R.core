@@ -359,7 +359,9 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_densitymap()
+quakes |>
+  go_figure() |>
+  add_densitymap(lat = ~lat, lon = ~long, z = ~mag)
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

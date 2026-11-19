@@ -393,10 +393,9 @@ named \code{xaxis}, \code{yaxis}, \code{zaxis}), all with the same
 properties and rules.
 }
 \examples{
-go_layout(
-  scene = go_scene(
-    xaxis = go_scene_axis(color = "red")
-  )
-)
+mtcars |>
+  go_figure() |>
+  add_scatter3d(x = ~wt, y = ~hp, z = ~mpg) |>
+  update_layout(scene = go_scene(xaxis = go_scene_axis(color = "red")))
 }
 \concept{shared object types}

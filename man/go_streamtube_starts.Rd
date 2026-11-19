@@ -52,8 +52,17 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_streamtube(
-  starts = go_streamtube_starts()
-)
+d <- expand.grid(x = 1:3, y = 1:3, z = 1:3)
+d |>
+  go_figure() |>
+  add_streamtube(
+    x = ~x,
+    y = ~y,
+    z = ~z,
+    u = ~y,
+    v = ~-x,
+    w = ~z,
+    starts = go_streamtube_starts()
+  )
 }
 \concept{trace objects}

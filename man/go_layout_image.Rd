@@ -133,8 +133,9 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_layout(
-  images = list(go_layout_image(opacity = 0.5))
-)
+mtcars |>
+  go_figure() |>
+  add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
+  update_layout(images = list(go_layout_image(opacity = 0.5)))
 }
 \concept{layout objects}

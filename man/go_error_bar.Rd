@@ -102,8 +102,13 @@ contexts it can be used in; when the object is placed in a figure it is
 checked again against that context's rules.
 }
 \examples{
-go_bar(
-  error_y = go_error_bar(color = "red")
-)
+mtcars |>
+  go_figure() |>
+  add_scatter(
+    x = ~wt,
+    y = ~mpg,
+    mode = "markers",
+    error_x = go_error_bar(color = "red")
+  )
 }
 \concept{shared object types}

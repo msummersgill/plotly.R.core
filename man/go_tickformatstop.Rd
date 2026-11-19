@@ -62,12 +62,14 @@ These objects appear in 50 places in the plotly.js schema (properties
 named \code{tickformatstop}), all with the same properties and rules.
 }
 \examples{
-go_bar(
-  marker = go_bar_marker(
-    colorbar = go_colorbar(
-      tickformatstops = list(go_tickformatstop())
+mtcars |>
+  go_figure() |>
+  add_bar(
+    x = ~factor(cyl),
+    y = ~mpg,
+    marker = go_bar_marker(
+      colorbar = go_colorbar(tickformatstops = list(go_tickformatstop()))
     )
   )
-)
 }
 \concept{shared object types}

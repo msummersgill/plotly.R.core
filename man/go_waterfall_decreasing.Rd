@@ -37,8 +37,12 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_waterfall(
-  decreasing = go_waterfall_decreasing()
-)
+mtcars |>
+  go_figure() |>
+  add_waterfall(
+    x = ~factor(cyl),
+    y = ~mpg,
+    decreasing = go_waterfall_decreasing()
+  )
 }
 \concept{trace objects}

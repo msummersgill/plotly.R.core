@@ -352,7 +352,9 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_bar(x = 1:3, y = c(2, 1, 3), marker = go_bar_marker(color = "red"))
+#' mtcars |>
+#'   go_figure() |>
+#'   add_bar(x = ~factor(cyl), y = ~mpg)
 go_bar <- function(
     arg = NULL, ..., alignmentgroup = NULL, base = NULL, cliponaxis = NULL,
     constraintext = NULL, customdata = NULL, dx = NULL, dy = NULL,
@@ -480,9 +482,13 @@ go_bar <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_bar(
-#'   marker = go_bar_marker(color = "red")
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_bar(
+#'     x = ~factor(cyl),
+#'     y = ~mpg,
+#'     marker = go_bar_marker(color = "red")
+#'   )
 go_bar_marker <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
@@ -577,11 +583,13 @@ go_bar_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_bar(
-#'   marker = go_bar_marker(
-#'     line = go_bar_marker_line(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_bar(
+#'     x = ~factor(cyl),
+#'     y = ~mpg,
+#'     marker = go_bar_marker(line = go_bar_marker_line(color = "red"))
 #'   )
-#' )
 go_bar_marker_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

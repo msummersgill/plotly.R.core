@@ -328,7 +328,9 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_scattergl(x = 1:3, y = c(2, 1, 3), mode = "markers", marker = go_scattergl_marker(color = "red"))
+#' mtcars |>
+#'   go_figure() |>
+#'   add_scattergl(x = ~wt, y = ~mpg, mode = "markers")
 go_scattergl <- function(
     arg = NULL, ..., connectgaps = NULL, customdata = NULL, dx = NULL,
     dy = NULL, error_x = NULL, error_y = NULL, fill = NULL,
@@ -385,9 +387,14 @@ go_scattergl <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scattergl(
-#'   line = go_scattergl_line(color = "red")
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_scattergl(
+#'     x = ~wt,
+#'     y = ~mpg,
+#'     mode = "markers",
+#'     line = go_scattergl_line(color = "red")
+#'   )
 go_scattergl_line <- function(
     arg = NULL, ..., color = NULL, dash = NULL, shape = NULL, width = NULL,
     skip_invalid = FALSE
@@ -636,9 +643,14 @@ go_scattergl_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scattergl(
-#'   marker = go_scattergl_marker(color = "red")
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_scattergl(
+#'     x = ~wt,
+#'     y = ~mpg,
+#'     mode = "markers",
+#'     marker = go_scattergl_marker(color = "red")
+#'   )
 go_scattergl_marker <- function(
     arg = NULL, ..., angle = NULL, autocolorscale = NULL, cauto = NULL,
     cmax = NULL, cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
@@ -733,11 +745,16 @@ go_scattergl_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scattergl(
-#'   marker = go_scattergl_marker(
-#'     line = go_scattergl_marker_line(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_scattergl(
+#'     x = ~wt,
+#'     y = ~mpg,
+#'     mode = "markers",
+#'     marker = go_scattergl_marker(
+#'       line = go_scattergl_marker_line(color = "red")
+#'     )
 #'   )
-#' )
 go_scattergl_marker_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

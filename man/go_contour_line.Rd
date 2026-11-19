@@ -58,8 +58,13 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_contour(
-  line = go_contour_line(color = "red")
-)
+airquality |>
+  go_figure() |>
+  add_contour(
+    x = ~Day,
+    y = ~Month,
+    z = ~Temp,
+    line = go_contour_line(color = "red")
+  )
 }
 \concept{trace objects}

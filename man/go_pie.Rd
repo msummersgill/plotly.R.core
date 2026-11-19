@@ -414,7 +414,10 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_pie()
+d <- as.data.frame(table(cylinders = mtcars$cyl))
+d |>
+  go_figure() |>
+  add_pie(labels = ~cylinders, values = ~Freq)
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

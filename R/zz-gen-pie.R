@@ -260,7 +260,10 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_pie()
+#' d <- as.data.frame(table(cylinders = mtcars$cyl))
+#' d |>
+#'   go_figure() |>
+#'   add_pie(labels = ~cylinders, values = ~Freq)
 go_pie <- function(
     arg = NULL, ..., automargin = NULL, customdata = NULL, direction = NULL,
     dlabel = NULL, domain = NULL, hole = NULL, hoverinfo = NULL,
@@ -315,9 +318,14 @@ go_pie <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_pie(
-#'   marker = go_pie_marker(colors = c("red", "blue"))
-#' )
+#' d <- as.data.frame(table(cylinders = mtcars$cyl))
+#' d |>
+#'   go_figure() |>
+#'   add_pie(
+#'     labels = ~cylinders,
+#'     values = ~Freq,
+#'     marker = go_pie_marker(colors = c("red", "blue"))
+#'   )
 go_pie_marker <- function(
     arg = NULL, ..., colors = NULL, line = NULL, pattern = NULL,
     skip_invalid = FALSE
@@ -355,11 +363,14 @@ go_pie_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_pie(
-#'   marker = go_pie_marker(
-#'     line = go_pie_marker_line(color = "red")
+#' d <- as.data.frame(table(cylinders = mtcars$cyl))
+#' d |>
+#'   go_figure() |>
+#'   add_pie(
+#'     labels = ~cylinders,
+#'     values = ~Freq,
+#'     marker = go_pie_marker(line = go_pie_marker_line(color = "red"))
 #'   )
-#' )
 go_pie_marker_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -402,9 +413,14 @@ go_pie_marker_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_pie(
-#'   title = go_pie_title(text = "title")
-#' )
+#' d <- as.data.frame(table(cylinders = mtcars$cyl))
+#' d |>
+#'   go_figure() |>
+#'   add_pie(
+#'     labels = ~cylinders,
+#'     values = ~Freq,
+#'     title = go_pie_title(text = "title")
+#'   )
 go_pie_title <- function(
     arg = NULL, ..., font = NULL, position = NULL, text = NULL,
     skip_invalid = FALSE

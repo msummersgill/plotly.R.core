@@ -45,10 +45,12 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_violin(
-  box = go_violin_box(
-    line = go_violin_box_line(color = "red")
+mtcars |>
+  go_figure() |>
+  add_violin(
+    x = ~factor(cyl),
+    y = ~mpg,
+    box = go_violin_box(line = go_violin_box_line(color = "red"))
   )
-)
 }
 \concept{trace objects}

@@ -42,12 +42,12 @@ These objects appear in 3 places in the plotly.js schema (properties
 named \code{project}), all with the same properties and rules.
 }
 \examples{
-go_surface(
-  contours = go_surface_contours(
-    x = go_surface_contours_axis(
-      project = go_project()
+go_figure() |>
+  add_surface(
+    z = volcano,
+    contours = go_surface_contours(
+      x = go_surface_contours_axis(project = go_project())
     )
   )
-)
 }
 \concept{shared object types}

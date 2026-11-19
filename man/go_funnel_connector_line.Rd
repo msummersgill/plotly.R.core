@@ -53,10 +53,14 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_funnel(
-  connector = go_funnel_connector(
-    line = go_funnel_connector_line(color = "red")
+mtcars |>
+  go_figure() |>
+  add_funnel(
+    x = ~factor(cyl),
+    y = ~mpg,
+    connector = go_funnel_connector(
+      line = go_funnel_connector_line(color = "red")
+    )
   )
-)
 }
 \concept{trace objects}

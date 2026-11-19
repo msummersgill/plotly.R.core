@@ -31,12 +31,19 @@ These objects appear in 1 places in the plotly.js schema (properties
 named \code{line}), all with the same properties and rules.
 }
 \examples{
-go_quiver(
-  selected = go_selected(
-    marker = go_selected_marker(
-      line = go_selected_marker_line(width = 2)
+d <- expand.grid(x = 1:5, y = 1:5)
+d |>
+  go_figure() |>
+  add_quiver(
+    x = ~x,
+    y = ~y,
+    u = ~y / 10,
+    v = ~-x / 10,
+    selected = go_selected(
+      marker = go_selected_marker(
+        line = go_selected_marker_line(width = 2)
+      )
     )
   )
-)
 }
 \concept{shared object types}

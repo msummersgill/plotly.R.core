@@ -139,8 +139,12 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_barpolar(
-  marker = go_barpolar_marker(color = "red")
-)
+mtcars |>
+  go_figure() |>
+  add_barpolar(
+    r = ~mpg,
+    theta = ~hp,
+    marker = go_barpolar_marker(color = "red")
+  )
 }
 \concept{trace objects}

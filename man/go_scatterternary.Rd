@@ -417,7 +417,13 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_scatterternary(mode = "markers", marker = go_scatterternary_marker(color = "red"))
+iris |>
+  go_figure() |>
+  add_scatterternary(
+    a = ~Sepal.Length,
+    b = ~Sepal.Width,
+    c = ~Petal.Length
+  )
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

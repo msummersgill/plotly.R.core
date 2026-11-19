@@ -53,8 +53,12 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_scattergeo(
-  line = go_scattergeo_line(color = "red")
-)
+quakes |>
+  go_figure() |>
+  add_scattergeo(
+    lat = ~lat,
+    lon = ~long,
+    line = go_scattergeo_line(color = "red")
+  )
 }
 \concept{trace objects}

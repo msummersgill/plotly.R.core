@@ -49,8 +49,12 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_waterfall(
-  connector = go_waterfall_connector(visible = TRUE)
-)
+mtcars |>
+  go_figure() |>
+  add_waterfall(
+    x = ~factor(cyl),
+    y = ~mpg,
+    connector = go_waterfall_connector(visible = TRUE)
+  )
 }
 \concept{trace objects}

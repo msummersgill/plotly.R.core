@@ -387,7 +387,12 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_contourcarpet()
+d <- expand.grid(a = c(4, 5, 6), b = c(1, 2, 3))
+d$y <- d$a * d$b
+d |>
+  go_figure() |>
+  add_carpet(a = ~a, b = ~b, y = ~y, carpet = "c") |>
+  add_contourcarpet(a = ~a, b = ~b, z = ~y, carpet = "c")
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

@@ -258,7 +258,9 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_scattersmith(mode = "markers", marker = go_scattersmith_marker(color = "red"))
+#' mtcars |>
+#'   go_figure() |>
+#'   add_scattersmith(real = ~wt, imag = ~drat)
 go_scattersmith <- function(
     arg = NULL, ..., cliponaxis = NULL, connectgaps = NULL,
     customdata = NULL, fill = NULL, fillcolor = NULL, hoverinfo = NULL,
@@ -324,9 +326,13 @@ go_scattersmith <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scattersmith(
-#'   line = go_scattersmith_line(color = "red")
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_scattersmith(
+#'     real = ~wt,
+#'     imag = ~drat,
+#'     line = go_scattersmith_line(color = "red")
+#'   )
 go_scattersmith_line <- function(
     arg = NULL, ..., backoff = NULL, color = NULL, dash = NULL,
     shape = NULL, smoothing = NULL, width = NULL, skip_invalid = FALSE
@@ -589,9 +595,13 @@ go_scattersmith_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scattersmith(
-#'   marker = go_scattersmith_marker(color = "red")
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_scattersmith(
+#'     real = ~wt,
+#'     imag = ~drat,
+#'     marker = go_scattersmith_marker(color = "red")
+#'   )
 go_scattersmith_marker <- function(
     arg = NULL, ..., angle = NULL, angleref = NULL, autocolorscale = NULL,
     cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL, color = NULL,
@@ -694,11 +704,15 @@ go_scattersmith_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scattersmith(
-#'   marker = go_scattersmith_marker(
-#'     line = go_scattersmith_marker_line(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_scattersmith(
+#'     real = ~wt,
+#'     imag = ~drat,
+#'     marker = go_scattersmith_marker(
+#'       line = go_scattersmith_marker_line(color = "red")
+#'     )
 #'   )
-#' )
 go_scattersmith_marker_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

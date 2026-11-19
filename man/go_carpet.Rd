@@ -282,7 +282,11 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_carpet(x = 1:3, y = c(2, 1, 3))
+d <- expand.grid(a = c(4, 5, 6), b = c(1, 2, 3))
+d$y <- d$a * d$b
+d |>
+  go_figure() |>
+  add_carpet(a = ~a, b = ~b, y = ~y)
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

@@ -343,7 +343,9 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_waterfall(x = 1:3, y = c(2, 1, 3))
+#' mtcars |>
+#'   go_figure() |>
+#'   add_waterfall(x = ~factor(cyl), y = ~mpg)
 go_waterfall <- function(
     arg = NULL, ..., alignmentgroup = NULL, base = NULL, cliponaxis = NULL,
     connector = NULL, constraintext = NULL, customdata = NULL,
@@ -399,9 +401,13 @@ go_waterfall <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_waterfall(
-#'   connector = go_waterfall_connector(visible = TRUE)
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_waterfall(
+#'     x = ~factor(cyl),
+#'     y = ~mpg,
+#'     connector = go_waterfall_connector(visible = TRUE)
+#'   )
 go_waterfall_connector <- function(
     arg = NULL, ..., line = NULL, mode = NULL, visible = NULL,
     skip_invalid = FALSE
@@ -445,11 +451,15 @@ go_waterfall_connector <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_waterfall(
-#'   connector = go_waterfall_connector(
-#'     line = go_waterfall_connector_line(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_waterfall(
+#'     x = ~factor(cyl),
+#'     y = ~mpg,
+#'     connector = go_waterfall_connector(
+#'       line = go_waterfall_connector_line(color = "red")
+#'     )
 #'   )
-#' )
 go_waterfall_connector_line <- function(
     arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
     skip_invalid = FALSE
@@ -486,9 +496,13 @@ go_waterfall_connector_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_waterfall(
-#'   decreasing = go_waterfall_decreasing()
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_waterfall(
+#'     x = ~factor(cyl),
+#'     y = ~mpg,
+#'     decreasing = go_waterfall_decreasing()
+#'   )
 go_waterfall_decreasing <- function(
     arg = NULL, ..., marker = NULL, skip_invalid = FALSE
 ) {
@@ -526,11 +540,15 @@ go_waterfall_decreasing <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_waterfall(
-#'   decreasing = go_waterfall_decreasing(
-#'     marker = go_waterfall_decreasing_marker(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_waterfall(
+#'     x = ~factor(cyl),
+#'     y = ~mpg,
+#'     decreasing = go_waterfall_decreasing(
+#'       marker = go_waterfall_decreasing_marker(color = "red")
+#'     )
 #'   )
-#' )
 go_waterfall_decreasing_marker <- function(
     arg = NULL, ..., color = NULL, line = NULL, skip_invalid = FALSE
 ) {
@@ -567,13 +585,17 @@ go_waterfall_decreasing_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_waterfall(
-#'   decreasing = go_waterfall_decreasing(
-#'     marker = go_waterfall_decreasing_marker(
-#'       line = go_waterfall_decreasing_marker_line(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_waterfall(
+#'     x = ~factor(cyl),
+#'     y = ~mpg,
+#'     decreasing = go_waterfall_decreasing(
+#'       marker = go_waterfall_decreasing_marker(
+#'         line = go_waterfall_decreasing_marker_line(color = "red")
+#'       )
 #'     )
 #'   )
-#' )
 go_waterfall_decreasing_marker_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -609,9 +631,13 @@ go_waterfall_decreasing_marker_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_waterfall(
-#'   increasing = go_waterfall_increasing()
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_waterfall(
+#'     x = ~factor(cyl),
+#'     y = ~mpg,
+#'     increasing = go_waterfall_increasing()
+#'   )
 go_waterfall_increasing <- function(
     arg = NULL, ..., marker = NULL, skip_invalid = FALSE
 ) {
@@ -649,11 +675,15 @@ go_waterfall_increasing <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_waterfall(
-#'   increasing = go_waterfall_increasing(
-#'     marker = go_waterfall_increasing_marker(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_waterfall(
+#'     x = ~factor(cyl),
+#'     y = ~mpg,
+#'     increasing = go_waterfall_increasing(
+#'       marker = go_waterfall_increasing_marker(color = "red")
+#'     )
 #'   )
-#' )
 go_waterfall_increasing_marker <- function(
     arg = NULL, ..., color = NULL, line = NULL, skip_invalid = FALSE
 ) {
@@ -690,13 +720,17 @@ go_waterfall_increasing_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_waterfall(
-#'   increasing = go_waterfall_increasing(
-#'     marker = go_waterfall_increasing_marker(
-#'       line = go_waterfall_increasing_marker_line(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_waterfall(
+#'     x = ~factor(cyl),
+#'     y = ~mpg,
+#'     increasing = go_waterfall_increasing(
+#'       marker = go_waterfall_increasing_marker(
+#'         line = go_waterfall_increasing_marker_line(color = "red")
+#'       )
 #'     )
 #'   )
-#' )
 go_waterfall_increasing_marker_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -732,9 +766,13 @@ go_waterfall_increasing_marker_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_waterfall(
-#'   totals = go_waterfall_totals()
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_waterfall(
+#'     x = ~factor(cyl),
+#'     y = ~mpg,
+#'     totals = go_waterfall_totals()
+#'   )
 go_waterfall_totals <- function(
     arg = NULL, ..., marker = NULL, skip_invalid = FALSE
 ) {
@@ -772,11 +810,15 @@ go_waterfall_totals <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_waterfall(
-#'   totals = go_waterfall_totals(
-#'     marker = go_waterfall_totals_marker(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_waterfall(
+#'     x = ~factor(cyl),
+#'     y = ~mpg,
+#'     totals = go_waterfall_totals(
+#'       marker = go_waterfall_totals_marker(color = "red")
+#'     )
 #'   )
-#' )
 go_waterfall_totals_marker <- function(
     arg = NULL, ..., color = NULL, line = NULL, skip_invalid = FALSE
 ) {
@@ -813,13 +855,17 @@ go_waterfall_totals_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_waterfall(
-#'   totals = go_waterfall_totals(
-#'     marker = go_waterfall_totals_marker(
-#'       line = go_waterfall_totals_marker_line(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_waterfall(
+#'     x = ~factor(cyl),
+#'     y = ~mpg,
+#'     totals = go_waterfall_totals(
+#'       marker = go_waterfall_totals_marker(
+#'         line = go_waterfall_totals_marker_line(color = "red")
+#'       )
 #'     )
 #'   )
-#' )
 go_waterfall_totals_marker_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {

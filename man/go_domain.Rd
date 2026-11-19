@@ -52,8 +52,9 @@ values against the contexts it can be used in; when the object is placed
 in a figure it is checked again against that context's rules.
 }
 \examples{
-go_funnelarea(
-  domain = go_domain()
-)
+d <- as.data.frame(table(cylinders = mtcars$cyl))
+d |>
+  go_figure() |>
+  add_pie(labels = ~cylinders, values = ~Freq, domain = go_domain())
 }
 \concept{shared object types}

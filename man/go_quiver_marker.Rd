@@ -130,8 +130,15 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_quiver(
-  marker = go_quiver_marker(color = "red")
-)
+d <- expand.grid(x = 1:5, y = 1:5)
+d |>
+  go_figure() |>
+  add_quiver(
+    x = ~x,
+    y = ~y,
+    u = ~y / 10,
+    v = ~-x / 10,
+    marker = go_quiver_marker(color = "red")
+  )
 }
 \concept{trace objects}

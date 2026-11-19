@@ -54,8 +54,13 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_funnelarea(
-  marker = go_funnelarea_marker(colors = c("red", "blue"))
-)
+d <- as.data.frame(table(cylinders = mtcars$cyl))
+d |>
+  go_figure() |>
+  add_funnelarea(
+    labels = ~cylinders,
+    values = ~Freq,
+    marker = go_funnelarea_marker(colors = c("red", "blue"))
+  )
 }
 \concept{trace objects}

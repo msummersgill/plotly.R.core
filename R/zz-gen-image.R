@@ -204,7 +204,10 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_image()
+#' rgb <- col2rgb(terrain.colors(100)[cut(volcano, 100)])
+#' z <- array(t(rgb), c(dim(volcano), 3))
+#' go_figure() |>
+#'   add_image(z = z)
 go_image <- function(
     arg = NULL, ..., colormodel = NULL, customdata = NULL, dx = NULL,
     dy = NULL, hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,

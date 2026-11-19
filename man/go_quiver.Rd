@@ -414,7 +414,10 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_quiver(x = 1:3, y = c(2, 1, 3), marker = go_quiver_marker(color = "red"))
+d <- expand.grid(x = 1:5, y = 1:5)
+d |>
+  go_figure() |>
+  add_quiver(x = ~x, y = ~y, u = ~y / 10, v = ~-x / 10)
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

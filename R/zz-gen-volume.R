@@ -290,7 +290,17 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_volume(x = 1:3, y = c(2, 1, 3))
+#' d <- expand.grid(x = 1:5, y = 1:5, z = 1:5)
+#' d |>
+#'   go_figure() |>
+#'   add_volume(
+#'     x = ~x,
+#'     y = ~y,
+#'     z = ~z,
+#'     value = ~x * y * z,
+#'     isomin = 10,
+#'     isomax = 50
+#'   )
 go_volume <- function(
     arg = NULL, ..., autocolorscale = NULL, caps = NULL, cauto = NULL,
     cmax = NULL, cmid = NULL, cmin = NULL, coloraxis = NULL,
@@ -341,9 +351,18 @@ go_volume <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_volume(
-#'   contour = go_volume_contour(color = "red")
-#' )
+#' d <- expand.grid(x = 1:5, y = 1:5, z = 1:5)
+#' d |>
+#'   go_figure() |>
+#'   add_volume(
+#'     x = ~x,
+#'     y = ~y,
+#'     z = ~z,
+#'     value = ~x * y * z,
+#'     isomin = 10,
+#'     isomax = 50,
+#'     contour = go_volume_contour(color = "red")
+#'   )
 go_volume_contour <- function(
     arg = NULL, ..., color = NULL, show = NULL, width = NULL,
     skip_invalid = FALSE
@@ -395,9 +414,18 @@ go_volume_contour <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_volume(
-#'   lighting = go_volume_lighting()
-#' )
+#' d <- expand.grid(x = 1:5, y = 1:5, z = 1:5)
+#' d |>
+#'   go_figure() |>
+#'   add_volume(
+#'     x = ~x,
+#'     y = ~y,
+#'     z = ~z,
+#'     value = ~x * y * z,
+#'     isomin = 10,
+#'     isomax = 50,
+#'     lighting = go_volume_lighting()
+#'   )
 go_volume_lighting <- function(
     arg = NULL, ..., ambient = NULL, diffuse = NULL,
     facenormalsepsilon = NULL, fresnel = NULL, roughness = NULL,
@@ -450,9 +478,18 @@ go_volume_lighting <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_volume(
-#'   surface = go_volume_surface(show = TRUE)
-#' )
+#' d <- expand.grid(x = 1:5, y = 1:5, z = 1:5)
+#' d |>
+#'   go_figure() |>
+#'   add_volume(
+#'     x = ~x,
+#'     y = ~y,
+#'     z = ~z,
+#'     value = ~x * y * z,
+#'     isomin = 10,
+#'     isomax = 50,
+#'     surface = go_volume_surface(show = TRUE)
+#'   )
 go_volume_surface <- function(
     arg = NULL, ..., count = NULL, fill = NULL, pattern = NULL, show = NULL,
     skip_invalid = FALSE

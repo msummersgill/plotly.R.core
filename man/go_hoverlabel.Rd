@@ -90,8 +90,9 @@ used in; when the object is placed in a figure it is checked again
 against that context's rules.
 }
 \examples{
-go_bar(
-  hoverlabel = go_hoverlabel()
-)
+mtcars |>
+  go_figure() |>
+  add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
+  update_layout(hoverlabel = go_hoverlabel(bgcolor = "lightyellow"))
 }
 \concept{shared object types}

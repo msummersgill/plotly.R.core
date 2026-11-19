@@ -397,7 +397,9 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_box(x = 1:3, y = c(2, 1, 3), marker = go_box_marker(color = "red"))
+#' mtcars |>
+#'   go_figure() |>
+#'   add_box(x = ~factor(cyl), y = ~mpg)
 go_box <- function(
     arg = NULL, ..., alignmentgroup = NULL, boxmean = NULL,
     boxpoints = NULL, customdata = NULL, dx = NULL, dy = NULL,
@@ -451,9 +453,9 @@ go_box <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_box(
-#'   line = go_box_line(color = "red")
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_box(x = ~factor(cyl), y = ~mpg, line = go_box_line(color = "red"))
 go_box_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -632,9 +634,13 @@ go_box_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_box(
-#'   marker = go_box_marker(color = "red")
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_box(
+#'     x = ~factor(cyl),
+#'     y = ~mpg,
+#'     marker = go_box_marker(color = "red")
+#'   )
 go_box_marker <- function(
     arg = NULL, ..., angle = NULL, color = NULL, line = NULL,
     opacity = NULL, outliercolor = NULL, size = NULL, symbol = NULL,
@@ -681,11 +687,13 @@ go_box_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_box(
-#'   marker = go_box_marker(
-#'     line = go_box_marker_line(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_box(
+#'     x = ~factor(cyl),
+#'     y = ~mpg,
+#'     marker = go_box_marker(line = go_box_marker_line(color = "red"))
 #'   )
-#' )
 go_box_marker_line <- function(
     arg = NULL, ..., color = NULL, outliercolor = NULL, outlierwidth = NULL,
     width = NULL, skip_invalid = FALSE

@@ -42,10 +42,15 @@ These objects appear in 1 places in the plotly.js schema (properties
 named \code{line}), all with the same properties and rules.
 }
 \examples{
-go_parcoords(
-  unselected = go_unselected(
-    line = go_unselected_line(color = "red")
+iris |>
+  go_figure() |>
+  add_parcoords(
+    dimensions = list(
+      go_parcoords_dimension(label = "Sepal.Length", values = ~Sepal.Length),
+      go_parcoords_dimension(label = "Sepal.Width", values = ~Sepal.Width),
+      go_parcoords_dimension(label = "Petal.Length", values = ~Petal.Length)
+    ),
+    unselected = go_unselected(line = go_unselected_line(color = "red"))
   )
-)
 }
 \concept{shared object types}

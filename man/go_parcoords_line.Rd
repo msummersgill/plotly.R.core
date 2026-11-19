@@ -121,8 +121,15 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_parcoords(
-  line = go_parcoords_line(color = "red")
-)
+iris |>
+  go_figure() |>
+  add_parcoords(
+    dimensions = list(
+      go_parcoords_dimension(label = "Sepal.Length", values = ~Sepal.Length),
+      go_parcoords_dimension(label = "Sepal.Width", values = ~Sepal.Width),
+      go_parcoords_dimension(label = "Petal.Length", values = ~Petal.Length)
+    ),
+    line = go_parcoords_line(color = "red")
+  )
 }
 \concept{trace objects}

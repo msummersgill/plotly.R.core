@@ -37,12 +37,13 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_layout(
-  map = go_map(
-    layers = list(go_map_layer(
-      fill = go_map_layer_fill()
-    ))
+quakes |>
+  go_figure() |>
+  add_scattermap(lat = ~lat, lon = ~long) |>
+  update_layout(
+    map = go_map(
+      layers = list(go_map_layer(fill = go_map_layer_fill()))
+    )
   )
-)
 }
 \concept{layout objects}

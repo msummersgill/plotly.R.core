@@ -163,7 +163,16 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_sankey()
+#' d <- aggregate(Freq ~ Class + Survived, as.data.frame(Titanic), sum)
+#' nodes <- c(levels(d$Class), paste("Survived:", levels(d$Survived)))
+#' d$source <- as.integer(d$Class) - 1
+#' d$target <- nlevels(d$Class) + as.integer(d$Survived) - 1
+#' d |>
+#'   go_figure() |>
+#'   add_sankey(
+#'     node = go_sankey_node(label = nodes),
+#'     link = go_sankey_link(source = ~source, target = ~target, value = ~Freq)
+#'   )
 go_sankey <- function(
     arg = NULL, ..., arrangement = NULL, customdata = NULL,
     direction = NULL, domain = NULL, hoverinfo = NULL, hoverlabel = NULL,

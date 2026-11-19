@@ -582,7 +582,9 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_contour(x = 1:3, y = c(2, 1, 3))
+airquality |>
+  go_figure() |>
+  add_contour(x = ~Day, y = ~Month, z = ~Temp)
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

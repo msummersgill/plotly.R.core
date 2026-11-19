@@ -31,8 +31,19 @@ These objects appear in 3 places in the plotly.js schema (properties
 named \code{root}), all with the same properties and rules.
 }
 \examples{
-go_icicle(
-  root = go_root(color = "red")
+cyl <- table(paste(mtcars$cyl, "cylinders"))
+d <- data.frame(
+  labels = c("all cars", names(cyl)),
+  parents = c("", rep("all cars", length(cyl))),
+  values = c(0, as.vector(cyl))
 )
+d |>
+  go_figure() |>
+  add_icicle(
+    labels = ~labels,
+    parents = ~parents,
+    values = ~values,
+    root = go_root(color = "red")
+  )
 }
 \concept{shared object types}

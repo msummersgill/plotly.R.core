@@ -142,7 +142,15 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_parcoords()
+#' iris |>
+#'   go_figure() |>
+#'   add_parcoords(
+#'     dimensions = list(
+#'       go_parcoords_dimension(label = "Sepal.Length", values = ~Sepal.Length),
+#'       go_parcoords_dimension(label = "Sepal.Width", values = ~Sepal.Width),
+#'       go_parcoords_dimension(label = "Petal.Length", values = ~Petal.Length)
+#'     )
+#'   )
 go_parcoords <- function(
     arg = NULL, ..., customdata = NULL, dimensions = NULL, domain = NULL,
     ids = NULL, labelangle = NULL, labelfont = NULL, labelside = NULL,
@@ -328,9 +336,16 @@ go_parcoords_dimension <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_parcoords(
-#'   line = go_parcoords_line(color = "red")
-#' )
+#' iris |>
+#'   go_figure() |>
+#'   add_parcoords(
+#'     dimensions = list(
+#'       go_parcoords_dimension(label = "Sepal.Length", values = ~Sepal.Length),
+#'       go_parcoords_dimension(label = "Sepal.Width", values = ~Sepal.Width),
+#'       go_parcoords_dimension(label = "Petal.Length", values = ~Petal.Length)
+#'     ),
+#'     line = go_parcoords_line(color = "red")
+#'   )
 go_parcoords_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

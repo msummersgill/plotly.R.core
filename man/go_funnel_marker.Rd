@@ -131,8 +131,12 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_funnel(
-  marker = go_funnel_marker(color = "red")
-)
+mtcars |>
+  go_figure() |>
+  add_funnel(
+    x = ~factor(cyl),
+    y = ~mpg,
+    marker = go_funnel_marker(color = "red")
+  )
 }
 \concept{trace objects}

@@ -52,8 +52,13 @@ the values against the contexts it can be used in; when the object is
 placed in a figure it is checked again against that context's rules.
 }
 \examples{
-go_scatter(
-  selected = go_selected()
-)
+mtcars |>
+  go_figure() |>
+  add_scatter(
+    x = ~wt,
+    y = ~mpg,
+    mode = "markers",
+    selected = go_selected()
+  )
 }
 \concept{shared object types}

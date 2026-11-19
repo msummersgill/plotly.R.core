@@ -536,7 +536,9 @@ evaluated in the data, and then checked, when the trace is added with
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_funnel(x = 1:3, y = c(2, 1, 3), marker = go_funnel_marker(color = "red"))
+mtcars |>
+  go_figure() |>
+  add_funnel(x = ~factor(cyl), y = ~mpg)
 }
 \seealso{
 \code{\link{go_figure}()}, \code{\link{add_trace}()}

@@ -51,10 +51,17 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_carpet(
-  aaxis = go_carpet_aaxis(
-    title = go_carpet_aaxis_title(text = "title")
+d <- expand.grid(a = c(4, 5, 6), b = c(1, 2, 3))
+d$y <- d$a * d$b
+d |>
+  go_figure() |>
+  add_carpet(
+    a = ~a,
+    b = ~b,
+    y = ~y,
+    aaxis = go_carpet_aaxis(
+      title = go_carpet_aaxis_title(text = "title")
+    )
   )
-)
 }
 \concept{trace objects}

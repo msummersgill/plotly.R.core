@@ -47,8 +47,19 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_candlestick(
-  increasing = go_candlestick_increasing()
-)
+d <- data.frame(day = 1:30, close = EuStockMarkets[1:30, "DAX"])
+d$open <- c(d$close[1], head(d$close, -1))
+d$high <- pmax(d$open, d$close) + 5
+d$low <- pmin(d$open, d$close) - 5
+d |>
+  go_figure() |>
+  add_candlestick(
+    x = ~day,
+    open = ~open,
+    high = ~high,
+    low = ~low,
+    close = ~close,
+    increasing = go_candlestick_increasing()
+  )
 }
 \concept{trace objects}

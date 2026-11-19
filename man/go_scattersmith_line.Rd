@@ -71,8 +71,12 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_scattersmith(
-  line = go_scattersmith_line(color = "red")
-)
+mtcars |>
+  go_figure() |>
+  add_scattersmith(
+    real = ~wt,
+    imag = ~drat,
+    line = go_scattersmith_line(color = "red")
+  )
 }
 \concept{trace objects}

@@ -371,6 +371,22 @@ shared_families <- function(nodes, validators) {
 shared_info <- function(type, ctx) {
   fam <- ctx$families[[type]]
   rep_key <- fam$variants[[1L]]
+  # the example uses it where it shows: in the layout, or as a property of a
+  # common trace, if it is used there
+  depth <- lengths(strsplit(fam$keys, ".", fixed = TRUE))
+  visible <- c(
+    fam$keys[startsWith(fam$keys, "layout.") & depth == 2L],
+    intersect(
+      paste0(
+        c("scatter", "bar", "heatmap", "pie"),
+        ".",
+        sub("^.*\\.", "", fam$keys)
+      ),
+      fam$keys[depth == 2L]
+    ),
+    fam$keys[depth == 2L]
+  )
+  example_key <- if (length(visible)) visible[[1L]] else rep_key
   names_used <- unique(sub("^.*\\.", "", fam$keys))
   # the schema's description, if every place it is used has the same one
   descs <- unique(vapply(fam$keys, object_description, "", ctx = ctx))
@@ -390,7 +406,7 @@ shared_info <- function(type, ctx) {
         length(fam$keys)
       )
     ),
-    example = object_example(rep_key, ctx)
+    example = object_figure_example(example_key, ctx)
   )
 }
 
@@ -766,26 +782,6 @@ page_title <- function(page, kind) {
   "Figure layout"
 }
 
-# Example call for a trace constructor, using only properties the trace has.
-trace_example <- function(fn, key, validators) {
-  props <- validators[[key]]$children
-  args <- c(
-    if (all(c("x", "y") %in% props)) c("x = 1:3", "y = c(2, 1, 3)"),
-    if ("markers" %in% validators[[paste0(key, ".mode")]]$flags) {
-      'mode = "markers"'
-    },
-    if (
-      !is.null(validators[[paste0(key, ".marker.color")]]) &&
-        !"values" %in% props
-    ) {
-      sprintf(
-        "marker = %s(color = \"red\")",
-        validators[[paste0(key, ".marker")]]$data_class
-      )
-    }
-  )
-  sprintf("%s(%s)", fn, paste(args, collapse = ", "))
-}
 
 # Roxygen block for a trace page (go_<trace>() and add_<trace>()) or go_layout().
 page_doc <- function(page, ctx, figure_fns) {
@@ -857,7 +853,7 @@ page_doc <- function(page, ctx, figure_fns) {
     "#' @export",
     "#' @examples",
     if (kind == "trace") {
-      paste0("#' ", trace_example(root_fn, page, validators))
+      paste0("#' ", figure_example(page, ctx))
     } else {
       sprintf(
         "#' %s(title = \"My plot\", xaxis = go_xaxis(title = \"x\", range = c(0, 10)))",
@@ -1082,9 +1078,11 @@ object_example_arg <- function(key, validators) {
     size = "size = 10",
     opacity = "opacity = 0.5",
     show = "show = TRUE",
-    visible = "visible = TRUE"
+    visible = "visible = TRUE",
+    bgcolor = 'bgcolor = "lightyellow"',
+    thickness = "thickness = 20"
   )
-  nums <- c(width = 2, size = 10, opacity = 0.5)
+  nums <- c(width = 2, size = 10, opacity = 0.5, thickness = 20)
   for (n in names(cand)) {
     if (!n %in% ch) {
       next
@@ -1205,7 +1203,7 @@ object_doc <- function(key, ctx) {
     "#' @noMd",
     "#' @export",
     "#' @examples",
-    paste0("#' ", object_example(key, ctx))
+    paste0("#' ", object_figure_example(key, ctx))
   )
 }
 

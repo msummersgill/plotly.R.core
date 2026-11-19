@@ -48,10 +48,16 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_choropleth(
-  marker = go_choropleth_marker(
-    line = go_choropleth_marker_line(color = "red")
-  )
-)
+USArrests |>
+  go_figure() |>
+  add_choropleth(
+    locations = state.abb,
+    z = ~Murder,
+    locationmode = "USA-states",
+    marker = go_choropleth_marker(
+      line = go_choropleth_marker_line(color = "red")
+    )
+  ) |>
+  update_layout(geo = go_geo(scope = "usa"))
 }
 \concept{trace objects}

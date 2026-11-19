@@ -358,7 +358,9 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_histogram(x = 1:3, y = c(2, 1, 3), marker = go_histogram_marker(color = "red"))
+#' mtcars |>
+#'   go_figure() |>
+#'   add_histogram(x = ~mpg)
 go_histogram <- function(
     arg = NULL, ..., alignmentgroup = NULL, autobinx = NULL,
     autobiny = NULL, bingroup = NULL, cliponaxis = NULL,
@@ -426,9 +428,9 @@ go_histogram <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_histogram(
-#'   cumulative = go_histogram_cumulative()
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_histogram(x = ~mpg, cumulative = go_histogram_cumulative())
 go_histogram_cumulative <- function(
     arg = NULL, ..., currentbin = NULL, direction = NULL, enabled = NULL,
     skip_invalid = FALSE
@@ -541,9 +543,9 @@ go_histogram_cumulative <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_histogram(
-#'   marker = go_histogram_marker(color = "red")
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_histogram(x = ~mpg, marker = go_histogram_marker(color = "red"))
 go_histogram_marker <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
@@ -638,11 +640,14 @@ go_histogram_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_histogram(
-#'   marker = go_histogram_marker(
-#'     line = go_histogram_marker_line(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_histogram(
+#'     x = ~mpg,
+#'     marker = go_histogram_marker(
+#'       line = go_histogram_marker_line(color = "red")
+#'     )
 #'   )
-#' )
 go_histogram_marker_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

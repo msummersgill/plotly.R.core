@@ -241,7 +241,19 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_candlestick()
+#' d <- data.frame(day = 1:30, close = EuStockMarkets[1:30, "DAX"])
+#' d$open <- c(d$close[1], head(d$close, -1))
+#' d$high <- pmax(d$open, d$close) + 5
+#' d$low <- pmin(d$open, d$close) - 5
+#' d |>
+#'   go_figure() |>
+#'   add_candlestick(
+#'     x = ~day,
+#'     open = ~open,
+#'     high = ~high,
+#'     low = ~low,
+#'     close = ~close
+#'   )
 go_candlestick <- function(
     arg = NULL, ..., close = NULL, customdata = NULL, decreasing = NULL,
     high = NULL, hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
@@ -290,9 +302,20 @@ go_candlestick <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_candlestick(
-#'   decreasing = go_candlestick_decreasing()
-#' )
+#' d <- data.frame(day = 1:30, close = EuStockMarkets[1:30, "DAX"])
+#' d$open <- c(d$close[1], head(d$close, -1))
+#' d$high <- pmax(d$open, d$close) + 5
+#' d$low <- pmin(d$open, d$close) - 5
+#' d |>
+#'   go_figure() |>
+#'   add_candlestick(
+#'     x = ~day,
+#'     open = ~open,
+#'     high = ~high,
+#'     low = ~low,
+#'     close = ~close,
+#'     decreasing = go_candlestick_decreasing()
+#'   )
 go_candlestick_decreasing <- function(
     arg = NULL, ..., fillcolor = NULL, line = NULL, skip_invalid = FALSE
 ) {
@@ -329,11 +352,22 @@ go_candlestick_decreasing <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_candlestick(
-#'   decreasing = go_candlestick_decreasing(
-#'     line = go_candlestick_decreasing_line(color = "red")
+#' d <- data.frame(day = 1:30, close = EuStockMarkets[1:30, "DAX"])
+#' d$open <- c(d$close[1], head(d$close, -1))
+#' d$high <- pmax(d$open, d$close) + 5
+#' d$low <- pmin(d$open, d$close) - 5
+#' d |>
+#'   go_figure() |>
+#'   add_candlestick(
+#'     x = ~day,
+#'     open = ~open,
+#'     high = ~high,
+#'     low = ~low,
+#'     close = ~close,
+#'     decreasing = go_candlestick_decreasing(
+#'       line = go_candlestick_decreasing_line(color = "red")
+#'     )
 #'   )
-#' )
 go_candlestick_decreasing_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -372,9 +406,20 @@ go_candlestick_decreasing_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_candlestick(
-#'   increasing = go_candlestick_increasing()
-#' )
+#' d <- data.frame(day = 1:30, close = EuStockMarkets[1:30, "DAX"])
+#' d$open <- c(d$close[1], head(d$close, -1))
+#' d$high <- pmax(d$open, d$close) + 5
+#' d$low <- pmin(d$open, d$close) - 5
+#' d |>
+#'   go_figure() |>
+#'   add_candlestick(
+#'     x = ~day,
+#'     open = ~open,
+#'     high = ~high,
+#'     low = ~low,
+#'     close = ~close,
+#'     increasing = go_candlestick_increasing()
+#'   )
 go_candlestick_increasing <- function(
     arg = NULL, ..., fillcolor = NULL, line = NULL, skip_invalid = FALSE
 ) {
@@ -411,11 +456,22 @@ go_candlestick_increasing <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_candlestick(
-#'   increasing = go_candlestick_increasing(
-#'     line = go_candlestick_increasing_line(color = "red")
+#' d <- data.frame(day = 1:30, close = EuStockMarkets[1:30, "DAX"])
+#' d$open <- c(d$close[1], head(d$close, -1))
+#' d$high <- pmax(d$open, d$close) + 5
+#' d$low <- pmin(d$open, d$close) - 5
+#' d |>
+#'   go_figure() |>
+#'   add_candlestick(
+#'     x = ~day,
+#'     open = ~open,
+#'     high = ~high,
+#'     low = ~low,
+#'     close = ~close,
+#'     increasing = go_candlestick_increasing(
+#'       line = go_candlestick_increasing_line(color = "red")
+#'     )
 #'   )
-#' )
 go_candlestick_increasing_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -452,9 +508,20 @@ go_candlestick_increasing_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_candlestick(
-#'   line = go_candlestick_line(width = 2)
-#' )
+#' d <- data.frame(day = 1:30, close = EuStockMarkets[1:30, "DAX"])
+#' d$open <- c(d$close[1], head(d$close, -1))
+#' d$high <- pmax(d$open, d$close) + 5
+#' d$low <- pmin(d$open, d$close) - 5
+#' d |>
+#'   go_figure() |>
+#'   add_candlestick(
+#'     x = ~day,
+#'     open = ~open,
+#'     high = ~high,
+#'     low = ~low,
+#'     close = ~close,
+#'     line = go_candlestick_line(width = 2)
+#'   )
 go_candlestick_line <- function(
     arg = NULL, ..., width = NULL, skip_invalid = FALSE
 ) {

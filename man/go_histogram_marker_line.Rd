@@ -115,10 +115,13 @@ formula (\code{color = ~col}): it is kept, and evaluated in the data
 \code{add_<trace>()} or \code{add_trace()}.
 }
 \examples{
-go_histogram(
-  marker = go_histogram_marker(
-    line = go_histogram_marker_line(color = "red")
+mtcars |>
+  go_figure() |>
+  add_histogram(
+    x = ~mpg,
+    marker = go_histogram_marker(
+      line = go_histogram_marker_line(color = "red")
+    )
   )
-)
 }
 \concept{trace objects}

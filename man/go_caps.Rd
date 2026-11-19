@@ -39,8 +39,17 @@ These objects appear in 2 places in the plotly.js schema (properties
 named \code{caps}), all with the same properties and rules.
 }
 \examples{
-go_isosurface(
-  caps = go_caps()
-)
+d <- expand.grid(x = 1:5, y = 1:5, z = 1:5)
+d |>
+  go_figure() |>
+  add_isosurface(
+    x = ~x,
+    y = ~y,
+    z = ~z,
+    value = ~x * y * z,
+    isomin = 10,
+    isomax = 50,
+    caps = go_caps()
+  )
 }
 \concept{shared object types}

@@ -223,7 +223,9 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_densitymap()
+#' quakes |>
+#'   go_figure() |>
+#'   add_densitymap(lat = ~lat, lon = ~long, z = ~mag)
 go_densitymap <- function(
     arg = NULL, ..., autocolorscale = NULL, below = NULL, coloraxis = NULL,
     colorbar = NULL, colorscale = NULL, customdata = NULL, hoverinfo = NULL,

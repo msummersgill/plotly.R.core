@@ -240,7 +240,19 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_ohlc()
+#' d <- data.frame(day = 1:30, close = EuStockMarkets[1:30, "DAX"])
+#' d$open <- c(d$close[1], head(d$close, -1))
+#' d$high <- pmax(d$open, d$close) + 5
+#' d$low <- pmin(d$open, d$close) - 5
+#' d |>
+#'   go_figure() |>
+#'   add_ohlc(
+#'     x = ~day,
+#'     open = ~open,
+#'     high = ~high,
+#'     low = ~low,
+#'     close = ~close
+#'   )
 go_ohlc <- function(
     arg = NULL, ..., close = NULL, customdata = NULL, decreasing = NULL,
     high = NULL, hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
@@ -285,9 +297,20 @@ go_ohlc <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_ohlc(
-#'   decreasing = go_ohlc_decreasing()
-#' )
+#' d <- data.frame(day = 1:30, close = EuStockMarkets[1:30, "DAX"])
+#' d$open <- c(d$close[1], head(d$close, -1))
+#' d$high <- pmax(d$open, d$close) + 5
+#' d$low <- pmin(d$open, d$close) - 5
+#' d |>
+#'   go_figure() |>
+#'   add_ohlc(
+#'     x = ~day,
+#'     open = ~open,
+#'     high = ~high,
+#'     low = ~low,
+#'     close = ~close,
+#'     decreasing = go_ohlc_decreasing()
+#'   )
 go_ohlc_decreasing <- function(
     arg = NULL, ..., line = NULL, skip_invalid = FALSE
 ) {
@@ -330,11 +353,22 @@ go_ohlc_decreasing <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_ohlc(
-#'   decreasing = go_ohlc_decreasing(
-#'     line = go_ohlc_decreasing_line(color = "red")
+#' d <- data.frame(day = 1:30, close = EuStockMarkets[1:30, "DAX"])
+#' d$open <- c(d$close[1], head(d$close, -1))
+#' d$high <- pmax(d$open, d$close) + 5
+#' d$low <- pmin(d$open, d$close) - 5
+#' d |>
+#'   go_figure() |>
+#'   add_ohlc(
+#'     x = ~day,
+#'     open = ~open,
+#'     high = ~high,
+#'     low = ~low,
+#'     close = ~close,
+#'     decreasing = go_ohlc_decreasing(
+#'       line = go_ohlc_decreasing_line(color = "red")
+#'     )
 #'   )
-#' )
 go_ohlc_decreasing_line <- function(
     arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
     skip_invalid = FALSE
@@ -370,9 +404,20 @@ go_ohlc_decreasing_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_ohlc(
-#'   increasing = go_ohlc_increasing()
-#' )
+#' d <- data.frame(day = 1:30, close = EuStockMarkets[1:30, "DAX"])
+#' d$open <- c(d$close[1], head(d$close, -1))
+#' d$high <- pmax(d$open, d$close) + 5
+#' d$low <- pmin(d$open, d$close) - 5
+#' d |>
+#'   go_figure() |>
+#'   add_ohlc(
+#'     x = ~day,
+#'     open = ~open,
+#'     high = ~high,
+#'     low = ~low,
+#'     close = ~close,
+#'     increasing = go_ohlc_increasing()
+#'   )
 go_ohlc_increasing <- function(
     arg = NULL, ..., line = NULL, skip_invalid = FALSE
 ) {
@@ -415,11 +460,22 @@ go_ohlc_increasing <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_ohlc(
-#'   increasing = go_ohlc_increasing(
-#'     line = go_ohlc_increasing_line(color = "red")
+#' d <- data.frame(day = 1:30, close = EuStockMarkets[1:30, "DAX"])
+#' d$open <- c(d$close[1], head(d$close, -1))
+#' d$high <- pmax(d$open, d$close) + 5
+#' d$low <- pmin(d$open, d$close) - 5
+#' d |>
+#'   go_figure() |>
+#'   add_ohlc(
+#'     x = ~day,
+#'     open = ~open,
+#'     high = ~high,
+#'     low = ~low,
+#'     close = ~close,
+#'     increasing = go_ohlc_increasing(
+#'       line = go_ohlc_increasing_line(color = "red")
+#'     )
 #'   )
-#' )
 go_ohlc_increasing_line <- function(
     arg = NULL, ..., color = NULL, dash = NULL, width = NULL,
     skip_invalid = FALSE
@@ -463,9 +519,20 @@ go_ohlc_increasing_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_ohlc(
-#'   line = go_ohlc_line(width = 2)
-#' )
+#' d <- data.frame(day = 1:30, close = EuStockMarkets[1:30, "DAX"])
+#' d$open <- c(d$close[1], head(d$close, -1))
+#' d$high <- pmax(d$open, d$close) + 5
+#' d$low <- pmin(d$open, d$close) - 5
+#' d |>
+#'   go_figure() |>
+#'   add_ohlc(
+#'     x = ~day,
+#'     open = ~open,
+#'     high = ~high,
+#'     low = ~low,
+#'     close = ~close,
+#'     line = go_ohlc_line(width = 2)
+#'   )
 go_ohlc_line <- function(
     arg = NULL, ..., dash = NULL, width = NULL, skip_invalid = FALSE
 ) {

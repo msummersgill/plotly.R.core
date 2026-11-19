@@ -260,7 +260,15 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_icicle()
+#' cyl <- table(paste(mtcars$cyl, "cylinders"))
+#' d <- data.frame(
+#'   labels = c("all cars", names(cyl)),
+#'   parents = c("", rep("all cars", length(cyl))),
+#'   values = c(0, as.vector(cyl))
+#' )
+#' d |>
+#'   go_figure() |>
+#'   add_icicle(labels = ~labels, parents = ~parents, values = ~values)
 go_icicle <- function(
     arg = NULL, ..., branchvalues = NULL, count = NULL, customdata = NULL,
     domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
@@ -369,9 +377,20 @@ go_icicle <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_icicle(
-#'   marker = go_icicle_marker(colors = c("red", "blue"))
+#' cyl <- table(paste(mtcars$cyl, "cylinders"))
+#' d <- data.frame(
+#'   labels = c("all cars", names(cyl)),
+#'   parents = c("", rep("all cars", length(cyl))),
+#'   values = c(0, as.vector(cyl))
 #' )
+#' d |>
+#'   go_figure() |>
+#'   add_icicle(
+#'     labels = ~labels,
+#'     parents = ~parents,
+#'     values = ~values,
+#'     marker = go_icicle_marker(colors = c("red", "blue"))
+#'   )
 go_icicle_marker <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, coloraxis = NULL, colorbar = NULL,
@@ -412,11 +431,22 @@ go_icicle_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_icicle(
-#'   marker = go_icicle_marker(
-#'     line = go_icicle_marker_line(color = "red")
-#'   )
+#' cyl <- table(paste(mtcars$cyl, "cylinders"))
+#' d <- data.frame(
+#'   labels = c("all cars", names(cyl)),
+#'   parents = c("", rep("all cars", length(cyl))),
+#'   values = c(0, as.vector(cyl))
 #' )
+#' d |>
+#'   go_figure() |>
+#'   add_icicle(
+#'     labels = ~labels,
+#'     parents = ~parents,
+#'     values = ~values,
+#'     marker = go_icicle_marker(
+#'       line = go_icicle_marker_line(color = "red")
+#'     )
+#'   )
 go_icicle_marker_line <- function(
     arg = NULL, ..., color = NULL, width = NULL, skip_invalid = FALSE
 ) {
@@ -461,9 +491,20 @@ go_icicle_marker_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_icicle(
-#'   tiling = go_icicle_tiling()
+#' cyl <- table(paste(mtcars$cyl, "cylinders"))
+#' d <- data.frame(
+#'   labels = c("all cars", names(cyl)),
+#'   parents = c("", rep("all cars", length(cyl))),
+#'   values = c(0, as.vector(cyl))
 #' )
+#' d |>
+#'   go_figure() |>
+#'   add_icicle(
+#'     labels = ~labels,
+#'     parents = ~parents,
+#'     values = ~values,
+#'     tiling = go_icicle_tiling()
+#'   )
 go_icicle_tiling <- function(
     arg = NULL, ..., flip = NULL, orientation = NULL, pad = NULL,
     skip_invalid = FALSE

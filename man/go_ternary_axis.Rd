@@ -315,10 +315,15 @@ named \code{aaxis}, \code{baxis}, \code{caxis}), all with the same
 properties and rules.
 }
 \examples{
-go_layout(
-  ternary = go_ternary(
-    aaxis = go_ternary_axis(color = "red")
+iris |>
+  go_figure() |>
+  add_scatterternary(
+    a = ~Sepal.Length,
+    b = ~Sepal.Width,
+    c = ~Petal.Length
+  ) |>
+  update_layout(
+    ternary = go_ternary(aaxis = go_ternary_axis(color = "red"))
   )
-)
 }
 \concept{shared object types}

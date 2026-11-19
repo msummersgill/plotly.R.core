@@ -268,7 +268,9 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_scatterpolar(mode = "markers", marker = go_scatterpolar_marker(color = "red"))
+#' mtcars |>
+#'   go_figure() |>
+#'   add_scatterpolar(r = ~mpg, theta = ~hp)
 go_scatterpolar <- function(
     arg = NULL, ..., cliponaxis = NULL, connectgaps = NULL,
     customdata = NULL, dr = NULL, dtheta = NULL, fill = NULL,
@@ -334,9 +336,13 @@ go_scatterpolar <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scatterpolar(
-#'   line = go_scatterpolar_line(color = "red")
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_scatterpolar(
+#'     r = ~mpg,
+#'     theta = ~hp,
+#'     line = go_scatterpolar_line(color = "red")
+#'   )
 go_scatterpolar_line <- function(
     arg = NULL, ..., backoff = NULL, color = NULL, dash = NULL,
     shape = NULL, smoothing = NULL, width = NULL, skip_invalid = FALSE
@@ -599,9 +605,13 @@ go_scatterpolar_line <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scatterpolar(
-#'   marker = go_scatterpolar_marker(color = "red")
-#' )
+#' mtcars |>
+#'   go_figure() |>
+#'   add_scatterpolar(
+#'     r = ~mpg,
+#'     theta = ~hp,
+#'     marker = go_scatterpolar_marker(color = "red")
+#'   )
 go_scatterpolar_marker <- function(
     arg = NULL, ..., angle = NULL, angleref = NULL, autocolorscale = NULL,
     cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL, color = NULL,
@@ -704,11 +714,15 @@ go_scatterpolar_marker <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_scatterpolar(
-#'   marker = go_scatterpolar_marker(
-#'     line = go_scatterpolar_marker_line(color = "red")
+#' mtcars |>
+#'   go_figure() |>
+#'   add_scatterpolar(
+#'     r = ~mpg,
+#'     theta = ~hp,
+#'     marker = go_scatterpolar_marker(
+#'       line = go_scatterpolar_marker_line(color = "red")
+#'     )
 #'   )
-#' )
 go_scatterpolar_marker_line <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,

@@ -294,7 +294,8 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_surface(x = 1:3, y = c(2, 1, 3))
+#' go_figure() |>
+#'   add_surface(z = volcano)
 go_surface <- function(
     arg = NULL, ..., autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, coloraxis = NULL, colorbar = NULL,
@@ -355,9 +356,8 @@ go_surface <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_surface(
-#'   contours = go_surface_contours()
-#' )
+#' go_figure() |>
+#'   add_surface(z = volcano, contours = go_surface_contours())
 go_surface_contours <- function(
     arg = NULL, ..., x = NULL, y = NULL, z = NULL, skip_invalid = FALSE
 ) {
@@ -402,9 +402,8 @@ go_surface_contours <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_surface(
-#'   lighting = go_surface_lighting()
-#' )
+#' go_figure() |>
+#'   add_surface(z = volcano, lighting = go_surface_lighting())
 go_surface_lighting <- function(
     arg = NULL, ..., ambient = NULL, diffuse = NULL, fresnel = NULL,
     roughness = NULL, specular = NULL, skip_invalid = FALSE

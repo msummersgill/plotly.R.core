@@ -360,7 +360,9 @@
 #' @noMd
 #' @export
 #' @examples
-#' go_contour(x = 1:3, y = c(2, 1, 3))
+#' airquality |>
+#'   go_figure() |>
+#'   add_contour(x = ~Day, y = ~Month, z = ~Temp)
 go_contour <- function(
     arg = NULL, ..., autocolorscale = NULL, autocontour = NULL,
     coloraxis = NULL, colorbar = NULL, colorscale = NULL,
@@ -457,9 +459,14 @@ go_contour <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_contour(
-#'   contours = go_contour_contours(size = 10)
-#' )
+#' airquality |>
+#'   go_figure() |>
+#'   add_contour(
+#'     x = ~Day,
+#'     y = ~Month,
+#'     z = ~Temp,
+#'     contours = go_contour_contours(size = 10)
+#'   )
 go_contour_contours <- function(
     arg = NULL, ..., coloring = NULL, end = NULL, labelfont = NULL,
     labelformat = NULL, operation = NULL, showlabels = NULL,
@@ -508,9 +515,14 @@ go_contour_contours <- function(
 #' @noMd
 #' @export
 #' @examples
-#' go_contour(
-#'   line = go_contour_line(color = "red")
-#' )
+#' airquality |>
+#'   go_figure() |>
+#'   add_contour(
+#'     x = ~Day,
+#'     y = ~Month,
+#'     z = ~Temp,
+#'     line = go_contour_line(color = "red")
+#'   )
 go_contour_line <- function(
     arg = NULL, ..., color = NULL, dash = NULL, smoothing = NULL,
     width = NULL, skip_invalid = FALSE
