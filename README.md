@@ -1,7 +1,7 @@
 # plotly.core
 
 Interactive web graphics for R built on [plotly.js](https://github.com/plotly/plotly.js). 
-plotly.core is a rendering engine for the [plotly R package](https://github.com/plotly/plotly.R) and can also be used stand-alone. 
+plotly.core is a rendering engine supporting the [plotly R package](https://github.com/plotly/plotly.R) and experimental [plotly.express R package](https://github.com/msummersgill/plotly.R.express) and can also be used stand-alone. 
 
 - **Faster plots, less browser memory** plotly.core leverages advances in plotly.js 
   to improve browser rendering performance, and implements optimizations to on
@@ -39,72 +39,17 @@ remotes::install_github("msummersgill/plotly.R.core")
 # plotly with plotly.core rendering
 remotes::install_github("msummersgill/plotly@plotly-core-render")
 ```
+## Graph Objects and Validation
 
-## Example: a 2D scatter plot with graph objects
+Every object in the plotly.js schema has a corresponding `go_*()` S3 class and constructor with all supported properties.
 
-```r
-library(plotly.core)
-
-mtcars |>
-  go_figure() |>
-  add_scatter(
-    x = ~wt,
-    y = ~mpg,
-    mode = "markers",
-    text = rownames(mtcars),
-    marker = go_scatter_marker(
-      size = 12,
-      color = ~cyl,
-      colorscale = "Viridis",
-      showscale = TRUE,
-      colorbar = go_colorbar(title = "Cylinders")
-    ),
-    hovertemplate = "%{text}<br>Weight: %{x} (1000 lbs)<br>MPG: %{y}<extra></extra>"
-  ) |>
-  update_layout(title = "Fuel economy vs. weight (mtcars)") |>
-  update_xaxes(title = "Weight (1000 lbs)") |>
-  update_yaxes(title = "Miles per gallon")
-```
-
-![](man/figures/README-mtcars-scatter.png)
-
-## Example: subplots
-
-```r
-fig <- make_subplots(
-  rows = 2, cols = 2,
-  specs = list(
-    list(list(secondary_y = TRUE), list(type = "domain")),
-    list(list(colspan = 2), NULL)
-  ),
-  subplot_titles = c("Scatter + secondary y", "Pie", "Bar across both columns")
-) |>
-  add_scatter(x = mtcars$wt, y = mtcars$mpg, mode = "markers", name = "mpg", row = 1, col = 1) |>
-  add_scatter(x = sort(mtcars$wt), y = sort(mtcars$hp), mode = "lines", name = "hp",
-              row = 1, col = 1, secondary_y = TRUE) |>
-  add_pie(labels = c("4", "6", "8"), values = as.vector(table(mtcars$cyl)), row = 1, col = 2) |>
-  add_bar(x = rownames(mtcars), y = mtcars$qsec, name = "qsec", row = 2, col = 1) |>
-  update_yaxes(title = "hp", row = 1, col = 1, secondary_y = TRUE) |>
-  update_layout(showlegend = FALSE)
-```
-
-![A 2x2 subplot grid with a scatter plot and secondary y axis, a pie chart, and a bar chart spanning the bottom row](man/figures/README-subplots.png)
-
-## Graph objects and validation
-
-Every object in the plotly.js schema has a `go_*()` constructor with exactly
-its properties, so autocomplete shows only what is valid there:
-
-- traces and the layout: `go_scatter()`, `go_bar()`, ..., `go_layout()`;
-- objects nested in them, named after their path: `go_scatter_marker()`,
-  `go_scatter_marker_line()`, `go_xaxis()`, `go_scene_camera()`,
-  `go_annotation()`, `go_slider_step()`, ...;
-- objects that appear in many places, with one constructor for all of them:
-  `go_font()`, `go_colorbar()`, `go_hoverlabel()`, `go_error_bar()`,
-  `go_scene_axis()`, `go_selected()`, ....
-
-Named lists work wherever a constructor does (`marker = list(size = 12)`).
-One-sided formulas such as `color = ~cyl` are kept by constructors and
+- Each trace type and layout: `go_scatter()`, `go_bar()`, ..., `go_layout()`;
+- Line and Marker objects support different parameters for each trace type and get a dedicated constructor for each trace type:
+  `go_scatter_line()`,`go_scatter_marker()`,`go_scatter_marker_line()`
+- Objects used in multiple trace types or layout objects have shared constructors:
+  `go_colorbar()`, `gofont`, `go_scene_axis()`...
+- Named lists work wherever a constructor does (`marker = list(size = 12)`).
+- One-sided formulas such as `color = ~cyl` are kept by constructors and
 evaluated in the figure's data when the trace is added:
 
 ```r
@@ -118,32 +63,122 @@ mtcars |>
   update_layout(xaxis = go_xaxis(title = "Cylinders"))
 ```
 
-Every property is checked against the plotly.js schema when an object is
-created, and again when it is placed in a figure, so mistakes are caught
-immediately:
+Every property is checked against the plotly.js schema, so typos or incorrect parameters
+are surfaced with informative error messages.
+
+Unsupported value for a valid property lists supported options:
 
 ```r
-add_scatter(fig, x = mtcars$wt, y = mtcars$mpg, mode = "dots")
+go_scatter(x = mtcars$wt, y = mtcars$mpg, mode = "dots")
 #> Error: Invalid value of type 'character' received for the 'mode' property of scatter
 #>     Received value: "dots"
 #>
 #>     The 'mode' property is a flaglist and may be specified as a string containing:
 #>       - Any combination of "lines", "markers", "text" joined with '+' characters (e.g. 'lines+markers')
 #>         OR exactly one of "none"
-
-add_bar(fig, x = mtcars$cyl, y = mtcars$mpg, marker = go_font(size = 3))
-#> Error: A go_font() object can't be used for bar.marker, which is an object (a named list)
 ```
 
-plotly.py's "magic underscore" names are not supported; the error shows the
-nested call instead:
+Wrong graph object provided gives a hint for the expected object:
 
 ```r
-add_scatter(fig, x = mtcars$wt, y = mtcars$mpg, marker_size = 12)
-#> Error: Invalid property specified for go_scatter(): 'marker_size'
-#>
-#> Nested properties are set with their objects: marker = go_scatter_marker(size = ...)
+go_bar(x = mtcars$cyl, y = mtcars$mpg, marker = go_font(size = 3))
+#> Error: A go_font() object can't be used for bar.marker: use go_bar_marker()
+
 ```
+
+Invalid property names throw an error with list of all the properties supported by schema:
+
+```r
+go_font(foo = "bar")
+#> Error: Invalid property specified for go_font(): 'foo'
+#> 
+#>     Valid properties:
+#>         color, family, lineposition, shadow, size, style, textcase, variant, weight
+```
+
+Invalid schema element in a legacy plotly methods drops invalid elements and warns. _(Legacy plotly R rendered with no warning)_
+
+```r
+plotly::plot_ly() |> 
+  plotly::add_markers(x = 1, y = 1, mode = "markers", marker = list(foo = "bar"))
+#> Warning message:
+#> Invalid property specified for scatter.marker: 'foo'
+#> 
+#>     Valid properties:
+#>         angle, angleref, autocolorscale, cauto, cmax, cmid, cmin, color, coloraxis, colorbar,
+#>         colorscale, gradient, line, maxdisplayed, opacity, reversescale, showscale, size,
+#>         sizemin, sizemode, sizeref, standoff, symbol
+#> (invalid attributes are ignored) 
+```
+
+## Examples
+
+Generate some data for plotting, store in a `data.table`. plotly.core supports any 
+data format that inherits `data.frame`, and trace values can also be defined by 
+vectors.
+
+```r
+library(plotly.core)
+library(data.table)
+
+DT <- data.table(t = seq.POSIXt(from = as.POSIXct(0, tz = "UTC"),
+                                to = as.POSIXct(2 * pi, tz = "UTC"),
+                                length.out = 10000))
+DT[, sin := sin(as.numeric(t))]
+DT[, cos := cos(as.numeric(t))]
+DT[, tan := tan(as.numeric(t))]
+```
+
+### Basic x-y plot
+
+```r
+DT |>
+  go_figure() |>
+  add_scatter(x = ~t, y = ~sin, name = "sin(t)",
+              mode = "lines", line = go_scatter_line(color = "red")) |>
+  add_scatter(x = ~t, y = ~cos, name = "cos(t)",
+              mode = "lines", line = go_scatter_line(color = "blue")) |>
+  update_layout(legend = go_legend(orientation = "h",
+                                   x = 0.5, xanchor = "center",
+                                   y = 1, yanchor = "bottom"))
+```
+
+![](man/figures/README-scatter.png)
+
+### Subplots with a shared Axis
+
+```r
+make_subplots(rows = 2, shared_xaxes = TRUE) |>
+  add_scatter(row = 1, col = 1,
+              data = DT, x = ~ t, y = ~ sin, name = "sin(t)", 
+              mode = "lines", line = go_scatter_line(color = "red")) |>
+  add_scatter(row = 2, col = 1,
+              data = DT, x = ~ t, y = ~ cos, name = "cos(t)", 
+              mode = "lines", line = go_scatter_line(color = "blue")) |>
+  update_layout(legend = go_legend(orientation = "h",
+                                   x = 0.5, xanchor = "center",
+                                   y = 1, yanchor = "bottom"))
+```
+
+![](man/figures/README-subplots.png)
+
+### 3D scatter plot
+
+```r
+DT |>
+  go_figure() |>
+  add_scatter3d(x = ~ cos, y = ~ sin, z = ~ tan,
+                mode = "markers",
+                marker = go_scatter3d_marker(size = 5,
+                                             color = ~ tan,
+                                             cmin = -100, cmax = 100,
+                                             colorscale = "Portland")) |>
+  update_scenes(xaxis = go_scene_axis(title = "cos(t)"),
+                xaxis = go_scene_axis(title = "sin(t)"),
+                zaxis = go_scene_axis(title = "tan(t)", range = c(-100, 100)))
+```
+
+![](man/figures/README-scatter3d.png)
 
 ## Shiny
 

@@ -993,16 +993,22 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
     return(v)
   } # already validated
   if (inherits(v, "plotly_obj") && !inherits(v, "plotly_shared")) {
-    # an object made for another place: only where the property has its name
-    # (a bar marker.line in a scatter marker.line, go_xaxis() in xaxis2)
+    # an object made for another place: only where the schema has that object
+    # (go_xaxis() in xaxis2), or one of the same shared type (a scene xaxis
+    # in zaxis); a scatter marker is not a scatter3d marker
     from <- tryCatch(class_key(class(v)[[1L]]), error = function(e) NULL)
-    # (or of the same shared type: a scene xaxis in zaxis)
     same_type <- !is.null(from) &&
       !is.na(shared_type_of(key)) &&
       identical(shared_type_of(from), shared_type_of(key))
-    if (!is.null(from) && prop_name(from) != prop_name(key) && !same_type) {
+    if (!is.null(from) && !identical(from, key) && !same_type) {
+      fn <- constructor_of(key)
       stop(
-        sprintf("A %s object can't be used for %s", from, key),
+        sprintf(
+          "A %s object can't be used for %s%s",
+          from,
+          key,
+          if (length(fn) && !is.na(fn)) sprintf(": use %s()", fn) else ""
+        ),
         call. = FALSE
       )
     }
@@ -1011,16 +1017,24 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
     # a go_font(), go_colorbar(), ... object: only where the schema has one
     type <- sub("^go_", "", class(v)[[1L]])
     if (!identical(shared_type_of(key), type)) {
+      fn <- constructor_of(key)
       stop(
         sprintf(
-          "A go_%s() object can't be used for %s, which is %s",
+          "A go_%s() object can't be used for %s%s",
           type,
           key,
-          sub(
-            "^ *The '[^']*' property is ",
-            "",
-            describe_validator(entry, prop_name(key))
-          )
+          if (length(fn) && !is.na(fn)) {
+            sprintf(": use %s()", fn)
+          } else {
+            paste0(
+              ", which is ",
+              sub(
+                "^ *The '[^']*' property is ",
+                "",
+                describe_validator(entry, prop_name(key))
+              )
+            )
+          }
         ),
         call. = FALSE
       )

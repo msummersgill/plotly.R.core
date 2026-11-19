@@ -272,11 +272,11 @@ stopifnot(
 expect_error(go_scatter_marker(sise = 1), "scatter.marker: 'sise'")
 expect_error(go_bar_marker(size = 1), "bar.marker: 'size'")
 expect_error(go_bar_marker_line(shape = "spline"), "bar.marker.line: 'shape'")
-# a bar marker line placed in a scatter marker is checked again there
-stopifnot(inherits(
-  go_scatter(marker = list(line = go_bar_marker_line(width = 1)))$marker$line,
-  "go_scatter_marker_line"
-))
+# a bar marker line can't be placed in a scatter marker
+expect_error(
+  go_scatter(marker = list(line = go_bar_marker_line(width = 1))),
+  "A bar.marker.line object can't be used for scatter.marker.line: use go_scatter_marker_line\\(\\)"
+)
 
 # axis constructors
 xa <- go_xaxis(title = "x", rangeslider = list(visible = TRUE))
@@ -360,7 +360,35 @@ expect_error(
 )
 expect_error(
   go_scatter(line = go_scatter_marker()),
-  "A scatter.marker object can't be used for scatter.line"
+  "A scatter.marker object can't be used for scatter.line: use go_scatter_line\\(\\)"
+)
+# an object made for one trace type is not accepted by another
+expect_error(
+  go_figure() |>
+    add_scatter3d(x = 1, y = 1, z = 1, marker = go_scatter_marker(size = 5)),
+  "A scatter.marker object can't be used for scatter3d.marker: use go_scatter3d_marker\\(\\)"
+)
+expect_error(
+  go_bar(marker = go_font(size = 3)),
+  "go_font\\(\\) object can't be used for bar.marker: use go_bar_marker\\(\\)"
+)
+# objects of the same schema object or shared type are still accepted
+stopifnot(
+  inherits(go_layout(xaxis2 = go_xaxis(title = "x"))$xaxis2, "plotly_obj"),
+  inherits(go_scene(zaxis = go_scene_axis(title = "z"))$zaxis, "plotly_obj")
+)
+# a property given twice in an update is an error, not a silent overwrite
+expect_error(
+  go_figure() |>
+    update_scenes(
+      xaxis = go_scene_axis(title = "a"),
+      xaxis = go_scene_axis(title = "b")
+    ),
+  "Property 'xaxis' is given more than once"
+)
+expect_error(
+  go_figure() |> update_layout(title = "a", title = "b"),
+  "Property 'title' is given more than once"
 )
 fig <- go_figure() |>
   add_scatter(y = 1:3) |>

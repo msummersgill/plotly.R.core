@@ -52,6 +52,8 @@ The `plot_ly()` results on plotly.core use a development version of the plotly p
 #| include: false
 library(plotly.core)
 library(data.table)
+# each figure loads the smallest plotly.js bundle with its trace types
+options(plotly.core.bundle = "auto")
 
 run <- isTRUE(as.logical(Sys.getenv("PLOTLY_CORE_RUN_BENCHMARKS", "false")))
 wd <- normalizePath(params$workdir, mustWork = FALSE)

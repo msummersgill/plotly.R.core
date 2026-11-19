@@ -17,6 +17,8 @@ knitr:
 ```{r setup}
 #| include: false
 library(plotly.core)
+# each figure loads the smallest plotly.js bundle with its trace types
+options(plotly.core.bundle = "auto")
 # The examples start Chrome: run them for the website and in development,
 # not when the vignette is rebuilt during R CMD check on CRAN
 chrome <- if (requireNamespace("chromote", quietly = TRUE)) {

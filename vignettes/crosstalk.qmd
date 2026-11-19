@@ -23,6 +23,8 @@ knitr:
 knitr::opts_chunk$set(eval = all(vapply(
   c("crosstalk", "data.table", "gapminder"), requireNamespace, NA, quietly = TRUE
 )))
+# each figure loads the smallest plotly.js bundle with its trace types
+options(plotly.core.bundle = "auto")
 ```
 
 [crosstalk](https://rstudio.github.io/crosstalk/) links htmlwidgets in the browser, with no Shiny server: selecting points in one figure selects the same rows in every other view of the data. This page shows how to do it with `go_figure()` and `add_<trace>()`.

@@ -544,6 +544,18 @@ combine_patch <- function(patch, dots, fig = NULL) {
   if (length(dots) && (is.null(names(dots)) || any(!nzchar(names(dots))))) {
     stop("All properties in `...` must be named", call. = FALSE)
   }
+  for (x in list(patch, dots)) {
+    dup <- unique(names(x)[duplicated(names(x))])
+    if (length(dup)) {
+      stop(
+        sprintf(
+          "Property %s is given more than once",
+          paste0("'", dup, "'", collapse = ", ")
+        ),
+        call. = FALSE
+      )
+    }
+  }
   out <- c(unclass(patch), dots)
   if (has_formula(out)) {
     data <- trace_data(fig)
