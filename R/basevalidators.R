@@ -93,6 +93,20 @@ validate_coerce <- function(
       }
     )
   }
+  # validators convert values before checking them (numbers to strings, ...):
+  # errors about the whole value report it as it was given
+  tryCatch(
+    validate_coerce_by_type(v, key, entry, skip_invalid),
+    plotly_invalid_value = function(e) {
+      if (!isTRUE(e$elements) && identical(e$key, key)) {
+        raise_invalid_val(v, key, entry)
+      }
+      stop(e)
+    }
+  )
+}
+
+validate_coerce_by_type <- function(v, key, entry, skip_invalid = FALSE) {
   switch(
     entry$superclass,
     "DataArrayValidator" = vc_data_array(v, key, entry),
@@ -180,7 +194,7 @@ raise_invalid_val <- function(v, key, entry, elements = FALSE) {
   msg <- paste0(what, "\n\n", describe_validator(entry, prop_name(key)))
   stop(structure(
     class = c("plotly_invalid_value", "error", "condition"),
-    list(message = msg, call = NULL)
+    list(message = msg, call = NULL, key = key, elements = elements)
   ))
 }
 
@@ -437,10 +451,46 @@ check_scalar_or_array <- function(v, key, entry) {
 
 # Simple validators ----------------------------------------------------------
 
+# Data arrays that may hold 2D data, given as a matrix or data frame (written
+# as rows of values): plotly.js reads them as one row per y (z, text, ...) or
+# one value per point (customdata).
+DATA_ARRAYS_2D <- c("z", "customdata", "surfacecolor")
+DATA_ARRAYS_2D_FOR <- list(
+  x = c("surface", "carpet"),
+  y = c("surface", "carpet"),
+  text = c("heatmap", "contour", "surface", "contourcarpet"),
+  hovertext = c("heatmap", "contour", "surface", "contourcarpet")
+)
+# ... and table cell and header values, which plotly.js reads as columns
+DATA_ARRAYS_COLUMNS <- c("table.cells.values", "table.header.values")
+
 vc_data_array <- function(v, key, entry) {
-  # A data.frame is 2D data (e.g. customdata): serialised as rows of values.
   if (is.data.frame(v)) {
-    return(v)
+    if (key %in% DATA_ARRAYS_COLUMNS) {
+      return(unname(lapply(v, as_char_if_factor)))
+    }
+    name <- prop_name(key)
+    trace <- sub("\\..*$", "", key)
+    if (name %in% DATA_ARRAYS_2D || trace %in% DATA_ARRAYS_2D_FOR[[name]]) {
+      return(v)
+    }
+    stop(
+      structure(
+        class = c("plotly_invalid_value", "error", "condition"),
+        list(
+          message = sprintf(
+            "A data frame can't be used for the '%s' property of %s, which takes one value per point: use one of its columns (e.g. %s = df$col, or %s = ~col with the data frame as data)",
+            name,
+            prop_parent(key),
+            name,
+            name
+          ),
+          call = NULL,
+          key = key,
+          elements = TRUE # report as is, not as an invalid value
+        )
+      )
+    )
   }
   if (is.list(v) && !is.null(names(v))) {
     raise_invalid_val(v, key, entry)

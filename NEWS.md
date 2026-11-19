@@ -42,6 +42,10 @@
   read back as the same double, and date-times keep microseconds.
 * `write_html()` saves figures as HTML pages faster than
   `htmlwidgets::saveWidget()`.
+* `available_fonts()` lists the font families installed on this computer
+  (with the systemfonts package), and `save_image()` warns when a figure asks
+  for a font that is not installed; see `?available_fonts` for local versus
+  viewer fonts.
 * Shiny (`plotlyOutput()`, `renderPlotly()`, `event_data()`, `plotlyProxy()`),
   knitr/Quarto output, and static image export (`save_image()`) to PNG, JPEG,
   WebP, SVG, PDF and EPS with headless Chrome via chromote, with LaTeX

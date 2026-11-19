@@ -319,6 +319,7 @@ layout_array_source <- function(array_key, ctx) {
     ),
     if (!element_key %in% ctx$object_roots) nested_sections(element_key, ctx),
     "#'",
+    "#' @concept layout objects",
     "#' @noMd",
     "#' @export",
     sprintf("add_%s <- function(", sing),

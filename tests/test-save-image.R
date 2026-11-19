@@ -465,6 +465,45 @@ if (
   )
 }
 
+# Fonts: available_fonts() and the warning for fonts that are not installed
+if (requireNamespace("systemfonts", quietly = TRUE)) {
+  fonts <- available_fonts()
+  stopifnot(is.character(fonts), length(fonts) > 0L, !is.unsorted(fonts))
+  fig <- go_figure() |>
+    add_scatter(
+      y = 1:3,
+      textfont = go_font(family = "No Such Font Abc, Arial")
+    ) |>
+    update_layout(
+      font = go_font(family = "sans-serif"),
+      template = list(layout = list(font = list(family = "Template Only Font")))
+    )
+  stopifnot(identical(
+    plotly.core:::figure_font_families(unclass(fig)[c("data", "layout")]),
+    c("No Such Font Abc, Arial", "sans-serif")
+  ))
+  assign("font_warned", NULL, envir = plotly.core:::the)
+  msg <- tryCatch(
+    plotly.core:::check_figure_fonts(fig),
+    warning = conditionMessage
+  )
+  stopifnot(grepl('"No Such Font Abc" is not installed', msg))
+  if ("arial" %in% tolower(fonts)) {
+    stopifnot(grepl('uses "Arial" instead', msg))
+  }
+  # once a session per font, and nothing for installed or generic fonts
+  stopifnot(is.null(tryCatch(
+    plotly.core:::check_figure_fonts(fig),
+    warning = conditionMessage
+  )))
+  ok <- go_figure() |>
+    update_layout(font = go_font(family = paste(fonts[[1L]], ", serif")))
+  stopifnot(is.null(tryCatch(
+    plotly.core:::check_figure_fonts(ok),
+    warning = conditionMessage
+  )))
+}
+
 # Exports start a browser, so only run them off CRAN, where Chrome is found.
 if (
   identical(Sys.getenv("NOT_CRAN"), "true") &&

@@ -285,3 +285,4 @@ objects of the constructors their arguments name.
 \seealso{
 \code{\link{update_shapes}()}, \code{\link{go_shape}()}
 }
+\concept{layout objects}

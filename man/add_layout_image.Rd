@@ -146,3 +146,4 @@ list(size = 14)}, or objects of the constructors their arguments name.
 \seealso{
 \code{\link{update_layout_images}()}, \code{\link{go_layout_image}()}
 }
+\concept{layout objects}

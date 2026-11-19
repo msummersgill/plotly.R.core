@@ -361,3 +361,4 @@ list(size = 14)}, or objects of the constructors their arguments name.
 \seealso{
 \code{\link{update_annotations}()}, \code{\link{go_annotation}()}
 }
+\concept{layout objects}

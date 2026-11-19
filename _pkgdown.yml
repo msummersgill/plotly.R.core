@@ -58,6 +58,7 @@ reference:
       - config
       - write_html
       - save_image
+      - available_fonts
       - install_chrome
       - plotly_json
       - TeX

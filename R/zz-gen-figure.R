@@ -2033,6 +2033,7 @@ for_each_yaxis <- function(fig, fn, selector = NULL, row = NULL, col = NULL, sec
 #' @return The modified figure.
 #' @seealso \code{\link{update_annotations}()}, \code{\link{go_annotation}()}
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 add_annotation <- function(
@@ -2187,6 +2188,7 @@ for_each_annotation <- function(fig, fn, selector = NULL, row = NULL, col = NULL
 #' @return The modified figure.
 #' @seealso \code{\link{update_layout_images}()}, \code{\link{go_layout_image}()}
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 add_layout_image <- function(
@@ -2321,6 +2323,7 @@ for_each_layout_image <- function(fig, fn, selector = NULL, row = NULL, col = NU
 #' @return The modified figure.
 #' @seealso \code{\link{update_selections}()}, \code{\link{go_selection}()}
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 add_selection <- function(
@@ -2571,6 +2574,7 @@ for_each_selection <- function(fig, fn, selector = NULL, row = NULL, col = NULL,
 #' @return The modified figure.
 #' @seealso \code{\link{update_shapes}()}, \code{\link{go_shape}()}
 #'
+#' @concept layout objects
 #' @noMd
 #' @export
 add_shape <- function(

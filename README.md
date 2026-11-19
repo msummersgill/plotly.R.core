@@ -109,11 +109,34 @@ fig <- make_subplots(
 
 ## Graph objects and validation
 
-Nested objects are named lists, such as `marker = list(size = 12)`, or objects
-from their constructors: `marker = go_scatter_marker(size = 12)`,
-`textfont = go_font(size = 14)`. Formulas such as `color = ~cyl` work in both,
-and are evaluated in the data when the trace is added. Every
-property is checked against the plotly.js schema, so invalid values are caught
+Every object in the plotly.js schema has a `go_*()` constructor with exactly
+its properties, so autocomplete shows only what is valid there:
+
+- traces and the layout: `go_scatter()`, `go_bar()`, ..., `go_layout()`;
+- objects nested in them, named after their path: `go_scatter_marker()`,
+  `go_scatter_marker_line()`, `go_xaxis()`, `go_scene_camera()`,
+  `go_annotation()`, `go_slider_step()`, ...;
+- objects that appear in many places, with one constructor for all of them:
+  `go_font()`, `go_colorbar()`, `go_hoverlabel()`, `go_error_bar()`,
+  `go_scene_axis()`, `go_selected()`, ....
+
+Named lists work wherever a constructor does (`marker = list(size = 12)`).
+One-sided formulas such as `color = ~cyl` are kept by constructors and
+evaluated in the figure's data when the trace is added:
+
+```r
+mtcars |>
+  go_figure() |>
+  add_bar(
+    x = ~factor(cyl), y = ~mpg,
+    marker = go_bar_marker(color = ~hp, line = go_bar_marker_line(width = 1)),
+    textfont = go_font(size = 14)
+  ) |>
+  update_layout(xaxis = go_xaxis(title = "Cylinders"))
+```
+
+Every property is checked against the plotly.js schema when an object is
+created, and again when it is placed in a figure, so mistakes are caught
 immediately:
 
 ```r
@@ -124,6 +147,19 @@ add_scatter(fig, x = mtcars$wt, y = mtcars$mpg, mode = "dots")
 #>     The 'mode' property is a flaglist and may be specified as a string containing:
 #>       - Any combination of "lines", "markers", "text" joined with '+' characters (e.g. 'lines+markers')
 #>         OR exactly one of "none"
+
+add_bar(fig, x = mtcars$cyl, y = mtcars$mpg, marker = go_font(size = 3))
+#> Error: A go_font() object can't be used for bar.marker, which is an object (a named list)
+```
+
+plotly.py's "magic underscore" names are not supported; the error shows the
+nested call instead:
+
+```r
+add_scatter(fig, x = mtcars$wt, y = mtcars$mpg, marker_size = 12)
+#> Error: Invalid property specified for go_scatter(): 'marker_size'
+#>
+#> Nested properties are set with their objects: marker = go_scatter_marker(size = ...)
 ```
 
 ## Shiny

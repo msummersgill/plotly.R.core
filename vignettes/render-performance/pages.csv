@@ -7,7 +7,7 @@ release,multiseries,100000,1000000,67.741768
 release,multiseries,500000,5000000,337.684924
 release,heatmap,100,10000,0.414867
 release,heatmap,500,250000,10.281643
-release,heatmap,1000,1000000,41.112983
+release,heatmap,1000,1000000,41.11298
 release,heatmap,2000,4000000,164.425017
 core_backend,timeseries,10000,10000,0.215447
 core_backend,timeseries,100000,100000,2.135447

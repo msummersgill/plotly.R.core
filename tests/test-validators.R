@@ -320,3 +320,34 @@ local({
   )$data[[1]]
   stopifnot(is.null(tr$textposition))
 })
+
+# errors report the value as given, before any conversion
+local({
+  msg <- tryCatch(
+    go_xaxis_title(text = c(0.1, 0.2, 0.3)),
+    error = conditionMessage
+  )
+  stopifnot(
+    grepl("type 'numeric vector'", msg),
+    grepl("Received value: 0.1, 0.2, 0.3", msg)
+  )
+  msg <- tryCatch(go_xaxis(range = "a"), error = conditionMessage)
+  stopifnot(grepl("type 'character' received for the 'range'", msg))
+})
+
+# data frames: only for 2D data arrays; table values are columns
+local({
+  df <- data.frame(a = 1:2, b = 3:4)
+  expect_error(
+    go_scatter(x = df),
+    "A data frame can't be used for the 'x' property of scatter"
+  )
+  expect_error(go_bar(y = df), "'y' property of bar")
+  stopifnot(
+    json(go_heatmap(z = df)) == '{"type":"heatmap","z":[[1,3],[2,4]]}',
+    json(go_table(cells = list(values = df))) ==
+      '{"type":"table","cells":{"values":[[1,2],[3,4]]}}',
+    inherits(go_scatter(customdata = df)$customdata, "data.frame"),
+    inherits(go_surface(x = df)$x, "data.frame")
+  )
+})
