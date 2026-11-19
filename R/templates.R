@@ -7,10 +7,10 @@
 #' Figure templates
 #'
 #' Templates (themes) set default layout and trace properties for figures.
-#' The built-in templates are those of plotly.py: `"plotly"` (the default),
+#' The built-in templates are those of plotly.py: `"plotly"`,
 #' `"plotly_white"`, `"plotly_dark"`, `"ggplot2"`, `"seaborn"`,
 #' `"simple_white"`, `"presentation"`, `"xgridoff"`, `"ygridoff"`,
-#' `"gridon"` and `"none"`. Templates can be combined with `"+"`, e.g.
+#' `"gridon"` and `"none"` (the default). Templates can be combined with `"+"`, e.g.
 #' `"plotly_white+presentation"`; later templates take precedence.
 #'
 #' Figures without a `layout$template` use the default template when they
@@ -70,7 +70,7 @@ register_template <- function(name, template) {
 #' @rdname get_template
 #' @export
 default_template <- function(name) {
-  current <- getOption("plotly.core.template", "plotly")
+  current <- getOption("plotly.core.template", "none")
   if (missing(name)) {
     return(current)
   }

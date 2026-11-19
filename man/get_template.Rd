@@ -30,10 +30,10 @@ and returns the previous one invisibly. \code{register_template()} returns
 }
 \description{
 Templates (themes) set default layout and trace properties for figures.
-The built-in templates are those of plotly.py: \code{"plotly"} (the default),
+The built-in templates are those of plotly.py: \code{"plotly"},
 \code{"plotly_white"}, \code{"plotly_dark"}, \code{"ggplot2"}, \code{"seaborn"},
 \code{"simple_white"}, \code{"presentation"}, \code{"xgridoff"}, \code{"ygridoff"},
-\code{"gridon"} and \code{"none"}. Templates can be combined with \code{"+"}, e.g.
+\code{"gridon"} and \code{"none"} (the default). Templates can be combined with \code{"+"}, e.g.
 \code{"plotly_white+presentation"}; later templates take precedence.
 }
 \details{

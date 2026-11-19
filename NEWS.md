@@ -38,7 +38,9 @@
   functions it uses (see `?"plotly.core-extending"`). plotly.py's colour
   sequences and scales are `plotly_colors`. plotly.core no longer imports
   data.table (#4).
-* `make_subplots()`, templates (`default_template()`, `register_template()`).
+* `make_subplots()`, templates (`default_template()`, `register_template()`);
+  figures use no template (`"none"`, plotly.js's own defaults) unless one is
+  set, as plotly 4.x does.
 * htmlwidget rendering: numeric arrays are sent as base64 typed arrays, arrays
   repeated in a figure are sent once, `as_float32()` sends data in single
   precision, and `partial_bundle()` loads a smaller plotly.js bundle.
