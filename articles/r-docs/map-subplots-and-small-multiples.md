@@ -1,0 +1,72 @@
+# Map Subplots And Small Multiples
+
+### Basic Subplots with Maps
+
+``` r
+
+library(plotly.core)
+library(dplyr)
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/1962_2006_walmart_store_openings.csv")
+
+years <- sort(unique(df$YEAR))
+n_rows <- 9
+n_cols <- ceiling(length(years) / n_rows)
+
+# one geo subplot per year; cells after the last year stay empty
+specs <- lapply(seq_len(n_rows), function(row) {
+  lapply(seq_len(n_cols), function(col) {
+    if ((row - 1) * n_cols + col <= length(years)) list(type = "geo") else NULL
+  })
+})
+fig <- make_subplots(
+  rows = n_rows,
+  cols = n_cols,
+  specs = specs,
+  horizontal_spacing = 0.01,
+  vertical_spacing = 0.01
+)
+
+for (idx in seq_along(years)) {
+  yr <- years[[idx]]
+  row <- (idx - 1) %/% n_cols + 1
+  col <- (idx - 1) %% n_cols + 1
+  fig <- fig |>
+    add_scattergeo(
+      data = filter(df, YEAR == yr),
+      lon = ~LON,
+      lat = ~LAT,
+      mode = "markers",
+      marker = go_scattergeo_marker(color = "blue", opacity = 0.5),
+      row = row,
+      col = col
+    ) |>
+    add_scattergeo(
+      lon = -78,
+      lat = 47,
+      text = as.character(yr),
+      mode = "text",
+      textfont = go_font(color = "black"),
+      row = row,
+      col = col
+    )
+}
+
+# common map properties
+fig <- fig |>
+  update_geos(
+    scope = "usa",
+    showland = TRUE,
+    landcolor = "rgb(229, 229, 229)",
+    showcountries = FALSE,
+    subunitcolor = "white"
+  ) |>
+  update_layout(
+    showlegend = FALSE,
+    title = 'New Walmart Stores per year 1962-2006<br> Source: <a href="http://www.econ.umn.edu/~holmes/data/WalMart/index.html">University of Minnesota</a>',
+    width = 1000,
+    height = 900,
+    hovermode = FALSE
+  )
+
+fig
+```

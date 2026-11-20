@@ -1,0 +1,155 @@
+# Aggregations
+
+#### Introduction
+
+The legacy `aggregate` transform has been removed from plotly.js, so
+plotly.core figures aggregate their data in R before plotting. The
+functions that the transform supported are easy to write in R:
+
+| Function | Description                                           |
+|----------|-------------------------------------------------------|
+| `count`  | Returns the quantity of items for each group.         |
+| `sum`    | Returns the summation of all numeric values.          |
+| `avg`    | Returns the average of all numeric values.            |
+| `median` | Returns the median of all numeric values.             |
+| `mode`   | Returns the mode of all numeric values.               |
+| `rms`    | Returns the rms of all numeric values.                |
+| `stddev` | Returns the standard deviation of all numeric values. |
+| `min`    | Returns the minimum numeric value for each group.     |
+| `max`    | Returns the maximum numeric value for each group.     |
+| `first`  | Returns the first numeric value for each group.       |
+| `last`   | Returns the last numeric value for each group.        |
+
+``` r
+
+agg_funs <- list(
+  count = length,
+  sum = sum,
+  avg = mean,
+  median = median,
+  mode = function(v) as.numeric(names(which.max(table(v)))),
+  rms = function(v) sqrt(mean(v^2)),
+  stddev = sd,
+  min = min,
+  max = max,
+  first = function(v) v[[1]],
+  last = function(v) v[[length(v)]]
+)
+```
+
+#### Basic Example
+
+``` r
+
+library(plotly.core)
+
+diamonds <- ggplot2::diamonds
+price_sum <- tapply(diamonds$price, diamonds$cut, sum)
+
+fig <- go_figure() |>
+  add_scatter(
+    x = names(price_sum),
+    y = unname(price_sum),
+    mode = "markers"
+  )
+
+fig
+```
+
+#### Aggregate Functions
+
+Each dropdown button restyles `y` with the values of one aggregation,
+computed in R.
+
+``` r
+
+library(plotly.core)
+
+diamonds <- ggplot2::diamonds
+by_cut <- lapply(agg_funs, function(f) unname(tapply(diamonds$price, diamonds$cut, f)))
+
+buttons <- lapply(names(by_cut), function(func) {
+  go_updatemenu_button(
+    method = "restyle",
+    args = list("y", list(by_cut[[func]])),
+    label = func
+  )
+})
+
+fig <- go_figure() |>
+  add_scatter(
+    x = levels(diamonds$cut),
+    y = by_cut$avg,
+    mode = "markers",
+    marker = go_scatter_marker(size = 10, color = "blue", opacity = 0.8)
+  ) |>
+  update_layout(
+    title = "<b>Plotly Aggregations</b><br>use dropdown to change aggregation",
+    xaxis = go_xaxis(title = "Cut"),
+    yaxis = go_yaxis(title = "Price ($)"),
+    updatemenus = list(
+      go_updatemenu(
+        x = 0.25,
+        y = 1.04,
+        yanchor = "top",
+        active = which(names(by_cut) == "avg") - 1,
+        buttons = buttons
+      )
+    )
+  )
+
+fig
+```
+
+#### Mapping with Aggregations
+
+``` r
+
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/bcdunbar/datasets/master/worldhappiness.csv")
+
+countries <- unique(df$Country)
+by_country <- lapply(agg_funs, function(f) {
+  unname(tapply(df$HappinessScore, factor(df$Country, levels = countries), f))
+})
+
+buttons <- lapply(names(by_country), function(func) {
+  go_updatemenu_button(
+    method = "restyle",
+    args = list("z", list(by_country[[func]])),
+    label = func
+  )
+})
+
+fig <- go_figure() |>
+  add_choropleth(
+    locationmode = "country names",
+    locations = countries,
+    z = by_country$sum,
+    autocolorscale = FALSE,
+    reversescale = TRUE,
+    colorscale = "Portland"
+  ) |>
+  update_layout(
+    title = "<b>World Happiness</b>",
+    geo = go_geo(showframe = FALSE, showcoastlines = FALSE),
+    updatemenus = list(
+      go_updatemenu(
+        x = 0.25,
+        y = 1.04,
+        yanchor = "top",
+        active = which(names(by_country) == "sum") - 1,
+        buttons = buttons
+      )
+    )
+  )
+
+fig
+```
+
+#### Reference
+
+See
+[`go_updatemenu()`](https://msummersgill.github.io/plotly.R.core/reference/go_updatemenu.md)
+for more information and options!

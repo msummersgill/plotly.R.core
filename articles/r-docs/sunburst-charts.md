@@ -1,0 +1,162 @@
+# Sunburst Charts
+
+### Basic Sunburst Chart
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_sunburst(
+    labels = c("Eve", "Cain", "Seth", "Enos", "Noam", "Abel", "Awan", "Enoch", "Azura"),
+    parents = c("", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve"),
+    values = c(10, 14, 12, 10, 2, 6, 6, 4, 4)
+  )
+
+fig
+```
+
+### Branchvalues
+
+With branchvalues “total”, the value of the parent represents the width
+of its wedge. In the example below, “Enoch” is 4 and “Awan” is 6 and so
+Enoch’s width is 4/6ths of Awans. With branchvalues “remainder”, the
+parent’s width is determined by its own value plus those of its
+children. So, Enoch’s width is 4/10ths of Awan’s (4 / (6 + 4)).
+
+Note that this means that the sum of the values of the children cannot
+exceed the value of their parent when branchvalues “total”. When
+branchvalues “relative” (the default), children will not take up all of
+the space below their parent (unless the parent is the root and it has a
+value of 0).
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_sunburst(
+    labels = c("Eve", "Cain", "Seth", "Enos", "Noam", "Abel", "Awan", "Enoch", "Azura"),
+    parents = c("", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve"),
+    values = c(65, 14, 12, 10, 2, 6, 6, 4, 4),
+    branchvalues = "total"
+  )
+
+fig
+```
+
+### Sunburst with Repeated Labels
+
+``` r
+
+library(plotly.core)
+
+d <- data.frame(
+    ids = c(
+    "North America", "Europe", "Australia", "North America - Football", "Soccer",
+    "North America - Rugby", "Europe - Football", "Rugby",
+    "Europe - American Football","Australia - Football", "Association",
+    "Australian Rules", "Autstralia - American Football", "Australia - Rugby",
+    "Rugby League", "Rugby Union"
+  ),
+  labels = c(
+    "North<br>America", "Europe", "Australia", "Football", "Soccer", "Rugby",
+    "Football", "Rugby", "American<br>Football", "Football", "Association",
+    "Australian<br>Rules", "American<br>Football", "Rugby", "Rugby<br>League",
+    "Rugby<br>Union"
+  ),
+  parents = c(
+    "", "", "", "North America", "North America", "North America", "Europe",
+    "Europe", "Europe","Australia", "Australia - Football", "Australia - Football",
+    "Australia - Football", "Australia - Football", "Australia - Rugby",
+    "Australia - Rugby"
+  ),
+  stringsAsFactors = FALSE
+)
+
+fig <- d |>
+  go_figure() |>
+  add_sunburst(ids = ~ids, labels = ~labels, parents = ~parents)
+
+fig
+```
+
+#### Controlling text orientation inside sunburst sectors
+
+The `insidetextorientation` attribute controls the orientation of text
+inside sectors. With “auto” the texts may automatically be rotated to
+fit with the maximum size inside the slice. Using “horizontal” (resp.
+“radial”, “tangential”) forces text to be horizontal (resp. radial or
+tangential). Note that plotly.js may reduce the font size in order to
+fit the text with the requested orientation.
+
+``` r
+
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/718417069ead87650b90472464c7565dc8c2cb1c/coffee-flavors.csv")
+
+fig <- df |>
+  go_figure() |>
+  add_sunburst(
+    ids = ~ids,
+    labels = ~labels,
+    parents = ~parents,
+    domain = go_domain(column = 1),
+    maxdepth = 2,
+    insidetextorientation = "radial"
+  )
+
+fig
+```
+
+### Subplots
+
+In order to create sunburst chart subplots, we use the `domain`
+attribute (see
+[`go_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_domain.md))
+and the layout `grid` attribute (see
+[`go_grid()`](https://msummersgill.github.io/plotly.R.core/reference/go_grid.md)).
+
+``` r
+
+library(plotly.core)
+
+d1 <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/coffee-flavors.csv")
+d2 <- read.csv("https://raw.githubusercontent.com/plotly/datasets/718417069ead87650b90472464c7565dc8c2cb1c/sunburst-coffee-flavors-complete.csv")
+
+fig <- go_figure() |>
+  add_sunburst(
+    data = d1,
+    ids = ~ids,
+    labels = ~labels,
+    parents = ~parents,
+    maxdepth = 2,
+    domain = go_domain(column = 0)
+  ) |>
+  add_sunburst(
+    data = d2,
+    ids = ~ids,
+    labels = ~labels,
+    parents = ~parents,
+    maxdepth = 3,
+    domain = go_domain(column = 1)
+  ) |>
+  update_layout(
+    grid = go_grid(columns = 2, rows = 1),
+    margin = go_margin(l = 0, r = 0, b = 0, t = 0),
+    sunburstcolorway = c(
+      "#636efa", "#EF553B", "#00cc96", "#ab63fa", "#19d3f3",
+      "#e763fa", "#FECB52", "#FFA15A", "#FF6692", "#B6E880"
+    ),
+    extendsunburstcolors = TRUE
+  )
+
+fig
+```
+
+\#Reference
+
+See
+[`go_sunburst()`](https://msummersgill.github.io/plotly.R.core/reference/go_sunburst.md)
+for more information and chart attribute options!

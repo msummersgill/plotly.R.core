@@ -85,9 +85,8 @@ go_sankey(
 
 - data:
 
-  A data frame in which formula properties (e.g. `x = ~col`,
-  `marker = list(size = ~col)`,
-  `marker = go_scatter_marker(size = ~col)`) are evaluated. Default: the
+  A data frame in which formula properties (e.g. `ids = ~col`,
+  `link = go_sankey_link(color = ~col)`) are evaluated. Default: the
   data given to
   [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md).
   Only the evaluated values are added to the trace. A

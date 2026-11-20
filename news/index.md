@@ -84,6 +84,18 @@
   [`register_template()`](https://msummersgill.github.io/plotly.R.core/reference/get_template.md));
   figures use no template (`"none"`, plotly.js’s own defaults) unless
   one is set, as plotly 4.x does.
+- Figures rendered with the `"none"` default template have plotly 4.x’s
+  margins (`l = 60, r = 10, t = 25, b = 40` pixels) unless the layout
+  sets them.
+- `options(plotly.core.plotlyjs = "cdn")` loads plotly.js from
+  cdn.jsdelivr.net instead of copying it next to the HTML, e.g. for
+  websites with many pages.
+- [`update_xaxes()`](https://msummersgill.github.io/plotly.R.core/reference/update_xaxes.md),
+  [`update_traces()`](https://msummersgill.github.io/plotly.R.core/reference/select_traces.md)
+  and the other `update_*()` / `select_*()` functions accept vectors and
+  `"all"` for `row` and `col`, as documented.
+- The pkgdown site has an Examples gallery: the Plotly R documentation
+  examples rewritten with plotly.core graph objects.
 - htmlwidget rendering: numeric arrays are sent as base64 typed arrays,
   arrays repeated in a figure are sent once,
   [`as_float32()`](https://msummersgill.github.io/plotly.R.core/reference/as_float32.md)

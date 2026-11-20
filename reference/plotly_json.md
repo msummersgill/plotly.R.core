@@ -46,7 +46,18 @@ cat(plotly_json(go_figure(go_bar(y = 1:3)), jsonedit = FALSE))
 #>       "y": [1, 2, 3]
 #>     }
 #>   ],
-#>   "layout": {},
+#>   "layout": {
+#>     "template": {
+#>       "layout": {
+#>         "margin": {
+#>           "b": 40,
+#>           "l": 60,
+#>           "t": 25,
+#>           "r": 10
+#>         }
+#>       }
+#>     }
+#>   },
 #>   "frames": [],
 #>   "config": {}
 #> }

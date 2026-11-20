@@ -1,0 +1,1760 @@
+# Axes
+
+This tutorial explain how to set the properties of 2-dimensional
+Cartesian axes, namely X-axis and Y-axis.
+
+Other kinds of subplots and axes are described in other tutorials:
+
+- [3D
+  axes](https://msummersgill.github.io/plotly.R.core/articles/r-docs/3d-axes.md)
+  The axis object is ‘scene’
+  ([`go_scene()`](https://msummersgill.github.io/plotly.R.core/reference/go_scene.md)).
+- [Polar
+  axes](https://msummersgill.github.io/plotly.R.core/articles/r-docs/polar-chart.md).
+  The axis object is ‘polar’
+  ([`go_polar()`](https://msummersgill.github.io/plotly.R.core/reference/go_polar.md)).
+- [Ternary
+  axes](https://msummersgill.github.io/plotly.R.core/articles/r-docs/ternary-plots.md).
+  The axis object is ‘ternary’
+  ([`go_ternary()`](https://msummersgill.github.io/plotly.R.core/reference/go_ternary.md)).
+- Geo axes: The axis object is ‘geo’
+  ([`go_geo()`](https://msummersgill.github.io/plotly.R.core/reference/go_geo.md)).
+- [Map
+  axes](https://msummersgill.github.io/plotly.R.core/articles/r-docs/mapbox-layers.md).
+  The axis object is ‘map’
+  ([`go_map()`](https://msummersgill.github.io/plotly.R.core/reference/go_map.md)).
+- [Color axes](https://plotly.com/r/colorscales/). The axis object is
+  ‘coloraxis’
+  ([`go_coloraxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_coloraxis.md)).
+
+**See also** the tutorials on
+[subplots](https://msummersgill.github.io/plotly.R.core/articles/r-docs/subplots.md)
+
+### 2-D Cartesian Axis Types and Auto-Detection
+
+The different types of Cartesian axes are configured via the `type`
+attribute of
+[`go_xaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis.md)
+or
+[`go_yaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_yaxis.md),
+which can take on the following values:
+
+- `'linear'`
+- `'log'`
+- `'date'`
+- `'category'`
+- `'multicategory'`
+
+The axis type is auto-detected by looking at data from the first trace
+linked to this axis:
+
+- First check for `multicategory`, then `date`, then `category`, else
+  default to `linear` (`log` is never automatically selected)
+- `multicategory` is just a shape test: is the array nested?
+- `date` and `category`: require **more than twice as many distinct date
+  or category strings as distinct numbers** in order to choose that axis
+  type.
+  - Both of these test an evenly-spaced sample of at most 1000 values
+
+### Forcing an axis to be categorical
+
+It is possible to force the axis type by setting explicitly
+`autotypenumber`. In the example below the automatic X axis type would
+be `linear` (because there are not more than twice as many unique
+strings as unique numbers) but we force it to be `category`.
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_bar(x = c("a", "a", "b", "3"), y = c(1, 2, 3, 4)) |>
+  update_layout(
+    xaxis = go_xaxis(
+      autotypenumbers = "strict",
+      title = "x",
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    yaxis = go_yaxis(
+      title = "y",
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    plot_bgcolor = "#e5ecf6"
+  )
+
+fig
+```
+
+#### General Axis properties
+
+The different groups of Cartesian axes properties are
+
+- title of the axis
+- tick values (locations of tick marks) and tick labels. Tick labels and
+  grid lines are placed at tick values.
+- lines: grid lines (passing through tick values), axis lines, zero
+  lines
+- range of the axis
+- domain of the axis
+
+The examples on this page apply to axes of any type, but extra
+attributes are available for axes of type `category` and axes of type
+`date`.
+
+#### Set and Style Axes Title Labels
+
+##### Set axis title text with Plotly
+
+plotly.core doesn’t set axis titles from the data: axes have no title
+until you give them one.
+
+``` r
+
+library(plotly.core)
+library(reshape2)
+
+data("tips")
+
+fig <- go_figure()
+for (g in levels(tips$sex)) {
+  fig <- fig |>
+    add_scatter(
+      data = tips[tips$sex == g, ],
+      x = ~total_bill,
+      y = ~tip,
+      mode = "markers",
+      name = g
+    )
+}
+fig <- fig |>
+  update_layout(
+    plot_bgcolor = "#e5ecf6",
+    xaxis = go_xaxis(
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    yaxis = go_yaxis(
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    )
+  )
+
+fig
+```
+
+Axis titles (and [legend
+titles](https://msummersgill.github.io/plotly.R.core/articles/r-docs/legend.md))
+are set with the `title` argument of
+[`go_xaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis.md),
+[`go_yaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_yaxis.md)
+and
+[`go_legend()`](https://msummersgill.github.io/plotly.R.core/reference/go_legend.md):
+
+``` r
+
+library(plotly.core)
+library(reshape2)
+
+data("tips")
+
+fig <- go_figure()
+for (g in levels(tips$sex)) {
+  fig <- fig |>
+    add_scatter(
+      data = tips[tips$sex == g, ],
+      x = ~total_bill,
+      y = ~tip,
+      mode = "markers",
+      name = g
+    )
+}
+fig <- fig |>
+  update_layout(
+    legend = go_legend(title = go_legend_title(text = "Payer Gender")),
+    xaxis = go_xaxis(
+      title = "Total Bill ($)",
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    yaxis = go_yaxis(
+      title = "Tip ($)",
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    plot_bgcolor = "#e5ecf6"
+  )
+
+fig
+```
+
+The `title` argument works the same way for figures made without a data
+frame:
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_bar(x = "Apples", y = 10, name = "Here") |>
+  add_bar(x = "Oranges", y = 20, name = "There") |>
+  update_layout(
+    legend = go_legend(title = go_legend_title(text = "Place")),
+    xaxis = go_xaxis(
+      title = "Fruit",
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    yaxis = go_yaxis(
+      title = "Amount",
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    plot_bgcolor = "#e5ecf6"
+  )
+
+fig
+```
+
+##### Set axis title text
+
+Axis titles are set using the nested `title.text` property of the x or y
+axis. Here is an example of creating a new figure and using
+`go_xaxis(title = ...)` and `go_yaxis(title = ...)` to set the axis
+titles (a string is the title text; use
+[`go_xaxis_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis_title.md)
+to set more title properties).
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scatter(x = c(0, 1), y = c(1, 0), mode = "lines") |>
+  update_layout(
+    xaxis = go_xaxis(
+      title = "Time",
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    yaxis = go_yaxis(
+      title = "Value A",
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    plot_bgcolor = "#e5ecf6"
+  )
+
+fig
+```
+
+### Set axis title position
+
+This example sets `standoff` attribute to cartesian axes to determine
+the distance between the tick labels and the axis title. Note that the
+axis title position is always constrained within the margins, so the
+actual standoff distance is always less than the set or default value.
+By default
+[automargin](https://msummersgill.github.io/plotly.R.core/articles/r-docs/setting-graph-size.html#automatically-adjust-margins)
+is `TRUE` in Plotly template for the cartesian axis, so the margins will
+be pushed to fit the axis title at given standoff distance.
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scatter(
+    x = c("December", "January", "February"),
+    y = c(4, 1, 3),
+    mode = "lines+markers"
+  ) |>
+  update_layout(
+    xaxis = go_xaxis(
+      title = go_xaxis_title(text = "Month", font = go_font(size = 20), standoff = 25),
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    yaxis = go_yaxis(
+      title = go_yaxis_title(text = "Temperature", standoff = 25),
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    plot_bgcolor = "#e5ecf6"
+  )
+
+fig
+```
+
+##### Set axis title font
+
+Here is an example that configures the font family, size, and color for
+the axis titles in a figure created using Plotly.
+
+``` r
+
+library(plotly.core)
+data(iris)
+
+species <- levels(iris$Species)
+
+fig <- make_subplots(
+  rows = 1,
+  cols = 3,
+  shared_yaxes = TRUE,
+  subplot_titles = paste0("species=", species)
+)
+for (i in seq_along(species)) {
+  fig <- fig |>
+    add_scatter(
+      data = iris[iris$Species == species[[i]], ],
+      x = ~Sepal.Width,
+      y = ~Sepal.Length,
+      mode = "markers",
+      opacity = 0.5,
+      marker = go_scatter_marker(color = "blue"),
+      row = 1,
+      col = i
+    )
+}
+fig <- fig |>
+  update_xaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white",
+    title = go_xaxis_title(
+      text = "Sepal.Width",
+      font = go_font(size = 15, family = "Courier", color = "crimson")
+    )
+  ) |>
+  update_yaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white"
+  ) |>
+  update_yaxes(
+    title = go_yaxis_title(
+      text = "Sepal.Length",
+      font = go_font(size = 18, family = "Courier", color = "crimson")
+    ),
+    col = 1
+  ) |>
+  update_layout(plot_bgcolor = "#e5ecf6", showlegend = FALSE)
+
+fig
+```
+
+#### Tick Placement, Color, and Style
+
+##### Toggling axis tick marks
+
+Axis tick marks are disabled by default for the default `plotly` theme,
+but they can easily be turned on by setting the `ticks` axis property to
+`"inside"` (to place ticks inside plotting area) or `"outside"` (to
+place ticks outside the plotting area).
+
+Here is an example of turning on inside x-axis and y-axis ticks in a
+faceted figure created using Plotly. Note how the `col` argument to
+[`update_yaxes()`](https://msummersgill.github.io/plotly.R.core/reference/update_yaxes.md)
+is used to only turn on the y-axis ticks for the left-most subplot.
+
+``` r
+
+library(plotly.core)
+data(iris)
+
+species <- levels(iris$Species)
+
+fig <- make_subplots(
+  rows = 1,
+  cols = 3,
+  shared_yaxes = TRUE,
+  subplot_titles = paste0("species=", species)
+)
+for (i in seq_along(species)) {
+  fig <- fig |>
+    add_scatter(
+      data = iris[iris$Species == species[[i]], ],
+      x = ~Sepal.Width,
+      y = ~Sepal.Length,
+      mode = "markers",
+      opacity = 0.5,
+      marker = go_scatter_marker(color = "blue"),
+      row = 1,
+      col = i
+    )
+}
+fig <- fig |>
+  update_xaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white",
+    ticks = "inside"
+  ) |>
+  update_yaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white"
+  ) |>
+  update_yaxes(
+    ticks = "inside",
+    col = 1
+  ) |>
+  update_layout(plot_bgcolor = "#e5ecf6", showlegend = FALSE)
+
+fig
+```
+
+##### Set number of tick marks (and grid lines)
+
+The approximate number of ticks displayed for an axis can be specified
+using the `nticks` axis property.
+
+Here is an example of updating the y-axes of a figure created using
+Plotly to display approximately 20 ticks.
+
+``` r
+
+library(plotly.core)
+data(iris)
+
+species <- levels(iris$Species)
+
+fig <- make_subplots(
+  rows = 1,
+  cols = 3,
+  shared_yaxes = TRUE,
+  subplot_titles = paste0("species=", species)
+)
+for (i in seq_along(species)) {
+  fig <- fig |>
+    add_scatter(
+      data = iris[iris$Species == species[[i]], ],
+      x = ~Sepal.Width,
+      y = ~Sepal.Length,
+      mode = "markers",
+      opacity = 0.5,
+      marker = go_scatter_marker(color = "blue"),
+      row = 1,
+      col = i
+    )
+}
+fig <- fig |>
+  update_xaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white"
+  ) |>
+  update_yaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white",
+    nticks = 20
+  ) |>
+  update_layout(plot_bgcolor = "#e5ecf6", showlegend = FALSE)
+
+fig
+```
+
+##### Set start position and distance between ticks
+
+The `tick0` and `dtick` axis properties can be used to control the
+placement of axis ticks as follows: If specified, a tick will fall
+exactly on the location of `tick0` and additional ticks will be added in
+both directions at intervals of `dtick`.
+
+Here is an example of updating the y axis of a figure created using
+Plotly to position the ticks at intervals of 0.5, starting at 0.25.
+
+``` r
+
+library(plotly.core)
+data(iris)
+
+species <- levels(iris$Species)
+
+fig <- make_subplots(
+  rows = 1,
+  cols = 3,
+  shared_yaxes = TRUE,
+  subplot_titles = paste0("species=", species)
+)
+for (i in seq_along(species)) {
+  fig <- fig |>
+    add_scatter(
+      data = iris[iris$Species == species[[i]], ],
+      x = ~Sepal.Width,
+      y = ~Sepal.Length,
+      mode = "markers",
+      opacity = 0.5,
+      marker = go_scatter_marker(color = "blue"),
+      row = 1,
+      col = i
+    )
+}
+fig <- fig |>
+  update_xaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white"
+  ) |>
+  update_yaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white",
+    tick0 = 0.25,
+    dtick = 0.5
+  ) |>
+  update_layout(plot_bgcolor = "#e5ecf6", showlegend = FALSE)
+
+fig
+```
+
+##### Set exact location of axis ticks
+
+It is possible to configure an axis to display ticks at a set of
+predefined locations by setting the `tickvals` property to an array of
+positions.
+
+Here is an example of setting the exact location of ticks on the y axes
+of a figure created using Plotly.
+
+``` r
+
+library(plotly.core)
+data(iris)
+
+species <- levels(iris$Species)
+
+fig <- make_subplots(
+  rows = 1,
+  cols = 3,
+  shared_yaxes = TRUE,
+  subplot_titles = paste0("species=", species)
+)
+for (i in seq_along(species)) {
+  fig <- fig |>
+    add_scatter(
+      data = iris[iris$Species == species[[i]], ],
+      x = ~Sepal.Width,
+      y = ~Sepal.Length,
+      mode = "markers",
+      opacity = 0.5,
+      marker = go_scatter_marker(color = "blue"),
+      row = 1,
+      col = i
+    )
+}
+fig <- fig |>
+  update_xaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white"
+  ) |>
+  update_yaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white",
+    tickvals = c(5.1, 5.9, 6.3, 7.5)
+  ) |>
+  update_layout(plot_bgcolor = "#e5ecf6", showlegend = FALSE)
+
+fig
+```
+
+##### Style tick marks
+
+As discussed above, tick marks are disabled by default in the default
+`plotly` theme, but they can be enabled by setting the `ticks` axis
+property to `"inside"` (to place ticks inside plotting area) or
+`"outside"` (to place ticks outside the plotting area).
+
+The appearance of these tick marks can be customized by setting their
+length (`ticklen`), width (`tickwidth`), and color (`tickcolor`).
+
+Here is an example of enabling and styling the tick marks of a faceted
+figure created using Plotly. Note how the `col` argument to
+[`update_yaxes()`](https://msummersgill.github.io/plotly.R.core/reference/update_yaxes.md)
+is used to only turn on and style the y-axis ticks for the left-most
+subplot.
+
+``` r
+
+library(plotly.core)
+data(iris)
+
+species <- levels(iris$Species)
+
+fig <- make_subplots(
+  rows = 1,
+  cols = 3,
+  shared_yaxes = TRUE,
+  subplot_titles = paste0("species=", species)
+)
+for (i in seq_along(species)) {
+  fig <- fig |>
+    add_scatter(
+      data = iris[iris$Species == species[[i]], ],
+      x = ~Sepal.Width,
+      y = ~Sepal.Length,
+      mode = "markers",
+      opacity = 0.5,
+      marker = go_scatter_marker(color = "blue"),
+      row = 1,
+      col = i
+    )
+}
+fig <- fig |>
+  update_xaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white",
+    ticks = "outside",
+    tickwidth = 2,
+    tickcolor = "crimson",
+    ticklen = 10
+  ) |>
+  update_yaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white"
+  ) |>
+  update_yaxes(
+    tick0 = 0.25,
+    dtick = 0.5,
+    ticks = "outside",
+    tickwidth = 2,
+    tickcolor = "crimson",
+    ticklen = 10,
+    col = 1
+  ) |>
+  update_layout(plot_bgcolor = "#e5ecf6", showlegend = FALSE)
+
+fig
+```
+
+##### Toggling axis labels
+
+The axis tick mark labels can be disabled by setting the
+`showticklabels` axis property to `FALSE`.
+
+Here is an example of disabling tick labels in all subplots for a
+faceted figure created using Plotly.
+
+``` r
+
+library(plotly.core)
+data(iris)
+
+species <- levels(iris$Species)
+
+fig <- make_subplots(
+  rows = 1,
+  cols = 3,
+  shared_yaxes = TRUE,
+  subplot_titles = paste0("species=", species)
+)
+for (i in seq_along(species)) {
+  fig <- fig |>
+    add_scatter(
+      data = iris[iris$Species == species[[i]], ],
+      x = ~Sepal.Width,
+      y = ~Sepal.Length,
+      mode = "markers",
+      opacity = 0.5,
+      marker = go_scatter_marker(color = "blue"),
+      row = 1,
+      col = i
+    )
+}
+fig <- fig |>
+  update_xaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white",
+    showticklabels = FALSE
+  ) |>
+  update_yaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white",
+    showticklabels = FALSE
+  ) |>
+  update_layout(plot_bgcolor = "#e5ecf6", showlegend = FALSE)
+
+fig
+```
+
+##### Set axis label rotation and font
+
+The orientation of the axis tick mark labels is configured using the
+`tickangle` axis property. The value of `tickangle` is the angle of
+rotation, in the clockwise direction, of the labels from vertical in
+units of degrees. The font family, size, and color for the tick labels
+are stored under the `tickfont` axis property.
+
+Here is an example of rotating the x-axis tick labels by 45 degrees, and
+customizing their font properties, in a faceted histogram figure created
+using Plotly.
+
+``` r
+
+library(plotly.core)
+
+fig <- make_subplots(
+  rows = 1,
+  cols = 2,
+  shared_yaxes = TRUE,
+  subplot_titles = c("smoker=NO", "smoker=YES")
+) |>
+  add_bar(x = c("Female", "Male"), y = c(150, 302), row = 1, col = 1) |>
+  add_bar(x = c("Female", "Male"), y = c(96, 183), row = 1, col = 2) |>
+  update_xaxes(
+    title = "sex",
+    tickangle = 45,
+    tickfont = go_font(family = "Rockwell", color = "crimson", size = 14)
+  ) |>
+  update_yaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white"
+  ) |>
+  update_yaxes(title = "sum of tip", row = 1, col = 1) |>
+  update_layout(showlegend = FALSE, plot_bgcolor = "#e5ecf6")
+
+fig
+```
+
+#### Enumerated Ticks with Tickvals and Ticktext
+
+The `tickvals` and `ticktext` axis properties can be used together to
+display custom tick label text at custom locations along an axis. They
+should be set to lists of the same length where the `tickvals` list
+contains positions along the axis, and `ticktext` contains the strings
+that should be displayed at the corresponding positions.
+
+Here is an example.
+
+``` r
+
+library(plotly.core)
+
+# AAPL daily prices, February 2015 to February 2017
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+apple <- data.frame(dates = df$Date, value = df$AAPL.High)
+apple <- subset(apple, dates >= "2016-01-01" & dates <= "2016-12-31")
+
+fig <- apple |>
+  go_figure() |>
+  add_scatter(x = ~dates, y = ~value, mode = "lines") |>
+  update_layout(
+    plot_bgcolor = "#e5ecf6",
+    xaxis = go_xaxis(
+      ticktext = c("End of Q1", "End of Q2", "End of Q3", "End of Q4"),
+      tickvals = c("2016-04-01", "2016-07-01", "2016-10-01", "2016-12-30"),
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    yaxis = go_yaxis(
+      tickprefix = "$",
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    title = "Apple Stock Price"
+  )
+
+fig
+```
+
+### Axis lines: grid and zerolines
+
+##### Toggling Axis grid lines
+
+Axis grid lines can be disabled by setting the `showgrid` property to
+`FALSE` for the x and/or y axis.
+
+Here is an example of setting `showgrid` to `FALSE` in the figure
+constructor.
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scatter(x = c(0, 1), y = c(1, 0), mode = "lines") |>
+  update_layout(
+    xaxis = go_xaxis(
+      title = "x",
+      showgrid = FALSE,
+      zerolinecolor = "white"
+    ),
+    yaxis = go_yaxis(
+      title = "y",
+      zerolinecolor = "white",
+      showgrid = FALSE
+    ),
+    plot_bgcolor = "#e5ecf6"
+  )
+
+fig
+```
+
+##### Toggling Axis zero lines
+
+The lines passing through zero can be disabled as well by setting the
+`zeroline` axis property to `FALSE`
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scatter(x = c(0, 1), y = c(1, 0), mode = "lines") |>
+  update_layout(
+    xaxis = go_xaxis(
+      title = "x",
+      zeroline = FALSE,
+      showgrid = FALSE
+    ),
+    yaxis = go_yaxis(
+      title = "y",
+      zeroline = FALSE,
+      showgrid = FALSE
+    ),
+    plot_bgcolor = "#e5ecf6"
+  )
+
+fig
+```
+
+#### Styling and Coloring Axes and the Zero-Line
+
+##### Styling axis lines
+
+The `showline` axis property controls the visibility of the axis line,
+and the `linecolor` and `linewidth` axis properties control the color
+and width of the axis line.
+
+Here is an example of enabling the x and y axis lines, and customizing
+their width and color, for a faceted histogram created with Plotly.
+
+``` r
+
+library(plotly.core)
+
+fig <- make_subplots(
+  rows = 1,
+  cols = 2,
+  shared_yaxes = FALSE,
+  subplot_titles = c("smoker=NO", "smoker=YES")
+) |>
+  add_bar(x = c("Female", "Male"), y = c(150, 302), row = 1, col = 1) |>
+  add_bar(x = c("Female", "Male"), y = c(96, 183), row = 1, col = 2) |>
+  update_xaxes(
+    title = "sex",
+    showline = TRUE,
+    linewidth = 2,
+    linecolor = "black"
+  ) |>
+  update_yaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white",
+    showline = TRUE,
+    linewidth = 2,
+    linecolor = "black"
+  ) |>
+  update_yaxes(title = "sum of tip", row = 1, col = 1) |>
+  update_yaxes(showticklabels = FALSE, row = 1, col = 2) |>
+  update_layout(showlegend = FALSE, plot_bgcolor = "#e5ecf6",
+    margin = go_margin(t = 90))
+
+fig
+```
+
+##### Mirroring axis lines
+
+Axis lines can be mirrored to the opposite side of the plotting area by
+setting the `mirror` axis property to `TRUE`.
+
+Here is an example of mirroring the x and y axis lines in a faceted
+histogram created using Plotly.
+
+``` r
+
+library(plotly.core)
+
+fig <- make_subplots(
+  rows = 1,
+  cols = 2,
+  shared_yaxes = FALSE,
+  subplot_titles = c("smoker=NO", "smoker=YES")
+) |>
+  add_bar(x = c("Female", "Male"), y = c(150, 302), row = 1, col = 1) |>
+  add_bar(x = c("Female", "Male"), y = c(96, 183), row = 1, col = 2) |>
+  update_xaxes(
+    title = "sex",
+    showline = TRUE,
+    linewidth = 2,
+    linecolor = "black",
+    mirror = TRUE
+  ) |>
+  update_yaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white",
+    showline = TRUE,
+    linewidth = 2,
+    linecolor = "black",
+    mirror = TRUE
+  ) |>
+  update_yaxes(title = "sum of tip", row = 1, col = 1) |>
+  update_yaxes(showticklabels = FALSE, row = 1, col = 2) |>
+  update_layout(showlegend = FALSE, plot_bgcolor = "#e5ecf6",
+    margin = go_margin(t = 90))
+
+fig
+```
+
+##### Styling grid lines
+
+The width and color of axis grid lines are controlled by the `gridwidth`
+and `gridcolor` axis properties.
+
+Here is an example of customizing the grid line width and color for a
+faceted scatter plot created with Plotly.
+
+``` r
+
+library(plotly.core)
+data(iris)
+
+species <- levels(iris$Species)
+
+fig <- make_subplots(
+  rows = 1,
+  cols = 3,
+  shared_yaxes = TRUE,
+  subplot_titles = paste0("species=", species)
+)
+for (i in seq_along(species)) {
+  fig <- fig |>
+    add_scatter(
+      data = iris[iris$Species == species[[i]], ],
+      x = ~Sepal.Width,
+      y = ~Sepal.Length,
+      mode = "markers",
+      opacity = 0.5,
+      marker = go_scatter_marker(color = "blue"),
+      row = 1,
+      col = i
+    )
+}
+fig <- fig |>
+  update_xaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "LightPink",
+    showgrid = TRUE,
+    gridwidth = 1
+  ) |>
+  update_yaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "LightPink",
+    showgrid = TRUE,
+    gridwidth = 1
+  ) |>
+  update_layout(plot_bgcolor = "#e5ecf6", showlegend = FALSE)
+
+fig
+```
+
+##### Styling zero lines
+
+The width and color of axis zero lines are controlled by the
+`zerolinewidth` and `zerolinecolor` axis properties.
+
+Here is an example of configuring the zero line width and color for a
+simple figure using the `xaxis` and `yaxis` figure methods.
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scatter(x = c(0, 1), y = c(1, 0), mode = "lines") |>
+  update_layout(
+    xaxis = go_xaxis(
+      zeroline = TRUE,
+      zerolinewidth = 2,
+      zerolinecolor = "LightPink",
+      gridcolor = "white",
+      title = "x"
+    ),
+    yaxis = go_yaxis(
+      zeroline = TRUE,
+      zerolinewidth = 2,
+      zerolinecolor = "LightPink",
+      gridcolor = "white",
+      title = "y"
+    ),
+    plot_bgcolor = "#e5ecf6"
+  )
+
+fig
+```
+
+#### Setting the Range of Axes Manually
+
+The visible x and y axis range can be configured manually by setting the
+`range` axis property to a list of two values, the lower and upper
+boundary.
+
+Here’s an example of manually specifying the x and y axis range for a
+faceted scatter plot created with Plotly.
+
+``` r
+
+library(plotly.core)
+data(iris)
+
+species <- levels(iris$Species)
+
+fig <- make_subplots(
+  rows = 1,
+  cols = 3,
+  shared_yaxes = TRUE,
+  subplot_titles = paste0("species=", species)
+)
+for (i in seq_along(species)) {
+  fig <- fig |>
+    add_scatter(
+      data = iris[iris$Species == species[[i]], ],
+      x = ~Sepal.Width,
+      y = ~Sepal.Length,
+      mode = "markers",
+      opacity = 0.5,
+      marker = go_scatter_marker(color = "blue"),
+      row = 1,
+      col = i
+    )
+}
+fig <- fig |>
+  update_xaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white",
+    range = c(1.5, 4.5)
+  ) |>
+  update_yaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white",
+    range = c(3, 9)
+  ) |>
+  update_layout(plot_bgcolor = "#e5ecf6", showlegend = FALSE)
+
+fig
+```
+
+#### Disabling Pan/Zoom on Axes (Fixed Range)
+
+Pan/Zoom can be disabled for a given axis by setting `fixedrange` to
+`TRUE`.
+
+``` r
+
+library(plotly.core)
+data(iris)
+
+species <- levels(iris$Species)
+
+fig <- make_subplots(
+  rows = 1,
+  cols = 3,
+  shared_yaxes = TRUE,
+  subplot_titles = paste0("species=", species)
+)
+for (i in seq_along(species)) {
+  fig <- fig |>
+    add_scatter(
+      data = iris[iris$Species == species[[i]], ],
+      x = ~Sepal.Width,
+      y = ~Sepal.Length,
+      mode = "markers",
+      opacity = 0.5,
+      marker = go_scatter_marker(color = "blue"),
+      row = 1,
+      col = i
+    )
+}
+fig <- fig |>
+  update_xaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white",
+    fixedrange = TRUE
+  ) |>
+  update_yaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white"
+  ) |>
+  update_layout(plot_bgcolor = "#e5ecf6", showlegend = FALSE)
+
+fig
+```
+
+### Fixed Ratio Axes
+
+The `scaleanchor` and `scaleratio` axis properties can be used to force
+a fixed ratio of pixels per unit between two axes.
+
+Here is an example of anchoring the scale of the x and y axis with a
+scale ratio of 1. Notice how the zoom box is constrained to prevent the
+distortion of the shape of the line plot.
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scatter(
+    x = c(0, 1, 1, 0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 3),
+    y = c(0, 0, 1, 1, 3, 3, 2, 2, 3, 3, 1, 1, 0, 0),
+    mode = "lines+markers"
+  ) |>
+  update_layout(
+    xaxis = go_xaxis(
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    yaxis = go_yaxis(
+      scaleanchor = "x",
+      scaleratio = 1,
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    plot_bgcolor = "#e5ecf6",
+    title = "fixed-ratio axes"
+  )
+
+fig
+```
+
+### Fixed Ratio Axes with Compressed domain
+
+If an axis needs to be compressed (either due to its own `scaleanchor`
+and `scaleratio` or those of the other axis), `constrain` determines how
+that happens: by increasing the “range” (default), or by decreasing the
+“domain”.
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scatter(
+    x = c(0, 1, 1, 0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 3),
+    y = c(0, 0, 1, 1, 3, 3, 2, 2, 3, 3, 1, 1, 0, 0),
+    mode = "lines+markers"
+  ) |>
+  update_layout(
+    xaxis = go_xaxis(
+      constrain = "domain",
+      range = c(-1, 4),
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    yaxis = go_yaxis(
+      scaleanchor = "x",
+      scaleratio = 1,
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    plot_bgcolor = "#e5ecf6",
+    title = "fixed-ratio axes with compressed axes"
+  )
+
+fig
+```
+
+##### Decreasing the domain spanned by an axis
+
+In the example below, the x and y axis are anchored together, and the
+range of the `xaxis` is set manually. By default, plotly extends the
+range of the axis (overriding the `range` parameter) to fit in the
+figure `domain`. You can restrict the `domain` to force the axis to span
+only the set range, by setting `constrain='domain'` as below.
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scatter(
+    x = c(0, 1, 1, 0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 3),
+    y = c(0, 0, 1, 1, 3, 3, 2, 2, 3, 3, 1, 1, 0, 0),
+    mode = "lines+markers"
+  ) |>
+  update_layout(
+    xaxis = go_xaxis(
+      scaleanchor = "y",
+      scaleratio = 1,
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    yaxis = go_yaxis(
+      range = c(-0.5, 3.5),
+      constrain = "domain",
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    plot_bgcolor = "#e5ecf6",
+    title = "fixed-ratio axes"
+  )
+
+fig
+```
+
+### Fixed Ratio Axes with Compressed domain
+
+If an axis needs to be compressed (either due to its own `scaleanchor`
+and `scaleratio` or those of the other axis), `constrain` determines how
+that happens: by increasing the “range” (default), or by decreasing the
+“domain”.
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scatter(
+    x = c(0, 1, 1, 0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 3),
+    y = c(0, 0, 1, 1, 3, 3, 2, 2, 3, 3, 1, 1, 0, 0),
+    mode = "lines+markers"
+  ) |>
+  update_layout(
+    xaxis = go_xaxis(
+      constrain = "domain",
+      range = c(-1, 4),
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    yaxis = go_yaxis(
+      scaleanchor = "x",
+      scaleratio = 1,
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    plot_bgcolor = "#e5ecf6",
+    title = "fixed-ratio axes with compressed axes"
+  )
+
+fig
+```
+
+#### Reversed Axes
+
+You can tell plotly’s automatic axis range calculation logic to reverse
+the direction of an axis by setting the `autorange` axis property to
+`"reversed"`.
+
+Here is an example of reversing the direction of the y axes for a
+faceted scatter plot created using Plotly.
+
+``` r
+
+library(plotly.core)
+data(iris)
+
+species <- levels(iris$Species)
+
+fig <- make_subplots(
+  rows = 1,
+  cols = 3,
+  shared_yaxes = TRUE,
+  subplot_titles = paste0("species=", species)
+)
+for (i in seq_along(species)) {
+  fig <- fig |>
+    add_scatter(
+      data = iris[iris$Species == species[[i]], ],
+      x = ~Sepal.Width,
+      y = ~Sepal.Length,
+      mode = "markers",
+      opacity = 0.5,
+      marker = go_scatter_marker(color = "blue"),
+      row = 1,
+      col = i
+    )
+}
+fig <- fig |>
+  update_xaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white"
+  ) |>
+  update_yaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white",
+    autorange = "reversed"
+  ) |>
+  update_layout(plot_bgcolor = "#e5ecf6", showlegend = FALSE)
+
+fig
+```
+
+#### Reversed Axes with Range ( Min/Max ) Specified
+
+The direction of an axis can be reversed when manually setting the range
+extents by specifying a list containing the upper bound followed by the
+lower bound (rather that the lower followed by the upper) as the `range`
+axis property.
+
+Here is an example of manually setting the reversed range of the y axes
+in a faceted scatter plot figure created using Plotly.
+
+``` r
+
+library(plotly.core)
+data(iris)
+
+species <- levels(iris$Species)
+
+fig <- make_subplots(
+  rows = 1,
+  cols = 3,
+  shared_yaxes = TRUE,
+  subplot_titles = paste0("species=", species)
+)
+for (i in seq_along(species)) {
+  fig <- fig |>
+    add_scatter(
+      data = iris[iris$Species == species[[i]], ],
+      x = ~Sepal.Width,
+      y = ~Sepal.Length,
+      mode = "markers",
+      opacity = 0.5,
+      marker = go_scatter_marker(color = "blue"),
+      row = 1,
+      col = i
+    )
+}
+fig <- fig |>
+  update_xaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white"
+  ) |>
+  update_yaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white",
+    range = c(9, 3)
+  ) |>
+  update_layout(plot_bgcolor = "#e5ecf6", showlegend = FALSE)
+
+fig
+```
+
+### Axis range for log axis type
+
+If you are using a `log` type of axis and you want to set the range of
+the axis, you have to give the `log10` value of the bounds.
+
+``` r
+
+library(pracma)
+library(plotly.core)
+
+x <- linspace(1, 200, 30)
+
+fig <- go_figure() |>
+  add_scatter(x = x, y = x^3, mode = "markers") |>
+  update_layout(
+    xaxis = go_xaxis(
+      range = c(log10(0.8), log10(250)),
+      type = "log",
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white",
+      title = "x"
+    ),
+    yaxis = go_yaxis(
+      type = "log",
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white",
+      title = "y"
+    ),
+    plot_bgcolor = "#e5ecf6"
+  )
+
+fig
+```
+
+``` r
+
+library(pracma)
+library(plotly.core)
+
+x <- linspace(1, 200, 30)
+
+fig <- go_figure() |>
+  add_scatter(x = x, y = x^3, mode = "lines") |>
+  update_layout(
+    yaxis = go_yaxis(
+      type = "log",
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    xaxis = go_xaxis(
+      type = "log",
+      range = c(log10(0.8), log10(250)),
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    plot_bgcolor = "#e5ecf6"
+  )
+
+fig
+```
+
+#### `nonnegative`, `tozero`, and `normal` Rangemode
+
+The axis auto-range calculation logic can be configured using the
+`rangemode` axis parameter.
+
+If `rangemode` is `"normal"` (the default), the range is computed based
+on the min and max values of the input data. If `"tozero"`, the range
+will always include zero. If `"nonnegative"`, the range will not extend
+below zero, regardless of the input data.
+
+Here is an example of configuring a faceted scatter plot created using
+Plotly to always include zero for both the x and y axes.
+
+``` r
+
+library(plotly.core)
+data(iris)
+
+species <- levels(iris$Species)
+
+fig <- make_subplots(
+  rows = 1,
+  cols = 3,
+  shared_yaxes = TRUE,
+  subplot_titles = paste0("species=", species)
+)
+for (i in seq_along(species)) {
+  fig <- fig |>
+    add_scatter(
+      data = iris[iris$Species == species[[i]], ],
+      x = ~Sepal.Width,
+      y = ~Sepal.Length,
+      mode = "markers",
+      opacity = 0.5,
+      marker = go_scatter_marker(color = "blue"),
+      row = 1,
+      col = i
+    )
+}
+fig <- fig |>
+  update_xaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white",
+    rangemode = "tozero"
+  ) |>
+  update_yaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white",
+    rangemode = "tozero"
+  ) |>
+  update_layout(plot_bgcolor = "#e5ecf6", showlegend = FALSE)
+
+fig
+```
+
+#### Setting the domain of the axis
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scatter(
+    x = c(0, 1, 1, 0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 3),
+    y = c(0, 0, 1, 1, 3, 3, 2, 2, 3, 3, 1, 1, 0, 0),
+    mode = "lines+markers"
+  ) |>
+  update_layout(
+    xaxis = go_xaxis(
+      domain = c(0.25, 0.75),
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    yaxis = go_yaxis(
+      domain = c(0.25, 0.75),
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    plot_bgcolor = "#e5ecf6"
+  )
+
+fig
+```
+
+#### Synchronizing axes in subplots with `matches`
+
+`make_subplots(shared_xaxes = TRUE)` links the x axes of subplots in the
+same column, so that
+[zoom](https://help.plotly.com/zoom-pan-hover-controls/#step-3-zoom-in-and-zoom-out-autoscale-the-plot)
+and
+[pan](https://help.plotly.com/zoom-pan-hover-controls/#step-6-pan-along-axes)
+apply to all of them. To link axes in other subplots, set the `matches`
+axis property, e.g. with `update_xaxes(matches = "x")`, to update all
+the subplots accordingly.
+
+Zoom in one trace below, to see the other subplots zoomed to the same
+x-axis range. To pan all the subplots, click and drag from the center of
+x-axis to the side:
+
+``` r
+
+library(plotly.core)
+N <- 20
+X <- seq(from = 0, to = 1, length.out = N)
+
+fig <- make_subplots(rows = 1, cols = 3, horizontal_spacing = 0.05)
+for (i in 1:3) {
+  y <- runif(n = 20, min = 0, max = 1)
+  fig <- fig |>
+    add_scatter(x = X, y = y, mode = "lines", row = 1, col = i)
+}
+fig <- fig |>
+  update_xaxes(
+    matches = "x",
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white"
+  ) |>
+  update_yaxes(
+    zerolinecolor = "white",
+    zerolinewidth = 2,
+    gridcolor = "white",
+    range = c(0, 1)
+  ) |>
+  update_layout(plot_bgcolor = "#e5ecf6", showlegend = TRUE)
+
+fig
+```
+
+### Subcategory Axes
+
+``` r
+
+library(plotly.core)
+
+boxes <- list(
+  A = c(2, 3, 1, 5),
+  B = c(8, 3, 6, 5),
+  C = c(2, 3, 2, 5),
+  D = c(7.5, 3, 6, 4)
+)
+
+fig <- go_figure()
+for (g in names(boxes)) {
+  fig <- fig |>
+    add_box(
+      x = boxes[[g]],
+      y = rep(g, 4),
+      name = g,
+      orientation = "h",
+      line = go_box_line(color = "gray")
+    )
+}
+
+subgroup_line <- function(y, color) {
+  go_shape(
+    type = "line",
+    line = go_shape_line(color = color, width = 1),
+    x0 = -0.3,
+    x1 = 1.2,
+    xref = "paper",
+    y0 = y,
+    y1 = y,
+    yref = "paper"
+  )
+}
+paper_label <- function(text, x, y) {
+  go_annotation(
+    x = x,
+    y = y,
+    showarrow = FALSE,
+    text = text,
+    xref = "paper",
+    yref = "paper"
+  )
+}
+
+fig <- fig |>
+  update_layout(
+    height = 400,
+    width = 600,
+    title = "",
+    yaxis = go_yaxis(
+      autorange = TRUE,
+      categoryorder = "category descending",
+      domain = c(0, 1),
+      range = c(-0.5, 3.5),
+      showline = TRUE,
+      title = "",
+      type = "category",
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    xaxis = go_xaxis(
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    margin = go_margin(r = 10, t = 25, b = 40, l = 110),
+    legend = go_legend(y = 0.936263886049),
+    shapes = list(
+      subgroup_line(0.5, "rgba(68, 68, 68, 0.5)"),
+      subgroup_line(1, "rgba(68, 68, 68, 0.63)")
+    ),
+    annotations = list(
+      paper_label("Subgroup", -0.0951769406393, 1.06972670892),
+      paper_label("Group", -0.235516552511, 1.07060587474),
+      paper_label("One", -0.235516552511, 0.922906017856),
+      paper_label("Two", -0.235516552511, 0.375)
+    ),
+    plot_bgcolor = "#e5ecf6"
+  )
+
+fig
+```
+
+### Fixed-Ratio Axes
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scatter(
+    x = c(0, 1, 1, 0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 3),
+    y = c(0, 0, 1, 1, 3, 3, 2, 2, 3, 3, 1, 1, 0, 0),
+    mode = "lines"
+  ) |>
+  add_scatter(
+    x = c(0, 1, 2, 3),
+    y = c(1, 2, 4, 8),
+    yaxis = "y2",
+    mode = "lines"
+  ) |>
+  add_scatter(
+    x = c(1, 10, 100, 10, 1),
+    y = c(0, 1, 2, 3, 4),
+    xaxis = "x2",
+    yaxis = "y3",
+    mode = "lines"
+  ) |>
+  add_scatter(
+    x = c(1, 100, 30, 80, 1),
+    y = c(1, 1.5, 2, 2.5, 3),
+    xaxis = "x2",
+    yaxis = "y4",
+    mode = "lines"
+  ) |>
+  update_layout(
+    width = 800,
+    height = 500,
+    title = "fixed-ratio axes",
+    xaxis = go_xaxis(
+      nticks = 10,
+      domain = c(0, 0.45),
+      title = "shared X axis",
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    yaxis = go_yaxis(
+      scaleanchor = "x",
+      domain = c(0, 0.45),
+      title = "1:1",
+      zerolinecolor = "white",
+      zerolinewidth = 2,
+      gridcolor = "white"
+    ),
+    yaxis2 = go_yaxis(
+      scaleanchor = "x",
+      scaleratio = 0.2,
+      domain = c(0.55, 1),
+      title = "1:5"
+    ),
+    xaxis2 = go_xaxis(
+      type = "log",
+      domain = c(0.55, 1),
+      anchor = "y3",
+      title = "unconstrained log X"
+    ),
+    yaxis3 = go_yaxis(
+      domain = c(0, 0.45),
+      anchor = "x2",
+      title = "Scale matches ->"
+    ),
+    yaxis4 = go_yaxis(
+      scaleanchor = "y3",
+      domain = c(0.55, 1),
+      anchor = "x2",
+      title = "Scale matches <-"
+    ),
+    showlegend = FALSE,
+    plot_bgcolor = "#e5ecf6"
+  )
+
+fig
+```
+
+#### Reference
+
+See
+[`go_xaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis.md)
+and
+[`go_yaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_yaxis.md)
+for more information and chart attribute options!

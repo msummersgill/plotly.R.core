@@ -1,0 +1,113 @@
+# Error Bars
+
+### Bar Chart with Error Bars
+
+``` r
+
+library(plotly.core)
+library(plyr)
+
+data_mean <- ddply(ToothGrowth, c("supp", "dose"), summarise, length = mean(len))
+data_sd <- ddply(ToothGrowth, c("supp", "dose"), summarise, length = sd(len))
+data <- data.frame(data_mean, data_sd$length)
+data <- rename(data, c("data_sd.length" = "sd"))
+data$dose <- as.factor(data$dose)
+
+error_y <- go_error_bar(array = ~sd, color = "#000000")
+
+fig <- go_figure() |>
+  add_bar(
+    data = data[data$supp == "OJ", ],
+    x = ~dose,
+    y = ~length,
+    name = "OJ",
+    error_y = error_y
+  ) |>
+  add_bar(
+    data = data[data$supp == "VC", ],
+    x = ~dose,
+    y = ~length,
+    name = "VC",
+    error_y = error_y
+  )
+
+fig
+```
+
+### Scatterplot with Error Bars
+
+``` r
+
+library(plotly.core)
+library(plyr)
+
+data_mean <- ddply(ToothGrowth, c("supp", "dose"), summarise, length = mean(len))
+data_sd <- ddply(ToothGrowth, c("supp", "dose"), summarise, length = sd(len))
+data <- data.frame(data_mean, data_sd$length)
+data <- rename(data, c("data_sd.length" = "sd"))
+data$dose <- as.factor(data$dose)
+
+error_y <- go_error_bar(array = ~sd, color = "#000000")
+
+fig <- go_figure() |>
+  add_scatter(
+    data = data[data$supp == "OJ", ],
+    x = ~dose,
+    y = ~length,
+    mode = "markers",
+    name = "OJ",
+    error_y = error_y
+  ) |>
+  add_scatter(
+    data = data[data$supp == "VC", ],
+    x = ~dose,
+    y = ~length,
+    mode = "markers",
+    name = "VC",
+    error_y = error_y
+  )
+
+fig
+```
+
+### Line Graph with Error Bars
+
+``` r
+
+library(plotly.core)
+library(plyr)
+
+data_mean <- ddply(ToothGrowth, c("supp", "dose"), summarise, length = mean(len))
+data_sd <- ddply(ToothGrowth, c("supp", "dose"), summarise, length = sd(len))
+data <- data.frame(data_mean, data_sd$length)
+data <- rename(data, c("data_sd.length" = "sd"))
+data$dose <- as.factor(data$dose)
+
+error_y <- go_error_bar(array = ~sd, color = "#000000")
+
+fig <- go_figure() |>
+  add_scatter(
+    data = data[data$supp == "OJ", ],
+    x = ~dose,
+    y = ~length,
+    mode = "lines+markers",
+    name = "OJ",
+    error_y = error_y
+  ) |>
+  add_scatter(
+    data = data[data$supp == "VC", ],
+    x = ~dose,
+    y = ~length,
+    mode = "lines+markers",
+    name = "VC",
+    error_y = error_y
+  )
+
+fig
+```
+
+### Reference
+
+See
+[`go_error_bar()`](https://msummersgill.github.io/plotly.R.core/reference/go_error_bar.md)
+for more information and chart attribute options!

@@ -1,0 +1,69 @@
+# Ternary Contour Plot
+
+### Basic Terary Contour Plot
+
+``` r
+
+library(plotly.core)
+library(jsonlite)
+
+df <- fromJSON(
+  "https://gist.githubusercontent.com/davenquinn/988167471993bc2ece29/raw/f38d9cb3dd86e315e237fde5d65e185c39c931c2/data.json",
+  simplifyVector = FALSE
+)
+
+colors <- c("#8dd3c7", "#ffffb3", "#bebada",
+            "#fb8072", "#80b1d3", "#fdb462",
+            "#b3de69", "#fccde5", "#d9d9d9",
+            "#bc80bd", "#ccebc5", "#ffed6f")
+
+fig <- go_figure()
+
+for (i in seq_along(df)) {
+  l <- sapply(df[[i]], function(pt) pt$clay)
+  m <- sapply(df[[i]], function(pt) pt$sand)
+  n <- sapply(df[[i]], function(pt) pt$silt)
+
+  fig <- fig |>
+    add_scatterternary(
+      a = l,
+      b = m,
+      c = n,
+      name = names(df)[i],
+      mode = "lines",
+      line = go_scatterternary_line(color = "#444"),
+      fill = "toself",
+      fillcolor = colors[i],
+      showlegend = FALSE
+    )
+}
+
+axis <- function(title) {
+  go_ternary_axis(
+    title = title,
+    ticksuffix = "%",
+    min = 0.01,
+    linewidth = 2,
+    ticks = "outside"
+  )
+}
+
+fig <- fig |>
+  update_layout(
+    title = "Simple Ternary Contour Plot in R",
+    ternary = go_ternary(
+      sum = 100,
+      aaxis = axis("clay"),
+      baxis = axis("sand"),
+      caxis = axis("silt")
+    )
+  )
+
+fig
+```
+
+\#Reference
+
+See
+[`go_scatterternary()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterternary.md)
+for more information and options!

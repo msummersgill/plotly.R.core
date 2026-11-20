@@ -1,0 +1,201 @@
+# Mapbox Layers
+
+### How Layers Work in Tile Maps
+
+plotly.js no longer uses Mapbox: the `scattermapbox`, `choroplethmapbox`
+and `densitymapbox` traces and `layout.mapbox` were replaced by the
+MapLibre-based `scattermap`, `choroplethmap` and `densitymap` traces
+([`add_scattermap()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md),
+[`add_choroplethmap()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md),
+[`add_densitymap()`](https://msummersgill.github.io/plotly.R.core/reference/go_densitymap.md))
+and `layout.map`
+([`go_map()`](https://msummersgill.github.io/plotly.R.core/reference/go_map.md)).
+If your figure contains one or more of these traces, the `layout` of
+your figure contains configuration information for the map itself.
+
+The map is composed of layers of three different types.
+
+1.  `layout.map.style` defines the lowest layers, also known as your
+    “base map”
+2.  the traces added with
+    [`add_scattermap()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
+    and friends are by default rendered above the base map (this can be
+    controlled via the use of `below` attribute).
+3.  the `layout.map.layers` attribute accepts an array of
+    [`go_map_layer()`](https://msummersgill.github.io/plotly.R.core/reference/go_map_layer.md)
+    objects that are by default rendered above the traces (this can be
+    controlled via the `below` attribute).
+
+### Access Tokens
+
+MapLibre does not need a Mapbox Access Token. All of the built-in values
+of `layout.map.style` work without one:
+
+1.  `white-bg` yields an empty white canvas which results in no external
+    HTTP requests
+2.  `open-street-map`, `carto-positron`, `carto-darkmatter`,
+    `carto-voyager` (and their `-nolabels` variants), `basic`,
+    `streets`, `outdoors`, `light`, `dark`, `satellite` and
+    `satellite-streets` yield maps composed of tiles from various public
+    tile servers which do not require signups or access tokens
+
+`layout.map.style` can also be a style URL or a style object as defined
+in the [MapLibre style spec](https://maplibre.org/maplibre-style-spec/).
+
+#### Using `layout.map.layers` to Specify a Base Map
+
+If you have access to your own private tile servers, or wish to use a
+tile server not included in the list above, the recommended approach is
+to first set `layout.map.style` to `"white-bg"` and then set
+`layout.map.layers` to `below` to specify a custom base map.
+
+> If you omit setting `layout.map.layers` to `below`, when using this
+> approach, your data will likely be hidden by fully-opaque raster
+> tiles!
+
+### OpenStreetMap Tiles
+
+This chart demonstrates how to use “open-street-map” tiles as the base
+map for a chart.
+
+``` r
+
+library(plotly.core)
+
+us_cities <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/us-cities-top-1k.csv")
+
+fig <- us_cities |>
+  go_figure() |>
+  add_scattermap(
+    lat = ~lat,
+    lon = ~lon,
+    marker = go_scattermap_marker(color = "fuchsia"),
+    hovertext = ~City
+  ) |>
+  update_layout(
+    map = go_map(
+      style = "open-street-map",
+      zoom = 2.5,
+      center = go_map_center(lon = -88, lat = 34)
+    )
+  )
+
+fig
+```
+
+### Base Map Below A Trace
+
+This chart demonstrates how to use a public USGS imagery map as a base
+map using `layout.map.layers`. The map is rendered *below* the trace.
+
+``` r
+
+library(plotly.core)
+
+us_cities <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/us-cities-top-1k.csv")
+
+fig <- us_cities |>
+  go_figure() |>
+  add_scattermap(
+    lat = ~lat,
+    lon = ~lon,
+    hovertext = ~City,
+    marker = go_scattermap_marker(color = "fuchsia")
+  ) |>
+  update_layout(
+    map = go_map(
+      style = "white-bg",
+      zoom = 3,
+      center = go_map_center(lon = -93, lat = 41),
+      layers = list(
+        go_map_layer(
+          below = "traces",
+          sourcetype = "raster",
+          source = list("https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}")
+        )
+      )
+    )
+  )
+
+fig
+```
+
+#### Maps Below and Above A Trace
+
+This example uses the same base map *below* the trace as the one above.
+
+In addition, a WMS layer map from Environment Canada (which displays
+near-real-time radar imagery in partly-transparent raster tiles) is
+rendered *above* the `scattermap` trace, as is the default:
+
+``` r
+
+library(plotly.core)
+
+fig <- us_cities |>
+  go_figure() |>
+  add_scattermap(
+    lat = ~lat,
+    lon = ~lon,
+    hovertext = ~City,
+    marker = go_scattermap_marker(color = "fuchsia")
+  ) |>
+  update_layout(
+    map = go_map(
+      style = "white-bg",
+      zoom = 3,
+      center = go_map_center(lon = -93, lat = 41),
+      layers = list(
+        go_map_layer(
+          below = "traces",
+          sourcetype = "raster",
+          source = list("https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}")
+        ),
+        go_map_layer(
+          sourcetype = "raster",
+          source = list("https://geo.weather.gc.ca/geomet/?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX={bbox-epsg-3857}&CRS=EPSG:3857&WIDTH=1000&HEIGHT=1000&LAYERS=RADAR_1KM_RDBR&TILED=true&FORMAT=image/png")
+        )
+      )
+    )
+  )
+
+fig
+```
+
+#### Dark Base Map
+
+This example uses the “carto-darkmatter” base map. Unlike the old Mapbox
+“dark” style, it doesn’t need an access token.
+
+``` r
+
+library(plotly.core)
+
+us_cities <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/us-cities-top-1k.csv")
+
+fig <- us_cities |>
+  go_figure() |>
+  add_scattermap(
+    lat = ~lat,
+    lon = ~lon,
+    marker = go_scattermap_marker(color = "fuchsia"),
+    hovertext = ~City
+  ) |>
+  update_layout(
+    map = go_map(
+      style = "carto-darkmatter",
+      zoom = 2.5,
+      center = go_map_center(lon = -88, lat = 34)
+    )
+  )
+
+fig
+```
+
+\#Reference
+
+See
+[`go_scattermap()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md)
+and
+[`go_map()`](https://msummersgill.github.io/plotly.R.core/reference/go_map.md)
+for more information and options!

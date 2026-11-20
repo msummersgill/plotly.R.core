@@ -1,0 +1,196 @@
+# Setting the Font, Title, Legend Entries, and Axis Titles
+
+## Setting the Font, Title, Legend Entries, and Axis Titles in R
+
+How to set the global font, title, legend-entries, and axis-titles in
+for plots in R.
+
+### Automatic Labelling with Plotly
+
+plotly.core doesn’t label axes automatically: set axis titles with
+`go_xaxis(title = ...)` and `go_yaxis(title = ...)` (or
+[`update_xaxes()`](https://msummersgill.github.io/plotly.R.core/reference/update_xaxes.md)
+/
+[`update_yaxes()`](https://msummersgill.github.io/plotly.R.core/reference/update_yaxes.md)),
+and the legend title with `go_legend(title = ...)`. The title of your
+figure is up to you too!
+
+Here’s a figure labelled with the data frame column names, and then the
+same figure with more descriptive labels.
+
+``` r
+
+library(plotly.core)
+
+data("iris")
+
+fig1 <- go_figure()
+for (sp in levels(iris$Species)) {
+  fig1 <- fig1 |>
+    add_scatter(
+      data = iris[iris$Species == sp, ],
+      x = ~Sepal.Length,
+      y = ~Sepal.Width,
+      mode = "markers",
+      name = sp
+    )
+}
+fig1 <- fig1 |>
+  update_layout(
+    title = "Labels Based on Data Frame Column Names",
+    plot_bgcolor = "#e5ecf6",
+    xaxis = go_xaxis(title = "Sepal.Length"),
+    yaxis = go_yaxis(title = "Sepal.Width"),
+    legend = go_legend(title = go_legend_title(text = "Species"))
+  )
+fig1
+```
+
+``` r
+
+# Manually specifying labels
+
+fig2 <- go_figure()
+for (sp in levels(iris$Species)) {
+  fig2 <- fig2 |>
+    add_scatter(
+      data = iris[iris$Species == sp, ],
+      x = ~Sepal.Length,
+      y = ~Sepal.Width,
+      mode = "markers",
+      name = sp
+    )
+}
+fig2 <- fig2 |>
+  update_layout(
+    title = "Manually Specified Labels",
+    plot_bgcolor = "#e5ecf6",
+    xaxis = go_xaxis(title = "Sepal Length (cm)"),
+    yaxis = go_yaxis(title = "Sepal Width (cm)"),
+    legend = go_legend(title = go_legend_title(text = "<b> Species of Iris </b>"))
+  )
+fig2
+```
+
+### Global and Local Font Specification
+
+You can set the figure-wide font with the `layout.font.family`
+attribute, which will apply to all titles and tick labels, but this can
+be overridden for specific plot items like individual axes and legend
+titles etc. In the following figure, we set the figure-wide font to
+Courier New in blue, and then override this for certain parts of the
+figure.
+
+``` r
+
+library(plotly.core)
+data(iris)
+
+t <- go_font(family = "Courier New", size = 14, color = "blue")
+t1 <- go_font(family = "Times New Roman", color = "red")
+t2 <- go_font(family = "Courier New", size = 14, color = "green")
+t3 <- go_font(family = "Arial")
+
+fig <- go_figure()
+for (sp in levels(iris$Species)) {
+  fig <- fig |>
+    add_scatter(
+      data = iris[iris$Species == sp, ],
+      x = ~Sepal.Length,
+      y = ~Sepal.Width,
+      mode = "markers",
+      name = sp
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = go_layout_title(text = "Playing with Fonts", font = t1),
+    font = t,
+    legend = go_legend(title = go_legend_title(text = "Species", font = t2)),
+    xaxis = go_xaxis(title = go_xaxis_title(text = "Sepal.Length", font = t3)),
+    plot_bgcolor = "#e5ecf6"
+  )
+fig
+```
+
+### Manual Labelling in Plotly
+
+Explicitly Labeling traces and axes in Plotly.
+
+``` r
+
+library(plotly.core)
+
+t <- go_font(family = "Courier New, monospace", size = 15, color = "RebeccaPurple")
+
+x1 <- c(0, 1, 2, 3, 4, 5, 6, 7, 8)
+y1 <- c(0, 1, 2, 3, 4, 5, 6, 7, 8)
+
+x2 <- c(0, 1, 2, 3, 4, 5, 6, 7, 8)
+y2 <- c(1, 0, 3, 2, 5, 4, 7, 6, 8)
+
+df <- data.frame(x1, y1, x2, y2)
+
+fig <- df |>
+  go_figure() |>
+  add_scatter(x = ~x1, y = ~y1, mode = "lines+markers", name = "Name of Trace 1") |>
+  add_scatter(x = ~x2, y = ~y2, mode = "lines+markers", name = "Name of Trace 2") |>
+  update_layout(
+    title = "Plot Title",
+    xaxis = go_xaxis(title = "X Axis Title"),
+    yaxis = go_yaxis(title = "Y Axis Title"),
+    font = t,
+    plot_bgcolor = "#e5ecf6",
+    legend = go_legend(title = go_legend_title(text = "Legend Title"))
+  )
+
+fig
+```
+
+The configuration of the legend is discussed in detail in the
+[Legends](https://msummersgill.github.io/plotly.R.core/articles/r-docs/legend.md)
+page.
+
+### Align Plot Title
+
+The following example shows how to align the plot title with
+`title = go_layout_title(...)` in
+[`update_layout()`](https://msummersgill.github.io/plotly.R.core/reference/update_layout.md).
+`x` sets the x position with respect to `xref` from “0” (left) to “1”
+(right), and `y` sets the y position with respect to `yref` from “0”
+(bottom) to “1” (top). Moreover, you can define `xanchor` to
+`left`,`right`, or `center` for setting the title’s horizontal alignment
+with respect to its x position, and/or `yanchor` to `top`, `bottom`, or
+`middle` for setting the title’s vertical alignment with respect to its
+y position.
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scatter(
+    x = c("Mon", "Tue", "Wed"),
+    y = c(3, 1, 4),
+    mode = "lines+markers"
+  ) |>
+  update_layout(
+    title = go_layout_title(
+      text = "Plot Title",
+      y = 0.95,
+      x = 0.5,
+      xanchor = "center",
+      yanchor = "top"
+    ),
+    plot_bgcolor = "#e5ecf6"
+  )
+fig
+```
+
+#### Reference
+
+See
+[`update_layout()`](https://msummersgill.github.io/plotly.R.core/reference/update_layout.md)
+and
+[`go_layout_title()`](https://msummersgill.github.io/plotly.R.core/reference/go_layout_title.md)
+for more information!

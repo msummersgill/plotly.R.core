@@ -1,0 +1,139 @@
+# Formatting Ticks
+
+### Tickmode - Linear
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scatter(
+    x = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
+    y = c(28.8, 28.5, 37, 56.8, 69.7, 79.7, 78.5, 77.8, 74.1, 62.6, 45.3, 39.9),
+    mode = "markers+lines"
+  ) |>
+  update_layout(
+    xaxis = go_xaxis(dtick = 0.75, tick0 = 0.5, tickmode = "linear")
+  )
+
+fig
+```
+
+### Tickmode - Array
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scatter(
+    x = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
+    y = c(28.8, 28.5, 37, 56.8, 69.7, 79.7, 78.5, 77.8, 74.1, 62.6, 45.3, 39.9),
+    mode = "markers+lines"
+  ) |>
+  update_layout(
+    xaxis = go_xaxis(
+      ticktext = c("One", "Three", "Five", "Seven", "Nine", "Eleven"),
+      tickvals = c(1, 3, 5, 7, 9, 11),
+      tickmode = "array"
+    )
+  )
+
+fig
+```
+
+### Using Tickformat
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scatter(
+    x = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
+    y = c(0.18, 0.38, 0.56, 0.46, 0.59, 0.4, 0.78, 0.77, 0.74, 0.42, 0.45, 0.39),
+    mode = "markers+lines"
+  ) |>
+  update_layout(yaxis = go_yaxis(tickformat = "%"))
+
+fig
+```
+
+### Using Tickformat (Date)
+
+``` r
+
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+
+fig <- go_figure() |>
+  add_scatter(
+    x = df$Date,
+    y = df$AAPL.High,
+    name = "AAPL High",
+    mode = "lines",
+    line = go_scatter_line(color = "#17BECF")
+  ) |>
+  add_scatter(
+    x = df$Date,
+    y = df$AAPL.Low,
+    name = "AAPL Low",
+    mode = "lines",
+    line = go_scatter_line(color = "#7F7F7F")
+  ) |>
+  update_layout(
+    title = "Time Series with Custom Date-Time Format",
+    xaxis = go_xaxis(type = "date", tickformat = "%d %B (%a)<br>%Y")
+  )
+
+fig
+```
+
+### Tickformatstops to customize for different zoom levels
+
+``` r
+
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+
+fig <- go_figure() |>
+  add_scatter(x = df$Date, y = df$mavg, mode = "lines") |>
+  update_layout(
+    xaxis = go_xaxis(
+      type = "date",
+      tickformatstops = list(
+        go_tickformatstop(dtickrange = list(NULL, 1000), value = "%H:%M:%S.%L ms"),
+        go_tickformatstop(dtickrange = list(1000, 60000), value = "%H:%M:%S s"),
+        go_tickformatstop(dtickrange = list(60000, 3600000), value = "%H:%M m"),
+        go_tickformatstop(dtickrange = list(3600000, 86400000), value = "%H:%M h"),
+        go_tickformatstop(dtickrange = list(86400000, 604800000), value = "%e. %b d"),
+        go_tickformatstop(dtickrange = list(604800000, "M1"), value = "%e. %b w"),
+        go_tickformatstop(dtickrange = list("M1", "M12"), value = "%b '%y M"),
+        go_tickformatstop(dtickrange = list("M12", NULL), value = "%Y Y")
+      )
+    )
+  )
+
+fig
+```
+
+### Using Exponentformat
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scatter(
+    x = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
+    y = c(68000, 52000, 60000, 20000, 95000, 40000, 60000, 79000, 74000, 42000, 20000, 90000),
+    mode = "markers+lines"
+  ) |>
+  update_layout(
+    yaxis = go_yaxis(showexponent = "all", exponentformat = "e")
+  )
+
+fig
+```

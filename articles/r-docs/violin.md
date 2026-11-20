@@ -1,0 +1,215 @@
+# Violin Plots
+
+#### Basic Violin Plot
+
+``` r
+
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/violin_data.csv")
+
+fig <- df |>
+  go_figure() |>
+  add_violin(
+    y = ~total_bill,
+    box = go_violin_box(visible = TRUE),
+    meanline = go_violin_meanline(visible = TRUE),
+    x0 = "Total Bill"
+  ) |>
+  update_layout(yaxis = go_yaxis(title = "", zeroline = FALSE))
+
+fig
+```
+
+#### Multiple Trace
+
+``` r
+
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/violin_data.csv")
+
+fig <- go_figure()
+for (d in unique(df$day)) {
+  fig <- fig |>
+    add_violin(
+      data = df[df$day == d, ],
+      x = ~day,
+      y = ~total_bill,
+      name = d,
+      box = go_violin_box(visible = TRUE),
+      meanline = go_violin_meanline(visible = TRUE)
+    )
+}
+
+fig <- fig |>
+  update_layout(
+    xaxis = go_xaxis(title = "Day"),
+    yaxis = go_yaxis(title = "Total Bill", zeroline = FALSE)
+  )
+
+fig
+```
+
+#### Grouped Violin Plot
+
+``` r
+
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/violin_data.csv")
+
+fig <- go_figure() |>
+  add_violin(
+    data = df[df$sex == "Male", ],
+    x = ~day,
+    y = ~total_bill,
+    legendgroup = "M",
+    scalegroup = "M",
+    name = "M",
+    box = go_violin_box(visible = TRUE),
+    meanline = go_violin_meanline(visible = TRUE),
+    line = go_violin_line(color = "blue")
+  ) |>
+  add_violin(
+    data = df[df$sex == "Female", ],
+    x = ~day,
+    y = ~total_bill,
+    legendgroup = "F",
+    scalegroup = "F",
+    name = "F",
+    box = go_violin_box(visible = TRUE),
+    meanline = go_violin_meanline(visible = TRUE),
+    line = go_violin_line(color = "pink")
+  ) |>
+  update_layout(
+    yaxis = go_yaxis(zeroline = FALSE),
+    violinmode = "group"
+  )
+
+fig
+```
+
+#### Split Violin Plot
+
+``` r
+
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/violin_data.csv")
+
+fig <- go_figure() |>
+  add_violin(
+    data = df[df$smoker == "Yes", ],
+    x = ~day,
+    y = ~total_bill,
+    legendgroup = "Yes",
+    scalegroup = "Yes",
+    name = "Yes",
+    side = "negative",
+    box = go_violin_box(visible = TRUE),
+    meanline = go_violin_meanline(visible = TRUE),
+    line = go_violin_line(color = "blue")
+  ) |>
+  add_violin(
+    data = df[df$smoker == "No", ],
+    x = ~day,
+    y = ~total_bill,
+    legendgroup = "No",
+    scalegroup = "No",
+    name = "No",
+    side = "positive",
+    box = go_violin_box(visible = TRUE),
+    meanline = go_violin_meanline(visible = TRUE),
+    line = go_violin_line(color = "green")
+  ) |>
+  update_layout(
+    xaxis = go_xaxis(title = ""),
+    yaxis = go_yaxis(title = "", zeroline = FALSE),
+    violingap = 0,
+    violingroupgap = 0,
+    violinmode = "overlay"
+  )
+
+fig
+```
+
+#### Advanced Violin Plot
+
+``` r
+
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/violin_data.csv")
+
+pointposMale <- c(-0.9, -1.1, -0.6, -0.3)
+pointposFemale <- c(0.45, 0.55, 1, 0.4)
+showLegend <- c(TRUE, FALSE, FALSE, FALSE)
+
+fig <- go_figure()
+
+for (i in seq_along(unique(df$day))) {
+  day <- unique(df$day)[i]
+  fig <- fig |>
+    add_violin(
+      x = df$day[df$sex == "Male" & df$day == day],
+      y = df$total_bill[df$sex == "Male" & df$day == day],
+      hoveron = "points+kde",
+      legendgroup = "M",
+      scalegroup = "M",
+      name = "M",
+      side = "negative",
+      box = go_violin_box(visible = TRUE),
+      points = "all",
+      pointpos = pointposMale[i],
+      jitter = 0,
+      scalemode = "count",
+      meanline = go_violin_meanline(visible = TRUE),
+      line = go_violin_line(color = "#8dd3c7"),
+      marker = go_violin_marker(
+        line = go_violin_marker_line(width = 2, color = "#8dd3c7"),
+        symbol = "line-ns"
+      ),
+      showlegend = showLegend[i]
+    ) |>
+    add_violin(
+      x = df$day[df$sex == "Female" & df$day == day],
+      y = df$total_bill[df$sex == "Female" & df$day == day],
+      hoveron = "points+kde",
+      legendgroup = "F",
+      scalegroup = "F",
+      name = "F",
+      side = "positive",
+      box = go_violin_box(visible = TRUE),
+      points = "all",
+      pointpos = pointposFemale[i],
+      jitter = 0,
+      scalemode = "count",
+      meanline = go_violin_meanline(visible = TRUE),
+      line = go_violin_line(color = "#bebada"),
+      marker = go_violin_marker(
+        line = go_violin_marker_line(width = 2, color = "#bebada"),
+        symbol = "line-ns"
+      ),
+      showlegend = showLegend[i]
+    )
+}
+
+fig <- fig |>
+  update_layout(
+    title = "Total bill distribution<br><i>scaled by number of bills per gender",
+    yaxis = go_yaxis(zeroline = FALSE),
+    violingap = 0,
+    violingroupgap = 0,
+    violinmode = "overlay",
+    legend = go_legend(tracegroupgap = 0)
+  )
+
+fig
+```
+
+#### Reference
+
+See
+[`go_violin()`](https://msummersgill.github.io/plotly.R.core/reference/go_violin.md)
+for more information and options!

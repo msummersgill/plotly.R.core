@@ -1,0 +1,86 @@
+# Polar Charts \[legacy\]
+
+### Legacy Plots
+
+These polar charts used the legacy polar attributes (`r` and `t` on
+`scatter` traces, with `angularaxis`/`radialaxis` at the top level of
+the layout), which have been removed from plotly.js. With plotly.core,
+the same charts are drawn with the `scatterpolar` and `scatterpolargl`
+[trace
+types](https://msummersgill.github.io/plotly.R.core/articles/r-docs/polar-chart.md),
+as below.
+
+### Polar Scatter Chart
+
+The microphone pick-up patterns are polar curves of the form
+$`|a + (1 - a)\cos\theta|`$.
+
+``` r
+
+library(plotly.core)
+
+mic_patterns <- c(
+  Figure8 = 0,
+  Cardioid = 0.5,
+  Hypercardioid = 0.25,
+  Subcardioid = 0.7,
+  Supercardioid = 0.37
+)
+t <- seq(0, 360, by = 6)
+
+fig <- go_figure()
+for (nm in names(mic_patterns)) {
+  a <- mic_patterns[[nm]]
+  fig <- fig |>
+    add_scatterpolar(
+      r = round(abs(a + (1 - a) * cos(t * pi / 180)), 3),
+      theta = t,
+      mode = "lines",
+      opacity = 0.5,
+      name = nm
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = "Mic Patterns",
+    polar = go_polar(angularaxis = go_polar_angularaxis(rotation = 90))
+  )
+
+fig
+```
+
+``` r
+
+library(plotly.core)
+
+trials <- read.csv(
+  "https://raw.githubusercontent.com/plotly/datasets/master/hobbs-pearson-trials.csv"
+)
+
+fig <- go_figure()
+for (i in 1:5) {
+  fig <- fig |>
+    add_scatterpolar(
+      r = trials[[paste0("trial_", i, "_r")]],
+      theta = trials[[paste0("trial_", i, "_theta")]],
+      mode = "markers",
+      opacity = 0.5,
+      name = paste("Trial", i)
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = "Hobbs-Pearson Trials",
+    polar = go_polar(bgcolor = "rgb(229, 229, 229)")
+  )
+
+fig
+```
+
+### Reference
+
+See
+[`go_scatterpolar()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
+and
+[`go_polar()`](https://msummersgill.github.io/plotly.R.core/reference/go_polar.md)
+for more information and chart attribute options!

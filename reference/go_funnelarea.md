@@ -111,10 +111,9 @@ go_funnelarea(
 
 - data:
 
-  A data frame in which formula properties (e.g. `x = ~col`,
-  `marker = list(size = ~col)`,
-  `marker = go_scatter_marker(size = ~col)`) are evaluated. Default: the
-  data given to
+  A data frame in which formula properties (e.g. `values = ~col`,
+  `marker = go_funnelarea_marker(colors = ~col)`) are evaluated.
+  Default: the data given to
   [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md).
   Only the evaluated values are added to the trace. A
   [`crosstalk::SharedData`](https://rdrr.io/pkg/crosstalk/man/SharedData.html)

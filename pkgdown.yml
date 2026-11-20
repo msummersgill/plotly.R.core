@@ -2,11 +2,130 @@ pandoc: 3.8.3
 pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
+  articles/r-docs/2d-histogram-contour: r-docs/2d-histogram-contour.html
+  articles/r-docs/2d-histogram: r-docs/2d-histogram.html
+  articles/r-docs/3d-axes: r-docs/3d-axes.html
+  articles/r-docs/3d-hover: r-docs/3d-hover.html
+  articles/r-docs/3d-isosurface-plots: r-docs/3d-isosurface-plots.html
+  articles/r-docs/3d-line-plots: r-docs/3d-line-plots.html
+  articles/r-docs/3d-mesh: r-docs/3d-mesh.html
+  articles/r-docs/3d-scatter-plots: r-docs/3d-scatter-plots.html
+  articles/r-docs/3d-subplots: r-docs/3d-subplots.html
+  articles/r-docs/3d-surface-lighting: r-docs/3d-surface-lighting.html
+  articles/r-docs/3d-surface-plots: r-docs/3d-surface-plots.html
+  articles/r-docs/aggregations: r-docs/aggregations.html
+  articles/r-docs/animations: r-docs/animations.html
+  articles/r-docs/axes: r-docs/axes.html
+  articles/r-docs/bar-charts: r-docs/bar-charts.html
+  articles/r-docs/box-plots: r-docs/box-plots.html
+  articles/r-docs/bubble-charts: r-docs/bubble-charts.html
+  articles/r-docs/bubble-maps: r-docs/bubble-maps.html
+  articles/r-docs/builtin-colorscales: r-docs/builtin-colorscales.html
+  articles/r-docs/bullet-charts: r-docs/bullet-charts.html
+  articles/r-docs/candlestick-charts: r-docs/candlestick-charts.html
+  articles/r-docs/carpet-contour: r-docs/carpet-contour.html
+  articles/r-docs/carpet-plot: r-docs/carpet-plot.html
+  articles/r-docs/carpet-scatter: r-docs/carpet-scatter.html
+  articles/r-docs/choropleth-maps: r-docs/choropleth-maps.html
+  articles/r-docs/colorway: r-docs/colorway.html
+  articles/r-docs/cone-plot: r-docs/cone-plot.html
+  articles/r-docs/configuration-options: r-docs/configuration-options.html
+  articles/r-docs/contour-plots: r-docs/contour-plots.html
+  articles/r-docs/creating-and-updating-figures: r-docs/creating-and-updating-figures.html
   crosstalk: crosstalk.html
+  articles/r-docs/cumulative-animations: r-docs/cumulative-animations.html
+  articles/r-docs/custom-buttons: r-docs/custom-buttons.html
+  articles/r-docs/discrete-color: r-docs/discrete-color.html
+  articles/r-docs/displaying-images: r-docs/displaying-images.html
+  articles/r-docs/distplot: r-docs/distplot.html
+  articles/r-docs/dot-plots: r-docs/dot-plots.html
+  articles/r-docs/dropdowns: r-docs/dropdowns.html
+  articles/r-docs/dumbbell-plots: r-docs/dumbbell-plots.html
+  articles/r-docs/error-bars: r-docs/error-bars.html
+  articles/r-docs/figure-labels: r-docs/figure-labels.html
+  articles/r-docs/figure-structure: r-docs/figure-structure.html
+  articles/r-docs/filled-area-on-mapbox: r-docs/filled-area-on-mapbox.html
+  articles/r-docs/filled-area-plots: r-docs/filled-area-plots.html
+  articles/r-docs/filter: r-docs/filter.html
+  articles/r-docs/funnel-charts: r-docs/funnel-charts.html
+  articles/r-docs/gantt: r-docs/gantt.html
+  articles/r-docs/gauge-charts: r-docs/gauge-charts.html
+  articles/r-docs/getting-started: r-docs/getting-started.html
+  articles/r-docs/github-getting-started-for-data-scientists: r-docs/github-getting-started-for-data-scientists.html
+  articles/r-docs/graphing-multiple-chart-types: r-docs/graphing-multiple-chart-types.html
+  articles/r-docs/group-by: r-docs/group-by.html
+  articles/r-docs/heatmap-webgl: r-docs/heatmap-webgl.html
+  articles/r-docs/heatmaps: r-docs/heatmaps.html
+  articles/r-docs/histograms: r-docs/histograms.html
+  articles/r-docs/horizontal-bar-charts: r-docs/horizontal-bar-charts.html
+  articles/r-docs/horizontal-vertical-shapes: r-docs/horizontal-vertical-shapes.html
+  articles/r-docs/hover-text-and-formatting: r-docs/hover-text-and-formatting.html
+  articles/r-docs/images: r-docs/images.html
+  articles/r-docs/index: r-docs/index.html
+  articles/r-docs/insets: r-docs/insets.html
+  articles/r-docs/knn-classification: r-docs/knn-classification.html
+  articles/r-docs/latex: r-docs/latex.html
+  articles/r-docs/legacy-polar-chart: r-docs/legacy-polar-chart.html
+  articles/r-docs/legend: r-docs/legend.html
+  articles/r-docs/line-and-scatter: r-docs/line-and-scatter.html
+  articles/r-docs/line-charts: r-docs/line-charts.html
+  articles/r-docs/lines-on-mapbox: r-docs/lines-on-mapbox.html
+  articles/r-docs/lines-on-maps: r-docs/lines-on-maps.html
+  articles/r-docs/locales: r-docs/locales.html
+  articles/r-docs/log-plot: r-docs/log-plot.html
+  articles/r-docs/logos: r-docs/logos.html
+  articles/r-docs/map-configuration: r-docs/map-configuration.html
+  articles/r-docs/map-subplots-and-small-multiples: r-docs/map-subplots-and-small-multiples.html
+  articles/r-docs/mapbox-county-choropleth: r-docs/mapbox-county-choropleth.html
+  articles/r-docs/mapbox-density-heatmaps: r-docs/mapbox-density-heatmaps.html
+  articles/r-docs/mapbox-layers: r-docs/mapbox-layers.html
+  articles/r-docs/maps-sf: r-docs/maps-sf.html
+  articles/r-docs/marker-style: r-docs/marker-style.html
+  articles/r-docs/ml-regression: r-docs/ml-regression.html
+  articles/r-docs/multiple-axes: r-docs/multiple-axes.html
+  articles/r-docs/network-graphs: r-docs/network-graphs.html
+  articles/r-docs/ohlc-charts: r-docs/ohlc-charts.html
+  articles/r-docs/parallel-coordinates-plot: r-docs/parallel-coordinates-plot.html
+  articles/r-docs/pca-visualization: r-docs/pca-visualization.html
+  articles/r-docs/pie-charts: r-docs/pie-charts.html
+  articles/r-docs/plot-data-from-csv: r-docs/plot-data-from-csv.html
+  articles/r-docs/polar-chart: r-docs/polar-chart.html
+  articles/r-docs/radar-chart: r-docs/radar-chart.html
+  articles/r-docs/range-slider: r-docs/range-slider.html
   render-performance: render-performance.html
+  articles/r-docs/renderers: r-docs/renderers.html
+  articles/r-docs/roc-and-pr-curves: r-docs/roc-and-pr-curves.html
+  articles/r-docs/sankey-diagram: r-docs/sankey-diagram.html
+  articles/r-docs/scatter-plots-on-maps: r-docs/scatter-plots-on-maps.html
+  articles/r-docs/scattermapbox: r-docs/scattermapbox.html
+  articles/r-docs/setting-graph-size: r-docs/setting-graph-size.html
+  articles/r-docs/shapes: r-docs/shapes.html
+  articles/r-docs/sliders: r-docs/sliders.html
+  articles/r-docs/splom: r-docs/splom.html
   static-export: static-export.html
+  articles/r-docs/static-image-export: r-docs/static-image-export.html
   streaming: streaming.html
-last_built: 2026-11-19T19:54Z
+  articles/r-docs/streamtube-plot: r-docs/streamtube-plot.html
+  articles/r-docs/styling-figures: r-docs/styling-figures.html
+  articles/r-docs/subplots: r-docs/subplots.html
+  articles/r-docs/sunburst-charts: r-docs/sunburst-charts.html
+  articles/r-docs/t-sne-and-umap-projections: r-docs/t-sne-and-umap-projections.html
+  articles/r-docs/table: r-docs/table.html
+  articles/r-docs/ternary-contour: r-docs/ternary-contour.html
+  articles/r-docs/ternary-plots: r-docs/ternary-plots.html
+  articles/r-docs/text-and-annotations: r-docs/text-and-annotations.html
+  articles/r-docs/tick-formatting: r-docs/tick-formatting.html
+  articles/r-docs/time-series: r-docs/time-series.html
+  articles/r-docs/treemaps: r-docs/treemaps.html
+  articles/r-docs/trisurf: r-docs/trisurf.html
+  articles/r-docs/troubleshooting: r-docs/troubleshooting.html
+  articles/r-docs/violin: r-docs/violin.html
+  articles/r-docs/waterfall-charts: r-docs/waterfall-charts.html
+  articles/r-docs/webgl-text-and-annotations: r-docs/webgl-text-and-annotations.html
+  articles/r-docs/webgl-vs-svg-million-points: r-docs/webgl-vs-svg-million-points.html
+  articles/r-docs/webgl-vs-svg-time-series: r-docs/webgl-vs-svg-time-series.html
+  articles/r-docs/webgl-vs-svg: r-docs/webgl-vs-svg.html
+last_built: 2026-11-20T03:50Z
 urls:
   reference: https://msummersgill.github.io/plotly.R.core/reference
   article: https://msummersgill.github.io/plotly.R.core/articles

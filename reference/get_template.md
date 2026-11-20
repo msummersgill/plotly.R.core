@@ -4,8 +4,9 @@ Templates (themes) set default layout and trace properties for figures.
 The built-in templates are those of plotly.py: `"plotly"`,
 `"plotly_white"`, `"plotly_dark"`, `"ggplot2"`, `"seaborn"`,
 `"simple_white"`, `"presentation"`, `"xgridoff"`, `"ygridoff"`,
-`"gridon"` and `"none"` (the default). Templates can be combined with
-`"+"`, e.g. `"plotly_white+presentation"`; later templates take
+`"gridon"` and `"none"` (the default: plotly.js's own defaults, with
+plotly 4.x's margins when it is the default). Templates can be combined
+with `"+"`, e.g. `"plotly_white+presentation"`; later templates take
 precedence.
 
 ## Usage

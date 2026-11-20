@@ -1,0 +1,295 @@
+# Horizontal Bar Charts
+
+### Basic Horizontal Bar Chart
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_bar(
+    x = c(20, 14, 23),
+    y = c("giraffes", "orangutans", "monkeys"),
+    orientation = "h"
+  )
+
+fig
+```
+
+### Colored Horizontal Bar Chart
+
+``` r
+
+library(plotly.core)
+
+y <- c('giraffes', 'orangutans', 'monkeys')
+SF_Zoo <- c(20, 14, 23)
+LA_Zoo <- c(12, 18, 29)
+data <- data.frame(y, SF_Zoo, LA_Zoo)
+
+fig <- data |>
+  go_figure() |>
+  add_bar(
+    x = ~SF_Zoo,
+    y = ~y,
+    orientation = "h",
+    name = "SF Zoo",
+    marker = go_bar_marker(
+      color = "rgba(246, 78, 139, 0.6)",
+      line = go_bar_marker_line(color = "rgba(246, 78, 139, 1.0)", width = 3)
+    )
+  ) |>
+  add_bar(
+    x = ~LA_Zoo,
+    y = ~y,
+    orientation = "h",
+    name = "LA Zoo",
+    marker = go_bar_marker(
+      color = "rgba(58, 71, 80, 0.6)",
+      line = go_bar_marker_line(color = "rgba(58, 71, 80, 1.0)", width = 3)
+    )
+  ) |>
+  update_layout(
+    barmode = "stack",
+    xaxis = go_xaxis(title = ""),
+    yaxis = go_yaxis(title = "")
+  )
+
+fig
+```
+
+### Color Palette for Bar Chart
+
+``` r
+
+library(plotly.core)
+
+y <- c('The course was effectively<br>organized',
+       'The course developed my<br>abilities and skills for<br>the subject',
+       'The course developed my<br>ability to think critically about<br>the subject',
+       'I would recommend this<br>course to a friend')
+x1 <- c(21, 24, 27, 29)
+x2 <-c(30, 31, 26, 24)
+x3 <- c(21, 19, 23, 15)
+x4 <- c(16, 15, 11, 18)
+x5 <- c(12, 11, 13, 14)
+
+data <- data.frame(y, x1, x2, x3, x4, x5)
+
+top_labels <- c('Strongly<br>agree', 'Agree', 'Neutral', 'Disagree', 'Strongly<br>disagree')
+
+bar_colors <- c(
+  x1 = "rgba(38, 24, 74, 0.8)",
+  x2 = "rgba(71, 58, 131, 0.8)",
+  x3 = "rgba(122, 120, 168, 0.8)",
+  x4 = "rgba(164, 163, 204, 0.85)",
+  x5 = "rgba(190, 192, 213, 1)"
+)
+
+fig <- data |>
+  go_figure()
+for (col in names(bar_colors)) {
+  fig <- fig |>
+    add_bar(
+      x = data[[col]],
+      y = ~y,
+      orientation = "h",
+      marker = go_bar_marker(
+        color = bar_colors[[col]],
+        line = go_bar_marker_line(color = "rgb(248, 248, 249)", width = 1)
+      )
+    )
+}
+fig <- fig |>
+  update_layout(
+    xaxis = go_xaxis(
+      title = "",
+      showgrid = FALSE,
+      showline = FALSE,
+      showticklabels = FALSE,
+      zeroline = FALSE,
+      domain = c(0.15, 1)
+    ),
+    yaxis = go_yaxis(
+      title = "",
+      showgrid = FALSE,
+      showline = FALSE,
+      showticklabels = FALSE,
+      zeroline = FALSE
+    ),
+    barmode = "stack",
+    paper_bgcolor = "rgb(248, 248, 255)",
+    plot_bgcolor = "rgb(248, 248, 255)",
+    margin = go_margin(l = 120, r = 10, t = 140, b = 80),
+    showlegend = FALSE
+  )
+
+annotations <- list()
+# labeling the y-axis
+for (i in seq_along(y)) {
+  annotations <- c(annotations, list(go_annotation(
+    xref = "paper",
+    yref = "y",
+    x = 0.14,
+    y = y[[i]],
+    xanchor = "right",
+    text = y[[i]],
+    font = go_font(family = "Arial", size = 12, color = "rgb(67, 67, 67)"),
+    showarrow = FALSE,
+    align = "right"
+  )))
+}
+# labeling the percentages of each bar (x_axis)
+values <- as.matrix(data[, names(bar_colors)])
+midpoints <- t(apply(values, 1, cumsum)) - values / 2
+for (i in seq_along(y)) {
+  for (j in seq_len(ncol(values))) {
+    annotations <- c(annotations, list(go_annotation(
+      xref = "x",
+      yref = "y",
+      x = midpoints[i, j],
+      y = y[[i]],
+      text = paste(values[i, j], "%"),
+      font = go_font(family = "Arial", size = 12, color = "rgb(248, 248, 255)"),
+      showarrow = FALSE
+    )))
+  }
+}
+# labeling the first Likert scale (on the top)
+for (j in seq_along(top_labels)) {
+  annotations <- c(annotations, list(go_annotation(
+    xref = "x",
+    yref = "paper",
+    x = midpoints[1, j],
+    y = 1.15,
+    text = top_labels[[j]],
+    font = go_font(family = "Arial", size = 12, color = "rgb(67, 67, 67)"),
+    showarrow = FALSE
+  )))
+}
+fig <- fig |>
+  update_layout(annotations = annotations)
+
+fig
+```
+
+### Bar Chart with Line Plot
+
+``` r
+
+library(plotly.core)
+
+y <- c('Japan', 'United Kingdom', 'Canada', 'Netherlands', 'United States', 'Belgium', 'Sweden', 'Switzerland')
+x_saving <- c(1.3586, 2.2623000000000002, 4.9821999999999997, 6.5096999999999996,
+              7.4812000000000003, 7.5133000000000001, 15.2148, 17.520499999999998)
+x_net_worth <- c(93453.919999999998, 81666.570000000007, 69889.619999999995, 78381.529999999999,
+                 141395.29999999999, 92969.020000000004, 66090.179999999993, 122379.3)
+data <- data.frame(y, x_saving, x_net_worth)
+# countries are listed in increasing order of savings, which sets the
+# category order on both y axes
+fig <- make_subplots(rows = 1, cols = 2, horizontal_spacing = 0.02) |>
+  add_bar(
+    x = x_saving,
+    y = y,
+    name = "Household savings, percentage of household disposable income",
+    orientation = "h",
+    marker = go_bar_marker(
+      color = "rgba(50, 171, 96, 0.6)",
+      line = go_bar_marker_line(color = "rgba(50, 171, 96, 1.0)", width = 1)
+    ),
+    row = 1,
+    col = 1
+  ) |>
+  add_scatter(
+    x = x_net_worth,
+    y = y,
+    name = "Household net worth, Million USD/capita",
+    mode = "lines+markers",
+    line = go_scatter_line(color = "rgb(128, 0, 128)"),
+    row = 1,
+    col = 2
+  ) |>
+  update_yaxes(
+    showgrid = FALSE,
+    showline = FALSE,
+    showticklabels = TRUE,
+    domain = c(0, 0.85),
+    row = 1,
+    col = 1
+  ) |>
+  update_xaxes(
+    zeroline = FALSE,
+    showline = FALSE,
+    showticklabels = TRUE,
+    showgrid = TRUE,
+    row = 1,
+    col = 1
+  ) |>
+  update_yaxes(
+    showgrid = FALSE,
+    showline = TRUE,
+    showticklabels = FALSE,
+    linecolor = "rgba(102, 102, 102, 0.8)",
+    linewidth = 2,
+    domain = c(0, 0.85),
+    row = 1,
+    col = 2
+  ) |>
+  update_xaxes(
+    zeroline = FALSE,
+    showline = FALSE,
+    showticklabels = TRUE,
+    showgrid = TRUE,
+    side = "top",
+    dtick = 25000,
+    row = 1,
+    col = 2
+  ) |>
+  update_layout(
+    title = "Household savings & net worth for eight OECD countries",
+    legend = go_legend(x = 0.029, y = 1.038, font = go_font(size = 10)),
+    margin = go_margin(l = 100, r = 20, t = 70, b = 70),
+    paper_bgcolor = "rgb(248, 248, 255)",
+    plot_bgcolor = "rgb(248, 248, 255)"
+  )
+
+for (i in seq_along(y)) {
+  fig <- fig |>
+    add_annotation(
+      xref = "x",
+      yref = "y",
+      x = x_saving[[i]] * 2.1 + 3,
+      y = y[[i]],
+      text = paste(round(x_saving[[i]], 2), "%"),
+      font = go_font(family = "Arial", size = 12, color = "rgb(50, 171, 96)"),
+      showarrow = FALSE
+    ) |>
+    add_annotation(
+      xref = "x2",
+      yref = "y2",
+      x = x_net_worth[[i]],
+      y = y[[i]],
+      text = paste(x_net_worth[[i]], "M"),
+      font = go_font(family = "Arial", size = 12, color = "rgb(128, 0, 128)"),
+      showarrow = FALSE
+    )
+}
+fig <- fig |>
+  add_annotation(
+    xref = "paper",
+    yref = "paper",
+    x = -0.14,
+    y = -0.15,
+    text = paste("OECD (2015), Household savings (indicator), Household net worth (indicator). doi: 10.1787/cfc6f499-en (Accessed on 05 June 2015)"),
+    font = go_font(family = "Arial", size = 10, color = "rgb(150,150,150)"),
+    showarrow = FALSE
+  )
+
+fig
+```
+
+### Reference
+
+See
+[`go_bar()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
+for more information and chart attribute options!

@@ -1,0 +1,137 @@
+# 3D Surface Plots
+
+## Basic 3D Surface Plot
+
+``` r
+
+library(plotly.core)
+# volcano is a numeric matrix that ships with R
+fig <- go_figure() |>
+  add_surface(z = volcano)
+
+fig
+```
+
+## Surface Plot With Contours
+
+``` r
+
+library(plotly.core)
+# volcano is a numeric matrix that ships with R
+fig <- go_figure() |>
+  add_surface(
+    z = volcano,
+    contours = go_surface_contours(
+      z = go_surface_contours_axis(
+        show = TRUE,
+        usecolormap = TRUE,
+        highlightcolor = "#ff0000",
+        project = go_project(z = TRUE)
+      )
+    )
+  ) |>
+  update_layout(
+    scene = go_scene(
+      camera = go_scene_camera(eye = go_scene_camera_eye(x = 1.87, y = 0.88, z = -0.64))
+    )
+  )
+
+fig
+```
+
+#### 2D Kernel Density Estimation
+
+``` r
+
+library(plotly.core)
+
+kd <- with(MASS::geyser, MASS::kde2d(duration, waiting, n = 50))
+fig <- go_figure() |>
+  add_surface(x = kd$x, y = kd$y, z = kd$z)
+
+fig
+```
+
+##### Configure Surface Contour Levels
+
+This example shows how to slice the surface graph on the desired
+position for each of x, y and z axis. `contours.x.start` (see
+[`go_surface_contours_axis()`](https://msummersgill.github.io/plotly.R.core/reference/go_surface_contours_axis.md))
+sets the starting contour level value, `end` sets the end of it, and
+`size` sets the step between each contour level.
+
+``` r
+
+x <- c(1, 2, 3, 4, 5)
+y <- c(1, 2, 3, 4, 5)
+z <- rbind(
+  c(0, 1, 0, 1, 0),
+  c(1, 0, 1, 0, 1),
+  c(0, 1, 0, 1, 0),
+  c(1, 0, 1, 0, 1),
+  c(0, 1, 0, 1, 0)
+)
+
+library(plotly.core)
+fig <- go_figure() |>
+  add_surface(
+    contours = go_surface_contours(
+      x = go_surface_contours_axis(
+        show = TRUE,
+        start = 1.5,
+        end = 2,
+        size = 0.04,
+        color = "white"
+      ),
+      z = go_surface_contours_axis(show = TRUE, start = 0.5, end = 0.8, size = 0.05)
+    ),
+    x = x,
+    y = y,
+    z = z
+  ) |>
+  update_layout(
+    scene = go_scene(
+      xaxis = go_scene_axis(nticks = 20),
+      zaxis = go_scene_axis(nticks = 4),
+      camera = go_scene_camera(eye = go_scene_camera_eye(x = 0, y = -1, z = 0.5)),
+      aspectratio = go_scene_aspectratio(x = 0.9, y = 0.8, z = 0.2)
+    )
+  )
+
+fig
+```
+
+#### Multiple Surfaces
+
+``` r
+
+library(plotly.core)
+
+z <- c(
+  c(8.83,8.89,8.81,8.87,8.9,8.87),
+  c(8.89,8.94,8.85,8.94,8.96,8.92),
+  c(8.84,8.9,8.82,8.92,8.93,8.91),
+  c(8.79,8.85,8.79,8.9,8.94,8.92),
+  c(8.79,8.88,8.81,8.9,8.95,8.92),
+  c(8.8,8.82,8.78,8.91,8.94,8.92),
+  c(8.75,8.78,8.77,8.91,8.95,8.92),
+  c(8.8,8.8,8.77,8.91,8.95,8.94),
+  c(8.74,8.81,8.76,8.93,8.98,8.99),
+  c(8.89,8.99,8.92,9.1,9.13,9.11),
+  c(8.97,8.97,8.91,9.09,9.11,9.11),
+  c(9.04,9.08,9.05,9.25,9.28,9.27),
+  c(9,9.01,9,9.2,9.23,9.2),
+  c(8.99,8.99,8.98,9.18,9.2,9.19),
+  c(8.93,8.97,8.97,9.18,9.2,9.18)
+)
+dim(z) <- c(15,6)
+z2 <- z + 1
+z3 <- z - 1
+
+fig <- go_figure() |>
+  add_surface(z = z, showscale = FALSE) |>
+  add_surface(z = z2, opacity = 0.98, showscale = FALSE) |>
+  add_surface(z = z3, opacity = 0.98, showscale = FALSE)
+
+fig
+```

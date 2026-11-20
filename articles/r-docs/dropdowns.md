@@ -1,0 +1,104 @@
+# Dropdown Events
+
+### Simple Dropdown Menu Example
+
+``` r
+
+library(plotly.core)
+library(MASS)
+
+covmat <- matrix(c(0.8, 0.4, 0.3, 0.8), nrow = 2, byrow = T)
+df <- mvrnorm(n = 10000, c(0, 0), Sigma = covmat)
+df <- as.data.frame(df)
+
+colnames(df) <- c("x", "y")
+fig <- df |>
+  go_figure() |>
+  add_scatter(
+    x = ~x,
+    y = ~y,
+    mode = "markers",
+    marker = go_scatter_marker(
+      opacity = 0.3,
+      line = go_scatter_marker_line(color = "black", width = 1)
+    )
+  ) |>
+  update_layout(
+    title = "Drop down menus - Plot type",
+    xaxis = go_xaxis(domain = c(0.1, 1)),
+    yaxis = go_yaxis(title = "y"),
+    updatemenus = list(
+      go_updatemenu(
+        y = 0.8,
+        buttons = list(
+          go_updatemenu_button(
+            method = "restyle",
+            args = list("type", "scatter"),
+            label = "Scatter"
+          ),
+          go_updatemenu_button(
+            method = "restyle",
+            args = list("type", "histogram2d"),
+            label = "2D Histogram"
+          )
+        )
+      )
+    )
+  )
+
+fig
+```
+
+### Add Two Dropdown Menus to Restyle Graph
+
+``` r
+
+library(plotly.core)
+
+x <- seq(-2 * pi, 2 * pi, length.out = 1000)
+df <- data.frame(x, y1 = sin(x), y2 = cos(x))
+
+fig <- df |>
+  go_figure() |>
+  add_scatter(x = ~x, y = ~y1, mode = "lines", name = "A") |>
+  add_scatter(x = ~x, y = ~y2, mode = "lines", name = "B", visible = FALSE) |>
+  update_layout(
+    title = "Drop down menus - Styling",
+    xaxis = go_xaxis(domain = c(0.1, 1)),
+    yaxis = go_yaxis(title = "y"),
+    updatemenus = list(
+      go_updatemenu(
+        y = 0.8,
+        buttons = list(
+          go_updatemenu_button(
+            method = "restyle",
+            args = list("line.color", "blue"),
+            label = "Blue"
+          ),
+          go_updatemenu_button(
+            method = "restyle",
+            args = list("line.color", "red"),
+            label = "Red"
+          )
+        )
+      ),
+      go_updatemenu(
+        y = 0.7,
+        buttons = list(
+          go_updatemenu_button(
+            method = "restyle",
+            args = list("visible", list(TRUE, FALSE)),
+            label = "Sin"
+          ),
+          go_updatemenu_button(
+            method = "restyle",
+            args = list("visible", list(FALSE, TRUE)),
+            label = "Cos"
+          )
+        )
+      )
+    )
+  )
+
+fig
+```

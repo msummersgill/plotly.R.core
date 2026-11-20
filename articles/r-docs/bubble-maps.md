@@ -1,0 +1,50 @@
+# Bubble Maps
+
+#### United States Bubble Map
+
+``` r
+
+library(plotly.core)
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2014_us_cities.csv")
+
+df$q <- with(df, cut(pop, quantile(pop)))
+levels(df$q) <- paste(c("1st", "2nd", "3rd", "4th", "5th"), "Quantile")
+df$q <- as.ordered(df$q)
+
+g <- go_geo(
+  scope = "usa",
+  projection = go_geo_projection(type = "albers usa"),
+  showland = TRUE,
+  landcolor = "rgb(217,217,217)",
+  subunitwidth = 1,
+  countrywidth = 1,
+  subunitcolor = "white",
+  countrycolor = "white"
+)
+
+# rescale populations to marker sizes between 1 and 250 (area-scaled)
+df$size <- scales::rescale(df$pop, to = c(1, 250))
+
+fig <- go_figure()
+for (q in levels(droplevels(df$q))) {
+  d <- df[df$q == q & !is.na(df$q), ]
+  fig <- fig |>
+    add_scattergeo(
+      data = d,
+      lon = ~lon,
+      lat = ~lat,
+      locationmode = "USA-states",
+      marker = go_scattergeo_marker(size = ~size, sizemode = "area"),
+      hoverinfo = "text",
+      text = ~paste(name, "<br />", pop / 1e6, " million"),
+      name = q
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = "2014 US city populations<br>(Click legend to toggle)",
+    geo = g
+  )
+
+fig
+```

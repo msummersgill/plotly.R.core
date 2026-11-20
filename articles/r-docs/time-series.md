@@ -1,0 +1,634 @@
+# Time Series and Date Axes
+
+### Time Series using Axes of type `date`
+
+Time series can be represented using any cartesian trace
+([`add_scatter()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md),
+[`add_bar()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
+etc). For more examples of such charts, see the documentation of [line
+and scatter plots](https://plotly.com/r/line-and-scatter/) or [bar
+charts](https://msummersgill.github.io/plotly.R.core/articles/r-docs/bar-charts.md).
+
+For financial applications, Plotly can also be used to create
+[Candlestick charts](https://plotly.com/r/candlestick-charts/) and [OHLC
+charts](https://plotly.com/r/ohlc-charts/), which default to date axes.
+
+Plotly doesn’t auto set the data type of axis to date. We have to give
+the values using as.Date() for an axis to mention it’s data type as
+date.
+
+``` r
+
+library(plotly.core)
+
+# Weekly stock prices for 2018-2019, normalized to the first week
+stocks_url <- "https://raw.githubusercontent.com/plotly/plotly.py/master/plotly/package_data/datasets/stocks.csv.gz"
+stock <- data.table::fread(stocks_url, data.table = FALSE)
+stock$date <- as.Date(stock$date)
+names(stock)[names(stock) == "FB"] <- "META"
+
+fig <- stock |>
+  go_figure() |>
+  add_scatter(x = ~date, y = ~GOOG, mode = "lines", name = "GOOG") |>
+  update_layout(showlegend = FALSE) |>
+  update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_layout(plot_bgcolor = "#e5ecf6", width = 900)
+
+fig
+```
+
+``` r
+
+library(plotly.core)
+
+stock <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+
+fig <- stock |>
+  go_figure() |>
+  add_scatter(x = ~Date, y = ~AAPL.High, mode = "lines") |>
+  update_layout(showlegend = FALSE) |>
+  update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_layout(plot_bgcolor = "#e5ecf6", width = 900)
+
+fig
+```
+
+### Different Chart Types on Date Axes
+
+Any kind of cartesian chart can be placed on `date` axes, for example
+this filled area chart of relative stock ticker values.
+
+``` r
+
+library(plotly.core)
+
+# Weekly stock prices for 2018-2019, normalized to the first week
+stocks_url <- "https://raw.githubusercontent.com/plotly/plotly.py/master/plotly/package_data/datasets/stocks.csv.gz"
+stock <- data.table::fread(stocks_url, data.table = FALSE)
+stock$date <- as.Date(stock$date)
+names(stock)[names(stock) == "FB"] <- "META"
+
+fig <- stock |>
+  go_figure() |>
+  add_scatter(x = ~date, y = ~GOOG, mode = "lines", fill = "tozeroy", name = "GOOG") |>
+  update_layout(showlegend = FALSE, yaxis = go_yaxis(range = c(0.8, 1.25))) |>
+  update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_layout(plot_bgcolor = "#e5ecf6", width = 900)
+
+fig
+```
+
+Or this facetted area plot:
+
+``` r
+
+library(plotly.core)
+
+# Weekly stock prices for 2018-2019, normalized to the first week
+stocks_url <- "https://raw.githubusercontent.com/plotly/plotly.py/master/plotly/package_data/datasets/stocks.csv.gz"
+stock <- data.table::fread(stocks_url, data.table = FALSE)
+stock$date <- as.Date(stock$date)
+names(stock)[names(stock) == "FB"] <- "META"
+
+tickers <- c("GOOG", "AAPL", "AMZN", "META", "NFLX", "MSFT")
+
+fig <- make_subplots(
+  rows = 3,
+  cols = 2,
+  subplot_titles = paste0("company=", tickers),
+  vertical_spacing = 0.08
+)
+for (i in seq_along(tickers)) {
+  fig <- fig |>
+    add_scatter(
+      data = stock,
+      x = ~date,
+      y = stock[[tickers[[i]]]],
+      mode = "lines",
+      fill = "tozeroy",
+      name = tickers[[i]],
+      row = (i - 1) %/% 2 + 1,
+      col = (i - 1) %% 2 + 1
+    )
+}
+
+fig <- fig |>
+  update_xaxes(showticklabels = FALSE, zeroline = FALSE) |>
+  update_xaxes(showticklabels = TRUE, title = "date", row = 3) |>
+  update_yaxes(range = c(0.5, 2)) |>
+  update_yaxes(title = "value", col = 1) |>
+  update_yaxes(showticklabels = FALSE, col = 2) |>
+  update_layout(legend = go_legend(title = go_legend_title(text = "company"))) |>
+  update_annotations(font = go_font(size = 10)) |>
+  update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_layout(plot_bgcolor = "#e5ecf6", width = 900)
+
+fig
+```
+
+### Configuring Tick Labels
+
+By default, the tick labels (and optional ticks) are associated with a
+specific grid-line, and represent an *instant* in time, for example,
+“00:00 on February 1, 2018”. Tick labels can be formatted using the
+`tickformat` attribute (which accepts the [d3 time-format formatting
+strings](https://github.com/d3/d3-time-format)) to display only the
+month and year, but they still represent an instant by default, so in
+the figure below, the text of the label “Feb 2018” spans part of the
+month of January and part of the month of February. The `dtick`
+attribute controls the spacing between gridlines, and the `"M1"` setting
+means “1 month”. This attribute also accepts a number of milliseconds,
+which can be scaled up to days by multiplying by `24*60*60*1000`.
+
+Note that by default, the formatting of values of X and Y values in the
+hover label matches that of the tick labels of the corresponding axes,
+so when customizing the tick labels to something broad like “month”,
+it’s usually necessary to [customize the hover
+label](https://msummersgill.github.io/plotly.R.core/articles/r-docs/hover-text-and-formatting.md)
+to something narrower like the actual date, as below.
+
+``` r
+
+library(plotly.core)
+
+# Weekly stock prices for 2018-2019, normalized to the first week
+stocks_url <- "https://raw.githubusercontent.com/plotly/plotly.py/master/plotly/package_data/datasets/stocks.csv.gz"
+stock <- data.table::fread(stocks_url, data.table = FALSE)
+stock$date <- as.Date(stock$date)
+names(stock)[names(stock) == "FB"] <- "META"
+
+tickers <- c("GOOG", "AAPL", "AMZN", "META", "NFLX", "MSFT")
+
+fig <- go_figure()
+for (tk in tickers) {
+  fig <- fig |>
+    add_scatter(x = stock$date, y = stock[[tk]], mode = "lines", name = tk)
+}
+
+fig <- fig |>
+  update_layout(
+    title = "custom tick labels",
+    legend = go_legend(title = go_legend_title(text = "variable")),
+    xaxis = go_xaxis(dtick = "M1", tickformat = "%b<br>%Y")
+  ) |>
+  update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_layout(plot_bgcolor = "#e5ecf6", width = 900) |>
+  update_layout(width = 1000)
+
+fig
+```
+
+### Moving Tick Labels to the Middle of the Period
+
+*new in 4.10*
+
+By setting the `ticklabelmode` attribute to `"period"` (the default is
+`"instant"`) we can move the tick labels to the middle of the period
+they represent. The gridlines remain at the beginning of each month
+(thanks to `dtick="M1"`) but the labels now span the month they refer
+to.
+
+``` r
+
+library(plotly.core)
+
+# Weekly stock prices for 2018-2019, normalized to the first week
+stocks_url <- "https://raw.githubusercontent.com/plotly/plotly.py/master/plotly/package_data/datasets/stocks.csv.gz"
+stock <- data.table::fread(stocks_url, data.table = FALSE)
+stock$date <- as.Date(stock$date)
+names(stock)[names(stock) == "FB"] <- "META"
+
+tickers <- c("GOOG", "AAPL", "AMZN", "META", "NFLX", "MSFT")
+
+fig <- go_figure()
+for (tk in tickers) {
+  fig <- fig |>
+    add_scatter(x = stock$date, y = stock[[tk]], mode = "lines", name = tk)
+}
+
+fig <- fig |>
+  update_layout(
+    title = "custom tick labels with ticklabelmode=\"period\"",
+    legend = go_legend(title = go_legend_title(text = "variable")),
+    xaxis = go_xaxis(dtick = "M1", tickformat = "%b\n%Y", ticklabelmode = "period")
+  ) |>
+  update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_layout(plot_bgcolor = "#e5ecf6", width = 900) |>
+  update_layout(width = 1000)
+
+fig
+```
+
+### Summarizing Time-series Data with Histograms
+
+Plotly [histograms](https://plotly.com/r/histograms/) are powerful
+data-aggregation tools which even work on date axes. In the figure
+below, we pass in daily data and display it as monthly averages by
+setting `histfunc = "avg"` and `xbins = go_bins(size = "M1")`.
+
+``` r
+
+library(plotly.core)
+
+stock <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+stock$Date <- as.Date(stock$Date)
+
+fig <- stock |>
+  go_figure() |>
+  add_scatter(x = ~Date, y = ~AAPL.Close, mode = "markers", name = "daily") |>
+  add_histogram(
+    x = ~Date,
+    y = ~AAPL.Close,
+    histfunc = "avg",
+    xbins = go_bins(size = "M1"),
+    name = "monthly average"
+  ) |>
+  update_layout(
+    yaxis = go_yaxis(title = "avg of AAPL.Close"),
+    title = "Histogram on Date Axes",
+    bargap = 0.1,
+    hovermode = "x unified"
+  ) |>
+  update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_layout(plot_bgcolor = "#e5ecf6", width = 900)
+
+fig
+```
+
+### Displaying Period Data
+
+*new in 4.11*
+
+If your data coded “January 1” or “January 31” in fact refers to data
+collected throughout the month of January, for example, you can
+configure your traces to display their marks at the start end, or middle
+of the month with the `xperiod` and `xperiodalignment` attributes. In
+the example below, the raw data is all coded with an X value of the 10th
+of the month, but is binned into monthly periods with `xperiod="M1"` and
+then displayed at the start, middle and end of the period.
+
+``` r
+
+library(plotly.core)
+
+date <- c(as.Date("2020-01-10"), as.Date("2020-02-10"), as.Date("2020-03-10"),
+          as.Date("2020-04-10"), as.Date("2020-05-10"), as.Date("2020-06-10"))
+value <- c(1, 2, 3, 1, 2, 3)
+
+df <- data.frame(date, value)
+
+fig <- df |>
+  go_figure() |>
+  add_scatter(
+    x = ~date,
+    y = ~value,
+    mode = "lines+markers",
+    name = "Raw Data",
+    marker = go_scatter_marker(symbol = "star")
+  ) |>
+  add_scatter(
+    x = ~date,
+    y = ~value,
+    mode = "lines+markers",
+    name = "Start-aligned",
+    xperiod = "M1",
+    xperiodalignment = "start"
+  ) |>
+  add_scatter(
+    x = ~date,
+    y = ~value,
+    mode = "lines+markers",
+    name = "Middle-aligned",
+    xperiod = "M1",
+    xperiodalignment = "middle"
+  ) |>
+  add_scatter(
+    x = ~date,
+    y = ~value,
+    mode = "lines+markers",
+    name = "End-aligned",
+    xperiod = "M1",
+    xperiodalignment = "end"
+  ) |>
+  add_bar(x = ~date, y = ~value, name = "Middle-aligned") |>
+  update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_layout(plot_bgcolor = "#e5ecf6", width = 900)
+
+fig
+```
+
+### Hover Templates with Mixtures of Period data
+
+*New in v5.0*
+
+When displaying periodic data with mixed-sized periods (i.e. quarterly
+and monthly) in conjunction with [`x` or `x unified` hovermodes and
+using
+`hovertemplate`](https://msummersgill.github.io/plotly.R.core/articles/r-docs/hover-text-and-formatting.md),
+the `xhoverformat` attribute can be used to control how each period’s X
+value is displayed, and the special `%{xother}` hover-template directive
+can be used to control how the X value is displayed for points that do
+not share the exact X coordinate with the point that is being hovered
+on. `%{xother}` will return an empty string when the X value is the one
+being hovered on, otherwise it will return `(%{x})`. The special
+`%{_xother}`, `%{xother_}` and `%{_xother_}` variations will display
+with spaces before, after or around the parentheses, respectively.
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_bar(
+    x = c(as.Date("2020-01-01"), as.Date("2020-04-01"), as.Date("2020-07-01")),
+    y = c(1000, 1500, 1700),
+    xperiod = "M3",
+    xperiodalignment = "middle",
+    hovertemplate = "%{y}%{_xother}"
+  ) |>
+  add_scatter(
+    x = seq(as.Date("2020-01-01"), as.Date("2020-09-01"), by = "month"),
+    y = c(1100, 1050, 1200, 1300, 1400, 1700, 1500, 1400, 1600),
+    mode = "lines+markers",
+    xperiod = "M1",
+    xperiodalignment = "middle",
+    hovertemplate = "%{y}%{_xother}"
+  ) |>
+  update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_layout(plot_bgcolor = "#e5ecf6", width = 900)
+
+fig
+```
+
+### Time Series Plot with Custom Date Range
+
+The data range can be set manually using `layout.xaxis.range` objects.
+
+``` r
+
+library(plotly.core)
+
+stock <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+
+fig <- stock |>
+  go_figure() |>
+  add_scatter(x = ~Date, y = ~AAPL.High, mode = "lines") |>
+  update_layout(
+    showlegend = FALSE,
+    xaxis = go_xaxis(range = c("2016-07-01", "2016-12-31"))
+  ) |>
+  update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_layout(plot_bgcolor = "#e5ecf6", width = 900)
+
+fig
+```
+
+### Time Series With Range Slider
+
+A range slider is a small subplot-like area below a plot which allows
+users to pan and zoom the X-axis while maintaining an overview of the
+chart. Check out the [range slider
+page](https://msummersgill.github.io/plotly.R.core/articles/r-docs/range-slider.md)
+and
+[`go_xaxis_rangeslider()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis_rangeslider.md)
+for more options.
+
+``` r
+
+library(plotly.core)
+
+stock <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+
+fig <- stock |>
+  go_figure() |>
+  add_scatter(x = ~Date, y = ~AAPL.High, mode = "lines") |>
+  update_layout(
+    showlegend = FALSE,
+    title = "Time Series with Rangeslider",
+    xaxis = go_xaxis(rangeslider = go_xaxis_rangeslider(visible = TRUE))
+  ) |>
+  update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_layout(plot_bgcolor = "#e5ecf6", width = 900)
+
+fig
+```
+
+### Time Series with Range Selector Buttons
+
+Range selector buttons are special controls that work well with time
+series and range sliders, and allow users to easily set the range of the
+x-axis. Check out the [range slider
+page](https://msummersgill.github.io/plotly.R.core/articles/r-docs/range-slider.md)
+and
+[`go_xaxis_rangeselector()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis_rangeselector.md)
+for more options.
+
+``` r
+
+library(plotly.core)
+
+stock <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+
+fig <- stock |>
+  go_figure() |>
+  add_scatter(x = ~Date, y = ~AAPL.High, mode = "lines") |>
+  update_layout(
+    showlegend = FALSE,
+    title = "Time Series with Range Slider and Selectors",
+    xaxis = go_xaxis(
+      rangeslider = go_xaxis_rangeslider(visible = TRUE),
+      rangeselector = go_xaxis_rangeselector(
+        buttons = list(
+          go_xaxis_rangeselector_button(count = 1, label = "1m", step = "month", stepmode = "backward"),
+          go_xaxis_rangeselector_button(count = 6, label = "6m", step = "month", stepmode = "backward"),
+          go_xaxis_rangeselector_button(count = 1, label = "YTD", step = "year", stepmode = "todate"),
+          go_xaxis_rangeselector_button(count = 1, label = "1y", step = "year", stepmode = "backward"),
+          go_xaxis_rangeselector_button(step = "all")
+        )
+      )
+    )
+  ) |>
+  update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_layout(plot_bgcolor = "#e5ecf6", width = 900)
+
+fig
+```
+
+### Customizing Tick Label Formatting by Zoom Level
+
+The `tickformatstops` attribute can be used to customize the formatting
+of tick labels depending on the zoom level. Try zooming in to the chart
+below and see how the tick label formatting changes. Check out
+[`go_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_tickformatstop.md)
+and the [tick formatting page](https://plotly.com/r/tick-formatting/)
+for more options.
+
+``` r
+
+library(plotly.core)
+
+data <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+data$Date <- as.Date(data$Date)
+
+fig <- data |>
+  go_figure() |>
+  add_scatter(x = ~Date, y = ~mavg, mode = "lines") |>
+  update_layout(
+    xaxis = go_xaxis(
+      title = "",
+      rangeslider = go_xaxis_rangeslider(visible = TRUE),
+      tickformatstops = list(
+        go_tickformatstop(dtickrange = list(NULL, 1000), value = "%H:%M:%S.%L ms"),
+        go_tickformatstop(dtickrange = list(1000, 60000), value = "%H:%M:%S s"),
+        go_tickformatstop(dtickrange = list(60000, 3600000), value = "%H:%M m"),
+        go_tickformatstop(dtickrange = list(3600000, 86400000), value = "%H:%M h"),
+        go_tickformatstop(dtickrange = list(86400000, 604800000), value = "%e. %b d"),
+        go_tickformatstop(dtickrange = list(604800000, "M1"), value = "%e. %b w"),
+        go_tickformatstop(dtickrange = list("M1", "M12"), value = "%b '%y M"),
+        go_tickformatstop(dtickrange = list("M12", NULL), value = "%Y Y")
+      )
+    ),
+    yaxis = go_yaxis(title = "")
+  ) |>
+  update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_layout(plot_bgcolor = "#e5ecf6", width = 900)
+
+fig
+```
+
+### Hiding Weekends and Holidays
+
+The `rangebreaks` attribute available on x- and y-axes of type `date`
+can be used to hide certain time-periods. In the example below, we show
+two plots: one in default mode to show gaps in the data, and one where
+we hide weekends and holidays to show an uninterrupted trading history.
+Note the smaller gaps between the grid lines for December 21 and January
+4, where holidays were removed. Check out
+[`go_rangebreak()`](https://msummersgill.github.io/plotly.R.core/reference/go_rangebreak.md)
+for more options.
+
+``` r
+
+library(plotly.core)
+
+stock <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+
+fig <- stock |>
+  go_figure() |>
+  add_scatter(x = ~Date, y = ~AAPL.High, mode = "markers") |>
+  update_layout(
+    showlegend = FALSE,
+    xaxis = go_xaxis(range = c("2015-12-01", "2016-01-15")),
+    title = "Default Display with Gaps"
+  ) |>
+  update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_layout(plot_bgcolor = "#e5ecf6", width = 900)
+
+fig
+```
+
+``` r
+
+library(plotly.core)
+
+stock <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+
+fig <- stock |>
+  go_figure() |>
+  add_scatter(x = ~Date, y = ~AAPL.High, mode = "markers") |>
+  update_layout(
+    showlegend = FALSE,
+    xaxis = go_xaxis(
+      range = c("2015-12-01", "2016-01-15"),
+      rangebreaks = list(
+        go_rangebreak(bounds = c("sat", "mon")), # hide weekends
+        go_rangebreak(values = c("2015-12-25", "2016-01-01"))
+      )
+    ),
+    title = "Hide Weekend and Holiday Gaps with rangebreaks"
+  ) |>
+  update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_layout(plot_bgcolor = "#e5ecf6", width = 900)
+
+fig
+```
+
+### Hiding Non-Business Hours
+
+The `rangebreaks` feature described above works for hiding hourly
+periods as well.
+
+``` r
+
+library(pracma)
+library(plotly.core)
+
+# the first 40 hours between 9:00 and 16:00, starting on 2020-03-01
+hours <- seq(as.POSIXct("2020-03-01 01:00:00", tz = "UTC"), by = "hour", length.out = 200)
+hours <- hours[as.integer(format(hours, "%H")) %in% 9:16][1:40]
+
+val <- cumsum(rand(n = 40, m = 1)[, 1]) - 0.5
+data <- data.frame(date = format(hours, "%Y-%m-%d %H:%M:%S"), value = val)
+
+fig <- data |>
+  go_figure() |>
+  add_scatter(x = ~date, y = ~value, mode = "markers") |>
+  update_layout(
+    showlegend = FALSE,
+    xaxis = go_xaxis(dtick = 86400000.0 / 2, tickformat = "%H:%M\n%b\n%Y"),
+    title = "Default Display with Gaps"
+  ) |>
+  update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_layout(plot_bgcolor = "#e5ecf6", width = 900)
+
+fig
+```
+
+``` r
+
+library(pracma)
+library(plotly.core)
+
+# the first 40 hours between 9:00 and 16:00, starting on 2020-03-01
+hours <- seq(as.POSIXct("2020-03-01 01:00:00", tz = "UTC"), by = "hour", length.out = 200)
+hours <- hours[as.integer(format(hours, "%H")) %in% 9:16][1:40]
+
+val <- cumsum(rand(n = 40, m = 1)[, 1]) - 0.5
+data <- data.frame(date = format(hours, "%Y-%m-%d %H:%M:%S"), value = val)
+
+fig <- data |>
+  go_figure() |>
+  add_scatter(x = ~date, y = ~value, mode = "markers") |>
+  update_layout(
+    showlegend = FALSE,
+    xaxis = go_xaxis(
+      rangebreaks = list(
+        go_rangebreak(bounds = c(17, 9), pattern = "hour") # hide hours outside of 9am-5pm
+      ),
+      dtick = 86400000.0 / 2,
+      tickformat = "%H:%M\n%b\n%Y"
+    ),
+    title = "Hide Non-Business Hour Gaps with rangebreaks"
+  ) |>
+  update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
+  update_layout(plot_bgcolor = "#e5ecf6", width = 900)
+
+fig
+```

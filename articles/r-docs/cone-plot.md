@@ -1,0 +1,199 @@
+# 3D Cone Plots
+
+### Basic 3D Cone
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_cone(x = 1, y = 1, z = 1, u = 1, v = 1, w = 0) |>
+  update_layout(
+    scene = go_scene(
+      camera = go_scene_camera(
+        eye = go_scene_camera_eye(x = -0.76, y = 1.8, z = 0.92)
+      )
+    )
+  )
+
+fig
+```
+
+### Mulitple 3D Cones
+
+``` r
+
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_cone(
+    x = c(1, 2, 3),
+    y = c(1, 2, 3),
+    z = c(1, 2, 3),
+    u = c(1, 0, 0),
+    v = c(0, 3, 0),
+    w = c(0, 0, 2),
+    sizemode = "absolute",
+    sizeref = 2,
+    anchor = "tip",
+    colorbar = go_colorbar(x = 0, xanchor = "right")
+  ) |>
+  update_layout(
+    scene = go_scene(
+      domain = go_domain(x = c(0, 1)),
+      camera = go_scene_camera(
+        eye = go_scene_camera_eye(x = -1.57, y = 1.36, z = 0.58)
+      )
+    )
+  )
+
+fig
+```
+
+### 3D Cone Lighting
+
+``` r
+
+library(plotly.core)
+
+# every cone shares these properties; each trace differs by x and one setting
+add_lit_cone <- function(fig, ...) {
+  fig |>
+    add_cone(
+      y = c(1, 2, 3),
+      z = c(1, 1, 1),
+      u = c(1, 2, 3),
+      v = c(1, 1, 2),
+      w = c(4, 4, 1),
+      showscale = FALSE,
+      hoverinfo = "u+v+w+name",
+      ...
+    )
+}
+
+fig <- go_figure() |>
+  add_lit_cone(
+    name = "base",
+    x = c(1, 1, 1)
+  ) |>
+  add_lit_cone(
+    name = "opacity=0.3",
+    x = c(2, 2, 2),
+    opacity = 0.3
+  ) |>
+  add_lit_cone(
+    name = "lighting.ambient=0.3",
+    x = c(3, 3, 3),
+    lighting = go_cone_lighting(ambient = 0.3)
+  ) |>
+  add_lit_cone(
+    name = "lighting.diffuse=0.3",
+    x = c(4, 4, 4),
+    lighting = go_cone_lighting(diffuse = 0.3)
+  ) |>
+  add_lit_cone(
+    name = "lighting.specular=2",
+    x = c(5, 5, 5),
+    lighting = go_cone_lighting(specular = 2)
+  ) |>
+  add_lit_cone(
+    name = "lighting.roughness=1",
+    x = c(6, 6, 6),
+    lighting = go_cone_lighting(roughness = 1)
+  ) |>
+  add_lit_cone(
+    name = "lighting.fresnel=2",
+    x = c(7, 7, 7),
+    lighting = go_cone_lighting(fresnel = 2)
+  ) |>
+  add_lit_cone(
+    name = "lighting.position x=0,y=0,z=1e5",
+    x = c(8, 8, 8),
+    lightposition = go_lightposition(x = 0, y = 0, z = 1e5)
+  ) |>
+  update_layout(
+    scene = go_scene(
+      aspectmode = "data",
+      camera = go_scene_camera(
+        eye = go_scene_camera_eye(x = 0.05, y = -2.6, z = 2)
+      )
+    ),
+    margin = go_margin(t = 0, b = 0, l = 0, r = 0)
+  )
+
+fig
+```
+
+### 3D Cone of Wind Dataset
+
+``` r
+
+library(plotly.core)
+library(jsonlite)
+
+dat <- fromJSON(
+  "https://raw.githubusercontent.com/plotly/plotly.js/master/test/image/mocks/gl3d_cone-wind.json",
+  simplifyVector = FALSE
+)
+wind <- dat$data[[1]]
+
+fig <- go_figure() |>
+  add_cone(
+    x = unlist(wind$x),
+    y = unlist(wind$y),
+    z = unlist(wind$z),
+    u = unlist(wind$u),
+    v = unlist(wind$v),
+    w = unlist(wind$w),
+    text = "-> wind <-",
+    hoverinfo = "u+v+w+text",
+    colorscale = "Viridis",
+    cmin = 0,
+    cmax = 100
+  ) |>
+  update_layout(
+    scene = go_scene(
+      aspectratio = go_scene_aspectratio(x = 1.57, y = 1.36, z = 0.58)
+    )
+  )
+
+fig
+```
+
+### 3D Cone Vortex
+
+``` r
+
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/vortex.csv")
+
+fig <- df |>
+  go_figure() |>
+  add_cone(
+    x = ~x,
+    y = ~y,
+    z = ~z,
+    u = ~u,
+    v = ~v,
+    w = ~w,
+    sizemode = "absolute",
+    sizeref = 40
+  ) |>
+  update_layout(
+    scene = go_scene(
+      aspectratio = go_scene_aspectratio(x = 1, y = 1, z = 0.8),
+      camera = go_scene_camera(
+        eye = go_scene_camera_eye(x = 1.2, y = 1.2, z = 0.6)
+      )
+    )
+  )
+
+fig
+```
+
+### Reference
+
+See
+[`go_cone()`](https://msummersgill.github.io/plotly.R.core/reference/go_cone.md)
+for more information and chart attribute options!

@@ -1,0 +1,368 @@
+# Candlestick Charts
+
+### Basic Candlestick
+
+These examples use daily Apple stock prices from February 2015 to
+February 2017.
+
+``` r
+
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+df$Date <- as.Date(df$Date)
+df <- tail(df, 30)
+
+fig <- df |>
+  go_figure() |>
+  add_candlestick(
+    x = ~Date,
+    open = ~AAPL.Open,
+    close = ~AAPL.Close,
+    high = ~AAPL.High,
+    low = ~AAPL.Low
+  ) |>
+  update_layout(title = "Basic Candlestick Chart")
+
+fig
+```
+
+### Candlestick without Rangeslider
+
+``` r
+
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+df$Date <- as.Date(df$Date)
+df <- tail(df, 30)
+
+fig <- df |>
+  go_figure() |>
+  add_candlestick(
+    x = ~Date,
+    open = ~AAPL.Open,
+    close = ~AAPL.Close,
+    high = ~AAPL.High,
+    low = ~AAPL.Low
+  ) |>
+  update_layout(
+    title = "Basic Candlestick Chart",
+    xaxis = go_xaxis(rangeslider = go_xaxis_rangeslider(visible = FALSE))
+  )
+
+fig
+```
+
+### Customise the fig ure with Shapes and Annotations
+
+``` r
+
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+df$Date <- as.Date(df$Date)
+
+# annotation
+a <- go_annotation(
+  text = "Brexit vote",
+  x = "2016-06-23",
+  y = 1.02,
+  xref = "x",
+  yref = "paper",
+  xanchor = "left",
+  showarrow = FALSE
+)
+
+# use shapes to create a line
+l <- go_shape(
+  type = "line",
+  x0 = "2016-06-23",
+  x1 = "2016-06-23",
+  y0 = 0,
+  y1 = 1,
+  xref = "x",
+  yref = "paper",
+  line = go_shape_line(color = "black", width = 0.5)
+)
+
+fig <- df |>
+  go_figure() |>
+  add_candlestick(
+    x = ~Date,
+    open = ~AAPL.Open,
+    close = ~AAPL.Close,
+    high = ~AAPL.High,
+    low = ~AAPL.Low
+  ) |>
+  update_layout(
+    title = "Apple Stock",
+    annotations = list(a),
+    shapes = list(l)
+  )
+
+fig
+```
+
+### Custom Candlestick Colors
+
+``` r
+
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+df$Date <- as.Date(df$Date)
+df <- tail(df, 30)
+
+# custom colors
+i <- go_candlestick_increasing(line = go_candlestick_increasing_line(color = "#FFD700"))
+d <- go_candlestick_decreasing(line = go_candlestick_decreasing_line(color = "#0000ff"))
+
+fig <- df |>
+  go_figure() |>
+  add_candlestick(
+    x = ~Date,
+    open = ~AAPL.Open,
+    close = ~AAPL.Close,
+    high = ~AAPL.High,
+    low = ~AAPL.Low,
+    increasing = i,
+    decreasing = d
+  )
+
+fig
+```
+
+### Add a Trace to Candlestick Chart
+
+``` r
+
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+df$Date <- as.Date(df$Date)
+df <- tail(df, 365)
+
+fig <- df |>
+  go_figure() |>
+  add_candlestick(
+    x = ~Date,
+    open = ~AAPL.Open,
+    close = ~AAPL.Close,
+    high = ~AAPL.High,
+    low = ~AAPL.Low
+  ) |>
+  add_scatter(
+    x = ~Date,
+    y = ~AAPL.Open,
+    mode = "lines",
+    line = go_scatter_line(color = "black", width = 0.75)
+  ) |>
+  update_layout(showlegend = FALSE)
+
+fig
+```
+
+### Candlestick Using Segments
+
+Each segment is a line between two points, and `NA`s between segments
+break the line.
+
+``` r
+
+library(plotly.core)
+
+dat <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+names(dat) <- sub("^AAPL\\.", "", names(dat))
+dat <- subset(dat, Date >= "2016-01-01")
+
+# x and y of the segments from y0 to y1, one per row, separated by NAs
+segments <- function(d, y0, y1) {
+  list(
+    x = as.vector(rbind(d$Date, d$Date, NA)),
+    y = as.vector(rbind(d[[y0]], d[[y1]], NA))
+  )
+}
+
+directions <- c(Decreasing = "red", Increasing = "forestgreen")
+
+fig <- go_figure()
+for (dir in names(directions)) {
+  d <- dat[dat$direction == dir, ]
+  low_high <- segments(d, "Low", "High")
+  open_close <- segments(d, "Open", "Close")
+  fig <- fig |>
+    add_scatter(
+      x = low_high$x,
+      y = low_high$y,
+      mode = "lines",
+      line = go_scatter_line(color = directions[[dir]], width = 1),
+      hoverinfo = "none"
+    ) |>
+    add_scatter(
+      x = open_close$x,
+      y = open_close$y,
+      mode = "lines",
+      line = go_scatter_line(color = directions[[dir]], width = 3),
+      hoverinfo = "none"
+    )
+}
+fig <- fig |>
+  update_layout(showlegend = FALSE, yaxis = go_yaxis(title = "Price")) |>
+  update_xaxes(rangeslider = go_xaxis_rangeslider(visible = TRUE))
+
+fig
+```
+
+### Add Bollinger Bands and Buttons
+
+The data set already holds the Bollinger bands (`dn`, `mavg`, `up`) and
+the direction of each day.
+
+``` r
+
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+df$Date <- as.Date(df$Date)
+
+band_line <- go_scatter_line(color = "#ccc", width = 0.5)
+direction_colors <- c(Increasing = "#17BECF", Decreasing = "#7F7F7F")
+
+i <- go_candlestick_increasing(line = go_candlestick_increasing_line(color = "#17BECF"))
+d <- go_candlestick_decreasing(line = go_candlestick_decreasing_line(color = "#7F7F7F"))
+
+# subplot with shared x axis
+fig <- make_subplots(
+  rows = 2,
+  cols = 1,
+  shared_xaxes = TRUE,
+  row_heights = c(0.7, 0.2)
+)
+
+# plot candlestick chart
+fig <- fig |>
+  add_candlestick(
+    data = df,
+    x = ~Date,
+    open = ~AAPL.Open,
+    close = ~AAPL.Close,
+    high = ~AAPL.High,
+    low = ~AAPL.Low,
+    name = "AAPL",
+    increasing = i,
+    decreasing = d,
+    row = 1,
+    col = 1
+  ) |>
+  add_scatter(
+    data = df,
+    x = ~Date,
+    y = ~up,
+    name = "B Bands",
+    mode = "lines",
+    line = band_line,
+    legendgroup = "Bollinger Bands",
+    hoverinfo = "none",
+    row = 1,
+    col = 1
+  ) |>
+  add_scatter(
+    data = df,
+    x = ~Date,
+    y = ~dn,
+    name = "B Bands",
+    mode = "lines",
+    line = band_line,
+    legendgroup = "Bollinger Bands",
+    showlegend = FALSE,
+    hoverinfo = "none",
+    row = 1,
+    col = 1
+  ) |>
+  add_scatter(
+    data = df,
+    x = ~Date,
+    y = ~mavg,
+    name = "Mv Avg",
+    mode = "lines",
+    line = go_scatter_line(color = "#E377C2", width = 0.5),
+    hoverinfo = "none",
+    row = 1,
+    col = 1
+  )
+
+# plot volume bar chart
+for (dir in names(direction_colors)) {
+  fig <- fig |>
+    add_bar(
+      data = df[df$direction == dir, ],
+      x = ~Date,
+      y = ~AAPL.Volume,
+      name = dir,
+      marker = go_bar_marker(color = direction_colors[[dir]]),
+      row = 2,
+      col = 1
+    )
+}
+
+# create rangeselector buttons
+rs <- go_xaxis_rangeselector(
+  visible = TRUE,
+  x = 0.5,
+  y = -0.055,
+  xanchor = "center",
+  font = go_font(size = 9),
+  buttons = list(
+    go_xaxis_rangeselector_button(count = 1, label = "RESET", step = "all"),
+    go_xaxis_rangeselector_button(
+      count = 1,
+      label = "1 YR",
+      step = "year",
+      stepmode = "backward"
+    ),
+    go_xaxis_rangeselector_button(
+      count = 3,
+      label = "3 MO",
+      step = "month",
+      stepmode = "backward"
+    ),
+    go_xaxis_rangeselector_button(
+      count = 1,
+      label = "1 MO",
+      step = "month",
+      stepmode = "backward"
+    )
+  )
+)
+
+fig <- fig |>
+  update_yaxes(title = "Price", row = 1, col = 1) |>
+  update_yaxes(title = "Volume", row = 2, col = 1) |>
+  update_xaxes(
+    rangeselector = rs,
+    rangeslider = go_xaxis_rangeslider(visible = FALSE),
+    row = 1,
+    col = 1
+  ) |>
+  update_layout(
+    title = "Apple: 2015-02-17 - 2017-02-16",
+    legend = go_legend(
+      orientation = "h",
+      x = 0.5,
+      y = 1,
+      xanchor = "center",
+      yref = "paper",
+      font = go_font(size = 10),
+      bgcolor = "transparent"
+    )
+  )
+
+fig
+```
+
+\#Reference
+
+See
+[`go_candlestick()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick.md)
+for more information and chart attribute options!
