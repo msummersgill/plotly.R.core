@@ -5,9 +5,10 @@
 plotly.core supports a large number of built-in continuous color scales.
 These can be viewed and used with the ‘RColorBrewer’ package.
 
-When using continuous color scales, you will often want to [configure
-various aspects of its range and
-colorbar](https://plotly.com/r/colorscales/).
+When using continuous color scales, you will often want to configure
+various aspects of its range and colorbar (`cmin`, `cmax`,
+`colorbar = go_colorbar()`; see
+[`go_colorbar()`](https://msummersgill.github.io/plotly.R.core/reference/go_colorbar.md)).
 
 ### Discrete Color Sequences
 

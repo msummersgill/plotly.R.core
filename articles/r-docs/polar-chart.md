@@ -3,8 +3,8 @@
 #### Polar Charts 1.0
 
 Looking for the old polar chart docs? See [legacy polar
-charts](https://plotly.com/r/legacy-polar-chart/). The legacy polar
-attributes were removed from plotly.js; use
+charts](https://msummersgill.github.io/plotly.R.core/articles/r-docs/legacy-polar-chart.md).
+The legacy polar attributes were removed from plotly.js; use
 [`add_scatterpolar()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatterpolar.md)
 with
 [`go_polar()`](https://msummersgill.github.io/plotly.R.core/reference/go_polar.md)

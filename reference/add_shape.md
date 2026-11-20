@@ -11,6 +11,7 @@ add_shape(
   fig,
   arg = NULL,
   ...,
+  data = NULL,
   editable = NULL,
   fillcolor = NULL,
   fillrule = NULL,
@@ -66,6 +67,13 @@ add_shape(
 
   Not for properties, which must be named in full: an abbreviated or
   unknown name is an error that suggests the right one.
+
+- data:
+
+  A data frame in which formula properties (e.g. `x = ~col`,
+  `text = ~label`) are evaluated, giving one object per row. Default:
+  the data given to
+  [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md).
 
 - editable:
 
@@ -366,8 +374,9 @@ The modified figure.
 
 ## Details
 
-Properties that take a single value may be given vectors to add several
-shapes at once, one per element; the other properties are recycled.
+Properties that take a single value may be given vectors, or formulas
+evaluated in `data` (`text = ~label`), to add several shapes at once,
+one per element; the other properties are recycled.
 
 ## See also
 

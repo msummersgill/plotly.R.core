@@ -752,7 +752,7 @@ make_subplots(
     row = 1,
     col = 2
   ) |>
-  add_contour(z = volcano, showscale = FALSE, row = 2, col = 1) |>
+  add_contour(z = ~volcano, showscale = FALSE, row = 2, col = 1) |>
   add_scatter(
     x = density$x,
     y = density$y,

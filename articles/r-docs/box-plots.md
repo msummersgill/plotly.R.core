@@ -7,8 +7,8 @@
 library(plotly.core)
 
 go_figure() |>
-  add_box(y = rnorm(50)) |>
-  add_box(y = rnorm(50, 1))
+  add_box(y = ~rnorm(50)) |>
+  add_box(y = ~rnorm(50, 1))
 ```
 
 ### Choosing The Algorithm For Computing Quartiles
@@ -102,8 +102,8 @@ go_figure() |>
 library(plotly.core)
 
 go_figure() |>
-  add_box(x = rnorm(50)) |>
-  add_box(x = rnorm(50, 1))
+  add_box(x = ~rnorm(50)) |>
+  add_box(x = ~rnorm(50, 1))
 ```
 
 ### Adding Jittered Points
@@ -111,7 +111,7 @@ go_figure() |>
 ``` r
 
 go_figure() |>
-  add_box(y = rnorm(50), boxpoints = "all", jitter = 0.3, pointpos = -1.8)
+  add_box(y = ~rnorm(50), boxpoints = "all", jitter = 0.3, pointpos = -1.8)
 ```
 
 ### Several Box Plots
@@ -122,7 +122,7 @@ diamonds <- ggplot2::diamonds
 
 diamonds |>
   go_figure() |>
-  add_box(y = ~price, split = ~cut)
+  add_box(y = ~price, marker = go_box_marker(color = ~cut))
 ```
 
 ### Grouped Box Plots
@@ -133,7 +133,7 @@ diamonds <- ggplot2::diamonds
 
 diamonds |>
   go_figure() |>
-  add_box(x = ~cut, y = ~price, split = ~clarity) |>
+  add_box(x = ~cut, y = ~price, marker = go_box_marker(color = ~clarity)) |>
   update_layout(boxmode = "group")
 ```
 

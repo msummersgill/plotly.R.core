@@ -40,6 +40,11 @@ go_figure() |>
 
 ### Using Tickformat
 
+`tickformat` takes a
+[d3-format](https://github.com/d3/d3-format#locale_format) specifier.
+Give the precision: `".0%"` shows 0.18 as “18%”, while a bare `"%"` uses
+d3’s default six decimal places (“18.000000%”).
+
 ``` r
 
 library(plotly.core)
@@ -50,7 +55,7 @@ go_figure() |>
     y = c(0.18, 0.38, 0.56, 0.46, 0.59, 0.4, 0.78, 0.77, 0.74, 0.42, 0.45, 0.39),
     mode = "markers+lines"
   ) |>
-  update_layout(yaxis = go_yaxis(tickformat = "%"))
+  update_layout(yaxis = go_yaxis(tickformat = ".0%"))
 ```
 
 ### Using Tickformat (Date)

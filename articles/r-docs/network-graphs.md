@@ -39,8 +39,8 @@ Yn <- L[, 2]
 
 network <- go_figure() |>
   add_scatter(
-    x = Xn,
-    y = Yn,
+    x = ~Xn,
+    y = ~Yn,
     mode = "markers",
     text = vs$label,
     hoverinfo = "text"

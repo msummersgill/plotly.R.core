@@ -1,7 +1,7 @@
 # Creating and Updating Figures
 
 The plotly.core R package exists to create, manipulate and
-[render](https://plotly.com/r/getting-started/#rendering-charts)
+[render](https://msummersgill.github.io/plotly.R.core/articles/r-docs/getting-started.html#rendering-charts)
 graphical figures (i.e. charts, plots, maps and diagrams) represented by
 data structures also referred to as figures. The rendering process uses
 the [Plotly.js JavaScript library](https://plotly.com/javascript/) under
@@ -63,7 +63,7 @@ Graph objects have several benefits compared to plain R lists.
     (e.g. [`?go_bar`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md))
     to learn about the available properties as an alternative to
     consulting the online [Full
-    Reference](https://plotly.com/r/reference/).
+    Reference](https://msummersgill.github.io/plotly.R.core/reference/index.md).
 3.  Properties of graph objects can be accessed using list-style lookup
     (e.g. `fig$data[[1]]$x`).
 4.  Figures support higher-level convenience functions for making
@@ -394,7 +394,7 @@ iris |>
     x = ~Sepal.Width,
     y = ~Sepal.Length,
     mode = "markers",
-    split = ~Species
+    marker = go_scatter_marker(color = ~Species)
   ) |>
   update_layout(
     title = "A Plotly Figure",
@@ -462,7 +462,7 @@ iris |>
     x = ~Sepal.Width,
     y = ~Sepal.Length,
     mode = "markers",
-    split = ~Species
+    marker = go_scatter_marker(color = ~Species)
   ) |>
   update_layout(
     title = "Using The add_trace() method With A Plotly Figure",

@@ -256,7 +256,7 @@ fig <- iris |>
     x = ~Petal.Width,
     y = ~Sepal.Length,
     mode = "markers",
-    split = ~Species
+    marker = go_scatter_marker(color = ~Species)
   )
 
 fig <- fig |>

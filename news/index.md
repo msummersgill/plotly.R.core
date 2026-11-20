@@ -97,7 +97,11 @@
 - [`add_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/add_annotation.md),
   [`add_shape()`](https://msummersgill.github.io/plotly.R.core/reference/add_shape.md)
   and the other layout element functions take vectors for single-value
-  properties, adding one object per element.
+  properties, adding one object per element, and formulas
+  (`text = ~label`) evaluated in a `data` argument or the figure’s data,
+  as plotly 4.x’s
+  [`add_annotations()`](https://rdrr.io/pkg/plotly/man/add_annotations.html)
+  did.
 - [`update_layout()`](https://msummersgill.github.io/plotly.R.core/reference/update_layout.md)
   has every layout property as an argument, documented in
   [`?update_layout`](https://msummersgill.github.io/plotly.R.core/reference/update_layout.md).

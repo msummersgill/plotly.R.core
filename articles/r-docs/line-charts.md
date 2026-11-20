@@ -294,14 +294,14 @@ data |>
     line = go_scatter_line(color = "rgba(49,130,189, 1)", width = 4)
   ) |>
   add_scatter(
-    x = c(x[1], x[12]),
-    y = c(y_television[1], y_television[12]),
+    x = ~c(x[1], x[12]),
+    y = ~c(y_television[1], y_television[12]),
     mode = "markers",
     marker = go_scatter_marker(color = "rgba(67,67,67,1)", size = 8)
   ) |>
   add_scatter(
-    x = c(x[1], x[12]),
-    y = c(y_internet[1], y_internet[12]),
+    x = ~c(x[1], x[12]),
+    y = ~c(y_internet[1], y_internet[12]),
     mode = "markers",
     marker = go_scatter_marker(color = "rgba(49,130,189, 1)", size = 12)
   ) |>
@@ -403,7 +403,7 @@ df <- data.frame(
 
 df |>
   go_figure() |>
-  add_scatter(x = ~x, y = ~y, mode = "lines", split = ~cut)
+  add_scatter(x = ~x, y = ~y, mode = "lines", line = go_scatter_line(color = ~cut))
 ```
 
 \#Reference

@@ -156,7 +156,7 @@ data |>
     y = ~y,
     z = ~cut,
     mode = "lines",
-    split = ~cut
+    line = go_scatter3d_line(color = ~cut)
   )
 ```
 

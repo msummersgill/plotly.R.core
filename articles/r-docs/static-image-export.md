@@ -45,6 +45,6 @@ the graph stored in `fig` in a file called `surface-plot.svg`:
 library(plotly.core)
 
 fig <- go_figure() |>
-  add_surface(z = volcano)
+  add_surface(z = ~volcano)
 save_image(fig, "surface-plot.svg")
 ```

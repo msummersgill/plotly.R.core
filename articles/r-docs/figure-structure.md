@@ -318,17 +318,18 @@ fig
 
 Plotly.js supports inputs adhering to a well-defined schema, whose
 overall architecture is explained in this page and which is exhaustively
-documented in the [Figure Reference](https://plotly.com/r/reference/)
+documented in the [Figure
+Reference](https://msummersgill.github.io/plotly.R.core/reference/index.md)
 (which is itself generated from a [machine-readable JSON representation
 of the
 schema](https://raw.githubusercontent.com/plotly/plotly.js/master/dist/plot-schema.json)).
 Figures are represented as trees with named nodes called “attributes”.
 
 Attributes are referred to in text and in the [Figure
-Reference](https://plotly.com/r/reference/) by their names. For example
-`layout$width` refers to the attribute whose key is `"width"` inside a
-list which is the value associated with a key `"layout"` at the root of
-the figure.
+Reference](https://msummersgill.github.io/plotly.R.core/reference/index.md)
+by their names. For example `layout$width` refers to the attribute whose
+key is `"width"` inside a list which is the value associated with a key
+`"layout"` at the root of the figure.
 
 When manipulating a `go_figure` object, attributes can be set directly
 with R list assignment,
@@ -339,13 +340,13 @@ When building a figure, it is *not necessary to populate every
 attribute* of every object. At render-time, the JavaScript layer will
 compute default values for each required unspecified attribute,
 depending upon the ones that are specified, as documented in the [Figure
-Reference](https://plotly.com/r/reference/). An example of this would be
-`layout.xaxis.range`, which may be specified explicitly, but if not will
-be computed based on the range of `x` values for every trace linked to
-that axis. The JavaScript layer will ignore unknown attributes or
-malformed values, although plotly.core validates every attribute in R as
-the figure is built, and reports invalid properties with an error naming
-the valid ones.
+Reference](https://msummersgill.github.io/plotly.R.core/reference/index.md).
+An example of this would be `layout.xaxis.range`, which may be specified
+explicitly, but if not will be computed based on the range of `x` values
+for every trace linked to that axis. The JavaScript layer will ignore
+unknown attributes or malformed values, although plotly.core validates
+every attribute in R as the figure is built, and reports invalid
+properties with an error naming the valid ones.
 
 ### The Top-Level `data` Attribute
 
@@ -370,9 +371,9 @@ value must be a list referred to as “traces”.
   [legend](https://msummersgill.github.io/plotly.R.core/articles/r-docs/legend.md)
   entry, with the exception of pie and funnelarea traces (see below).
 - Certain trace types support [continuous color, with an associated
-  colorbar](https://plotly.com/r/colorscales/), which can be controlled
-  by attributes either within the trace, or within the layout when using
-  the coloraxis attribute (see
+  colorbar](https://msummersgill.github.io/plotly.R.core/articles/r-docs/builtin-colorscales.md),
+  which can be controlled by attributes either within the trace, or
+  within the layout when using the coloraxis attribute (see
   [`go_coloraxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_coloraxis.md)).
 
 ### The Top-Level `layout` Attribute
@@ -388,8 +389,8 @@ non-data-related parts of the figure such as:
   [legend](https://msummersgill.github.io/plotly.R.core/articles/r-docs/legend.md)
   (positionable in container and/or paper coordinates)
 - [Color axes and associated color
-  bars](https://plotly.com/r/colorscales/) (positionable in paper
-  coordinates)
+  bars](https://msummersgill.github.io/plotly.R.core/articles/r-docs/builtin-colorscales.md)
+  (positionable in paper coordinates)
 - Subplots of various types on which can be drawn multiple traces and
   which are positioned in paper coordinates:
   - `xaxis`, `yaxis`, `xaxis2`, `yaxis3` etc: X and Y cartesian axes,
@@ -552,7 +553,9 @@ the `xaxis` and `yaxis` attributes:
 ### 3D, Polar and Ternary Trace Types and Subplots
 
 Beyond 2D cartesian subplots, figures can include [three-dimensional
-cartesian subplots](https://plotly.com/r/3d-charts/), [polar
+cartesian
+subplots](https://msummersgill.github.io/plotly.R.core/articles/r-docs/index.html#d-charts),
+[polar
 subplots](https://msummersgill.github.io/plotly.R.core/articles/r-docs/polar-chart.md)
 and [ternary
 subplots](https://msummersgill.github.io/plotly.R.core/articles/r-docs/ternary-plots.md).
@@ -718,12 +721,14 @@ with the same legend group are treated the same way during
 click/double-click interactions.
 
 The fact that legend items are linked to traces means that when using
-[discrete color](https://plotly.com/r/colorscales/), a figure must have
-one trace per color in order to get a meaningful legend.
+[discrete
+color](https://msummersgill.github.io/plotly.R.core/articles/r-docs/builtin-colorscales.md),
+a figure must have one trace per color in order to get a meaningful
+legend.
 
 Traces which support [continuous
-color](https://plotly.com/r/colorscales/) can also be associated with
-color axes in the layout via the `coloraxis` attribute. Multiple traces
-can be linked to the same color axis. Color axes have a legend-like
-component called color bars. Alternatively, color axes can be configured
-within the trace itself.
+color](https://msummersgill.github.io/plotly.R.core/articles/r-docs/builtin-colorscales.md)
+can also be associated with color axes in the layout via the `coloraxis`
+attribute. Multiple traces can be linked to the same color axis. Color
+axes have a legend-like component called color bars. Alternatively,
+color axes can be configured within the trace itself.

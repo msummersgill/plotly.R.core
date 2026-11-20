@@ -8,8 +8,10 @@ for plots in R.
 ### Automatic Labelling with Plotly
 
 plotly.core titles the axes after the `x` and `y` formulas, and names
-each trace added with `split` after its group. Set your own axis titles
-with `go_xaxis(title = ...)` and `go_yaxis(title = ...)` (or
+each trace made by a colour mapping
+(`marker = go_scatter_marker(color = ~Species)`) after its group. Set
+your own axis titles with `go_xaxis(title = ...)` and
+`go_yaxis(title = ...)` (or
 [`update_xaxes()`](https://msummersgill.github.io/plotly.R.core/reference/update_xaxes.md)
 /
 [`update_yaxes()`](https://msummersgill.github.io/plotly.R.core/reference/update_yaxes.md)),
@@ -31,7 +33,7 @@ iris |>
     x = ~Sepal.Length,
     y = ~Sepal.Width,
     mode = "markers",
-    split = ~Species
+    marker = go_scatter_marker(color = ~Species)
   ) |>
   update_layout(
     title = "Labels Based on Data Frame Column Names",
@@ -50,7 +52,7 @@ iris |>
     x = ~Sepal.Length,
     y = ~Sepal.Width,
     mode = "markers",
-    split = ~Species
+    marker = go_scatter_marker(color = ~Species)
   ) |>
   update_layout(
     title = "Manually Specified Labels",
@@ -86,7 +88,7 @@ iris |>
     x = ~Sepal.Length,
     y = ~Sepal.Width,
     mode = "markers",
-    split = ~Species
+    marker = go_scatter_marker(color = ~Species)
   ) |>
   update_layout(
     title = go_layout_title(text = "Playing with Fonts", font = t1),

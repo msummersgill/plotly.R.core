@@ -379,15 +379,14 @@ Notation (JSON)</a> before being passed to Plotly.js.</p>
 </h3>
 <p>Plotly.js supports inputs adhering to a well-defined schema, whose
 overall architecture is explained in this page and which is exhaustively
-documented in the <a href="https://plotly.com/r/reference/" class="external-link">Figure
+documented in the <a href="../../reference/index.html">Figure
 Reference</a> (which is itself generated from a <a href="https://raw.githubusercontent.com/plotly/plotly.js/master/dist/plot-schema.json" class="external-link">machine-readable
 JSON representation of the schema</a>). Figures are represented as trees
 with named nodes called “attributes”.</p>
-<p>Attributes are referred to in text and in the <a href="https://plotly.com/r/reference/" class="external-link">Figure Reference</a> by their
-names. For example <code>layout$width</code> refers to the attribute
-whose key is <code>"width"</code> inside a list which is the value
-associated with a key <code>"layout"</code> at the root of the
-figure.</p>
+<p>Attributes are referred to in text and in the <a href="../../reference/index.html">Figure Reference</a> by their names.
+For example <code>layout$width</code> refers to the attribute whose key
+is <code>"width"</code> inside a list which is the value associated with
+a key <code>"layout"</code> at the root of the figure.</p>
 <p>When manipulating a <code>go_figure</code> object, attributes can be
 set directly with R list assignment,
 e.g. <code>fig$layout$title$font$family &lt;- "Open Sans"</code>, or
@@ -396,8 +395,8 @@ using
 <p>When building a figure, it is <em>not necessary to populate every
 attribute</em> of every object. At render-time, the JavaScript layer
 will compute default values for each required unspecified attribute,
-depending upon the ones that are specified, as documented in the <a href="https://plotly.com/r/reference/" class="external-link">Figure Reference</a>. An example
-of this would be <code>layout.xaxis.range</code>, which may be specified
+depending upon the ones that are specified, as documented in the <a href="../../reference/index.html">Figure Reference</a>. An example of
+this would be <code>layout.xaxis.range</code>, which may be specified
 explicitly, but if not will be computed based on the range of
 <code>x</code> values for every trace linked to that axis. The
 JavaScript layer will ignore unknown attributes or malformed values,
@@ -422,10 +421,10 @@ whose type must be compatible with the trace’s type, or is its own
 subplot (see below).</li>
 <li>Traces may have a single <a href="legend.html">legend</a> entry,
 with the exception of pie and funnelarea traces (see below).</li>
-<li>Certain trace types support <a href="https://plotly.com/r/colorscales/" class="external-link">continuous color, with an
-associated colorbar</a>, which can be controlled by attributes either
-within the trace, or within the layout when using the coloraxis
-attribute (see <code><a href="../../reference/go_coloraxis.html">go_coloraxis()</a></code>).</li>
+<li>Certain trace types support <a href="builtin-colorscales.html">continuous color, with an associated
+colorbar</a>, which can be controlled by attributes either within the
+trace, or within the layout when using the coloraxis attribute (see
+<code><a href="../../reference/go_coloraxis.html">go_coloraxis()</a></code>).</li>
 </ul>
 </div>
 <div class="section level3">
@@ -441,8 +440,8 @@ coordinates” (see below)</li>
 <li>Title and <a href="legend.html">legend</a> (positionable in
 container and/or paper coordinates)</li>
 <li>
-<a href="https://plotly.com/r/colorscales/" class="external-link">Color axes and
-associated color bars</a> (positionable in paper coordinates)</li>
+<a href="builtin-colorscales.html">Color axes and associated color
+bars</a> (positionable in paper coordinates)</li>
 <li>Subplots of various types on which can be drawn multiple traces and
 which are positioned in paper coordinates:
 <ul>
@@ -616,8 +615,7 @@ once.</li>
 <div class="section level3">
 <h3 id="d-polar-and-ternary-trace-types-and-subplots">3D, Polar and Ternary Trace Types and Subplots<a class="anchor" aria-label="anchor" href="#d-polar-and-ternary-trace-types-and-subplots"></a>
 </h3>
-<p>Beyond 2D cartesian subplots, figures can include <a href="https://plotly.com/r/3d-charts/" class="external-link">three-dimensional cartesian
-subplots</a>, <a href="polar-chart.html">polar subplots</a> and <a href="ternary-plots.html">ternary subplots</a>. The following trace
+<p>Beyond 2D cartesian subplots, figures can include <a href="index.html#d-charts">three-dimensional cartesian subplots</a>, <a href="polar-chart.html">polar subplots</a> and <a href="ternary-plots.html">ternary subplots</a>. The following trace
 types support attributes named <code>scene</code>, <code>polar</code> or
 <code>ternary</code>, whose values must refer to corresponding objects
 in the layout portion of the figure i.e. <code>ternary="ternary2"</code>
@@ -769,10 +767,10 @@ legend item. Traces that support legend items also support the
 group are treated the same way during click/double-click
 interactions.</p>
 <p>The fact that legend items are linked to traces means that when using
-<a href="https://plotly.com/r/colorscales/" class="external-link">discrete color</a>, a figure
-must have one trace per color in order to get a meaningful legend.</p>
-<p>Traces which support <a href="https://plotly.com/r/colorscales/" class="external-link">continuous color</a> can also
-be associated with color axes in the layout via the
+<a href="builtin-colorscales.html">discrete color</a>, a figure must
+have one trace per color in order to get a meaningful legend.</p>
+<p>Traces which support <a href="builtin-colorscales.html">continuous
+color</a> can also be associated with color axes in the layout via the
 <code>coloraxis</code> attribute. Multiple traces can be linked to the
 same color axis. Color axes have a legend-like component called color
 bars. Alternatively, color axes can be configured within the trace

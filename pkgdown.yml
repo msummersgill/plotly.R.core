@@ -124,7 +124,7 @@ articles:
   articles/r-docs/webgl-vs-svg-million-points: r-docs/webgl-vs-svg-million-points.html
   articles/r-docs/webgl-vs-svg-time-series: r-docs/webgl-vs-svg-time-series.html
   articles/r-docs/webgl-vs-svg: r-docs/webgl-vs-svg.html
-last_built: 2026-11-20T16:45Z
+last_built: 2026-11-20T18:41Z
 urls:
   reference: https://msummersgill.github.io/plotly.R.core/reference
   article: https://msummersgill.github.io/plotly.R.core/articles

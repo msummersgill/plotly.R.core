@@ -23,8 +23,9 @@ Other kinds of subplots and axes are described in other tutorials:
   axes](https://msummersgill.github.io/plotly.R.core/articles/r-docs/mapbox-layers.md).
   The axis object is ‘map’
   ([`go_map()`](https://msummersgill.github.io/plotly.R.core/reference/go_map.md)).
-- [Color axes](https://plotly.com/r/colorscales/). The axis object is
-  ‘coloraxis’
+- [Color
+  axes](https://msummersgill.github.io/plotly.R.core/articles/r-docs/builtin-colorscales.md).
+  The axis object is ‘coloraxis’
   ([`go_coloraxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_coloraxis.md)).
 
 **See also** the tutorials on

@@ -6,12 +6,17 @@ Time series can be represented using any cartesian trace
 ([`add_scatter()`](https://msummersgill.github.io/plotly.R.core/reference/go_scatter.md),
 [`add_bar()`](https://msummersgill.github.io/plotly.R.core/reference/go_bar.md)
 etc). For more examples of such charts, see the documentation of [line
-and scatter plots](https://plotly.com/r/line-and-scatter/) or [bar
+and scatter
+plots](https://msummersgill.github.io/plotly.R.core/articles/r-docs/line-and-scatter.md)
+or [bar
 charts](https://msummersgill.github.io/plotly.R.core/articles/r-docs/bar-charts.md).
 
 For financial applications, Plotly can also be used to create
-[Candlestick charts](https://plotly.com/r/candlestick-charts/) and [OHLC
-charts](https://plotly.com/r/ohlc-charts/), which default to date axes.
+[Candlestick
+charts](https://msummersgill.github.io/plotly.R.core/articles/r-docs/candlestick-charts.md)
+and [OHLC
+charts](https://msummersgill.github.io/plotly.R.core/articles/r-docs/ohlc-charts.md),
+which default to date axes.
 
 Plotly doesn’t auto set the data type of axis to date. We have to give
 the values using as.Date() for an axis to mention it’s data type as
@@ -221,10 +226,11 @@ fig
 
 ### Summarizing Time-series Data with Histograms
 
-Plotly [histograms](https://plotly.com/r/histograms/) are powerful
-data-aggregation tools which even work on date axes. In the figure
-below, we pass in daily data and display it as monthly averages by
-setting `histfunc = "avg"` and `xbins = go_bins(size = "M1")`.
+Plotly
+[histograms](https://msummersgill.github.io/plotly.R.core/articles/r-docs/histograms.md)
+are powerful data-aggregation tools which even work on date axes. In the
+figure below, we pass in daily data and display it as monthly averages
+by setting `histfunc = "avg"` and `xbins = go_bins(size = "M1")`.
 
 ``` r
 
@@ -454,7 +460,8 @@ The `tickformatstops` attribute can be used to customize the formatting
 of tick labels depending on the zoom level. Try zooming in to the chart
 below and see how the tick label formatting changes. Check out
 [`go_tickformatstop()`](https://msummersgill.github.io/plotly.R.core/reference/go_tickformatstop.md)
-and the [tick formatting page](https://plotly.com/r/tick-formatting/)
+and the [tick formatting
+page](https://msummersgill.github.io/plotly.R.core/articles/r-docs/tick-formatting.md)
 for more options.
 
 ``` r

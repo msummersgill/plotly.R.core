@@ -20,8 +20,8 @@ There are three different ways to show an area on a tile map:
 3.  Use the `choroplethmap` trace
     ([`add_choroplethmap()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md))
     for tile maps, or the
-    [Choropleth](https://plotly.com/r/choropleth-maps/) trace for
-    non-tile maps.
+    [Choropleth](https://msummersgill.github.io/plotly.R.core/articles/r-docs/choropleth-maps.md)
+    trace for non-tile maps.
 
 The following example uses the `scattermap` trace and sets
 `fill = "toself"`

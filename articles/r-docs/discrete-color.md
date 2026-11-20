@@ -8,7 +8,7 @@ moments in time) or categories (i.e. labels), color can be used to
 represent continuous or discrete data. This page is about using color to
 represent **categorical** data using discrete colors, but Plotly can
 also [represent continuous values with
-color](https://plotly.com/r/colorscales/).
+color](https://msummersgill.github.io/plotly.R.core/articles/r-docs/builtin-colorscales.md).
 
 ### Discrete Color Concepts
 
@@ -17,10 +17,10 @@ This document explains the following discrete-color-related concepts:
 - **color sequences** are lists of colors to be mapped onto discrete
   data values. No interpolation occurs when using color sequences,
   unlike with [continuous color
-  scales](https://plotly.com/r/colorscales/), and each color is used
-  as-is. The default color sequence comes from the layout’s `colorway`
-  attribute and can be explicitly specified using a vector of colors, as
-  in `update_layout(colorway = c(...))`.
+  scales](https://msummersgill.github.io/plotly.R.core/articles/r-docs/builtin-colorscales.md),
+  and each color is used as-is. The default color sequence comes from
+  the layout’s `colorway` attribute and can be explicitly specified
+  using a vector of colors, as in `update_layout(colorway = c(...))`.
 - **legends** are visible representations of the mapping between colors
   and data values. Legend markers also change shape when used with
   various kinds of traces, such as symbols or lines for scatter-like
@@ -29,7 +29,7 @@ This document explains the following discrete-color-related concepts:
   under the `layout.legend` attribute
   ([`go_legend()`](https://msummersgill.github.io/plotly.R.core/reference/go_legend.md)).
   Legends are the discrete equivalent of [continuous color
-  bars](https://plotly.com/r/colorscales/)
+  bars](https://msummersgill.github.io/plotly.R.core/articles/r-docs/builtin-colorscales.md)
 
 ### Discrete Color with Plotly
 

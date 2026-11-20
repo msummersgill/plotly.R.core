@@ -65,7 +65,7 @@ update several data attributes: colorscale, chart `type`, and
 library(plotly.core)
 
 fig <- go_figure() |>
-  add_heatmap(z = volcano, colorscale = "Rainbow")
+  add_heatmap(z = ~volcano, colorscale = "Rainbow")
 
 restyle_button <- function(attr, value, label) {
   go_updatemenu_button(method = "restyle", args = list(attr, value), label = label)

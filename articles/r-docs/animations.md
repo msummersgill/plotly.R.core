@@ -107,8 +107,12 @@ fig <- df[df$year == years[1], ] |>
     text = ~country,
     hoverinfo = "text",
     mode = "markers",
-    split = ~continent,
-    marker = go_scatter_marker(size = ~pop, sizemode = "area", sizeref = sizeref)
+    marker = go_scatter_marker(
+      color = ~continent,
+      size = ~pop,
+      sizemode = "area",
+      sizeref = sizeref
+    )
   )
 
 fig$frames <- lapply(years, function(yr) {
@@ -241,8 +245,12 @@ fig <- df[df$year == years[1], ] |>
     text = ~country,
     hoverinfo = "text",
     mode = "markers",
-    split = ~continent,
-    marker = go_scatter_marker(size = ~pop, sizemode = "area", sizeref = sizeref)
+    marker = go_scatter_marker(
+      color = ~continent,
+      size = ~pop,
+      sizemode = "area",
+      sizeref = sizeref
+    )
   )
 
 fig$frames <- lapply(years, function(yr) {

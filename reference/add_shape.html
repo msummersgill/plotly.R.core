@@ -59,6 +59,7 @@ objects of the constructors their arguments name.</p>
 <span>  <span class="va">fig</span>,</span>
 <span>  arg <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span>,</span>
+<span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  editable <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fillcolor <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fillrule <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -115,6 +116,12 @@ arguments take precedence.</p></dd>
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.</p></dd>
+
+
+<dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
+<dd><p>A data frame in which formula properties (e.g. <code>x =
+~col</code>, <code>text = ~label</code>) are evaluated, giving one object per row.
+Default: the data given to <code><a href="go_figure.html">go_figure()</a></code>.</p></dd>
 
 
 <dt id="arg-editable">editable<a class="anchor" aria-label="anchor" href="#arg-editable"></a></dt>
@@ -416,8 +423,9 @@ instead of raising an error.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Properties that take a single value may be given vectors to add several
-shapes at once, one per element; the other properties are recycled.</p>
+    <p>Properties that take a single value may be given vectors, or formulas
+evaluated in <code>data</code> (<code>text = ~label</code>), to add several shapes at
+once, one per element; the other properties are recycled.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

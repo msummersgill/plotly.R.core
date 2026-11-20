@@ -7,7 +7,7 @@
 library(plotly.core)
 # volcano is a numeric matrix that ships with R
 go_figure() |>
-  add_surface(z = volcano)
+  add_surface(z = ~volcano)
 ```
 
 ## Surface Plot With Contours
@@ -18,7 +18,7 @@ library(plotly.core)
 # volcano is a numeric matrix that ships with R
 go_figure() |>
   add_surface(
-    z = volcano,
+    z = ~volcano,
     contours = go_surface_contours(
       z = go_surface_contours_axis(
         show = TRUE,
@@ -79,9 +79,9 @@ go_figure() |>
       ),
       z = go_surface_contours_axis(show = TRUE, start = 0.5, end = 0.8, size = 0.05)
     ),
-    x = x,
-    y = y,
-    z = z
+    x = ~x,
+    y = ~y,
+    z = ~z
   ) |>
   update_layout(
     scene = go_scene(
@@ -121,7 +121,7 @@ z2 <- z + 1
 z3 <- z - 1
 
 go_figure() |>
-  add_surface(z = z, showscale = FALSE) |>
-  add_surface(z = z2, opacity = 0.98, showscale = FALSE) |>
-  add_surface(z = z3, opacity = 0.98, showscale = FALSE)
+  add_surface(z = ~z, showscale = FALSE) |>
+  add_surface(z = ~z2, opacity = 0.98, showscale = FALSE) |>
+  add_surface(z = ~z3, opacity = 0.98, showscale = FALSE)
 ```

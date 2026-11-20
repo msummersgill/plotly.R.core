@@ -7,7 +7,7 @@
 library(plotly.core)
 
 go_figure() |>
-  add_contour(z = volcano)
+  add_contour(z = ~volcano)
 ```
 
 ### Set X and Y Coordinates
@@ -127,7 +127,7 @@ library(plotly.core)
 
 go_figure() |>
   add_contour(
-    z = volcano,
+    z = ~volcano,
     contours = go_contour_contours(showlabels = TRUE),
     colorbar = go_colorbar(title = go_colorbar_title(text = "Elevation <br> in meters"))
   )
@@ -208,8 +208,9 @@ make_subplots(
 
 ### Contour Colorscales
 
-See [here](https://plotly.com/r/colorscales/) for more examples
-concerning colorscales!
+See
+[here](https://msummersgill.github.io/plotly.R.core/articles/r-docs/builtin-colorscales.md)
+for more examples concerning colorscales!
 
 ### Reference
 

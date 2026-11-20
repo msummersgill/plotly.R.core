@@ -275,8 +275,9 @@ go_figure() |>
 
 ### Mapping a Color Variable
 
-`split = ~clarity` adds one trace per level, so each group gets its own
-color and legend entry.
+Mapping the bar colour to `clarity` adds one trace per level, each with
+its own colour and legend entry. `clarity` is an ordered factor, so the
+colours are evenly spaced viridis.
 
 ``` r
 
@@ -285,7 +286,7 @@ library(dplyr)
 
 count(ggplot2::diamonds, cut, clarity) |>
   go_figure() |>
-  add_bar(x = ~cut, y = ~n, split = ~clarity)
+  add_bar(x = ~cut, y = ~n, marker = go_bar_marker(color = ~clarity))
 ```
 
 ### Colored and Styled Bar Chart

@@ -17,7 +17,7 @@ y <- 55*(runif(70, 0, 1))
 z <- 40*(runif(70, 0, 1))
 
 go_figure() |>
-  add_mesh3d(x = x, y = y, z = z) |>
+  add_mesh3d(x = ~x, y = ~y, z = ~z) |>
   update_layout(scene = go_scene(xaxis = axx, yaxis = axy, zaxis = axz))
 ```
 
@@ -41,7 +41,7 @@ fig <- make_subplots(rows = 2, cols = 2, specs = list(scene_row, scene_row))
 for (row in 1:2) {
   for (col in 1:2) {
     fig <- fig |>
-      add_surface(z = volcano, showscale = FALSE, row = row, col = col)
+      add_surface(z = ~volcano, showscale = FALSE, row = row, col = col)
   }
 }
 
@@ -80,7 +80,7 @@ y <- 55*(runif(70, 0, 1))
 z <- 40*(runif(70, 0, 1))
 
 go_figure() |>
-  add_mesh3d(x = x, y = y, z = z) |>
+  add_mesh3d(x = ~x, y = ~y, z = ~z) |>
   update_layout(scene = go_scene(xaxis = axx, yaxis = axy, zaxis = axz))
 ```
 
@@ -106,7 +106,7 @@ y <- 55*(runif(70, 0, 1))
 z <- 40*(runif(70, 0, 1))
 
 go_figure() |>
-  add_mesh3d(x = x, y = y, z = z) |>
+  add_mesh3d(x = ~x, y = ~y, z = ~z) |>
   update_layout(scene = go_scene(xaxis = axx, yaxis = axy, zaxis = axz))
 ```
 
@@ -142,7 +142,7 @@ y <- 55*(runif(70, 0, 1))
 z <- 40*(runif(70, 0, 1))
 
 go_figure() |>
-  add_mesh3d(x = x, y = y, z = z) |>
+  add_mesh3d(x = ~x, y = ~y, z = ~z) |>
   update_layout(scene = go_scene(xaxis = axx, yaxis = axy, zaxis = axz))
 ```
 

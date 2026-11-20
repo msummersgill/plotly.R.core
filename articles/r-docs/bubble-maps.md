@@ -31,10 +31,9 @@ df |>
     lon = ~lon,
     lat = ~lat,
     locationmode = "USA-states",
-    marker = go_scattergeo_marker(size = ~size, sizemode = "area"),
+    marker = go_scattergeo_marker(color = ~q, size = ~size, sizemode = "area"),
     hoverinfo = "text",
-    text = ~paste(name, "<br />", pop / 1e6, " million"),
-    split = ~q
+    text = ~paste(name, "<br />", pop / 1e6, " million")
   ) |>
   update_layout(
     title = "2014 US city populations<br>(Click legend to toggle)",

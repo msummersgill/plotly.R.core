@@ -12,14 +12,14 @@ make_subplots(
   specs = list(list(list(type = "scene"), list(type = "scene")))
 ) |>
   add_surface(
-    z = volcano,
+    z = ~volcano,
     lighting = go_surface_lighting(ambient = 0.2),
     showscale = FALSE,
     row = 1,
     col = 1
   ) |>
   add_surface(
-    z = volcano,
+    z = ~volcano,
     lighting = go_surface_lighting(ambient = 0.9),
     showscale = FALSE,
     row = 1,
@@ -41,14 +41,14 @@ make_subplots(
   specs = list(list(list(type = "scene"), list(type = "scene")))
 ) |>
   add_surface(
-    z = volcano,
+    z = ~volcano,
     lighting = go_surface_lighting(roughness = 0.1),
     showscale = FALSE,
     row = 1,
     col = 1
   ) |>
   add_surface(
-    z = volcano,
+    z = ~volcano,
     lighting = go_surface_lighting(roughness = 0.9),
     showscale = FALSE,
     row = 1,
@@ -70,14 +70,14 @@ make_subplots(
   specs = list(list(list(type = "scene"), list(type = "scene")))
 ) |>
   add_surface(
-    z = volcano,
+    z = ~volcano,
     lighting = go_surface_lighting(diffuse = 0.1),
     showscale = FALSE,
     row = 1,
     col = 1
   ) |>
   add_surface(
-    z = volcano,
+    z = ~volcano,
     lighting = go_surface_lighting(diffuse = 0.9),
     showscale = FALSE,
     row = 1,
@@ -99,14 +99,14 @@ make_subplots(
   specs = list(list(list(type = "scene"), list(type = "scene")))
 ) |>
   add_surface(
-    z = volcano,
+    z = ~volcano,
     lighting = go_surface_lighting(specular = 0.1),
     showscale = FALSE,
     row = 1,
     col = 1
   ) |>
   add_surface(
-    z = volcano,
+    z = ~volcano,
     lighting = go_surface_lighting(specular = 1.9),
     showscale = FALSE,
     row = 1,
@@ -128,14 +128,14 @@ make_subplots(
   specs = list(list(list(type = "scene"), list(type = "scene")))
 ) |>
   add_surface(
-    z = volcano,
+    z = ~volcano,
     lighting = go_surface_lighting(fresnel = 0.1),
     showscale = FALSE,
     row = 1,
     col = 1
   ) |>
   add_surface(
-    z = volcano,
+    z = ~volcano,
     lighting = go_surface_lighting(fresnel = 4.5),
     showscale = FALSE,
     row = 1,

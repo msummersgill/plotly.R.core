@@ -81,8 +81,8 @@ coordinates can be used to represent continuous values (i.e. amounts or
 moments in time) or categories (i.e. labels), color can be used to
 represent continuous or discrete data. This page is about using color to
 represent <strong>categorical</strong> data using discrete colors, but
-Plotly can also <a href="https://plotly.com/r/colorscales/" class="external-link">represent
-continuous values with color</a>.</p>
+Plotly can also <a href="builtin-colorscales.html">represent continuous
+values with color</a>.</p>
 </div>
 <div class="section level3">
 <h3 id="discrete-color-concepts">Discrete Color Concepts<a class="anchor" aria-label="anchor" href="#discrete-color-concepts"></a>
@@ -93,10 +93,10 @@ concepts:</p>
 <li>
 <strong>color sequences</strong> are lists of colors to be mapped
 onto discrete data values. No interpolation occurs when using color
-sequences, unlike with <a href="https://plotly.com/r/colorscales/" class="external-link">continuous color scales</a>,
-and each color is used as-is. The default color sequence comes from the
-layout’s <code>colorway</code> attribute and can be explicitly specified
-using a vector of colors, as in
+sequences, unlike with <a href="builtin-colorscales.html">continuous
+color scales</a>, and each color is used as-is. The default color
+sequence comes from the layout’s <code>colorway</code> attribute and can
+be explicitly specified using a vector of colors, as in
 <code>update_layout(colorway = c(...))</code>.</li>
 <li>
 <strong>legends</strong> are visible representations of the mapping
@@ -104,7 +104,7 @@ between colors and data values. Legend markers also change shape when
 used with various kinds of traces, such as symbols or lines for
 scatter-like traces. <a href="legend.html">Legends are configurable</a>
 under the <code>layout.legend</code> attribute
-(<code><a href="../../reference/go_legend.html">go_legend()</a></code>). Legends are the discrete equivalent of <a href="https://plotly.com/r/colorscales/" class="external-link">continuous color bars</a>
+(<code><a href="../../reference/go_legend.html">go_legend()</a></code>). Legends are the discrete equivalent of <a href="builtin-colorscales.html">continuous color bars</a>
 </li>
 </ul>
 </div>

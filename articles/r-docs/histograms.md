@@ -7,7 +7,7 @@
 library(plotly.core)
 
 go_figure() |>
-  add_histogram(x = rnorm(50))
+  add_histogram(x = ~rnorm(50))
 ```
 
 #### Normalized Histogram
@@ -17,7 +17,7 @@ go_figure() |>
 library(plotly.core)
 
 go_figure() |>
-  add_histogram(x = rnorm(50), histnorm = "probability")
+  add_histogram(x = ~rnorm(50), histnorm = "probability")
 ```
 
 #### Specify Binning Function
@@ -41,7 +41,7 @@ go_figure() |>
 library(plotly.core)
 
 go_figure() |>
-  add_histogram(y = rnorm(50))
+  add_histogram(y = ~rnorm(50))
 ```
 
 #### Overlaid Histograms
@@ -51,8 +51,8 @@ go_figure() |>
 library(plotly.core)
 
 go_figure() |>
-  add_histogram(x = rnorm(500), opacity = 0.6) |>
-  add_histogram(x = rnorm(500) + 1, opacity = 0.6) |>
+  add_histogram(x = ~rnorm(500), opacity = 0.6) |>
+  add_histogram(x = ~rnorm(500) + 1, opacity = 0.6) |>
   update_layout(barmode = "overlay")
 ```
 
@@ -63,8 +63,8 @@ go_figure() |>
 library(plotly.core)
 
 go_figure() |>
-  add_histogram(x = rnorm(500), opacity = 0.6) |>
-  add_histogram(x = rnorm(500) + 1, opacity = 0.6) |>
+  add_histogram(x = ~rnorm(500), opacity = 0.6) |>
+  add_histogram(x = ~rnorm(500) + 1, opacity = 0.6) |>
   update_layout(barmode = "stack")
 ```
 
@@ -76,7 +76,7 @@ library(plotly.core)
 
 go_figure() |>
   add_histogram(
-    x = rnorm(50),
+    x = ~rnorm(50),
     cumulative = go_histogram_cumulative(enabled = TRUE)
   )
 ```
@@ -92,8 +92,8 @@ In this example both histograms have a compatible bin settings using the
 library(plotly.core)
 
 go_figure() |>
-  add_histogram(x = rnorm(100, 5), bingroup = 1) |>
-  add_histogram(x = rnorm(20, 5), bingroup = 1) |>
+  add_histogram(x = ~rnorm(100, 5), bingroup = 1) |>
+  add_histogram(x = ~rnorm(20, 5), bingroup = 1) |>
   update_layout(barmode = "overlay", bargap = 0.1)
 ```
 
@@ -109,8 +109,8 @@ trace can share the same `bingroup`.
 library(plotly.core)
 
 go_figure() |>
-  add_histogram(x = rnorm(100, 5)) |>
-  add_histogram(x = rnorm(20, 5)) |>
+  add_histogram(x = ~rnorm(100, 5)) |>
+  add_histogram(x = ~rnorm(20, 5)) |>
   update_layout(barmode = "stack", bargap = 0.1)
 ```
 

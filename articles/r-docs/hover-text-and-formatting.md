@@ -140,10 +140,14 @@ df |>
   go_figure() |>
   add_scatter(
     mode = "markers",
-    split = ~education,
     x = ~prob,
     y = ~Average.annual.wage,
-    marker = go_scatter_marker(size = ~numbEmployed, sizeref = 4000, sizemode = "area"),
+    marker = go_scatter_marker(
+      color = ~education,
+      size = ~numbEmployed,
+      sizeref = 4000,
+      sizemode = "area"
+    ),
     text = ~short.occupation,
     hovertemplate = paste(
       "<b>%{text}</b><br><br>",

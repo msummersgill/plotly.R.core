@@ -55,7 +55,7 @@ data("tips")
 
 tips |>
   go_figure() |>
-  add_bar(x = ~day, y = ~total_bill, split = ~sex) |>
+  add_bar(x = ~day, y = ~total_bill, marker = go_bar_marker(color = ~sex)) |>
   update_layout(barmode = "stack")
 ```
 

@@ -19,8 +19,8 @@ Tile-based maps
 ([`add_choroplethmap()`](https://msummersgill.github.io/plotly.R.core/reference/go_choroplethmap.md),
 [`add_scattermap()`](https://msummersgill.github.io/plotly.R.core/reference/go_scattermap.md),
 …) use MapLibre and need no access token. See the [Map
-Layers](https://plotly.com/r/mapbox-layers/) documentation for more
-information.
+Layers](https://msummersgill.github.io/plotly.R.core/articles/r-docs/mapbox-layers.md)
+documentation for more information.
 
 ### Basic sf
 

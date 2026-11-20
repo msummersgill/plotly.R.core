@@ -63,7 +63,7 @@ Constructors take properties by name only (no positional <code>arg</code>; start
 <li>axis titles, trace names and colorbar titles come from the formulas, and factor <code>x</code>/<code>y</code> values keep their level order, unless set.</li>
 </ul></li>
 <li>
-<code><a href="../reference/add_annotation.html">add_annotation()</a></code>, <code><a href="../reference/add_shape.html">add_shape()</a></code> and the other layout element functions take vectors for single-value properties, adding one object per element.</li>
+<code><a href="../reference/add_annotation.html">add_annotation()</a></code>, <code><a href="../reference/add_shape.html">add_shape()</a></code> and the other layout element functions take vectors for single-value properties, adding one object per element, and formulas (<code>text = ~label</code>) evaluated in a <code>data</code> argument or the figure’s data, as plotly 4.x’s <code><a href="https://rdrr.io/pkg/plotly/man/add_annotations.html" class="external-link">add_annotations()</a></code> did.</li>
 <li>
 <code><a href="../reference/update_layout.html">update_layout()</a></code> has every layout property as an argument, documented in <code><a href="../reference/update_layout.html">?update_layout</a></code>.</li>
 <li>Colorscale names plotly.js knows (<code>"Blues"</code>, <code>"Viridis"</code>, …) use plotly.js’s definitions, as in plotly.js and plotly 4.x; others are plotly.py’s. With the <code>"none"</code> default template, colour scales default to viridis, as in plotly 4.x.</li>

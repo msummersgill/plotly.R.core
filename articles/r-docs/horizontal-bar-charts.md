@@ -173,7 +173,7 @@ data <- data.frame(y, x_saving, x_net_worth)
 # category order on both y axes
 fig <- make_subplots(rows = 1, cols = 2, horizontal_spacing = 0.02) |>
   add_bar(
-    x = x_saving,
+    x = ~x_saving,
     y = y,
     name = "Household savings, percentage of household disposable income",
     orientation = "h",
@@ -185,7 +185,7 @@ fig <- make_subplots(rows = 1, cols = 2, horizontal_spacing = 0.02) |>
     col = 1
   ) |>
   add_scatter(
-    x = x_net_worth,
+    x = ~x_net_worth,
     y = y,
     name = "Household net worth, Million USD/capita",
     mode = "lines+markers",
@@ -241,7 +241,7 @@ fig |>
   add_annotation(
     xref = "x",
     yref = "y",
-    x = x_saving * 2.1 + 3,
+    x = ~x_saving * 2.1 + 3,
     y = y,
     text = paste(round(x_saving, 2), "%"),
     font = go_font(family = "Arial", size = 12, color = "rgb(50, 171, 96)"),
@@ -250,7 +250,7 @@ fig |>
   add_annotation(
     xref = "x2",
     yref = "y2",
-    x = x_net_worth,
+    x = ~x_net_worth,
     y = y,
     text = paste(x_net_worth, "M"),
     font = go_font(family = "Arial", size = 12, color = "rgb(128, 0, 128)"),

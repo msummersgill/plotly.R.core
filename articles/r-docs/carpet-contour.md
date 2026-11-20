@@ -144,7 +144,8 @@ go_figure() |>
     colorbar = go_colorbar(
       y = 0,
       yanchor = "bottom",
-      len = 0.75,
+      # below the legend
+      len = 0.55,
       title = go_colorbar_title(
         text = "Pressure coefficient, c<sub>p</sub>",
         side = "right"
@@ -232,6 +233,7 @@ go_figure() |>
       showgrid = FALSE
     ),
     title = "Flow over a Karman-Trefftz airfoil",
+    legend = go_legend(y = 1, yanchor = "top"),
     hovermode = "closest",
     margin = go_margin(r = 60, b = 40, l = 40, t = 80)
   )

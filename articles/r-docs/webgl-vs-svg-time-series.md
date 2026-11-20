@@ -5,10 +5,9 @@
 ``` r
 
 library(plotly.core)
-library(readr)
 
 # Read some weather data
-df <- readr::read_csv(
+df <- read.csv(
   "https://raw.githubusercontent.com/plotly/datasets/master/2016-weather-data-seattle.csv"
 )
 
