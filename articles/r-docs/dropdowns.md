@@ -12,7 +12,7 @@ df <- mvrnorm(n = 10000, c(0, 0), Sigma = covmat)
 df <- as.data.frame(df)
 
 colnames(df) <- c("x", "y")
-fig <- df |>
+df |>
   go_figure() |>
   add_scatter(
     x = ~x,
@@ -45,8 +45,6 @@ fig <- df |>
       )
     )
   )
-
-fig
 ```
 
 ### Add Two Dropdown Menus to Restyle Graph
@@ -58,7 +56,7 @@ library(plotly.core)
 x <- seq(-2 * pi, 2 * pi, length.out = 1000)
 df <- data.frame(x, y1 = sin(x), y2 = cos(x))
 
-fig <- df |>
+df |>
   go_figure() |>
   add_scatter(x = ~x, y = ~y1, mode = "lines", name = "A") |>
   add_scatter(x = ~x, y = ~y2, mode = "lines", name = "B", visible = FALSE) |>
@@ -99,6 +97,4 @@ fig <- df |>
       )
     )
   )
-
-fig
 ```

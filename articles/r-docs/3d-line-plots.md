@@ -9,7 +9,7 @@ library(plotly.core)
 data <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/3d-line1.csv")
 data$color <- as.factor(data$color)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter3d(
     x = ~x,
@@ -23,8 +23,6 @@ fig <- data |>
       reversescale = FALSE
     )
   )
-
-fig
 ```
 
 ### 3D Line and Markers Plot
@@ -48,7 +46,7 @@ for (i in 1:62) {
 
 data <- data.frame(x, y, z, c)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter3d(
     x = ~x,
@@ -64,8 +62,6 @@ fig <- data |>
       cmax = 50
     )
   )
-
-fig
 ```
 
 ### Custom Color Scale
@@ -91,7 +87,7 @@ for (i in 1:count) {
 
 data <- data.frame(x, y, z, c)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter3d(
     x = ~x,
@@ -104,8 +100,6 @@ fig <- data |>
       colorscale = list(c(0, "#BA52ED"), c(1, "#FCB040"))
     )
   )
-
-fig
 ```
 
 ### 3D Random Walk Plot
@@ -116,7 +110,7 @@ library(plotly.core)
 
 data <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/_3d-line-plot.csv")
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter3d(
     x = ~x1,
@@ -139,8 +133,6 @@ fig <- data |>
     mode = "lines",
     line = go_scatter3d_line(color = "#bcbd22", width = 1)
   )
-
-fig
 ```
 
 ### 3D Density Plot
@@ -154,23 +146,18 @@ dens <- with(diamonds, tapply(price, INDEX = cut, density))
 data <- data.frame(
   x = unlist(lapply(dens, "[[", "x")),
   y = unlist(lapply(dens, "[[", "y")),
-  cut = rep(names(dens), each = length(dens[[1]]$x))
+  cut = factor(rep(names(dens), each = length(dens[[1]]$x)), levels = names(dens))
 )
 
-fig <- go_figure()
-for (g in names(dens)) {
-  fig <- fig |>
-    add_scatter3d(
-      data = data[data$cut == g, ],
-      x = ~x,
-      y = ~y,
-      z = ~cut,
-      mode = "lines",
-      name = g
-    )
-}
-
-fig
+data |>
+  go_figure() |>
+  add_scatter3d(
+    x = ~x,
+    y = ~y,
+    z = ~cut,
+    mode = "lines",
+    split = ~cut
+  )
 ```
 
 \#Reference

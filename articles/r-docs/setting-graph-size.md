@@ -13,11 +13,9 @@ m <- go_margin(
   t = 100,
   pad = 4
 )
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = seq(0, 8), y = seq(0, 8)) |>
   update_layout(autosize = FALSE, width = 500, height = 500, margin = m)
-
-fig
 ```
 
 ### Automatically Adjust Margins
@@ -33,12 +31,10 @@ yaxis <- go_yaxis(
   tickmode = "array",
   automargin = TRUE
 )
-fig <- go_figure() |>
+go_figure() |>
   add_bar(
     x = c("Apples", "Oranges", "Watermelon", "Pears"),
     y = c(3, 1, 2, 4)
   ) |>
   update_layout(autosize = FALSE, width = 500, height = 500, yaxis = yaxis)
-
-fig
 ```

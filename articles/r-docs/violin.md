@@ -8,7 +8,7 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/violin_data.csv")
 
-fig <- df |>
+df |>
   go_figure() |>
   add_violin(
     y = ~total_bill,
@@ -17,8 +17,6 @@ fig <- df |>
     x0 = "Total Bill"
   ) |>
   update_layout(yaxis = go_yaxis(title = "", zeroline = FALSE))
-
-fig
 ```
 
 #### Multiple Trace
@@ -29,26 +27,20 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/violin_data.csv")
 
-fig <- go_figure()
-for (d in unique(df$day)) {
-  fig <- fig |>
-    add_violin(
-      data = df[df$day == d, ],
-      x = ~day,
-      y = ~total_bill,
-      name = d,
-      box = go_violin_box(visible = TRUE),
-      meanline = go_violin_meanline(visible = TRUE)
-    )
-}
-
-fig <- fig |>
+# one violin per day, in the order the days appear in the data
+df |>
+  go_figure() |>
+  add_violin(
+    x = ~day,
+    y = ~total_bill,
+    split = ~factor(day, levels = unique(day)),
+    box = go_violin_box(visible = TRUE),
+    meanline = go_violin_meanline(visible = TRUE)
+  ) |>
   update_layout(
     xaxis = go_xaxis(title = "Day"),
     yaxis = go_yaxis(title = "Total Bill", zeroline = FALSE)
   )
-
-fig
 ```
 
 #### Grouped Violin Plot
@@ -59,7 +51,7 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/violin_data.csv")
 
-fig <- go_figure() |>
+go_figure() |>
   add_violin(
     data = df[df$sex == "Male", ],
     x = ~day,
@@ -86,8 +78,6 @@ fig <- go_figure() |>
     yaxis = go_yaxis(zeroline = FALSE),
     violinmode = "group"
   )
-
-fig
 ```
 
 #### Split Violin Plot
@@ -98,7 +88,7 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/violin_data.csv")
 
-fig <- go_figure() |>
+go_figure() |>
   add_violin(
     data = df[df$smoker == "Yes", ],
     x = ~day,
@@ -130,8 +120,6 @@ fig <- go_figure() |>
     violingroupgap = 0,
     violinmode = "overlay"
   )
-
-fig
 ```
 
 #### Advanced Violin Plot

@@ -84,7 +84,7 @@ above could be specified using graph objects instead of a list.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_bar(x = c(1, 2, 3), y = c(1, 3, 2)) |>
   update_layout(
     title = "A Plotly Figure",
@@ -92,7 +92,6 @@ fig <- go_figure() |>
     xaxis = go_xaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff"),
     yaxis = go_yaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff")
   )
-fig
 ```
 
 ### Converting Figures To Lists and JSON
@@ -156,6 +155,218 @@ cat("JSON Representation of a figure:", jfig, sep = "\n\n")
 ##           "l": 60,
 ##           "t": 25,
 ##           "r": 10
+##         },
+##         "colorscale": {
+##           "sequential": [
+##             [
+##               0,
+##               "#440154"
+##             ],
+##             [
+##               0.0627450980392157,
+##               "#48186a"
+##             ],
+##             [
+##               0.125490196078431,
+##               "#472d7b"
+##             ],
+##             [
+##               0.188235294117647,
+##               "#424086"
+##             ],
+##             [
+##               0.250980392156863,
+##               "#3b528b"
+##             ],
+##             [
+##               0.313725490196078,
+##               "#33638d"
+##             ],
+##             [
+##               0.376470588235294,
+##               "#2c728e"
+##             ],
+##             [
+##               0.43921568627451,
+##               "#26828e"
+##             ],
+##             [
+##               0.501960784313725,
+##               "#21918c"
+##             ],
+##             [
+##               0.564705882352941,
+##               "#1fa088"
+##             ],
+##             [
+##               0.627450980392157,
+##               "#28ae80"
+##             ],
+##             [
+##               0.690196078431373,
+##               "#3fbc73"
+##             ],
+##             [
+##               0.752941176470588,
+##               "#5ec962"
+##             ],
+##             [
+##               0.815686274509804,
+##               "#84d44b"
+##             ],
+##             [
+##               0.87843137254902,
+##               "#addc30"
+##             ],
+##             [
+##               0.941176470588235,
+##               "#d8e219"
+##             ],
+##             [
+##               1,
+##               "#fde725"
+##             ]
+##           ],
+##           "sequentialminus": [
+##             [
+##               0,
+##               "#440154"
+##             ],
+##             [
+##               0.0627450980392157,
+##               "#48186a"
+##             ],
+##             [
+##               0.125490196078431,
+##               "#472d7b"
+##             ],
+##             [
+##               0.188235294117647,
+##               "#424086"
+##             ],
+##             [
+##               0.250980392156863,
+##               "#3b528b"
+##             ],
+##             [
+##               0.313725490196078,
+##               "#33638d"
+##             ],
+##             [
+##               0.376470588235294,
+##               "#2c728e"
+##             ],
+##             [
+##               0.43921568627451,
+##               "#26828e"
+##             ],
+##             [
+##               0.501960784313725,
+##               "#21918c"
+##             ],
+##             [
+##               0.564705882352941,
+##               "#1fa088"
+##             ],
+##             [
+##               0.627450980392157,
+##               "#28ae80"
+##             ],
+##             [
+##               0.690196078431373,
+##               "#3fbc73"
+##             ],
+##             [
+##               0.752941176470588,
+##               "#5ec962"
+##             ],
+##             [
+##               0.815686274509804,
+##               "#84d44b"
+##             ],
+##             [
+##               0.87843137254902,
+##               "#addc30"
+##             ],
+##             [
+##               0.941176470588235,
+##               "#d8e219"
+##             ],
+##             [
+##               1,
+##               "#fde725"
+##             ]
+##           ],
+##           "diverging": [
+##             [
+##               0,
+##               "#440154"
+##             ],
+##             [
+##               0.0627450980392157,
+##               "#48186a"
+##             ],
+##             [
+##               0.125490196078431,
+##               "#472d7b"
+##             ],
+##             [
+##               0.188235294117647,
+##               "#424086"
+##             ],
+##             [
+##               0.250980392156863,
+##               "#3b528b"
+##             ],
+##             [
+##               0.313725490196078,
+##               "#33638d"
+##             ],
+##             [
+##               0.376470588235294,
+##               "#2c728e"
+##             ],
+##             [
+##               0.43921568627451,
+##               "#26828e"
+##             ],
+##             [
+##               0.501960784313725,
+##               "#21918c"
+##             ],
+##             [
+##               0.564705882352941,
+##               "#1fa088"
+##             ],
+##             [
+##               0.627450980392157,
+##               "#28ae80"
+##             ],
+##             [
+##               0.690196078431373,
+##               "#3fbc73"
+##             ],
+##             [
+##               0.752941176470588,
+##               "#5ec962"
+##             ],
+##             [
+##               0.815686274509804,
+##               "#84d44b"
+##             ],
+##             [
+##               0.87843137254902,
+##               "#addc30"
+##             ],
+##             [
+##               0.941176470588235,
+##               "#d8e219"
+##             ],
+##             [
+##               1,
+##               "#fde725"
+##             ]
+##           ]
 ##         }
 ##       }
 ##     }
@@ -164,56 +375,6 @@ cat("JSON Representation of a figure:", jfig, sep = "\n\n")
 ##   "config": {}
 ## }
 ```
-
-### Representing Figures in Dash
-
-[Dash for R](https://dashr.plotly.com/) is an open-source framework for
-building analytical applications, with no Javascript required, and it is
-tightly integrated with the Plotly graphing library.
-
-Learn about how to install Dash for R at
-<https://dashr.plot.ly/installation>.
-
-Everywhere in this page that you see fig, you can display the same
-figure in a Dash for R application by passing it to the figure argument.
-
-``` r
-
-library(dash)
-library(dashCoreComponents)
-library(dashHtmlComponents)
-library(plotly.core)
-
-fig <- go_figure() |>
-  add_scatter(x = c("a", "b", "c"), y = c(1, 3, 2), mode = "lines") |>
-  update_layout(title = "sample figure")
-
-app <- Dash$new()
-
-app$layout(
-  htmlDiv(
-    list(
-      dccGraph(id = 'graph', figure=fig),
-      htmlPre(
-        id='structure',
-        style = list(border = 'thin lightgrey solid',
-                     overflowY = 'scroll',
-                     height = '275px')
-      )
-    )
-  )
-)
-app$callback(
-  output(id = 'structure', property='children'),
-  params=list(input(id='graph', property='figure')),
-  function(fig_json) {
-    jfig <- plotly_json(fig, jsonedit = FALSE)
-    return(jfig)
-  })
-#app$run_server()
-```
-
-Use `app$run_server()` to run the dash app.
 
 ### Creating Figures
 
@@ -227,18 +388,14 @@ plotly.core graphing library.
 library(plotly.core)
 data(iris)
 
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_scatter(
-      data = iris[iris$Species == sp, ],
-      x = ~Sepal.Width,
-      y = ~Sepal.Length,
-      mode = "markers",
-      name = sp
-    )
-}
-fig <- fig |>
+iris |>
+  go_figure() |>
+  add_scatter(
+    x = ~Sepal.Width,
+    y = ~Sepal.Length,
+    mode = "markers",
+    split = ~Species
+  ) |>
   update_layout(
     title = "A Plotly Figure",
     legend = go_legend(title = go_legend_title(text = "species")),
@@ -246,7 +403,6 @@ fig <- fig |>
     xaxis = go_xaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff"),
     yaxis = go_yaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff")
   )
-fig
 ```
 
 #### Make Subplots
@@ -260,13 +416,12 @@ that traces can be added to.
 
 library(plotly.core)
 
-fig <- make_subplots(rows = 1, cols = 2) |>
+make_subplots(rows = 1, cols = 2) |>
   add_scatter(y = c(4, 2, 1), mode = "lines", row = 1, col = 1) |>
   add_bar(y = c(2, 1, 3), row = 1, col = 2) |>
   update_xaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
   update_yaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
   update_layout(plot_bgcolor = "#e5ecf6")
-fig
 ```
 
 ### Updating Figures
@@ -289,12 +444,11 @@ sequentially.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_trace(go_bar(x = c(1, 2, 3), y = c(1, 3, 2))) |>
   update_xaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
   update_yaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
   update_layout(plot_bgcolor = "#e5ecf6")
-fig
 ```
 
 ``` r
@@ -302,18 +456,14 @@ fig
 library(plotly.core)
 data(iris)
 
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_scatter(
-      data = iris[iris$Species == sp, ],
-      x = ~Sepal.Width,
-      y = ~Sepal.Length,
-      mode = "markers",
-      name = sp
-    )
-}
-fig <- fig |>
+iris |>
+  go_figure() |>
+  add_scatter(
+    x = ~Sepal.Width,
+    y = ~Sepal.Length,
+    mode = "markers",
+    split = ~Species
+  ) |>
   update_layout(
     title = "Using The add_trace() method With A Plotly Figure",
     legend = go_legend(title = go_legend_title(text = "species")),
@@ -330,7 +480,6 @@ fig <- fig |>
       showlegend = FALSE
     )
   )
-fig
 ```
 
 #### Updating Figure Layouts
@@ -347,7 +496,7 @@ Here is an example of updating the font size of a figure’s title using
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_bar(x = c(1, 2, 3), y = c(1, 3, 2)) |>
   update_layout(
     title = go_layout_title(
@@ -358,7 +507,6 @@ fig <- go_figure() |>
     xaxis = go_xaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff"),
     yaxis = go_yaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff")
   )
-fig
 ```
 
 #### Updating Traces
@@ -375,7 +523,7 @@ and `scatter` traces across two subplots.
 
 library(plotly.core)
 
-fig <- make_subplots(rows = 1, cols = 2) |>
+make_subplots(rows = 1, cols = 2) |>
   add_bar(
     x = c(0, 1, 2),
     y = c(2, 1, 3),
@@ -413,7 +561,6 @@ fig <- make_subplots(rows = 1, cols = 2) |>
   update_xaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
   update_yaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
   update_layout(plot_bgcolor = "#e5ecf6")
-fig
 ```
 
 Note that both `scatter` and `bar` traces have a `marker.color` property
@@ -425,7 +572,7 @@ to modify the color of all traces.
 
 library(plotly.core)
 
-fig <- make_subplots(rows = 1, cols = 2) |>
+make_subplots(rows = 1, cols = 2) |>
   add_bar(
     x = c(0, 1, 2),
     y = c(2, 1, 3),
@@ -464,7 +611,6 @@ fig <- make_subplots(rows = 1, cols = 2) |>
   update_yaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
   update_layout(plot_bgcolor = "#e5ecf6") |>
   update_traces(marker = go_bar_marker(color = "blue"))
-fig
 ```
 
 The
@@ -480,7 +626,7 @@ of the `bar` traces.
 
 library(plotly.core)
 
-fig <- make_subplots(rows = 1, cols = 2) |>
+make_subplots(rows = 1, cols = 2) |>
   add_bar(
     x = c(0, 1, 2),
     y = c(2, 1, 3),
@@ -519,7 +665,6 @@ fig <- make_subplots(rows = 1, cols = 2) |>
   update_yaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
   update_layout(plot_bgcolor = "#e5ecf6") |>
   update_traces(marker = go_bar_marker(color = "blue"), selector = "bar")
-fig
 ```
 
 ### Overwrite Existing Properties When Using Update Methods
@@ -632,7 +777,7 @@ library(plotly.core)
 
 t <- go_font(size = 15)
 
-fig <- go_figure() |>
+go_figure() |>
   add_bar(x = c(0, 1, 2), y = c(2, 1, 3), name = "b", marker = go_bar_marker(color = "red")) |>
   add_scatter(
     x = c(0, 1, 2),
@@ -661,8 +806,11 @@ fig <- go_figure() |>
   # disables vertical grid lines
   update_xaxes(showgrid = FALSE, zerolinecolor = "#ffff", zerolinewidth = 2) |>
   update_yaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff")
+```
+
+``` r
+
 # displaying the figure
-fig 
 ```
 
 #### Property Assignment

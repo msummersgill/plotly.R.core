@@ -6,7 +6,7 @@
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_carpet(
     a = c(4, 4, 4, 4.5, 4.5, 4.5, 5, 5, 5, 6, 6, 6),
     b = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3),
@@ -24,8 +24,6 @@ fig <- go_figure() |>
       minorgridcount = 9
     )
   )
-
-fig
 ```
 
 ### Add Carpet Scatter Trace
@@ -34,7 +32,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_carpet(
     a = c(4, 4, 4, 4.5, 4.5, 4.5, 5, 5, 5, 6, 6, 6),
     b = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3),
@@ -58,8 +56,6 @@ fig <- go_figure() |>
     line = go_scattercarpet_line(shape = "spline", smoothing = 1, color = "blue"),
     marker = go_scattercarpet_marker(color = "blue")
   )
-
-fig
 ```
 
 ### Adding Multiple Traces
@@ -68,7 +64,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_carpet(
     a = c(4, 4, 4, 4.5, 4.5, 4.5, 5, 5, 5, 6, 6, 6),
     b = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3),
@@ -111,8 +107,6 @@ fig <- go_figure() |>
     mode = "markers",
     marker = go_scattercarpet_marker(color = "black", size = c(0, 0, 30, 0))
   )
-
-fig
 ```
 
 \#Reference

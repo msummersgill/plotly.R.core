@@ -7,16 +7,17 @@ for plots in R.
 
 ### Automatic Labelling with Plotly
 
-plotly.core doesn’t label axes automatically: set axis titles with
-`go_xaxis(title = ...)` and `go_yaxis(title = ...)` (or
+plotly.core titles the axes after the `x` and `y` formulas, and names
+each trace added with `split` after its group. Set your own axis titles
+with `go_xaxis(title = ...)` and `go_yaxis(title = ...)` (or
 [`update_xaxes()`](https://msummersgill.github.io/plotly.R.core/reference/update_xaxes.md)
 /
 [`update_yaxes()`](https://msummersgill.github.io/plotly.R.core/reference/update_yaxes.md)),
 and the legend title with `go_legend(title = ...)`. The title of your
 figure is up to you too!
 
-Here’s a figure labelled with the data frame column names, and then the
-same figure with more descriptive labels.
+Here’s a figure labelled automatically with the data frame column names,
+and then the same figure with more descriptive labels.
 
 ``` r
 
@@ -24,44 +25,33 @@ library(plotly.core)
 
 data("iris")
 
-fig1 <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig1 <- fig1 |>
-    add_scatter(
-      data = iris[iris$Species == sp, ],
-      x = ~Sepal.Length,
-      y = ~Sepal.Width,
-      mode = "markers",
-      name = sp
-    )
-}
-fig1 <- fig1 |>
+iris |>
+  go_figure() |>
+  add_scatter(
+    x = ~Sepal.Length,
+    y = ~Sepal.Width,
+    mode = "markers",
+    split = ~Species
+  ) |>
   update_layout(
     title = "Labels Based on Data Frame Column Names",
     plot_bgcolor = "#e5ecf6",
-    xaxis = go_xaxis(title = "Sepal.Length"),
-    yaxis = go_yaxis(title = "Sepal.Width"),
     legend = go_legend(title = go_legend_title(text = "Species"))
   )
-fig1
 ```
 
 ``` r
 
 # Manually specifying labels
 
-fig2 <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig2 <- fig2 |>
-    add_scatter(
-      data = iris[iris$Species == sp, ],
-      x = ~Sepal.Length,
-      y = ~Sepal.Width,
-      mode = "markers",
-      name = sp
-    )
-}
-fig2 <- fig2 |>
+iris |>
+  go_figure() |>
+  add_scatter(
+    x = ~Sepal.Length,
+    y = ~Sepal.Width,
+    mode = "markers",
+    split = ~Species
+  ) |>
   update_layout(
     title = "Manually Specified Labels",
     plot_bgcolor = "#e5ecf6",
@@ -69,7 +59,6 @@ fig2 <- fig2 |>
     yaxis = go_yaxis(title = "Sepal Width (cm)"),
     legend = go_legend(title = go_legend_title(text = "<b> Species of Iris </b>"))
   )
-fig2
 ```
 
 ### Global and Local Font Specification
@@ -91,26 +80,21 @@ t1 <- go_font(family = "Times New Roman", color = "red")
 t2 <- go_font(family = "Courier New", size = 14, color = "green")
 t3 <- go_font(family = "Arial")
 
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_scatter(
-      data = iris[iris$Species == sp, ],
-      x = ~Sepal.Length,
-      y = ~Sepal.Width,
-      mode = "markers",
-      name = sp
-    )
-}
-fig <- fig |>
+iris |>
+  go_figure() |>
+  add_scatter(
+    x = ~Sepal.Length,
+    y = ~Sepal.Width,
+    mode = "markers",
+    split = ~Species
+  ) |>
   update_layout(
     title = go_layout_title(text = "Playing with Fonts", font = t1),
     font = t,
     legend = go_legend(title = go_legend_title(text = "Species", font = t2)),
-    xaxis = go_xaxis(title = go_xaxis_title(text = "Sepal.Length", font = t3)),
+    xaxis = go_xaxis(title = go_xaxis_title(font = t3)),
     plot_bgcolor = "#e5ecf6"
   )
-fig
 ```
 
 ### Manual Labelling in Plotly
@@ -131,7 +115,7 @@ y2 <- c(1, 0, 3, 2, 5, 4, 7, 6, 8)
 
 df <- data.frame(x1, y1, x2, y2)
 
-fig <- df |>
+df |>
   go_figure() |>
   add_scatter(x = ~x1, y = ~y1, mode = "lines+markers", name = "Name of Trace 1") |>
   add_scatter(x = ~x2, y = ~y2, mode = "lines+markers", name = "Name of Trace 2") |>
@@ -143,8 +127,6 @@ fig <- df |>
     plot_bgcolor = "#e5ecf6",
     legend = go_legend(title = go_legend_title(text = "Legend Title"))
   )
-
-fig
 ```
 
 The configuration of the legend is discussed in detail in the
@@ -168,7 +150,7 @@ y position.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = c("Mon", "Tue", "Wed"),
     y = c(3, 1, 4),
@@ -184,7 +166,6 @@ fig <- go_figure() |>
     ),
     plot_bgcolor = "#e5ecf6"
   )
-fig
 ```
 
 #### Reference

@@ -20,7 +20,7 @@ g <- go_geo(
   subunitwidth = 0.5
 )
 
-fig <- df |>
+df |>
   go_figure() |>
   add_scattergeo(
     lat = ~lat,
@@ -41,8 +41,6 @@ fig <- df |>
     title = "Most trafficked US airports<br />(Hover for airport)",
     geo = g
   )
-
-fig
 ```
 
 ### Style Scatter Map Layout
@@ -83,7 +81,7 @@ g <- go_geo(
   )
 )
 
-fig <- df |>
+df |>
   go_figure() |>
   add_scattergeo(
     lat = ~Lat,
@@ -101,6 +99,4 @@ fig <- df |>
     title = "US Precipitation 06-30-2015<br>Source: NOAA",
     geo = g
   )
-
-fig
 ```

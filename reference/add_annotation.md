@@ -454,6 +454,11 @@ add_annotation(
 
 The modified figure.
 
+## Details
+
+Properties that take a single value may be given vectors to add several
+annotations at once, one per element; the other properties are recycled.
+
 ## See also
 
 [`update_annotations()`](https://msummersgill.github.io/plotly.R.core/reference/update_annotations.md),

@@ -11,7 +11,7 @@ Bodywt <- c(10.0, 207.0, 62.0, 6.8, 52.2)
 Brainwt <- c(115, 406, 1320, 179, 440)
 data <- data.frame(Primates, Bodywt, Brainwt)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(
     x = ~Bodywt,
@@ -26,8 +26,6 @@ fig <- data |>
     xaxis = go_xaxis(title = "Body Weight (kg)", zeroline = TRUE, range = c(0, 250)),
     yaxis = go_yaxis(title = "Brain Weight (g)", range = c(0, 1400))
   )
-
-fig
 ```
 
 See more options on the `textposition` argument in
@@ -43,7 +41,7 @@ data <- mtcars[which(mtcars$am == 1 & mtcars$gear == 4), ]
 
 t <- go_font(family = "sans serif", size = 14, color = "rgb(127, 127, 127)")
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
   add_scatter(
@@ -55,8 +53,6 @@ fig <- data |>
     textposition = "top right"
   ) |>
   update_layout(xaxis = go_xaxis(range = c(1.6, 3.2)), showlegend = FALSE)
-
-fig
 ```
 
 ### Controlling text fontsize with uniformtext
@@ -80,7 +76,7 @@ library(plotly.core)
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/gapminderDataFiveYear.csv", stringsAsFactors = FALSE)
 df <- df[which(df$year == 2007 & df$continent == "Europe" & df$pop > 2.e6), ]
 
-fig <- df |>
+df |>
   go_figure() |>
   add_bar(
     x = ~country,
@@ -92,8 +88,6 @@ fig <- df |>
     textposition = "outside"
   ) |>
   update_layout(uniformtext = go_uniformtext(minsize = 8, mode = "hide"))
-
-fig
 ```
 
 ``` r
@@ -103,12 +97,10 @@ library(plotly.core)
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/gapminderDataFiveYear.csv", stringsAsFactors = FALSE)
 df <- df[which(df$year == 2007 & df$continent == "Asia"), ]
 
-fig <- df |>
+df |>
   go_figure() |>
   add_pie(labels = ~country, values = ~pop, textposition = "inside") |>
   update_layout(uniformtext = go_uniformtext(minsize = 12, mode = "hide"))
-
-fig
 ```
 
 ### Adding Informations to Default Hover Text
@@ -117,7 +109,7 @@ fig
 
 library(plotly.core)
 
-fig <- iris |>
+iris |>
   go_figure() |>
   add_scatter(
     x = ~Petal.Length,
@@ -125,8 +117,6 @@ fig <- iris |>
     mode = "markers",
     text = ~paste("Species: ", Species)
   )
-
-fig
 ```
 
 ### Custom Hover Text
@@ -135,7 +125,7 @@ fig
 
 library(plotly.core)
 
-fig <- iris |>
+iris |>
   go_figure() |>
   add_scatter(
     x = ~Petal.Length,
@@ -148,8 +138,6 @@ fig <- iris |>
       "</br> Petal Width: ", Petal.Width
     )
   )
-
-fig
 ```
 
 ### Single Annotation
@@ -160,7 +148,7 @@ library(plotly.core)
 
 m <- mtcars[which.max(mtcars$mpg), ]
 
-fig <- mtcars |>
+mtcars |>
   go_figure() |>
   add_scatter(x = ~wt, y = ~mpg, mode = "markers") |>
   add_annotation(
@@ -174,8 +162,6 @@ fig <- mtcars |>
     ax = 20,
     ay = -40
   )
-
-fig
 ```
 
 ### Multiple Annotations
@@ -186,32 +172,26 @@ library(plotly.core)
 
 data <- mtcars[which(mtcars$am == 1 & mtcars$gear == 4), ]
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(
     x = ~wt,
     y = ~mpg,
     mode = "markers",
     marker = go_scatter_marker(size = 10)
+  ) |>
+  add_annotation(
+    x = data$wt,
+    y = data$mpg,
+    text = rownames(data),
+    xref = "x",
+    yref = "y",
+    showarrow = TRUE,
+    arrowhead = 4,
+    arrowsize = .5,
+    ax = 20,
+    ay = -40
   )
-
-for (i in seq_len(nrow(data))) {
-  fig <- fig |>
-    add_annotation(
-      x = data$wt[[i]],
-      y = data$mpg[[i]],
-      text = rownames(data)[[i]],
-      xref = "x",
-      yref = "y",
-      showarrow = TRUE,
-      arrowhead = 4,
-      arrowsize = .5,
-      ax = 20,
-      ay = -40
-    )
-}
-
-fig
 ```
 
 ### Subplot Annotations
@@ -227,7 +207,7 @@ n <- economics[which.max(economics$uempmed), ]
 # figure labels
 f <- go_font(family = "Courier New, monospace", size = 18, color = "#7f7f7f")
 
-fig <- make_subplots(rows = 1, cols = 2) |>
+make_subplots(rows = 1, cols = 2) |>
   add_scatter(
     data = economics,
     x = ~date,
@@ -270,8 +250,6 @@ fig <- make_subplots(rows = 1, cols = 2) |>
   ) |>
   update_xaxes(title = go_xaxis_title(text = "x Axis", font = f)) |>
   update_yaxes(title = go_yaxis_title(text = "y Axis", font = f))
-
-fig
 ```
 
 ### 3D Annotations
@@ -280,7 +258,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter3d(
     x = c("2017-01-01", "2017-02-10", "2017-03-20"),
     y = c("A", "B", "C"),
@@ -344,8 +322,6 @@ fig <- go_figure() |>
     xaxis = go_xaxis(title = "x"),
     yaxis = go_yaxis(title = "y")
   )
-
-fig
 ```
 
 ### Styling Annotations
@@ -356,34 +332,28 @@ library(plotly.core)
 
 data <- mtcars[which(mtcars$am == 1 & mtcars$gear == 4), ]
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(
     x = ~wt,
     y = ~mpg,
     mode = "markers",
     marker = go_scatter_marker(size = 10)
+  ) |>
+  add_annotation(
+    x = data$wt,
+    y = data$mpg,
+    text = rownames(data),
+    xref = "x",
+    yref = "y",
+    showarrow = TRUE,
+    arrowhead = 4,
+    arrowsize = .5,
+    ax = 20,
+    ay = -40,
+    # Styling annotations' text:
+    font = go_font(color = "#264E86", family = "sans serif", size = 14)
   )
-
-for (i in seq_len(nrow(data))) {
-  fig <- fig |>
-    add_annotation(
-      x = data$wt[[i]],
-      y = data$mpg[[i]],
-      text = rownames(data)[[i]],
-      xref = "x",
-      yref = "y",
-      showarrow = TRUE,
-      arrowhead = 4,
-      arrowsize = .5,
-      ax = 20,
-      ay = -40,
-      # Styling annotations' text:
-      font = go_font(color = "#264E86", family = "sans serif", size = 14)
-    )
-}
-
-fig
 ```
 
 ### Set Annotation Text Anchors
@@ -392,7 +362,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = 1, y = 1, mode = "markers", showlegend = FALSE) |>
   add_scatter(x = 1, y = 2, mode = "markers", showlegend = FALSE) |>
   add_scatter(x = 1, y = 3, mode = "markers", showlegend = FALSE) |>
@@ -423,8 +393,6 @@ fig <- go_figure() |>
     xanchor = "left",
     showarrow = FALSE
   )
-
-fig
 ```
 
 ### Customize Displayed Text with a Text Template
@@ -444,15 +412,13 @@ vs. `hovertemplate` that customizes the tooltip text.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_pie(
     values = c(40000000, 20000000, 30000000, 10000000),
     labels = c("Wages", "Operating expenses", "Cost of sales", "Insurance"),
     texttemplate = "%{label}: %{value:$,s} <br>(%{percent})",
     textposition = "inside"
   )
-
-fig
 ```
 
 ### Customize Text Template
@@ -465,7 +431,7 @@ to customize the added text.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatterternary(
     a = c(3, 2, 5),
     b = c(2, 5, 2),
@@ -480,8 +446,6 @@ fig <- go_figure() |>
       color = c("IndianRed", "MediumPurple", "DarkOrange")
     )
   )
-
-fig
 ```
 
 ### Set Date in Text Template
@@ -500,7 +464,7 @@ information on the graph.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_funnel(
     name = "Montreal",
     orientation = "h",
@@ -518,8 +482,6 @@ fig <- go_figure() |>
     textinfo = "label"
   ) |>
   update_layout(yaxis = go_yaxis(type = "date"))
-
-fig
 ```
 
 ### Set Annotation Coordinate References
@@ -528,7 +490,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = 0.5, y = 1, mode = "markers", showlegend = FALSE) |>
   add_annotation(
     x = 0.5,
@@ -552,8 +514,6 @@ fig <- go_figure() |>
     xaxis = go_xaxis(zeroline = FALSE),
     yaxis = go_yaxis(zeroline = FALSE)
   )
-
-fig
 ```
 
 \#Reference

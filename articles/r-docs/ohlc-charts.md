@@ -10,7 +10,7 @@ df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance
 df$Date <- as.Date(df$Date)
 df <- tail(df, 30)
 
-fig <- df |>
+df |>
   go_figure() |>
   add_ohlc(
     x = ~Date,
@@ -20,8 +20,6 @@ fig <- df |>
     low = ~AAPL.Low
   ) |>
   update_layout(title = "Basic OHLC Chart")
-
-fig
 ```
 
 ### OHLC Chart without Rangeslider
@@ -34,7 +32,7 @@ df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance
 df$Date <- as.Date(df$Date)
 df <- tail(df, 30)
 
-fig <- df |>
+df |>
   go_figure() |>
   add_ohlc(
     x = ~Date,
@@ -47,8 +45,6 @@ fig <- df |>
     title = "Basic OHLC Chart",
     xaxis = go_xaxis(rangeslider = go_xaxis_rangeslider(visible = FALSE))
   )
-
-fig
 ```
 
 ### Customise the Figure with Shapes and Annotations
@@ -83,7 +79,7 @@ l <- go_shape(
   line = go_shape_line(color = "black", width = 0.5)
 )
 
-fig <- df |>
+df |>
   go_figure() |>
   add_ohlc(
     x = ~Date,
@@ -97,8 +93,6 @@ fig <- df |>
     annotations = list(a),
     shapes = list(l)
   )
-
-fig
 ```
 
 ### Custom OHLC Chart Colors
@@ -116,7 +110,7 @@ df <- tail(df, 30)
 i <- go_ohlc_increasing(line = go_ohlc_increasing_line(color = "#FFD700"))
 d <- go_ohlc_decreasing(line = go_ohlc_decreasing_line(color = "#0000ff"))
 
-fig <- df |>
+df |>
   go_figure() |>
   add_ohlc(
     x = ~Date,
@@ -127,8 +121,6 @@ fig <- df |>
     increasing = i,
     decreasing = d
   )
-
-fig
 ```
 
 \#Reference

@@ -24,10 +24,8 @@ img_rgb <- list(
   list(c(255, 0, 0), c(0, 255, 0), c(0, 0, 255)),
   list(c(0, 255, 0), c(0, 0, 255), c(255, 0, 0))
 )
-fig <- go_figure() |>
+go_figure() |>
   add_image(z = img_rgb)
-
-fig
 ```
 
 ### Read image arrays from image files
@@ -47,10 +45,8 @@ library(plotly.core)
 
 img <- png::readPNG(system.file("img", "Rlogo.png", package = "png"))[, , 1:3]
 
-fig <- go_figure() |>
+go_figure() |>
   add_image(z = img * 255)
-
-fig
 ```
 
 ### Define the data range covered by the color range with zmin and zmax
@@ -70,14 +66,12 @@ library(plotly.core)
 
 img <- png::readPNG(system.file("img", "Rlogo.png", package = "png"))[, , 1:3]
 # Stretch the contrast of the red channel only, resulting in a more red image
-fig <- go_figure() |>
+go_figure() |>
   add_image(
     z = img * 250,
     zmin = c(10, 0, 0, 0),
     zmax = c(200, 250, 250, 1)
   )
-
-fig
 ```
 
 ### Set Ticks and Margins
@@ -87,15 +81,13 @@ fig
 library(plotly.core)
 
 img <- png::readPNG(system.file("img", "Rlogo.png", package = "png"))[, , 1:3]
-fig <- go_figure() |>
+go_figure() |>
   add_image(z = img * 250) |>
   update_layout(
     margin = go_margin(l = 10, r = 10, b = 0, t = 0),
     xaxis = go_xaxis(showticklabels = FALSE, ticks = ""),
     yaxis = go_yaxis(showticklabels = FALSE, ticks = "")
   )
-
-fig
 ```
 
 ### Drawing Shapes on Images
@@ -123,9 +115,8 @@ turns to pink to highlight the activated shape and then you can
 
 An activated shape is deleted by cliking on the `eraseshape` button.
 
-Drawing or modifying a shape triggers a `relayout` event, which [can be
-captured by a callback inside a Dash For R
-application](https://dash.plotly.com/interactive-graphing).
+Drawing or modifying a shape triggers a `relayout` event, which a Shiny
+app can capture with `event_data("plotly_relayout")`.
 
 ``` r
 
@@ -133,7 +124,7 @@ library(plotly.core)
 
 img <- png::readPNG(system.file("img", "Rlogo.png", package = "png"))[, , 1:3]
 
-fig <- go_figure() |>
+go_figure() |>
   add_image(z = img * 255) |>
   update_layout(
     dragmode = "drawrect",
@@ -151,8 +142,6 @@ fig <- go_figure() |>
       "eraseshape"
     )
   )
-
-fig
 ```
 
 ### Reference

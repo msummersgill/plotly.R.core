@@ -29,12 +29,13 @@ updating the layout:
   [`go_yaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_yaxis.md)
   and
   [`go_legend()`](https://msummersgill.github.io/plotly.R.core/reference/go_legend.md)
-  to set axis and legend titles. plotly.core doesn’t label axes
-  automatically.
+  to set axis and legend titles. By default, axes are titled with the
+  column names in the `x` and `y` formulas.
 - `categoryorder` and `categoryarray` in
   [`go_xaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_xaxis.md)
   to override the default category ordering behaviour, which is to use
-  the order in which the data appears in the input.
+  the levels of a factor, or otherwise the order in which the data
+  appears in the input.
 - `hovertemplate`, `hoverinfo` and the axes’ `hoverformat` to control
   which attributes appear in the hover label and how they are formatted.
 - Various color-related attributes such as
@@ -52,15 +53,10 @@ library(plotly.core)
 
 data("tips")
 
-fig1 <- go_figure()
-for (g in levels(tips$sex)) {
-  fig1 <- fig1 |>
-    add_bar(data = tips[tips$sex == g, ], x = ~day, y = ~total_bill, name = g)
-}
-fig1 <- fig1 |>
+tips |>
+  go_figure() |>
+  add_bar(x = ~day, y = ~total_bill, split = ~sex) |>
   update_layout(barmode = "stack")
-
-fig1
 ```
 
 Here is the same figure, restyled by adding some extra parameters:
@@ -80,18 +76,14 @@ xform <- go_xaxis(
   categoryarray = c("Thur", "Fri", "Sat", "Sun")
 )
 
-fig2 <- go_figure()
-for (g in levels(tips$sex)) {
-  fig2 <- fig2 |>
-    add_bar(
-      data = tips[tips$sex == g, ],
-      x = ~day,
-      y = ~total_bill,
-      name = g,
-      marker = go_bar_marker(color = sex_colors[[g]])
-    )
-}
-fig2 <- fig2 |>
+tips |>
+  go_figure() |>
+  update_layout(colorway = sex_colors) |>
+  add_bar(
+    x = ~day,
+    y = ~total_bill,
+    marker = go_bar_marker(color = ~sex)
+  ) |>
   update_layout(
     barmode = "stack",
     xaxis = xform,
@@ -99,8 +91,6 @@ fig2 <- fig2 |>
     title = "Receipts by Payer Gender and Day of Week",
     legend = go_legend(title = go_legend_title(text = "<b> Payer Gender </b>"))
   )
-
-fig2
 ```
 
 ### Updating or Modifying Figures made with Plotly
@@ -123,17 +113,14 @@ xform <- go_xaxis(
   categoryarray = c("Thur", "Fri", "Sat", "Sun")
 )
 
-fig <- go_figure()
-for (g in levels(tips$sex)) {
-  fig <- fig |>
-    add_bar(
-      data = tips[tips$sex == g, ],
-      x = ~day,
-      y = ~total_bill,
-      name = g,
-      marker = go_bar_marker(color = sex_colors[[g]])
-    )
-}
+fig <- tips |>
+  go_figure() |>
+  update_layout(colorway = sex_colors) |>
+  add_bar(
+    x = ~day,
+    y = ~total_bill,
+    marker = go_bar_marker(color = ~sex)
+  )
 # the y-axis prefix given as dollars
 fig <- fig |>
   update_layout(

@@ -35,7 +35,7 @@ hline <- function(y = 0, color = "black") {
   )
 }
 
-fig <- iris |>
+iris |>
   go_figure() |>
   add_scatter(x = ~Petal.Length, y = ~Petal.Width, mode = "markers") |>
   update_layout(
@@ -45,8 +45,6 @@ fig <- iris |>
     ),
     plot_bgcolor = "#e5ecf6"
   )
-
-fig
 ```
 
 The shapes can also be filled with a specified color using `fillcolor`
@@ -70,7 +68,7 @@ vline <- function(x = 0, color = "green") {
   )
 }
 
-fig <- iris |>
+iris |>
   go_figure() |>
   add_scatter(x = ~Petal.Length, y = ~Petal.Width, mode = "markers") |>
   update_layout(
@@ -89,89 +87,7 @@ fig <- iris |>
       )
     )
   )
-
-fig
 ```
-
-### Horizontal and Vertical Lines in Dash
-
-[Dash for R](https://dashr.plotly.com) is an open-source framework for
-building analytical applications, with no Javascript required, and it is
-tightly integrated with the Plotly graphing library.
-
-Learn about how to install Dash for R at
-<https://dashr.plot.ly/installation>.
-
-Everywhere in this page that you see fig, you can display the same
-figure in a Dash for R application by passing it to the figure argument.
-
-``` r
-
-library(dash)
-library(dashCoreComponents)
-library(dashHtmlComponents)
-library(plotly.core)
-data("iris")
-
-vline <- function(x = 0, color = "green") {
-  go_shape(
-    type = "line",
-    y0 = 0,
-    y1 = 1,
-    yref = "paper",
-    x0 = x,
-    x1 = x,
-    line = go_shape_line(color = color, dash = "dot")
-  )
-}
-
-app <- Dash$new()
-
-app$layout(
-  htmlDiv(
-    list(
-      dccGraph(id = "graph-with-slider"),
-      htmlLabel("Position of hline"),
-      dccSlider(
-        id = "slider",
-        min = 1,
-        max = 7,
-        marks = c("", "1", "", "", "", "", "", "7"),
-        value = 2.5,
-        step = 0.1
-      )
-    )
-  )
-)
-app$callback(
-  output(id = "graph-with-slider", property = "figure"),
-  params = list(input(id = "slider", property = "value")),
-  function(value) {
-    iris |>
-      go_figure() |>
-      add_scatter(x = ~Petal.Length, y = ~Petal.Width, mode = "markers") |>
-      update_layout(
-        plot_bgcolor = "#e5ecf6",
-        shapes = list(
-          vline(value),
-          go_shape(
-            type = "rect",
-            fillcolor = "red",
-            line = go_shape_line(color = "red"),
-            opacity = 0.2,
-            y0 = 0.9,
-            y1 = 2.6,
-            x0 = 0.5,
-            x1 = 7.5
-          )
-        )
-      )
-  }
-)
-```
-
-After executing this code, give app\$run_server() in the console to
-start the dash.
 
 ### Adding Text Annotations
 

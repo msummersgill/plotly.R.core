@@ -18,7 +18,7 @@ for more detail.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_indicator(
     mode = "number+gauge+delta",
     gauge = go_indicator_gauge(shape = "bullet"),
@@ -28,8 +28,6 @@ fig <- go_figure() |>
     title = go_indicator_title(text = "Profit")
   ) |>
   update_layout(height = 150)
-
-fig
 ```
 
 ### Add Steps, and Threshold
@@ -42,7 +40,7 @@ if the value cross a defined threshold.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_indicator(
     mode = "number+gauge+delta",
     value = 220,
@@ -64,8 +62,6 @@ fig <- go_figure() |>
     )
   ) |>
   update_layout(height = 150, width = 600, margin = go_margin(l = 100, r = 10))
-
-fig
 ```
 
 ### Custom Bullet Chart
@@ -78,7 +74,7 @@ information about all possible options see
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_indicator(
     mode = "number+gauge+delta",
     value = 220,
@@ -102,8 +98,6 @@ fig <- go_figure() |>
     )
   ) |>
   update_layout(height = 150)
-
-fig
 ```
 
 ### Multi Bullet
@@ -132,7 +126,7 @@ bullet_gauge <- function(range_max, threshold, steps) {
   )
 }
 
-fig <- go_figure() |>
+go_figure() |>
   add_indicator(
     mode = "number+gauge+delta",
     value = 180,
@@ -157,8 +151,6 @@ fig <- go_figure() |>
     title = go_indicator_title(text = "Satisfaction"),
     gauge = bullet_gauge(300, 210, c(100, 250))
   )
-
-fig
 ```
 
 ### Reference

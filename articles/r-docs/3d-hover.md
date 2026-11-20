@@ -17,21 +17,17 @@ mtcars$am <- as.factor(mtcars$am)
 
 am_colors <- c(Automatic = "#BF382A", Manual = "#0C4B8E")
 
-fig <- go_figure()
-for (g in levels(mtcars$am)) {
-  fig <- fig |>
-    add_scatter3d(
-      data = mtcars[mtcars$am == g, ],
-      x = ~wt,
-      y = ~hp,
-      z = ~qsec,
-      mode = "markers",
-      opacity = 0.8,
-      marker = go_scatter3d_marker(color = am_colors[[g]]),
-      name = g
-    )
-}
-fig <- fig |>
+mtcars |>
+  go_figure() |>
+  update_layout(colorway = am_colors) |>
+  add_scatter3d(
+    x = ~wt,
+    y = ~hp,
+    z = ~qsec,
+    mode = "markers",
+    opacity = 0.8,
+    marker = go_scatter3d_marker(color = ~am)
+  ) |>
   update_layout(
     scene = go_scene(
       xaxis = go_scene_axis(
@@ -50,8 +46,6 @@ fig <- fig |>
       )
     )
   )
-
-fig
 ```
 
 #### Customize Hover for Surface Contours
@@ -65,7 +59,7 @@ contours on hover by default. These are customized by styling the
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_surface(
     z = volcano,
     contours = go_surface_contours(
@@ -81,8 +75,6 @@ fig <- go_figure() |>
       zaxis = go_scene_axis(showspikes = FALSE)
     )
   )
-
-fig
 ```
 
 ## Reference

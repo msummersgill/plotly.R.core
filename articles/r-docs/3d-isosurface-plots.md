@@ -6,7 +6,7 @@
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_isosurface(
     x = c(0, 0, 0, 0, 1, 1, 1, 1),
     y = c(1, 0, 1, 0, 1, 0, 1, 0),
@@ -15,8 +15,6 @@ fig <- go_figure() |>
     isomin = 2,
     isomax = 6
   )
-
-fig
 ```
 
 #### Isosurface with Additional Slices
@@ -27,7 +25,7 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/clebsch-cubic.csv")
 
-fig <- df |>
+df |>
   go_figure() |>
   add_isosurface(
     x = ~x,
@@ -51,8 +49,6 @@ fig <- df |>
       camera = go_scene_camera(eye = go_scene_camera_eye(x = 1.86, y = 0.61, z = 0.98))
     )
   )
-
-fig
 ```
 
 #### Multiple Isosurfaces with Caps
@@ -63,7 +59,7 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/clebsch-cubic.csv")
 
-fig <- df |>
+df |>
   go_figure() |>
   add_isosurface(
     x = ~x,
@@ -85,8 +81,6 @@ fig <- df |>
       camera = go_scene_camera(eye = go_scene_camera_eye(x = 1.86, y = 0.61, z = 0.98))
     )
   )
-
-fig
 ```
 
 #### Reference

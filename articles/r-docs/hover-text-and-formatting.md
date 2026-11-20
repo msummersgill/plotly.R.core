@@ -6,7 +6,7 @@
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = 1:5,
     y = rnorm(5, mean = 5),
@@ -16,8 +16,6 @@ fig <- go_figure() |>
     marker = go_scatter_marker(color = "green"),
     showlegend = FALSE
   )
-
-fig
 ```
 
 #### Unified hovermode
@@ -42,14 +40,12 @@ x <- c(1:100)
 
 data <- data.frame(x, trace_0, trace_1, trace_2)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(x = ~x, y = ~trace_0, name = "trace 0", mode = "lines") |>
   add_scatter(x = ~x, y = ~trace_1, name = "trace 1", mode = "lines+markers") |>
   add_scatter(x = ~x, y = ~trace_2, name = "trace 2", mode = "markers") |>
   update_layout(hovermode = "x unified")
-
-fig
 ```
 
 #### Format Hover Text
@@ -58,7 +54,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = 1:100,
     y = rnorm(100, mean = 5),
@@ -75,8 +71,6 @@ fig <- go_figure() |>
     xaxis = go_xaxis(zeroline = FALSE),
     yaxis = go_yaxis(hoverformat = ".2f")
   )
-
-fig
 ```
 
 #### Customize Tooltip Text with a Hovertemplate
@@ -98,7 +92,7 @@ Set the horizontal alignment of the text within tooltip with `align` in
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     mode = "lines+markers",
     x = c(1, 2, 3, 4, 5),
@@ -118,15 +112,13 @@ fig <- go_figure() |>
     hovertemplate = "Price: %{y:$.2f}<extra></extra>",
     showlegend = FALSE
   )
-
-fig
 ```
 
 ``` r
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_pie(
     name = "",
     values = c(2, 1, 3, 2.5),
@@ -134,8 +126,6 @@ fig <- go_figure() |>
     text = c("textA", "TextB", "TextC", "TextD"),
     hovertemplate = "%{label}: <br>Popularity: %{percent} </br> %{text}"
   )
-
-fig
 ```
 
 #### Advanced Hovertemplate
@@ -146,34 +136,24 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/job-automation-probability.csv")
 
-fig <- go_figure()
-for (ed in unique(df$education)) {
-  fig <- fig |>
-    add_scatter(
-      data = df[df$education == ed, ],
-      mode = "markers",
-      name = ed,
-      x = ~prob,
-      y = ~Average.annual.wage,
-      marker = go_scatter_marker(size = ~numbEmployed, sizeref = 4000, sizemode = "area"),
-      text = ~short.occupation,
-      hovertemplate = paste(
-        "<b>%{text}</b><br><br>",
-        "%{yaxis.title.text}: %{y:$,.0f}<br>",
-        "%{xaxis.title.text}: %{x:.0%}<br>",
-        "Number Employed: %{marker.size:,}",
-        "<extra></extra>"
-      )
+df |>
+  go_figure() |>
+  add_scatter(
+    mode = "markers",
+    split = ~education,
+    x = ~prob,
+    y = ~Average.annual.wage,
+    marker = go_scatter_marker(size = ~numbEmployed, sizeref = 4000, sizemode = "area"),
+    text = ~short.occupation,
+    hovertemplate = paste(
+      "<b>%{text}</b><br><br>",
+      "%{yaxis.title.text}: %{y:$,.0f}<br>",
+      "%{xaxis.title.text}: %{x:.0%}<br>",
+      "Number Employed: %{marker.size:,}",
+      "<extra></extra>"
     )
-}
-fig <- fig |>
-  update_layout(
-    xaxis = go_xaxis(title = "prob"),
-    yaxis = go_yaxis(title = "Average.annual.wage"),
-    legend = go_legend(orientation = "h", y = -0.3)
-  )
-
-fig
+  ) |>
+  update_layout(legend = go_legend(orientation = "h", y = -0.3))
 ```
 
 #### Reference

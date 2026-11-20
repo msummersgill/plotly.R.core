@@ -6,7 +6,7 @@
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_cone(x = 1, y = 1, z = 1, u = 1, v = 1, w = 0) |>
   update_layout(
     scene = go_scene(
@@ -15,8 +15,6 @@ fig <- go_figure() |>
       )
     )
   )
-
-fig
 ```
 
 ### Mulitple 3D Cones
@@ -25,7 +23,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_cone(
     x = c(1, 2, 3),
     y = c(1, 2, 3),
@@ -46,8 +44,6 @@ fig <- go_figure() |>
       )
     )
   )
-
-fig
 ```
 
 ### 3D Cone Lighting
@@ -137,7 +133,7 @@ dat <- fromJSON(
 )
 wind <- dat$data[[1]]
 
-fig <- go_figure() |>
+go_figure() |>
   add_cone(
     x = unlist(wind$x),
     y = unlist(wind$y),
@@ -156,8 +152,6 @@ fig <- go_figure() |>
       aspectratio = go_scene_aspectratio(x = 1.57, y = 1.36, z = 0.58)
     )
   )
-
-fig
 ```
 
 ### 3D Cone Vortex
@@ -168,7 +162,7 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/vortex.csv")
 
-fig <- df |>
+df |>
   go_figure() |>
   add_cone(
     x = ~x,
@@ -188,8 +182,6 @@ fig <- df |>
       )
     )
   )
-
-fig
 ```
 
 ### Reference

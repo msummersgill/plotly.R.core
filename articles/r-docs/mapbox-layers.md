@@ -58,13 +58,22 @@ to first set `layout.map.style` to `"white-bg"` and then set
 This chart demonstrates how to use “open-street-map” tiles as the base
 map for a chart.
 
+> The “open-street-map” style loads tiles from OpenStreetMap’s
+> volunteer-run servers, whose [tile usage
+> policy](https://operations.osmfoundation.org/policies/tiles/) blocks
+> requests that don’t identify the page they come from. Browsers or
+> extensions that strip the `Referer` header then show an “Access
+> blocked” tile instead of the map. The `carto-*` styles have no such
+> requirement, so the other examples on these pages use
+> `"carto-voyager"`.
+
 ``` r
 
 library(plotly.core)
 
 us_cities <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/us-cities-top-1k.csv")
 
-fig <- us_cities |>
+us_cities |>
   go_figure() |>
   add_scattermap(
     lat = ~lat,
@@ -79,8 +88,6 @@ fig <- us_cities |>
       center = go_map_center(lon = -88, lat = 34)
     )
   )
-
-fig
 ```
 
 ### Base Map Below A Trace
@@ -94,7 +101,7 @@ library(plotly.core)
 
 us_cities <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/us-cities-top-1k.csv")
 
-fig <- us_cities |>
+us_cities |>
   go_figure() |>
   add_scattermap(
     lat = ~lat,
@@ -116,8 +123,6 @@ fig <- us_cities |>
       )
     )
   )
-
-fig
 ```
 
 #### Maps Below and Above A Trace
@@ -132,7 +137,7 @@ rendered *above* the `scattermap` trace, as is the default:
 
 library(plotly.core)
 
-fig <- us_cities |>
+us_cities |>
   go_figure() |>
   add_scattermap(
     lat = ~lat,
@@ -158,8 +163,6 @@ fig <- us_cities |>
       )
     )
   )
-
-fig
 ```
 
 #### Dark Base Map
@@ -173,7 +176,7 @@ library(plotly.core)
 
 us_cities <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/us-cities-top-1k.csv")
 
-fig <- us_cities |>
+us_cities |>
   go_figure() |>
   add_scattermap(
     lat = ~lat,
@@ -188,8 +191,6 @@ fig <- us_cities |>
       center = go_map_center(lon = -88, lat = 34)
     )
   )
-
-fig
 ```
 
 \#Reference

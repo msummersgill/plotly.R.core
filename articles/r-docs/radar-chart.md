@@ -6,7 +6,7 @@
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatterpolar(
     r = c(39, 28, 8, 7, 28, 39),
     theta = c("A", "B", "C", "D", "E", "A"),
@@ -18,8 +18,6 @@ fig <- go_figure() |>
     ),
     showlegend = FALSE
   )
-
-fig
 ```
 
 #### Multiple Trace Radar Charts
@@ -28,7 +26,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatterpolar(
     r = c(39, 28, 8, 7, 28, 39),
     theta = c("A", "B", "C", "D", "E", "A"),
@@ -46,8 +44,6 @@ fig <- go_figure() |>
       radialaxis = go_polar_radialaxis(visible = TRUE, range = c(0, 50))
     )
   )
-
-fig
 ```
 
 #### Reference

@@ -264,11 +264,6 @@ objects (see the Examples gallery).
 
   How to get started making charts with Plotly’s R graphing library.
 
-- [GitHub for Data Scientists without the
-  Terminal](https://msummersgill.github.io/plotly.R.core/articles/r-docs/github-getting-started-for-data-scientists.md):
-
-  Introduction to GitHub for Data Scientists without the Terminal
-
 - [Multiple Chart
   Types](https://msummersgill.github.io/plotly.R.core/articles/r-docs/graphing-multiple-chart-types.md):
 

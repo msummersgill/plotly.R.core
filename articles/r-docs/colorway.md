@@ -12,7 +12,7 @@ a_list <- seq(1, 3, length = 7)
 b_list <- seq(2, 14, length = 7)
 df <- data.frame(cbind(x, (outer((x * x), a_list) + outer(ones, b_list))))
 
-fig <- df |>
+df |>
   go_figure() |>
   add_scatter(x = ~x, y = ~V2, mode = "lines") |>
   add_scatter(x = ~x, y = ~V3, mode = "lines") |>
@@ -27,8 +27,6 @@ fig <- df |>
       "#6f4d96", "#3d3b72", "#182844"
     )
   )
-
-fig
 ```
 
 \#Reference

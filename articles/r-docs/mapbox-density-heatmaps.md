@@ -18,7 +18,7 @@ library(plotly.core)
 
 quakes <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/earthquakes-23k.csv")
 
-fig <- quakes |>
+quakes |>
   go_figure() |>
   add_densitymap(
     lat = ~Latitude,
@@ -27,11 +27,9 @@ fig <- quakes |>
     radius = 10
   ) |>
   update_layout(
-    map = go_map(style = "open-street-map", center = go_map_center(lon = 180)),
+    map = go_map(style = "carto-voyager", center = go_map_center(lon = 180)),
     coloraxis = go_coloraxis(colorscale = "Viridis")
   )
-
-fig
 ```
 
 \#Reference

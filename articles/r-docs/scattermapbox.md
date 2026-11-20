@@ -24,7 +24,7 @@ dat <- dat |> group_by(group)
 paths <- dat |>
   group_modify(~ add_row(.x, long = NA, lat = NA))
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattermap(
     data = paths,
     lon = ~long,
@@ -39,13 +39,11 @@ fig <- go_figure() |>
   ) |>
   update_layout(
     map = go_map(
-      style = "open-street-map",
+      style = "carto-voyager",
       zoom = 0,
       center = go_map_center(lat = median(dat$lat), lon = median(dat$long))
     )
   )
-
-fig
 ```
 
 ### Multiple Markers
@@ -56,20 +54,16 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/bcdunbar/datasets/master/meteorites_subset.csv")
 
-fig <- go_figure()
-for (cl in unique(df$class)) {
-  fig <- fig |>
-    add_scattermap(
-      data = df[df$class == cl, ],
-      lat = ~reclat,
-      lon = ~reclong,
-      mode = "markers",
-      marker = go_scattermap_marker(size = 2),
-      hoverinfo = "name",
-      name = cl
-    )
-}
-fig <- fig |>
+df |>
+  go_figure() |>
+  add_scattermap(
+    lat = ~reclat,
+    lon = ~reclong,
+    mode = "markers",
+    marker = go_scattermap_marker(size = 2),
+    hoverinfo = "name",
+    split = ~class
+  ) |>
   update_layout(
     title = "Meteorites by Class",
     font = go_font(color = "white"),
@@ -79,8 +73,6 @@ fig <- fig |>
     legend = go_legend(orientation = "h", font = go_font(size = 8)),
     margin = go_margin(l = 25, r = 25, b = 25, t = 25, pad = 2)
   )
-
-fig
 ```
 
 ### Adding lines to tile maps
@@ -101,7 +93,7 @@ flights$id <- seq_len(nrow(flights))
 seg_lon <- as.vector(rbind(flights$start_lon, flights$end_lon, NA))
 seg_lat <- as.vector(rbind(flights$start_lat, flights$end_lat, NA))
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattermap(
     data = air,
     lon = ~long,
@@ -134,8 +126,6 @@ fig <- go_figure() |>
     margin = go_margin(l = 0, r = 0, b = 0, t = 0, pad = 0),
     showlegend = FALSE
   )
-
-fig
 ```
 
 \#Reference

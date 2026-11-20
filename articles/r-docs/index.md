@@ -16,9 +16,8 @@ Structure](https://msummersgill.github.io/plotly.R.core/articles/r-docs/figure-s
 Figures](https://msummersgill.github.io/plotly.R.core/articles/r-docs/creating-and-updating-figures.md)
 [![](thumb-renderers.png)Displaying
 Figures](https://msummersgill.github.io/plotly.R.core/articles/r-docs/renderers.md)
-[](https://msummersgill.github.io/plotly.R.core/articles/r-docs/static-image-export.md)
-
-Exporting Graphs as Static Images
+[Exporting Graphs as Static
+Images](https://msummersgill.github.io/plotly.R.core/articles/r-docs/static-image-export.md)
 [![](thumb-configuration-options.png)Configuration](https://msummersgill.github.io/plotly.R.core/articles/r-docs/configuration-options.md)
 [![](thumb-setting-graph-size.png)Setting Graph
 Size](https://msummersgill.github.io/plotly.R.core/articles/r-docs/setting-graph-size.md)
@@ -42,9 +41,9 @@ Annotations](https://msummersgill.github.io/plotly.R.core/articles/r-docs/text-a
 [![](thumb-hover-text-and-formatting.png)Hover Text and
 Formatting](https://msummersgill.github.io/plotly.R.core/articles/r-docs/hover-text-and-formatting.md)
 [![](thumb-images.png)Images](https://msummersgill.github.io/plotly.R.core/articles/r-docs/images.md)
-[](https://msummersgill.github.io/plotly.R.core/articles/r-docs/builtin-colorscales.md)
-
-Built-in Continuous Color Scales [![](thumb-discrete-color.png)Discrete
+[Built-in Continuous Color
+Scales](https://msummersgill.github.io/plotly.R.core/articles/r-docs/builtin-colorscales.md)
+[![](thumb-discrete-color.png)Discrete
 Colors](https://msummersgill.github.io/plotly.R.core/articles/r-docs/discrete-color.md)
 [![](thumb-styling-figures.png)Styling Plotly Figures in
 R](https://msummersgill.github.io/plotly.R.core/articles/r-docs/styling-figures.md)
@@ -61,14 +60,11 @@ Lighting](https://msummersgill.github.io/plotly.R.core/articles/r-docs/3d-surfac
 Graphs](https://msummersgill.github.io/plotly.R.core/articles/r-docs/latex.md)
 [![](thumb-logos.png)Embedding Logos in Plotly
 Graphs](https://msummersgill.github.io/plotly.R.core/articles/r-docs/logos.md)
-[](https://msummersgill.github.io/plotly.R.core/articles/r-docs/locales.md)
-
-Locales [![](thumb-webgl-text-and-annotations.png)WebGL Text and
+[Locales](https://msummersgill.github.io/plotly.R.core/articles/r-docs/locales.md)
+[![](thumb-webgl-text-and-annotations.png)WebGL Text and
 Annotations](https://msummersgill.github.io/plotly.R.core/articles/r-docs/webgl-text-and-annotations.md)
 [![](thumb-colorway.png)Colorway](https://msummersgill.github.io/plotly.R.core/articles/r-docs/colorway.md)
-[](https://msummersgill.github.io/plotly.R.core/articles/r-docs/troubleshooting.md)
-
-Troubleshooting
+[Troubleshooting](https://msummersgill.github.io/plotly.R.core/articles/r-docs/troubleshooting.md)
 
 ## Basic Charts
 
@@ -82,10 +78,8 @@ Charts](https://msummersgill.github.io/plotly.R.core/articles/r-docs/bar-charts.
 Charts](https://msummersgill.github.io/plotly.R.core/articles/r-docs/pie-charts.md)
 [![](thumb-bubble-charts.png)Bubble
 Charts](https://msummersgill.github.io/plotly.R.core/articles/r-docs/bubble-charts.md)
-[](https://msummersgill.github.io/plotly.R.core/articles/r-docs/webgl-vs-svg.md)
-
-WebGL vs SVG in R
-
+[WebGL vs SVG in
+R](https://msummersgill.github.io/plotly.R.core/articles/r-docs/webgl-vs-svg.md)
 [![](thumb-filled-area-plots.png)Filled Area
 Plots](https://msummersgill.github.io/plotly.R.core/articles/r-docs/filled-area-plots.md)
 [![](thumb-horizontal-bar-charts.png)Horizontal Bar
@@ -118,9 +112,7 @@ Plots](https://msummersgill.github.io/plotly.R.core/articles/r-docs/violin.md)
 [![](thumb-2d-histogram-contour.png)2D Histogram
 Contour](https://msummersgill.github.io/plotly.R.core/articles/r-docs/2d-histogram-contour.md)
 [![](thumb-splom.png)Splom](https://msummersgill.github.io/plotly.R.core/articles/r-docs/splom.md)
-[](https://msummersgill.github.io/plotly.R.core/articles/r-docs/distplot.md)
-
-Distplots
+[Distplots](https://msummersgill.github.io/plotly.R.core/articles/r-docs/distplot.md)
 
 ## Scientific Charts
 
@@ -273,10 +265,6 @@ By](https://msummersgill.github.io/plotly.R.core/articles/r-docs/group-by.md)
 
 [![](thumb-getting-started.png)Getting Started with
 Plotly](https://msummersgill.github.io/plotly.R.core/articles/r-docs/getting-started.md)
-[](https://msummersgill.github.io/plotly.R.core/articles/r-docs/github-getting-started-for-data-scientists.md)
-
-GitHub for Data Scientists without the Terminal
-
 [![](thumb-webgl-vs-svg-million-points.png)WebGL in Plotly and
 R](https://msummersgill.github.io/plotly.R.core/articles/r-docs/webgl-vs-svg-million-points.md)
 [![](thumb-webgl-vs-svg-time-series.png)WebGL in Plotly and

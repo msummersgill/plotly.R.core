@@ -196,10 +196,8 @@ final <- data.frame(X1 = as.vector(xx), X2 = as.vector(yy))
 predicted <- knn_score(make_moons[, c("X1", "X2")], final, make_moons$y, k = 15)
 Z <- matrix(predicted, nrow(xx), ncol(xx))
 
-fig <- go_figure() |>
+go_figure() |>
   add_contour(x = xrange, y = yrange, z = Z, colorscale = "RdBu")
-
-fig
 ```
 
 Now, let’s try to combine our `Contour` plot with the first scatter plot

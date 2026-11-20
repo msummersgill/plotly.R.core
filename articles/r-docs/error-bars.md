@@ -15,7 +15,7 @@ data$dose <- as.factor(data$dose)
 
 error_y <- go_error_bar(array = ~sd, color = "#000000")
 
-fig <- go_figure() |>
+go_figure() |>
   add_bar(
     data = data[data$supp == "OJ", ],
     x = ~dose,
@@ -30,8 +30,6 @@ fig <- go_figure() |>
     name = "VC",
     error_y = error_y
   )
-
-fig
 ```
 
 ### Scatterplot with Error Bars
@@ -49,7 +47,7 @@ data$dose <- as.factor(data$dose)
 
 error_y <- go_error_bar(array = ~sd, color = "#000000")
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     data = data[data$supp == "OJ", ],
     x = ~dose,
@@ -66,8 +64,6 @@ fig <- go_figure() |>
     name = "VC",
     error_y = error_y
   )
-
-fig
 ```
 
 ### Line Graph with Error Bars
@@ -85,7 +81,7 @@ data$dose <- as.factor(data$dose)
 
 error_y <- go_error_bar(array = ~sd, color = "#000000")
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     data = data[data$supp == "OJ", ],
     x = ~dose,
@@ -102,8 +98,6 @@ fig <- go_figure() |>
     name = "VC",
     error_y = error_y
   )
-
-fig
 ```
 
 ### Reference

@@ -6,14 +6,12 @@
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_bar(
     x = c("giraffes", "orangutans", "monkeys"),
     y = c(20, 14, 23),
     name = "SF Zoo"
   )
-
-fig
 ```
 
 ### Grouped Bar Chart
@@ -27,13 +25,11 @@ SF_Zoo <- c(20, 14, 23)
 LA_Zoo <- c(12, 18, 29)
 data <- data.frame(Animals, SF_Zoo, LA_Zoo)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_bar(x = ~Animals, y = ~SF_Zoo, name = "SF Zoo") |>
   add_bar(x = ~Animals, y = ~LA_Zoo, name = "LA Zoo") |>
   update_layout(yaxis = go_yaxis(title = "Count"), barmode = "group")
-
-fig
 ```
 
 ### Stacked Bar Chart
@@ -47,13 +43,11 @@ SF_Zoo <- c(20, 14, 23)
 LA_Zoo <- c(12, 18, 29)
 data <- data.frame(Animals, SF_Zoo, LA_Zoo)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_bar(x = ~Animals, y = ~SF_Zoo, name = "SF Zoo") |>
   add_bar(x = ~Animals, y = ~LA_Zoo, name = "LA Zoo") |>
   update_layout(yaxis = go_yaxis(title = "Count"), barmode = "stack")
-
-fig
 ```
 
 ### Bar Chart with Hover Text
@@ -67,7 +61,7 @@ y <- c(20, 14, 23)
 text <- c("27% market share", "24% market share", "19% market share")
 data <- data.frame(x, y, text)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_bar(
     x = ~x,
@@ -83,8 +77,6 @@ fig <- data |>
     xaxis = go_xaxis(title = ""),
     yaxis = go_yaxis(title = "")
   )
-
-fig
 ```
 
 ### Bar Chart with Direct Labels
@@ -97,7 +89,7 @@ x <- c("Product A", "Product B", "Product C")
 y <- c(20, 14, 23)
 data <- data.frame(x, y)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_bar(
     x = ~x,
@@ -114,8 +106,6 @@ fig <- data |>
     xaxis = go_xaxis(title = ""),
     yaxis = go_yaxis(title = "")
   )
-
-fig
 ```
 
 ### Grouped Bar Chart with Direct Labels
@@ -129,7 +119,7 @@ y <- c(20, 14, 23)
 y2 <- c(16, 12, 27)
 data <- data.frame(x, y, y2)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_bar(
     x = ~x,
@@ -157,8 +147,6 @@ fig <- data |>
     xaxis = go_xaxis(title = ""),
     yaxis = go_yaxis(title = "")
   )
-
-fig
 ```
 
 ### Rotated Bar Chart Labels
@@ -173,7 +161,7 @@ y1 <- c(20, 14, 25, 16, 18, 22, 19, 15, 12, 16, 14, 17)
 y2 <- c(19, 14, 22, 14, 16, 19, 15, 14, 10, 12, 12, 16)
 data <- data.frame(x, y1, y2)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_bar(
     x = ~x,
@@ -193,8 +181,6 @@ fig <- data |>
     margin = go_margin(b = 100),
     barmode = "group"
   )
-
-fig
 ```
 
 Categories are drawn in the order they first appear in the data, so the
@@ -210,7 +196,7 @@ x <- c("Feature A", "Feature B", "Feature C", "Feature D", "Feature E")
 y <- c(20, 14, 23, 25, 22)
 data <- data.frame(x, y)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_bar(x = ~x, y = ~y, marker = go_bar_marker(color = "black")) |>
   update_layout(
@@ -218,8 +204,6 @@ fig <- data |>
     xaxis = go_xaxis(title = ""),
     yaxis = go_yaxis(title = "")
   )
-
-fig
 ```
 
 ### Customizing Individual Bar Colors
@@ -232,7 +216,7 @@ x <- c("Feature A", "Feature B", "Feature C", "Feature D", "Feature E")
 y <- c(20, 14, 23, 25, 22)
 data <- data.frame(x, y)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_bar(
     x = ~x,
@@ -248,8 +232,6 @@ fig <- data |>
     xaxis = go_xaxis(title = ""),
     yaxis = go_yaxis(title = "")
   )
-
-fig
 ```
 
 ### Customizing Individual Bar Widths
@@ -263,11 +245,9 @@ y <- c(10, 8, 6, 4, 2)
 width <- c(0.8, 0.8, 0.8, 3.5, 4)
 data <- data.frame(x, y, width)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_bar(x = ~x, y = ~y, width = ~width)
-
-fig
 ```
 
 ### Customizing Individual Bar Base
@@ -276,7 +256,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_bar(
     x = c("2016", "2017", "2018"),
     y = c(500, 600, 700),
@@ -291,28 +271,21 @@ fig <- go_figure() |>
     marker = go_bar_marker(color = "blue"),
     name = "revenue"
   )
-
-fig
 ```
 
 ### Mapping a Color Variable
 
-One trace per group gives each group its own color and legend entry.
+`split = ~clarity` adds one trace per level, so each group gets its own
+color and legend entry.
 
 ``` r
 
 library(plotly.core)
 library(dplyr)
 
-counts <- count(ggplot2::diamonds, cut, clarity)
-
-fig <- go_figure()
-for (cl in levels(counts$clarity)) {
-  fig <- fig |>
-    add_bar(data = filter(counts, clarity == cl), x = ~cut, y = ~n, name = cl)
-}
-
-fig
+count(ggplot2::diamonds, cut, clarity) |>
+  go_figure() |>
+  add_bar(x = ~cut, y = ~n, split = ~clarity)
 ```
 
 ### Colored and Styled Bar Chart
@@ -331,7 +304,7 @@ data <- data.frame(x, roW, China)
 
 grey <- "rgb(107, 107, 107)"
 
-fig <- data |>
+data |>
   go_figure() |>
   add_bar(
     x = ~x,
@@ -365,8 +338,6 @@ fig <- data |>
     bargap = 0.15,
     bargroupgap = 0.1
   )
-
-fig
 ```
 
 ### Waterfall Bar Chart
@@ -418,20 +389,16 @@ fig <- data |>
   )
 
 # one annotation per bar
-for (i in seq_along(x)) {
-  fig <- fig |>
-    add_annotation(
-      text = text[[i]],
-      x = x[[i]],
-      y = y[[i]],
-      xref = "x",
-      yref = "y",
-      font = go_font(family = "Arial", size = 14, color = "rgba(245, 246, 249, 1)"),
-      showarrow = FALSE
-    )
-}
-
-fig
+fig |>
+  add_annotation(
+    text = text,
+    x = x,
+    y = y,
+    xref = "x",
+    yref = "y",
+    font = go_font(family = "Arial", size = 14, color = "rgba(245, 246, 249, 1)"),
+    showarrow = FALSE
+  )
 ```
 
 ### Horizontal Bar Chart

@@ -19,6 +19,7 @@ add_surface(
   fig,
   ...,
   data = NULL,
+  split = NULL,
   autocolorscale = NULL,
   cauto = NULL,
   cmax = NULL,
@@ -144,6 +145,15 @@ go_surface(
   [`crosstalk::SharedData`](https://rdrr.io/pkg/crosstalk/man/SharedData.html)
   works the same way, and links the trace to its crosstalk group (see
   [`highlight()`](https://msummersgill.github.io/plotly.R.core/reference/highlight.md)).
+
+- split:
+
+  A column (`~col`) or vector, one value per row of the data: one trace
+  is added per value, named after it. Colour properties given a discrete
+  column (a factor, character or logical, e.g.
+  `marker = go_scatter_marker(color = ~group)`) split the data the same
+  way, each trace getting its own colour: evenly spaced viridis colours
+  for an ordered factor, otherwise the figure's colorway.
 
 - autocolorscale:
 

@@ -51,32 +51,25 @@ network <- go_figure() |>
 
 ``` r
 
-edge_shapes <- list()
-for (i in 1:Ne) {
-  v0 <- es[i, ]$V1
-  v1 <- es[i, ]$V2
-
-  edge_shape <- go_shape(
+network <- network |>
+  # igraph also has an add_shape()
+  plotly.core::add_shape(
     type = "line",
     line = go_shape_line(color = "#030303", width = 0.3),
-    x0 = Xn[v0],
-    y0 = Yn[v0],
-    x1 = Xn[v1],
-    y1 = Yn[v1]
+    x0 = Xn[es$V1],
+    y0 = Yn[es$V1],
+    x1 = Xn[es$V2],
+    y1 = Yn[es$V2]
   )
-
-  edge_shapes[[i]] <- edge_shape
-}
 ```
 
 ### Create Network
 
 ``` r
 
-fig <- network |>
+network |>
   update_layout(
     title = "Karate Network",
-    shapes = edge_shapes,
     xaxis = go_xaxis(
       title = "",
       showgrid = FALSE,
@@ -90,8 +83,6 @@ fig <- network |>
       zeroline = FALSE
     )
   )
-
-fig
 ```
 
 ### Reference

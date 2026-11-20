@@ -223,7 +223,7 @@ yaxis_style <- go_yaxis(
   title = go_yaxis_title(font = go_font(size = 13))
 )
 
-fig <- df |>
+df |>
   go_figure() |>
   add_splom(
     dimensions = list(
@@ -270,8 +270,6 @@ fig <- df |>
     yaxis7 = yaxis_style,
     yaxis8 = yaxis_style
   )
-
-fig
 ```
 
 ### Reference

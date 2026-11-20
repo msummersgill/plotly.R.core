@@ -6,7 +6,7 @@
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
     y = c(28.8, 28.5, 37, 56.8, 69.7, 79.7, 78.5, 77.8, 74.1, 62.6, 45.3, 39.9),
@@ -15,8 +15,6 @@ fig <- go_figure() |>
   update_layout(
     xaxis = go_xaxis(dtick = 0.75, tick0 = 0.5, tickmode = "linear")
   )
-
-fig
 ```
 
 ### Tickmode - Array
@@ -25,7 +23,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
     y = c(28.8, 28.5, 37, 56.8, 69.7, 79.7, 78.5, 77.8, 74.1, 62.6, 45.3, 39.9),
@@ -38,8 +36,6 @@ fig <- go_figure() |>
       tickmode = "array"
     )
   )
-
-fig
 ```
 
 ### Using Tickformat
@@ -48,15 +44,13 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
     y = c(0.18, 0.38, 0.56, 0.46, 0.59, 0.4, 0.78, 0.77, 0.74, 0.42, 0.45, 0.39),
     mode = "markers+lines"
   ) |>
   update_layout(yaxis = go_yaxis(tickformat = "%"))
-
-fig
 ```
 
 ### Using Tickformat (Date)
@@ -67,7 +61,7 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = df$Date,
     y = df$AAPL.High,
@@ -86,8 +80,6 @@ fig <- go_figure() |>
     title = "Time Series with Custom Date-Time Format",
     xaxis = go_xaxis(type = "date", tickformat = "%d %B (%a)<br>%Y")
   )
-
-fig
 ```
 
 ### Tickformatstops to customize for different zoom levels
@@ -98,7 +90,7 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = df$Date, y = df$mavg, mode = "lines") |>
   update_layout(
     xaxis = go_xaxis(
@@ -115,8 +107,6 @@ fig <- go_figure() |>
       )
     )
   )
-
-fig
 ```
 
 ### Using Exponentformat
@@ -125,7 +115,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
     y = c(68000, 52000, 60000, 20000, 95000, 40000, 60000, 79000, 74000, 42000, 20000, 90000),
@@ -134,6 +124,4 @@ fig <- go_figure() |>
   update_layout(
     yaxis = go_yaxis(showexponent = "all", exponentformat = "e")
   )
-
-fig
 ```

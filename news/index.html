@@ -56,6 +56,18 @@ Constructors take properties by name only (no positional <code>arg</code>; start
 <code><a href="../reference/make_subplots.html">make_subplots()</a></code>, templates (<code><a href="../reference/get_template.html">default_template()</a></code>, <code><a href="../reference/get_template.html">register_template()</a></code>); figures use no template (<code>"none"</code>, plotly.js’s own defaults) unless one is set, as plotly 4.x does.</li>
 <li>Figures rendered with the <code>"none"</code> default template have plotly 4.x’s margins (<code>l = 60, r = 10, t = 25, b = 40</code> pixels) unless the layout sets them.</li>
 <li>
+<code>add_&lt;trace&gt;()</code> takes data-driven defaults as plotly 4.x does:
+<ul><li>
+<code>split = ~col</code> adds one trace per level, named after it;</li>
+<li>colour properties given a discrete column (<code>marker = go_scatter_marker(color = ~group)</code>) split the same way, with viridis colours for ordered factors and the colorway otherwise;</li>
+<li>axis titles, trace names and colorbar titles come from the formulas, and factor <code>x</code>/<code>y</code> values keep their level order, unless set.</li>
+</ul></li>
+<li>
+<code><a href="../reference/add_annotation.html">add_annotation()</a></code>, <code><a href="../reference/add_shape.html">add_shape()</a></code> and the other layout element functions take vectors for single-value properties, adding one object per element.</li>
+<li>
+<code><a href="../reference/update_layout.html">update_layout()</a></code> has every layout property as an argument, documented in <code><a href="../reference/update_layout.html">?update_layout</a></code>.</li>
+<li>Colorscale names plotly.js knows (<code>"Blues"</code>, <code>"Viridis"</code>, …) use plotly.js’s definitions, as in plotly.js and plotly 4.x; others are plotly.py’s. With the <code>"none"</code> default template, colour scales default to viridis, as in plotly 4.x.</li>
+<li>
 <code>options(plotly.core.plotlyjs = "cdn")</code> loads plotly.js from cdn.jsdelivr.net instead of copying it next to the HTML, e.g. for websites with many pages.</li>
 <li>
 <code><a href="../reference/update_xaxes.html">update_xaxes()</a></code>, <code><a href="../reference/select_traces.html">update_traces()</a></code> and the other <code>update_*()</code> / <code>select_*()</code> functions accept vectors and <code>"all"</code> for <code>row</code> and <code>col</code>, as documented.</li>

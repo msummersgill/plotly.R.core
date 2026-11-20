@@ -6,14 +6,12 @@
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_bar(
     x = c(20, 14, 23),
     y = c("giraffes", "orangutans", "monkeys"),
     orientation = "h"
   )
-
-fig
 ```
 
 ### Colored Horizontal Bar Chart
@@ -27,7 +25,7 @@ SF_Zoo <- c(20, 14, 23)
 LA_Zoo <- c(12, 18, 29)
 data <- data.frame(y, SF_Zoo, LA_Zoo)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_bar(
     x = ~SF_Zoo,
@@ -54,8 +52,6 @@ fig <- data |>
     xaxis = go_xaxis(title = ""),
     yaxis = go_yaxis(title = "")
   )
-
-fig
 ```
 
 ### Color Palette for Bar Chart
@@ -124,53 +120,41 @@ fig <- fig |>
     showlegend = FALSE
   )
 
-annotations <- list()
-# labeling the y-axis
-for (i in seq_along(y)) {
-  annotations <- c(annotations, list(go_annotation(
+values <- as.matrix(data[, names(bar_colors)])
+midpoints <- t(apply(values, 1, cumsum)) - values / 2
+fig |>
+  # labeling the y-axis
+  add_annotation(
     xref = "paper",
     yref = "y",
     x = 0.14,
-    y = y[[i]],
+    y = y,
     xanchor = "right",
-    text = y[[i]],
+    text = y,
     font = go_font(family = "Arial", size = 12, color = "rgb(67, 67, 67)"),
     showarrow = FALSE,
     align = "right"
-  )))
-}
-# labeling the percentages of each bar (x_axis)
-values <- as.matrix(data[, names(bar_colors)])
-midpoints <- t(apply(values, 1, cumsum)) - values / 2
-for (i in seq_along(y)) {
-  for (j in seq_len(ncol(values))) {
-    annotations <- c(annotations, list(go_annotation(
-      xref = "x",
-      yref = "y",
-      x = midpoints[i, j],
-      y = y[[i]],
-      text = paste(values[i, j], "%"),
-      font = go_font(family = "Arial", size = 12, color = "rgb(248, 248, 255)"),
-      showarrow = FALSE
-    )))
-  }
-}
-# labeling the first Likert scale (on the top)
-for (j in seq_along(top_labels)) {
-  annotations <- c(annotations, list(go_annotation(
+  ) |>
+  # labeling the percentages of each bar (x_axis)
+  add_annotation(
+    xref = "x",
+    yref = "y",
+    x = c(t(midpoints)),
+    y = rep(y, each = ncol(values)),
+    text = paste(c(t(values)), "%"),
+    font = go_font(family = "Arial", size = 12, color = "rgb(248, 248, 255)"),
+    showarrow = FALSE
+  ) |>
+  # labeling the first Likert scale (on the top)
+  add_annotation(
     xref = "x",
     yref = "paper",
-    x = midpoints[1, j],
+    x = midpoints[1, ],
     y = 1.15,
-    text = top_labels[[j]],
+    text = top_labels,
     font = go_font(family = "Arial", size = 12, color = "rgb(67, 67, 67)"),
     showarrow = FALSE
-  )))
-}
-fig <- fig |>
-  update_layout(annotations = annotations)
-
-fig
+  )
 ```
 
 ### Bar Chart with Line Plot
@@ -253,28 +237,25 @@ fig <- make_subplots(rows = 1, cols = 2, horizontal_spacing = 0.02) |>
     plot_bgcolor = "rgb(248, 248, 255)"
   )
 
-for (i in seq_along(y)) {
-  fig <- fig |>
-    add_annotation(
-      xref = "x",
-      yref = "y",
-      x = x_saving[[i]] * 2.1 + 3,
-      y = y[[i]],
-      text = paste(round(x_saving[[i]], 2), "%"),
-      font = go_font(family = "Arial", size = 12, color = "rgb(50, 171, 96)"),
-      showarrow = FALSE
-    ) |>
-    add_annotation(
-      xref = "x2",
-      yref = "y2",
-      x = x_net_worth[[i]],
-      y = y[[i]],
-      text = paste(x_net_worth[[i]], "M"),
-      font = go_font(family = "Arial", size = 12, color = "rgb(128, 0, 128)"),
-      showarrow = FALSE
-    )
-}
-fig <- fig |>
+fig |>
+  add_annotation(
+    xref = "x",
+    yref = "y",
+    x = x_saving * 2.1 + 3,
+    y = y,
+    text = paste(round(x_saving, 2), "%"),
+    font = go_font(family = "Arial", size = 12, color = "rgb(50, 171, 96)"),
+    showarrow = FALSE
+  ) |>
+  add_annotation(
+    xref = "x2",
+    yref = "y2",
+    x = x_net_worth,
+    y = y,
+    text = paste(x_net_worth, "M"),
+    font = go_font(family = "Arial", size = 12, color = "rgb(128, 0, 128)"),
+    showarrow = FALSE
+  ) |>
   add_annotation(
     xref = "paper",
     yref = "paper",
@@ -284,8 +265,6 @@ fig <- fig |>
     font = go_font(family = "Arial", size = 10, color = "rgb(150,150,150)"),
     showarrow = FALSE
   )
-
-fig
 ```
 
 ### Reference

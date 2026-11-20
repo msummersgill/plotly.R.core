@@ -9,12 +9,10 @@ library(plotly.core)
 USPersonalExpenditure <- data.frame("Categorie"=rownames(USPersonalExpenditure), USPersonalExpenditure)
 data <- USPersonalExpenditure[,c('Categorie', 'X1960')]
 
-fig <- data |>
+data |>
   go_figure() |>
   add_pie(labels = ~Categorie, values = ~X1960) |>
   update_layout(title = "United States Personal Expenditures by Categories in 1960")
-
-fig
 ```
 
 ### Styled Pie Chart
@@ -28,7 +26,7 @@ data <- USPersonalExpenditure[, c('Categorie', 'X1960')]
 
 colors <- c('rgb(211,94,96)', 'rgb(128,133,133)', 'rgb(144,103,167)', 'rgb(171,104,87)', 'rgb(114,147,203)')
 
-fig <- data |>
+data |>
   go_figure() |>
   add_pie(
     labels = ~Categorie,
@@ -46,8 +44,6 @@ fig <- data |>
     showlegend = FALSE
   ) |>
   update_layout(title = "United States Personal Expenditures by Categories in 1960")
-
-fig
 ```
 
 ### Subplots
@@ -67,7 +63,7 @@ library(dplyr)
 
 diamonds <- ggplot2::diamonds
 
-fig <- go_figure() |>
+go_figure() |>
   add_pie(
     data = count(diamonds, cut),
     labels = ~cut,
@@ -90,8 +86,6 @@ fig <- go_figure() |>
     domain = go_domain(x = c(0.25, 0.75), y = c(0, 0.6))
   ) |>
   update_layout(title = "Pie Charts with Subplots", showlegend = FALSE)
-
-fig
 ```
 
 ### Subplots Using Grid
@@ -109,7 +103,7 @@ library(dplyr)
 
 diamonds <- ggplot2::diamonds
 
-fig <- go_figure() |>
+go_figure() |>
   add_pie(
     data = count(diamonds, cut),
     labels = ~cut,
@@ -143,8 +137,6 @@ fig <- go_figure() |>
     showlegend = FALSE,
     grid = go_grid(rows = 2, columns = 2)
   )
-
-fig
 ```
 
 [`make_subplots()`](https://msummersgill.github.io/plotly.R.core/reference/make_subplots.md)
@@ -168,14 +160,13 @@ library(plotly.core)
 labels = c('Oxygen','Hydrogen','Carbon_Dioxide','Nitrogen')
 values = c(4500, 2500, 1053, 500)
 
-fig <- go_figure() |>
+go_figure() |>
   add_pie(
     labels = labels,
     values = values,
     textinfo = "label+percent",
     insidetextorientation = "radial"
   )
-fig
 ```
 
 ### Donut Chart
@@ -191,12 +182,10 @@ mtcars$manuf <- sapply(strsplit(rownames(mtcars), " "), "[[", 1)
 df <- mtcars
 df <- df %>% group_by(manuf)
 df <- df %>% summarize(count = n())
-fig <- df |>
+df |>
   go_figure() |>
   add_pie(labels = ~manuf, values = ~count, hole = 0.6) |>
   update_layout(title = "Donut charts using Plotly", showlegend = FALSE)
-
-fig
 ```
 
 ### Reference

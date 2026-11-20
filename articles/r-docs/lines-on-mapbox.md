@@ -25,7 +25,7 @@ to the combination of markers and lines.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattermap(
     mode = "markers+lines",
     lon = c(10, 20, 30),
@@ -40,14 +40,12 @@ fig <- go_figure() |>
   ) |>
   update_layout(
     map = go_map(
-      style = "open-street-map",
+      style = "carto-voyager",
       center = go_map_center(lon = 10, lat = 10),
       zoom = 1
     ),
     margin = go_margin(l = 0, t = 0, b = 0, r = 0)
   )
-
-fig
 ```
 
 \#Reference

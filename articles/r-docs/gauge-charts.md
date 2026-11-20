@@ -14,7 +14,7 @@ The example below displays a basic gauge chart with default attributes.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_indicator(
     domain = go_domain(x = c(0, 1), y = c(0, 1)),
     value = 270,
@@ -22,8 +22,6 @@ fig <- go_figure() |>
     mode = "gauge+number"
   ) |>
   update_layout(margin = go_margin(l = 20, r = 30))
-
-fig
 ```
 
 ### Add Steps, Threshold, and Delta
@@ -37,7 +35,7 @@ visually alert you if the value cross a defined threshold.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_indicator(
     domain = go_domain(x = c(0, 1), y = c(0, 1)),
     value = 450,
@@ -58,8 +56,6 @@ fig <- go_figure() |>
     )
   ) |>
   update_layout(margin = go_margin(l = 20, r = 30))
-
-fig
 ```
 
 ### Custom Gauge Chart
@@ -72,7 +68,7 @@ information about all possible options see
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_indicator(
     mode = "gauge+number+delta",
     value = 420,
@@ -107,8 +103,6 @@ fig <- go_figure() |>
     paper_bgcolor = "lavender",
     font = go_font(color = "darkblue", family = "Arial")
   )
-
-fig
 ```
 
 \#Reference

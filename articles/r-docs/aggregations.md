@@ -46,14 +46,12 @@ library(plotly.core)
 diamonds <- ggplot2::diamonds
 price_sum <- tapply(diamonds$price, diamonds$cut, sum)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = names(price_sum),
     y = unname(price_sum),
     mode = "markers"
   )
-
-fig
 ```
 
 #### Aggregate Functions

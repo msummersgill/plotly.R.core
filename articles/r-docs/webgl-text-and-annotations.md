@@ -22,7 +22,7 @@ steps <- lapply(1:(n - 30), function(e) {
   )
 })
 
-fig <- go_figure() |>
+go_figure() |>
   add_heatmap(z = z) |>
   add_scattergl(
     mode = "text",
@@ -41,8 +41,6 @@ fig <- go_figure() |>
     yaxis = go_yaxis(showline = FALSE, zeroline = FALSE, showgrid = FALSE),
     sliders = list(go_slider(active = 0, steps = steps))
   )
-
-fig
 ```
 
 \#Reference

@@ -6,7 +6,7 @@
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_sankey(
     orientation = "h",
     node = go_sankey_node(
@@ -29,8 +29,6 @@ fig <- go_figure() |>
     title = "Basic Sankey Diagram",
     font = go_font(size = 10)
   )
-
-fig
 ```
 
 ### Create Canvas
@@ -101,7 +99,7 @@ json_file <- "https://raw.githubusercontent.com/plotly/plotly.js/master/test/ima
 json_data <- fromJSON(json_file, simplifyVector = FALSE)
 sankey <- json_data$data[[1]]
 
-fig <- go_figure() |>
+go_figure() |>
   add_sankey(
     domain = go_domain(x = c(0, 1), y = c(0, 1)),
     orientation = "h",
@@ -130,8 +128,6 @@ fig <- go_figure() |>
     xaxis = go_xaxis(showgrid = FALSE, zeroline = FALSE),
     yaxis = go_yaxis(showgrid = FALSE, zeroline = FALSE)
   )
-
-fig
 ```
 
 ### Style Sankey Diagram
@@ -145,7 +141,7 @@ json_file <- "https://raw.githubusercontent.com/plotly/plotly.js/master/test/ima
 json_data <- fromJSON(json_file, simplifyVector = FALSE)
 sankey <- json_data$data[[1]]
 
-fig <- go_figure() |>
+go_figure() |>
   add_sankey(
     domain = go_domain(x = c(0, 1), y = c(0, 1)),
     orientation = "h",
@@ -176,8 +172,6 @@ fig <- go_figure() |>
     plot_bgcolor = "black",
     paper_bgcolor = "black"
   )
-
-fig
 ```
 
 ### Define Node Position
@@ -195,7 +189,7 @@ the node’s `pad`. The other possible arrangements are: 1) perpendicular
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_sankey(
     arrangement = "snap",
     node = go_sankey_node(
@@ -211,8 +205,6 @@ fig <- go_figure() |>
     )
   ) |>
   update_layout(title = "Sankey with manually positioned node")
-
-fig
 ```
 
 ### Reference

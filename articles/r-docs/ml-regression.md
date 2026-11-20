@@ -43,7 +43,7 @@ lm_model <- lm(tip ~ total_bill, data = tips)
 xy <- data.frame(total_bill = seq(min(X), max(X), length.out = 100))
 xy$tip <- predict(lm_model, xy)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     data = tips,
     x = ~total_bill,
@@ -59,8 +59,6 @@ fig <- go_figure() |>
     mode = "lines",
     name = "Regression Fit"
   )
-
-fig
 ```
 
 ## Model generalization on unseen data
@@ -90,7 +88,7 @@ lm_model <- lm(tip ~ total_bill, data = tips_training)
 xy <- data.frame(total_bill = seq(min(X), max(X), length.out = 100))
 xy$tip <- predict(lm_model, xy)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     data = tips_training,
     x = ~total_bill,
@@ -114,8 +112,6 @@ fig <- go_figure() |>
     mode = "lines",
     name = "prediction"
   )
-
-fig
 ```
 
 ## Comparing different kNN models parameters
@@ -158,19 +154,18 @@ xy$uni <- knn_predict(tips$total_bill, tips$tip, xy$total_bill, weighted = FALSE
 
 sex_colors <- c(Female = "#FF7F50", Male = "#6495ED")
 
-fig <- go_figure()
-for (sx in levels(tips$sex)) {
-  fig <- fig |>
-    add_scatter(
-      data = tips[tips$sex == sx, ],
-      x = ~total_bill,
-      y = ~tip,
-      mode = "markers",
-      marker = go_scatter_marker(color = sex_colors[[sx]], opacity = 0.65),
-      name = sx
-    )
-}
-fig <- fig |>
+tips |>
+  go_figure() |>
+  add_scatter(
+    x = ~total_bill,
+    y = ~tip,
+    mode = "markers",
+    marker = go_scatter_marker(
+      color = ~sex_colors[as.character(sex)],
+      opacity = 0.65
+    ),
+    split = ~sex
+  ) |>
   add_scatter(
     data = xy,
     x = ~total_bill,
@@ -185,8 +180,6 @@ fig <- fig |>
     name = "Weights: Uniform",
     mode = "lines"
   )
-
-fig
 ```
 
 ## 3D regression surface with `add_surface()`
@@ -232,7 +225,7 @@ final <- data.frame(Sepal.Width = c(xx), Sepal.Length = c(yy))
 pred <- predict(model, final)
 pred <- matrix(pred, dim_val[1], dim_val[2])
 
-fig <- iris |>
+iris |>
   go_figure() |>
   add_scatter3d(
     x = ~Sepal.Width,
@@ -248,6 +241,4 @@ fig <- iris |>
     opacity = 0.65,
     name = "pred_surface"
   )
-
-fig
 ```

@@ -61,29 +61,23 @@ axis_y <- go_yaxis(
   title = go_yaxis_title(font = go_font(size = 13))
 )
 
-colors <- c(setosa = "#636EFA", versicolor = "#EF553B", virginica = "#00CC96")
-
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_splom(
-      data = iris[iris$Species == sp, ],
-      name = sp,
-      dimensions = list(
-        go_splom_dimension(label = "sepal length", values = ~Sepal.Length),
-        go_splom_dimension(label = "sepal width", values = ~Sepal.Width),
-        go_splom_dimension(label = "petal length", values = ~Petal.Length),
-        go_splom_dimension(label = "petal width", values = ~Petal.Width)
-      ),
-      diagonal = go_splom_diagonal(visible = FALSE),
-      marker = go_splom_marker(
-        color = colors[[sp]],
-        size = 7,
-        line = go_splom_marker_line(width = 1, color = "rgb(230,230,230)")
-      )
+iris |>
+  go_figure() |>
+  update_layout(colorway = c("#636EFA", "#EF553B", "#00CC96")) |>
+  add_splom(
+    dimensions = list(
+      go_splom_dimension(label = "sepal length", values = ~Sepal.Length),
+      go_splom_dimension(label = "sepal width", values = ~Sepal.Width),
+      go_splom_dimension(label = "petal length", values = ~Petal.Length),
+      go_splom_dimension(label = "petal width", values = ~Petal.Width)
+    ),
+    diagonal = go_splom_diagonal(visible = FALSE),
+    marker = go_splom_marker(
+      color = ~Species,
+      size = 7,
+      line = go_splom_marker_line(width = 1, color = "rgb(230,230,230)")
     )
-}
-fig <- fig |>
+  ) |>
   update_layout(
     hovermode = "closest",
     dragmode = "select",
@@ -97,8 +91,6 @@ fig <- fig |>
     yaxis3 = axis_y,
     yaxis4 = axis_y
   )
-
-fig
 ```
 
 ### Visualize all the principal components
@@ -146,25 +138,19 @@ axis_y <- go_yaxis(
 pc_label <- function(i) {
   paste("PC ", i, " (", toString(round(explained_variance_ratio[i], 1)), "%)", sep = "")
 }
-colors <- c(setosa = "#636EFA", versicolor = "#EF553B", virginica = "#00CC96")
-
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_splom(
-      data = components[iris$Species == sp, ],
-      name = sp,
-      dimensions = list(
-        go_splom_dimension(label = pc_label(1), values = ~PC1),
-        go_splom_dimension(label = pc_label(2), values = ~PC2),
-        go_splom_dimension(label = pc_label(3), values = ~PC3),
-        go_splom_dimension(label = pc_label(4), values = ~PC4)
-      ),
-      diagonal = go_splom_diagonal(visible = FALSE),
-      marker = go_splom_marker(color = colors[[sp]])
-    )
-}
-fig <- fig |>
+components |>
+  go_figure() |>
+  update_layout(colorway = c("#636EFA", "#EF553B", "#00CC96")) |>
+  add_splom(
+    dimensions = list(
+      go_splom_dimension(label = pc_label(1), values = ~PC1),
+      go_splom_dimension(label = pc_label(2), values = ~PC2),
+      go_splom_dimension(label = pc_label(3), values = ~PC3),
+      go_splom_dimension(label = pc_label(4), values = ~PC4)
+    ),
+    diagonal = go_splom_diagonal(visible = FALSE),
+    marker = go_splom_marker(color = ~iris$Species)
+  ) |>
   update_layout(
     legend = go_legend(title = go_legend_title(text = "color")),
     hovermode = "closest",
@@ -179,8 +165,6 @@ fig <- fig |>
     yaxis3 = axis_y,
     yaxis4 = axis_y
   )
-
-fig
 ```
 
 ### Visualize a subset of the principal components
@@ -232,7 +216,7 @@ axis_y <- go_yaxis(
   title = go_yaxis_title(font = go_font(size = 13))
 )
 
-fig <- components |>
+components |>
   go_figure() |>
   add_splom(
     dimensions = list(
@@ -263,7 +247,6 @@ fig <- components |>
     yaxis3 = axis_y,
     yaxis4 = axis_y
   )
-fig
 ```
 
 ## 2D PCA Scatter Plot
@@ -285,21 +268,15 @@ components <- data.frame(components)
 components <- cbind(components, iris$Species)
 components$PC2 <- -components$PC2
 
-colors <- c(setosa = "#636EFA", versicolor = "#EF553B", virginica = "#00CC96")
-
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_scatter(
-      data = components[iris$Species == sp, ],
-      x = ~PC1,
-      y = ~PC2,
-      mode = "markers",
-      name = sp,
-      marker = go_scatter_marker(color = colors[[sp]])
-    )
-}
-fig <- fig |>
+components |>
+  go_figure() |>
+  update_layout(colorway = c("#636EFA", "#EF553B", "#00CC96")) |>
+  add_scatter(
+    x = ~PC1,
+    y = ~PC2,
+    mode = "markers",
+    marker = go_scatter_marker(color = ~iris$Species)
+  ) |>
   update_layout(
     legend = go_legend(title = go_legend_title(text = "color")),
     plot_bgcolor = "#e5ecf6",
@@ -316,7 +293,6 @@ fig <- fig |>
       gridcolor = "#ffff"
     )
   )
-fig
 ```
 
 ## Visualize PCA with scatter3d
@@ -345,28 +321,20 @@ tot_explained_variance_ratio <- 100 * sum(tot_explained_variance_ratio)
 
 tit <- "Total Explained Variance = 99.48"
 
-colors <- c(setosa = "#636EFA", versicolor = "#EF553B", virginica = "#00CC96")
-
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_scatter3d(
-      data = components[iris$Species == sp, ],
-      x = ~PC1,
-      y = ~PC2,
-      z = ~PC3,
-      mode = "markers",
-      name = sp,
-      marker = go_scatter3d_marker(color = colors[[sp]], size = 6)
-    )
-}
-fig <- fig |>
+components |>
+  go_figure() |>
+  update_layout(colorway = c("#636EFA", "#EF553B", "#00CC96")) |>
+  add_scatter3d(
+    x = ~PC1,
+    y = ~PC2,
+    z = ~PC3,
+    mode = "markers",
+    marker = go_scatter3d_marker(color = ~iris$Species, size = 6)
+  ) |>
   update_layout(
     title = tit,
     scene = go_scene(bgcolor = "#e5ecf6")
   )
-
-fig
 ```
 
 ## Plotting explained variance
@@ -400,7 +368,7 @@ cumsum <- cumsum(explained_variance_ratio)
 data <- data.frame(cumsum, seq(1, length(cumsum), 1))
 colnames(data) <- c("Explained_Variance", "Components")
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(
     x = ~Components,
@@ -412,7 +380,6 @@ fig <- data |>
     xaxis = go_xaxis(title = "# Components", tickvals = seq(1, length(cumsum), 1)),
     yaxis = go_yaxis(title = "Explained Variance")
   )
-fig
 ```
 
 ## Visualize Loadings
@@ -451,49 +418,38 @@ for (i in seq(explained_variance)) {
 
 features <- c("sepal_length", "sepal_width", "petal_length", "petal_width")
 
-colors <- c(setosa = "#636EFA", versicolor = "#EF553B", virginica = "#00CC96")
-
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_scatter(
-      data = components[iris$Species == sp, ],
-      x = ~PC1,
-      y = ~PC2,
-      mode = "markers",
-      name = sp,
-      marker = go_scatter_marker(color = colors[[sp]])
-    )
-}
-fig <- fig |>
+components |>
+  go_figure() |>
+  update_layout(colorway = c("#636EFA", "#EF553B", "#00CC96")) |>
+  add_scatter(
+    x = ~PC1,
+    y = ~PC2,
+    mode = "markers",
+    marker = go_scatter_marker(color = ~iris$Species)
+  ) |>
   update_layout(
     legend = go_legend(title = go_legend_title(text = "color")),
     plot_bgcolor = "#e5ecf6",
     xaxis = go_xaxis(title = "0"),
     yaxis = go_yaxis(title = "1")
+  ) |>
+  add_shape(
+    type = "line",
+    x0 = 0,
+    y0 = 0,
+    x1 = loadings[, 1],
+    y1 = loadings[, 2],
+    line = go_shape_line(color = "black")
+  ) |>
+  add_annotation(
+    x = loadings[, 1],
+    y = loadings[, 2],
+    ax = 0,
+    ay = 0,
+    text = features,
+    xanchor = "center",
+    yanchor = "bottom"
   )
-for (i in seq(4)) {
-  fig <- fig |>
-    add_shape(
-      type = "line",
-      x0 = 0,
-      y0 = 0,
-      x1 = loadings[i, 1],
-      y1 = loadings[i, 2],
-      line = go_shape_line(color = "black")
-    ) |>
-    add_annotation(
-      x = loadings[i, 1],
-      y = loadings[i, 2],
-      ax = 0,
-      ay = 0,
-      text = features[i],
-      xanchor = "center",
-      yanchor = "bottom"
-    )
-}
-
-fig
 ```
 
 ## References

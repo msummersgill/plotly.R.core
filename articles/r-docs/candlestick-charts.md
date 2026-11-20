@@ -13,7 +13,7 @@ df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance
 df$Date <- as.Date(df$Date)
 df <- tail(df, 30)
 
-fig <- df |>
+df |>
   go_figure() |>
   add_candlestick(
     x = ~Date,
@@ -23,8 +23,6 @@ fig <- df |>
     low = ~AAPL.Low
   ) |>
   update_layout(title = "Basic Candlestick Chart")
-
-fig
 ```
 
 ### Candlestick without Rangeslider
@@ -37,7 +35,7 @@ df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance
 df$Date <- as.Date(df$Date)
 df <- tail(df, 30)
 
-fig <- df |>
+df |>
   go_figure() |>
   add_candlestick(
     x = ~Date,
@@ -50,8 +48,6 @@ fig <- df |>
     title = "Basic Candlestick Chart",
     xaxis = go_xaxis(rangeslider = go_xaxis_rangeslider(visible = FALSE))
   )
-
-fig
 ```
 
 ### Customise the fig ure with Shapes and Annotations
@@ -86,7 +82,7 @@ l <- go_shape(
   line = go_shape_line(color = "black", width = 0.5)
 )
 
-fig <- df |>
+df |>
   go_figure() |>
   add_candlestick(
     x = ~Date,
@@ -100,8 +96,6 @@ fig <- df |>
     annotations = list(a),
     shapes = list(l)
   )
-
-fig
 ```
 
 ### Custom Candlestick Colors
@@ -118,7 +112,7 @@ df <- tail(df, 30)
 i <- go_candlestick_increasing(line = go_candlestick_increasing_line(color = "#FFD700"))
 d <- go_candlestick_decreasing(line = go_candlestick_decreasing_line(color = "#0000ff"))
 
-fig <- df |>
+df |>
   go_figure() |>
   add_candlestick(
     x = ~Date,
@@ -129,8 +123,6 @@ fig <- df |>
     increasing = i,
     decreasing = d
   )
-
-fig
 ```
 
 ### Add a Trace to Candlestick Chart
@@ -143,7 +135,7 @@ df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance
 df$Date <- as.Date(df$Date)
 df <- tail(df, 365)
 
-fig <- df |>
+df |>
   go_figure() |>
   add_candlestick(
     x = ~Date,
@@ -159,8 +151,6 @@ fig <- df |>
     line = go_scatter_line(color = "black", width = 0.75)
   ) |>
   update_layout(showlegend = FALSE)
-
-fig
 ```
 
 ### Candlestick Using Segments

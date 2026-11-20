@@ -33,7 +33,7 @@ steps <- list(
   )
 )
 
-fig <- df |>
+df |>
   go_figure() |>
   add_scatter(
     x = ~x,
@@ -52,8 +52,6 @@ fig <- df |>
       )
     )
   )
-
-fig
 ```
 
 ### Sine Wave Slider

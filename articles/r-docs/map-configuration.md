@@ -48,10 +48,9 @@ small-scale 1:110m resolution:
 
 library(plotly.core)
 g <- go_geo(showland = TRUE, landcolor = "#e5ecf6")
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 Here is a map with all physical features enabled and styled, at a
@@ -74,10 +73,9 @@ g <- go_geo(
   resolution = 50
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 ### Disabling Base Maps
@@ -106,10 +104,9 @@ g <- go_geo(
   resolution = 50
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 ### Cultural Base Maps
@@ -150,10 +147,9 @@ g <- go_geo(
   landcolor = "#e5ecf6"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 ### Map Projections
@@ -182,10 +178,9 @@ g <- go_geo(
   landcolor = "#e5ecf6"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 ``` r
@@ -200,10 +195,9 @@ g <- go_geo(
   landcolor = "#e5ecf6"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 Map projections can be rotated using the `rotation` of
@@ -234,10 +228,9 @@ g <- go_geo(
   landcolor = "#e5ecf6"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 ### Automatic Zooming or Bounds Fitting
@@ -260,14 +253,13 @@ g <- go_geo(
   landcolor = "#e5ecf6"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(
     mode = "lines",
     lat = c(0, 15, 20, 35),
     lon = c(5, 10, 25, 30)
   ) |>
   update_layout(geo = g)
-fig
 ```
 
 ### Named Map Scopes and Country Sub-Units
@@ -298,10 +290,9 @@ g <- go_geo(
   landcolor = "#e5ecf6"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 The `"usa"` scope contains state boundaries at both resolutions, and
@@ -325,10 +316,9 @@ g <- go_geo(
   landcolor = "#e5ecf6"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 ### Graticules (Latitude and Longitude Grid Lines)
@@ -351,10 +341,9 @@ g <- go_geo(
   landcolor = "#e5ecf6"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 ### Reference

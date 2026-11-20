@@ -37,7 +37,7 @@ data <- data.frame(
   Bar = c(2, 1, 3)
 )
 
-fig <- data |>
+data |>
   go_figure() |>
   add_bar(x = ~Fruits, y = ~Bar, name = "Last Year") |>
   add_scatter(x = ~Fruits, y = ~Line, mode = "lines", name = "This year") |>
@@ -45,8 +45,6 @@ fig <- data |>
     yaxis = go_yaxis(title = "Amount"),
     legend = go_legend(title = go_legend_title(text = "<b> Time Period </b>"))
   )
-
-fig
 ```
 
 #### Line Chart and a Bar Chart
@@ -61,12 +59,10 @@ data <- data.frame(
   Bar = c(1, 0.5, 0.7, -1.2, 0.3, 0.4)
 )
 
-fig <- data |>
+data |>
   go_figure() |>
   add_bar(x = ~X, y = ~Bar) |>
   add_scatter(x = ~X, y = ~Line, mode = "lines+markers")
-
-fig
 ```
 
 #### A Contour and Scatter Plot of the Method of Steepest Descent
@@ -82,7 +78,7 @@ X <- data[["contour_x"]][, ]
 Y <- data[["contour_y"]][, ]
 Z <- data[["contour_z"]][, , ]
 
-fig <- go_figure() |>
+go_figure() |>
   add_contour(x = X, y = Y, z = Z, showscale = FALSE) |>
   add_scatter(
     x = data$trace_x,
@@ -93,8 +89,6 @@ fig <- go_figure() |>
     line = go_scatter_line(color = "black")
   ) |>
   update_layout(showlegend = FALSE)
-
-fig
 ```
 
 #### Reference

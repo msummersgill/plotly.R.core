@@ -25,7 +25,7 @@ wheel on their mouse and/or a two-finger scroll.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = c(1, 2, 3), y = c(1, 3, 1), mode = "lines+markers") |>
   update_layout(
     plot_bgcolor = "#e5ecf6",
@@ -33,8 +33,6 @@ fig <- go_figure() |>
     yaxis = go_yaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "ffff")
   ) |>
   config(scrollZoom = TRUE)
-
-fig
 ```
 
 ### Turning Off Responsiveness
@@ -58,7 +56,7 @@ figure’s configuration dictionary.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = c(1, 2, 3), y = c(1, 3, 1), mode = "lines+markers") |>
   update_layout(
     plot_bgcolor = "#e5ecf6",
@@ -66,8 +64,6 @@ fig <- go_figure() |>
     yaxis = go_yaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "ffff")
   ) |>
   config(responsive = FALSE)
-
-fig
 ```
 
 ### Making A Static Chart
@@ -76,7 +72,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = c(1, 2, 3), y = c(1, 3, 1), mode = "lines+markers") |>
   update_layout(
     plot_bgcolor = "#e5ecf6",
@@ -84,8 +80,6 @@ fig <- go_figure() |>
     yaxis = go_yaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "ffff")
   ) |>
   config(staticPlot = TRUE)
-
-fig
 ```
 
 ### Forcing The Modebar to Always Be Visible
@@ -104,7 +98,7 @@ true.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = c(1, 2, 3), y = c(1, 3, 1), mode = "lines+markers") |>
   update_layout(
     plot_bgcolor = "#e5ecf6",
@@ -112,8 +106,6 @@ fig <- go_figure() |>
     yaxis = go_yaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "ffff")
   ) |>
   config(displayModeBar = TRUE)
-
-fig
 ```
 
 ### Preventing the Modebar from Appearing
@@ -130,7 +122,7 @@ the `displayModeBar` attribute in the config of your figure to FALSE.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = c(1, 2, 3), y = c(1, 3, 1), mode = "lines+markers") |>
   update_layout(
     plot_bgcolor = "#e5ecf6",
@@ -138,8 +130,6 @@ fig <- go_figure() |>
     yaxis = go_yaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "ffff")
   ) |>
   config(displayModeBar = FALSE)
-
-fig
 ```
 
 ### Hiding the Plotly Logo on the Modebar
@@ -148,7 +138,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = c(1, 2, 3), y = c(1, 3, 1), mode = "lines+markers") |>
   update_layout(
     plot_bgcolor = "#e5ecf6",
@@ -156,8 +146,6 @@ fig <- go_figure() |>
     yaxis = go_yaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "ffff")
   ) |>
   config(displaylogo = FALSE)
-
-fig
 ```
 
 ### Customizing Modebar “Download Plot” Button
@@ -173,7 +161,7 @@ configuration key.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_bar(x = c(1, 2, 3), y = c(1, 3, 1)) |>
   update_layout(
     plot_bgcolor = "#e5ecf6",
@@ -189,8 +177,6 @@ fig <- go_figure() |>
       scale = 1
     )
   )
-
-fig
 ```
 
 Figures can be set to download at the currently-rendered size by setting
@@ -200,7 +186,7 @@ Figures can be set to download at the currently-rendered size by setting
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_bar(x = c(1, 2, 3), y = c(1, 3, 1)) |>
   update_layout(
     plot_bgcolor = "#e5ecf6",
@@ -210,8 +196,6 @@ fig <- go_figure() |>
   config(
     toImageButtonOptions = list(height = NULL, width = NULL)
   )
-
-fig
 ```
 
 ### Removing Modebar Buttons
@@ -242,7 +226,7 @@ chart types they are associated with:
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = c(1, 2, 3), y = c(1, 3, 1), mode = "lines+markers") |>
   update_layout(
     plot_bgcolor = "#e5ecf6",
@@ -250,8 +234,6 @@ fig <- go_figure() |>
     yaxis = go_yaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "ffff")
   ) |>
   config(modeBarButtonsToRemove = c("zoom2d", "pan2d"))
-
-fig
 ```
 
 ### Add optional shape-drawing buttons to modebar
@@ -268,17 +250,14 @@ for more details.
 library(plotly.core)
 data(iris)
 
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_scatter(
-      data = iris[iris$Species == sp, ],
-      x = ~Petal.Width,
-      y = ~Sepal.Length,
-      mode = "markers",
-      name = sp
-    )
-}
+fig <- iris |>
+  go_figure() |>
+  add_scatter(
+    x = ~Petal.Width,
+    y = ~Sepal.Length,
+    mode = "markers",
+    split = ~Species
+  )
 
 fig <- fig |>
   update_layout(
@@ -316,7 +295,7 @@ clicks (except for `geo` and `mapbox`).
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_bar(
     y = c(3, 5, 3, 2),
     x = c("2019-09-02", "2019-10-10", "2019-11-12", "2019-12-22"),
@@ -329,18 +308,4 @@ fig <- go_figure() |>
     yaxis = go_yaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "ffff")
   ) |>
   config(doubleClickDelay = 1000)
-
-fig
 ```
-
-### Configuring Figures in Dash Apps
-
-The same configuration options that you pass to
-[`config()`](https://msummersgill.github.io/plotly.R.core/reference/config.md)
-can also be passed to the [config property of a `dcc.Graph`
-component](https://dashr.plotly.com/dash-core-components/graph).
-
-#### Reference
-
-See config options at
-<https://github.com/plotly/plotly.js/blob/master/src/plot_api/plot_config.js#L6>

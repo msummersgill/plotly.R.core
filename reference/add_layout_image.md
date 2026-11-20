@@ -187,6 +187,11 @@ add_layout_image(
 
 The modified figure.
 
+## Details
+
+Properties that take a single value may be given vectors to add several
+images at once, one per element; the other properties are recycled.
+
 ## See also
 
 [`update_layout_images()`](https://msummersgill.github.io/plotly.R.core/reference/update_layout_images.md),

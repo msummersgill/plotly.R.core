@@ -18,7 +18,7 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/streamtube-basic.csv")
 
-fig <- df |>
+df |>
   go_figure() |>
   add_streamtube(
     x = ~x,
@@ -42,8 +42,6 @@ fig <- df |>
       )
     )
   )
-
-fig
 ```
 
 #### Starting Position and Segments
@@ -54,7 +52,7 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/streamtube-wind.csv")
 
-fig <- df |>
+df |>
   go_figure() |>
   add_streamtube(
     x = ~x,
@@ -76,8 +74,6 @@ fig <- df |>
     scene = go_scene(aspectratio = go_scene_aspectratio(x = 2, y = 1, z = 0.3)),
     margin = go_margin(t = 20, b = 20, l = 20, r = 20)
   )
-
-fig
 ```
 
 #### Reference

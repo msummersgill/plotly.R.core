@@ -108,13 +108,13 @@ Notation (JSON)</a> before being passed to Plotly.js.</p>
 <span><span class="co">##   ..$ :List of 4</span></span>
 <span><span class="co">##   .. ..- attr(*, "class")= chr [1:2] "go_scatter" "plotly_obj"</span></span>
 <span><span class="co">##  $ layout:List of 4</span></span>
+<span><span class="co">##   ..$ plot_bgcolor: chr "#c7daec"</span></span>
 <span><span class="co">##   ..$ title       :List of 1</span></span>
 <span><span class="co">##   .. ..- attr(*, "class")= chr [1:2] "go_layout_title" "plotly_obj"</span></span>
 <span><span class="co">##   ..$ xaxis       :List of 1</span></span>
 <span><span class="co">##   .. ..- attr(*, "class")= chr [1:2] "go_layout_xaxis" "plotly_obj"</span></span>
 <span><span class="co">##   ..$ yaxis       :List of 1</span></span>
 <span><span class="co">##   .. ..- attr(*, "class")= chr [1:2] "go_layout_yaxis" "plotly_obj"</span></span>
-<span><span class="co">##   ..$ plot_bgcolor: chr "#c7daec"</span></span>
 <span><span class="co">##   ..- attr(*, "class")= chr [1:2] "go_layout" "plotly_obj"</span></span>
 <span><span class="co">##  $ frames: list()</span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -129,6 +129,7 @@ Notation (JSON)</a> before being passed to Plotly.js.</p>
 <span><span class="co">##     }</span></span>
 <span><span class="co">##   ],</span></span>
 <span><span class="co">##   "layout": {</span></span>
+<span><span class="co">##     "plot_bgcolor": "#c7daec",</span></span>
 <span><span class="co">##     "title": {</span></span>
 <span><span class="co">##       "text": "sample figure"</span></span>
 <span><span class="co">##     },</span></span>
@@ -142,7 +143,6 @@ Notation (JSON)</a> before being passed to Plotly.js.</p>
 <span><span class="co">##         "text": "y"</span></span>
 <span><span class="co">##       }</span></span>
 <span><span class="co">##     },</span></span>
-<span><span class="co">##     "plot_bgcolor": "#c7daec",</span></span>
 <span><span class="co">##     "template": {</span></span>
 <span><span class="co">##       "layout": {</span></span>
 <span><span class="co">##         "margin": {</span></span>
@@ -150,6 +150,218 @@ Notation (JSON)</a> before being passed to Plotly.js.</p>
 <span><span class="co">##           "l": 60,</span></span>
 <span><span class="co">##           "t": 25,</span></span>
 <span><span class="co">##           "r": 10</span></span>
+<span><span class="co">##         },</span></span>
+<span><span class="co">##         "colorscale": {</span></span>
+<span><span class="co">##           "sequential": [</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0,</span></span>
+<span><span class="co">##               "#440154"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.0627450980392157,</span></span>
+<span><span class="co">##               "#48186a"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.125490196078431,</span></span>
+<span><span class="co">##               "#472d7b"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.188235294117647,</span></span>
+<span><span class="co">##               "#424086"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.250980392156863,</span></span>
+<span><span class="co">##               "#3b528b"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.313725490196078,</span></span>
+<span><span class="co">##               "#33638d"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.376470588235294,</span></span>
+<span><span class="co">##               "#2c728e"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.43921568627451,</span></span>
+<span><span class="co">##               "#26828e"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.501960784313725,</span></span>
+<span><span class="co">##               "#21918c"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.564705882352941,</span></span>
+<span><span class="co">##               "#1fa088"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.627450980392157,</span></span>
+<span><span class="co">##               "#28ae80"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.690196078431373,</span></span>
+<span><span class="co">##               "#3fbc73"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.752941176470588,</span></span>
+<span><span class="co">##               "#5ec962"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.815686274509804,</span></span>
+<span><span class="co">##               "#84d44b"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.87843137254902,</span></span>
+<span><span class="co">##               "#addc30"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.941176470588235,</span></span>
+<span><span class="co">##               "#d8e219"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               1,</span></span>
+<span><span class="co">##               "#fde725"</span></span>
+<span><span class="co">##             ]</span></span>
+<span><span class="co">##           ],</span></span>
+<span><span class="co">##           "sequentialminus": [</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0,</span></span>
+<span><span class="co">##               "#440154"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.0627450980392157,</span></span>
+<span><span class="co">##               "#48186a"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.125490196078431,</span></span>
+<span><span class="co">##               "#472d7b"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.188235294117647,</span></span>
+<span><span class="co">##               "#424086"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.250980392156863,</span></span>
+<span><span class="co">##               "#3b528b"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.313725490196078,</span></span>
+<span><span class="co">##               "#33638d"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.376470588235294,</span></span>
+<span><span class="co">##               "#2c728e"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.43921568627451,</span></span>
+<span><span class="co">##               "#26828e"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.501960784313725,</span></span>
+<span><span class="co">##               "#21918c"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.564705882352941,</span></span>
+<span><span class="co">##               "#1fa088"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.627450980392157,</span></span>
+<span><span class="co">##               "#28ae80"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.690196078431373,</span></span>
+<span><span class="co">##               "#3fbc73"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.752941176470588,</span></span>
+<span><span class="co">##               "#5ec962"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.815686274509804,</span></span>
+<span><span class="co">##               "#84d44b"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.87843137254902,</span></span>
+<span><span class="co">##               "#addc30"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.941176470588235,</span></span>
+<span><span class="co">##               "#d8e219"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               1,</span></span>
+<span><span class="co">##               "#fde725"</span></span>
+<span><span class="co">##             ]</span></span>
+<span><span class="co">##           ],</span></span>
+<span><span class="co">##           "diverging": [</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0,</span></span>
+<span><span class="co">##               "#440154"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.0627450980392157,</span></span>
+<span><span class="co">##               "#48186a"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.125490196078431,</span></span>
+<span><span class="co">##               "#472d7b"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.188235294117647,</span></span>
+<span><span class="co">##               "#424086"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.250980392156863,</span></span>
+<span><span class="co">##               "#3b528b"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.313725490196078,</span></span>
+<span><span class="co">##               "#33638d"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.376470588235294,</span></span>
+<span><span class="co">##               "#2c728e"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.43921568627451,</span></span>
+<span><span class="co">##               "#26828e"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.501960784313725,</span></span>
+<span><span class="co">##               "#21918c"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.564705882352941,</span></span>
+<span><span class="co">##               "#1fa088"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.627450980392157,</span></span>
+<span><span class="co">##               "#28ae80"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.690196078431373,</span></span>
+<span><span class="co">##               "#3fbc73"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.752941176470588,</span></span>
+<span><span class="co">##               "#5ec962"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.815686274509804,</span></span>
+<span><span class="co">##               "#84d44b"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.87843137254902,</span></span>
+<span><span class="co">##               "#addc30"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               0.941176470588235,</span></span>
+<span><span class="co">##               "#d8e219"</span></span>
+<span><span class="co">##             ],</span></span>
+<span><span class="co">##             [</span></span>
+<span><span class="co">##               1,</span></span>
+<span><span class="co">##               "#fde725"</span></span>
+<span><span class="co">##             ]</span></span>
+<span><span class="co">##           ]</span></span>
 <span><span class="co">##         }</span></span>
 <span><span class="co">##       }</span></span>
 <span><span class="co">##     }</span></span>
@@ -160,58 +372,7 @@ Notation (JSON)</a> before being passed to Plotly.js.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fig</span></span></code></pre></div>
 <div class="plotly_core html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:700px;height:432.632880098888px;"></div>
-<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"data":[{"type":"scatter","mode":"lines","x":["a","b","c"],"y":{"dtype":"i1","bdata":"AQMC"}}],"layout":{"title":{"text":"sample figure"},"xaxis":{"title":{"text":"x"}},"yaxis":{"title":{"text":"y"}},"plot_bgcolor":"#c7daec","template":{"layout":{"margin":{"b":40,"l":60,"t":25,"r":10}}}},"frames":[],"config":{},"source":"A","shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"]},"evals":[],"jsHooks":[]}</script>
-</div>
-<div class="section level3">
-<h3 id="accessing-figure-structures-in-dash">Accessing figure structures in Dash<a class="anchor" aria-label="anchor" href="#accessing-figure-structures-in-dash"></a>
-</h3>
-<p><a href="https://dashr.plotly.com" class="external-link">Dash for R</a> is an open-source
-framework for building analytical applications, with no Javascript
-required, and it is tightly integrated with the Plotly graphing
-library.</p>
-<p>Learn about how to install Dash for R at <a href="https://dashr.plot.ly/installation" class="external-link uri">https://dashr.plot.ly/installation</a>.</p>
-<p>Everywhere in this page that you see fig, you can display the same
-figure in a Dash for R application by passing its JSON representation to
-the figure argument.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">dash</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">dashCoreComponents</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">dashHtmlComponents</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msummersgill.github.io/plotly.R.core/">plotly.core</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/go_figure.html">go_figure</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../../reference/go_scatter.html">add_scatter</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span>, mode <span class="op">=</span> <span class="st">"lines"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../../reference/update_layout.html">update_layout</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"sample figure"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">app</span> <span class="op">&lt;-</span> <span class="va">Dash</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">app</span><span class="op">$</span><span class="fu">layout</span><span class="op">(</span></span>
-<span>  <span class="fu">htmlDiv</span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>      <span class="fu">dccGraph</span><span class="op">(</span></span>
-<span>        id <span class="op">=</span> <span class="st">"graph"</span>,</span>
-<span>        figure <span class="op">=</span> <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html" class="external-link">fromJSON</a></span><span class="op">(</span><span class="fu"><a href="../../reference/plotly_json.html">plotly_json</a></span><span class="op">(</span><span class="va">fig</span><span class="op">)</span>, simplifyVector <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span>      <span class="op">)</span>,</span>
-<span>      <span class="fu">htmlPre</span><span class="op">(</span></span>
-<span>        id <span class="op">=</span> <span class="st">"structure"</span>,</span>
-<span>        style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>          border <span class="op">=</span> <span class="st">"thin lightgrey solid"</span>,</span>
-<span>          overflowY <span class="op">=</span> <span class="st">"scroll"</span>,</span>
-<span>          height <span class="op">=</span> <span class="st">"275px"</span></span>
-<span>        <span class="op">)</span></span>
-<span>      <span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">app</span><span class="op">$</span><span class="fu">callback</span><span class="op">(</span></span>
-<span>  <span class="fu">output</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"structure"</span>, property <span class="op">=</span> <span class="st">"children"</span><span class="op">)</span>,</span>
-<span>  params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu">input</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"graph"</span>, property <span class="op">=</span> <span class="st">"figure"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  <span class="kw">function</span><span class="op">(</span><span class="va">fig_json</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html" class="external-link">toJSON</a></span><span class="op">(</span><span class="va">fig_json</span>, pretty <span class="op">=</span> <span class="cn">TRUE</span>, auto_unbox <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p>After executing this code, give app$run_server() in the console to
-start the dash.</p>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"data":[{"type":"scatter","mode":"lines","x":["a","b","c"],"y":{"dtype":"i1","bdata":"AQMC"}}],"layout":{"plot_bgcolor":"#c7daec","title":{"text":"sample figure"},"xaxis":{"title":{"text":"x"}},"yaxis":{"title":{"text":"y"}},"template":{"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"colorscale":{"sequential":[[0,"#440154"],[0.0627450980392157,"#48186a"],[0.125490196078431,"#472d7b"],[0.188235294117647,"#424086"],[0.250980392156863,"#3b528b"],[0.313725490196078,"#33638d"],[0.376470588235294,"#2c728e"],[0.43921568627451,"#26828e"],[0.501960784313725,"#21918c"],[0.564705882352941,"#1fa088"],[0.627450980392157,"#28ae80"],[0.690196078431373,"#3fbc73"],[0.752941176470588,"#5ec962"],[0.815686274509804,"#84d44b"],[0.87843137254902,"#addc30"],[0.941176470588235,"#d8e219"],[1,"#fde725"]],"sequentialminus":[[0,"#440154"],[0.0627450980392157,"#48186a"],[0.125490196078431,"#472d7b"],[0.188235294117647,"#424086"],[0.250980392156863,"#3b528b"],[0.313725490196078,"#33638d"],[0.376470588235294,"#2c728e"],[0.43921568627451,"#26828e"],[0.501960784313725,"#21918c"],[0.564705882352941,"#1fa088"],[0.627450980392157,"#28ae80"],[0.690196078431373,"#3fbc73"],[0.752941176470588,"#5ec962"],[0.815686274509804,"#84d44b"],[0.87843137254902,"#addc30"],[0.941176470588235,"#d8e219"],[1,"#fde725"]],"diverging":[[0,"#440154"],[0.0627450980392157,"#48186a"],[0.125490196078431,"#472d7b"],[0.188235294117647,"#424086"],[0.250980392156863,"#3b528b"],[0.313725490196078,"#33638d"],[0.376470588235294,"#2c728e"],[0.43921568627451,"#26828e"],[0.501960784313725,"#21918c"],[0.564705882352941,"#1fa088"],[0.627450980392157,"#28ae80"],[0.690196078431373,"#3fbc73"],[0.752941176470588,"#5ec962"],[0.815686274509804,"#84d44b"],[0.87843137254902,"#addc30"],[0.941176470588235,"#d8e219"],[1,"#fde725"]]}}}},"frames":[],"config":{},"source":"A","shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"]},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level3">
 <h3 id="figures-as-trees-of-attributes">Figures as Trees of Attributes<a class="anchor" aria-label="anchor" href="#figures-as-trees-of-attributes"></a>

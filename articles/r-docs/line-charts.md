@@ -10,11 +10,9 @@ x <- c(1:100)
 random_y <- rnorm(100, mean = 0)
 data <- data.frame(x, random_y)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(x = ~x, y = ~random_y, mode = "lines")
-
-fig
 ```
 
 ### Line Plots Mode
@@ -30,13 +28,11 @@ x <- c(1:100)
 
 data <- data.frame(x, trace_0, trace_1, trace_2)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(x = ~x, y = ~trace_0, name = "trace 0", mode = "lines") |>
   add_scatter(x = ~x, y = ~trace_1, name = "trace 1", mode = "lines+markers") |>
   add_scatter(x = ~x, y = ~trace_2, name = "trace 2", mode = "markers")
-
-fig
 ```
 
 ### Style Line Plots
@@ -59,7 +55,7 @@ data <- data.frame(month, high_2000, low_2000, high_2007, low_2007, high_2014, l
 red <- "rgb(205, 12, 24)"
 blue <- "rgb(22, 96, 167)"
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(
     x = ~month,
@@ -108,8 +104,6 @@ fig <- data |>
     xaxis = go_xaxis(title = "Months"),
     yaxis = go_yaxis(title = "Temperature (degrees F)")
   )
-
-fig
 ```
 
 Categories are drawn in the order they first appear in the data, so the
@@ -161,7 +155,7 @@ y <- c(10, 20, NA, 15, 10, 5, 15, NA, 20, 10, 10, 15, 25, 20, 10)
 
 data <- data.frame(x, y)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(x = ~x, y = ~y, name = "Gaps", mode = "lines") |>
   add_scatter(
@@ -171,8 +165,6 @@ fig <- data |>
     mode = "lines",
     connectgaps = TRUE
   )
-
-fig
 ```
 
 ### Line Interpolation Options
@@ -287,7 +279,7 @@ internet_2 <- go_annotation(
   showarrow = FALSE
 )
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(
     x = ~x,
@@ -322,8 +314,6 @@ fig <- data |>
     showlegend = FALSE,
     annotations = list(television_1, internet_1, television_2, internet_2)
   )
-
-fig
 ```
 
 ### Filled Lines
@@ -339,7 +329,7 @@ low_2014 <- c(12.7, 14.3, 18.6, 35.5, 49.9, 58.0, 60.0, 58.6, 51.7, 45.2, 32.2, 
 data <- data.frame(month, high_2014, low_2014)
 data$average_2014 <- rowMeans(data[,c("high_2014", "low_2014")])
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(
     x = ~month,
@@ -391,8 +381,6 @@ fig <- data |>
       zeroline = FALSE
     )
   )
-
-fig
 ```
 
 See more examples of filled line charts
@@ -410,16 +398,12 @@ dens <- with(diamonds, tapply(price, INDEX = cut, density))
 df <- data.frame(
   x = unlist(lapply(dens, "[[", "x")),
   y = unlist(lapply(dens, "[[", "y")),
-  cut = rep(names(dens), each = length(dens[[1]]$x))
+  cut = factor(rep(names(dens), each = length(dens[[1]]$x)), levels = names(dens))
 )
 
-fig <- go_figure()
-for (ct in names(dens)) {
-  fig <- fig |>
-    add_scatter(data = df[df$cut == ct, ], x = ~x, y = ~y, mode = "lines", name = ct)
-}
-
-fig
+df |>
+  go_figure() |>
+  add_scatter(x = ~x, y = ~y, mode = "lines", split = ~cut)
 ```
 
 \#Reference

@@ -6,10 +6,8 @@
 
 library(plotly.core)
 # volcano is a numeric matrix that ships with R
-fig <- go_figure() |>
+go_figure() |>
   add_surface(z = volcano)
-
-fig
 ```
 
 ## Surface Plot With Contours
@@ -18,7 +16,7 @@ fig
 
 library(plotly.core)
 # volcano is a numeric matrix that ships with R
-fig <- go_figure() |>
+go_figure() |>
   add_surface(
     z = volcano,
     contours = go_surface_contours(
@@ -35,8 +33,6 @@ fig <- go_figure() |>
       camera = go_scene_camera(eye = go_scene_camera_eye(x = 1.87, y = 0.88, z = -0.64))
     )
   )
-
-fig
 ```
 
 #### 2D Kernel Density Estimation
@@ -46,10 +42,8 @@ fig
 library(plotly.core)
 
 kd <- with(MASS::geyser, MASS::kde2d(duration, waiting, n = 50))
-fig <- go_figure() |>
+go_figure() |>
   add_surface(x = kd$x, y = kd$y, z = kd$z)
-
-fig
 ```
 
 ##### Configure Surface Contour Levels
@@ -73,7 +67,7 @@ z <- rbind(
 )
 
 library(plotly.core)
-fig <- go_figure() |>
+go_figure() |>
   add_surface(
     contours = go_surface_contours(
       x = go_surface_contours_axis(
@@ -97,8 +91,6 @@ fig <- go_figure() |>
       aspectratio = go_scene_aspectratio(x = 0.9, y = 0.8, z = 0.2)
     )
   )
-
-fig
 ```
 
 #### Multiple Surfaces
@@ -128,10 +120,8 @@ dim(z) <- c(15,6)
 z2 <- z + 1
 z3 <- z - 1
 
-fig <- go_figure() |>
+go_figure() |>
   add_surface(z = z, showscale = FALSE) |>
   add_surface(z = z2, opacity = 0.98, showscale = FALSE) |>
   add_surface(z = z3, opacity = 0.98, showscale = FALSE)
-
-fig
 ```

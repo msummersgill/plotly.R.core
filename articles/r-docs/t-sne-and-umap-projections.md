@@ -49,21 +49,19 @@ data(iris)
 
 species_colors <- c(setosa = "#636EFA", versicolor = "#EF553B", virginica = "#00CC96")
 
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_splom(
-      data = iris[iris$Species == sp, ],
-      name = sp,
-      dimensions = list(
-        go_splom_dimension(label = "sepal_width", values = ~Sepal.Width),
-        go_splom_dimension(label = "sepal_length", values = ~Sepal.Length),
-        go_splom_dimension(label = "petal_width", values = ~Petal.Width),
-        go_splom_dimension(label = "petal_length", values = ~Petal.Length)
-      ),
-      marker = go_splom_marker(color = species_colors[[sp]])
-    )
-}
+# colouring by Species adds one trace per species, coloured from the colorway
+fig <- iris |>
+  go_figure() |>
+  update_layout(colorway = species_colors) |>
+  add_splom(
+    dimensions = list(
+      go_splom_dimension(label = "sepal_width", values = ~Sepal.Width),
+      go_splom_dimension(label = "sepal_length", values = ~Sepal.Length),
+      go_splom_dimension(label = "petal_width", values = ~Petal.Width),
+      go_splom_dimension(label = "petal_length", values = ~Petal.Length)
+    ),
+    marker = go_splom_marker(color = ~Species)
+  )
 
 xaxis <- go_xaxis(showline = FALSE, zeroline = FALSE, gridcolor = "#ffff", ticklen = 4)
 yaxis <- go_yaxis(showline = FALSE, zeroline = FALSE, gridcolor = "#ffff", ticklen = 4)

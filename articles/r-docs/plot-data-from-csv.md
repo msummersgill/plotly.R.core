@@ -29,7 +29,7 @@ library(plotly.core)
 
 data <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2014_apple_stock.csv")
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = as.Date(data$AAPL_x),
     y = data$AAPL_y,
@@ -54,8 +54,6 @@ fig <- go_figure() |>
     showlegend = TRUE,
     width = 1100
   )
-
-fig
 ```
 
 #### Reference

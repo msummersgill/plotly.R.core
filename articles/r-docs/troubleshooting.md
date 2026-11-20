@@ -12,7 +12,7 @@ package from the legacy `plotly` R package: code written for `plotly`
 `subplot()`, …) will not work here, and vice versa. `plotly.core`
 bundles its own copy of the Plotly.js rendering engine, so figures look
 the same wherever they are rendered. Read on for details about
-troubleshooting `plotly.core` in other environments such as Dash.
+troubleshooting `plotly.core` in other environments.
 
 ### Import Problems
 
@@ -27,49 +27,6 @@ console to fully remove `plotly.core` before installing again:
 
 > Problems can also arise if you have a file named `plotly.core.R` in
 > the same directory as the code you are executing.
-
-### Dash Problems
-
-If you are encountering problems using `plotly.core` with
-[Dash](https://dashr.plotly.com/) please first ensure that you have
-upgraded `dash` to the latest version, which will automatically upgrade
-`dash-core-components` to the latest version, ensuring that Dash is
-using an up-to-date version of the Plotly.js rendering engine. If this
-does not resolve your issue, please visit our [Dash Community
-Forum](https://community.plotly.com/) and we will be glad to help you
-out.
-
-This is an example of a `plotly.core` graph inside `dash`:
-
-``` r
-
-library(plotly.core)
-
-fig <- go_figure() |>
-  add_bar(x = c(0, 1, 2), y = c(3, 7, 9))
-#fig
-
-library(dash)
-library(dashCoreComponents)
-library(dashHtmlComponents)
-
-app <- Dash$new()
-
-app$layout(
-  htmlDiv(
-    list(
-      dccGraph(
-        id = "graph",
-        figure = fig
-      )
-    )
-  )
-)
-
-#app$run_server()
-```
-
-Use `app$run_server()` to run the dash app.
 
 ### Static Image Export Problems
 

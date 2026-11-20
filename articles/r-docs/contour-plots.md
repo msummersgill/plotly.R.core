@@ -6,10 +6,8 @@
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_contour(z = volcano)
-
-fig
 ```
 
 ### Set X and Y Coordinates
@@ -18,7 +16,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_contour(
     x = c(-9, -6, -5, -3, -1),
     y = c(0, 1, 4, 5, 7),
@@ -33,8 +31,6 @@ fig <- go_figure() |>
     ncol = 5
   )
   )
-
-fig
 ```
 
 ### Set Size and Range of a Contours
@@ -43,7 +39,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_contour(
     z = matrix(
     c(
@@ -63,8 +59,6 @@ fig <- go_figure() |>
       size = 2
     )
   )
-
-fig
 ```
 
 ### Smoothing Contour Lines
@@ -84,7 +78,7 @@ z <- matrix(
   ncol = 8
 )
 
-fig <- make_subplots(rows = 1, cols = 2) |>
+make_subplots(rows = 1, cols = 2) |>
   add_contour(
     z = z,
     autocontour = TRUE,
@@ -101,8 +95,6 @@ fig <- make_subplots(rows = 1, cols = 2) |>
     row = 1,
     col = 2
   )
-
-fig
 ```
 
 ### Smoothing Contour Coloring
@@ -111,7 +103,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_contour(
     z = matrix(
     c(
@@ -125,8 +117,6 @@ fig <- go_figure() |>
   ),
     contours = go_contour_contours(coloring = "heatmap")
   )
-
-fig
 ```
 
 ### Add Contour Labels
@@ -135,14 +125,12 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_contour(
     z = volcano,
     contours = go_contour_contours(showlabels = TRUE),
     colorbar = go_colorbar(title = go_colorbar_title(text = "Elevation <br> in meters"))
   )
-
-fig
 ```
 
 ### Create Matrix and Plot Contour
@@ -187,12 +175,10 @@ names(mtrx.melt) <- c('wt', 'hp', 'qsec')
 mtrx.melt$wt <- as.numeric(str_sub(mtrx.melt$wt, str_locate(mtrx.melt$wt, '=')[1,1] + 1))
 mtrx.melt$hp <-  as.numeric(str_sub(mtrx.melt$hp, str_locate(mtrx.melt$hp, '=')[1,1] + 1))
 
-fig <- mtrx.melt |>
+mtrx.melt |>
   go_figure() |>
   add_contour(x = ~wt, y = ~hp, z = ~qsec) |>
   update_layout(width = 600, height = 500)
-
-fig
 ```
 
 ### 2D Density Contour Plot
@@ -204,7 +190,7 @@ library(plotly.core)
 x <- rnorm(200)
 y <- rnorm(200)
 
-fig <- make_subplots(
+make_subplots(
   rows = 2,
   cols = 2,
   row_heights = c(0.2, 0.8),
@@ -218,8 +204,6 @@ fig <- make_subplots(
   add_histogram2dcontour(x = x, y = y, row = 2, col = 1) |>
   add_histogram(y = y, row = 2, col = 2) |>
   update_layout(showlegend = FALSE)
-
-fig
 ```
 
 ### Contour Colorscales

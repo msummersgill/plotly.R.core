@@ -6,7 +6,7 @@
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_mesh3d(
     x = c(0, 1, 2, 0),
     y = c(0, 0, 1, 2),
@@ -16,8 +16,6 @@ fig <- go_figure() |>
     k = c(2, 3, 1, 3),
     facecolor = substr(viridisLite::viridis(4), 1, 7)
   )
-
-fig
 ```
 
 ### Cube with Different Face Colors
@@ -26,7 +24,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_mesh3d(
     x = c(0, 0, 1, 1, 0, 0, 1, 1),
     y = c(0, 1, 1, 0, 0, 1, 1, 0),
@@ -36,6 +34,4 @@ fig <- go_figure() |>
     k = c(0, 7, 2, 3, 6, 7, 1, 2, 5, 5, 7, 6),
     facecolor = rep(substr(viridisLite::inferno(6), 1, 7), each = 2)
   )
-
-fig
 ```

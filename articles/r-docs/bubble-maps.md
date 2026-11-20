@@ -25,26 +25,19 @@ g <- go_geo(
 # rescale populations to marker sizes between 1 and 250 (area-scaled)
 df$size <- scales::rescale(df$pop, to = c(1, 250))
 
-fig <- go_figure()
-for (q in levels(droplevels(df$q))) {
-  d <- df[df$q == q & !is.na(df$q), ]
-  fig <- fig |>
-    add_scattergeo(
-      data = d,
-      lon = ~lon,
-      lat = ~lat,
-      locationmode = "USA-states",
-      marker = go_scattergeo_marker(size = ~size, sizemode = "area"),
-      hoverinfo = "text",
-      text = ~paste(name, "<br />", pop / 1e6, " million"),
-      name = q
-    )
-}
-fig <- fig |>
+df |>
+  go_figure() |>
+  add_scattergeo(
+    lon = ~lon,
+    lat = ~lat,
+    locationmode = "USA-states",
+    marker = go_scattergeo_marker(size = ~size, sizemode = "area"),
+    hoverinfo = "text",
+    text = ~paste(name, "<br />", pop / 1e6, " million"),
+    split = ~q
+  ) |>
   update_layout(
     title = "2014 US city populations<br>(Click legend to toggle)",
     geo = g
   )
-
-fig
 ```

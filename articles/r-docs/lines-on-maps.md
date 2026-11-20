@@ -27,7 +27,7 @@ geo <- go_geo(
   countrycolor = "rgb(204,204,204)"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(
     data = air,
     lon = ~long,
@@ -57,8 +57,6 @@ fig <- go_figure() |>
     showlegend = FALSE,
     height = 800
   )
-
-fig
 ```
 
 ### London to NYC Great Circle
@@ -67,7 +65,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(
     lat = c(40.7127, 51.5072),
     lon = c(-74.0059, 0.1275),
@@ -98,8 +96,6 @@ fig <- go_figure() |>
       )
     )
   )
-
-fig
 ```
 
 ### Contour lines on globe
@@ -142,17 +138,12 @@ geo <- go_geo(
   )
 )
 
-fig <- go_figure()
-for (l in unique(d$line)) {
-  fig <- fig |>
-    add_scattergeo(data = d[d$line == l, ], lon = ~lon, lat = ~lat, mode = "lines", name = l)
-}
-fig <- fig |>
+d |>
+  go_figure() |>
+  add_scattergeo(lon = ~lon, lat = ~lat, mode = "lines", split = ~line) |>
   update_layout(
     showlegend = FALSE,
     geo = geo,
     title = "Contour lines over globe<br>(Click and drag to rotate)"
   )
-
-fig
 ```

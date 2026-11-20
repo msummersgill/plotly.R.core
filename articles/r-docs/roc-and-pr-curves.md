@@ -57,19 +57,15 @@ auc <- function(roc) {
 
 z <- roc_df(data$y, y_score)
 
-colors <- c("0" = "blue", "1" = "red")
-fig1 <- go_figure()
-for (lvl in levels(data$y)) {
-  fig1 <- fig1 |>
-    add_histogram(
-      x = y_score[data$y == lvl],
-      name = lvl,
-      opacity = 0.5,
-      nbinsx = 50,
-      marker = go_histogram_marker(color = colors[[lvl]])
-    )
-}
-fig1 <- fig1 |>
+fig1 <- data.frame(score = y_score, y = data$y) |>
+  go_figure() |>
+  update_layout(colorway = c("blue", "red")) |>
+  add_histogram(
+    x = ~score,
+    opacity = 0.5,
+    nbinsx = 50,
+    marker = go_histogram_marker(color = ~y)
+  ) |>
   update_layout(barmode = "overlay")
 fig1
 ```

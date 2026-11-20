@@ -15,7 +15,7 @@ library(plotly.core)
 x <- runif(500, min = 3, max = 6)
 y <- runif(500, min = 3, max = 6)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     mode = "markers",
     x = x,
@@ -44,8 +44,6 @@ fig <- go_figure() |>
     ),
     showlegend = FALSE
   )
-
-fig
 ```
 
 #### Fully Opaque
@@ -60,7 +58,7 @@ library(plotly.core)
 x <- runif(500, min = 3, max = 6)
 y <- runif(500, min = 3, max = 6)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     mode = "markers",
     x = x,
@@ -89,8 +87,6 @@ fig <- go_figure() |>
     ),
     showlegend = FALSE
   )
-
-fig
 ```
 
 #### Opacity
@@ -108,7 +104,7 @@ y <- runif(500, min = 3, max = 4.5)
 x2 <- runif(500, min = 3, max = 6)
 y2 <- runif(500, min = 4.5, max = 6)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     mode = "markers",
     x = x,
@@ -153,8 +149,6 @@ fig <- go_figure() |>
     ),
     showlegend = FALSE
   )
-
-fig
 ```
 
 #### Marker Opacity
@@ -171,7 +165,7 @@ library(plotly.core)
 x <- runif(500, min = 3, max = 6)
 y <- runif(500, min = 3, max = 6)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     mode = "markers",
     x = x,
@@ -202,8 +196,6 @@ fig <- go_figure() |>
     ),
     showlegend = FALSE
   )
-
-fig
 ```
 
 #### Color Opacity
@@ -219,7 +211,7 @@ library(plotly.core)
 x <- runif(500, min = 3, max = 6)
 y <- runif(500, min = 3, max = 6)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     mode = "markers",
     x = x,
@@ -248,8 +240,6 @@ fig <- go_figure() |>
     ),
     showlegend = FALSE
   )
-
-fig
 ```
 
 ### Reference

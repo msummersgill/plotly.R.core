@@ -11,15 +11,13 @@ library(plyr)
 data <- spread(Orange, Tree, circumference)
 data <- rename(data, c("1" = "Tree1", "2" = "Tree2", "3" = "Tree3", "4" = "Tree4", "5" = "Tree5"))
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(x = ~age, y = ~Tree1, mode = "lines", name = "Tree 1") |>
   add_scatter(x = ~age, y = ~Tree2, mode = "lines", name = "Tree 2") |>
   add_scatter(x = ~age, y = ~Tree3, mode = "lines", name = "Tree 3") |>
   add_scatter(x = ~age, y = ~Tree4, mode = "lines", name = "Tree 4") |>
   add_scatter(x = ~age, y = ~Tree5, mode = "lines", name = "Tree 5")
-
-fig
 ```
 
 ### Hiding the Legend
@@ -33,7 +31,7 @@ library(plyr)
 data <- spread(Orange, Tree, circumference)
 data <- rename(data, c("1" = "Tree1", "2" = "Tree2", "3" = "Tree3", "4" = "Tree4", "5" = "Tree5"))
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(x = ~age, y = ~Tree1, mode = "lines") |>
   add_scatter(x = ~age, y = ~Tree2, mode = "lines") |>
@@ -41,8 +39,6 @@ fig <- data |>
   add_scatter(x = ~age, y = ~Tree4, mode = "lines") |>
   add_scatter(x = ~age, y = ~Tree5, mode = "lines") |>
   update_layout(showlegend = FALSE)
-
-fig
 ```
 
 ### Hiding Legend Entries
@@ -56,7 +52,7 @@ library(plyr)
 data <- spread(Orange, Tree, circumference)
 data <- rename(data, c("1" = "Tree1", "2" = "Tree2", "3" = "Tree3", "4" = "Tree4", "5" = "Tree5"))
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(x = ~age, y = ~Tree1, mode = "lines", name = "Tree 1") |>
   add_scatter(x = ~age, y = ~Tree2, mode = "lines", name = "Tree 2") |>
@@ -69,8 +65,6 @@ fig <- data |>
   ) |>
   add_scatter(x = ~age, y = ~Tree4, mode = "lines", name = "Tree 4") |>
   add_scatter(x = ~age, y = ~Tree5, mode = "lines", name = "Tree 5")
-
-fig
 ```
 
 ### Positioning the Legend Inside the Plot
@@ -84,7 +78,7 @@ library(plyr)
 data <- spread(Orange, Tree, circumference)
 data <- rename(data, c("1" = "Tree1", "2" = "Tree2", "3" = "Tree3", "4" = "Tree4", "5" = "Tree5"))
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(x = ~age, y = ~Tree1, mode = "lines", name = "Tree 1") |>
   add_scatter(x = ~age, y = ~Tree2, mode = "lines", name = "Tree 2") |>
@@ -92,8 +86,6 @@ fig <- data |>
   add_scatter(x = ~age, y = ~Tree4, mode = "lines", name = "Tree 4") |>
   add_scatter(x = ~age, y = ~Tree5, mode = "lines", name = "Tree 5") |>
   update_layout(legend = go_legend(x = 0.1, y = 0.9))
-
-fig
 ```
 
 ### Positioning the Legend Outside the Plot
@@ -107,7 +99,7 @@ library(plyr)
 data <- spread(Orange, Tree, circumference)
 data <- rename(data, c("1" = "Tree1", "2" = "Tree2", "3" = "Tree3", "4" = "Tree4", "5" = "Tree5"))
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(x = ~age, y = ~Tree1, mode = "lines", name = "Tree 1") |>
   add_scatter(x = ~age, y = ~Tree2, mode = "lines", name = "Tree 2") |>
@@ -115,8 +107,6 @@ fig <- data |>
   add_scatter(x = ~age, y = ~Tree4, mode = "lines", name = "Tree 4") |>
   add_scatter(x = ~age, y = ~Tree5, mode = "lines", name = "Tree 5") |>
   update_layout(legend = go_legend(x = 1.1, y = 0.5))
-
-fig
 ```
 
 ### Changing the Legend Orientation
@@ -130,7 +120,7 @@ library(plyr)
 data <- spread(Orange, Tree, circumference)
 data <- rename(data, c("1" = "Tree1", "2" = "Tree2", "3" = "Tree3", "4" = "Tree4", "5" = "Tree5"))
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(x = ~age, y = ~Tree1, mode = "lines", name = "Tree 1") |>
   add_scatter(x = ~age, y = ~Tree2, mode = "lines", name = "Tree 2") |>
@@ -138,8 +128,6 @@ fig <- data |>
   add_scatter(x = ~age, y = ~Tree4, mode = "lines", name = "Tree 4") |>
   add_scatter(x = ~age, y = ~Tree5, mode = "lines", name = "Tree 5") |>
   update_layout(legend = go_legend(orientation = "h"))
-
-fig
 ```
 
 ### Styling the Legend
@@ -164,7 +152,7 @@ l <- go_legend(
   borderwidth = 2
 )
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(x = ~age, y = ~Tree1, mode = "lines", name = "Tree 1") |>
   add_scatter(x = ~age, y = ~Tree2, mode = "lines", name = "Tree 2") |>
@@ -172,8 +160,6 @@ fig <- data |>
   add_scatter(x = ~age, y = ~Tree4, mode = "lines", name = "Tree 4") |>
   add_scatter(x = ~age, y = ~Tree5, mode = "lines", name = "Tree 5") |>
   update_layout(legend = l)
-
-fig
 ```
 
 ### Size of Legend Items
@@ -187,7 +173,7 @@ regardless of how tiny/huge the bubbles are in the graph.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = c(1, 2, 3, 4, 5),
     y = c(1, 2, 3, 4, 5),
@@ -201,8 +187,6 @@ fig <- go_figure() |>
     marker = go_scatter_marker(size = 100)
   ) |>
   update_layout(legend = go_legend(itemsizing = "constant"))
-
-fig
 ```
 
 ### Legend Title
@@ -211,7 +195,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     mode = "lines",
     x = c(1, 2, 3, 4, 5),
@@ -227,8 +211,6 @@ fig <- go_figure() |>
   update_layout(
     legend = go_legend(title = go_legend_title(text = "<b> Trend </b>"))
   )
-
-fig
 ```
 
 ### Grouped Legend
@@ -247,7 +229,7 @@ library(plyr)
 data <- spread(Orange, Tree, circumference)
 data <- rename(data, c("1" = "Tree1", "2" = "Tree2", "3" = "Tree3", "4" = "Tree4", "5" = "Tree5"))
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(
     x = ~age,
@@ -284,8 +266,6 @@ fig <- data |>
     legendgroup = "group1",
     name = "Zone 1 - Tree 3"
   )
-
-fig
 ```
 
 ### Subplot Grouped Legend
@@ -295,38 +275,30 @@ fig
 library(plotly.core)
 
 df <- data.frame(x = c("a", "b", "c"), y = c(2, 3, 2), y2 = c(4, 2, 4))
-colors <- c(a = "#66C2A5", b = "#FC8D62", c = "#8DA0CB")
 
-fig <- make_subplots(rows = 2, cols = 1, shared_xaxes = TRUE)
-for (g in df$x) {
-  fig <- fig |>
-    add_bar(
-      data = df[df$x == g, ],
-      x = ~x,
-      y = ~y,
-      name = g,
-      legendgroup = g,
-      marker = go_bar_marker(color = colors[[g]]),
-      row = 1,
-      col = 1
-    ) |>
-    add_bar(
-      data = df[df$x == g, ],
-      x = ~x,
-      y = ~y2,
-      name = g,
-      legendgroup = g,
-      showlegend = FALSE,
-      marker = go_bar_marker(color = colors[[g]]),
-      row = 2,
-      col = 1
-    )
-}
-fig <- fig |>
+make_subplots(rows = 2, cols = 1, shared_xaxes = TRUE) |>
+  update_layout(colorway = c("#66C2A5", "#FC8D62", "#8DA0CB")) |>
+  add_bar(
+    data = df,
+    x = ~x,
+    y = ~y,
+    legendgroup = ~x,
+    marker = go_bar_marker(color = ~x),
+    row = 1,
+    col = 1
+  ) |>
+  add_bar(
+    data = df,
+    x = ~x,
+    y = ~y2,
+    legendgroup = ~x,
+    showlegend = FALSE,
+    marker = go_bar_marker(color = ~x),
+    row = 2,
+    col = 1
+  ) |>
   update_xaxes(showgrid = FALSE) |>
   update_yaxes(showgrid = FALSE)
-
-fig
 ```
 
 Reference

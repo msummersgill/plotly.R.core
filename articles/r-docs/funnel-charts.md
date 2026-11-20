@@ -17,11 +17,9 @@ library(plotly.core)
 
 stages <- c("Website visit", "Downloads", "Potential customers", "Requested price", "invoice sent")
 
-fig <- go_figure() |>
+go_figure() |>
   add_funnel(y = stages, x = c(39, 27.4, 20.6, 11, 2)) |>
   update_layout(yaxis = go_yaxis(categoryarray = stages))
-
-fig
 ```
 
 ### Setting Marker Size and Color
@@ -37,7 +35,7 @@ library(plotly.core)
 
 stages <- c("Website visit", "Downloads", "Potential customers", "Requested price", "Finalized")
 
-fig <- go_figure() |>
+go_figure() |>
   add_funnel(
     y = stages,
     x = c(39, 27.4, 20.6, 11, 2),
@@ -56,8 +54,6 @@ fig <- go_figure() |>
     )
   ) |>
   update_layout(yaxis = go_yaxis(categoryarray = stages))
-
-fig
 ```
 
 ### Stacked Funnel Plot
@@ -66,7 +62,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_funnel(
     name = "Montreal",
     y = c("Website visit", "Downloads", "Potential customers", "Requested price"),
@@ -94,8 +90,6 @@ fig <- go_figure() |>
       categoryarray = c("Website visit", "Downloads", "Potential customers", "Requested price", "invoice sent", "Finalized")
     )
   )
-
-fig
 ```
 
 ### Basic Area Funnel Plot
@@ -104,13 +98,11 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_funnelarea(
     text = c("The 1st", "The 2nd", "The 3rd", "The 4th", "The 5th"),
     values = c(5, 4, 3, 2, 1)
   )
-
-fig
 ```
 
 ### Set Marker Size and Color in Area Funnel Plots
@@ -119,7 +111,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_funnelarea(
     values = c(5, 4, 3, 2, 1),
     text = c("The 1st", "The 2nd", "The 3rd", "The 4th", "The 5th"),
@@ -133,8 +125,6 @@ fig <- go_figure() |>
     textfont = go_font(family = "Old Standard TT, serif", size = 13, color = "black"),
     opacity = 0.65
   )
-
-fig
 ```
 
 ### Multiple Area Funnels
@@ -143,7 +133,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_funnelarea(
     scalegroup = "first",
     values = c(500, 450, 340, 230, 220, 110),
@@ -181,8 +171,6 @@ fig <- go_figure() |>
       go_shape(x0 = 0.55, x1 = 1, y0 = 0.55, y1 = 1)
     )
   )
-
-fig
 ```
 
 \#Reference

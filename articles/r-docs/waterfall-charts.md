@@ -12,7 +12,7 @@ text <- c("+60", "+80", "", "-40", "-20", "Total")
 y <- c(60, 80, 0, -40, -20, 0)
 data <- data.frame(x = factor(x, levels = x), measure, text, y)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_waterfall(
     name = "20",
@@ -32,8 +32,6 @@ fig <- data |>
     autosize = TRUE,
     showlegend = TRUE
   )
-
-fig
 ```
 
 ### Setting Marker Size and Color
@@ -57,7 +55,7 @@ measure <- c("relative", "relative", "relative", "total", "relative",
              "relative", "total")
 data <- data.frame(x = factor(x, levels = x), y, measure)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_waterfall(
     x = ~x,
@@ -86,8 +84,6 @@ fig <- data |>
     yaxis = go_yaxis(title = ""),
     waterfallgap = 0.3
   )
-
-fig
 ```
 
 ``` r
@@ -105,7 +101,7 @@ measure <- c("relative", "relative", "relative", "relative", "total",
              "relative", "relative", "total", "relative", "total")
 data <- data.frame(x, y = factor(y, levels = y), measure)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_waterfall(
     x = ~x,
@@ -125,6 +121,4 @@ fig <- data |>
     margin = go_margin(l = 150),
     showlegend = TRUE
   )
-
-fig
 ```

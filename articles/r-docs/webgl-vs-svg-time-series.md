@@ -15,7 +15,7 @@ df <- readr::read_csv(
 # Convert to dates
 df$Date <- as.Date(df$Date, format = "%m/%d/%Y")
 
-fig <- df |>
+df |>
   go_figure() |>
   add_scattergl(
     x = ~Date,
@@ -27,6 +27,4 @@ fig <- df |>
     title = "Mean Temparature in Seattle (1948 - 2015)",
     yaxis = go_yaxis(title = "Temperature (<sup>o</sup>C)")
   )
-
-fig
 ```

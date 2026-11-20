@@ -27,15 +27,13 @@ stock <- data.table::fread(stocks_url, data.table = FALSE)
 stock$date <- as.Date(stock$date)
 names(stock)[names(stock) == "FB"] <- "META"
 
-fig <- stock |>
+stock |>
   go_figure() |>
   add_scatter(x = ~date, y = ~GOOG, mode = "lines", name = "GOOG") |>
   update_layout(showlegend = FALSE) |>
   update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_layout(plot_bgcolor = "#e5ecf6", width = 900)
-
-fig
 ```
 
 ``` r
@@ -44,15 +42,13 @@ library(plotly.core)
 
 stock <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
 
-fig <- stock |>
+stock |>
   go_figure() |>
   add_scatter(x = ~Date, y = ~AAPL.High, mode = "lines") |>
   update_layout(showlegend = FALSE) |>
   update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_layout(plot_bgcolor = "#e5ecf6", width = 900)
-
-fig
 ```
 
 ### Different Chart Types on Date Axes
@@ -70,15 +66,13 @@ stock <- data.table::fread(stocks_url, data.table = FALSE)
 stock$date <- as.Date(stock$date)
 names(stock)[names(stock) == "FB"] <- "META"
 
-fig <- stock |>
+stock |>
   go_figure() |>
   add_scatter(x = ~date, y = ~GOOG, mode = "lines", fill = "tozeroy", name = "GOOG") |>
   update_layout(showlegend = FALSE, yaxis = go_yaxis(range = c(0.8, 1.25))) |>
   update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_layout(plot_bgcolor = "#e5ecf6", width = 900)
-
-fig
 ```
 
 Or this facetted area plot:
@@ -239,7 +233,7 @@ library(plotly.core)
 stock <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
 stock$Date <- as.Date(stock$Date)
 
-fig <- stock |>
+stock |>
   go_figure() |>
   add_scatter(x = ~Date, y = ~AAPL.Close, mode = "markers", name = "daily") |>
   add_histogram(
@@ -258,8 +252,6 @@ fig <- stock |>
   update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_layout(plot_bgcolor = "#e5ecf6", width = 900)
-
-fig
 ```
 
 ### Displaying Period Data
@@ -284,7 +276,7 @@ value <- c(1, 2, 3, 1, 2, 3)
 
 df <- data.frame(date, value)
 
-fig <- df |>
+df |>
   go_figure() |>
   add_scatter(
     x = ~date,
@@ -321,8 +313,6 @@ fig <- df |>
   update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_layout(plot_bgcolor = "#e5ecf6", width = 900)
-
-fig
 ```
 
 ### Hover Templates with Mixtures of Period data
@@ -346,7 +336,7 @@ with spaces before, after or around the parentheses, respectively.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_bar(
     x = c(as.Date("2020-01-01"), as.Date("2020-04-01"), as.Date("2020-07-01")),
     y = c(1000, 1500, 1700),
@@ -365,8 +355,6 @@ fig <- go_figure() |>
   update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_layout(plot_bgcolor = "#e5ecf6", width = 900)
-
-fig
 ```
 
 ### Time Series Plot with Custom Date Range
@@ -379,7 +367,7 @@ library(plotly.core)
 
 stock <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
 
-fig <- stock |>
+stock |>
   go_figure() |>
   add_scatter(x = ~Date, y = ~AAPL.High, mode = "lines") |>
   update_layout(
@@ -389,8 +377,6 @@ fig <- stock |>
   update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_layout(plot_bgcolor = "#e5ecf6", width = 900)
-
-fig
 ```
 
 ### Time Series With Range Slider
@@ -409,7 +395,7 @@ library(plotly.core)
 
 stock <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
 
-fig <- stock |>
+stock |>
   go_figure() |>
   add_scatter(x = ~Date, y = ~AAPL.High, mode = "lines") |>
   update_layout(
@@ -420,8 +406,6 @@ fig <- stock |>
   update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_layout(plot_bgcolor = "#e5ecf6", width = 900)
-
-fig
 ```
 
 ### Time Series with Range Selector Buttons
@@ -440,7 +424,7 @@ library(plotly.core)
 
 stock <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
 
-fig <- stock |>
+stock |>
   go_figure() |>
   add_scatter(x = ~Date, y = ~AAPL.High, mode = "lines") |>
   update_layout(
@@ -462,8 +446,6 @@ fig <- stock |>
   update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_layout(plot_bgcolor = "#e5ecf6", width = 900)
-
-fig
 ```
 
 ### Customizing Tick Label Formatting by Zoom Level
@@ -482,7 +464,7 @@ library(plotly.core)
 data <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
 data$Date <- as.Date(data$Date)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(x = ~Date, y = ~mavg, mode = "lines") |>
   update_layout(
@@ -505,8 +487,6 @@ fig <- data |>
   update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_layout(plot_bgcolor = "#e5ecf6", width = 900)
-
-fig
 ```
 
 ### Hiding Weekends and Holidays
@@ -526,7 +506,7 @@ library(plotly.core)
 
 stock <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
 
-fig <- stock |>
+stock |>
   go_figure() |>
   add_scatter(x = ~Date, y = ~AAPL.High, mode = "markers") |>
   update_layout(
@@ -537,8 +517,6 @@ fig <- stock |>
   update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_layout(plot_bgcolor = "#e5ecf6", width = 900)
-
-fig
 ```
 
 ``` r
@@ -547,7 +525,7 @@ library(plotly.core)
 
 stock <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
 
-fig <- stock |>
+stock |>
   go_figure() |>
   add_scatter(x = ~Date, y = ~AAPL.High, mode = "markers") |>
   update_layout(
@@ -564,8 +542,6 @@ fig <- stock |>
   update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_layout(plot_bgcolor = "#e5ecf6", width = 900)
-
-fig
 ```
 
 ### Hiding Non-Business Hours
@@ -585,7 +561,7 @@ hours <- hours[as.integer(format(hours, "%H")) %in% 9:16][1:40]
 val <- cumsum(rand(n = 40, m = 1)[, 1]) - 0.5
 data <- data.frame(date = format(hours, "%Y-%m-%d %H:%M:%S"), value = val)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(x = ~date, y = ~value, mode = "markers") |>
   update_layout(
@@ -596,8 +572,6 @@ fig <- data |>
   update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_layout(plot_bgcolor = "#e5ecf6", width = 900)
-
-fig
 ```
 
 ``` r
@@ -612,7 +586,7 @@ hours <- hours[as.integer(format(hours, "%H")) %in% 9:16][1:40]
 val <- cumsum(rand(n = 40, m = 1)[, 1]) - 0.5
 data <- data.frame(date = format(hours, "%Y-%m-%d %H:%M:%S"), value = val)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(x = ~date, y = ~value, mode = "markers") |>
   update_layout(
@@ -629,6 +603,4 @@ fig <- data |>
   update_xaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_yaxes(zerolinecolor = "white", zerolinewidth = 2, gridcolor = "white") |>
   update_layout(plot_bgcolor = "#e5ecf6", width = 900)
-
-fig
 ```

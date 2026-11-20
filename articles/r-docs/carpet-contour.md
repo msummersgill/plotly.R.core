@@ -16,7 +16,7 @@ For a more detailed list of axes attributes refer to
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_carpet(
     a = c(0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3),
     b = c(4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6),
@@ -43,8 +43,6 @@ fig <- go_figure() |>
     yaxis = go_yaxis(range = c(0.388, 4.361)),
     xaxis = go_xaxis(range = c(0.667, 5.932))
   )
-
-fig
 ```
 
 ### Add Contours
@@ -53,7 +51,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_contourcarpet(
     a = c(0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3),
     b = c(4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6),
@@ -94,8 +92,6 @@ fig <- go_figure() |>
     yaxis = go_yaxis(range = c(0.388, 4.361)),
     xaxis = go_xaxis(range = c(0.667, 5.932))
   )
-
-fig
 ```
 
 ### Add Multiple Traces
@@ -109,7 +105,7 @@ library(jsonlite)
 # hold the arrays of the i-th trace
 data <- fromJSON("https://raw.githubusercontent.com/bcdunbar/datasets/master/airfoil_data.json")
 
-fig <- go_figure() |>
+go_figure() |>
   add_carpet(
     a = c(
       1.083, 1.214, 1.344, 1.475, 1.605, 1.736, 1.866, 1.997, 2.128, 2.258, 2.389, 2.519, 2.650, 2.780, 2.911, 3.041, 3.172, 3.303, 3.433, 3.564, 3.694, 3.825, 3.955, 4.086, 4.217, 4.347, 4.478, 4.608, 4.739, 4.869, 5.000
@@ -239,8 +235,6 @@ fig <- go_figure() |>
     hovermode = "closest",
     margin = go_margin(r = 60, b = 40, l = 40, t = 80)
   )
-
-fig
 ```
 
 ### Reference

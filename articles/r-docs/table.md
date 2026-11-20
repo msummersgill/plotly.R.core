@@ -12,7 +12,7 @@ library(plotly.core)
 
 diamonds <- ggplot2::diamonds
 
-fig <- go_figure() |>
+go_figure() |>
   add_table(
     columnwidth = c(100, 100),
     columnorder = c(0, 1),
@@ -30,8 +30,6 @@ fig <- go_figure() |>
       font = go_font(family = "Arial", size = 12, color = "black")
     )
   )
-
-fig
 ```
 
 ### Styled Table
@@ -40,7 +38,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_table(
     header = go_table_header(
       values = c("<b>EXPENSES</b>", "<b>Q1</b>", "<b>Q2</b>", "<b>Q3</b>", "<b>Q4</b>"),
@@ -63,8 +61,6 @@ fig <- go_figure() |>
       font = go_font(color = "#506784", size = 12)
     )
   )
-
-fig
 ```
 
 ### Table From a Dataframe
@@ -73,7 +69,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_table(
     header = go_table_header(
       values = c("<b>Cars</b>", names(mtcars)),
@@ -95,8 +91,6 @@ fig <- go_figure() |>
       font = go_font(family = "Arial", size = 12, color = "black")
     )
   )
-
-fig
 ```
 
 ### Changing Size of Rows and Columns
@@ -111,7 +105,7 @@ values <- rbind(
   rep(lorem, 5)
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_table(
     columnorder = c(1, 2),
     columnwidth = c(80, 400),
@@ -132,8 +126,6 @@ fig <- go_figure() |>
       height = 30
     )
   )
-
-fig
 ```
 
 \#Reference

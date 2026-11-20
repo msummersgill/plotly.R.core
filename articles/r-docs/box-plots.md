@@ -6,11 +6,9 @@
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_box(y = rnorm(50)) |>
   add_box(y = rnorm(50, 1))
-
-fig
 ```
 
 ### Choosing The Algorithm For Computing Quartiles
@@ -38,10 +36,8 @@ the median of the upper half.
 library(plotly.core)
 
 # or "inclusive", or "linear" by default
-fig <- go_figure() |>
+go_figure() |>
   add_box(y = c(1, 2, 3, 4, 5), quartilemethod = "exclusive")
-
-fig
 ```
 
 ### Modifying The Algorithm For Computing Quartiles
@@ -54,7 +50,7 @@ Quartiles](#choosing-the-algorithm-for-computing-quartiles)
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_box(
     y = c(1, 2, 3, 4, 5),
     quartilemethod = "linear",
@@ -71,8 +67,6 @@ fig <- go_figure() |>
     name = "Exclusive Quartile Mode"
   ) |>
   update_layout(title = "Modifying The Algorithm For Computing Quartiles")
-
-fig
 ```
 
 ### Box Plot With Precomputed Quartiles
@@ -87,7 +81,7 @@ you need to use a different algorithm than the ones provided.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_box(
     y = c(1, 2, 3, 4, 5, 6, 7, 8, 9),
     q1 = c(1, 2, 3),
@@ -99,8 +93,6 @@ fig <- go_figure() |>
     sd = c(0.2, 0.4, 0.6),
     notchspan = c(0.2, 0.4, 0.6)
   )
-
-fig
 ```
 
 ### Horizontal Boxplot
@@ -109,21 +101,17 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_box(x = rnorm(50)) |>
   add_box(x = rnorm(50, 1))
-
-fig
 ```
 
 ### Adding Jittered Points
 
 ``` r
 
-fig <- go_figure() |>
+go_figure() |>
   add_box(y = rnorm(50), boxpoints = "all", jitter = 0.3, pointpos = -1.8)
-
-fig
 ```
 
 ### Several Box Plots
@@ -132,13 +120,9 @@ fig
 
 diamonds <- ggplot2::diamonds
 
-fig <- go_figure()
-for (g in levels(diamonds$cut)) {
-  fig <- fig |>
-    add_box(data = diamonds[diamonds$cut == g, ], y = ~price, name = g)
-}
-
-fig
+diamonds |>
+  go_figure() |>
+  add_box(y = ~price, split = ~cut)
 ```
 
 ### Grouped Box Plots
@@ -147,20 +131,10 @@ fig
 
 diamonds <- ggplot2::diamonds
 
-fig <- go_figure()
-for (g in levels(diamonds$clarity)) {
-  fig <- fig |>
-    add_box(
-      data = diamonds[diamonds$clarity == g, ],
-      x = ~cut,
-      y = ~price,
-      name = g
-    )
-}
-fig <- fig |>
+diamonds |>
+  go_figure() |>
+  add_box(x = ~cut, y = ~price, split = ~clarity) |>
   update_layout(boxmode = "group")
-
-fig
 ```
 
 ### Styling Outliers
@@ -178,7 +152,7 @@ y3 <- c(0.75, 5.25, 5.5, 6, 6.2, 6.6, 6.80, 7.0, 7.2, 7.5, 7.5, 7.75, 8.15,
 y4 <- c(0.75, 5.25, 5.5, 6, 6.2, 6.6, 6.80, 7.0, 7.2, 7.5, 7.5, 7.75, 8.15,
         8.15, 8.65, 8.93, 9.2, 9.5, 10, 10.25, 11.5, 12, 16, 20.90, 22.3, 23.25)
 
-fig <- go_figure() |>
+go_figure() |>
   add_box(
     y = y1,
     jitter = 0.3,
@@ -217,8 +191,6 @@ fig <- go_figure() |>
     line = go_box_line(color = "rgb(107,174,214)")
   ) |>
   update_layout(title = "Box Plot Styling Outliers")
-
-fig
 ```
 
 ### Reference

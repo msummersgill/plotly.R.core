@@ -83,7 +83,7 @@ df = data.frame(x,y,stringsAsFactors = FALSE)
 
 m = go_margin(r = 20, l = 300, b = 75, t = 125)
 
-fig <- df |>
+df |>
   go_figure() |>
   add_bar(
     x = ~x,
@@ -115,7 +115,6 @@ fig <- df |>
     xaxis = go_xaxis(title = "", zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff"),
     yaxis = go_yaxis(title = "", zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff")
   )
-fig
 ```
 
 ### Zoom on Static Images
@@ -212,9 +211,8 @@ Shapes can be selected and modified after they have been drawn. More
 details and examples are given in the [tutorial on
 shapes](https://msummersgill.github.io/plotly.R.core/articles/r-docs/shapes.html#drawing-shapes-on-cartesian-plots).
 
-Drawing or modifying a shape triggers a `relayout` event, which [can be
-captured by a callback inside a Dash
-application](https://dashr.plotly.com/interactive-graphing).
+Drawing or modifying a shape triggers a `relayout` event, which a Shiny
+app can capture with `event_data("plotly_relayout")`.
 
 ``` r
 

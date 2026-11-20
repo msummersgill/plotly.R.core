@@ -71,9 +71,12 @@ An object of class `htmlwidget`.
 
 If the figure's layout has no `template`, the default template (see
 [`default_template()`](https://msummersgill.github.io/plotly.R.core/reference/get_template.md))
-is applied. With the `"none"` default, figures get plotly 4.x's margins
-(`l = 60, r = 10, t = 25, b = 40` pixels) unless their layout sets them
-(e.g. `update_layout(margin = go_margin(t = 50))`).
+is applied. With the `"none"` default, figures get plotly 4.x's defaults
+unless they set these properties: margins of
+`l = 60, r = 10, t = 25, b = 40` pixels (e.g.
+`update_layout(margin = go_margin(t = 50))` changes the top one) and the
+viridis colorscale for colour-mapped markers and for heatmaps, contours,
+surfaces and the other traces with a colorscale.
 
 Numeric arrays in traces are sent to the browser as base64-encoded typed
 arrays (`{dtype, bdata}` objects, as plotly.py does), which are smaller
@@ -97,5 +100,5 @@ cdn.jsdelivr.net instead, e.g. for a website with many pages of figures.
 ``` r
 plotly_widget(list(data = list(list(type = "bar", x = 1:3, y = c(2, 5, 3)))))
 
-{"x":{"data":[{"type":"bar","x":{"dtype":"i1","bdata":"AQID"},"y":{"dtype":"i1","bdata":"AgUD"}}],"layout":{"template":{"layout":{"margin":{"b":40,"l":60,"t":25,"r":10}}}},"frames":[],"config":{},"source":"A","shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"]},"evals":[],"jsHooks":[]}
+{"x":{"data":[{"type":"bar","x":{"dtype":"i1","bdata":"AQID"},"y":{"dtype":"i1","bdata":"AgUD"}}],"layout":{"template":{"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"colorscale":{"sequential":[[0,"#440154"],[0.0627450980392157,"#48186a"],[0.125490196078431,"#472d7b"],[0.188235294117647,"#424086"],[0.250980392156863,"#3b528b"],[0.313725490196078,"#33638d"],[0.376470588235294,"#2c728e"],[0.43921568627451,"#26828e"],[0.501960784313725,"#21918c"],[0.564705882352941,"#1fa088"],[0.627450980392157,"#28ae80"],[0.690196078431373,"#3fbc73"],[0.752941176470588,"#5ec962"],[0.815686274509804,"#84d44b"],[0.87843137254902,"#addc30"],[0.941176470588235,"#d8e219"],[1,"#fde725"]],"sequentialminus":[[0,"#440154"],[0.0627450980392157,"#48186a"],[0.125490196078431,"#472d7b"],[0.188235294117647,"#424086"],[0.250980392156863,"#3b528b"],[0.313725490196078,"#33638d"],[0.376470588235294,"#2c728e"],[0.43921568627451,"#26828e"],[0.501960784313725,"#21918c"],[0.564705882352941,"#1fa088"],[0.627450980392157,"#28ae80"],[0.690196078431373,"#3fbc73"],[0.752941176470588,"#5ec962"],[0.815686274509804,"#84d44b"],[0.87843137254902,"#addc30"],[0.941176470588235,"#d8e219"],[1,"#fde725"]],"diverging":[[0,"#440154"],[0.0627450980392157,"#48186a"],[0.125490196078431,"#472d7b"],[0.188235294117647,"#424086"],[0.250980392156863,"#3b528b"],[0.313725490196078,"#33638d"],[0.376470588235294,"#2c728e"],[0.43921568627451,"#26828e"],[0.501960784313725,"#21918c"],[0.564705882352941,"#1fa088"],[0.627450980392157,"#28ae80"],[0.690196078431373,"#3fbc73"],[0.752941176470588,"#5ec962"],[0.815686274509804,"#84d44b"],[0.87843137254902,"#addc30"],[0.941176470588235,"#d8e219"],[1,"#fde725"]]}}}},"frames":[],"config":{},"source":"A","shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"]},"evals":[],"jsHooks":[]}
 ```

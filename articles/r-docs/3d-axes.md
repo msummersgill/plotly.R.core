@@ -16,11 +16,9 @@ x <- 70*(runif(70, 0, 1))
 y <- 55*(runif(70, 0, 1))
 z <- 40*(runif(70, 0, 1))
 
-fig <- go_figure() |>
+go_figure() |>
   add_mesh3d(x = x, y = y, z = z) |>
   update_layout(scene = go_scene(xaxis = axx, yaxis = axy, zaxis = axz))
-
-fig
 ```
 
 ### Fixed Ratio Axes
@@ -81,11 +79,9 @@ x <- 70*(runif(70, 0, 1))
 y <- 55*(runif(70, 0, 1))
 z <- 40*(runif(70, 0, 1))
 
-fig <- go_figure() |>
+go_figure() |>
   add_mesh3d(x = x, y = y, z = z) |>
   update_layout(scene = go_scene(xaxis = axx, yaxis = axy, zaxis = axz))
-
-fig
 ```
 
 ### Ticks Formatting
@@ -109,11 +105,9 @@ x <- 70*(runif(70, 0, 1))
 y <- 55*(runif(70, 0, 1))
 z <- 40*(runif(70, 0, 1))
 
-fig <- go_figure() |>
+go_figure() |>
   add_mesh3d(x = x, y = y, z = z) |>
   update_layout(scene = go_scene(xaxis = axx, yaxis = axy, zaxis = axz))
-
-fig
 ```
 
 ### Background and Grid Color
@@ -147,11 +141,9 @@ x <- 70*(runif(70, 0, 1))
 y <- 55*(runif(70, 0, 1))
 z <- 40*(runif(70, 0, 1))
 
-fig <- go_figure() |>
+go_figure() |>
   add_mesh3d(x = x, y = y, z = z) |>
   update_layout(scene = go_scene(xaxis = axx, yaxis = axy, zaxis = axz))
-
-fig
 ```
 
 ### Reference

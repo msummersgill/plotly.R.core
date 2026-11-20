@@ -6,10 +6,8 @@
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_heatmap(z = volcano)
-
-fig
 ```
 
 #### Categorical Axes
@@ -17,14 +15,12 @@ fig
 ``` r
 
 m <- matrix(rnorm(9), nrow = 3, ncol = 3)
-fig <- go_figure() |>
+go_figure() |>
   add_heatmap(
     x = c("a", "b", "c"),
     y = c("d", "e", "f"),
     z = m
   )
-
-fig
 ```
 
 #### Sequential Colorscales: Greys
@@ -34,10 +30,8 @@ The `colorscale` property accepts the name of a built-in colorscale (see
 
 ``` r
 
-fig <- go_figure() |>
+go_figure() |>
   add_heatmap(z = volcano, colorscale = "Greys")
-
-fig
 ```
 
 #### Custom colorscales
@@ -47,10 +41,8 @@ from 0 to 1.
 
 ``` r
 
-fig <- go_figure() |>
+go_figure() |>
   add_heatmap(z = volcano, colorscale = c("red", "green"))
-
-fig
 ```
 
 Or, you can do the scaling yourself and give the colorscale as a
@@ -62,8 +54,6 @@ vals <- unique(scales::rescale(c(volcano)))
 o <- order(vals, decreasing = FALSE)
 cols <- scales::col_numeric("Blues", domain = NULL)(vals)
 colz <- setNames(data.frame(vals[o], cols[o]), NULL)
-fig <- go_figure() |>
+go_figure() |>
   add_heatmap(z = volcano, colorscale = colz)
-
-fig
 ```

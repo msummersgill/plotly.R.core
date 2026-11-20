@@ -85,7 +85,7 @@ url <- "https://raw.githubusercontent.com/plotly/datasets/master/geojson-countie
 counties <- jsonlite::fromJSON(url, simplifyVector = FALSE)
 url2 <- "https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv"
 df <- read.csv(url2, colClasses = c(fips = "character"))
-fig <- go_figure() |>
+go_figure() |>
   add_choroplethmap(
     geojson = counties,
     locations = df$fips,
@@ -105,7 +105,6 @@ fig <- go_figure() |>
       center = go_map_center(lon = -95.71, lat = 37.09)
     )
   )
-fig
 ```
 
 ### Tile Map Choropleth Map Using GeoJSON with `featureidkey`
@@ -127,7 +126,7 @@ url <- "https://raw.githubusercontent.com/plotly/datasets/master/election.geojso
 geojson <- jsonlite::fromJSON(url, simplifyVector = FALSE)
 url2 <- "https://raw.githubusercontent.com/plotly/datasets/master/election.csv"
 df <- read.csv(url2)
-fig <- go_figure() |>
+go_figure() |>
   add_choroplethmap(
     geojson = geojson,
     locations = df$district,
@@ -143,7 +142,6 @@ fig <- go_figure() |>
       center = go_map_center(lon = -73.7073, lat = 45.5517)
     )
   )
-fig
 ```
 
 #### Carto Voyager base map: no token needed
@@ -158,7 +156,7 @@ counties <- jsonlite::fromJSON(url, simplifyVector = FALSE)
 url2 <- "https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv"
 df <- read.csv(url2, colClasses = c(fips = "character"))
 
-fig <- go_figure() |>
+go_figure() |>
   add_choroplethmap(
     geojson = counties,
     locations = df$fips,
@@ -178,7 +176,6 @@ fig <- go_figure() |>
       center = go_map_center(lon = -95.7129, lat = 37.0902)
     )
   )
-fig
 ```
 
 \#Reference

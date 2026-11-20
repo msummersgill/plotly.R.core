@@ -6,7 +6,7 @@
 
 library(plotly.core)
 
-fig <- make_subplots(
+make_subplots(
   rows = 1,
   cols = 2,
   specs = list(list(list(type = "scene"), list(type = "scene")))
@@ -27,8 +27,6 @@ fig <- make_subplots(
   ) |>
   update_scenes(aspectmode = "cube") |>
   update_layout(title = "Ambient Lighting")
-
-fig
 ```
 
 ### Roughness
@@ -37,7 +35,7 @@ fig
 
 library(plotly.core)
 
-fig <- make_subplots(
+make_subplots(
   rows = 1,
   cols = 2,
   specs = list(list(list(type = "scene"), list(type = "scene")))
@@ -58,8 +56,6 @@ fig <- make_subplots(
   ) |>
   update_scenes(aspectmode = "cube") |>
   update_layout(title = "Roughness")
-
-fig
 ```
 
 ### Diffuse
@@ -68,7 +64,7 @@ fig
 
 library(plotly.core)
 
-fig <- make_subplots(
+make_subplots(
   rows = 1,
   cols = 2,
   specs = list(list(list(type = "scene"), list(type = "scene")))
@@ -89,8 +85,6 @@ fig <- make_subplots(
   ) |>
   update_scenes(aspectmode = "cube") |>
   update_layout(title = "Diffuse Reflection")
-
-fig
 ```
 
 ### Specular
@@ -99,7 +93,7 @@ fig
 
 library(plotly.core)
 
-fig <- make_subplots(
+make_subplots(
   rows = 1,
   cols = 2,
   specs = list(list(list(type = "scene"), list(type = "scene")))
@@ -120,8 +114,6 @@ fig <- make_subplots(
   ) |>
   update_scenes(aspectmode = "cube") |>
   update_layout(title = "Specular Reflection")
-
-fig
 ```
 
 ### Fresnel
@@ -130,7 +122,7 @@ fig
 
 library(plotly.core)
 
-fig <- make_subplots(
+make_subplots(
   rows = 1,
   cols = 2,
   specs = list(list(list(type = "scene"), list(type = "scene")))
@@ -151,8 +143,6 @@ fig <- make_subplots(
   ) |>
   update_scenes(aspectmode = "cube") |>
   update_layout(title = "Fresnel")
-
-fig
 ```
 
 \#Reference

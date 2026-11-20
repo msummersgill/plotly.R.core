@@ -33,34 +33,31 @@ This document explains the following discrete-color-related concepts:
 
 ### Discrete Color with Plotly
 
-With plotly.core, discrete colors come from adding **one trace per
-category**: each trace gets the next color of the color sequence and its
-own legend entry. Continuous color comes from passing **numeric** values
-to a marker’s `color` together with a `colorscale`. This means that
-numeric strings must be parsed to be used for continuous color, and
-conversely, numbers used as category codes are best converted to
-strings.
+With plotly.core, discrete colors come from mapping a color property
+(such as a marker’s `color`) to a **factor, character or logical**
+column: the data is split into **one trace per category**, and each
+trace gets the next color of the color sequence and its own legend
+entry. Continuous color comes from passing **numeric** values to a
+marker’s `color` together with a `colorscale`. This means that numeric
+strings must be parsed to be used for continuous color, and conversely,
+numbers used as category codes are best converted to strings.
 
-For example, in the `tips` dataset, the `smoker` column contains
-strings, so we add one trace per value:
+For example, in the `tips` dataset, the `smoker` column is a factor, so
+its values get discrete colors:
 
 ``` r
 
 library(plotly.core)
 data("tips", package = "reshape2")
 
-fig <- go_figure()
-for (g in unique(tips$smoker)) {
-  fig <- fig |>
-    add_scatter(
-      data = tips[tips$smoker == g, ],
-      x = ~total_bill,
-      y = ~tip,
-      mode = "markers",
-      name = g
-    )
-}
-fig <- fig |>
+tips |>
+  go_figure() |>
+  add_scatter(
+    x = ~total_bill,
+    y = ~tip,
+    mode = "markers",
+    marker = go_scatter_marker(color = ~smoker)
+  ) |>
   update_layout(
     title = "String 'smoker' values mean discrete colors",
     legend = go_legend(title = go_legend_title(text = "smoker")),
@@ -76,7 +73,6 @@ fig <- fig |>
       gridcolor = "#ffff"
     )
   )
-fig
 ```
 
 The `size` column, however, contains numbers:
@@ -86,7 +82,7 @@ The `size` column, however, contains numbers:
 library(plotly.core)
 data("tips", package = "reshape2")
 
-fig <- tips |>
+tips |>
   go_figure() |>
   add_scatter(
     x = ~total_bill,
@@ -112,12 +108,12 @@ fig <- tips |>
       gridcolor = "#ffff"
     )
   )
-fig
 ```
 
-Converting this column to strings is very straightforward, but note that
-the ordering in the legend follows the order in which the traces are
-added (see below for how to control discrete order):
+Converting this column to strings is very straightforward, and
+`split = ~size` then adds one trace per value, but note that the legend
+lists the values in sorted order, which is the order in which their
+traces are added (see below for how to control discrete order):
 
 ``` r
 
@@ -126,18 +122,14 @@ data("tips", package = "reshape2")
 
 tips$size <- as.character(tips$size) #convert to string
 
-fig <- go_figure()
-for (g in sort(unique(tips$size))) {
-  fig <- fig |>
-    add_scatter(
-      data = tips[tips$size == g, ],
-      x = ~total_bill,
-      y = ~tip,
-      mode = "markers",
-      name = g
-    )
-}
-fig <- fig |>
+tips |>
+  go_figure() |>
+  add_scatter(
+    x = ~total_bill,
+    y = ~tip,
+    mode = "markers",
+    split = ~size
+  ) |>
   update_layout(
     title = "String 'size' values mean discrete colors",
     plot_bgcolor = "#e5ecf6",
@@ -152,85 +144,7 @@ fig <- fig |>
       gridcolor = "#ffff"
     )
   )
-fig
 ```
-
-### Discrete Colors in Dash
-
-[Dash for R](https://dashr.plotly.com/) is an open-source framework for
-building analytical applications, with no Javascript required, and it is
-tightly integrated with the Plotly graphing library.
-
-Learn about how to install Dash for R at
-<https://dashr.plot.ly/installation>.
-
-Everywhere in this page that you see fig, you can display the same
-figure in a Dash for R application by passing it to the figure argument.
-
-``` r
-
-library(dash)
-library(dashCoreComponents)
-library(dashHtmlComponents)
-library(plotly.core)
-
-app <- Dash$new()
-
-app$layout(
-  htmlDiv(
-    list(
-      dccGraph(id = "graph"),
-      htmlLabel("Color mode:"),
-      dccRadioItems(
-        id = "radio",
-        options = list(
-          list(label = "discrete", value = "d"),
-          list(label = "continuous", value = "c")
-        ),
-        value = "Secondary"
-      )
-    )
-  )
-)
-app$callback(
-  output(id = "graph", property = "figure"),
-  params = list(input(id = "radio", property = "value")),
-  function(value) {
-    data("tips", package = "reshape2")
-    if (value == "d") {
-      fig <- go_figure()
-      for (g in sort(unique(tips$size))) {
-        fig <- fig |>
-          add_scatter(
-            data = tips[tips$size == g, ],
-            x = ~total_bill,
-            y = ~tip,
-            mode = "markers",
-            name = as.character(g)
-          )
-      }
-      fig <- fig |>
-        update_layout(title = "'size' values mean discrete colors")
-
-      return(fig)
-    } else {
-      fig <- tips |>
-        go_figure() |>
-        add_scatter(
-          x = ~total_bill,
-          y = ~tip,
-          mode = "markers",
-          marker = go_scatter_marker(color = ~size, showscale = TRUE)
-        ) |>
-        update_layout(title = "'size' values mean continuous color")
-
-      return(fig)
-    }
-  }
-)
-```
-
-Use `app$run_server()` to run the dash app.
 
 ### Color Sequences in Plotly
 
@@ -247,7 +161,8 @@ display.brewer.all(type = "qual")
 
 Here is an example that creates a scatter plot using Plotly, with points
 colored using the qualitative `Accent` color sequence from RColorBrewer,
-passed to `colorway`.
+passed to `colorway`. Set `colorway` before adding the traces: the
+colors are taken from it when the column is mapped.
 
 ``` r
 
@@ -255,18 +170,15 @@ library(plotly.core)
 library(gapminder)
 data("gapminder")
 
-fig <- go_figure()
-for (cont in levels(gapminder$continent)) {
-  fig <- fig |>
-    add_scatter(
-      data = gapminder[gapminder$continent == cont, ],
-      x = ~year,
-      y = ~lifeExp,
-      mode = "lines",
-      name = cont
-    )
-}
-fig <- fig |>
+gapminder |>
+  go_figure() |>
+  update_layout(colorway = RColorBrewer::brewer.pal(5, "Accent")) |>
+  add_scatter(
+    x = ~year,
+    y = ~lifeExp,
+    mode = "lines",
+    line = go_scatter_line(color = ~continent)
+  ) |>
   update_layout(
     title = "Built-in Accent color sequence",
     legend = go_legend(title = go_legend_title(text = "continent")),
@@ -280,10 +192,8 @@ fig <- fig |>
       zerolinecolor = "#ffff",
       zerolinewidth = 2,
       gridcolor = "#ffff"
-    ),
-    colorway = RColorBrewer::brewer.pal(5, "Accent")
+    )
   )
-fig
 ```
 
 ### Explicitly Constructing a Color Sequence
@@ -299,25 +209,22 @@ data("gapminder")
 
 data <- gapminder[gapminder$year == 2007, ]
 
-fig <- go_figure()
-for (cont in levels(data$continent)) {
-  fig <- fig |>
-    add_bar(
-      data = data[data$continent == cont, ],
-      x = ~pop,
-      y = ~continent,
-      width = 1,
-      orientation = "h",
-      name = cont,
-      text = ~country,
-      hovertemplate = paste(
-        "<b>%{text}</b>",
-        "<br><b>Continent</b>: %{y}<br>",
-        "<i>pop</i>: $%{x}"
-      )
-    )
-}
-fig <- fig |>
+data |>
+  go_figure() |>
+  update_layout(colorway = c("red", "green", "blue", "goldenrod", "magenta")) |>
+  add_bar(
+    x = ~pop,
+    y = ~continent,
+    width = 1,
+    orientation = "h",
+    text = ~country,
+    hovertemplate = paste(
+      "<b>%{text}</b>",
+      "<br><b>Continent</b>: %{y}<br>",
+      "<i>pop</i>: $%{x}"
+    ),
+    marker = go_bar_marker(color = ~continent)
+  ) |>
   update_layout(
     title = "Explicit color sequence",
     legend = go_legend(title = go_legend_title(text = "continent")),
@@ -331,11 +238,8 @@ fig <- fig |>
       zerolinecolor = "#ffff",
       zerolinewidth = 2,
       gridcolor = "#ffff"
-    ),
-    colorway = c("red", "green", "blue", "goldenrod", "magenta")
+    )
   )
-
-fig
 ```
 
 ***Warning***: If you give colors to fewer traces than the number of
@@ -387,10 +291,11 @@ fig
 
 The example above assigned colors to data values on a
 first-come-first-served basis, but you can directly map colors to data
-values if this is important to your application, by looking up each
-trace’s color in a named vector. Note that this does not change the
-order in which values appear in the figure or legend, as can be
-controlled below:
+values if this is important to your application, by looking up the
+colors of the column’s levels in a named vector and passing them, in
+level order, as the `colorway`. Note that this does not change the order
+in which values appear in the figure or legend, as can be controlled
+below:
 
 ``` r
 
@@ -401,26 +306,22 @@ data("gapminder")
 pal <- c("red", "green", "blue", "goldenrod", "magenta")
 pal <- setNames(pal, c("Europe", "Asia", "Americas", "Oceania", "Africa"))
 
-fig <- go_figure()
-for (cont in levels(data$continent)) {
-  fig <- fig |>
-    add_bar(
-      data = data[data$continent == cont, ],
-      x = ~pop,
-      y = ~continent,
-      width = 1,
-      orientation = "h",
-      name = cont,
-      text = ~country,
-      hovertemplate = paste(
-        "<b>%{text}</b>",
-        "<br><b>Continent</b>: %{y}<br>",
-        "<i>pop</i>: $%{x}"
-      ),
-      marker = go_bar_marker(color = pal[[cont]])
-    )
-}
-fig <- fig |>
+data |>
+  go_figure() |>
+  update_layout(colorway = unname(pal[levels(data$continent)])) |>
+  add_bar(
+    x = ~pop,
+    y = ~continent,
+    width = 1,
+    orientation = "h",
+    text = ~country,
+    hovertemplate = paste(
+      "<b>%{text}</b>",
+      "<br><b>Continent</b>: %{y}<br>",
+      "<i>pop</i>: $%{x}"
+    ),
+    marker = go_bar_marker(color = ~continent)
+  ) |>
   update_layout(
     title = "Explicit color mapping",
     legend = go_legend(title = go_legend_title(text = "continent")),
@@ -436,8 +337,6 @@ fig <- fig |>
       gridcolor = "#ffff"
     )
   )
-
-fig
 ```
 
 If your data set already contains valid CSS colors which you wish to use
@@ -450,7 +349,7 @@ hover label:
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_bar(
     x = c("a", "b", "c"),
     y = c(1, 3, 2),
@@ -471,8 +370,6 @@ fig <- go_figure() |>
       gridcolor = "#ffff"
     )
   )
-
-fig
 ```
 
 ### Controlling Discrete Color Order
@@ -491,30 +388,25 @@ data("gapminder")
 
 data <- gapminder[gapminder$year == 2007, ]
 
-
 pal <- c("green", "blue", "magenta", "red", "goldenrod")
 pal <- setNames(pal, c("Europe", "Asia", "Americas", "Oceania", "Africa"))
 
-fig <- go_figure()
-for (cont in levels(data$continent)) {
-  fig <- fig |>
-    add_bar(
-      data = data[data$continent == cont, ],
-      x = ~pop,
-      y = ~continent,
-      width = 1,
-      orientation = "h",
-      name = cont,
-      text = ~country,
-      hovertemplate = paste(
-        "<b>%{text}</b>",
-        "<br><b>Continent</b>: %{y}<br>",
-        "<i>pop</i>: $%{x}"
-      ),
-      marker = go_bar_marker(color = pal[[cont]])
-    )
-}
-fig <- fig |>
+data |>
+  go_figure() |>
+  update_layout(colorway = unname(pal[levels(data$continent)])) |>
+  add_bar(
+    x = ~pop,
+    y = ~continent,
+    width = 1,
+    orientation = "h",
+    text = ~country,
+    hovertemplate = paste(
+      "<b>%{text}</b>",
+      "<br><b>Continent</b>: %{y}<br>",
+      "<i>pop</i>: $%{x}"
+    ),
+    marker = go_bar_marker(color = ~continent)
+  ) |>
   update_layout(
     title = "Explicit color sequence with explicit ordering",
     legend = go_legend(title = go_legend_title(text = "continent")),
@@ -533,8 +425,6 @@ fig <- fig |>
     ),
     bargap = 1
   )
-
-fig
 ```
 
 ``` r
@@ -545,30 +435,25 @@ data("gapminder")
 
 data <- gapminder[gapminder$year == 2007, ]
 
-
 pal <- c("red", "green", "blue", "goldenrod", "magenta")
 pal <- setNames(pal, c("Europe", "Asia", "Americas", "Oceania", "Africa"))
 
-fig <- go_figure()
-for (cont in levels(data$continent)) {
-  fig <- fig |>
-    add_bar(
-      data = data[data$continent == cont, ],
-      x = ~pop,
-      y = ~continent,
-      width = 1,
-      orientation = "h",
-      name = cont,
-      text = ~country,
-      hovertemplate = paste(
-        "<b>%{text}</b>",
-        "<br><b>Continent</b>: %{y}<br>",
-        "<i>pop</i>: $%{x}"
-      ),
-      marker = go_bar_marker(color = pal[[cont]])
-    )
-}
-fig <- fig |>
+data |>
+  go_figure() |>
+  update_layout(colorway = unname(pal[levels(data$continent)])) |>
+  add_bar(
+    x = ~pop,
+    y = ~continent,
+    width = 1,
+    orientation = "h",
+    text = ~country,
+    hovertemplate = paste(
+      "<b>%{text}</b>",
+      "<br><b>Continent</b>: %{y}<br>",
+      "<i>pop</i>: $%{x}"
+    ),
+    marker = go_bar_marker(color = ~continent)
+  ) |>
   update_layout(
     title = "Explicit color mapping with explicit ordering",
     legend = go_legend(title = go_legend_title(text = "continent")),
@@ -587,6 +472,4 @@ fig <- fig |>
     ),
     bargap = 1
   )
-
-fig
 ```

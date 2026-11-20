@@ -12,7 +12,6 @@ designer <- c(0, 20, 5, 35, 10, 0, 10, 70, 80, 80, 70)
 label <- c("point 1", "point 2", "point 3", "point 4", "point 5", "point 6",
            "point 7", "point 8", "point 9", "point 10", "point 11")
 
-
 df <- data.frame(journalist, developer, designer, label)
 
 # axis layout
@@ -25,8 +24,7 @@ axis <- function(title) {
   )
 }
 
-
-fig <- df |>
+df |>
   go_figure() |>
   add_scatterternary(
     mode = "markers",
@@ -50,8 +48,6 @@ fig <- df |>
       caxis = axis("Designer")
     )
   )
-
-fig
 ```
 
 \#Reference

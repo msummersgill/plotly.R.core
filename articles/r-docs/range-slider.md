@@ -11,7 +11,7 @@ stocks <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/sto
 stocks$Date <- as.Date(stocks$Date)
 ds <- stocks[stocks$Date >= as.Date("2015-01-01"), ]
 
-fig <- ds |>
+ds |>
   go_figure() |>
   add_scatter(x = ~Date, y = ~AAPL, mode = "lines", name = "Apple") |>
   add_scatter(x = ~Date, y = ~MSFT, mode = "lines", name = "Microsoft") |>
@@ -51,6 +51,4 @@ fig <- ds |>
     ),
     yaxis = go_yaxis(title = "Price")
   )
-
-fig
 ```

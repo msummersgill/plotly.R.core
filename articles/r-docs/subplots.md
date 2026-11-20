@@ -25,7 +25,7 @@ subplot layout.
 
 library(plotly.core)
 
-fig <- make_subplots(rows = 1, cols = 2) |>
+make_subplots(rows = 1, cols = 2) |>
   add_scatter(
     x = c(1, 2, 3),
     y = c(4, 5, 6),
@@ -54,8 +54,6 @@ fig <- make_subplots(rows = 1, cols = 2) |>
     gridcolor = "#ffff"
   ) |>
   update_layout(title = "Side By Side Subplots")
-
-fig
 ```
 
 #### Stacked Subplots
@@ -68,7 +66,7 @@ layout.
 
 library(plotly.core)
 
-fig <- make_subplots(rows = 3, cols = 1) |>
+make_subplots(rows = 3, cols = 1) |>
   add_scatter(
     x = c(3, 4, 5),
     y = c(1000, 1100, 1200),
@@ -102,8 +100,6 @@ fig <- make_subplots(rows = 3, cols = 1) |>
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
 
 #### Multiple Subplots
@@ -115,7 +111,7 @@ subplot with `scatter` trace.
 
 library(plotly.core)
 
-fig <- make_subplots(rows = 2, cols = 2) |>
+make_subplots(rows = 2, cols = 2) |>
   add_scatter(
     x = c(1, 2, 3),
     y = c(4, 5, 6),
@@ -159,8 +155,6 @@ fig <- make_subplots(rows = 2, cols = 2) |>
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
 
 #### Multiple Subplots with Titles
@@ -176,7 +170,7 @@ scatter traces.
 
 library(plotly.core)
 
-fig <- make_subplots(
+make_subplots(
   rows = 2,
   cols = 2,
   subplot_titles = c("Plot 1", "Plot 2", "Plot 3", "Plot 4")
@@ -225,8 +219,6 @@ fig <- make_subplots(
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
 
 #### Subplots with Annotations
@@ -235,7 +227,7 @@ fig
 
 library(plotly.core)
 
-fig <- make_subplots(rows = 1, cols = 2) |>
+make_subplots(rows = 1, cols = 2) |>
   add_scatter(
     x = c(1, 2, 3),
     y = c(4, 5, 6),
@@ -268,8 +260,6 @@ fig <- make_subplots(rows = 1, cols = 2) |>
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
 
 #### Customize Subplot Column Widths and Row Heights
@@ -290,7 +280,7 @@ right one.
 
 library(plotly.core)
 
-fig <- make_subplots(rows = 1, cols = 2, column_widths = c(0.7, 0.3)) |>
+make_subplots(rows = 1, cols = 2, column_widths = c(0.7, 0.3)) |>
   add_scatter(
     x = c(1, 2, 3),
     y = c(4, 5, 6),
@@ -318,78 +308,7 @@ fig <- make_subplots(rows = 1, cols = 2, column_widths = c(0.7, 0.3)) |>
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
-
-#### Subplots in Dash
-
-[Dash for R](https://dashr.plotly.com) is an open-source framework for
-building analytical applications, with no Javascript required, and it is
-tightly integrated with the Plotly graphing library.
-
-Learn about how to install Dash for R at
-<https://dashr.plot.ly/installation>.
-
-Everywhere in this page that you see fig, you can display the same
-figure in a Dash for R application by passing it to the figure argument.
-
-``` r
-
-library(dash)
-library(dashCoreComponents)
-library(dashHtmlComponents)
-library(plotly.core)
-
-app <- Dash$new()
-
-app$layout(
-  htmlDiv(
-    list(
-      dccGraph(id = "graph-with-slider"),
-      htmlLabel("Subplots Width:"),
-      dccSlider(
-        id = "slider",
-        min = 0,
-        max = 1,
-        value = 0.5,
-        step = 0.01
-      )
-    )
-  )
-)
-app$callback(
-  output(id = "graph-with-slider", property = "figure"),
-  params = list(input(id = "slider", property = "value")),
-  function(value) {
-    fig <- make_subplots(
-      rows = 1,
-      cols = 2,
-      column_widths = c(value, 1 - value)
-    ) |>
-      add_scatter(
-        x = c(1, 2, 3),
-        y = c(4, 5, 6),
-        mode = "lines+markers",
-        marker = go_scatter_marker(line = go_scatter_marker_line(width = 3)),
-        row = 1,
-        col = 1
-      ) |>
-      add_scatter(
-        x = c(20, 30, 40),
-        y = c(50, 60, 70),
-        mode = "lines+markers",
-        marker = go_scatter_marker(line = go_scatter_marker_line(width = 3)),
-        row = 1,
-        col = 2
-      )
-    return(fig)
-  }
-)
-```
-
-After executing this code, give app\$run_server() in the console to
-start the dash.
 
 #### Customizing Subplot Axes
 
@@ -495,7 +414,7 @@ reduce the spacing between subplot rows.
 
 library(plotly.core)
 
-fig <- make_subplots(
+make_subplots(
   rows = 3,
   cols = 1,
   shared_xaxes = TRUE,
@@ -534,8 +453,6 @@ fig <- make_subplots(
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
 
 #### Subplots with Shared Y-Axes
@@ -550,7 +467,7 @@ where the y axes of each row are linked.
 
 library(plotly.core)
 
-fig <- make_subplots(rows = 2, cols = 2, shared_yaxes = TRUE) |>
+make_subplots(rows = 2, cols = 2, shared_yaxes = TRUE) |>
   add_scatter(
     x = c(1, 2, 3),
     y = c(2, 3, 4),
@@ -591,8 +508,6 @@ fig <- make_subplots(rows = 2, cols = 2, shared_yaxes = TRUE) |>
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
 
 ### Subplots with Shared Colorscale
@@ -605,7 +520,7 @@ To share colorscale information in multiple subplots, you can use a
 
 library(plotly.core)
 
-fig <- make_subplots(rows = 1, cols = 2, shared_yaxes = TRUE) |>
+make_subplots(rows = 1, cols = 2, shared_yaxes = TRUE) |>
   add_bar(
     x = c(1, 2, 3),
     y = c(4, 5, 6),
@@ -635,8 +550,6 @@ fig <- make_subplots(rows = 1, cols = 2, shared_yaxes = TRUE) |>
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
 
 #### Custom Sized Subplot with Subplot Titles
@@ -654,7 +567,7 @@ subplots.
 
 library(plotly.core)
 
-fig <- make_subplots(
+make_subplots(
   rows = 2,
   cols = 2,
   specs = list(
@@ -696,8 +609,6 @@ fig <- make_subplots(
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
 
 #### Multiple Custom Sized Subplots
@@ -709,7 +620,7 @@ to create a custom subplot layout with subplots of mixed sizes.
 
 library(plotly.core)
 
-fig <- make_subplots(
+make_subplots(
   rows = 5,
   cols = 2,
   specs = list(
@@ -795,11 +706,6 @@ fig <- make_subplots(
     ## ⎣      :                :      ⎦
     ## [ (5,1) x5,y5 ]  [ (5,2) x6,y6 ]
 
-``` r
-
-fig
-```
-
 #### Subplots Types
 
 By default, the
@@ -823,7 +729,7 @@ library(plotly.core)
 data <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/school_earnings.csv")
 density <- density(ggplot2::diamonds$carat)
 
-fig <- make_subplots(
+make_subplots(
   rows = 2,
   cols = 2,
   horizontal_spacing = 0.1,
@@ -871,8 +777,6 @@ fig <- make_subplots(
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
 
 #### Reference

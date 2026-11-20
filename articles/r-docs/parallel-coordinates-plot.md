@@ -6,7 +6,7 @@
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_parcoords(
     line = go_parcoords_line(color = "blue"),
     dimensions = list(
@@ -32,8 +32,6 @@ fig <- go_figure() |>
       go_parcoords_dimension(range = c(1, 5), label = "D", values = c(4, 2))
     )
   )
-
-fig
 ```
 
 ### Basic Parallel Cordinates Plot
@@ -44,7 +42,7 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/bcdunbar/datasets/master/iris.csv")
 
-fig <- df |>
+df |>
   go_figure() |>
   add_parcoords(
     line = go_parcoords_line(
@@ -63,8 +61,6 @@ fig <- df |>
       go_parcoords_dimension(range = c(1, 7), label = "Petal Length", values = ~petal_length)
     )
   )
-
-fig
 ```
 
 ### Advanced Parallel Coordinates Plot
@@ -75,7 +71,7 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/bcdunbar/datasets/master/parcoords_data.csv")
 
-fig <- df |>
+df |>
   go_figure() |>
   add_parcoords(
     line = go_parcoords_line(
@@ -128,8 +124,6 @@ fig <- df |>
     )
   ) |>
   update_layout(width = 1000, height = 600)
-
-fig
 ```
 
 \#Reference

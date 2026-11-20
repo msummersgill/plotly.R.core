@@ -87,7 +87,7 @@ package: code written for <code>plotly</code> (<code>plot_ly()</code>,
 and vice versa. <code>plotly.core</code> bundles its own copy of the
 Plotly.js rendering engine, so figures look the same wherever they are
 rendered. Read on for details about troubleshooting
-<code>plotly.core</code> in other environments such as Dash.</p>
+<code>plotly.core</code> in other environments.</p>
 </div>
 <div class="section level3">
 <h3 id="import-problems">Import Problems<a class="anchor" aria-label="anchor" href="#import-problems"></a>
@@ -103,46 +103,6 @@ remove <code>plotly.core</code> before installing again:</p>
 <code>plotly.core.R</code> in the same directory as the code you are
 executing.</p>
 </blockquote>
-</div>
-<div class="section level3">
-<h3 id="dash-problems">Dash Problems<a class="anchor" aria-label="anchor" href="#dash-problems"></a>
-</h3>
-<p>If you are encountering problems using <code>plotly.core</code> with
-<a href="https://dashr.plotly.com/" class="external-link">Dash</a> please first ensure that
-you have upgraded <code>dash</code> to the latest version, which will
-automatically upgrade <code>dash-core-components</code> to the latest
-version, ensuring that Dash is using an up-to-date version of the
-Plotly.js rendering engine. If this does not resolve your issue, please
-visit our <a href="https://community.plotly.com/" class="external-link">Dash Community
-Forum</a> and we will be glad to help you out.</p>
-<p>This is an example of a <code>plotly.core</code> graph inside
-<code>dash</code>: <!-- #endregion --></p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://msummersgill.github.io/plotly.R.core/">plotly.core</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/go_figure.html">go_figure</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../../reference/go_bar.html">add_bar</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">7</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#fig</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">dash</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">dashCoreComponents</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">dashHtmlComponents</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">app</span> <span class="op">&lt;-</span> <span class="va">Dash</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">app</span><span class="op">$</span><span class="fu">layout</span><span class="op">(</span></span>
-<span>  <span class="fu">htmlDiv</span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>      <span class="fu">dccGraph</span><span class="op">(</span></span>
-<span>        id <span class="op">=</span> <span class="st">"graph"</span>,</span>
-<span>        figure <span class="op">=</span> <span class="va">fig</span></span>
-<span>      <span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#app$run_server()</span></span></code></pre></div>
-<p>Use <code>app$run_server()</code> to run the dash app.</p>
 </div>
 <div class="section level3">
 <h3 id="static-image-export-problems">Static Image Export Problems<a class="anchor" aria-label="anchor" href="#static-image-export-problems"></a>

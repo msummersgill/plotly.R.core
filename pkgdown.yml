@@ -51,7 +51,6 @@ articles:
   articles/r-docs/gantt: r-docs/gantt.html
   articles/r-docs/gauge-charts: r-docs/gauge-charts.html
   articles/r-docs/getting-started: r-docs/getting-started.html
-  articles/r-docs/github-getting-started-for-data-scientists: r-docs/github-getting-started-for-data-scientists.html
   articles/r-docs/graphing-multiple-chart-types: r-docs/graphing-multiple-chart-types.html
   articles/r-docs/group-by: r-docs/group-by.html
   articles/r-docs/heatmap-webgl: r-docs/heatmap-webgl.html
@@ -125,7 +124,7 @@ articles:
   articles/r-docs/webgl-vs-svg-million-points: r-docs/webgl-vs-svg-million-points.html
   articles/r-docs/webgl-vs-svg-time-series: r-docs/webgl-vs-svg-time-series.html
   articles/r-docs/webgl-vs-svg: r-docs/webgl-vs-svg.html
-last_built: 2026-11-20T03:50Z
+last_built: 2026-11-20T16:45Z
 urls:
   reference: https://msummersgill.github.io/plotly.R.core/reference
   article: https://msummersgill.github.io/plotly.R.core/articles

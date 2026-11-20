@@ -28,7 +28,7 @@ library(plotly.core)
 x <- seq(-2 * pi, 2 * pi, length.out = 1000)
 df <- data.frame(x, y1 = sin(x))
 
-fig <- df |>
+df |>
   go_figure() |>
   add_scatter(x = ~x, y = ~y1, mode = "lines") |>
   update_layout(
@@ -54,8 +54,6 @@ fig <- df |>
       )
     )
   )
-
-fig
 ```
 
 **Update Several Data Attributes** This example demostrates how to
@@ -197,7 +195,7 @@ updatemenus <- list(
   )
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = x0,
     y = y0,
@@ -221,8 +219,6 @@ fig <- go_figure() |>
     showlegend = FALSE,
     updatemenus = updatemenus
   )
-
-fig
 ```
 
 ### Update Button
@@ -289,7 +285,7 @@ updatemenus <- list(
   )
 )
 
-fig <- df |>
+df |>
   go_figure() |>
   add_scatter(
     x = ~Date,
@@ -312,8 +308,6 @@ fig <- df |>
     yaxis = go_yaxis(title = "Price ($)"),
     updatemenus = updatemenus
   )
-
-fig
 ```
 
 ### Animate Button
@@ -363,7 +357,6 @@ df_farms <- df_farms[order(-df_farms$turbines), ]
 df_farms$Wind.Farm <- df_farms$site_name
 rm(df_wind)
 
-
 # location buttons
 usa <- go_updatemenu_button(
   method = "relayout",
@@ -395,25 +388,20 @@ style_button <- function(style, label) {
     label = label
   )
 }
-basic <- style_button("open-street-map", "Basic")
+basic <- style_button("carto-voyager", "Basic")
 dark <- style_button("carto-darkmatter", "Dark")
 satellite <- style_button("satellite", "Satellite")
 
 # plot one scattermap trace per manufacturer, with buttons
-fig <- go_figure()
-for (m in unique(df_sub$manufac)) {
-  fig <- fig |>
-    add_scattermap(
-      data = df_sub[df_sub$manufac == m, ],
-      lat = ~lat_DD,
-      lon = ~long_DD,
-      mode = "markers",
-      marker = go_scattermap_marker(size = 3),
-      name = m
-    )
-}
-
-fig <- fig |>
+df_sub |>
+  go_figure() |>
+  add_scattermap(
+    lat = ~lat_DD,
+    lon = ~long_DD,
+    mode = "markers",
+    marker = go_scattermap_marker(size = 3),
+    split = ~manufac
+  ) |>
   add_annotation(
     x = 0.05,
     y = 0.05,
@@ -467,8 +455,6 @@ fig <- fig |>
       )
     )
   )
-
-fig
 ```
 
 \#Reference

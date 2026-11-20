@@ -13,14 +13,12 @@ library(plotly.core)
 
 density <- density(ggplot2::diamonds$carat)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = density$x, y = density$y, mode = "lines", fill = "tozeroy") |>
   update_layout(
     xaxis = go_xaxis(title = "Carat"),
     yaxis = go_yaxis(title = "Density")
   )
-
-fig
 ```
 
 ### Filled Area Plot with Multiple Traces
@@ -38,7 +36,7 @@ density1 <- density(diamonds1$carat)
 diamonds2 <- diamonds[which(diamonds$cut == "Ideal"), ]
 density2 <- density(diamonds2$carat)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = density1$x,
     y = density1$y,
@@ -57,8 +55,6 @@ fig <- go_figure() |>
     xaxis = go_xaxis(title = "Carat"),
     yaxis = go_yaxis(title = "Density")
   )
-
-fig
 ```
 
 ### Selecting Hover Points
@@ -67,7 +63,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = c(0, 0.5, 1, 1.5, 2),
     y = c(0, 1, 2, 1, 0),
@@ -95,8 +91,6 @@ fig <- go_figure() |>
     xaxis = go_xaxis(range = c(0, 5.2)),
     yaxis = go_yaxis(range = c(0, 3))
   )
-
-fig
 ```
 
 ### Custom Colors
@@ -112,7 +106,7 @@ density1 <- density(diamonds1$carat)
 diamonds2 <- diamonds[which(diamonds$cut == "Ideal"), ]
 density2 <- density(diamonds2$carat)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = density1$x,
     y = density1$y,
@@ -134,8 +128,6 @@ fig <- go_figure() |>
     xaxis = go_xaxis(title = "Carat"),
     yaxis = go_yaxis(title = "Density")
   )
-
-fig
 ```
 
 ### Area Plot without Lines
@@ -153,7 +145,7 @@ density1 <- density(diamonds1$carat)
 diamonds2 <- diamonds[which(diamonds$cut == "Ideal"), ]
 density2 <- density(diamonds2$carat)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = density1$x,
     y = density1$y,
@@ -174,8 +166,6 @@ fig <- go_figure() |>
     xaxis = go_xaxis(title = "Carat"),
     yaxis = go_yaxis(title = "Density")
   )
-
-fig
 ```
 
 ### Interior Filling for Area Chart
@@ -199,7 +189,7 @@ data$average_2014 <- rowMeans(data[, c("high_2014", "low_2014")])
 #The default order will be alphabetized unless specified as below:
 data$month <- factor(data$month, levels = data[["month"]])
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(
     x = ~month,
@@ -244,8 +234,6 @@ fig <- data |>
       zeroline = FALSE
     )
   )
-
-fig
 ```
 
 ### Stacked Area Chart with Original Values
@@ -257,7 +245,7 @@ library(plotly.core)
 data <- t(USPersonalExpenditure)
 data <- data.frame("year" = rownames(data), data)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(
     x = ~year,
@@ -307,8 +295,6 @@ fig <- data |>
       showgrid = FALSE
     )
   )
-
-fig
 ```
 
 ### Stacked Area Chart with Cumulative Values
@@ -320,7 +306,7 @@ library(plotly.core)
 data <- t(USPersonalExpenditure)
 data <- data.frame("year" = rownames(data), data)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(
     x = ~year,
@@ -372,8 +358,6 @@ fig <- data |>
       ticksuffix = "%"
     )
   )
-
-fig
 ```
 
 \#Reference

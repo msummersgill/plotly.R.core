@@ -22,11 +22,9 @@ lines <- lapply(c(0, 3, 5, 7, 9, 13), function(i) {
   )
 })
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = s, y = sin(s), mode = "lines") |>
   update_layout(title = "Highlighting with Lines", shapes = lines)
-
-fig
 ```
 
 ### Rectangles
@@ -37,7 +35,7 @@ library(plotly.core)
 
 economics <- ggplot2::economics
 
-fig <- economics |>
+economics |>
   go_figure() |>
   add_scatter(x = ~date, y = ~uempmed, name = "unemployment", mode = "lines") |>
   update_layout(
@@ -69,8 +67,6 @@ fig <- economics |>
       )
     )
   )
-
-fig
 ```
 
 ### Circles
@@ -83,7 +79,7 @@ library(plotly.core)
 
 df <- ggplot2::diamonds[sample(nrow(ggplot2::diamonds), 1000), ]
 
-fig <- df |>
+df |>
   go_figure() |>
   add_scatter(
     x = ~carat,
@@ -140,8 +136,6 @@ fig <- df |>
       )
     )
   )
-
-fig
 ```
 
 ### Drawing Shapes on Cartesian Plots
@@ -170,9 +164,8 @@ turns to pink to highlight the activated shape and then you can
 
 An activated shape is deleted by cliking on the `eraseshape` button.
 
-Drawing or modifying a shape triggers a `relayout` event, which [can be
-captured by a callback inside a Dash For R
-application](https://dash.plotly.com/interactive-graphing).
+Drawing or modifying a shape triggers a `relayout` event, which a Shiny
+app can capture with `event_data("plotly_relayout")`.
 
 ``` r
 
@@ -180,7 +173,7 @@ library(plotly.core)
 
 df <- ggplot2::diamonds[sample(nrow(ggplot2::diamonds), 1000), ]
 
-fig <- df |>
+df |>
   go_figure() |>
   add_scatter(
     x = ~carat,
@@ -207,8 +200,6 @@ fig <- df |>
       "drawline", "drawopenpath", "drawclosedpath", "drawcircle", "drawrect", "eraseshape"
     )
   )
-
-fig
 ```
 
 ### Style of user-drawn shapes
@@ -229,7 +220,7 @@ library(plotly.core)
 
 df <- ggplot2::diamonds[sample(nrow(ggplot2::diamonds), 1000), ]
 
-fig <- df |>
+df |>
   go_figure() |>
   add_scatter(
     x = ~carat,
@@ -257,8 +248,6 @@ fig <- df |>
       "drawline", "drawopenpath", "drawclosedpath", "drawcircle", "drawrect", "eraseshape"
     )
   )
-
-fig
 ```
 
 ### Reference

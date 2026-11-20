@@ -6,7 +6,7 @@
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = c(1, 2, 3), y = c(1, 2, 3), mode = "lines") |>
   update_layout(
     images = list(
@@ -44,6 +44,4 @@ fig <- go_figure() |>
       )
     )
   )
-
-fig
 ```

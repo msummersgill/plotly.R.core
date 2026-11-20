@@ -39,7 +39,7 @@ rings <- split(coords, list(coords$L1, coords$L2, coords$L3), drop = TRUE)
 x <- unlist(lapply(rings, function(r) c(r$X, NA)), use.names = FALSE)
 y <- unlist(lapply(rings, function(r) c(r$Y, NA)), use.names = FALSE)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = x,
     y = y,
@@ -48,8 +48,6 @@ fig <- go_figure() |>
     line = go_scatter_line(width = 1)
   ) |>
   update_yaxes(scaleanchor = "x")
-
-fig
 ```
 
 You can also draw the features on a geo map with
@@ -67,7 +65,7 @@ nc_geojson <- jsonlite::fromJSON(
   simplifyVector = FALSE
 )
 
-fig <- nc |>
+nc |>
   go_figure() |>
   add_choropleth(
     geojson = nc_geojson,
@@ -77,8 +75,6 @@ fig <- nc |>
     colorscale = "Viridis"
   ) |>
   update_geos(fitbounds = "locations", visible = FALSE)
-
-fig
 ```
 
 Or on a tile map with
@@ -95,7 +91,7 @@ nc_geojson <- jsonlite::fromJSON(
   simplifyVector = FALSE
 )
 
-fig <- nc |>
+nc |>
   go_figure() |>
   add_choroplethmap(
     geojson = nc_geojson,
@@ -115,8 +111,6 @@ fig <- nc |>
       center = go_map_center(lon = -79.5, lat = 35.5)
     )
   )
-
-fig
 ```
 
 ### Reference

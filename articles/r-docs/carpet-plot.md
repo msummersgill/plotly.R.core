@@ -21,14 +21,12 @@ To save parameter values use `a` and `b` attributes.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_carpet(
     a = c(4, 4, 4, 4.5, 4.5, 4.5, 5, 5, 5, 6, 6, 6),
     b = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3),
     y = c(2, 3.5, 4, 3, 4.5, 5, 5.5, 6.5, 7.5, 8, 8.5, 10)
   )
-
-fig
 ```
 
 ### Add Carpet Axes
@@ -45,7 +43,7 @@ refer to
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_carpet(
     a = c(4, 4, 4, 4.5, 4.5, 4.5, 5, 5, 5, 6, 6, 6),
     b = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3),
@@ -63,8 +61,6 @@ fig <- go_figure() |>
       minorgridcount = 9
     )
   )
-
-fig
 ```
 
 ### Style Carpet Axes
@@ -73,7 +69,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_carpet(
     a = c(4, 4, 4, 4.5, 4.5, 4.5, 5, 5, 5, 6, 6, 6),
     b = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3),
@@ -105,8 +101,6 @@ fig <- go_figure() |>
     xaxis = go_xaxis(showgrid = FALSE, showticklabels = FALSE),
     yaxis = go_yaxis(showgrid = FALSE, showticklabels = FALSE)
   )
-
-fig
 ```
 
 ### Add Points and Contours

@@ -59,6 +59,7 @@ with a matching `carpet` attribute.</p>
 <span>  <span class="va">fig</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  split <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  a <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  b <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  carpet <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -171,6 +172,15 @@ evaluated. Default: the data given to <code><a href="go_figure.html">go_figure()
 the evaluated values are added to the trace. A
 <code><a href="https://rdrr.io/pkg/crosstalk/man/SharedData.html" class="external-link">crosstalk::SharedData</a></code> works the same way, and links the trace
 to its crosstalk group (see <code><a href="highlight.html">highlight()</a></code>).</p></dd>
+
+
+<dt id="arg-split">split<a class="anchor" aria-label="anchor" href="#arg-split"></a></dt>
+<dd><p>A column (<code>~col</code>) or vector, one value per row of the
+data: one trace is added per value, named after it. Colour properties
+given a discrete column (a factor, character or logical, e.g.
+<code>marker = go_scatter_marker(color = ~group)</code>) split the data the
+same way, each trace getting its own colour: evenly spaced viridis
+colours for an ordered factor, otherwise the figure's colorway.</p></dd>
 
 
 <dt id="arg-a">a<a class="anchor" aria-label="anchor" href="#arg-a"></a></dt>

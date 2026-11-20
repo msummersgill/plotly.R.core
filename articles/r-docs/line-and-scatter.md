@@ -6,11 +6,9 @@
 
 library(plotly.core)
 
-fig <- iris |>
+iris |>
   go_figure() |>
   add_scatter(x = ~Sepal.Length, y = ~Petal.Length, mode = "markers")
-
-fig
 ```
 
 ### Styled Scatter Plot
@@ -19,7 +17,7 @@ fig
 
 library(plotly.core)
 
-fig <- iris |>
+iris |>
   go_figure() |>
   add_scatter(
     x = ~Sepal.Length,
@@ -36,8 +34,6 @@ fig <- iris |>
     yaxis = go_yaxis(zeroline = FALSE),
     xaxis = go_xaxis(zeroline = FALSE)
   )
-
-fig
 ```
 
 ### Plotting Markers and Lines
@@ -53,13 +49,11 @@ x <- c(1:100)
 
 data <- data.frame(x, trace_0, trace_1, trace_2)
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(x = ~x, y = ~trace_0, name = "trace 0", mode = "lines") |>
   add_scatter(x = ~x, y = ~trace_1, name = "trace 1", mode = "lines+markers") |>
   add_scatter(x = ~x, y = ~trace_2, name = "trace 2", mode = "markers")
-
-fig
 ```
 
 Each
@@ -72,26 +66,21 @@ See more examples of line charts
 
 ### Qualitative Colorscales
 
-One trace per species gives each species its own color (from the default
-colorway) and legend entry.
+Mapping `marker.color` to a factor makes one trace per species, giving
+each species its own color (from the default colorway) and legend entry.
 
 ``` r
 
 library(plotly.core)
 
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_scatter(
-      data = iris[iris$Species == sp, ],
-      x = ~Sepal.Length,
-      y = ~Petal.Length,
-      mode = "markers",
-      name = sp
-    )
-}
-
-fig
+iris |>
+  go_figure() |>
+  add_scatter(
+    x = ~Sepal.Length,
+    y = ~Petal.Length,
+    mode = "markers",
+    marker = go_scatter_marker(color = ~Species)
+  )
 ```
 
 ### ColorBrewer Palette Names
@@ -102,21 +91,15 @@ library(plotly.core)
 
 pal <- RColorBrewer::brewer.pal(3, "Set1")
 
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_scatter(
-      data = iris[iris$Species == sp, ],
-      x = ~Sepal.Length,
-      y = ~Petal.Length,
-      mode = "markers",
-      name = sp
-    )
-}
-fig <- fig |>
-  update_layout(colorway = pal)
-
-fig
+iris |>
+  go_figure() |>
+  update_layout(colorway = pal) |>
+  add_scatter(
+    x = ~Sepal.Length,
+    y = ~Petal.Length,
+    mode = "markers",
+    marker = go_scatter_marker(color = ~Species)
+  )
 ```
 
 ### Custom Color Scales
@@ -130,26 +113,20 @@ library(plotly.core)
 
 pal <- c("red", "blue", "green")
 
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_scatter(
-      data = iris[iris$Species == sp, ],
-      x = ~Sepal.Length,
-      y = ~Petal.Length,
-      mode = "markers",
-      name = sp
-    )
-}
-fig <- fig |>
-  update_layout(colorway = pal)
-
-fig
+iris |>
+  go_figure() |>
+  update_layout(colorway = pal) |>
+  add_scatter(
+    x = ~Sepal.Length,
+    y = ~Petal.Length,
+    mode = "markers",
+    marker = go_scatter_marker(color = ~Species)
+  )
 ```
 
 To ensure a particular data value gets mapped to particular color, use a
-named character vector of color codes and look the color up for each
-trace.
+named character vector of color codes and put it in the order of the
+factor levels.
 
 ``` r
 
@@ -158,20 +135,15 @@ library(plotly.core)
 pal <- c("red", "blue", "green")
 pal <- setNames(pal, c("virginica", "setosa", "versicolor"))
 
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_scatter(
-      data = iris[iris$Species == sp, ],
-      x = ~Sepal.Length,
-      y = ~Petal.Length,
-      mode = "markers",
-      name = sp,
-      marker = go_scatter_marker(color = pal[[sp]])
-    )
-}
-
-fig
+iris |>
+  go_figure() |>
+  update_layout(colorway = unname(pal[levels(iris$Species)])) |>
+  add_scatter(
+    x = ~Sepal.Length,
+    y = ~Petal.Length,
+    mode = "markers",
+    marker = go_scatter_marker(color = ~Species)
+  )
 ```
 
 ### Mapping Data to Symbols
@@ -206,7 +178,7 @@ library(plotly.core)
 
 d <- ggplot2::diamonds[sample(nrow(ggplot2::diamonds), 1000), ]
 
-fig <- d |>
+d |>
   go_figure() |>
   add_scatter(
     x = ~carat,
@@ -222,8 +194,6 @@ fig <- d |>
       sizemin = 2
     )
   )
-
-fig
 ```
 
 ### Data Labels on Hover
@@ -234,7 +204,7 @@ library(plotly.core)
 
 d <- ggplot2::diamonds[sample(nrow(ggplot2::diamonds), 1000), ]
 
-fig <- d |>
+d |>
   go_figure() |>
   add_scatter(
     x = ~carat,
@@ -252,8 +222,6 @@ fig <- d |>
       sizemin = 2
     )
   )
-
-fig
 ```
 
 \#Reference

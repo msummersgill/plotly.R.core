@@ -30,7 +30,7 @@ The following example uses the `scattermap` trace and sets
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattermap(
     fill = "toself",
     lon = c(-74, -70, -70, -74),
@@ -45,8 +45,6 @@ fig <- go_figure() |>
     ),
     showlegend = FALSE
   )
-
-fig
 ```
 
 ### Provide Gaps on Map
@@ -60,7 +58,7 @@ of the `connectgaps` attribute (see
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattermap(
     mode = "lines",
     fill = "toself",
@@ -75,8 +73,6 @@ fig <- go_figure() |>
     ),
     showlegend = FALSE
   )
-
-fig
 ```
 
 ### Use the Corresponding Geojson
@@ -118,7 +114,7 @@ geojson <- list(
   ))
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattermap(
     mode = "markers",
     lon = c(-73.605),
@@ -140,8 +136,6 @@ fig <- go_figure() |>
       )
     )
   )
-
-fig
 ```
 
 \#Reference

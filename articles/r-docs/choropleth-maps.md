@@ -207,7 +207,7 @@ g <- go_geo(
   lakecolor = "white"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_choropleth(
     geojson = counties,
     locations = df$fips,
@@ -219,8 +219,6 @@ fig <- go_figure() |>
     colorbar = go_colorbar(title = "Unemployment Rate (%)")
   ) |>
   update_layout(title = "2016 US Unemployment by County", geo = g)
-
-fig
 ```
 
 **Note** In this example we set `layout.geo.scope` to usa to
@@ -247,7 +245,7 @@ geojson <- fromJSON(url, simplifyVector = FALSE)
 url2 <- "https://raw.githubusercontent.com/plotly/datasets/master/election.csv"
 df <- read.csv(url2)
 
-fig <- go_figure() |>
+go_figure() |>
   add_choropleth(
     geojson = geojson,
     locations = df$district,
@@ -260,8 +258,6 @@ fig <- go_figure() |>
     geo = go_geo(fitbounds = "locations", visible = FALSE),
     title = "2013 Montreal Election"
   )
-
-fig
 ```
 
 ### Using Built-in Country and State Geometries
@@ -520,7 +516,7 @@ df
 
 ``` r
 
-fig <- df |>
+df |>
   go_figure() |>
   add_choropleth(
     locations = ~CODE,
@@ -528,8 +524,6 @@ fig <- df |>
     text = ~COUNTRY,
     colorscale = "Blues"
   )
-
-fig
 ```
 
 To use the USA States geometry, set `locationmode = "USA-states"` and
@@ -543,7 +537,7 @@ df$hover <- with(df, paste(state, "<br>", "Beef", beef, "Dairy", dairy, "<br>",
                            "Fruits", total.fruits, "Veggies", total.veggies,
                            "<br>", "Wheat", wheat, "Corn", corn))
 
-fig <- df |>
+df |>
   go_figure() |>
   add_choropleth(
     locationmode = "USA-states",
@@ -556,8 +550,6 @@ fig <- df |>
   update_layout(
     title = "2011 US Agriculture Exports by State<br>(Hover for breakdown)"
   )
-
-fig
 ```
 
 ### Customize choropleth chart
@@ -579,7 +571,7 @@ g <- go_geo(
   lakecolor = "white"
 )
 
-fig <- df |>
+df |>
   go_figure() |>
   add_choropleth(
     locationmode = "USA-states",
@@ -594,8 +586,6 @@ fig <- df |>
     title = "2011 US Agriculture Exports by State<br>(Hover for breakdown)",
     geo = g
   )
-
-fig
 ```
 
 **Note** In this example we set `layout.geo.scope` to `usa` to
@@ -620,7 +610,7 @@ g <- go_geo(
   projection = go_geo_projection(type = "mercator")
 )
 
-fig <- df |>
+df |>
   go_figure() |>
   add_choropleth(
     z = ~GDP..BILLIONS.,
@@ -634,8 +624,6 @@ fig <- df |>
     title = '2014 Global GDP<br>Source:<a href="https://www.cia.gov/library/publications/the-world-factbook/fields/2195.html">CIA World Factbook</a>',
     geo = g
   )
-
-fig
 ```
 
 ### Choropleth Inset Map
@@ -682,24 +670,20 @@ g2 <- go_geo(
 # marker area proportional to the number of cases
 sizeref <- 2 * max(df$Value) / 40^2
 
-fig <- go_figure()
-for (m in levels(df$abbrev)) {
-  fig <- fig |>
-    add_scattergeo(
-      data = df[df$abbrev == m, ],
-      lat = ~Lat,
-      lon = ~Lon,
-      text = ~paste(Value, "cases"),
-      mode = "markers",
-      marker = go_scattergeo_marker(
-        size = ~Value,
-        sizemode = "area",
-        sizeref = sizeref
-      ),
-      name = m
-    )
-}
-fig <- fig |>
+df |>
+  go_figure() |>
+  add_scattergeo(
+    lat = ~Lat,
+    lon = ~Lon,
+    text = ~paste(Value, "cases"),
+    mode = "markers",
+    marker = go_scattergeo_marker(
+      size = ~Value,
+      sizemode = "area",
+      sizeref = sizeref
+    ),
+    split = ~abbrev
+  ) |>
   add_scattergeo(
     lon = 21.0936,
     lat = 7.1881,
@@ -722,6 +706,4 @@ fig <- fig |>
     geo = g1,
     geo2 = g2
   )
-
-fig
 ```

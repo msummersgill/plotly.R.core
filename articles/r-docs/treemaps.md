@@ -19,12 +19,11 @@ of clicking on the sectors directly.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_treemap(
     labels = c("Eve", "Cain", "Seth", "Enos", "Noam", "Abel", "Awan", "Enoch", "Azura"),
     parents = c("", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve")
   )
-fig
 ```
 
 ### Customize Treemap Attributes
@@ -64,7 +63,7 @@ library(plotly.core)
 labels = c("Eve", "Cain", "Seth", "Enos", "Noam", "Abel", "Awan", "Enoch", "Azura")
 parents = c("", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve")
 
-fig <- go_figure() |>
+go_figure() |>
   add_treemap(
     labels = labels,
     parents = parents,
@@ -87,8 +86,6 @@ fig <- go_figure() |>
     grid = go_grid(columns = 2, rows = 1),
     margin = go_margin(l = 0, r = 0, b = 0, t = 0)
   )
-
-fig
 ```
 
 ### Set Color of Treemap Sectors
@@ -114,7 +111,7 @@ library(plotly.core)
 labels = c("A1", "A2", "A3", "A4", "A5", "B1", "B2")
 parents = c("", "A1", "A2", "A3", "A4", "", "B1")
 
-fig <- go_figure() |>
+go_figure() |>
   add_treemap(
     labels = labels,
     parents = parents,
@@ -122,7 +119,6 @@ fig <- go_figure() |>
       colors = c("#000", "royalblue", "lightgray", "purple", "#FFF", "lightgray", "lightblue")
     )
   )
-fig
 ```
 
 The following example uses the `marker.colorscale` attribute. Rather
@@ -140,15 +136,13 @@ labels = c("A1", "A2", "A3", "A4", "A5", "B1", "B2")
 parents = c("", "A1", "A2", "A3", "A4", "", "B1")
 values = c(11, 12, 13, 14, 15, 20, 30)
 
-fig <- go_figure() |>
+go_figure() |>
   add_treemap(
     labels = labels,
     parents = parents,
     values = values,
     marker = go_treemap_marker(colorscale = "Reds")
   )
-
-fig
 ```
 
 The following example uses the `treemapcolorway` attribute, which should
@@ -161,10 +155,9 @@ library(plotly.core)
 labels = c("A1", "A2", "A3", "A4", "A5", "B1", "B2")
 parents = c("", "A1", "A2", "A3", "A4", "", "B1")
 
-fig <- go_figure() |>
+go_figure() |>
   add_treemap(labels = labels, parents = parents) |>
   update_layout(treemapcolorway = c("pink", "lightgray"))
-fig
 ```
 
 ### Nested Layers in Treemap
@@ -182,7 +175,7 @@ library(plotly.core)
 df1 = read.csv('https://raw.githubusercontent.com/plotly/datasets/718417069ead87650b90472464c7565dc8c2cb1c/sunburst-coffee-flavors-complete.csv')
 df2 = read.csv('https://raw.githubusercontent.com/plotly/datasets/718417069ead87650b90472464c7565dc8c2cb1c/coffee-flavors.csv')
 
-fig <- go_figure() |>
+go_figure() |>
   add_treemap(
     data = df1,
     ids = ~ids,
@@ -199,7 +192,6 @@ fig <- go_figure() |>
     domain = go_domain(column = 1)
   ) |>
   update_layout(grid = go_grid(columns = 2, rows = 1))
-fig
 ```
 
 ### Controlling Text Font Size with `uniformtext`
@@ -216,11 +208,10 @@ which cannot fit within a sector with the specified fontsize: either
 
 library(plotly.core)
 df = read.csv('https://raw.githubusercontent.com/plotly/datasets/718417069ead87650b90472464c7565dc8c2cb1c/sunburst-coffee-flavors-complete.csv')
-fig <- df |>
+df |>
   go_figure() |>
   add_treemap(ids = ~ids, labels = ~labels, parents = ~parents) |>
   update_layout(uniformtext = go_uniformtext(minsize = 10, mode = "hide"))
-fig
 ```
 
 ### Reference

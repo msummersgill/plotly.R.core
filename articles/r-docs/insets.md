@@ -11,7 +11,7 @@ for laying out several plots with
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = c(1, 2, 3), y = c(4, 3, 2), mode = "lines") |>
   add_scatter(
     x = c(20, 30, 40),
@@ -24,6 +24,4 @@ fig <- go_figure() |>
     xaxis2 = go_xaxis(domain = c(0.6, 0.95), anchor = "y2"),
     yaxis2 = go_yaxis(domain = c(0.6, 0.95), anchor = "x2")
   )
-
-fig
 ```

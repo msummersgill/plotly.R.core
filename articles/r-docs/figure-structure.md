@@ -43,13 +43,13 @@ str(unclass(fig), max.level = 2)
     ##   ..$ :List of 4
     ##   .. ..- attr(*, "class")= chr [1:2] "go_scatter" "plotly_obj"
     ##  $ layout:List of 4
+    ##   ..$ plot_bgcolor: chr "#c7daec"
     ##   ..$ title       :List of 1
     ##   .. ..- attr(*, "class")= chr [1:2] "go_layout_title" "plotly_obj"
     ##   ..$ xaxis       :List of 1
     ##   .. ..- attr(*, "class")= chr [1:2] "go_layout_xaxis" "plotly_obj"
     ##   ..$ yaxis       :List of 1
     ##   .. ..- attr(*, "class")= chr [1:2] "go_layout_yaxis" "plotly_obj"
-    ##   ..$ plot_bgcolor: chr "#c7daec"
     ##   ..- attr(*, "class")= chr [1:2] "go_layout" "plotly_obj"
     ##  $ frames: list()
 
@@ -68,6 +68,7 @@ plotly_json(fig)
     ##     }
     ##   ],
     ##   "layout": {
+    ##     "plot_bgcolor": "#c7daec",
     ##     "title": {
     ##       "text": "sample figure"
     ##     },
@@ -81,7 +82,6 @@ plotly_json(fig)
     ##         "text": "y"
     ##       }
     ##     },
-    ##     "plot_bgcolor": "#c7daec",
     ##     "template": {
     ##       "layout": {
     ##         "margin": {
@@ -89,6 +89,218 @@ plotly_json(fig)
     ##           "l": 60,
     ##           "t": 25,
     ##           "r": 10
+    ##         },
+    ##         "colorscale": {
+    ##           "sequential": [
+    ##             [
+    ##               0,
+    ##               "#440154"
+    ##             ],
+    ##             [
+    ##               0.0627450980392157,
+    ##               "#48186a"
+    ##             ],
+    ##             [
+    ##               0.125490196078431,
+    ##               "#472d7b"
+    ##             ],
+    ##             [
+    ##               0.188235294117647,
+    ##               "#424086"
+    ##             ],
+    ##             [
+    ##               0.250980392156863,
+    ##               "#3b528b"
+    ##             ],
+    ##             [
+    ##               0.313725490196078,
+    ##               "#33638d"
+    ##             ],
+    ##             [
+    ##               0.376470588235294,
+    ##               "#2c728e"
+    ##             ],
+    ##             [
+    ##               0.43921568627451,
+    ##               "#26828e"
+    ##             ],
+    ##             [
+    ##               0.501960784313725,
+    ##               "#21918c"
+    ##             ],
+    ##             [
+    ##               0.564705882352941,
+    ##               "#1fa088"
+    ##             ],
+    ##             [
+    ##               0.627450980392157,
+    ##               "#28ae80"
+    ##             ],
+    ##             [
+    ##               0.690196078431373,
+    ##               "#3fbc73"
+    ##             ],
+    ##             [
+    ##               0.752941176470588,
+    ##               "#5ec962"
+    ##             ],
+    ##             [
+    ##               0.815686274509804,
+    ##               "#84d44b"
+    ##             ],
+    ##             [
+    ##               0.87843137254902,
+    ##               "#addc30"
+    ##             ],
+    ##             [
+    ##               0.941176470588235,
+    ##               "#d8e219"
+    ##             ],
+    ##             [
+    ##               1,
+    ##               "#fde725"
+    ##             ]
+    ##           ],
+    ##           "sequentialminus": [
+    ##             [
+    ##               0,
+    ##               "#440154"
+    ##             ],
+    ##             [
+    ##               0.0627450980392157,
+    ##               "#48186a"
+    ##             ],
+    ##             [
+    ##               0.125490196078431,
+    ##               "#472d7b"
+    ##             ],
+    ##             [
+    ##               0.188235294117647,
+    ##               "#424086"
+    ##             ],
+    ##             [
+    ##               0.250980392156863,
+    ##               "#3b528b"
+    ##             ],
+    ##             [
+    ##               0.313725490196078,
+    ##               "#33638d"
+    ##             ],
+    ##             [
+    ##               0.376470588235294,
+    ##               "#2c728e"
+    ##             ],
+    ##             [
+    ##               0.43921568627451,
+    ##               "#26828e"
+    ##             ],
+    ##             [
+    ##               0.501960784313725,
+    ##               "#21918c"
+    ##             ],
+    ##             [
+    ##               0.564705882352941,
+    ##               "#1fa088"
+    ##             ],
+    ##             [
+    ##               0.627450980392157,
+    ##               "#28ae80"
+    ##             ],
+    ##             [
+    ##               0.690196078431373,
+    ##               "#3fbc73"
+    ##             ],
+    ##             [
+    ##               0.752941176470588,
+    ##               "#5ec962"
+    ##             ],
+    ##             [
+    ##               0.815686274509804,
+    ##               "#84d44b"
+    ##             ],
+    ##             [
+    ##               0.87843137254902,
+    ##               "#addc30"
+    ##             ],
+    ##             [
+    ##               0.941176470588235,
+    ##               "#d8e219"
+    ##             ],
+    ##             [
+    ##               1,
+    ##               "#fde725"
+    ##             ]
+    ##           ],
+    ##           "diverging": [
+    ##             [
+    ##               0,
+    ##               "#440154"
+    ##             ],
+    ##             [
+    ##               0.0627450980392157,
+    ##               "#48186a"
+    ##             ],
+    ##             [
+    ##               0.125490196078431,
+    ##               "#472d7b"
+    ##             ],
+    ##             [
+    ##               0.188235294117647,
+    ##               "#424086"
+    ##             ],
+    ##             [
+    ##               0.250980392156863,
+    ##               "#3b528b"
+    ##             ],
+    ##             [
+    ##               0.313725490196078,
+    ##               "#33638d"
+    ##             ],
+    ##             [
+    ##               0.376470588235294,
+    ##               "#2c728e"
+    ##             ],
+    ##             [
+    ##               0.43921568627451,
+    ##               "#26828e"
+    ##             ],
+    ##             [
+    ##               0.501960784313725,
+    ##               "#21918c"
+    ##             ],
+    ##             [
+    ##               0.564705882352941,
+    ##               "#1fa088"
+    ##             ],
+    ##             [
+    ##               0.627450980392157,
+    ##               "#28ae80"
+    ##             ],
+    ##             [
+    ##               0.690196078431373,
+    ##               "#3fbc73"
+    ##             ],
+    ##             [
+    ##               0.752941176470588,
+    ##               "#5ec962"
+    ##             ],
+    ##             [
+    ##               0.815686274509804,
+    ##               "#84d44b"
+    ##             ],
+    ##             [
+    ##               0.87843137254902,
+    ##               "#addc30"
+    ##             ],
+    ##             [
+    ##               0.941176470588235,
+    ##               "#d8e219"
+    ##             ],
+    ##             [
+    ##               1,
+    ##               "#fde725"
+    ##             ]
+    ##           ]
     ##         }
     ##       }
     ##     }
@@ -101,62 +313,6 @@ plotly_json(fig)
 
 fig
 ```
-
-### Accessing figure structures in Dash
-
-[Dash for R](https://dashr.plotly.com) is an open-source framework for
-building analytical applications, with no Javascript required, and it is
-tightly integrated with the Plotly graphing library.
-
-Learn about how to install Dash for R at
-<https://dashr.plot.ly/installation>.
-
-Everywhere in this page that you see fig, you can display the same
-figure in a Dash for R application by passing its JSON representation to
-the figure argument.
-
-``` r
-
-library(dash)
-library(dashCoreComponents)
-library(dashHtmlComponents)
-library(plotly.core)
-
-fig <- go_figure() |>
-  add_scatter(x = c("a", "b", "c"), y = c(1, 3, 2), mode = "lines") |>
-  update_layout(title = "sample figure")
-
-app <- Dash$new()
-
-app$layout(
-  htmlDiv(
-    list(
-      dccGraph(
-        id = "graph",
-        figure = jsonlite::fromJSON(plotly_json(fig), simplifyVector = FALSE)
-      ),
-      htmlPre(
-        id = "structure",
-        style = list(
-          border = "thin lightgrey solid",
-          overflowY = "scroll",
-          height = "275px"
-        )
-      )
-    )
-  )
-)
-app$callback(
-  output(id = "structure", property = "children"),
-  params = list(input(id = "graph", property = "figure")),
-  function(fig_json) {
-    jsonlite::toJSON(fig_json, pretty = TRUE, auto_unbox = TRUE)
-  }
-)
-```
-
-After executing this code, give app\$run_server() in the console to
-start the dash.
 
 ### Figures as Trees of Attributes
 

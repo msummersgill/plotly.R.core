@@ -15,7 +15,7 @@ library(plotly.core)
 s <- matrix(c(1, -.75, -.75, 1), ncol = 2)
 obs <- mvtnorm::rmvnorm(500, sigma = s)
 
-fig <- make_subplots(rows = 1, cols = 2) |>
+make_subplots(rows = 1, cols = 2) |>
   add_scatter(
     x = obs[, 1],
     y = obs[, 2],
@@ -25,8 +25,6 @@ fig <- make_subplots(rows = 1, cols = 2) |>
     col = 1
   ) |>
   add_histogram2d(x = obs[, 1], y = obs[, 2], row = 1, col = 2)
-
-fig
 ```
 
 #### Colorscale
@@ -37,8 +35,6 @@ If `z` is not provided, the only way to control coloring is through the
 
 ``` r
 
-fig <- go_figure() |>
+go_figure() |>
   add_histogram2d(x = obs[, 1], y = obs[, 2], colorscale = "Blues")
-
-fig
 ```

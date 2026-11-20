@@ -14,7 +14,7 @@ library(plotly.core)
 seg_x <- as.vector(rbind(s$Women, s$Men, NA))
 seg_y <- as.vector(rbind(s$School, s$School, NA))
 
-fig <- s |>
+s |>
   go_figure() |>
   add_scatter(
     x = seg_x,
@@ -43,8 +43,6 @@ fig <- s |>
     yaxis = go_yaxis(categoryorder = "array", categoryarray = s$School),
     margin = go_margin(l = 65)
   )
-
-fig
 ```
 
 \#Reference

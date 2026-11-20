@@ -9,7 +9,7 @@ library(plotly.core)
 s <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/school_earnings.csv")
 s <- s[order(s$Men), ]
 
-fig <- s |>
+s |>
   go_figure() |>
   add_scatter(
     x = ~Women,
@@ -30,8 +30,6 @@ fig <- s |>
     xaxis = go_xaxis(title = "Annual Salary (in thousands)"),
     margin = go_margin(l = 100)
   )
-
-fig
 ```
 
 \#Reference

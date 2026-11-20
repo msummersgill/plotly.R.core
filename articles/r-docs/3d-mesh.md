@@ -10,10 +10,8 @@ x <- runif(50, 0, 1)
 y <- runif(50, 0, 1)
 z <- runif(50, 0, 1)
 
-fig <- go_figure() |>
+go_figure() |>
   add_mesh3d(x = x, y = y, z = z)
-
-fig
 ```
 
 ### Tetrahedron Mesh Plot
@@ -22,7 +20,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_mesh3d(
     x = c(0, 1, 2, 0),
     y = c(0, 0, 1, 2),
@@ -33,8 +31,6 @@ fig <- go_figure() |>
     intensity = c(0, 0.33, 0.66, 1),
     colorscale = list(c(0, "red"), c(0.5, "green"), c(1, "blue"))
   )
-
-fig
 ```
 
 ### Cube Mesh Plot
@@ -45,7 +41,7 @@ library(plotly.core)
 
 rainbow_scale <- Map(c, seq(0, 1, length.out = 8), substr(rainbow(8), 1, 7))
 
-fig <- go_figure() |>
+go_figure() |>
   add_mesh3d(
     x = c(0, 0, 1, 1, 0, 0, 1, 1),
     y = c(0, 1, 1, 0, 0, 1, 1, 0),
@@ -56,8 +52,6 @@ fig <- go_figure() |>
     intensity = seq(0, 1, length.out = 8),
     colorscale = rainbow_scale
   )
-
-fig
 ```
 
 \#Reference

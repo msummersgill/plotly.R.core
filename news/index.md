@@ -87,6 +87,24 @@
 - Figures rendered with the `"none"` default template have plotly 4.x’s
   margins (`l = 60, r = 10, t = 25, b = 40` pixels) unless the layout
   sets them.
+- `add_<trace>()` takes data-driven defaults as plotly 4.x does:
+  - `split = ~col` adds one trace per level, named after it;
+  - colour properties given a discrete column
+    (`marker = go_scatter_marker(color = ~group)`) split the same way,
+    with viridis colours for ordered factors and the colorway otherwise;
+  - axis titles, trace names and colorbar titles come from the formulas,
+    and factor `x`/`y` values keep their level order, unless set.
+- [`add_annotation()`](https://msummersgill.github.io/plotly.R.core/reference/add_annotation.md),
+  [`add_shape()`](https://msummersgill.github.io/plotly.R.core/reference/add_shape.md)
+  and the other layout element functions take vectors for single-value
+  properties, adding one object per element.
+- [`update_layout()`](https://msummersgill.github.io/plotly.R.core/reference/update_layout.md)
+  has every layout property as an argument, documented in
+  [`?update_layout`](https://msummersgill.github.io/plotly.R.core/reference/update_layout.md).
+- Colorscale names plotly.js knows (`"Blues"`, `"Viridis"`, …) use
+  plotly.js’s definitions, as in plotly.js and plotly 4.x; others are
+  plotly.py’s. With the `"none"` default template, colour scales default
+  to viridis, as in plotly 4.x.
 - `options(plotly.core.plotlyjs = "cdn")` loads plotly.js from
   cdn.jsdelivr.net instead of copying it next to the HTML, e.g. for
   websites with many pages.

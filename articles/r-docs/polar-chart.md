@@ -16,14 +16,12 @@ as shown here.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatterpolar(
     r = c(0, 1, 2, 2),
     theta = c(0, 45, 90, 0),
     mode = "markers"
   )
-
-fig
 ```
 
 #### Line Polar Charts
@@ -34,7 +32,7 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/polar_dataset.csv")
 
-fig <- df |>
+df |>
   go_figure() |>
   add_scatterpolar(
     r = ~x1,
@@ -76,8 +74,6 @@ fig <- df |>
     font = go_font(family = "Arial", size = 12, color = "#000"),
     showlegend = FALSE
   )
-
-fig
 ```
 
 #### Area Polar Charts
@@ -120,7 +116,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatterpolar(
     r = c(5, 4, 2, 4, 5),
     theta = c("a", "b", "c", "d", "a"),
@@ -175,8 +171,6 @@ fig <- go_figure() |>
       angularaxis = go_polar_angularaxis(thetaunit = "radians", dtick = 0.3141592653589793)
     )
   )
-
-fig
 ```
 
 #### Polar Charts Directions
@@ -187,7 +181,7 @@ library(plotly.core)
 
 small_ticks <- go_font(size = 8)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatterpolar(
     r = c(1, 2, 3, 4, 5),
     theta = c(0, 90, 180, 360, 0),
@@ -226,8 +220,6 @@ fig <- go_figure() |>
     ),
     showlegend = FALSE
   )
-
-fig
 ```
 
 #### Polar Charts Sector
@@ -238,7 +230,7 @@ library(plotly.core)
 
 small_ticks <- go_font(size = 8)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatterpolar(
     r = c(1, 2, 3, 4, 5),
     theta = c(0, 90, 180, 360, 0),
@@ -268,8 +260,6 @@ fig <- go_figure() |>
     ),
     showlegend = FALSE
   )
-
-fig
 ```
 
 #### Polar Charts Subplot
@@ -278,7 +268,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatterpolar(
     r = c(1, 2, 3),
     theta = c(50, 100, 200),
@@ -330,8 +320,6 @@ fig <- go_figure() |>
     ),
     showlegend = FALSE
   )
-
-fig
 ```
 
 #### Webgl Polar Charts

@@ -67,7 +67,7 @@ strings as unique numbers) but we force it to be `category`.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_bar(x = c("a", "a", "b", "3"), y = c(1, 2, 3, 4)) |>
   update_layout(
     xaxis = go_xaxis(
@@ -85,8 +85,6 @@ fig <- go_figure() |>
     ),
     plot_bgcolor = "#e5ecf6"
   )
-
-fig
 ```
 
 #### General Axis properties
@@ -109,8 +107,8 @@ attributes are available for axes of type `category` and axes of type
 
 ##### Set axis title text with Plotly
 
-plotly.core doesn’t set axis titles from the data: axes have no title
-until you give them one.
+plotly.core titles the axes after the `x` and `y` formulas, and
+`split = ~sex` adds one trace per level of `sex`.
 
 ``` r
 
@@ -119,18 +117,14 @@ library(reshape2)
 
 data("tips")
 
-fig <- go_figure()
-for (g in levels(tips$sex)) {
-  fig <- fig |>
-    add_scatter(
-      data = tips[tips$sex == g, ],
-      x = ~total_bill,
-      y = ~tip,
-      mode = "markers",
-      name = g
-    )
-}
-fig <- fig |>
+tips |>
+  go_figure() |>
+  add_scatter(
+    x = ~total_bill,
+    y = ~tip,
+    mode = "markers",
+    split = ~sex
+  ) |>
   update_layout(
     plot_bgcolor = "#e5ecf6",
     xaxis = go_xaxis(
@@ -144,8 +138,6 @@ fig <- fig |>
       gridcolor = "white"
     )
   )
-
-fig
 ```
 
 Axis titles (and [legend
@@ -163,18 +155,14 @@ library(reshape2)
 
 data("tips")
 
-fig <- go_figure()
-for (g in levels(tips$sex)) {
-  fig <- fig |>
-    add_scatter(
-      data = tips[tips$sex == g, ],
-      x = ~total_bill,
-      y = ~tip,
-      mode = "markers",
-      name = g
-    )
-}
-fig <- fig |>
+tips |>
+  go_figure() |>
+  add_scatter(
+    x = ~total_bill,
+    y = ~tip,
+    mode = "markers",
+    split = ~sex
+  ) |>
   update_layout(
     legend = go_legend(title = go_legend_title(text = "Payer Gender")),
     xaxis = go_xaxis(
@@ -191,8 +179,6 @@ fig <- fig |>
     ),
     plot_bgcolor = "#e5ecf6"
   )
-
-fig
 ```
 
 The `title` argument works the same way for figures made without a data
@@ -202,7 +188,7 @@ frame:
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_bar(x = "Apples", y = 10, name = "Here") |>
   add_bar(x = "Oranges", y = 20, name = "There") |>
   update_layout(
@@ -221,8 +207,6 @@ fig <- go_figure() |>
     ),
     plot_bgcolor = "#e5ecf6"
   )
-
-fig
 ```
 
 ##### Set axis title text
@@ -238,7 +222,7 @@ to set more title properties).
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = c(0, 1), y = c(1, 0), mode = "lines") |>
   update_layout(
     xaxis = go_xaxis(
@@ -255,8 +239,6 @@ fig <- go_figure() |>
     ),
     plot_bgcolor = "#e5ecf6"
   )
-
-fig
 ```
 
 ### Set axis title position
@@ -274,7 +256,7 @@ be pushed to fit the axis title at given standoff distance.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = c("December", "January", "February"),
     y = c(4, 1, 3),
@@ -295,8 +277,6 @@ fig <- go_figure() |>
     ),
     plot_bgcolor = "#e5ecf6"
   )
-
-fig
 ```
 
 ##### Set axis title font
@@ -714,7 +694,7 @@ using Plotly.
 
 library(plotly.core)
 
-fig <- make_subplots(
+make_subplots(
   rows = 1,
   cols = 2,
   shared_yaxes = TRUE,
@@ -734,8 +714,6 @@ fig <- make_subplots(
   ) |>
   update_yaxes(title = "sum of tip", row = 1, col = 1) |>
   update_layout(showlegend = FALSE, plot_bgcolor = "#e5ecf6")
-
-fig
 ```
 
 #### Enumerated Ticks with Tickvals and Ticktext
@@ -757,7 +735,7 @@ df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance
 apple <- data.frame(dates = df$Date, value = df$AAPL.High)
 apple <- subset(apple, dates >= "2016-01-01" & dates <= "2016-12-31")
 
-fig <- apple |>
+apple |>
   go_figure() |>
   add_scatter(x = ~dates, y = ~value, mode = "lines") |>
   update_layout(
@@ -777,8 +755,6 @@ fig <- apple |>
     ),
     title = "Apple Stock Price"
   )
-
-fig
 ```
 
 ### Axis lines: grid and zerolines
@@ -795,7 +771,7 @@ constructor.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = c(0, 1), y = c(1, 0), mode = "lines") |>
   update_layout(
     xaxis = go_xaxis(
@@ -810,8 +786,6 @@ fig <- go_figure() |>
     ),
     plot_bgcolor = "#e5ecf6"
   )
-
-fig
 ```
 
 ##### Toggling Axis zero lines
@@ -823,7 +797,7 @@ The lines passing through zero can be disabled as well by setting the
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = c(0, 1), y = c(1, 0), mode = "lines") |>
   update_layout(
     xaxis = go_xaxis(
@@ -838,8 +812,6 @@ fig <- go_figure() |>
     ),
     plot_bgcolor = "#e5ecf6"
   )
-
-fig
 ```
 
 #### Styling and Coloring Axes and the Zero-Line
@@ -857,7 +829,7 @@ their width and color, for a faceted histogram created with Plotly.
 
 library(plotly.core)
 
-fig <- make_subplots(
+make_subplots(
   rows = 1,
   cols = 2,
   shared_yaxes = FALSE,
@@ -883,8 +855,6 @@ fig <- make_subplots(
   update_yaxes(showticklabels = FALSE, row = 1, col = 2) |>
   update_layout(showlegend = FALSE, plot_bgcolor = "#e5ecf6",
     margin = go_margin(t = 90))
-
-fig
 ```
 
 ##### Mirroring axis lines
@@ -899,7 +869,7 @@ histogram created using Plotly.
 
 library(plotly.core)
 
-fig <- make_subplots(
+make_subplots(
   rows = 1,
   cols = 2,
   shared_yaxes = FALSE,
@@ -927,8 +897,6 @@ fig <- make_subplots(
   update_yaxes(showticklabels = FALSE, row = 1, col = 2) |>
   update_layout(showlegend = FALSE, plot_bgcolor = "#e5ecf6",
     margin = go_margin(t = 90))
-
-fig
 ```
 
 ##### Styling grid lines
@@ -997,7 +965,7 @@ simple figure using the `xaxis` and `yaxis` figure methods.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = c(0, 1), y = c(1, 0), mode = "lines") |>
   update_layout(
     xaxis = go_xaxis(
@@ -1016,8 +984,6 @@ fig <- go_figure() |>
     ),
     plot_bgcolor = "#e5ecf6"
   )
-
-fig
 ```
 
 #### Setting the Range of Axes Manually
@@ -1134,7 +1100,7 @@ distortion of the shape of the line plot.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = c(0, 1, 1, 0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 3),
     y = c(0, 0, 1, 1, 3, 3, 2, 2, 3, 3, 1, 1, 0, 0),
@@ -1156,8 +1122,6 @@ fig <- go_figure() |>
     plot_bgcolor = "#e5ecf6",
     title = "fixed-ratio axes"
   )
-
-fig
 ```
 
 ### Fixed Ratio Axes with Compressed domain
@@ -1171,7 +1135,7 @@ that happens: by increasing the “range” (default), or by decreasing the
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = c(0, 1, 1, 0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 3),
     y = c(0, 0, 1, 1, 3, 3, 2, 2, 3, 3, 1, 1, 0, 0),
@@ -1195,8 +1159,6 @@ fig <- go_figure() |>
     plot_bgcolor = "#e5ecf6",
     title = "fixed-ratio axes with compressed axes"
   )
-
-fig
 ```
 
 ##### Decreasing the domain spanned by an axis
@@ -1211,7 +1173,7 @@ only the set range, by setting `constrain='domain'` as below.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = c(0, 1, 1, 0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 3),
     y = c(0, 0, 1, 1, 3, 3, 2, 2, 3, 3, 1, 1, 0, 0),
@@ -1235,8 +1197,6 @@ fig <- go_figure() |>
     plot_bgcolor = "#e5ecf6",
     title = "fixed-ratio axes"
   )
-
-fig
 ```
 
 ### Fixed Ratio Axes with Compressed domain
@@ -1250,7 +1210,7 @@ that happens: by increasing the “range” (default), or by decreasing the
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = c(0, 1, 1, 0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 3),
     y = c(0, 0, 1, 1, 3, 3, 2, 2, 3, 3, 1, 1, 0, 0),
@@ -1274,8 +1234,6 @@ fig <- go_figure() |>
     plot_bgcolor = "#e5ecf6",
     title = "fixed-ratio axes with compressed axes"
   )
-
-fig
 ```
 
 #### Reversed Axes
@@ -1395,7 +1353,7 @@ library(plotly.core)
 
 x <- linspace(1, 200, 30)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = x, y = x^3, mode = "markers") |>
   update_layout(
     xaxis = go_xaxis(
@@ -1415,8 +1373,6 @@ fig <- go_figure() |>
     ),
     plot_bgcolor = "#e5ecf6"
   )
-
-fig
 ```
 
 ``` r
@@ -1426,7 +1382,7 @@ library(plotly.core)
 
 x <- linspace(1, 200, 30)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = x, y = x^3, mode = "lines") |>
   update_layout(
     yaxis = go_yaxis(
@@ -1444,8 +1400,6 @@ fig <- go_figure() |>
     ),
     plot_bgcolor = "#e5ecf6"
   )
-
-fig
 ```
 
 #### `nonnegative`, `tozero`, and `normal` Rangemode
@@ -1511,7 +1465,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = c(0, 1, 1, 0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 3),
     y = c(0, 0, 1, 1, 3, 3, 2, 2, 3, 3, 1, 1, 0, 0),
@@ -1532,8 +1486,6 @@ fig <- go_figure() |>
     ),
     plot_bgcolor = "#e5ecf6"
   )
-
-fig
 ```
 
 #### Synchronizing axes in subplots with `matches`
@@ -1675,7 +1627,7 @@ fig
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = c(0, 1, 1, 0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 3),
     y = c(0, 0, 1, 1, 3, 3, 2, 2, 3, 3, 1, 1, 0, 0),
@@ -1747,8 +1699,6 @@ fig <- go_figure() |>
     showlegend = FALSE,
     plot_bgcolor = "#e5ecf6"
   )
-
-fig
 ```
 
 #### Reference

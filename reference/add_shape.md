@@ -364,6 +364,11 @@ add_shape(
 
 The modified figure.
 
+## Details
+
+Properties that take a single value may be given vectors to add several
+shapes at once, one per element; the other properties are recycled.
+
 ## See also
 
 [`update_shapes()`](https://msummersgill.github.io/plotly.R.core/reference/update_shapes.md),

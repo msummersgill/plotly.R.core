@@ -12,7 +12,7 @@ works offline.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = c(1, 2, 3, 4),
     y = c(1, 4, 9, 16),
@@ -30,8 +30,6 @@ fig <- go_figure() |>
     yaxis = go_yaxis(title = TeX("d, r \\text{ (solar radius)}"))
   ) |>
   config(mathjax = "cdn")
-
-fig
 ```
 
 #### Reference

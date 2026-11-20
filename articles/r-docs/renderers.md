@@ -3,21 +3,20 @@
 Plotly’s R graphing library, `plotly.core`, gives you a wide range of
 options for how and where to display your figures.
 
-In general, there are four different approaches you can take in order to
-display `plotly.core` figures:
+In general, there are three different approaches you can take in order
+to display `plotly.core` figures:
 
 1.  Using the `renderers` framework in the context of a script or
     notebook (the main topic of this page)
-2.  Using [Dash](https://dashr.plotly.com) in a web app context
-3.  By exporting to an HTML file with
+2.  By exporting to an HTML file with
     [`write_html()`](https://msummersgill.github.io/plotly.R.core/reference/write_html.md)
     and loading that file in a browser immediately or later
-4.  By rendering the figure to a static image file with
+3.  By rendering the figure to a static image file with
     [`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
     such as PNG, JPEG, SVG or PDF and loading the resulting file in any
     viewer
 
-Each of the first two approaches is discussed below.
+The first approach is discussed below.
 
 ### Displaying Figures Using The `renderers` Framework
 
@@ -60,7 +59,7 @@ display itself.
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_bar(x = c(0, 1, 2), y = c(2, 1, 3)) |>
   update_layout(
     title = "A Figure Displaying Itself",
@@ -76,8 +75,6 @@ fig <- go_figure() |>
       gridcolor = "#ffff"
     )
   )
-
-fig
 ```
 
 > To be precise, figures will display themselves using the current
@@ -96,43 +93,6 @@ In editors that support it,
 displays the JSON representation of a figure in a collapsible
 interactive tree structure. This can be very useful for examining the
 structure of complex figures.
-
-### Displaying figures in Dash
-
-[Dash for R](https://dashr.plotly.com) is an open-source framework for
-building analytical applications, with no Javascript required, and it is
-tightly integrated with the Plotly graphing library.
-
-Learn about how to install Dash for R at
-<https://dashr.plot.ly/installation>.
-
-Everywhere in this page that you see fig, you can display the same
-figure in a Dash for R application by passing it to the figure argument.
-
-``` r
-
-library(dash)
-library(dashCoreComponents)
-library(dashHtmlComponents)
-library(plotly.core)
-
-fig <- go_figure() |>
-  add_bar(x = c(0, 1, 2), y = c(2, 1, 3)) |>
-  update_layout(title = "Native Plotly rendering in Dash")
-
-app <- Dash$new()
-
-app$layout(
-  htmlDiv(
-    list(
-      dccGraph(id = "graph", figure = fig)
-    )
-  )
-)
-```
-
-After executing this code, give app\$run_server() in the console to
-start the dash.
 
 ## Performance
 

@@ -6,14 +6,12 @@
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_sunburst(
     labels = c("Eve", "Cain", "Seth", "Enos", "Noam", "Abel", "Awan", "Enoch", "Azura"),
     parents = c("", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve"),
     values = c(10, 14, 12, 10, 2, 6, 6, 4, 4)
   )
-
-fig
 ```
 
 ### Branchvalues
@@ -34,15 +32,13 @@ value of 0).
 
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_sunburst(
     labels = c("Eve", "Cain", "Seth", "Enos", "Noam", "Abel", "Awan", "Enoch", "Azura"),
     parents = c("", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve"),
     values = c(65, 14, 12, 10, 2, 6, 6, 4, 4),
     branchvalues = "total"
   )
-
-fig
 ```
 
 ### Sunburst with Repeated Labels
@@ -74,11 +70,9 @@ d <- data.frame(
   stringsAsFactors = FALSE
 )
 
-fig <- d |>
+d |>
   go_figure() |>
   add_sunburst(ids = ~ids, labels = ~labels, parents = ~parents)
-
-fig
 ```
 
 #### Controlling text orientation inside sunburst sectors
@@ -96,7 +90,7 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/718417069ead87650b90472464c7565dc8c2cb1c/coffee-flavors.csv")
 
-fig <- df |>
+df |>
   go_figure() |>
   add_sunburst(
     ids = ~ids,
@@ -106,8 +100,6 @@ fig <- df |>
     maxdepth = 2,
     insidetextorientation = "radial"
   )
-
-fig
 ```
 
 ### Subplots
@@ -125,7 +117,7 @@ library(plotly.core)
 d1 <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/coffee-flavors.csv")
 d2 <- read.csv("https://raw.githubusercontent.com/plotly/datasets/718417069ead87650b90472464c7565dc8c2cb1c/sunburst-coffee-flavors-complete.csv")
 
-fig <- go_figure() |>
+go_figure() |>
   add_sunburst(
     data = d1,
     ids = ~ids,
@@ -151,8 +143,6 @@ fig <- go_figure() |>
     ),
     extendsunburstcolors = TRUE
   )
-
-fig
 ```
 
 \#Reference
