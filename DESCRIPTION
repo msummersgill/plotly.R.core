@@ -87,6 +87,7 @@ Config/Needs/website:
     nnet,
     plyr,
     pracma,
+    R.utils,
     RColorBrewer,
     readr,
     reshape2,
