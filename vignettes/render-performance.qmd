@@ -30,6 +30,10 @@ params:
   ms_sizes: [10000, 100000, 500000]
   hm_sizes: [100, 500, 1000, 2000]
   reps: 3
+  # Variants to rerun, comma-separated ("" = all); the others keep their
+  # results from the previous run (e.g. "core_backend,go_figure_f32" when only
+  # plotly.core has changed)
+  only: ""
   # Where data and generated pages go
   workdir: "bench-out"
   # Where results are saved (when the benchmarks run) or read from (otherwise)
@@ -69,6 +73,9 @@ if (
 pages_dir <- file.path(wd, "pages")
 reps <- params$reps
 variants <- c("release", "core_backend", "go_figure_f32", "plotly_py", "plotly_py_f32")
+only <- trimws(strsplit(params$only, ",", fixed = TRUE)[[1]])
+rerun <- if (length(only)) intersect(variants, only) else variants
+partial <- !setequal(rerun, variants)
 ```
 
 
@@ -352,6 +359,8 @@ PLOTLY_CORE_RUN_BENCHMARKS=true quarto render vignettes/render-performance.qmd \
 
 Parameters (`-P name:value`): `python`, a Python with plotly, numpy and pandas; `release_lib`, a library with the CRAN plotly (installed there if missing); `core_lib`, a library with the development plotly and plotly.core (default: the first of `.libPaths()`); `ts_sizes`, `ms_sizes`, `hm_sizes` and `reps`.
 
+When only plotly.core has changed, rerun just its variants with `-P only:core_backend,go_figure_f32`: the other variants keep their saved results (the case sizes must be the same).
+
 ### What is measured
 
 Three use cases, over a range of sizes:
@@ -380,13 +389,19 @@ dir.create(results_dir, recursive = TRUE, showWarnings = FALSE)
 
 release_lib <- if (nzchar(params$release_lib)) params$release_lib else file.path(wd, "lib-release")
 core_lib <- if (nzchar(params$core_lib)) params$core_lib else .libPaths()[1]
-if (!file.exists(file.path(release_lib, "plotly", "DESCRIPTION"))) {
+if ("release" %in% rerun && !file.exists(file.path(release_lib, "plotly", "DESCRIPTION"))) {
   dir.create(release_lib, recursive = TRUE, showWarnings = FALSE)
   install.packages("plotly", lib = release_lib, repos = "https://cloud.r-project.org",
                    type = "source", dependencies = FALSE)
 }
 libs <- list(release = release_lib, core_backend = core_lib, go_figure_f32 = core_lib)
 python <- params$python
+# a partial run (`only`) keeps the other variants' previous results
+if (partial) {
+  prev <- lapply(c(build = "build", browser = "browser", pages = "pages", versions = "versions"),
+                 function(f) fread(file.path(results_dir, paste0(f, ".csv"))))
+  prev_meta <- jsonlite::read_json(file.path(results_dir, "meta.json"))
+}
 ```
 
 ### Data
@@ -598,7 +613,7 @@ r_worker <- function(variant, fns, write, export, cases, reps, outdir) {
 # Kaleido (for the CRAN release) runs in the benchmark's Python, which also
 # has plotly; ~/.Renviron is skipped, as it may point reticulate elsewhere
 worker_env <- c(callr::rcmd_safe_env(), RETICULATE_PYTHON = python, R_ENVIRON_USER = tempfile())
-build_r <- rbindlist(lapply(names(figures), function(v) {
+build_r <- rbindlist(lapply(intersect(names(figures), rerun), function(v) {
   callr::r(r_worker, list(v, figures[[v]], writers[[v]], exporters[[v]], cases, reps, file.path(pages_dir, v)),
            libpath = c(libs[[v]], .libPaths()), env = worker_env)
 }))
@@ -608,7 +623,7 @@ build_r <- rbindlist(lapply(names(figures), function(v) {
 #| eval: false
 cases_json <- file.path(wd, "cases.json")
 jsonlite::write_json(cases[, .(case, size, file)], cases_json)
-build_py <- rbindlist(lapply(c("plotly_py", "plotly_py_f32"), function(v) {
+build_py <- rbindlist(lapply(intersect(c("plotly_py", "plotly_py_f32"), rerun), function(v) {
   outdir <- file.path(pages_dir, v)
   dir.create(outdir, showWarnings = FALSE)
   res <- system2(python, c(shQuote(file.path(wd, "bench.py")), v, shQuote(cases_json), reps,
@@ -617,7 +632,7 @@ build_py <- rbindlist(lapply(c("plotly_py", "plotly_py_f32"), function(v) {
 }))
 build <- rbindlist(list(build_r, build_py))
 # one page per variant and case size
-pages <- CJ(variant = variants, i = seq_len(nrow(cases)), sorted = FALSE)[
+pages <- CJ(variant = rerun, i = seq_len(nrow(cases)), sorted = FALSE)[
   , c(.(variant = variant), cases[i, .(case, size, values)])]
 pages[, path := sprintf("%s/%s-%d.html", variant, case, size)]
 pages[, html_mb := file.size(file.path(pages_dir, path)) / 1e6]
@@ -778,7 +793,7 @@ server$kill()
 
 ### Environment
 
-Results above are from a run on `r meta$date` on `r meta$os` (`r meta$cpu`), with `r meta$R` and `r meta$browser` (headless), and these versions:
+Results above are from a run on `r meta$date` on `r meta$os` (`r meta$cpu`), with `r meta$R` and `r meta$browser` (headless)`r if (length(meta$rerun)) paste0(" (", paste(unlist(meta$rerun), collapse = " and "), " only; the other variants' results are from ", meta$previous_date, ")") else ""`, and these versions:
 
 ```{r versions}
 #| echo: false
@@ -804,17 +819,24 @@ r_versions <- function(lib) {
     )
   }, libpath = c(lib, .libPaths()))
 }
-py <- jsonlite::fromJSON(system2(python, c("-c", shQuote(paste(
-  "import json, plotly, numpy, pandas, plotly.offline as o;",
-  "print(json.dumps(dict(plotly=plotly.__version__, numpy=numpy.__version__,",
-  "pandas=pandas.__version__, plotlyjs=o.get_plotlyjs_version())))"))), stdout = TRUE))
+py_rerun <- any(c("plotly_py", "plotly_py_f32") %in% rerun)
+if (py_rerun) {
+  py <- jsonlite::fromJSON(system2(python, c("-c", shQuote(paste(
+    "import json, plotly, numpy, pandas, plotly.offline as o;",
+    "print(json.dumps(dict(plotly=plotly.__version__, numpy=numpy.__version__,",
+    "pandas=pandas.__version__, plotlyjs=o.get_plotlyjs_version())))"))), stdout = TRUE))
+}
 versions <- rbindlist(list(
-  c(variant = "release", r_versions(release_lib)),
-  c(variant = "core_backend, go_figure_f32", r_versions(core_lib)),
-  list(variant = "plotly_py, plotly_py_f32",
-       plotly = paste0(py$plotly, " (Python; numpy ", py$numpy, ", pandas ", py$pandas, ")"),
-       plotly.core = NA_character_, plotly.js = py$plotlyjs)
-))
+  if ("release" %in% rerun) c(variant = "release", r_versions(release_lib)),
+  if (any(c("core_backend", "go_figure_f32") %in% rerun)) {
+    c(variant = "core_backend, go_figure_f32", r_versions(core_lib))
+  },
+  if (py_rerun) {
+    list(variant = "plotly_py, plotly_py_f32",
+         plotly = paste0(py$plotly, " (Python; numpy ", py$numpy, ", pandas ", py$pandas, ")"),
+         plotly.core = NA_character_, plotly.js = py$plotlyjs)
+  }
+), fill = TRUE)
 cpu <- if (Sys.info()[["sysname"]] == "Darwin") {
   system("sysctl -n machdep.cpu.brand_string", intern = TRUE)
 } else {
@@ -824,9 +846,25 @@ meta <- list(date = format(Sys.Date()), R = R.version.string, os = utils::sessio
              cpu = cpu, browser = chrome$Browser$getVersion()$product, reps = reps)
 chrome$close()
 
+pages <- pages[, .(variant, case, size, values, html_mb)]
+if (partial) {
+  # the other variants' previous results, for the same cases
+  if (!setequal(paste(prev$pages$case, prev$pages$size), paste(cases$case, cases$size))) {
+    stop("A partial run (`only`) needs the same case sizes as the saved results", call. = FALSE)
+  }
+  keep <- function(d) d[!variant %in% rerun]
+  build <- rbind(keep(prev$build), build, fill = TRUE)
+  browser <- rbind(keep(prev$browser), browser, fill = TRUE)
+  pages <- rbind(keep(prev$pages), pages, fill = TRUE)
+  versions <- rbind(prev$versions[!variant %in% versions$variant], versions, fill = TRUE)
+  versions <- versions[order(match(sub(",.*", "", variant), variants))]
+  meta$rerun <- rerun
+  meta$previous_date <- prev_meta$previous_date %||% prev_meta$date
+}
+
 fwrite(build, file.path(results_dir, "build.csv"))
 fwrite(browser, file.path(results_dir, "browser.csv"))
-fwrite(pages[, .(variant, case, size, values, html_mb)], file.path(results_dir, "pages.csv"))
+fwrite(pages, file.path(results_dir, "pages.csv"))
 fwrite(versions, file.path(results_dir, "versions.csv"))
 jsonlite::write_json(meta, file.path(results_dir, "meta.json"), auto_unbox = TRUE, pretty = TRUE)
 ```

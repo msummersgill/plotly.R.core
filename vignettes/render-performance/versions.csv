@@ -1,4 +1,4 @@
 variant,plotly,plotly.core,plotly.js
-release,4.12.1,,2.25.2
+release,4.12.1,"",2.25.2
 "core_backend, go_figure_f32",4.12.1.9000,0.1.0,4.3.0
-"plotly_py, plotly_py_f32","7.1.0 (Python; numpy 2.0.2, pandas 2.3.3)",,4.1.1
+"plotly_py, plotly_py_f32","7.1.0 (Python; numpy 2.0.2, pandas 2.3.3)","",4.1.1
