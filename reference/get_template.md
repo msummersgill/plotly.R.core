@@ -51,7 +51,7 @@ are rendered.
 template_names()
 #>  [1] "ggplot2"      "gridon"       "plotly"       "plotly_dark"  "plotly_white"
 #>  [6] "presentation" "seaborn"      "simple_white" "xgridoff"     "ygridoff"    
-#> [11] "none"         "big_font"    
+#> [11] "none"        
 tpl <- get_template("plotly_white+presentation")
 tpl$layout$font
 #> $color

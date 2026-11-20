@@ -28,7 +28,7 @@ of a fork of plotly; it isn’t on CRAN yet. To try it:
 ## Results
 
 Each chart shows one measurement for the three cases, by figure size,
-medians over 3 runs (2026-11-18, Apple M3 Pro, Chrome/157.0.8103.79).
+medians over 3 runs (2026-11-20, Apple M3 Pro, Chrome/157.0.8103.79).
 Lower is better throughout. The numbers are in the [results
 tables](#results-tables).
 
@@ -94,7 +94,7 @@ with plotly.core takes 0.2 s, and
 [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
 with
 [`as_float32()`](https://msummersgill.github.io/plotly.R.core/reference/as_float32.md)
-0.08 s, faster than plotly.py.
+0.07 s, faster than plotly.py.
 
 ### Web Browser Load time
 
@@ -107,7 +107,7 @@ metric_chart("load_sec", "load (s)")
 
 The time from opening the page to the plot appearing, here with no
 network in between. A heatmap that CRAN plotly takes 8.2 s to show
-appears in 2.2 s with plotly.core (1.4 s with float32). For small
+appears in 2.3 s with plotly.core (1.4 s with float32). For small
 figures (under about 100,000 values) CRAN plotly loads slightly faster,
 because plotly.js 4 is a larger script; see
 [`partial_bundle()`](https://msummersgill.github.io/plotly.R.core/reference/partial_bundle.md).
@@ -115,7 +115,7 @@ The largest 10-series case is 10 × 500,000 because CRAN plotly couldn’t
 show 10 × 1,000,000 at all: in an earlier run, Chrome never finished
 drawing its 678 MB page in two tries of 5 minutes each, while
 plotly.core showed the same figure in about 9 s. At 10 × 500,000, CRAN
-plotly takes 12.6 s and plotly.core 4.6 s.
+plotly takes 12.6 s and plotly.core 4.7 s.
 
 ### HTML Page size
 
@@ -176,10 +176,10 @@ The wall-clock time to save a figure as a PNG. It adds up wherever
 figures are saved as images: a script that writes a batch of plots, or
 an R Markdown or Quarto document rendered to PDF or Word, where every
 figure is exported. For 10 series of 500,000 points, each image takes
-134 s with CRAN plotly, 63 s with plotly.py and 4.5 s with plotly.core:
-for 100 such images, about 3.7 hours with CRAN plotly against 7 minutes
+134 s with CRAN plotly, 63 s with plotly.py and 5.0 s with plotly.core:
+for 100 such images, about 3.7 hours with CRAN plotly against 8 minutes
 with plotly.core. The 2000 × 2000 heatmap is closer: 8.9 s with CRAN
-plotly, 1.6 s with plotly.py and 1.7 s with plotly.core. Setting up
+plotly, 1.6 s with plotly.py and 1.9 s with plotly.core. Setting up
 image export, and how it compares with Kaleido, is in
 [`vignette("static-export")`](https://msummersgill.github.io/plotly.R.core/articles/static-export.md).
 
@@ -199,8 +199,8 @@ type without loss. A double takes 10.7 bytes of base64 instead of about
 into a typed array instead of parsing text. For the heatmap this takes
 the page from 164.4 MB (CRAN plotly) to 42.7 MB
 ([`plot_ly()`](https://rdrr.io/pkg/plotly/man/plot_ly.html) with
-plotly.core), the load time from 8.16 s to 2.18 s, and the renderer’s
-peak memory from 1049 MB to 658 MB. plotly.js’s own `newPlot()` time is
+plotly.core), the load time from 8.16 s to 2.25 s, and the renderer’s
+peak memory from 1049 MB to 657 MB. plotly.js’s own `newPlot()` time is
 about the same for every variant, so the faster loads come from
 fetching, parsing and decoding less data, not from plotly.js itself.
 
@@ -231,7 +231,7 @@ plotly.core writes 11.7 MB and
 [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
 6.4 MB, against 67.7 MB for CRAN plotly and 43.3 MB for plotly.py, which
 repeat x in each trace. Those pages are smaller than the single 1M-point
-series and load faster (0.82 s against 1.16 s for
+series and load faster (0.84 s against 1.15 s for
 [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)).
 
 **[`as_float32()`](https://msummersgill.github.io/plotly.R.core/reference/as_float32.md).**
@@ -240,7 +240,7 @@ Doubles marked with
 are sent in single precision, 4 bytes instead of 8 (about 7 significant
 digits, which is what WebGL draws with). It halves the heatmap’s page
 (42.7 to 21.3 MB) and cuts the JavaScript memory left after loading (153
-to 107 MB) and the load time (2.18 to 1.37 s). For the time series only
+to 107 MB) and the load time (2.25 to 1.38 s). For the time series only
 y is halved; x stays in double precision.
 
 **[`write_html()`](https://msummersgill.github.io/plotly.R.core/reference/write_html.md).**
@@ -252,12 +252,12 @@ well as
 [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
 ones, and both plotly.core variants here use it: the
 [`plot_ly()`](https://rdrr.io/pkg/plotly/man/plot_ly.html) heatmap takes
-0.19 s to build and save, against about 0.8 s with
+0.17 s to build and save, against about 0.8 s with
 [`htmlwidgets::saveWidget()`](https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html)
 (an earlier run of these benchmarks). With
 [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
-and float32 it is 0.077 s for the heatmap (0.143 s for plotly.py with
-float32), and 0.047 s for the 1M-point time series (0.435 s).
+and float32 it is 0.068 s for the heatmap (0.143 s for plotly.py with
+float32), and 0.041 s for the 1M-point time series (0.435 s).
 
 ### Building `plot_ly()` figures in plotly
 
@@ -279,7 +279,7 @@ timing). With
 [`write_html()`](https://msummersgill.github.io/plotly.R.core/reference/write_html.md),
 the whole build and save of the
 [`plot_ly()`](https://rdrr.io/pkg/plotly/man/plot_ly.html) heatmap now
-takes 0.19 s.
+takes 0.17 s.
 
 ## Appendix
 
@@ -292,18 +292,18 @@ Medians over 3 runs.
 | case | variant | build + write (s) | image export (s) | HTML (MB) | load (s) | peak renderer (MB) |
 |:---|:---|---:|---:|---:|---:|---:|
 | timeseries | release | 7.259 | 27.16 | 95.9 | 2.85 | 1016 |
-| timeseries | core_backend | 0.113 | 1.30 | 21.3 | 1.48 | 820 |
-| timeseries | go_figure_f32 | 0.047 | 1.03 | 16.0 | 1.16 | 749 |
+| timeseries | core_backend | 0.113 | 1.35 | 21.3 | 1.53 | 817 |
+| timeseries | go_figure_f32 | 0.041 | 1.12 | 16.0 | 1.15 | 751 |
 | timeseries | plotly_py | 0.459 | 12.75 | 43.3 | 1.58 | 784 |
 | timeseries | plotly_py_f32 | 0.435 | 12.71 | 37.7 | 1.41 | 766 |
 | multiseries | release | 23.622 | 134.06 | 337.7 | 12.56 | 3127 |
-| multiseries | core_backend | 0.805 | 4.49 | 58.7 | 4.64 | 1515 |
-| multiseries | go_figure_f32 | 0.088 | 3.16 | 32.0 | 3.52 | 1299 |
+| multiseries | core_backend | 0.911 | 5.00 | 58.7 | 4.74 | 1518 |
+| multiseries | go_figure_f32 | 0.119 | 3.38 | 32.0 | 3.65 | 1296 |
 | multiseries | plotly_py | 2.282 | 63.19 | 216.5 | 6.00 | 1834 |
 | multiseries | plotly_py_f32 | 2.153 | 62.57 | 188.3 | 5.04 | 1722 |
 | heatmap | release | 10.642 | 8.90 | 164.4 | 8.16 | 1049 |
-| heatmap | core_backend | 0.186 | 1.75 | 42.7 | 2.18 | 658 |
-| heatmap | go_figure_f32 | 0.077 | 1.21 | 21.3 | 1.37 | 524 |
+| heatmap | core_backend | 0.166 | 1.88 | 42.7 | 2.25 | 657 |
+| heatmap | go_figure_f32 | 0.068 | 1.29 | 21.3 | 1.38 | 524 |
 | heatmap | plotly_py | 0.294 | 1.61 | 54.0 | 2.47 | 669 |
 | heatmap | plotly_py_f32 | 0.143 | 1.14 | 25.5 | 1.55 | 583 |
 
@@ -312,18 +312,18 @@ Medians over 3 runs.
 | size | variant | build + write (s) | image export (s) | HTML (MB) | load (s) | newPlot (s) | JS transferred (MB) | peak renderer (MB) | JS heap after (MB) |
 |:---|:---|---:|---:|---:|---:|---:|---:|---:|---:|
 | 10,000 | release | 0.064 | 0.503 | 0.97 | 0.232 | 0.080 | 1.20 | 221 | 15.5 |
-| 10,000 | core_backend | 0.021 | 0.069 | 0.22 | 0.371 | 0.079 | 1.54 | 243 | 17.4 |
-| 10,000 | go_figure_f32 | 0.015 | 0.064 | 0.17 | 0.176 | 0.072 | 0.52 | 179 | 8.6 |
+| 10,000 | core_backend | 0.018 | 0.069 | 0.22 | 0.361 | 0.085 | 1.54 | 243 | 17.4 |
+| 10,000 | go_figure_f32 | 0.008 | 0.065 | 0.16 | 0.181 | 0.075 | 0.52 | 177 | 8.6 |
 | 10,000 | plotly_py | 0.005 | 0.375 | 0.44 | 0.348 | 0.080 | 1.47 | 236 | 16.3 |
 | 10,000 | plotly_py_f32 | 0.005 | 0.371 | 0.38 | 0.342 | 0.072 | 1.47 | 235 | 16.2 |
 | 100,000 | release | 0.598 | 2.833 | 9.61 | 0.453 | 0.141 | 1.20 | 327 | 41.0 |
-| 100,000 | core_backend | 0.028 | 0.186 | 2.14 | 0.481 | 0.145 | 1.54 | 329 | 35.0 |
-| 100,000 | go_figure_f32 | 0.019 | 0.162 | 1.61 | 0.288 | 0.135 | 0.52 | 257 | 24.6 |
+| 100,000 | core_backend | 0.027 | 0.197 | 2.14 | 0.495 | 0.151 | 1.54 | 325 | 35.0 |
+| 100,000 | go_figure_f32 | 0.013 | 0.163 | 1.60 | 0.288 | 0.136 | 0.52 | 257 | 24.6 |
 | 100,000 | plotly_py | 0.050 | 1.455 | 4.34 | 0.485 | 0.144 | 1.47 | 307 | 32.4 |
 | 100,000 | plotly_py_f32 | 0.044 | 1.448 | 3.77 | 0.447 | 0.137 | 1.47 | 303 | 31.5 |
 | 1,000,000 | release | 7.259 | 27.159 | 95.92 | 2.852 | 0.681 | 1.20 | 1016 | 291.2 |
-| 1,000,000 | core_backend | 0.113 | 1.296 | 21.34 | 1.485 | 0.674 | 1.54 | 820 | 204.7 |
-| 1,000,000 | go_figure_f32 | 0.047 | 1.031 | 16.01 | 1.158 | 0.625 | 0.52 | 749 | 178.8 |
+| 1,000,000 | core_backend | 0.113 | 1.354 | 21.34 | 1.527 | 0.677 | 1.54 | 817 | 204.7 |
+| 1,000,000 | go_figure_f32 | 0.041 | 1.122 | 16.00 | 1.152 | 0.623 | 0.52 | 751 | 178.7 |
 | 1,000,000 | plotly_py | 0.459 | 12.749 | 43.28 | 1.582 | 0.592 | 1.47 | 784 | 187.7 |
 | 1,000,000 | plotly_py_f32 | 0.435 | 12.715 | 37.66 | 1.415 | 0.608 | 1.47 | 766 | 178.4 |
 
@@ -332,18 +332,18 @@ Medians over 3 runs.
 | size | variant | build + write (s) | image export (s) | HTML (MB) | load (s) | newPlot (s) | JS transferred (MB) | peak renderer (MB) | JS heap after (MB) |
 |:---|:---|---:|---:|---:|---:|---:|---:|---:|---:|
 | 10 × 10,000 | release | 0.370 | 2.838 | 6.81 | 0.425 | 0.130 | 1.20 | 304 | 31.2 |
-| 10 × 10,000 | core_backend | 0.065 | 0.191 | 1.18 | 0.446 | 0.134 | 1.54 | 273 | 24.4 |
-| 10 × 10,000 | go_figure_f32 | 0.020 | 0.132 | 0.65 | 0.242 | 0.123 | 0.52 | 208 | 14.0 |
+| 10 × 10,000 | core_backend | 0.057 | 0.193 | 1.18 | 0.448 | 0.136 | 1.54 | 272 | 24.4 |
+| 10 × 10,000 | go_figure_f32 | 0.013 | 0.136 | 0.64 | 0.252 | 0.132 | 0.52 | 208 | 13.9 |
 | 10 × 10,000 | plotly_py | 0.051 | 1.490 | 4.35 | 0.449 | 0.125 | 1.47 | 287 | 22.9 |
 | 10 × 10,000 | plotly_py_f32 | 0.048 | 1.470 | 3.78 | 0.427 | 0.124 | 1.47 | 281 | 21.9 |
 | 10 × 100,000 | release | 4.374 | 27.158 | 67.74 | 2.632 | 0.661 | 1.20 | 748 | 246.6 |
-| 10 × 100,000 | core_backend | 0.202 | 0.969 | 11.74 | 1.162 | 0.628 | 1.54 | 568 | 153.8 |
-| 10 × 100,000 | go_figure_f32 | 0.033 | 0.676 | 6.41 | 0.820 | 0.586 | 0.52 | 486 | 127.8 |
+| 10 × 100,000 | core_backend | 0.202 | 0.984 | 11.74 | 1.140 | 0.627 | 1.54 | 577 | 153.8 |
+| 10 × 100,000 | go_figure_f32 | 0.025 | 0.703 | 6.40 | 0.839 | 0.600 | 0.52 | 486 | 127.8 |
 | 10 × 100,000 | plotly_py | 0.471 | 12.877 | 43.33 | 1.400 | 0.596 | 1.47 | 614 | 147.6 |
 | 10 × 100,000 | plotly_py_f32 | 0.423 | 12.777 | 37.69 | 1.210 | 0.594 | 1.47 | 614 | 138.3 |
 | 10 × 500,000 | release | 23.622 | 134.061 | 337.68 | 12.564 | 2.970 | 1.20 | 3127 | 1196.7 |
-| 10 × 500,000 | core_backend | 0.805 | 4.493 | 58.67 | 4.638 | 2.633 | 1.54 | 1515 | 723.3 |
-| 10 × 500,000 | go_figure_f32 | 0.088 | 3.164 | 32.01 | 3.519 | 2.490 | 0.52 | 1299 | 627.9 |
+| 10 × 500,000 | core_backend | 0.911 | 5.000 | 58.67 | 4.738 | 2.655 | 1.54 | 1518 | 723.3 |
+| 10 × 500,000 | go_figure_f32 | 0.119 | 3.381 | 32.00 | 3.650 | 2.616 | 0.52 | 1296 | 627.9 |
 | 10 × 500,000 | plotly_py | 2.282 | 63.193 | 216.53 | 5.996 | 2.483 | 1.47 | 1834 | 696.2 |
 | 10 × 500,000 | plotly_py_f32 | 2.153 | 62.566 | 188.32 | 5.045 | 2.457 | 1.47 | 1722 | 649.6 |
 
@@ -352,23 +352,23 @@ Medians over 3 runs.
 | size | variant | build + write (s) | image export (s) | HTML (MB) | load (s) | newPlot (s) | JS transferred (MB) | peak renderer (MB) | JS heap after (MB) |
 |:---|:---|---:|---:|---:|---:|---:|---:|---:|---:|
 | 100² | release | 0.032 | 0.071 | 0.41 | 0.183 | 0.032 | 1.20 | 195 | 11.9 |
-| 100² | core_backend | 0.022 | 0.025 | 0.11 | 0.328 | 0.048 | 1.54 | 227 | 14.7 |
-| 100² | go_figure_f32 | 0.015 | 0.024 | 0.06 | 0.153 | 0.048 | 0.53 | 166 | 6.2 |
+| 100² | core_backend | 0.020 | 0.027 | 0.11 | 0.327 | 0.048 | 1.54 | 226 | 14.7 |
+| 100² | go_figure_f32 | 0.010 | 0.019 | 0.06 | 0.155 | 0.048 | 0.53 | 166 | 6.2 |
 | 100² | plotly_py | 0.002 | 0.054 | 0.14 | 0.307 | 0.047 | 1.47 | 223 | 13.9 |
 | 100² | plotly_py_f32 | 0.002 | 0.052 | 0.07 | 0.305 | 0.046 | 1.47 | 223 | 13.8 |
 | 500² | release | 0.427 | 0.525 | 10.28 | 0.620 | 0.078 | 1.20 | 283 | 21.6 |
-| 500² | core_backend | 0.033 | 0.148 | 2.67 | 0.440 | 0.086 | 1.54 | 273 | 23.1 |
-| 500² | go_figure_f32 | 0.019 | 0.106 | 1.34 | 0.223 | 0.082 | 0.53 | 203 | 12.3 |
+| 500² | core_backend | 0.033 | 0.156 | 2.67 | 0.445 | 0.086 | 1.54 | 273 | 23.1 |
+| 500² | go_figure_f32 | 0.013 | 0.115 | 1.34 | 0.222 | 0.082 | 0.53 | 202 | 12.3 |
 | 500² | plotly_py | 0.018 | 0.157 | 3.39 | 0.443 | 0.086 | 1.47 | 275 | 22.2 |
 | 500² | plotly_py_f32 | 0.011 | 0.130 | 1.60 | 0.391 | 0.082 | 1.47 | 261 | 19.9 |
 | 1000² | release | 2.343 | 2.077 | 41.11 | 2.114 | 0.211 | 1.20 | 468 | 51.6 |
-| 1000² | core_backend | 0.056 | 0.471 | 10.67 | 0.686 | 0.199 | 1.54 | 390 | 49.1 |
-| 1000² | go_figure_f32 | 0.030 | 0.318 | 5.34 | 0.405 | 0.179 | 0.53 | 294 | 31.4 |
+| 1000² | core_backend | 0.054 | 0.500 | 10.67 | 0.694 | 0.200 | 1.54 | 389 | 49.1 |
+| 1000² | go_figure_f32 | 0.025 | 0.344 | 5.34 | 0.438 | 0.194 | 0.53 | 294 | 31.3 |
 | 1000² | plotly_py | 0.074 | 0.430 | 13.51 | 0.718 | 0.188 | 1.47 | 396 | 48.3 |
 | 1000² | plotly_py_f32 | 0.035 | 0.333 | 6.39 | 0.546 | 0.176 | 1.47 | 356 | 39.0 |
 | 2000² | release | 10.642 | 8.905 | 164.43 | 8.158 | 0.730 | 1.20 | 1049 | 171.8 |
-| 2000² | core_backend | 0.186 | 1.749 | 42.67 | 2.179 | 0.654 | 1.54 | 658 | 153.2 |
-| 2000² | go_figure_f32 | 0.077 | 1.214 | 21.34 | 1.373 | 0.576 | 0.53 | 524 | 107.5 |
+| 2000² | core_backend | 0.166 | 1.881 | 42.67 | 2.254 | 0.661 | 1.54 | 657 | 153.2 |
+| 2000² | go_figure_f32 | 0.068 | 1.289 | 21.34 | 1.381 | 0.602 | 0.53 | 524 | 107.5 |
 | 2000² | plotly_py | 0.294 | 1.609 | 54.04 | 2.468 | 0.617 | 1.47 | 669 | 152.4 |
 | 2000² | plotly_py_f32 | 0.143 | 1.138 | 25.54 | 1.550 | 0.576 | 1.47 | 583 | 115.1 |
 
@@ -379,44 +379,44 @@ smaller than the release).
 
 | case | size | variant | build + write | image export | HTML | load | peak renderer | JS heap |
 |:---|:---|:---|---:|---:|---:|---:|---:|---:|
-| timeseries | 10,000 | core_backend | 3.0 | 7.3 | 4.5 | 0.6 | 0.9 | 0.9 |
-| timeseries | 10,000 | go_figure_f32 | 4.3 | 7.9 | 5.8 | 1.3 | 1.2 | 1.8 |
+| timeseries | 10,000 | core_backend | 3.6 | 7.3 | 4.5 | 0.6 | 0.9 | 0.9 |
+| timeseries | 10,000 | go_figure_f32 | 8.0 | 7.7 | 5.9 | 1.3 | 1.2 | 1.8 |
 | timeseries | 10,000 | plotly_py | 12.0 | 1.3 | 2.2 | 0.7 | 0.9 | 1.0 |
 | timeseries | 10,000 | plotly_py_f32 | 12.7 | 1.4 | 2.5 | 0.7 | 0.9 | 1.0 |
-| timeseries | 100,000 | core_backend | 21.4 | 15.2 | 4.5 | 0.9 | 1.0 | 1.2 |
-| timeseries | 100,000 | go_figure_f32 | 31.5 | 17.5 | 6.0 | 1.6 | 1.3 | 1.7 |
+| timeseries | 100,000 | core_backend | 22.1 | 14.4 | 4.5 | 0.9 | 1.0 | 1.2 |
+| timeseries | 100,000 | go_figure_f32 | 46.0 | 17.4 | 6.0 | 1.6 | 1.3 | 1.7 |
 | timeseries | 100,000 | plotly_py | 12.1 | 1.9 | 2.2 | 0.9 | 1.1 | 1.3 |
 | timeseries | 100,000 | plotly_py_f32 | 13.5 | 2.0 | 2.5 | 1.0 | 1.1 | 1.3 |
-| timeseries | 1,000,000 | core_backend | 64.2 | 21.0 | 4.5 | 1.9 | 1.2 | 1.4 |
-| timeseries | 1,000,000 | go_figure_f32 | 154.4 | 26.3 | 6.0 | 2.5 | 1.4 | 1.6 |
+| timeseries | 1,000,000 | core_backend | 64.2 | 20.1 | 4.5 | 1.9 | 1.2 | 1.4 |
+| timeseries | 1,000,000 | go_figure_f32 | 177.0 | 24.2 | 6.0 | 2.5 | 1.4 | 1.6 |
 | timeseries | 1,000,000 | plotly_py | 15.8 | 2.1 | 2.2 | 1.8 | 1.3 | 1.6 |
 | timeseries | 1,000,000 | plotly_py_f32 | 16.7 | 2.1 | 2.5 | 2.0 | 1.3 | 1.6 |
-| multiseries | 10 × 10,000 | core_backend | 5.7 | 14.9 | 5.8 | 1.0 | 1.1 | 1.3 |
-| multiseries | 10 × 10,000 | go_figure_f32 | 18.5 | 21.5 | 10.5 | 1.8 | 1.5 | 2.2 |
+| multiseries | 10 × 10,000 | core_backend | 6.5 | 14.7 | 5.8 | 0.9 | 1.1 | 1.3 |
+| multiseries | 10 × 10,000 | go_figure_f32 | 28.5 | 20.9 | 10.6 | 1.7 | 1.5 | 2.2 |
 | multiseries | 10 × 10,000 | plotly_py | 7.2 | 1.9 | 1.6 | 0.9 | 1.1 | 1.4 |
 | multiseries | 10 × 10,000 | plotly_py_f32 | 7.7 | 1.9 | 1.8 | 1.0 | 1.1 | 1.4 |
-| multiseries | 10 × 100,000 | core_backend | 21.7 | 28.0 | 5.8 | 2.3 | 1.3 | 1.6 |
-| multiseries | 10 × 100,000 | go_figure_f32 | 132.5 | 40.2 | 10.6 | 3.2 | 1.5 | 1.9 |
+| multiseries | 10 × 100,000 | core_backend | 21.7 | 27.6 | 5.8 | 2.3 | 1.3 | 1.6 |
+| multiseries | 10 × 100,000 | go_figure_f32 | 175.0 | 38.6 | 10.6 | 3.1 | 1.5 | 1.9 |
 | multiseries | 10 × 100,000 | plotly_py | 9.3 | 2.1 | 1.6 | 1.9 | 1.2 | 1.7 |
 | multiseries | 10 × 100,000 | plotly_py_f32 | 10.3 | 2.1 | 1.8 | 2.2 | 1.2 | 1.8 |
-| multiseries | 10 × 500,000 | core_backend | 29.3 | 29.8 | 5.8 | 2.7 | 2.1 | 1.7 |
-| multiseries | 10 × 500,000 | go_figure_f32 | 268.4 | 42.4 | 10.5 | 3.6 | 2.4 | 1.9 |
+| multiseries | 10 × 500,000 | core_backend | 25.9 | 26.8 | 5.8 | 2.7 | 2.1 | 1.7 |
+| multiseries | 10 × 500,000 | go_figure_f32 | 198.5 | 39.7 | 10.6 | 3.4 | 2.4 | 1.9 |
 | multiseries | 10 × 500,000 | plotly_py | 10.4 | 2.1 | 1.6 | 2.1 | 1.7 | 1.7 |
 | multiseries | 10 × 500,000 | plotly_py_f32 | 11.0 | 2.1 | 1.8 | 2.5 | 1.8 | 1.8 |
-| heatmap | 100² | core_backend | 1.5 | 2.8 | 3.8 | 0.6 | 0.9 | 0.8 |
-| heatmap | 100² | go_figure_f32 | 2.1 | 3.0 | 6.8 | 1.2 | 1.2 | 1.9 |
+| heatmap | 100² | core_backend | 1.6 | 2.6 | 3.8 | 0.6 | 0.9 | 0.8 |
+| heatmap | 100² | go_figure_f32 | 3.2 | 3.7 | 7.3 | 1.2 | 1.2 | 1.9 |
 | heatmap | 100² | plotly_py | 14.1 | 1.3 | 2.9 | 0.6 | 0.9 | 0.9 |
 | heatmap | 100² | plotly_py_f32 | 15.9 | 1.4 | 5.8 | 0.6 | 0.9 | 0.9 |
-| heatmap | 500² | core_backend | 12.9 | 3.5 | 3.9 | 1.4 | 1.0 | 0.9 |
-| heatmap | 500² | go_figure_f32 | 22.5 | 5.0 | 7.7 | 2.8 | 1.4 | 1.8 |
+| heatmap | 500² | core_backend | 12.9 | 3.4 | 3.9 | 1.4 | 1.0 | 0.9 |
+| heatmap | 500² | go_figure_f32 | 32.8 | 4.6 | 7.7 | 2.8 | 1.4 | 1.8 |
 | heatmap | 500² | plotly_py | 23.4 | 3.4 | 3.0 | 1.4 | 1.0 | 1.0 |
 | heatmap | 500² | plotly_py_f32 | 39.9 | 4.1 | 6.4 | 1.6 | 1.1 | 1.1 |
-| heatmap | 1000² | core_backend | 41.8 | 4.4 | 3.9 | 3.1 | 1.2 | 1.1 |
-| heatmap | 1000² | go_figure_f32 | 78.1 | 6.5 | 7.7 | 5.2 | 1.6 | 1.6 |
+| heatmap | 1000² | core_backend | 43.4 | 4.2 | 3.9 | 3.0 | 1.2 | 1.1 |
+| heatmap | 1000² | go_figure_f32 | 93.7 | 6.0 | 7.7 | 4.8 | 1.6 | 1.6 |
 | heatmap | 1000² | plotly_py | 31.8 | 4.8 | 3.0 | 2.9 | 1.2 | 1.1 |
 | heatmap | 1000² | plotly_py_f32 | 66.6 | 6.2 | 6.4 | 3.9 | 1.3 | 1.3 |
-| heatmap | 2000² | core_backend | 57.2 | 5.1 | 3.9 | 3.7 | 1.6 | 1.1 |
-| heatmap | 2000² | go_figure_f32 | 138.2 | 7.3 | 7.7 | 5.9 | 2.0 | 1.6 |
+| heatmap | 2000² | core_backend | 64.1 | 4.7 | 3.9 | 3.6 | 1.6 | 1.1 |
+| heatmap | 2000² | go_figure_f32 | 156.5 | 6.9 | 7.7 | 5.9 | 2.0 | 1.6 |
 | heatmap | 2000² | plotly_py | 36.2 | 5.5 | 3.0 | 3.3 | 1.6 | 1.1 |
 | heatmap | 2000² | plotly_py_f32 | 74.6 | 7.8 | 6.4 | 5.3 | 1.8 | 1.5 |
 
@@ -461,6 +461,10 @@ if missing); `core_lib`, a library with the development plotly and
 plotly.core (default: the first of
 [`.libPaths()`](https://rdrr.io/r/base/libPaths.html)); `ts_sizes`,
 `ms_sizes`, `hm_sizes` and `reps`.
+
+When only plotly.core has changed, rerun just its variants with
+`-P only:core_backend,go_figure_f32`: the other variants keep their
+saved results (the case sizes must be the same).
 
 ### What is measured
 
@@ -526,13 +530,19 @@ dir.create(results_dir, recursive = TRUE, showWarnings = FALSE)
 
 release_lib <- if (nzchar(params$release_lib)) params$release_lib else file.path(wd, "lib-release")
 core_lib <- if (nzchar(params$core_lib)) params$core_lib else .libPaths()[1]
-if (!file.exists(file.path(release_lib, "plotly", "DESCRIPTION"))) {
+if ("release" %in% rerun && !file.exists(file.path(release_lib, "plotly", "DESCRIPTION"))) {
   dir.create(release_lib, recursive = TRUE, showWarnings = FALSE)
   install.packages("plotly", lib = release_lib, repos = "https://cloud.r-project.org",
                    type = "source", dependencies = FALSE)
 }
 libs <- list(release = release_lib, core_backend = core_lib, go_figure_f32 = core_lib)
 python <- params$python
+# a partial run (`only`) keeps the other variants' previous results
+if (partial) {
+  prev <- lapply(c(build = "build", browser = "browser", pages = "pages", versions = "versions"),
+                 function(f) fread(file.path(results_dir, paste0(f, ".csv"))))
+  prev_meta <- jsonlite::read_json(file.path(results_dir, "meta.json"))
+}
 ```
 
 ### Data
@@ -750,7 +760,7 @@ r_worker <- function(variant, fns, write, export, cases, reps, outdir) {
 # Kaleido (for the CRAN release) runs in the benchmark's Python, which also
 # has plotly; ~/.Renviron is skipped, as it may point reticulate elsewhere
 worker_env <- c(callr::rcmd_safe_env(), RETICULATE_PYTHON = python, R_ENVIRON_USER = tempfile())
-build_r <- rbindlist(lapply(names(figures), function(v) {
+build_r <- rbindlist(lapply(intersect(names(figures), rerun), function(v) {
   callr::r(r_worker, list(v, figures[[v]], writers[[v]], exporters[[v]], cases, reps, file.path(pages_dir, v)),
            libpath = c(libs[[v]], .libPaths()), env = worker_env)
 }))
@@ -760,7 +770,7 @@ build_r <- rbindlist(lapply(names(figures), function(v) {
 
 cases_json <- file.path(wd, "cases.json")
 jsonlite::write_json(cases[, .(case, size, file)], cases_json)
-build_py <- rbindlist(lapply(c("plotly_py", "plotly_py_f32"), function(v) {
+build_py <- rbindlist(lapply(intersect(c("plotly_py", "plotly_py_f32"), rerun), function(v) {
   outdir <- file.path(pages_dir, v)
   dir.create(outdir, showWarnings = FALSE)
   res <- system2(python, c(shQuote(file.path(wd, "bench.py")), v, shQuote(cases_json), reps,
@@ -769,7 +779,7 @@ build_py <- rbindlist(lapply(c("plotly_py", "plotly_py_f32"), function(v) {
 }))
 build <- rbindlist(list(build_r, build_py))
 # one page per variant and case size
-pages <- CJ(variant = variants, i = seq_len(nrow(cases)), sorted = FALSE)[
+pages <- CJ(variant = rerun, i = seq_len(nrow(cases)), sorted = FALSE)[
   , c(.(variant = variant), cases[i, .(case, size, values)])]
 pages[, path := sprintf("%s/%s-%d.html", variant, case, size)]
 pages[, html_mb := file.size(file.path(pages_dir, path)) / 1e6]
@@ -931,9 +941,10 @@ server$kill()
 
 ### Environment
 
-Results above are from a run on 2026-11-18 on macOS 26.5.1 (Apple M3
+Results above are from a run on 2026-11-20 on macOS 26.5.1 (Apple M3
 Pro), with R version 4.4.2 (2024-10-31) and Chrome/157.0.8103.79
-(headless), and these versions:
+(headless) (core_backend and go_figure_f32 only; the other variants’
+results are from 2026-11-18), and these versions:
 
 | variant | plotly | plotly.core | plotly.js |
 |:---|:---|:---|:---|
@@ -960,17 +971,24 @@ r_versions <- function(lib) {
     )
   }, libpath = c(lib, .libPaths()))
 }
-py <- jsonlite::fromJSON(system2(python, c("-c", shQuote(paste(
-  "import json, plotly, numpy, pandas, plotly.offline as o;",
-  "print(json.dumps(dict(plotly=plotly.__version__, numpy=numpy.__version__,",
-  "pandas=pandas.__version__, plotlyjs=o.get_plotlyjs_version())))"))), stdout = TRUE))
+py_rerun <- any(c("plotly_py", "plotly_py_f32") %in% rerun)
+if (py_rerun) {
+  py <- jsonlite::fromJSON(system2(python, c("-c", shQuote(paste(
+    "import json, plotly, numpy, pandas, plotly.offline as o;",
+    "print(json.dumps(dict(plotly=plotly.__version__, numpy=numpy.__version__,",
+    "pandas=pandas.__version__, plotlyjs=o.get_plotlyjs_version())))"))), stdout = TRUE))
+}
 versions <- rbindlist(list(
-  c(variant = "release", r_versions(release_lib)),
-  c(variant = "core_backend, go_figure_f32", r_versions(core_lib)),
-  list(variant = "plotly_py, plotly_py_f32",
-       plotly = paste0(py$plotly, " (Python; numpy ", py$numpy, ", pandas ", py$pandas, ")"),
-       plotly.core = NA_character_, plotly.js = py$plotlyjs)
-))
+  if ("release" %in% rerun) c(variant = "release", r_versions(release_lib)),
+  if (any(c("core_backend", "go_figure_f32") %in% rerun)) {
+    c(variant = "core_backend, go_figure_f32", r_versions(core_lib))
+  },
+  if (py_rerun) {
+    list(variant = "plotly_py, plotly_py_f32",
+         plotly = paste0(py$plotly, " (Python; numpy ", py$numpy, ", pandas ", py$pandas, ")"),
+         plotly.core = NA_character_, plotly.js = py$plotlyjs)
+  }
+), fill = TRUE)
 cpu <- if (Sys.info()[["sysname"]] == "Darwin") {
   system("sysctl -n machdep.cpu.brand_string", intern = TRUE)
 } else {
@@ -980,9 +998,25 @@ meta <- list(date = format(Sys.Date()), R = R.version.string, os = utils::sessio
              cpu = cpu, browser = chrome$Browser$getVersion()$product, reps = reps)
 chrome$close()
 
+pages <- pages[, .(variant, case, size, values, html_mb)]
+if (partial) {
+  # the other variants' previous results, for the same cases
+  if (!setequal(paste(prev$pages$case, prev$pages$size), paste(cases$case, cases$size))) {
+    stop("A partial run (`only`) needs the same case sizes as the saved results", call. = FALSE)
+  }
+  keep <- function(d) d[!variant %in% rerun]
+  build <- rbind(keep(prev$build), build, fill = TRUE)
+  browser <- rbind(keep(prev$browser), browser, fill = TRUE)
+  pages <- rbind(keep(prev$pages), pages, fill = TRUE)
+  versions <- rbind(prev$versions[!variant %in% versions$variant], versions, fill = TRUE)
+  versions <- versions[order(match(sub(",.*", "", variant), variants))]
+  meta$rerun <- rerun
+  meta$previous_date <- prev_meta$previous_date %||% prev_meta$date
+}
+
 fwrite(build, file.path(results_dir, "build.csv"))
 fwrite(browser, file.path(results_dir, "browser.csv"))
-fwrite(pages[, .(variant, case, size, values, html_mb)], file.path(results_dir, "pages.csv"))
+fwrite(pages, file.path(results_dir, "pages.csv"))
 fwrite(versions, file.path(results_dir, "versions.csv"))
 jsonlite::write_json(meta, file.path(results_dir, "meta.json"), auto_unbox = TRUE, pretty = TRUE)
 ```
