@@ -37,7 +37,7 @@ go_figure() |>
   ) |>
   update_layout(
     map = go_map(
-      style = "open-street-map",
+      style = "carto-voyager",
       center = go_map_center(lon = 10, lat = 10),
       zoom = 1
     ),

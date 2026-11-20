@@ -44,7 +44,7 @@ go_figure() |>
   ) |>
   update_layout(
     map = go_map(
-      style = "open-street-map",
+      style = "carto-voyager",
       zoom = 0,
       center = go_map_center(lat = median(dat$lat), lon = median(dat$long))
     )

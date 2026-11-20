@@ -47,6 +47,13 @@ If you have access to your own private tile servers, or wish to use a tile serve
 
 This chart demonstrates how to use "open-street-map" tiles as the base map for a chart.
 
+> The "open-street-map" style loads tiles from OpenStreetMap's volunteer-run
+> servers, whose [tile usage policy](https://operations.osmfoundation.org/policies/tiles/)
+> blocks requests that don't identify the page they come from. Browsers or
+> extensions that strip the `Referer` header then show an "Access blocked"
+> tile instead of the map. The `carto-*` styles have no such requirement, so
+> the other examples on these pages use `"carto-voyager"`.
+
 ```{r}
 library(plotly.core)
 
