@@ -158,7 +158,7 @@ static void write_value(jbuf *b, SEXP x, SEXP fallback, SEXP rho) {
   }
   if (type == VECSXP) {
     // lists jsonlite writes its own way
-    if (OBJECT(x) && (has_class(x, "data.frame") || has_class(x, "POSIXlt") ||
+    if (isObject(x) && (has_class(x, "data.frame") || has_class(x, "POSIXlt") ||
                       has_class(x, "AsIs"))) {
       write_fallback(b, x, fallback, rho);
       return;
@@ -189,7 +189,7 @@ static void write_value(jbuf *b, SEXP x, SEXP fallback, SEXP rho) {
     return;
   }
   int asis = 0;
-  if (OBJECT(x)) {
+  if (isObject(x)) {
     if (type == STRSXP && xlength(x) == 1 && has_class(x, "json")) {
       // json_verbatim: written as is
       const char *s = CHAR(STRING_ELT(x, 0));
