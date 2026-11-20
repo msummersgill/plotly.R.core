@@ -13,7 +13,7 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 options(plotly.core.plotlyjs = "cdn")
 ```
 
-The plotly.core R package exists to create, manipulate and [render](https://plotly.com/r/getting-started/#rendering-charts) graphical figures (i.e. charts, plots, maps and diagrams) represented by data structures also referred to as figures. The rendering process uses the [Plotly.js JavaScript library](https://plotly.com/javascript/) under the hood although R developers using this package very rarely need to interact with the Javascript library directly, if ever. Figures can be represented in R either as lists or as `go_figure()` objects, and are serialized as text in [JavaScript Object Notation (JSON)](https://json.org/) before being passed to Plotly.js.
+The plotly.core R package exists to create, manipulate and [render](getting-started.html#rendering-charts) graphical figures (i.e. charts, plots, maps and diagrams) represented by data structures also referred to as figures. The rendering process uses the [Plotly.js JavaScript library](https://plotly.com/javascript/) under the hood although R developers using this package very rarely need to interact with the Javascript library directly, if ever. Figures can be represented in R either as lists or as `go_figure()` objects, and are serialized as text in [JavaScript Object Notation (JSON)](https://json.org/) before being passed to Plotly.js.
 
 ### Figures As Lists
 
@@ -47,7 +47,7 @@ The `go_*()` functions (`go_figure()`, `go_bar()`, `go_bar_marker()`, `go_layout
 Graph objects have several benefits compared to plain R lists.
 
 1. Graph objects provide precise data validation. If you provide an invalid property name or an invalid property value, an error will be raised with a helpful message describing the problem.
-2. Graph objects contain descriptions of each valid property in their R documentation. You can use the help pages (e.g. `?go_bar`) to learn about the available properties as an alternative to consulting the online [Full Reference](https://plotly.com/r/reference/).
+2. Graph objects contain descriptions of each valid property in their R documentation. You can use the help pages (e.g. `?go_bar`) to learn about the available properties as an alternative to consulting the online [Full Reference](../../reference/index.html).
 3. Properties of graph objects can be accessed using list-style lookup (e.g. `fig$data[[1]]$x`).
 4. Figures support higher-level convenience functions for making updates to already constructed figures (`update_layout()`, `add_trace()`, `update_traces()`, etc).
 5. Figures can be displayed directly, saved as HTML with `write_html()` and exported as static images with `save_image()`.

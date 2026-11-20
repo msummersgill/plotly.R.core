@@ -22,7 +22,7 @@ The examples below use the library [simple features](https://r-spatial.github.io
 
 ### Map Tiles
 
-Tile-based maps (`add_choroplethmap()`, `add_scattermap()`, ...) use MapLibre and need no access token. See the [Map Layers](https://plotly.com/r/mapbox-layers/) documentation for more information.
+Tile-based maps (`add_choroplethmap()`, `add_scattermap()`, ...) use MapLibre and need no access token. See the [Map Layers](mapbox-layers.html) documentation for more information.
 
 ### Basic sf
 

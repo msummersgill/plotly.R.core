@@ -13,7 +13,7 @@ options(plotly.core.plotlyjs = "cdn")
 ```
 #### Polar Charts 1.0
 
-Looking for the old polar chart docs? See [legacy polar charts](https://plotly.com/r/legacy-polar-chart/). The legacy polar attributes were removed from plotly.js; use `add_scatterpolar()` with `go_polar()` as shown here.
+Looking for the old polar chart docs? See [legacy polar charts](legacy-polar-chart.html). The legacy polar attributes were removed from plotly.js; use `add_scatterpolar()` with `go_polar()` as shown here.
 
 #### Basic Polar Charts
 

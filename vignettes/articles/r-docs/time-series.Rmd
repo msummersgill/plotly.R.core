@@ -14,9 +14,9 @@ options(plotly.core.plotlyjs = "cdn")
 ```
 ### Time Series using Axes of type `date`
 
-Time series can be represented using any cartesian trace (`add_scatter()`, `add_bar()` etc). For more examples of such charts, see the documentation of [line and scatter plots](https://plotly.com/r/line-and-scatter/) or [bar charts](bar-charts.html).
+Time series can be represented using any cartesian trace (`add_scatter()`, `add_bar()` etc). For more examples of such charts, see the documentation of [line and scatter plots](line-and-scatter.html) or [bar charts](bar-charts.html).
 
-For financial applications, Plotly can also be used to create [Candlestick charts](https://plotly.com/r/candlestick-charts/) and [OHLC charts](https://plotly.com/r/ohlc-charts/), which default to date axes.
+For financial applications, Plotly can also be used to create [Candlestick charts](candlestick-charts.html) and [OHLC charts](ohlc-charts.html), which default to date axes.
 
 Plotly doesn't auto set the data type of axis to date. We have to give the values using as.Date() for an axis to mention it's data type as date.
 
@@ -198,7 +198,7 @@ fig
 
 ### Summarizing Time-series Data with Histograms
 
-Plotly [histograms](https://plotly.com/r/histograms/) are powerful data-aggregation tools which even work on date axes. In the figure below, we pass in daily data and display it as monthly averages by setting `histfunc = "avg"` and `xbins = go_bins(size = "M1")`.
+Plotly [histograms](histograms.html) are powerful data-aggregation tools which even work on date axes. In the figure below, we pass in daily data and display it as monthly averages by setting `histfunc = "avg"` and `xbins = go_bins(size = "M1")`.
 
 ```{r}
 library(plotly.core)
@@ -391,7 +391,7 @@ stock |>
 
 ### Customizing Tick Label Formatting by Zoom Level
 
-The `tickformatstops` attribute can be used to customize the formatting of tick labels depending on the zoom level. Try zooming in to the chart below and see how the tick label formatting changes. Check out `go_tickformatstop()` and the [tick formatting page](https://plotly.com/r/tick-formatting/) for more options.
+The `tickformatstops` attribute can be used to customize the formatting of tick labels depending on the zoom level. Try zooming in to the chart below and see how the tick label formatting changes. Check out `go_tickformatstop()` and the [tick formatting page](tick-formatting.html) for more options.
 
 ```{r}
 library(plotly.core)

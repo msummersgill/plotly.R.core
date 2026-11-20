@@ -22,7 +22,7 @@ Other kinds of subplots and axes are described in other tutorials:
 - [Ternary axes](ternary-plots.html). The axis object is 'ternary' (`go_ternary()`).
 - Geo axes: The axis object is 'geo' (`go_geo()`).
 - [Map axes](mapbox-layers.html). The axis object is 'map' (`go_map()`).
-- [Color axes](https://plotly.com/r/colorscales/). The axis object is 'coloraxis' (`go_coloraxis()`).
+- [Color axes](builtin-colorscales.html). The axis object is 'coloraxis' (`go_coloraxis()`).
 
 **See also** the tutorials on  [subplots](subplots.html)
 

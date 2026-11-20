@@ -37,13 +37,13 @@ fig
 
 ### Figures as Trees of Attributes
 
-Plotly.js supports inputs adhering to a well-defined schema, whose overall architecture is explained in this page and which is exhaustively documented in the [Figure Reference](https://plotly.com/r/reference/) (which is itself generated from a [machine-readable JSON representation of the schema](https://raw.githubusercontent.com/plotly/plotly.js/master/dist/plot-schema.json)). Figures are represented as trees with named nodes called "attributes".
+Plotly.js supports inputs adhering to a well-defined schema, whose overall architecture is explained in this page and which is exhaustively documented in the [Figure Reference](../../reference/index.html) (which is itself generated from a [machine-readable JSON representation of the schema](https://raw.githubusercontent.com/plotly/plotly.js/master/dist/plot-schema.json)). Figures are represented as trees with named nodes called "attributes".
 
-Attributes are referred to in text and in the [Figure Reference](https://plotly.com/r/reference/) by their names. For example `layout$width` refers to the attribute whose key is `"width"` inside a list which is the value associated with a key `"layout"` at the root of the figure. 
+Attributes are referred to in text and in the [Figure Reference](../../reference/index.html) by their names. For example `layout$width` refers to the attribute whose key is `"width"` inside a list which is the value associated with a key `"layout"` at the root of the figure. 
 
 When manipulating a `go_figure` object, attributes can be set directly with R list assignment, e.g. `fig$layout$title$font$family <- "Open Sans"`, or using `fig |> update_layout(title = go_layout_title(font = go_font(family = "Open Sans")))`.
 
-When building a figure, it is *not necessary to populate every attribute* of every object. At render-time, the JavaScript layer will compute default values for each required unspecified attribute, depending upon the ones that are specified, as documented in the [Figure Reference](https://plotly.com/r/reference/). An example of this would be `layout.xaxis.range`, which may be specified explicitly, but if not will be computed based on the range of `x` values for every trace linked to that axis. The JavaScript layer will ignore unknown attributes or malformed values, although plotly.core validates every attribute in R as the figure is built, and reports invalid properties with an error naming the valid ones.
+When building a figure, it is *not necessary to populate every attribute* of every object. At render-time, the JavaScript layer will compute default values for each required unspecified attribute, depending upon the ones that are specified, as documented in the [Figure Reference](../../reference/index.html). An example of this would be `layout.xaxis.range`, which may be specified explicitly, but if not will be computed based on the range of `x` values for every trace linked to that axis. The JavaScript layer will ignore unknown attributes or malformed values, although plotly.core validates every attribute in R as the figure is built, and reports invalid properties with an error naming the valid ones.
 
 ### The Top-Level `data` Attribute
 
@@ -52,7 +52,7 @@ The first of the three top-level attributes of a figure is `data`, whose value m
 * Each trace has one of more than 40 possible types (see below for a list organized by subplot type, including e.g. [`scatter`](line-and-scatter.html), [`bar`](bar-charts.html), [`pie`](pie-charts.html), [`surface`](3d-surface-plots.html), [`choropleth`](choropleth-maps.html) etc), and represents a set of related graphical marks in a figure. Each trace must have a `type` attribute which defines the other allowable attributes.
 * Each trace is drawn on a single [subplot](subplots.html) whose type must be compatible with the trace's type, or is its own subplot (see below).
 * Traces may have a single [legend](legend.html) entry, with the exception of pie and funnelarea traces (see below).
-* Certain trace types support [continuous color, with an associated colorbar](https://plotly.com/r/colorscales/), which can be controlled by attributes either within the trace, or within the layout when using the coloraxis attribute (see `go_coloraxis()`).
+* Certain trace types support [continuous color, with an associated colorbar](builtin-colorscales.html), which can be controlled by attributes either within the trace, or within the layout when using the coloraxis attribute (see `go_coloraxis()`).
 
 ### The Top-Level `layout` Attribute
 
@@ -60,7 +60,7 @@ The second of the three top-level attributes of a figure is `layout`, whose valu
 
   * Dimensions and margins, which define the bounds of "paper coordinates" (see below)
   * Title and [legend](legend.html) (positionable in container and/or paper coordinates)
-  * [Color axes and associated color bars](https://plotly.com/r/colorscales/) (positionable in paper coordinates)
+  * [Color axes and associated color bars](builtin-colorscales.html) (positionable in paper coordinates)
   * Subplots of various types on which can be drawn multiple traces and which are positioned in paper coordinates:
     * `xaxis`, `yaxis`, `xaxis2`, `yaxis3` etc: X and Y cartesian axes, the intersections of which are cartesian subplots
     * `scene`, `scene2`, `scene3` etc: 3d scene subplots
@@ -119,7 +119,7 @@ The following trace types are compatible with 2d-cartesian subplots via the `xax
 
 ### 3D, Polar and Ternary Trace Types and Subplots
 
-Beyond 2D cartesian subplots, figures can include [three-dimensional cartesian subplots](https://plotly.com/r/3d-charts/), [polar subplots](polar-chart.html) and [ternary subplots](ternary-plots.html). The following trace types support attributes named `scene`, `polar` or `ternary`, whose values must refer to corresponding objects in the layout portion of the figure i.e. `ternary="ternary2"` etc. Note that attributes such as `layout.scene` and `layout.ternary2` etc do not have to be explicitly defined, in which case default values will be inferred. Multiple traces of a compatible type can be placed on the same subplot.
+Beyond 2D cartesian subplots, figures can include [three-dimensional cartesian subplots](index.html#d-charts), [polar subplots](polar-chart.html) and [ternary subplots](ternary-plots.html). The following trace types support attributes named `scene`, `polar` or `ternary`, whose values must refer to corresponding objects in the layout portion of the figure i.e. `ternary="ternary2"` etc. Note that attributes such as `layout.scene` and `layout.ternary2` etc do not have to be explicitly defined, in which case default values will be inferred. Multiple traces of a compatible type can be placed on the same subplot.
 
 The following trace types are compatible with 3D subplots via the `scene` attribute, which contains special camera controls (see `go_scene_camera()`):
 
@@ -178,7 +178,7 @@ The following trace types are compatible with `carpet` trace subplots via the `c
 
 Traces of most types can be optionally associated with a single legend item in the [legend](legend.html). Whether or not a given trace appears in the legend is controlled via the `showlegend` attribute. Traces which are their own subplots (see above) do not support this, with the exception of traces of type `pie` and `funnelarea` for which every distinct color represented in the trace gets a separate legend item. Users may show or hide traces by clicking or double-clicking on their associated legend item. Traces that support legend items also support the `legendgroup` attribute, and all traces with the same legend group are treated the same way during click/double-click interactions.
 
-The fact that legend items are linked to traces means that when using [discrete color](https://plotly.com/r/colorscales/), a figure must have one trace per color in order to get a meaningful legend. 
+The fact that legend items are linked to traces means that when using [discrete color](builtin-colorscales.html), a figure must have one trace per color in order to get a meaningful legend. 
 
-Traces which support [continuous color](https://plotly.com/r/colorscales/) can also be associated with color axes in the layout via the `coloraxis` attribute. Multiple traces can be linked to the same color axis. Color axes have a legend-like component called color bars. Alternatively, color axes can be configured within the trace itself.
+Traces which support [continuous color](builtin-colorscales.html) can also be associated with color axes in the layout via the `coloraxis` attribute. Multiple traces can be linked to the same color axis. Color axes have a legend-like component called color bars. Alternatively, color axes can be configured within the trace itself.
 

@@ -18,7 +18,7 @@ How to design figures with multiple chart types in R.
 
 ### Chart Types versus Trace Types
 
-Plotly's figure data structure supports defining [subplots](subplots.html) of [various types](https://plotly.com/r/mixed-subplots/) (e.g. [cartesian](axes.html), [polar](polar-chart.html), [3-dimensional](https://plotly.com/r/3d-charts/), [maps](https://plotly.com/r/maps/) etc) with attached traces of various compatible types (e.g. scatter, bar, choropleth, surface etc). This means that **Plotly figures are not constrained to representing a fixed set of "chart types"** such as scatter plots only or bar charts only or line charts only: any subplot can contain multiple traces of different types.
+Plotly's figure data structure supports defining [subplots](subplots.html) of [various types](subplots.html) (e.g. [cartesian](axes.html), [polar](polar-chart.html), [3-dimensional](index.html#d-charts), [maps](index.html#maps) etc) with attached traces of various compatible types (e.g. scatter, bar, choropleth, surface etc). This means that **Plotly figures are not constrained to representing a fixed set of "chart types"** such as scatter plots only or bar charts only or line charts only: any subplot can contain multiple traces of different types.
 
 ### Multiple Trace Types with Plotly
 

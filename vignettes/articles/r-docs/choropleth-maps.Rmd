@@ -274,13 +274,17 @@ g2 <- go_geo(
   landcolor = "rgb(229,229,229)",
   showcountries = FALSE,
   bgcolor = "rgba(255,255,255,0)",
+  # the whole continent
+  lonaxis = go_geo_lonaxis(range = c(-20, 55)),
+  lataxis = go_geo_lataxis(range = c(-36, 38)),
   domain = go_domain(x = c(0, 0.6), y = c(0, 0.6))
 )
 
 # marker area proportional to the number of cases
 sizeref <- 2 * max(df$Value) / 40^2
 
-df |>
+# one trace per month, coloured by the ordered factor (viridis)
+fig <- df |>
   go_figure() |>
   add_scattergeo(
     lat = ~Lat,
@@ -288,12 +292,16 @@ df |>
     text = ~paste(Value, "cases"),
     mode = "markers",
     marker = go_scattergeo_marker(
+      color = ~abbrev,
       size = ~Value,
       sizemode = "area",
       sizeref = sizeref
-    ),
-    split = ~abbrev
-  ) |>
+    )
+  )
+# draw the largest (September) circles first, so the earlier months show on top
+fig$data <- rev(fig$data)
+
+fig |>
   add_scattergeo(
     lon = 21.0936,
     lat = 7.1881,
@@ -307,7 +315,8 @@ df |>
     z = ~Month,
     locations = ~Country,
     locationmode = "country names",
-    colorscale = list(c(0, "black"), c(1, "black")),
+    colorscale = list(c(0, "#F28E5C"), c(1, "#F28E5C")),
+    marker = go_choropleth_marker(line = go_choropleth_marker_line(color = "black")),
     showscale = FALSE,
     geo = "geo2"
   ) |>

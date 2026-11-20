@@ -24,7 +24,7 @@ There are three different ways to show an area on a tile map:
 <ol>
     <li> Use a `scattermap` trace (`add_scattermap()`) and set its `fill` attribute to "toself"</li>
     <li> Use a `scattermap` trace and define the corresponding geojson as a map layer</li>
-    <li> Use the `choroplethmap` trace (`add_choroplethmap()`) for tile maps, or the [Choropleth](https://plotly.com/r/choropleth-maps/) trace for non-tile maps.</li>
+    <li> Use the `choroplethmap` trace (`add_choroplethmap()`) for tile maps, or the [Choropleth](choropleth-maps.html) trace for non-tile maps.</li>
 </ol>
 
 The following example uses the `scattermap` trace and sets `fill = "toself"`
