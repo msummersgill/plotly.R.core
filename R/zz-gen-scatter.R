@@ -230,6 +230,12 @@
 #'   have no effect. Any value.
 #' @param showlegend Determines whether or not an item corresponding to
 #'   this trace is shown in the legend. Logical.
+#' @param split A column (\code{~col}) or vector, one value per row of the
+#'   data: one trace is added per value, named after it. Colour properties
+#'   given a discrete column (a factor, character or logical, e.g.
+#'   \code{marker = go_scatter_marker(color = ~group)}) split the data the
+#'   same way, each trace getting its own colour: evenly spaced viridis
+#'   colours for an ordered factor, otherwise the figure's colorway.
 #' @param stackgaps Only relevant when `stackgroup` is used, and only the
 #'   first `stackgaps` found in the `stackgroup` will be used - including
 #'   if `visible` is "legendonly" but not if it is `false`. Determines how

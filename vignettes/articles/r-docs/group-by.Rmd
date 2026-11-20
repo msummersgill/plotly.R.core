@@ -13,33 +13,28 @@ options(plotly.core.plotlyjs = "cdn")
 ```
 #### Basic Example
 
-The `groupby` transform was removed from plotly.js. Split the data in R
-instead and add one trace per group, styling each one as needed.
+The `groupby` transform was removed from plotly.js. Use `split` instead to
+add one trace per group, and the figure's `colorway` to color the groups.
 
 ```{r}
 library(plotly.core)
 
-cyl_colors <- c("4" = "blue", "6" = "red", "8" = "black")
+cars <- cbind(make = rownames(mtcars), mtcars)
 
-fig <- go_figure()
-for (cyl in names(cyl_colors)) {
-  cars <- mtcars[mtcars$cyl == as.numeric(cyl), ]
-  fig <- fig |>
-    add_scatter(
-      x = cars$hp,
-      y = cars$qsec,
-      text = paste("Make: ", rownames(cars),
-                   "<br>hp: ", cars$hp,
-                   "<br>qsec: ", cars$qsec,
-                   "<br>Cyl: ", cars$cyl),
-      hoverinfo = "text",
-      mode = "markers",
-      name = cyl,
-      marker = go_scatter_marker(color = cyl_colors[[cyl]])
-    )
-}
-
-fig
+cars |>
+  go_figure() |>
+  update_layout(colorway = c("blue", "red", "black")) |>
+  add_scatter(
+    x = ~hp,
+    y = ~qsec,
+    text = ~ paste("Make: ", make,
+                   "<br>hp: ", hp,
+                   "<br>qsec: ", qsec,
+                   "<br>Cyl: ", cyl),
+    hoverinfo = "text",
+    mode = "markers",
+    split = ~cyl
+  )
 ```
 
 #### Reference

@@ -120,7 +120,14 @@ stopifnot(
   ), # hex without "#"
   identical(vc(c(1, 2, 3), "scatter.marker.color"), c(1, 2, 3)), # numeric: has colorscale
   identical(vc(c("red", NA), "scatter.marker.color"), c("red", NA)),
-  length(vc("viridis", "scatter.marker.colorscale")) == 10L, # expanded like plotly.py
+  # plotly.js's own scale names expand to plotly.js's definitions
+  length(vc("viridis", "scatter.marker.colorscale")) == 17L,
+  identical(
+    vc("Blues", "scatter.marker.colorscale")[[1L]],
+    list(0, "rgb(5,10,172)")
+  ),
+  # other names are plotly.py's
+  length(vc("plasma", "scatter.marker.colorscale")) == 10L,
   identical(
     vc("viridis", "scatter.marker.colorscale")[[1L]],
     list(0, "#440154")

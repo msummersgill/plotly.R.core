@@ -457,6 +457,14 @@ FIGURE_ARG_DOCS <- list(
     "A \\code{crosstalk::SharedData} works the same way, and links the trace",
     "to its crosstalk group (see \\code{\\link{highlight}()})."
   ),
+  split = paste(
+    "A column (\\code{~col}) or vector, one value per row of the data: one",
+    "trace is added per value, named after it. Colour properties given a",
+    "discrete column (a factor, character or logical, e.g.",
+    "\\code{marker = go_scatter_marker(color = ~group)}) split the data the",
+    "same way, each trace getting its own colour: evenly spaced viridis",
+    "colours for an ordered factor, otherwise the figure's colorway."
+  ),
   row = paste(
     "Subplot grid row (figures created with \\code{\\link{make_subplots}()} only).",
     "May be \\code{\"all\"} or a vector to address several cells."
@@ -1349,7 +1357,7 @@ page_figure_fns <- function(page, validators) {
   has_xy <- all(c("xaxis", "yaxis") %in% entry$children)
   list(list(
     fn = paste0("add_", page),
-    args = c("fig", "data", "row", "col", if (has_xy) "secondary_y")
+    args = c("fig", "data", "split", "row", "col", if (has_xy) "secondary_y")
   ))
 }
 

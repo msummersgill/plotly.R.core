@@ -4,6 +4,7 @@ description: "How to customize figures with Plotly for R."
 display_as: file_settings
 order: 22
 source: 2021-08-02-styling-plotly-in-r.Rmd
+thumbnail_figure: 2
 ---
 
 ```{r, echo = FALSE, message=FALSE}
@@ -25,8 +26,8 @@ More specifically, here are the 2 ways you can style and customize figures made 
 Many common styling options can be set directly when adding traces and updating the layout:
 
 - `title` (in `update_layout()`) to set the figure title
-- `name` to set the legend entry of each trace, and `title` in `go_xaxis()`, `go_yaxis()` and `go_legend()` to set axis and legend titles. plotly.core doesn't label axes automatically.
-- `categoryorder` and `categoryarray` in `go_xaxis()` to override the default category ordering behaviour, which is to use the order in which the data appears in the input.
+- `name` to set the legend entry of each trace, and `title` in `go_xaxis()`, `go_yaxis()` and `go_legend()` to set axis and legend titles. By default, axes are titled with the column names in the `x` and `y` formulas.
+- `categoryorder` and `categoryarray` in `go_xaxis()` to override the default category ordering behaviour, which is to use the levels of a factor, or otherwise the order in which the data appears in the input.
 - `hovertemplate`, `hoverinfo` and the axes' `hoverformat` to control which attributes appear in the hover label and how they are formatted.
 - Various color-related attributes such as `marker = go_bar_marker(color = ...)`, `colorscale`, `colorbar` and the layout `colorway` set the colors used in the figure.
 
@@ -38,15 +39,10 @@ library(plotly.core)
 
 data("tips")
 
-fig1 <- go_figure()
-for (g in levels(tips$sex)) {
-  fig1 <- fig1 |>
-    add_bar(data = tips[tips$sex == g, ], x = ~day, y = ~total_bill, name = g)
-}
-fig1 <- fig1 |>
+tips |>
+  go_figure() |>
+  add_bar(x = ~day, y = ~total_bill, split = ~sex) |>
   update_layout(barmode = "stack")
-
-fig1
 ```
 
 Here is the same figure, restyled by adding some extra parameters:
@@ -65,18 +61,14 @@ xform <- go_xaxis(
   categoryarray = c("Thur", "Fri", "Sat", "Sun")
 )
 
-fig2 <- go_figure()
-for (g in levels(tips$sex)) {
-  fig2 <- fig2 |>
-    add_bar(
-      data = tips[tips$sex == g, ],
-      x = ~day,
-      y = ~total_bill,
-      name = g,
-      marker = go_bar_marker(color = sex_colors[[g]])
-    )
-}
-fig2 <- fig2 |>
+tips |>
+  go_figure() |>
+  update_layout(colorway = sex_colors) |>
+  add_bar(
+    x = ~day,
+    y = ~total_bill,
+    marker = go_bar_marker(color = ~sex)
+  ) |>
   update_layout(
     barmode = "stack",
     xaxis = xform,
@@ -84,12 +76,9 @@ fig2 <- fig2 |>
     title = "Receipts by Payer Gender and Day of Week",
     legend = go_legend(title = go_legend_title(text = "<b> Payer Gender </b>"))
   )
-
-fig2
 ```
 
 ### Updating or Modifying Figures made with Plotly
-
 
 Here is the same figure as above, with some additional customizations to the axes and legend.
 
@@ -107,17 +96,14 @@ xform <- go_xaxis(
   categoryarray = c("Thur", "Fri", "Sat", "Sun")
 )
 
-fig <- go_figure()
-for (g in levels(tips$sex)) {
-  fig <- fig |>
-    add_bar(
-      data = tips[tips$sex == g, ],
-      x = ~day,
-      y = ~total_bill,
-      name = g,
-      marker = go_bar_marker(color = sex_colors[[g]])
-    )
-}
+fig <- tips |>
+  go_figure() |>
+  update_layout(colorway = sex_colors) |>
+  add_bar(
+    x = ~day,
+    y = ~total_bill,
+    marker = go_bar_marker(color = ~sex)
+  )
 # the y-axis prefix given as dollars
 fig <- fig |>
   update_layout(

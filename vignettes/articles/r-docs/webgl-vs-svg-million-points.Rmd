@@ -20,15 +20,13 @@ n <- 1e5
 x <- rnorm(n)
 y <- 2 * x + rnorm(n, sd = 5)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergl(
     x = x,
     y = y,
     mode = "markers",
     marker = go_scattergl_marker(opacity = 0.01)
   )
-
-fig
 ```
 
 # Reference

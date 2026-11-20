@@ -4,6 +4,7 @@ description: "Interpret the results of your classification using Receiver Operat
 display_as: ai_ml
 order: 3
 source: 2021-07-26-ml-roc-pr.Rmd
+thumbnail_figure: 2
 ---
 
 ```{r, echo = FALSE, message=FALSE}
@@ -22,7 +23,6 @@ Before diving into the receiver operating characteristic (ROC) curve, we will lo
 In the histogram, we observe that the score spread such that most of the positive labels are binned near 1, and a lot of the negative labels are close to 0. When we set a threshold on the score, all of the bins to its left will be classified as 0's, and everything to the right will be 1's. There are obviously a few outliers, such as **negative** samples that our model gave a high score, and *positive* samples with a low score. If we set a threshold right in the middle, those outliers will respectively become **false positives** and *false negatives*.
 
 As we adjust thresholds, the number of false positives will increase or decrease, and at the same time the number of true positives will also change; this is shown in the second plot. As you can see, the model seems to perform fairly well, because the true positive rate and the false positive rate decreases sharply as we increase the threshold. Those two lines each represent a dimension of the ROC curve.
-
 
 ```{r}
 library(plotly.core)
@@ -53,19 +53,15 @@ auc <- function(roc) {
 
 z <- roc_df(data$y, y_score)
 
-colors <- c("0" = "blue", "1" = "red")
-fig1 <- go_figure()
-for (lvl in levels(data$y)) {
-  fig1 <- fig1 |>
-    add_histogram(
-      x = y_score[data$y == lvl],
-      name = lvl,
-      opacity = 0.5,
-      nbinsx = 50,
-      marker = go_histogram_marker(color = colors[[lvl]])
-    )
-}
-fig1 <- fig1 |>
+fig1 <- data.frame(score = y_score, y = data$y) |>
+  go_figure() |>
+  update_layout(colorway = c("blue", "red")) |>
+  add_histogram(
+    x = ~score,
+    opacity = 0.5,
+    nbinsx = 50,
+    marker = go_histogram_marker(color = ~y)
+  ) |>
   update_layout(barmode = "overlay")
 fig1
 
@@ -207,9 +203,7 @@ fig <- fig |>
 fig
 ```
 
-
 ## References
-
 
 Learn more about histograms, filled area plots and line charts:
 

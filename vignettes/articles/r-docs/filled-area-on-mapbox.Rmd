@@ -4,6 +4,7 @@ description: "How to make an area on Map in R with plotly."
 display_as: maps
 order: 8
 source: 2019-09-20-filled-area-on-mapbox.Rmd
+thumbnail_figure: 2
 ---
 
 ```{r, echo = FALSE, message=FALSE}
@@ -31,7 +32,7 @@ The following example uses the `scattermap` trace and sets `fill = "toself"`
 ```{r}
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattermap(
     fill = "toself",
     lon = c(-74, -70, -70, -74),
@@ -46,8 +47,6 @@ fig <- go_figure() |>
     ),
     showlegend = FALSE
   )
-
-fig
 ```
 
 ### Provide Gaps on Map
@@ -57,7 +56,7 @@ The following example shows how to use missing values in your data to provide ga
 ```{r}
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattermap(
     mode = "lines",
     fill = "toself",
@@ -72,10 +71,7 @@ fig <- go_figure() |>
     ),
     showlegend = FALSE
   )
-
-fig
 ```
-
 
 ### Use the Corresponding Geojson
 
@@ -114,7 +110,7 @@ geojson <- list(
   ))
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattermap(
     mode = "markers",
     lon = c(-73.605),
@@ -136,8 +132,6 @@ fig <- go_figure() |>
       )
     )
   )
-
-fig
 ```
 
 #Reference

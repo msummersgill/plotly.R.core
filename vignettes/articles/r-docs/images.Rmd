@@ -4,6 +4,7 @@ description: "How to add images to charts as background images or logos in R"
 display_as: file_settings
 order: 17
 source: 2021-08-06-images.Rmd
+thumbnail_figure: 5
 ---
 
 ```{r, echo = FALSE, message=FALSE}
@@ -84,7 +85,7 @@ df = data.frame(x,y,stringsAsFactors = FALSE)
 
 m = go_margin(r = 20, l = 300, b = 75, t = 125)
 
-fig <- df |>
+df |>
   go_figure() |>
   add_bar(
     x = ~x,
@@ -116,7 +117,6 @@ fig <- df |>
     xaxis = go_xaxis(title = "", zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff"),
     yaxis = go_yaxis(title = "", zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff")
   )
-fig
 ```
 
 ### Zoom on Static Images
@@ -202,7 +202,7 @@ In order to enable shape drawing, you need to
 
 The style of new shapes is specified by the `newshape` layout attribute (`go_newshape()`). Shapes can be selected and modified after they have been drawn. More details and examples are given in the [tutorial on shapes](shapes.html#drawing-shapes-on-cartesian-plots).
 
-Drawing or modifying a shape triggers a `relayout` event, which [can be captured by a callback inside a Dash application](https://dashr.plotly.com/interactive-graphing).
+Drawing or modifying a shape triggers a `relayout` event, which a Shiny app can capture with `event_data("plotly_relayout")`.
 
 ```{r}
 library(plotly.core)
@@ -274,7 +274,6 @@ fig <- fig |>
  
 fig
 ```
-
 
 ### Images Placed Relative to Axes
 

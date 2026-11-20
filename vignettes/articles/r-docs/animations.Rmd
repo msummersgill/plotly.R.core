@@ -101,20 +101,17 @@ continent_trace <- function(d) {
   )
 }
 
-fig <- go_figure()
-for (cont in continents) {
-  d <- df[df$continent == cont & df$year == years[1], ]
-  fig <- fig |>
-    add_scatter(
-      x = d$gdpPercap,
-      y = d$lifeExp,
-      text = d$country,
-      hoverinfo = "text",
-      mode = "markers",
-      name = cont,
-      marker = go_scatter_marker(size = d$pop, sizemode = "area", sizeref = sizeref)
-    )
-}
+fig <- df[df$year == years[1], ] |>
+  go_figure() |>
+  add_scatter(
+    x = ~gdpPercap,
+    y = ~lifeExp,
+    text = ~country,
+    hoverinfo = "text",
+    mode = "markers",
+    split = ~continent,
+    marker = go_scatter_marker(size = ~pop, sizemode = "area", sizeref = sizeref)
+  )
 
 fig$frames <- lapply(years, function(yr) {
   list(
@@ -234,20 +231,17 @@ fig
 ```{r}
 library(plotly.core)
 
-fig <- go_figure()
-for (cont in continents) {
-  d <- df[df$continent == cont & df$year == years[1], ]
-  fig <- fig |>
-    add_scatter(
-      x = d$gdpPercap,
-      y = d$lifeExp,
-      text = d$country,
-      hoverinfo = "text",
-      mode = "markers",
-      name = cont,
-      marker = go_scatter_marker(size = d$pop, sizemode = "area", sizeref = sizeref)
-    )
-}
+fig <- df[df$year == years[1], ] |>
+  go_figure() |>
+  add_scatter(
+    x = ~gdpPercap,
+    y = ~lifeExp,
+    text = ~country,
+    hoverinfo = "text",
+    mode = "markers",
+    split = ~continent,
+    marker = go_scatter_marker(size = ~pop, sizemode = "area", sizeref = sizeref)
+  )
 
 fig$frames <- lapply(years, function(yr) {
   list(

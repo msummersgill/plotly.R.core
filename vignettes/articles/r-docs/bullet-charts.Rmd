@@ -4,6 +4,7 @@ description: "How to create a Bullet Chart in R with Plotly"
 display_as: financial
 order: 7
 source: 2019-09-26-bullet-charts.Rmd
+thumbnail_figure: 4
 ---
 
 ```{r, echo = FALSE, message=FALSE}
@@ -19,7 +20,7 @@ options(plotly.core.plotlyjs = "cdn")
 ```{r}
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_indicator(
     mode = "number+gauge+delta",
     gauge = go_indicator_gauge(shape = "bullet"),
@@ -29,8 +30,6 @@ fig <- go_figure() |>
     title = go_indicator_title(text = "Profit")
   ) |>
   update_layout(height = 150)
-
-fig
 ```
 
 ### Add Steps, and Threshold
@@ -40,7 +39,7 @@ Below is the same example using "steps" attribute, which is shown as shading, an
 ```{r}
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_indicator(
     mode = "number+gauge+delta",
     value = 220,
@@ -62,8 +61,6 @@ fig <- go_figure() |>
     )
   ) |>
   update_layout(height = 150, width = 600, margin = go_margin(l = 100, r = 10))
-
-fig
 ```
 
 ### Custom Bullet Chart
@@ -73,7 +70,7 @@ The following example shows how to customize your charts. For more information a
 ```{r}
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_indicator(
     mode = "number+gauge+delta",
     value = 220,
@@ -97,8 +94,6 @@ fig <- go_figure() |>
     )
   ) |>
   update_layout(height = 150)
-
-fig
 ```
 ### Multi Bullet
 
@@ -124,7 +119,7 @@ bullet_gauge <- function(range_max, threshold, steps) {
   )
 }
 
-fig <- go_figure() |>
+go_figure() |>
   add_indicator(
     mode = "number+gauge+delta",
     value = 180,
@@ -149,8 +144,6 @@ fig <- go_figure() |>
     title = go_indicator_title(text = "Satisfaction"),
     gauge = bullet_gauge(300, 210, c(100, 250))
   )
-
-fig
 ```
 
 ### Reference

@@ -4,6 +4,7 @@ description: "How to make scatter-plot matrices or \"sploms\" natively with Plot
 display_as: statistical
 order: 7
 source: 2018-05-23-splom.Rmd
+thumbnail_figure: 1
 ---
 
 ```{r, echo = FALSE, message=FALSE}
@@ -196,7 +197,7 @@ yaxis_style <- go_yaxis(
   title = go_yaxis_title(font = go_font(size = 13))
 )
 
-fig <- df |>
+df |>
   go_figure() |>
   add_splom(
     dimensions = list(
@@ -243,8 +244,6 @@ fig <- df |>
     yaxis7 = yaxis_style,
     yaxis8 = yaxis_style
   )
-
-fig
 ```
 
 ### Reference

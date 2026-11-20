@@ -4,6 +4,7 @@ description: "How to create a Gauge Chart in R with Plotly"
 display_as: financial
 order: 6
 source: 2019-09-26-gauge-charts.Rmd
+thumbnail_figure: 2
 ---
 
 ```{r, echo = FALSE, message=FALSE}
@@ -22,7 +23,7 @@ options(plotly.core.plotlyjs = "cdn")
 ```{r}
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_indicator(
     domain = go_domain(x = c(0, 1), y = c(0, 1)),
     value = 270,
@@ -30,8 +31,6 @@ fig <- go_figure() |>
     mode = "gauge+number"
   ) |>
   update_layout(margin = go_margin(l = 20, r = 30))
-
-fig
 ```
 ### Add Steps, Threshold, and Delta
 
@@ -41,7 +40,7 @@ The following examples include "steps" attribute shown as shading inside the rad
 ```{r}
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_indicator(
     domain = go_domain(x = c(0, 1), y = c(0, 1)),
     value = 450,
@@ -62,8 +61,6 @@ fig <- go_figure() |>
     )
   ) |>
   update_layout(margin = go_margin(l = 20, r = 30))
-
-fig
 ```
 
 ### Custom Gauge Chart
@@ -72,7 +69,7 @@ The following example shows how to style your gauge charts. For more information
 ```{r}
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_indicator(
     mode = "gauge+number+delta",
     value = 420,
@@ -107,8 +104,6 @@ fig <- go_figure() |>
     paper_bgcolor = "lavender",
     font = go_font(color = "darkblue", family = "Arial")
   )
-
-fig
 ```
 
 #Reference

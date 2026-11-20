@@ -36,12 +36,14 @@ CATEGORIES <- c(
 )
 
 front_matter <- function(path) {
-  rmarkdown::yaml_front_matter(path)[c("title", "display_as", "order")] |>
-    lapply(function(x) x %||% NA)
+  fm <- rmarkdown::yaml_front_matter(path)
+  fields <- c("title", "display_as", "order", "thumbnail_figure")
+  stats::setNames(lapply(fields, function(f) fm[[f]] %||% NA), fields)
 }
 
-# The first go_figure a page's code chunks create (NULL if none).
-first_figure <- function(path) {
+# The figures a page draws (the go_figure values its chunks print), up to
+# the `n`th.
+page_figures <- function(path, n = Inf) {
   code <- knitr::purl(
     path,
     output = tempfile(),
@@ -52,16 +54,28 @@ first_figure <- function(path) {
   env <- new.env(parent = globalenv())
   old <- setwd(dirname(path))
   on.exit(setwd(old))
+  figs <- list()
   for (e in exprs) {
     val <- tryCatch(
       withVisible(suppressWarnings(suppressMessages(eval(e, env)))),
       error = function(err) NULL
     )
     if (!is.null(val) && val$visible && inherits(val$value, "go_figure")) {
-      return(val$value)
+      figs[[length(figs) + 1L]] <- val$value
+      if (length(figs) >= n) {
+        break
+      }
     }
   }
-  NULL
+  figs
+}
+
+# The page's thumbnail figure: the `thumbnail_figure`th it draws (front
+# matter; set to match the plotly.com thumbnail), or its first.
+thumbnail_figure <- function(path, n) {
+  n <- if (is.na(n)) 1L else as.integer(n)
+  figs <- page_figures(path, n)
+  if (length(figs)) figs[[length(figs)]]
 }
 
 pages <- setdiff(list.files(dir, "[.]Rmd$"), "index.Rmd")
@@ -78,6 +92,7 @@ info <- do.call(
         "other"
       },
       order = suppressWarnings(as.numeric(fm$order)),
+      thumbnail_figure = suppressWarnings(as.integer(fm$thumbnail_figure)),
       stringsAsFactors = FALSE
     )
   })
@@ -86,7 +101,10 @@ info <- do.call(
 # Thumbnails
 info$thumb <- file.exists(thumb_file(info$slug))
 for (i in which(redo_thumbnails | !info$thumb)) {
-  fig <- first_figure(file.path(dir, paste0(info$slug[[i]], ".Rmd")))
+  fig <- thumbnail_figure(
+    file.path(dir, paste0(info$slug[[i]], ".Rmd")),
+    info$thumbnail_figure[[i]]
+  )
   if (is.null(fig)) {
     next
   }
@@ -117,7 +135,7 @@ card <- function(row) {
   img <- if (row$thumb) {
     sprintf('<img src="thumb-%s.png" alt="" loading="lazy">', row$slug)
   } else {
-    '<div class="r-docs-nothumb"></div>'
+    '<span class="r-docs-nothumb"></span>'
   }
   sprintf(
     '<a class="r-docs-card" href="%s.html">%s<span>%s</span></a>',
@@ -136,9 +154,11 @@ sections <- unlist(lapply(names(CATEGORIES), function(cat) {
   c(
     paste("##", CATEGORIES[[cat]]),
     "",
+    "```{=html}",
     '<div class="r-docs-grid">',
     vapply(split(rows, seq_len(nrow(rows))), card, ""),
     "</div>",
+    "```",
     ""
   )
 }))

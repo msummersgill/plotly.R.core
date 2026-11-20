@@ -4,6 +4,7 @@ description: "How to configure and style base maps for Choropleths and Bubble Ma
 display_as: maps
 order: 12
 source: 2021-08-21-map-configuration.Rmd
+thumbnail_figure: 2
 ---
 
 ```{r, echo = FALSE, message=FALSE}
@@ -11,7 +12,6 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 # plotly.js from the CDN, so the site's pages don't each copy it
 options(plotly.core.plotlyjs = "cdn")
 ```
-
 
 ### Mapbox Maps vs Geo Maps
 
@@ -31,10 +31,9 @@ Plotly Geo maps have a built-in base map layer composed of "physical" and "cultu
 ```{r}
 library(plotly.core)
 g <- go_geo(showland = TRUE, landcolor = "#e5ecf6")
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 Here is a map with all physical features enabled and styled, at a larger-scale 1:50m resolution:
@@ -55,10 +54,9 @@ g <- go_geo(
   resolution = 50
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 ### Disabling Base Maps
@@ -78,10 +76,9 @@ g <- go_geo(
   resolution = 50
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 ### Cultural Base Maps
@@ -109,10 +106,9 @@ g <- go_geo(
   landcolor = "#e5ecf6"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 ### Map Projections
@@ -132,10 +128,9 @@ g <- go_geo(
   landcolor = "#e5ecf6"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 ```{r}
@@ -149,10 +144,9 @@ g <- go_geo(
   landcolor = "#e5ecf6"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 Map projections can be rotated using the `rotation` of `go_geo_projection()`, and maps can be translated using the `center` of `go_geo()`, as well as truncated to a certain longitude and latitude range using the `range` of `go_geo_lataxis()` and `go_geo_lonaxis()`.
@@ -173,10 +167,9 @@ g <- go_geo(
   landcolor = "#e5ecf6"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 ### Automatic Zooming or Bounds Fitting
@@ -192,14 +185,13 @@ g <- go_geo(
   landcolor = "#e5ecf6"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(
     mode = "lines",
     lat = c(0, 15, 20, 35),
     lon = c(5, 10, 25, 30)
   ) |>
   update_layout(geo = g)
-fig
 ```
 
 ### Named Map Scopes and Country Sub-Units
@@ -223,10 +215,9 @@ g <- go_geo(
   landcolor = "#e5ecf6"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 The `"usa"` scope contains state boundaries at both resolutions, and uses the special `'albers usa'` projection which moves Alaska and Hawaii closer to the "lower 48 states" to reduce projection distortion and produce a more compact map.
@@ -246,10 +237,9 @@ g <- go_geo(
   landcolor = "#e5ecf6"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 ### Graticules (Latitude and Longitude Grid Lines)
@@ -266,10 +256,9 @@ g <- go_geo(
   landcolor = "#e5ecf6"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattergeo(mode = "markers") |>
   update_layout(geo = g)
-fig
 ```
 
 ### Reference

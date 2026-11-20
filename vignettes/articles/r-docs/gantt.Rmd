@@ -4,6 +4,7 @@ description: "How to make a gantt charts in R with Plotly"
 display_as: basic
 order: 9
 source: 2016-11-28-gantt.Rmd
+thumbnail_figure: 1
 ---
 
 ```{r, echo = FALSE, message=FALSE}

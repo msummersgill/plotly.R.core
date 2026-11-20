@@ -11,6 +11,7 @@
 # Arguments of generated functions that are not object properties.
 FIGURE_RESERVED_ARGS <- c(
   "fig",
+  "split",
   "arg",
   "skip_invalid",
   "row",
@@ -71,6 +72,7 @@ add_trace_source <- function(trace, validators) {
     "fig",
     "...",
     "data = NULL",
+    "split = NULL",
     paste0(props, " = NULL"),
     extra,
     "skip_invalid = FALSE"
@@ -87,17 +89,18 @@ add_trace_source <- function(trace, validators) {
     sprintf("%s.default <- function(", fn),
     wrap_args(args),
     ") {",
-    "  # formula properties (x = ~col) are evaluated in `data` or the figure's data",
-    "  data <- trace_data(fig, data)",
+    "  # formulas (x = ~col) are evaluated in `data` or the figure's data, one",
+    "  # trace per group of `split` and of discrete colour columns",
+    "  add_trace_with_data(",
     sprintf(
-      '  trace <- plotly_object("%s", NULL, environment(), list(...), skip_invalid, data = data)',
+      '    fig, "%s", environment(), list(...), data, split, skip_invalid,',
       trace
     ),
-    "  # traces of a crosstalk SharedData's rows are linked to its group",
     sprintf(
-      "  link_shared_traces(add_trace(fig, trace, row = row, col = col%s), data, length(fig$data))",
+      "    row = row, col = col%s",
       if (has_xy) ", secondary_y = secondary_y" else ""
     ),
+    "  )",
     "}",
     ""
   )
@@ -292,6 +295,11 @@ layout_array_source <- function(array_key, ctx) {
       "Nested objects are named lists, e.g. \\code{font = list(size = 14)}, or objects of the constructors their arguments name."
     )),
     "#'",
+    roxygen_lines(sprintf(
+      "Properties that take a single value may be given vectors to add several %s at once, one per element; the other properties are recycled.",
+      prop
+    )),
+    "#'",
     "#' @param arg Optional named list of properties to start from. Named",
     "#'   arguments take precedence.",
     # nested objects are documented on the element's constructor page
@@ -325,14 +333,13 @@ layout_array_source <- function(array_key, ctx) {
     sprintf("add_%s <- function(", sing),
     wrap_args(args),
     ") {",
+    "  # properties that take one value may be vectors: one object per element",
     sprintf(
-      '  obj <- plotly_object("%s", arg, environment(), list(...), skip_invalid)',
-      element_key
-    ),
-    sprintf(
-      '  add_layout_array_item(fig, "%s", obj, row, col, secondary_y, exclude_empty_subplots)',
+      '  add_layout_items(fig, "%s", "%s", arg, environment(), list(...), skip_invalid,',
+      element_key,
       prop
     ),
+    "    row, col, secondary_y, exclude_empty_subplots)",
     "}",
     "",
     sprintf("#' Select, update or modify %s", prop),
@@ -428,6 +435,7 @@ write_figure <- function(ctx, outdir = ".") {
       schema_version(outdir)
     ),
     "",
+    update_layout_source(validators),
     unlist(lapply(traces, add_trace_source, validators = validators)),
     unlist(lapply(subplots, subplot_source, ctx = ctx)),
     unlist(lapply(arrays, layout_array_source, ctx = ctx))
@@ -439,4 +447,68 @@ write_figure <- function(ctx, outdir = ".") {
     paste(subplots, collapse = ", "),
     paste(sub("layout.", "", arrays, fixed = TRUE), collapse = ", ")
   ))
+}
+
+# update_layout(), with every layout property as an argument (documented
+# with go_layout()'s).
+update_layout_source <- function(validators) {
+  props <- validators[["layout"]]$children
+  bad <- intersect(props, c("fig", "patch", "overwrite"))
+  if (length(bad)) {
+    stop(
+      "Layout properties clash with update_layout() arguments: ",
+      paste(bad, collapse = ", ")
+    )
+  }
+  c(
+    "#' Update a figure's layout",
+    "#'",
+    "#' Updates layout properties, merging nested objects (e.g. \\code{xaxis}) with",
+    "#' any existing values unless \\code{overwrite = TRUE}. Properties can be given",
+    "#' in \\code{patch}, as arguments, or both; arguments are applied last.",
+    "#' Nested properties are given as objects (\\code{xaxis = go_xaxis(title = \"x\")})",
+    "#' or named lists, which are merged into the existing objects. \\code{NULL}",
+    "#' removes a property. Numbered subplot properties (\\code{xaxis2},",
+    "#' \\code{scene3}, ...) are given in \\code{...}.",
+    "#'",
+    "#' @param fig A \\code{go_figure} object.",
+    "#' @param patch A named list or \\code{\\link{go_layout}()} object of updates.",
+    "#' @param ... Numbered subplot properties (\\code{xaxis2 = go_xaxis(...)}).",
+    "#' @param overwrite If \\code{TRUE}, replace nested objects instead of merging.",
+    "#' @inheritParams go_layout",
+    "#' @return The modified figure.",
+    "#' @seealso \\code{\\link{go_layout}()}, \\code{\\link{update_xaxes}()} and the other",
+    "#'   \\code{update_*()} functions.",
+    "#' @export",
+    "#' @examples",
+    "#' go_figure() |>",
+    "#'   update_layout(title = \"Title\", xaxis = go_xaxis(range = c(0, 10))) |>",
+    "#'   update_layout(xaxis = go_xaxis(title = \"x\"), yaxis = go_yaxis(type = \"log\"))",
+    "update_layout <- function(",
+    wrap_args(c(
+      "fig",
+      "patch = NULL",
+      "...",
+      paste0(props, " = NULL"),
+      "overwrite = FALSE"
+    )),
+    ") {",
+    "  check_figure(fig)",
+    "  # the properties given, NULL included (NULL removes a property)",
+    sprintf("  args <- given_args(environment(), %s)", "LAYOUT_PROPERTIES"),
+    "  layout <- update_object(",
+    "    fig$layout,",
+    '    "layout",',
+    "    combine_patch(patch, c(args, list(...)), fig),",
+    "    overwrite",
+    "  )",
+    "  modify_figure(fig, layout = layout)",
+    "}",
+    "",
+    sprintf(
+      "LAYOUT_PROPERTIES <- c(%s)",
+      paste0('"', props, '"', collapse = ", ")
+    ),
+    ""
+  )
 }

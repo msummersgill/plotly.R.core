@@ -64,3 +64,53 @@ write_colors <- function(outdir = ".") {
     paste(sprintf("%d %s", lengths(cols[types]), types), collapse = ", ")
   ))
 }
+
+# plotly.js's built-in named colorscales (Blues, Reds, Viridis, ...), read
+# from the bundled plotly.js: a named colorscale plotly.js knows expands to
+# plotly.js's definition, so it looks as it does in plotly.js and the
+# plotly package.
+PLOTLYJS_COLORSCALES <- c(
+  "Greys",
+  "YlGnBu",
+  "Greens",
+  "YlOrRd",
+  "Bluered",
+  "RdBu",
+  "Reds",
+  "Blues",
+  "Picnic",
+  "Rainbow",
+  "Portland",
+  "Jet",
+  "Hot",
+  "Blackbody",
+  "Earth",
+  "Electric",
+  "Viridis",
+  "Cividis"
+)
+
+read_plotlyjs_colorscales <- function(path) {
+  js <- paste(readLines(path, warn = FALSE), collapse = "\n")
+  out <- lapply(PLOTLYJS_COLORSCALES, function(name) {
+    m <- regmatches(
+      js,
+      regexpr(
+        paste0("\\b", name, ":\\[\\[[^;]*?\\]\\](?=[,}])"),
+        js,
+        perl = TRUE
+      )
+    )
+    if (!length(m)) {
+      stop("plotly.js colorscale not found: ", name)
+    }
+    json <- sub(paste0("^", name, ":"), "", m)
+    json <- gsub("([\\[,])\\.", "\\10.", json) # .2 -> 0.2
+    stops <- jsonlite::fromJSON(json, simplifyVector = FALSE)
+    stats::setNames(
+      vapply(stops, function(s) as.character(s[[2L]]), ""),
+      vapply(stops, function(s) as.numeric(s[[1L]]), 0)
+    )
+  })
+  stats::setNames(out, PLOTLYJS_COLORSCALES)
+}

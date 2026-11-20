@@ -42,8 +42,6 @@ library("RColorBrewer")
 brewer.pal(n = 8, name = "YlGn")
 ```
 
-
-
 ### Built-In Sequential Color scales
 
 A collection of predefined sequential colorscales is provided in the 'RColorBrewer' package. Sequential color scales are appropriate for most continuous data, but in some cases it can be helpful to use a diverging or cyclical color scale (see below).

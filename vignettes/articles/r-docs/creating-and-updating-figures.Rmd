@@ -4,6 +4,7 @@ description: "Creating and Updating Figures with Plotly's R graphing library"
 display_as: file_settings
 order: 2
 source: 2021-08-13-creating-and-updating-figures.Rmd
+thumbnail_figure: 6
 ---
 
 ```{r, echo = FALSE, message=FALSE}
@@ -11,7 +12,6 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 # plotly.js from the CDN, so the site's pages don't each copy it
 options(plotly.core.plotlyjs = "cdn")
 ```
-
 
 The plotly.core R package exists to create, manipulate and [render](https://plotly.com/r/getting-started/#rendering-charts) graphical figures (i.e. charts, plots, maps and diagrams) represented by data structures also referred to as figures. The rendering process uses the [Plotly.js JavaScript library](https://plotly.com/javascript/) under the hood although R developers using this package very rarely need to interact with the Javascript library directly, if ever. Figures can be represented in R either as lists or as `go_figure()` objects, and are serialized as text in [JavaScript Object Notation (JSON)](https://json.org/) before being passed to Plotly.js.
 
@@ -57,7 +57,7 @@ Below you can find an example of one way that the figure in the example above co
 ```{r}
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_bar(x = c(1, 2, 3), y = c(1, 3, 2)) |>
   update_layout(
     title = "A Plotly Figure",
@@ -65,7 +65,6 @@ fig <- go_figure() |>
     xaxis = go_xaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff"),
     yaxis = go_yaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff")
   )
-fig
 ```
 
 ### Converting Figures To Lists and JSON
@@ -83,51 +82,6 @@ str(unclass(fig), max.level = 2)
 cat("JSON Representation of a figure:", jfig, sep = "\n\n")
 ```
 
-### Representing Figures in Dash
-
-[Dash for R](https://dashr.plotly.com/) is an open-source framework for building analytical applications, with no Javascript required, and it is tightly integrated with the Plotly graphing library. 
- 
-Learn about how to install Dash for R at https://dashr.plot.ly/installation. 
- 
-Everywhere in this page that you see fig, you can display the same figure in a Dash for R application by passing it to the figure argument.
-
-```{r eval=FALSE}
-library(dash)
-library(dashCoreComponents)
-library(dashHtmlComponents)
-library(plotly.core)
-
-fig <- go_figure() |>
-  add_scatter(x = c("a", "b", "c"), y = c(1, 3, 2), mode = "lines") |>
-  update_layout(title = "sample figure")
-
-app <- Dash$new()
-
-app$layout(
-  htmlDiv(
-    list(
-      dccGraph(id = 'graph', figure=fig),
-      htmlPre(
-        id='structure',
-        style = list(border = 'thin lightgrey solid',
-                     overflowY = 'scroll',
-                     height = '275px')
-      )
-    )
-  )
-)
-app$callback(
-  output(id = 'structure', property='children'),
-  params=list(input(id='graph', property='figure')),
-  function(fig_json) {
-    jfig <- plotly_json(fig, jsonedit = FALSE)
-    return(jfig)
-  })
-#app$run_server()
-```
-
-Use `app$run_server()` to run the dash app.
-
 ### Creating Figures
 
 This section summarizes several ways to create new figures with the plotly.core graphing library.
@@ -138,18 +92,14 @@ This section summarizes several ways to create new figures with the plotly.core 
 library(plotly.core)
 data(iris)
 
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_scatter(
-      data = iris[iris$Species == sp, ],
-      x = ~Sepal.Width,
-      y = ~Sepal.Length,
-      mode = "markers",
-      name = sp
-    )
-}
-fig <- fig |>
+iris |>
+  go_figure() |>
+  add_scatter(
+    x = ~Sepal.Width,
+    y = ~Sepal.Length,
+    mode = "markers",
+    split = ~Species
+  ) |>
   update_layout(
     title = "A Plotly Figure",
     legend = go_legend(title = go_legend_title(text = "species")),
@@ -157,7 +107,6 @@ fig <- fig |>
     xaxis = go_xaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff"),
     yaxis = go_yaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff")
   )
-fig
 ```
 
 #### Make Subplots
@@ -167,13 +116,12 @@ The `make_subplots()` function produces a figure that is preconfigured with a gr
 ```{r}
 library(plotly.core)
 
-fig <- make_subplots(rows = 1, cols = 2) |>
+make_subplots(rows = 1, cols = 2) |>
   add_scatter(y = c(4, 2, 1), mode = "lines", row = 1, col = 1) |>
   add_bar(y = c(2, 1, 3), row = 1, col = 2) |>
   update_xaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
   update_yaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
   update_layout(plot_bgcolor = "#e5ecf6")
-fig
 ```
 
 ### Updating Figures
@@ -187,30 +135,25 @@ New traces can be added to a figure using `add_trace()` (with a graph object suc
 ```{r}
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_trace(go_bar(x = c(1, 2, 3), y = c(1, 3, 2))) |>
   update_xaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
   update_yaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
   update_layout(plot_bgcolor = "#e5ecf6")
-fig
 ```
 
 ```{r}
 library(plotly.core)
 data(iris)
 
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_scatter(
-      data = iris[iris$Species == sp, ],
-      x = ~Sepal.Width,
-      y = ~Sepal.Length,
-      mode = "markers",
-      name = sp
-    )
-}
-fig <- fig |>
+iris |>
+  go_figure() |>
+  add_scatter(
+    x = ~Sepal.Width,
+    y = ~Sepal.Length,
+    mode = "markers",
+    split = ~Species
+  ) |>
   update_layout(
     title = "Using The add_trace() method With A Plotly Figure",
     legend = go_legend(title = go_legend_title(text = "species")),
@@ -227,7 +170,6 @@ fig <- fig |>
       showlegend = FALSE
     )
   )
-fig
 ```
 
 #### Updating Figure Layouts
@@ -239,7 +181,7 @@ Here is an example of updating the font size of a figure's title using `update_l
 ```{r}
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_bar(x = c(1, 2, 3), y = c(1, 3, 2)) |>
   update_layout(
     title = go_layout_title(
@@ -250,9 +192,7 @@ fig <- go_figure() |>
     xaxis = go_xaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff"),
     yaxis = go_yaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff")
   )
-fig
 ```
-
 
 #### Updating Traces
 
@@ -263,7 +203,7 @@ To show some examples, we will start with a figure that contains `bar` and `scat
 ```{r}
 library(plotly.core)
 
-fig <- make_subplots(rows = 1, cols = 2) |>
+make_subplots(rows = 1, cols = 2) |>
   add_bar(
     x = c(0, 1, 2),
     y = c(2, 1, 3),
@@ -301,7 +241,6 @@ fig <- make_subplots(rows = 1, cols = 2) |>
   update_xaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
   update_yaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
   update_layout(plot_bgcolor = "#e5ecf6")
-fig
 ```
 
 Note that both `scatter` and `bar` traces have a `marker.color` property to control their coloring. Here is an example of using `update_traces()` to modify the color of all traces.
@@ -309,7 +248,7 @@ Note that both `scatter` and `bar` traces have a `marker.color` property to cont
 ```{r}
 library(plotly.core)
 
-fig <- make_subplots(rows = 1, cols = 2) |>
+make_subplots(rows = 1, cols = 2) |>
   add_bar(
     x = c(0, 1, 2),
     y = c(2, 1, 3),
@@ -348,7 +287,6 @@ fig <- make_subplots(rows = 1, cols = 2) |>
   update_yaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
   update_layout(plot_bgcolor = "#e5ecf6") |>
   update_traces(marker = go_bar_marker(color = "blue"))
-fig
 ```
 
 The `update_traces()` function supports a `selector` argument to control which traces should be updated. Only traces that match the selector (a trace type, trace indices, a named list of property values, or a function) will be updated. `row` and `col` restrict the update to the traces of one subplot. Here is an example of using a selector to only update the color of the `bar` traces.
@@ -356,7 +294,7 @@ The `update_traces()` function supports a `selector` argument to control which t
 ```{r}
 library(plotly.core)
 
-fig <- make_subplots(rows = 1, cols = 2) |>
+make_subplots(rows = 1, cols = 2) |>
   add_bar(
     x = c(0, 1, 2),
     y = c(2, 1, 3),
@@ -395,8 +333,6 @@ fig <- make_subplots(rows = 1, cols = 2) |>
   update_yaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
   update_layout(plot_bgcolor = "#e5ecf6") |>
   update_traces(marker = go_bar_marker(color = "blue"), selector = "bar")
-fig
-
 ```
 
 ### Overwrite Existing Properties When Using Update Methods
@@ -482,7 +418,7 @@ library(plotly.core)
 
 t <- go_font(size = 15)
 
-fig <- go_figure() |>
+go_figure() |>
   add_bar(x = c(0, 1, 2), y = c(2, 1, 3), name = "b", marker = go_bar_marker(color = "red")) |>
   add_scatter(
     x = c(0, 1, 2),
@@ -512,7 +448,6 @@ fig <- go_figure() |>
   update_xaxes(showgrid = FALSE, zerolinecolor = "#ffff", zerolinewidth = 2) |>
   update_yaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff")
 # displaying the figure
-fig 
 ```
 
 #### Property Assignment

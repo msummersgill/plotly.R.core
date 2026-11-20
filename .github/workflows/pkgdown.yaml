@@ -23,6 +23,9 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          # history, to compare with the commit the deployed site was built from
+          fetch-depth: 0
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -41,15 +44,51 @@ jobs:
       - name: Drop CLAUDE.md
         run: rm -f CLAUDE.md
 
+      # The R docs examples take most of the build: reuse the deployed pages
+      # whose sources haven't changed since the deployed site's commit (named
+      # in the gh-pages commit message). Anything the pages depend on
+      # changing (the package, the site config) rebuilds them all.
+      - name: Reuse unchanged example pages
+        if: github.event_name != 'pull_request'
+        run: |
+          git fetch --depth=1 origin gh-pages || exit 0
+          sha=$(git log -1 --format=%B FETCH_HEAD | grep -oE '[0-9a-f]{40}' | head -n 1)
+          if [ -z "$sha" ] || ! git cat-file -e "$sha^{commit}" 2>/dev/null; then
+            echo "Deployed site's commit not found: building every page"
+            exit 0
+          fi
+          changed=$(git diff --name-only "$sha" HEAD)
+          if echo "$changed" | grep -qE '^(R|src|inst|codegen|pkgdown)/|^(DESCRIPTION|NAMESPACE|_pkgdown\.yml)$|^vignettes/articles/r-docs/data/'; then
+            echo "Package or site configuration changed since $sha: building every page"
+            exit 0
+          fi
+          mkdir -p docs
+          git archive FETCH_HEAD articles/r-docs | tar -x -C docs
+          # pkgdown's lazy build re-renders a page when its source is newer
+          # than its output: unchanged sources predate the restored pages,
+          # changed ones are newer
+          find vignettes/articles/r-docs -type f -exec touch -d '2001-01-01' {} +
+          find docs/articles/r-docs -type f -exec touch -d '2001-01-02' {} +
+          echo "$changed" | grep '^vignettes/articles/r-docs/' | while read -r f; do
+            [ -f "$f" ] && touch "$f"
+          done
+          echo "LAZY_ARTICLES=true" >> "$GITHUB_ENV"
+          echo "Reusing pages from $sha; changed since:"
+          echo "$changed" | grep '^vignettes/articles/r-docs/' || true
+
       # Loud, so a failing article shows its error; retried once, as articles
       # that fetch data or drive headless Chrome can fail transiently
       - name: Build site
         run: |
           build <- function() {
+            lazy <- identical(Sys.getenv("LAZY_ARTICLES"), "true")
             pkgdown::build_site_github_pages(
               new_process = FALSE,
               install = FALSE,
-              quiet = FALSE
+              quiet = FALSE,
+              # keep the restored example pages
+              clean = !lazy,
+              lazy = lazy
             )
           }
           ok <- tryCatch(

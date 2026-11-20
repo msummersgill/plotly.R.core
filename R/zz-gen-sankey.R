@@ -119,6 +119,12 @@
 #'   are turned on for all points, whereas, any other non-array values
 #'   means no selection all where the `selected` and `unselected` styles
 #'   have no effect. Any value.
+#' @param split A column (\code{~col}) or vector, one value per row of the
+#'   data: one trace is added per value, named after it. Colour properties
+#'   given a discrete column (a factor, character or logical, e.g.
+#'   \code{marker = go_scatter_marker(color = ~group)}) split the data the
+#'   same way, each trace getting its own colour: evenly spaced viridis
+#'   colours for an ordered factor, otherwise the figure's colorway.
 #' @param textfont Sets the font for node labels A \code{\link{go_font}()}
 #'   object or named list, with properties \code{color}, \code{family},
 #'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},

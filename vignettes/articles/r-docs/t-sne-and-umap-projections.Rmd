@@ -13,19 +13,15 @@ options(plotly.core.plotlyjs = "cdn")
 ```
 ## t-SNE and UMAP projections in R
 
-
 This page presents various ways to visualize two popular dimensionality reduction techniques, namely the [t-distributed stochastic neighbor embedding](https://lvdmaaten.github.io/tsne/) (t-SNE) and [Uniform Manifold Approximation and Projection](https://umap-learn.readthedocs.io/en/latest/index.html) (UMAP). They are needed whenever you want to visualize data with more than two or three features (i.e. dimensions).
 
 We first show how to visualize data with more than three features using the [scatter plot matrix](splom.html), then we apply dimensionality reduction techniques to get 2D/3D representation of our data, and visualize the results with [scatter plots](line-and-scatter.html) and [3D scatter plots](3d-scatter-plots.html).
-
 
 ## Basic t-SNE projections
 
 t-SNE is a popular dimensionality reduction algorithm that arises from probability theory. Simply put, it projects the high-dimensional data points (sometimes with hundreds of features) into 2D/3D by inducing the projected data to have a similar distribution as the original data points by minimizing something called the [KL divergence](https://towardsdatascience.com/light-on-math-machine-learning-intuitive-guide-to-understanding-kl-divergence-2b382ca2b2a8).
 
 Compared to a method like Principal Component Analysis (PCA), it takes significantly more time to converge, but present significantly better insights when visualized. For example, by projecting features of flowers, it will be able to distinctly group 
-
-
 
 ### Visualizing high-dimensional data with `splom`
 
@@ -37,21 +33,19 @@ data(iris)
 
 species_colors <- c(setosa = "#636EFA", versicolor = "#EF553B", virginica = "#00CC96")
 
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_splom(
-      data = iris[iris$Species == sp, ],
-      name = sp,
-      dimensions = list(
-        go_splom_dimension(label = "sepal_width", values = ~Sepal.Width),
-        go_splom_dimension(label = "sepal_length", values = ~Sepal.Length),
-        go_splom_dimension(label = "petal_width", values = ~Petal.Width),
-        go_splom_dimension(label = "petal_length", values = ~Petal.Length)
-      ),
-      marker = go_splom_marker(color = species_colors[[sp]])
-    )
-}
+# colouring by Species adds one trace per species, coloured from the colorway
+fig <- iris |>
+  go_figure() |>
+  update_layout(colorway = species_colors) |>
+  add_splom(
+    dimensions = list(
+      go_splom_dimension(label = "sepal_width", values = ~Sepal.Width),
+      go_splom_dimension(label = "sepal_length", values = ~Sepal.Length),
+      go_splom_dimension(label = "petal_width", values = ~Petal.Width),
+      go_splom_dimension(label = "petal_length", values = ~Petal.Length)
+    ),
+    marker = go_splom_marker(color = ~Species)
+  )
 
 xaxis <- go_xaxis(showline = FALSE, zeroline = FALSE, gridcolor = "#ffff", ticklen = 4)
 yaxis <- go_yaxis(showline = FALSE, zeroline = FALSE, gridcolor = "#ffff", ticklen = 4)
@@ -91,7 +85,6 @@ Plotly figures:
 * [3D scatter plots](3d-scatter-plots.html)
 
 * [Scatter plot matrix](splom.html)
-
 
 Details about algorithms:
 * UMAP library: https://umap-learn.readthedocs.io/en/latest/

@@ -12,6 +12,7 @@ add_histogram2dcontour(fig, ...)
   fig,
   ...,
   data = NULL,
+  split = NULL,
   autobinx = NULL,
   autobiny = NULL,
   autocolorscale = NULL,
@@ -149,6 +150,13 @@ evaluated. Default: the data given to \code{\link{go_figure}()}. Only
 the evaluated values are added to the trace. A
 \code{crosstalk::SharedData} works the same way, and links the trace
 to its crosstalk group (see \code{\link{highlight}()}).}
+
+\item{split}{A column (\code{~col}) or vector, one value per row of the
+data: one trace is added per value, named after it. Colour properties
+given a discrete column (a factor, character or logical, e.g.
+\code{marker = go_scatter_marker(color = ~group)}) split the data the
+same way, each trace getting its own colour: evenly spaced viridis
+colours for an ordered factor, otherwise the figure's colorway.}
 
 \item{autobinx}{Obsolete: since v1.42 each bin attribute is
 auto-determined separately and `autobinx` is not needed. However, we

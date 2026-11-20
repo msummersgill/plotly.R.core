@@ -41,13 +41,9 @@ library(plotly.core)
 
 midwest <- ggplot2::midwest
 
-fig <- go_figure()
-for (st in sort(unique(midwest$state))) {
-  fig <- fig |>
-    add_box(data = midwest[midwest$state == st, ], x = ~percollege, name = st)
-}
-
-fig
+midwest |>
+  go_figure() |>
+  add_box(x = ~percollege, split = ~state)
 ```
 
 Simply printing the figure object will render the chart locally in your web browser or in the `RStudio` viewer.

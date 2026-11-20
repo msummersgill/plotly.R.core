@@ -359,6 +359,10 @@ The modified figure.
 \code{annotations}. Nested objects are named lists, e.g. \code{font =
 list(size = 14)}, or objects of the constructors their arguments name.
 }
+\details{
+Properties that take a single value may be given vectors to add several
+annotations at once, one per element; the other properties are recycled.
+}
 \seealso{
 \code{\link{update_annotations}()}, \code{\link{go_annotation}()}
 }

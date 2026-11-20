@@ -658,10 +658,14 @@ coerce_colors <- function(x) {
       out[[i]] <- paste0("#", norm[[i]])
       next
     }
-    rgba <- tryCatch(
-      grDevices::col2rgb(u[[i]], alpha = TRUE),
-      error = function(e) NULL
-    )
+    # R colour names; not digit strings, which col2rgb() reads as palette
+    # indices ("1" is black)
+    rgba <- if (!grepl("^[0-9]+$", norm[[i]])) {
+      tryCatch(
+        grDevices::col2rgb(u[[i]], alpha = TRUE),
+        error = function(e) NULL
+      )
+    }
     if (!is.null(rgba)) {
       out[[i]] <- sprintf(
         "rgba(%d,%d,%d,%s)",
@@ -717,6 +721,12 @@ vc_colorlist <- function(v, key, entry) {
 vc_colorscale <- function(v, key, entry) {
   v <- as_char_if_factor(v)
   if (is.character(v) && length(v) == 1L) {
+    # plotly.js's own named scales keep plotly.js's definition (as in plotly.js
+    # and the plotly package); other names are plotly.py's
+    builtin <- plotlyjs_colorscale(v)
+    if (!is.null(builtin)) {
+      return(builtin)
+    }
     named <- named_colorscale(v)
     if (is.null(named)) {
       raise_invalid_val(v, key, entry)
@@ -755,6 +765,27 @@ vc_colorscale <- function(v, key, entry) {
     if (anyNA(stops) || any(stops < 0 | stops > 1) || anyNA(cols)) {
       raise_invalid_val(v, key, entry)
     }
+  }
+  unname(Map(function(s, col) list(s, col), stops, cols))
+}
+
+# A plotly.js built-in colorscale (case-insensitive; "_r" reverses) as a
+# colorscale value, or NULL.
+plotlyjs_colorscale <- function(name) {
+  key <- tolower(name)
+  reverse <- endsWith(key, "_r")
+  if (reverse) {
+    key <- substr(key, 1L, nchar(key) - 2L)
+  }
+  i <- match(key, tolower(names(.plotlyjs_colorscales)))
+  if (is.na(i)) {
+    return(NULL)
+  }
+  cols <- unname(.plotlyjs_colorscales[[i]])
+  stops <- as.numeric(names(.plotlyjs_colorscales[[i]]))
+  if (reverse) {
+    cols <- rev(cols)
+    stops <- rev(1 - stops)
   }
   unname(Map(function(s, col) list(s, col), stops, cols))
 }

@@ -4,6 +4,7 @@ description: "How to format axes of 3d plots in R with Plotly."
 display_as: file_settings
 order: 24
 source: 2017-01-04-3d-axes.Rmd
+thumbnail_figure: 2
 ---
 
 ```{r, echo = FALSE, message=FALSE}
@@ -26,11 +27,9 @@ x <- 70*(runif(70, 0, 1))
 y <- 55*(runif(70, 0, 1))
 z <- 40*(runif(70, 0, 1))
 
-fig <- go_figure() |>
+go_figure() |>
   add_mesh3d(x = x, y = y, z = z) |>
   update_layout(scene = go_scene(xaxis = axx, yaxis = axy, zaxis = axz))
-
-fig
 ```
 
 ### Fixed Ratio Axes
@@ -89,11 +88,9 @@ x <- 70*(runif(70, 0, 1))
 y <- 55*(runif(70, 0, 1))
 z <- 40*(runif(70, 0, 1))
 
-fig <- go_figure() |>
+go_figure() |>
   add_mesh3d(x = x, y = y, z = z) |>
   update_layout(scene = go_scene(xaxis = axx, yaxis = axy, zaxis = axz))
-
-fig
 ```
 
 ### Ticks Formatting
@@ -116,11 +113,9 @@ x <- 70*(runif(70, 0, 1))
 y <- 55*(runif(70, 0, 1))
 z <- 40*(runif(70, 0, 1))
 
-fig <- go_figure() |>
+go_figure() |>
   add_mesh3d(x = x, y = y, z = z) |>
   update_layout(scene = go_scene(xaxis = axx, yaxis = axy, zaxis = axz))
-
-fig
 ```
 
 ### Background and Grid Color
@@ -153,11 +148,9 @@ x <- 70*(runif(70, 0, 1))
 y <- 55*(runif(70, 0, 1))
 z <- 40*(runif(70, 0, 1))
 
-fig <- go_figure() |>
+go_figure() |>
   add_mesh3d(x = x, y = y, z = z) |>
   update_layout(scene = go_scene(xaxis = axx, yaxis = axy, zaxis = axz))
-
-fig
 ```
 
 ### Reference

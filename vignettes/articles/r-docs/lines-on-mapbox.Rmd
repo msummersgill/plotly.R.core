@@ -22,7 +22,7 @@ To draw a line on your map, you either can use `add_scattermap()` (see `go_scatt
 ```{r}
 library(plotly.core)
 
-fig <- go_figure() |>
+go_figure() |>
   add_scattermap(
     mode = "markers+lines",
     lon = c(10, 20, 30),
@@ -43,8 +43,6 @@ fig <- go_figure() |>
     ),
     margin = go_margin(l = 0, t = 0, b = 0, r = 0)
   )
-
-fig
 ```
 #Reference
 

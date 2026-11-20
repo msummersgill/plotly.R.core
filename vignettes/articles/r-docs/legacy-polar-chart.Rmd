@@ -4,6 +4,7 @@ description: "How to create a polar chart in R. Three examples of polar line, po
 display_as: legacy_charts
 order: 1
 source: 2015-07-30-polar-chart.Rmd
+thumbnail_figure: 2
 ---
 
 ```{r, echo = FALSE, message=FALSE}

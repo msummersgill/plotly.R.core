@@ -9,7 +9,8 @@ stopifnot(
 )
 
 # Serialisation: scalars unboxed, NA -> null; by default no template, only
-# plotly 4.x's margins
+# plotly 4.x's margins and viridis colorscales (per trace type only for the
+# types the figure has)
 json <- as.character(attr(w$x, "TOJSON_FUNC")(w$x))
 stopifnot(
   grepl('"type":"scatter"', json, fixed = TRUE),
@@ -19,10 +20,22 @@ stopifnot(
     fixed = TRUE
   ),
   grepl(
-    '"layout":{"template":{"layout":{"margin":{"b":40,"l":60,"t":25,"r":10}}}}',
+    '"layout":{"template":{"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"colorscale":{"sequential":[[0,"#440154"]',
     json,
     fixed = TRUE
-  )
+  ),
+  # scatter has no trace-level colorscale, so no per-trace defaults are sent
+  is.null(w$x$layout$template$data)
+)
+hm <- plotly_widget(list(
+  data = list(list(type = "heatmap", z = matrix(1:4, 2)))
+))
+stopifnot(
+  identical(
+    hm$x$layout$template$data$heatmap[[1L]]$colorscale[[1L]],
+    list(0, "#440154")
+  ),
+  identical(names(hm$x$layout$template$data), "heatmap")
 )
 old <- default_template("plotly")
 json <- as.character(attr(plotly_widget(fig)$x, "TOJSON_FUNC")(

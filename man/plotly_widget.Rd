@@ -49,9 +49,11 @@ htmltools or \code{\link[htmlwidgets:saveWidget]{htmlwidgets::saveWidget()}}.
 \details{
 If the figure's layout has no \code{template}, the default template
 (see \code{\link[=default_template]{default_template()}}) is applied. With the \code{"none"} default,
-figures get plotly 4.x's margins (\verb{l = 60, r = 10, t = 25, b = 40}
-pixels) unless their layout sets them (e.g.
-\code{update_layout(margin = go_margin(t = 50))}).
+figures get plotly 4.x's defaults unless they set these properties:
+margins of \verb{l = 60, r = 10, t = 25, b = 40} pixels (e.g.
+\code{update_layout(margin = go_margin(t = 50))} changes the top one) and
+the viridis colorscale for colour-mapped markers and for heatmaps,
+contours, surfaces and the other traces with a colorscale.
 
 Numeric arrays in traces are sent to the browser as base64-encoded typed
 arrays (\verb{\{dtype, bdata\}} objects, as plotly.py does), which are smaller

@@ -35,56 +35,6 @@ plotly_json(fig)
 fig
 ```
 
-### Accessing figure structures in Dash
-
-[Dash for R](https://dashr.plotly.com) is an open-source framework for building analytical applications, with no Javascript required, and it is tightly integrated with the Plotly graphing library.
-
-Learn about how to install Dash for R at https://dashr.plot.ly/installation.
-
-Everywhere in this page that you see fig, you can display the same figure in a Dash for R application by passing its JSON representation to the figure argument.
-
-
-```{r eval=FALSE}
-library(dash)
-library(dashCoreComponents)
-library(dashHtmlComponents)
-library(plotly.core)
-
-fig <- go_figure() |>
-  add_scatter(x = c("a", "b", "c"), y = c(1, 3, 2), mode = "lines") |>
-  update_layout(title = "sample figure")
-
-app <- Dash$new()
-
-app$layout(
-  htmlDiv(
-    list(
-      dccGraph(
-        id = "graph",
-        figure = jsonlite::fromJSON(plotly_json(fig), simplifyVector = FALSE)
-      ),
-      htmlPre(
-        id = "structure",
-        style = list(
-          border = "thin lightgrey solid",
-          overflowY = "scroll",
-          height = "275px"
-        )
-      )
-    )
-  )
-)
-app$callback(
-  output(id = "structure", property = "children"),
-  params = list(input(id = "graph", property = "figure")),
-  function(fig_json) {
-    jsonlite::toJSON(fig_json, pretty = TRUE, auto_unbox = TRUE)
-  }
-)
-```
-
-After executing this code, give app$run_server() in the console to start the dash.
-
 ### Figures as Trees of Attributes
 
 Plotly.js supports inputs adhering to a well-defined schema, whose overall architecture is explained in this page and which is exhaustively documented in the [Figure Reference](https://plotly.com/r/reference/) (which is itself generated from a [machine-readable JSON representation of the schema](https://raw.githubusercontent.com/plotly/plotly.js/master/dist/plot-schema.json)). Figures are represented as trees with named nodes called "attributes".
@@ -103,7 +53,6 @@ The first of the three top-level attributes of a figure is `data`, whose value m
 * Each trace is drawn on a single [subplot](subplots.html) whose type must be compatible with the trace's type, or is its own subplot (see below).
 * Traces may have a single [legend](legend.html) entry, with the exception of pie and funnelarea traces (see below).
 * Certain trace types support [continuous color, with an associated colorbar](https://plotly.com/r/colorscales/), which can be controlled by attributes either within the trace, or within the layout when using the coloraxis attribute (see `go_coloraxis()`).
-
 
 ### The Top-Level `layout` Attribute
 
@@ -126,7 +75,6 @@ The second of the three top-level attributes of a figure is `layout`, whose valu
 ### The Top-Level `frames` Attribute
 
 The third of the three top-level attributes of a figure is `frames`, whose value must be a list that define sequential frames in an [animated plot](animations.html). Each frame contains its own data attribute as well as other parameters. Animations are usually triggered and controlled via controls defined in layout.sliders and/or layout.updatemenus
-
 
 ### Positioning With Paper, Container Coordinates, or Axis Domain Coordinates
 
@@ -168,7 +116,6 @@ The following trace types are compatible with 2d-cartesian subplots via the `xax
 * [`ohlc`](ohlc-charts.html) and [`candlestick`](candlestick-charts.html): stock-like trace types
 * [`carpet`](carpet-plot.html): a special trace type for building [carpet plots](carpet-plot.html), in that other traces can use as subplots (see below)
 * [`splom`](splom.html): multi-dimensional scatter plots which implicitly refer to many 2-d cartesian subplots at once.
-
 
 ### 3D, Polar and Ternary Trace Types and Subplots
 
@@ -234,6 +181,4 @@ Traces of most types can be optionally associated with a single legend item in t
 The fact that legend items are linked to traces means that when using [discrete color](https://plotly.com/r/colorscales/), a figure must have one trace per color in order to get a meaningful legend. 
 
 Traces which support [continuous color](https://plotly.com/r/colorscales/) can also be associated with color axes in the layout via the `coloraxis` attribute. Multiple traces can be linked to the same color axis. Color axes have a legend-like component called color bars. Alternatively, color axes can be configured within the trace itself.
-
-
 

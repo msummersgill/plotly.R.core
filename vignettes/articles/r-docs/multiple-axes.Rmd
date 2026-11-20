@@ -4,6 +4,7 @@ description: "How to make a graph with multiple axes (dual y-axis plots, plots w
 display_as: file_settings
 order: 11
 source: 2021-08-11-multiple-axes.Rmd
+thumbnail_figure: 3
 ---
 
 ```{r, echo = FALSE, message=FALSE}
@@ -26,7 +27,7 @@ ay <- go_yaxis(
   title = "<b>secondary</b> yaxis title"
 )
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = 1:3, y = 10 * (4:6), name = "yaxis data", mode = "lines+markers") |>
   add_scatter(
     x = 2:4,
@@ -53,89 +54,7 @@ fig <- go_figure() |>
       gridcolor = "ffff"
     )
   )
-
-fig
 ```
-
-## Multiple axes in Dash
-
-[Dash for R](https://dashr.plotly.com) is an open-source framework for building analytical applications, with no Javascript required, and it is tightly integrated with the Plotly graphing library.
-
-Learn about how to install Dash for R at https://dashr.plot.ly/installation.
-
-Everywhere in this page that you see fig, you can display the same figure in a Dash for R application by passing it to the figure argument.
-
-```{r eval=FALSE}
-library(dash)
-library(dashCoreComponents)
-library(dashHtmlComponents)
-library(plotly.core)
-
-app <- Dash$new()
-
-app$layout(
-  htmlDiv(
-    list(
-      dccGraph(id = "graph"),
-      htmlLabel("Red line's axis:"),
-      dccRadioItems(
-        id = "radio",
-        options = list(
-          list(label = "Primary", value = "Primary"),
-          list(label = "Secondary", value = "Secondary")
-        ),
-        value = "Secondary"
-      )
-    )
-  )
-)
-app$callback(
-  output(id = "graph", property = "figure"),
-  params = list(input(id = "radio", property = "value")),
-  function(value) {
-    secondary <- value != "Primary"
-    fig <- go_figure() |>
-      add_scatter(x = 1:3, y = 10 * (4:6), name = "yaxis data", mode = "lines+markers") |>
-      add_scatter(
-        x = 2:4,
-        y = 4:6,
-        name = "yaxis 2 data",
-        yaxis = if (secondary) "y2" else "y",
-        mode = "lines+markers"
-      ) |>
-      update_layout(
-        title = "Double Y Axis Example",
-        plot_bgcolor = "#e5ecf6",
-        xaxis = go_xaxis(
-          title = "xaxis title",
-          zerolinecolor = "#ffff",
-          zerolinewidth = 2,
-          gridcolor = "ffff"
-        ),
-        yaxis = go_yaxis(
-          title = "<b>primary</b> yaxis title",
-          zerolinecolor = "#ffff",
-          zerolinewidth = 2,
-          gridcolor = "ffff"
-        )
-      )
-    if (secondary) {
-      fig <- fig |>
-        update_layout(
-          yaxis2 = go_yaxis(
-            overlaying = "y",
-            side = "right",
-            title = "<b>secondary</b> yaxis title"
-          )
-        )
-    }
-    fig
-  }
-)
-# app$run_server()
-```
-
-Use `app$run_server()` to run the dash file.
 
 ## Multiple Y-Axes Subplots
 
@@ -206,7 +125,7 @@ colored_axis <- function(color, title, ...) {
   )
 }
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(x = 1:3, y = 4:6, name = "yaxis1 data", mode = "lines+markers") |>
   add_scatter(x = 2:4, y = 10 * (4:6), name = "yaxis2 data", yaxis = "y2", mode = "lines+markers") |>
   add_scatter(x = 4:6, y = 1000 * (4:6), name = "yaxis3 data", yaxis = "y3", mode = "lines+markers") |>
@@ -247,8 +166,6 @@ fig <- go_figure() |>
       position = 0.85
     )
   )
-
-fig
 ```
 
 ### Reference

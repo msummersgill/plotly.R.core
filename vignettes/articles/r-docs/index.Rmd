@@ -9,11 +9,12 @@ rewritten with plotly.core's graph objects: `go_figure()`, `add_<trace>()`,
 
 ## Fundamentals
 
+```{=html}
 <div class="r-docs-grid">
 <a class="r-docs-card" href="figure-structure.html"><img src="thumb-figure-structure.png" alt="" loading="lazy"><span>The Figure Data Structure</span></a>
 <a class="r-docs-card" href="creating-and-updating-figures.html"><img src="thumb-creating-and-updating-figures.png" alt="" loading="lazy"><span>Creating and Updating Figures</span></a>
 <a class="r-docs-card" href="renderers.html"><img src="thumb-renderers.png" alt="" loading="lazy"><span>Displaying Figures</span></a>
-<a class="r-docs-card" href="static-image-export.html"><div class="r-docs-nothumb"></div><span>Exporting Graphs as Static Images</span></a>
+<a class="r-docs-card" href="static-image-export.html"><span class="r-docs-nothumb"></span><span>Exporting Graphs as Static Images</span></a>
 <a class="r-docs-card" href="configuration-options.html"><img src="thumb-configuration-options.png" alt="" loading="lazy"><span>Configuration</span></a>
 <a class="r-docs-card" href="setting-graph-size.html"><img src="thumb-setting-graph-size.png" alt="" loading="lazy"><span>Setting Graph Size</span></a>
 <a class="r-docs-card" href="tick-formatting.html"><img src="thumb-tick-formatting.png" alt="" loading="lazy"><span>Formatting Ticks</span></a>
@@ -28,7 +29,7 @@ rewritten with plotly.core's graph objects: `go_figure()`, `add_<trace>()`,
 <a class="r-docs-card" href="text-and-annotations.html"><img src="thumb-text-and-annotations.png" alt="" loading="lazy"><span>Text and Annotations</span></a>
 <a class="r-docs-card" href="hover-text-and-formatting.html"><img src="thumb-hover-text-and-formatting.png" alt="" loading="lazy"><span>Hover Text and Formatting</span></a>
 <a class="r-docs-card" href="images.html"><img src="thumb-images.png" alt="" loading="lazy"><span>Images</span></a>
-<a class="r-docs-card" href="builtin-colorscales.html"><div class="r-docs-nothumb"></div><span>Built-in Continuous Color Scales</span></a>
+<a class="r-docs-card" href="builtin-colorscales.html"><span class="r-docs-nothumb"></span><span>Built-in Continuous Color Scales</span></a>
 <a class="r-docs-card" href="discrete-color.html"><img src="thumb-discrete-color.png" alt="" loading="lazy"><span>Discrete Colors</span></a>
 <a class="r-docs-card" href="styling-figures.html"><img src="thumb-styling-figures.png" alt="" loading="lazy"><span>Styling Plotly Figures in R</span></a>
 <a class="r-docs-card" href="horizontal-vertical-shapes.html"><img src="thumb-horizontal-vertical-shapes.png" alt="" loading="lazy"><span>Horizontal and Vertical Lines and Rectangles</span></a>
@@ -37,21 +38,23 @@ rewritten with plotly.core's graph objects: `go_figure()`, `add_<trace>()`,
 <a class="r-docs-card" href="3d-surface-lighting.html"><img src="thumb-3d-surface-lighting.png" alt="" loading="lazy"><span>3D Surface Lighting</span></a>
 <a class="r-docs-card" href="latex.html"><img src="thumb-latex.png" alt="" loading="lazy"><span>LaTeX Typesetting in R Graphs</span></a>
 <a class="r-docs-card" href="logos.html"><img src="thumb-logos.png" alt="" loading="lazy"><span>Embedding Logos in Plotly Graphs</span></a>
-<a class="r-docs-card" href="locales.html"><div class="r-docs-nothumb"></div><span>Locales</span></a>
+<a class="r-docs-card" href="locales.html"><span class="r-docs-nothumb"></span><span>Locales</span></a>
 <a class="r-docs-card" href="webgl-text-and-annotations.html"><img src="thumb-webgl-text-and-annotations.png" alt="" loading="lazy"><span>WebGL Text and Annotations</span></a>
 <a class="r-docs-card" href="colorway.html"><img src="thumb-colorway.png" alt="" loading="lazy"><span>Colorway</span></a>
-<a class="r-docs-card" href="troubleshooting.html"><div class="r-docs-nothumb"></div><span>Troubleshooting</span></a>
+<a class="r-docs-card" href="troubleshooting.html"><span class="r-docs-nothumb"></span><span>Troubleshooting</span></a>
 </div>
+```
 
 ## Basic Charts
 
+```{=html}
 <div class="r-docs-grid">
 <a class="r-docs-card" href="line-and-scatter.html"><img src="thumb-line-and-scatter.png" alt="" loading="lazy"><span>Scatter and Line Plots</span></a>
 <a class="r-docs-card" href="line-charts.html"><img src="thumb-line-charts.png" alt="" loading="lazy"><span>Line Plots</span></a>
 <a class="r-docs-card" href="bar-charts.html"><img src="thumb-bar-charts.png" alt="" loading="lazy"><span>Bar Charts</span></a>
 <a class="r-docs-card" href="pie-charts.html"><img src="thumb-pie-charts.png" alt="" loading="lazy"><span>Pie Charts</span></a>
 <a class="r-docs-card" href="bubble-charts.html"><img src="thumb-bubble-charts.png" alt="" loading="lazy"><span>Bubble Charts</span></a>
-<a class="r-docs-card" href="webgl-vs-svg.html"><div class="r-docs-nothumb"></div><span>WebGL vs SVG in R</span></a>
+<a class="r-docs-card" href="webgl-vs-svg.html"><span class="r-docs-nothumb"></span><span>WebGL vs SVG in R</span></a>
 <a class="r-docs-card" href="filled-area-plots.html"><img src="thumb-filled-area-plots.png" alt="" loading="lazy"><span>Filled Area Plots</span></a>
 <a class="r-docs-card" href="horizontal-bar-charts.html"><img src="thumb-horizontal-bar-charts.png" alt="" loading="lazy"><span>Horizontal Bar Charts</span></a>
 <a class="r-docs-card" href="gantt.html"><img src="thumb-gantt.png" alt="" loading="lazy"><span>Gantt Charts</span></a>
@@ -62,9 +65,11 @@ rewritten with plotly.core's graph objects: `go_figure()`, `add_<trace>()`,
 <a class="r-docs-card" href="sankey-diagram.html"><img src="thumb-sankey-diagram.png" alt="" loading="lazy"><span>Sankey Diagram</span></a>
 <a class="r-docs-card" href="treemaps.html"><img src="thumb-treemaps.png" alt="" loading="lazy"><span>Treemap Charts</span></a>
 </div>
+```
 
 ## Statistical Charts
 
+```{=html}
 <div class="r-docs-grid">
 <a class="r-docs-card" href="2d-histogram.html"><img src="thumb-2d-histogram.png" alt="" loading="lazy"><span>2D Histograms</span></a>
 <a class="r-docs-card" href="box-plots.html"><img src="thumb-box-plots.png" alt="" loading="lazy"><span>Box Plots</span></a>
@@ -73,11 +78,13 @@ rewritten with plotly.core's graph objects: `go_figure()`, `add_<trace>()`,
 <a class="r-docs-card" href="violin.html"><img src="thumb-violin.png" alt="" loading="lazy"><span>Violin Plots</span></a>
 <a class="r-docs-card" href="2d-histogram-contour.html"><img src="thumb-2d-histogram-contour.png" alt="" loading="lazy"><span>2D Histogram Contour</span></a>
 <a class="r-docs-card" href="splom.html"><img src="thumb-splom.png" alt="" loading="lazy"><span>Splom</span></a>
-<a class="r-docs-card" href="distplot.html"><div class="r-docs-nothumb"></div><span>Distplots</span></a>
+<a class="r-docs-card" href="distplot.html"><span class="r-docs-nothumb"></span><span>Distplots</span></a>
 </div>
+```
 
 ## Scientific Charts
 
+```{=html}
 <div class="r-docs-grid">
 <a class="r-docs-card" href="log-plot.html"><img src="thumb-log-plot.png" alt="" loading="lazy"><span>Log Plots</span></a>
 <a class="r-docs-card" href="contour-plots.html"><img src="thumb-contour-plots.png" alt="" loading="lazy"><span>Contour Plots</span></a>
@@ -94,9 +101,11 @@ rewritten with plotly.core's graph objects: `go_figure()`, `add_<trace>()`,
 <a class="r-docs-card" href="ternary-plots.html"><img src="thumb-ternary-plots.png" alt="" loading="lazy"><span>Ternary Plots</span></a>
 <a class="r-docs-card" href="displaying-images.html"><img src="thumb-displaying-images.png" alt="" loading="lazy"><span>Display Image Data</span></a>
 </div>
+```
 
 ## Financial Charts
 
+```{=html}
 <div class="r-docs-grid">
 <a class="r-docs-card" href="time-series.html"><img src="thumb-time-series.png" alt="" loading="lazy"><span>Time Series and Date Axes</span></a>
 <a class="r-docs-card" href="candlestick-charts.html"><img src="thumb-candlestick-charts.png" alt="" loading="lazy"><span>Candlestick Charts</span></a>
@@ -106,9 +115,11 @@ rewritten with plotly.core's graph objects: `go_figure()`, `add_<trace>()`,
 <a class="r-docs-card" href="gauge-charts.html"><img src="thumb-gauge-charts.png" alt="" loading="lazy"><span>Gauge Chart</span></a>
 <a class="r-docs-card" href="bullet-charts.html"><img src="thumb-bullet-charts.png" alt="" loading="lazy"><span>Bullet Charts</span></a>
 </div>
+```
 
 ## Maps
 
+```{=html}
 <div class="r-docs-grid">
 <a class="r-docs-card" href="choropleth-maps.html"><img src="thumb-choropleth-maps.png" alt="" loading="lazy"><span>Choropleth Maps</span></a>
 <a class="r-docs-card" href="scatter-plots-on-maps.html"><img src="thumb-scatter-plots-on-maps.png" alt="" loading="lazy"><span>Scatter Plots on Maps</span></a>
@@ -123,9 +134,11 @@ rewritten with plotly.core's graph objects: `go_figure()`, `add_<trace>()`,
 <a class="r-docs-card" href="bubble-maps.html"><img src="thumb-bubble-maps.png" alt="" loading="lazy"><span>Bubble Maps</span></a>
 <a class="r-docs-card" href="map-configuration.html"><img src="thumb-map-configuration.png" alt="" loading="lazy"><span>Map Configuration and Styling</span></a>
 </div>
+```
 
 ## 3D Charts
 
+```{=html}
 <div class="r-docs-grid">
 <a class="r-docs-card" href="3d-scatter-plots.html"><img src="thumb-3d-scatter-plots.png" alt="" loading="lazy"><span>3D Scatter Plots</span></a>
 <a class="r-docs-card" href="3d-line-plots.html"><img src="thumb-3d-line-plots.png" alt="" loading="lazy"><span>3D Line Plots</span></a>
@@ -136,17 +149,21 @@ rewritten with plotly.core's graph objects: `go_figure()`, `add_<trace>()`,
 <a class="r-docs-card" href="3d-isosurface-plots.html"><img src="thumb-3d-isosurface-plots.png" alt="" loading="lazy"><span>3D Isosurface Plots</span></a>
 <a class="r-docs-card" href="trisurf.html"><img src="thumb-trisurf.png" alt="" loading="lazy"><span>3D Tri-Surf Plots</span></a>
 </div>
+```
 
 ## Subplots and Multiple Axes
 
+```{=html}
 <div class="r-docs-grid">
 <a class="r-docs-card" href="map-subplots-and-small-multiples.html"><img src="thumb-map-subplots-and-small-multiples.png" alt="" loading="lazy"><span>Map Subplots And Small Multiples</span></a>
 <a class="r-docs-card" href="insets.html"><img src="thumb-insets.png" alt="" loading="lazy"><span>Inset Plots</span></a>
 <a class="r-docs-card" href="3d-subplots.html"><img src="thumb-3d-subplots.png" alt="" loading="lazy"><span>3D Subplots</span></a>
 </div>
+```
 
 ## Artificial Intelligence and Machine Learning
 
+```{=html}
 <div class="r-docs-grid">
 <a class="r-docs-card" href="ml-regression.html"><img src="thumb-ml-regression.png" alt="" loading="lazy"><span>ML Regression</span></a>
 <a class="r-docs-card" href="knn-classification.html"><img src="thumb-knn-classification.png" alt="" loading="lazy"><span>kNN Classification</span></a>
@@ -154,49 +171,61 @@ rewritten with plotly.core's graph objects: `go_figure()`, `add_<trace>()`,
 <a class="r-docs-card" href="pca-visualization.html"><img src="thumb-pca-visualization.png" alt="" loading="lazy"><span>PCA Visualization</span></a>
 <a class="r-docs-card" href="t-sne-and-umap-projections.html"><img src="thumb-t-sne-and-umap-projections.png" alt="" loading="lazy"><span>t-SNE and UMAP projections</span></a>
 </div>
+```
 
 ## Controls
 
+```{=html}
 <div class="r-docs-grid">
 <a class="r-docs-card" href="custom-buttons.html"><img src="thumb-custom-buttons.png" alt="" loading="lazy"><span>Buttons</span></a>
 <a class="r-docs-card" href="dropdowns.html"><img src="thumb-dropdowns.png" alt="" loading="lazy"><span>Dropdown Events</span></a>
 <a class="r-docs-card" href="range-slider.html"><img src="thumb-range-slider.png" alt="" loading="lazy"><span>Range Sliders and Selectors</span></a>
 <a class="r-docs-card" href="sliders.html"><img src="thumb-sliders.png" alt="" loading="lazy"><span>Sliders</span></a>
 </div>
+```
 
 ## Animations
 
+```{=html}
 <div class="r-docs-grid">
 <a class="r-docs-card" href="animations.html"><img src="thumb-animations.png" alt="" loading="lazy"><span>Intro to Animations</span></a>
 <a class="r-docs-card" href="cumulative-animations.html"><img src="thumb-cumulative-animations.png" alt="" loading="lazy"><span>Cumulative Animations</span></a>
 </div>
+```
 
 ## Advanced
 
+```{=html}
 <div class="r-docs-grid">
 <a class="r-docs-card" href="plot-data-from-csv.html"><img src="thumb-plot-data-from-csv.png" alt="" loading="lazy"><span>Plot CSV Data</span></a>
 </div>
+```
 
 ## Transforms
 
+```{=html}
 <div class="r-docs-grid">
 <a class="r-docs-card" href="filter.html"><img src="thumb-filter.png" alt="" loading="lazy"><span>Filter</span></a>
 <a class="r-docs-card" href="group-by.html"><img src="thumb-group-by.png" alt="" loading="lazy"><span>Group By</span></a>
 <a class="r-docs-card" href="aggregations.html"><img src="thumb-aggregations.png" alt="" loading="lazy"><span>Aggregations</span></a>
 </div>
+```
 
 ## Legacy Charts
 
+```{=html}
 <div class="r-docs-grid">
 <a class="r-docs-card" href="legacy-polar-chart.html"><img src="thumb-legacy-polar-chart.png" alt="" loading="lazy"><span>Polar Charts [legacy]</span></a>
 </div>
+```
 
 ## Other
 
+```{=html}
 <div class="r-docs-grid">
 <a class="r-docs-card" href="getting-started.html"><img src="thumb-getting-started.png" alt="" loading="lazy"><span>Getting Started with Plotly</span></a>
-<a class="r-docs-card" href="github-getting-started-for-data-scientists.html"><div class="r-docs-nothumb"></div><span>GitHub for Data Scientists without the Terminal</span></a>
 <a class="r-docs-card" href="webgl-vs-svg-million-points.html"><img src="thumb-webgl-vs-svg-million-points.png" alt="" loading="lazy"><span>WebGL in Plotly and R</span></a>
 <a class="r-docs-card" href="webgl-vs-svg-time-series.html"><img src="thumb-webgl-vs-svg-time-series.png" alt="" loading="lazy"><span>WebGL in Plotly and R</span></a>
 </div>
+```
 

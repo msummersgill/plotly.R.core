@@ -21,7 +21,7 @@ library(plotly.core)
 
 cars <- mtcars[mtcars$qsec > mean(mtcars$qsec), ]
 
-fig <- go_figure() |>
+go_figure() |>
   add_scatter(
     x = cars$hp,
     y = cars$qsec,
@@ -29,8 +29,6 @@ fig <- go_figure() |>
     hoverinfo = "text",
     mode = "markers"
   )
-
-fig
 ```
 
 #### Reference

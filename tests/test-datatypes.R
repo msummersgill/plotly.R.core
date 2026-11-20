@@ -388,7 +388,8 @@ expect_error(
 )
 expect_error(
   go_figure() |> update_layout(title = "a", title = "b"),
-  "Property 'title' is given more than once"
+  # a named argument of update_layout(): R reports it
+  "matched by multiple actual arguments"
 )
 fig <- go_figure() |>
   add_scatter(y = 1:3) |>

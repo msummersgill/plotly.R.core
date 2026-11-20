@@ -4,6 +4,7 @@ description: "How to make subplots in with Plotly's R graphing library. Examples
 display_as: file_settings
 order: 12
 source: 2021-08-09-subplots.Rmd
+thumbnail_figure: 12
 ---
 
 ```{r, echo = FALSE, message=FALSE}
@@ -26,7 +27,7 @@ Here is an example of creating a figure that includes two `scatter` traces which
 ```{r}
 library(plotly.core)
 
-fig <- make_subplots(rows = 1, cols = 2) |>
+make_subplots(rows = 1, cols = 2) |>
   add_scatter(
     x = c(1, 2, 3),
     y = c(4, 5, 6),
@@ -55,8 +56,6 @@ fig <- make_subplots(rows = 1, cols = 2) |>
     gridcolor = "#ffff"
   ) |>
   update_layout(title = "Side By Side Subplots")
-
-fig
 ```
 
 #### Stacked Subplots
@@ -66,7 +65,7 @@ Here is an example of creating a figure with subplots that are stacked on top of
 ```{r}
 library(plotly.core)
 
-fig <- make_subplots(rows = 3, cols = 1) |>
+make_subplots(rows = 3, cols = 1) |>
   add_scatter(
     x = c(3, 4, 5),
     y = c(1000, 1100, 1200),
@@ -100,8 +99,6 @@ fig <- make_subplots(rows = 3, cols = 1) |>
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
 
 #### Multiple Subplots
@@ -111,7 +108,7 @@ Here is an example of creating a 2 x 2 subplot grid and populating each subplot 
 ```{r}
 library(plotly.core)
 
-fig <- make_subplots(rows = 2, cols = 2) |>
+make_subplots(rows = 2, cols = 2) |>
   add_scatter(
     x = c(1, 2, 3),
     y = c(4, 5, 6),
@@ -155,8 +152,6 @@ fig <- make_subplots(rows = 2, cols = 2) |>
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
 
 #### Multiple Subplots with Titles
@@ -167,7 +162,7 @@ Here is an example of adding subplot titles to a 2 x 2 subplot grid of scatter t
 ```{r}
 library(plotly.core)
 
-fig <- make_subplots(
+make_subplots(
   rows = 2,
   cols = 2,
   subplot_titles = c("Plot 1", "Plot 2", "Plot 3", "Plot 4")
@@ -216,8 +211,6 @@ fig <- make_subplots(
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
 
 #### Subplots with Annotations
@@ -225,7 +218,7 @@ fig
 ```{r}
 library(plotly.core)
 
-fig <- make_subplots(rows = 1, cols = 2) |>
+make_subplots(rows = 1, cols = 2) |>
   add_scatter(
     x = c(1, 2, 3),
     y = c(4, 5, 6),
@@ -258,8 +251,6 @@ fig <- make_subplots(rows = 1, cols = 2) |>
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
 
 #### Customize Subplot Column Widths and Row Heights
@@ -270,7 +261,7 @@ Here is an example of creating a figure with two scatter traces in side-by-side 
 ```{r}
 library(plotly.core)
 
-fig <- make_subplots(rows = 1, cols = 2, column_widths = c(0.7, 0.3)) |>
+make_subplots(rows = 1, cols = 2, column_widths = c(0.7, 0.3)) |>
   add_scatter(
     x = c(1, 2, 3),
     y = c(4, 5, 6),
@@ -298,73 +289,7 @@ fig <- make_subplots(rows = 1, cols = 2, column_widths = c(0.7, 0.3)) |>
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
-
-#### Subplots in Dash
-
-[Dash for R](https://dashr.plotly.com) is an open-source framework for building analytical applications, with no Javascript required, and it is tightly integrated with the Plotly graphing library.
-
-Learn about how to install Dash for R at https://dashr.plot.ly/installation.
-
-Everywhere in this page that you see fig, you can display the same figure in a Dash for R application by passing it to the figure argument.
-
-
-```{r eval=FALSE}
-library(dash)
-library(dashCoreComponents)
-library(dashHtmlComponents)
-library(plotly.core)
-
-app <- Dash$new()
-
-app$layout(
-  htmlDiv(
-    list(
-      dccGraph(id = "graph-with-slider"),
-      htmlLabel("Subplots Width:"),
-      dccSlider(
-        id = "slider",
-        min = 0,
-        max = 1,
-        value = 0.5,
-        step = 0.01
-      )
-    )
-  )
-)
-app$callback(
-  output(id = "graph-with-slider", property = "figure"),
-  params = list(input(id = "slider", property = "value")),
-  function(value) {
-    fig <- make_subplots(
-      rows = 1,
-      cols = 2,
-      column_widths = c(value, 1 - value)
-    ) |>
-      add_scatter(
-        x = c(1, 2, 3),
-        y = c(4, 5, 6),
-        mode = "lines+markers",
-        marker = go_scatter_marker(line = go_scatter_marker_line(width = 3)),
-        row = 1,
-        col = 1
-      ) |>
-      add_scatter(
-        x = c(20, 30, 40),
-        y = c(50, 60, 70),
-        mode = "lines+markers",
-        marker = go_scatter_marker(line = go_scatter_marker_line(width = 3)),
-        row = 1,
-        col = 2
-      )
-    return(fig)
-  }
-)
-```
-
-After executing this code, give app$run_server() in the console to start the dash.
 
 #### Customizing Subplot Axes
 After a figure with subplots is created using the `make_subplots()` function, its axis properties (title, font, range, grid style, etc.) can be customized using the `update_xaxes()` and `update_yaxes()` figure functions.  By default, these functions apply to all of the x axes or y axes in the figure. The `row` and `col` arguments can be used to control which axes are targeted by the update.
@@ -449,7 +374,7 @@ Here is an example that creates a figure with 3 vertically stacked subplots with
 ```{r}
 library(plotly.core)
 
-fig <- make_subplots(
+make_subplots(
   rows = 3,
   cols = 1,
   shared_xaxes = TRUE,
@@ -488,8 +413,6 @@ fig <- make_subplots(
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
 
 #### Subplots with Shared Y-Axes
@@ -497,11 +420,10 @@ The `shared_yaxes` argument can be used to link the y axes of subplots in the re
 
 Here is an example that creates a figure with a 2 x 2 subplot grid, where the y axes of each row are linked.
 
-
 ```{r}
 library(plotly.core)
 
-fig <- make_subplots(rows = 2, cols = 2, shared_yaxes = TRUE) |>
+make_subplots(rows = 2, cols = 2, shared_yaxes = TRUE) |>
   add_scatter(
     x = c(1, 2, 3),
     y = c(2, 3, 4),
@@ -542,8 +464,6 @@ fig <- make_subplots(rows = 2, cols = 2, shared_yaxes = TRUE) |>
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
 
 ### Subplots with Shared Colorscale
@@ -553,7 +473,7 @@ To share colorscale information in multiple subplots, you can use a `coloraxis` 
 ```{r}
 library(plotly.core)
 
-fig <- make_subplots(rows = 1, cols = 2, shared_yaxes = TRUE) |>
+make_subplots(rows = 1, cols = 2, shared_yaxes = TRUE) |>
   add_bar(
     x = c(1, 2, 3),
     y = c(4, 5, 6),
@@ -583,8 +503,6 @@ fig <- make_subplots(rows = 1, cols = 2, shared_yaxes = TRUE) |>
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
 
 #### Custom Sized Subplot with Subplot Titles
@@ -595,7 +513,7 @@ Here is an example that creates a 2 by 2 subplot grid containing 3 subplots.
 ```{r}
 library(plotly.core)
 
-fig <- make_subplots(
+make_subplots(
   rows = 2,
   cols = 2,
   specs = list(
@@ -637,8 +555,6 @@ fig <- make_subplots(
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
 
 #### Multiple Custom Sized Subplots
@@ -648,7 +564,7 @@ Here is an example that uses the `rowspan` and `colspan` subplot options to crea
 ```{r}
 library(plotly.core)
 
-fig <- make_subplots(
+make_subplots(
   rows = 5,
   cols = 2,
   specs = list(
@@ -725,13 +641,10 @@ fig <- make_subplots(
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
 
 #### Subplots Types
 By default, the `make_subplots()` function assumes that the traces that will be added to all subplots are 2-dimensional cartesian traces (e.g. `scatter`, `bar`, `histogram`, `violin`, etc.). Other subplot types (e.g. `"scene"`, `"polar"`, `"domain"`) are set with the `type` of a cell in `specs`:
-
 
  - trace type: A trace type name (e.g. `"bar"`, `"contour"`, `"pie"`, `"scatter"`, etc.) which will be used to determine the appropriate subplot type for that trace.
 
@@ -743,7 +656,7 @@ library(plotly.core)
 data <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/school_earnings.csv")
 density <- density(ggplot2::diamonds$carat)
 
-fig <- make_subplots(
+make_subplots(
   rows = 2,
   cols = 2,
   horizontal_spacing = 0.1,
@@ -791,14 +704,10 @@ fig <- make_subplots(
     zerolinewidth = 2,
     gridcolor = "#ffff"
   )
-
-fig
 ```
-
 
 #### Reference
 All of the axis properties are found in `go_xaxis()` and `go_yaxis()`; see also [Axes](axes.html).
-
 
 ```{r}
 help_file <- help(make_subplots, package = "plotly.core")

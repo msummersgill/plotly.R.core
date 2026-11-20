@@ -4,6 +4,7 @@ description: "Visualize Principle Component Analysis (PCA) of your high-dimensio
 display_as: ai_ml
 order: 4
 source: 2021-07-27-ml-pca.Rmd
+thumbnail_figure: 4
 ---
 
 ```{r, echo = FALSE, message=FALSE}
@@ -17,13 +18,11 @@ This page first shows how to visualize higher dimension data using various Plotl
 
 We will use base R's `prcomp()` (from the `stats` package) to apply dimensionality reduction to a few well-known datasets. Packages such as [Tidymodels](https://www.tidymodels.org/) or [Caret](https://cran.r-project.org/web/packages/caret/vignettes/caret.html#) offer the same technique as part of a wider Machine Learning (ML) toolkit.
 
-
 ## High-dimensional PCA Analysis with  `splom`
 
 The dimensionality reduction technique we will be using is called the [Principal Component Analysis (PCA)](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/prcomp). It is a powerful technique that arises from linear algebra and probability theory. In essence, it computes a matrix that represents the variation of your data ([covariance matrix/eigenvectors][covmatrix]), and rank them by their relevance (explained variance/eigenvalues).
 
 [covmatrix]: https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues#:~:text=As%20it%20is%20a%20square%20symmetric%20matrix%2C%20it%20can%20be%20diagonalized%20by%20choosing%20a%20new%20orthogonal%20coordinate%20system%2C%20given%20by%20its%20eigenvectors%20(incidentally%2C%20this%20is%20called%20spectral%20theorem)%3B%20corresponding%20eigenvalues%20will%20then%20be%20located%20on%20the%20diagonal.%20In%20this%20new%20coordinate%20system%2C%20the%20covariance%20matrix%20is%20diagonal%20and%20looks%20like%20that%3A
-
 
 ### Visualize all the original dimensions
 
@@ -51,29 +50,23 @@ axis_y <- go_yaxis(
   title = go_yaxis_title(font = go_font(size = 13))
 )
 
-colors <- c(setosa = "#636EFA", versicolor = "#EF553B", virginica = "#00CC96")
-
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_splom(
-      data = iris[iris$Species == sp, ],
-      name = sp,
-      dimensions = list(
-        go_splom_dimension(label = "sepal length", values = ~Sepal.Length),
-        go_splom_dimension(label = "sepal width", values = ~Sepal.Width),
-        go_splom_dimension(label = "petal length", values = ~Petal.Length),
-        go_splom_dimension(label = "petal width", values = ~Petal.Width)
-      ),
-      diagonal = go_splom_diagonal(visible = FALSE),
-      marker = go_splom_marker(
-        color = colors[[sp]],
-        size = 7,
-        line = go_splom_marker_line(width = 1, color = "rgb(230,230,230)")
-      )
+iris |>
+  go_figure() |>
+  update_layout(colorway = c("#636EFA", "#EF553B", "#00CC96")) |>
+  add_splom(
+    dimensions = list(
+      go_splom_dimension(label = "sepal length", values = ~Sepal.Length),
+      go_splom_dimension(label = "sepal width", values = ~Sepal.Width),
+      go_splom_dimension(label = "petal length", values = ~Petal.Length),
+      go_splom_dimension(label = "petal width", values = ~Petal.Width)
+    ),
+    diagonal = go_splom_diagonal(visible = FALSE),
+    marker = go_splom_marker(
+      color = ~Species,
+      size = 7,
+      line = go_splom_marker_line(width = 1, color = "rgb(230,230,230)")
     )
-}
-fig <- fig |>
+  ) |>
   update_layout(
     hovermode = "closest",
     dragmode = "select",
@@ -87,15 +80,11 @@ fig <- fig |>
     yaxis3 = axis_y,
     yaxis4 = axis_y
   )
-
-fig
 ```
-
 
 ###  Visualize all the principal components
 
 Now, we apply `PCA` to the same dataset, and retrieve **all** the components. We use the same `splom` trace to display our results, but this time our features are the resulting *principal components*, ordered by how much variance they are able to explain.
-
 
 The importance of explained variance is demonstrated in the example below. The subplot between PC3 and PC4 is clearly unable to separate each class, whereas the subplot between PC1 and PC2 shows a clear separation between each species.
 
@@ -131,25 +120,19 @@ axis_y <- go_yaxis(
 pc_label <- function(i) {
   paste("PC ", i, " (", toString(round(explained_variance_ratio[i], 1)), "%)", sep = "")
 }
-colors <- c(setosa = "#636EFA", versicolor = "#EF553B", virginica = "#00CC96")
-
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_splom(
-      data = components[iris$Species == sp, ],
-      name = sp,
-      dimensions = list(
-        go_splom_dimension(label = pc_label(1), values = ~PC1),
-        go_splom_dimension(label = pc_label(2), values = ~PC2),
-        go_splom_dimension(label = pc_label(3), values = ~PC3),
-        go_splom_dimension(label = pc_label(4), values = ~PC4)
-      ),
-      diagonal = go_splom_diagonal(visible = FALSE),
-      marker = go_splom_marker(color = colors[[sp]])
-    )
-}
-fig <- fig |>
+components |>
+  go_figure() |>
+  update_layout(colorway = c("#636EFA", "#EF553B", "#00CC96")) |>
+  add_splom(
+    dimensions = list(
+      go_splom_dimension(label = pc_label(1), values = ~PC1),
+      go_splom_dimension(label = pc_label(2), values = ~PC2),
+      go_splom_dimension(label = pc_label(3), values = ~PC3),
+      go_splom_dimension(label = pc_label(4), values = ~PC4)
+    ),
+    diagonal = go_splom_diagonal(visible = FALSE),
+    marker = go_splom_marker(color = ~iris$Species)
+  ) |>
   update_layout(
     legend = go_legend(title = go_legend_title(text = "color")),
     hovermode = "closest",
@@ -164,10 +147,7 @@ fig <- fig |>
     yaxis3 = axis_y,
     yaxis4 = axis_y
   )
-
-fig
 ```
-
 
 ### Visualize a subset of the principal components
 
@@ -210,7 +190,7 @@ axis_y <- go_yaxis(
   title = go_yaxis_title(font = go_font(size = 13))
 )
 
-fig <- components |>
+components |>
   go_figure() |>
   add_splom(
     dimensions = list(
@@ -241,9 +221,7 @@ fig <- components |>
     yaxis3 = axis_y,
     yaxis4 = axis_y
   )
-fig
 ```
-
 
 ## 2D PCA Scatter Plot
 
@@ -260,21 +238,15 @@ components <- data.frame(components)
 components <- cbind(components, iris$Species)
 components$PC2 <- -components$PC2
 
-colors <- c(setosa = "#636EFA", versicolor = "#EF553B", virginica = "#00CC96")
-
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_scatter(
-      data = components[iris$Species == sp, ],
-      x = ~PC1,
-      y = ~PC2,
-      mode = "markers",
-      name = sp,
-      marker = go_scatter_marker(color = colors[[sp]])
-    )
-}
-fig <- fig |>
+components |>
+  go_figure() |>
+  update_layout(colorway = c("#636EFA", "#EF553B", "#00CC96")) |>
+  add_scatter(
+    x = ~PC1,
+    y = ~PC2,
+    mode = "markers",
+    marker = go_scatter_marker(color = ~iris$Species)
+  ) |>
   update_layout(
     legend = go_legend(title = go_legend_title(text = "color")),
     plot_bgcolor = "#e5ecf6",
@@ -291,9 +263,7 @@ fig <- fig |>
       gridcolor = "#ffff"
     )
   )
-fig
 ```
-
 
 ## Visualize PCA with scatter3d
 
@@ -319,30 +289,21 @@ tot_explained_variance_ratio <- 100 * sum(tot_explained_variance_ratio)
 
 tit <- "Total Explained Variance = 99.48"
 
-colors <- c(setosa = "#636EFA", versicolor = "#EF553B", virginica = "#00CC96")
-
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_scatter3d(
-      data = components[iris$Species == sp, ],
-      x = ~PC1,
-      y = ~PC2,
-      z = ~PC3,
-      mode = "markers",
-      name = sp,
-      marker = go_scatter3d_marker(color = colors[[sp]], size = 6)
-    )
-}
-fig <- fig |>
+components |>
+  go_figure() |>
+  update_layout(colorway = c("#636EFA", "#EF553B", "#00CC96")) |>
+  add_scatter3d(
+    x = ~PC1,
+    y = ~PC2,
+    z = ~PC3,
+    mode = "markers",
+    marker = go_scatter3d_marker(color = ~iris$Species, size = 6)
+  ) |>
   update_layout(
     title = tit,
     scene = go_scene(bgcolor = "#e5ecf6")
   )
-
-fig
 ```
-
 
 ## Plotting explained variance
 
@@ -364,7 +325,7 @@ cumsum <- cumsum(explained_variance_ratio)
 data <- data.frame(cumsum, seq(1, length(cumsum), 1))
 colnames(data) <- c("Explained_Variance", "Components")
 
-fig <- data |>
+data |>
   go_figure() |>
   add_scatter(
     x = ~Components,
@@ -376,9 +337,7 @@ fig <- data |>
     xaxis = go_xaxis(title = "# Components", tickvals = seq(1, length(cumsum), 1)),
     yaxis = go_yaxis(title = "Explained Variance")
   )
-fig
 ```
-
 
 ## Visualize Loadings
 
@@ -411,51 +370,39 @@ for (i in seq(explained_variance)) {
 
 features <- c("sepal_length", "sepal_width", "petal_length", "petal_width")
 
-colors <- c(setosa = "#636EFA", versicolor = "#EF553B", virginica = "#00CC96")
-
-fig <- go_figure()
-for (sp in levels(iris$Species)) {
-  fig <- fig |>
-    add_scatter(
-      data = components[iris$Species == sp, ],
-      x = ~PC1,
-      y = ~PC2,
-      mode = "markers",
-      name = sp,
-      marker = go_scatter_marker(color = colors[[sp]])
-    )
-}
-fig <- fig |>
+components |>
+  go_figure() |>
+  update_layout(colorway = c("#636EFA", "#EF553B", "#00CC96")) |>
+  add_scatter(
+    x = ~PC1,
+    y = ~PC2,
+    mode = "markers",
+    marker = go_scatter_marker(color = ~iris$Species)
+  ) |>
   update_layout(
     legend = go_legend(title = go_legend_title(text = "color")),
     plot_bgcolor = "#e5ecf6",
     xaxis = go_xaxis(title = "0"),
     yaxis = go_yaxis(title = "1")
+  ) |>
+  add_shape(
+    type = "line",
+    x0 = 0,
+    y0 = 0,
+    x1 = loadings[, 1],
+    y1 = loadings[, 2],
+    line = go_shape_line(color = "black")
+  ) |>
+  add_annotation(
+    x = loadings[, 1],
+    y = loadings[, 2],
+    ax = 0,
+    ay = 0,
+    text = features,
+    xanchor = "center",
+    yanchor = "bottom"
   )
-for (i in seq(4)) {
-  fig <- fig |>
-    add_shape(
-      type = "line",
-      x0 = 0,
-      y0 = 0,
-      x1 = loadings[i, 1],
-      y1 = loadings[i, 2],
-      line = go_shape_line(color = "black")
-    ) |>
-    add_annotation(
-      x = loadings[i, 1],
-      y = loadings[i, 2],
-      ax = 0,
-      ay = 0,
-      text = features[i],
-      xanchor = "center",
-      yanchor = "bottom"
-    )
-}
-
-fig
 ```
-
 
 ## References
 

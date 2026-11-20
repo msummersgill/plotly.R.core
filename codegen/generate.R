@@ -46,6 +46,14 @@ perform_codegen <- function(outdir = ".", scope = CODEGEN_SCOPE) {
     "named-colors.txt"
   ))
   .config_options <- sort(names(schema$config))
+  .plotlyjs_colorscales <- read_plotlyjs_colorscales(file.path(
+    outdir,
+    "inst",
+    "htmlwidgets",
+    "lib",
+    "plotlyjs",
+    "plotly.min.js"
+  ))
   ctx <- doc_context(nodes, validators, schema)
   .shared_types <- shared_types_data(ctx)
   # constructor of each object, for messages
@@ -57,6 +65,7 @@ perform_codegen <- function(outdir = ".", scope = CODEGEN_SCOPE) {
     .validators,
     .named_colors,
     .config_options,
+    .plotlyjs_colorscales,
     .shared_types,
     .constructors,
     file = file.path(outdir, "R", "sysdata.rda"),

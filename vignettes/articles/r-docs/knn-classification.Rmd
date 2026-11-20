@@ -4,6 +4,7 @@ description: "Visualize a k-Nearest-Neighbors (kNN) classification in R with Tid
 display_as: ai_ml
 order: 2
 source: 2021-07-21-ml-knn.Rmd
+thumbnail_figure: 4
 ---
 
 ```{r, echo = FALSE, message=FALSE}
@@ -15,7 +16,6 @@ options(plotly.core.plotlyjs = "cdn")
 
 Visualize k-Nearest Neighbors (kNN) classification in R with Plotly.
 
-
 ## Basic binary classification with kNN
 
 This section gets us started with displaying basic binary classification using 2D data. We first show how to display training versus testing data using [various marker styles](marker-style.html), then demonstrate how to evaluate our classifier's performance on the **test split** using a continuous color gradient to indicate the model's predicted score.
@@ -23,7 +23,6 @@ This section gets us started with displaying basic binary classification using 2
 We will use the `knn()` function of the [class](https://cran.r-project.org/package=class) package, which ships with R, to classify our data.
 
 We will train a k-Nearest Neighbors (kNN) classifier. First, the model records the label of each training sample. Then, whenever we give it a new sample, it will look at the `k` closest samples from the training set to find the most common label, and assign it to our new sample. With `prob = TRUE`, `knn()` also returns the proportion of the `k` neighbours that voted for that label, which we use as the model's score.
-
 
 ### Display training and test splits
 
@@ -174,10 +173,8 @@ final <- data.frame(X1 = as.vector(xx), X2 = as.vector(yy))
 predicted <- knn_score(make_moons[, c("X1", "X2")], final, make_moons$y, k = 15)
 Z <- matrix(predicted, nrow(xx), ncol(xx))
 
-fig <- go_figure() |>
+go_figure() |>
   add_contour(x = xrange, y = yrange, z = Z, colorscale = "RdBu")
-
-fig
 ```
 
 Now, let's try to combine our `Contour` plot with the first scatter plot of our data points, so that we can visually compare the confidence of our model with the true labels.

@@ -307,3 +307,130 @@ expect_error(
     update_traces(marker = list(color = ~cyl)),
   "Couldn't evaluate `~cyl` for property 'marker.color'"
 )
+
+# split = ~col: one trace per level, in level order, named after it
+d <- data.frame(
+  g = factor(c("b", "a", "b", "c"), levels = c("c", "b", "a")),
+  x = 1:4,
+  y = c(2, 3, 1, 4),
+  o = factor(
+    c("lo", "hi", "lo", "mid"),
+    levels = c("lo", "mid", "hi"),
+    ordered = TRUE
+  )
+)
+f <- d |>
+  go_figure() |>
+  add_scatter(x = ~x, y = ~y, mode = "markers", split = ~g)
+stopifnot(
+  identical(vapply(f$data, `[[`, "", "name"), c("c", "b", "a")),
+  identical(lengths(lapply(f$data, `[[`, "x")), c(1L, 2L, 1L)),
+  # axis titles from the formulas
+  identical(f$layout$xaxis$title$text, "x"),
+  identical(f$layout$yaxis$title$text, "y")
+)
+# a discrete colour column splits too: viridis for an ordered factor
+f <- d |>
+  go_figure() |>
+  add_scatter(x = ~x, y = ~y, marker = go_scatter_marker(color = ~o))
+stopifnot(
+  identical(vapply(f$data, `[[`, "", "name"), c("lo", "mid", "hi")),
+  identical(f$data[[1L]]$marker$color, "#440154"),
+  identical(f$data[[3L]]$marker$color, "#FDE725")
+)
+# ... and the colorway for an unordered one; literal colours don't split
+f <- d |>
+  go_figure() |>
+  add_bar(
+    x = ~x,
+    y = ~y,
+    marker = go_bar_marker(line = go_bar_marker_line(color = ~g))
+  )
+stopifnot(identical(f$data[[1L]]$marker$line$color, "#1f77b4"))
+f <- d |>
+  go_figure() |>
+  add_scatter(
+    x = ~x,
+    y = ~y,
+    marker = go_scatter_marker(color = ~ ifelse(y > 2, "red", "blue"))
+  )
+stopifnot(length(f$data) == 1L)
+# factor levels set the category order; names and colorbar titles from formulas
+f <- d |> go_figure() |> add_bar(x = ~g, y = ~y)
+stopifnot(
+  identical(f$layout$xaxis$categoryorder, "array"),
+  identical(f$layout$xaxis$categoryarray, c("c", "b", "a")),
+  identical(f$data[[1L]]$name, "y")
+)
+f <- go_figure() |>
+  add_bar(x = factor(c("b", "a"), levels = c("a", "b")), y = 1:2)
+stopifnot(identical(f$layout$xaxis$categoryarray, c("a", "b")))
+f <- d |>
+  go_figure() |>
+  add_scatter(
+    x = ~x,
+    y = ~y,
+    marker = go_scatter_marker(color = ~y, showscale = TRUE)
+  )
+stopifnot(identical(f$data[[1L]]$marker$colorbar$title$text, "y"))
+# set values win
+f <- d |>
+  go_figure() |>
+  update_layout(xaxis = go_xaxis(title = "X")) |>
+  add_scatter(x = ~x, y = ~y, name = "n")
+stopifnot(
+  identical(f$layout$xaxis$title$text, "X"),
+  identical(f$data[[1L]]$name, "n")
+)
+
+# vectors in add_annotation()/add_shape(): one object per element
+f <- go_figure() |>
+  add_annotation(x = 1:3, y = 2, text = c("a", "b", "c"), showarrow = FALSE) |>
+  add_shape(type = "line", x0 = 1:2, x1 = 1:2, y0 = 0, y1 = 1)
+stopifnot(
+  identical(vapply(f$layout$annotations, `[[`, "", "text"), c("a", "b", "c")),
+  identical(vapply(f$layout$annotations, `[[`, 0, "y"), c(2, 2, 2)),
+  length(f$layout$shapes) == 2L
+)
+expect_error(
+  go_figure() |> add_annotation(x = 1:3, text = c("a", "b")),
+  "Vector properties must have the same length"
+)
+
+# update_layout(): every layout property is an argument; NULL removes one
+f <- go_figure() |>
+  update_layout(title = "T", margin = go_margin(t = 10)) |>
+  update_layout(margin = NULL, xaxis2 = go_xaxis(title = "x2"))
+stopifnot(
+  identical(names(f$layout), c("title", "xaxis2")),
+  "barmode" %in% names(formals(update_layout))
+)
+
+# a formula for a single-value property takes the group's one value
+df <- data.frame(x = c("a", "a", "c"), y = c(2, 3, 2))
+f <- go_figure() |>
+  add_bar(data = df, x = ~x, y = ~y, legendgroup = ~x, split = ~x)
+stopifnot(identical(vapply(f$data, `[[`, "", "legendgroup"), c("a", "c")))
+# no default title on shared axes with hidden tick labels
+df <- data.frame(x = c("a", "b"), y = 1:2)
+f <- make_subplots(rows = 2, cols = 1, shared_xaxes = TRUE) |>
+  add_bar(data = df, x = ~x, y = ~y, row = 1, col = 1) |>
+  add_bar(data = df, x = ~x, y = ~y, row = 2, col = 1)
+stopifnot(
+  is.null(f$layout$xaxis$title),
+  identical(f$layout$xaxis2$title$text, "x")
+)
+# 3D axes keep factor levels too
+d3 <- data.frame(
+  x = 1:3,
+  y = 1:3,
+  z = factor(c("b", "a", "c"), levels = c("c", "b", "a"))
+)
+f <- d3 |> go_figure() |> add_scatter3d(x = ~x, y = ~y, z = ~z)
+stopifnot(identical(f$layout$scene$zaxis$categoryarray, c("c", "b", "a")))
+
+# category codes are categories, not colours
+f <- go_figure(data.frame(x = 1:3, g = c("1", "2", "123"))) |>
+  add_scatter(x = ~x, y = ~x, marker = go_scatter_marker(color = ~g))
+stopifnot(length(f$data) == 3L)
+expect_error(go_scatter(marker = go_scatter_marker(color = "1")), "color")

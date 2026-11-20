@@ -21,9 +21,11 @@
 #' @return An object of class `htmlwidget`.
 #' @details If the figure's layout has no `template`, the default template
 #'   (see [default_template()]) is applied. With the `"none"` default,
-#'   figures get plotly 4.x's margins (`l = 60, r = 10, t = 25, b = 40`
-#'   pixels) unless their layout sets them (e.g.
-#'   `update_layout(margin = go_margin(t = 50))`).
+#'   figures get plotly 4.x's defaults unless they set these properties:
+#'   margins of `l = 60, r = 10, t = 25, b = 40` pixels (e.g.
+#'   `update_layout(margin = go_margin(t = 50))` changes the top one) and
+#'   the viridis colorscale for colour-mapped markers and for heatmaps,
+#'   contours, surfaces and the other traces with a colorscale.
 #'
 #'   Numeric arrays in traces are sent to the browser as base64-encoded typed
 #'   arrays (`{dtype, bdata}` objects, as plotly.py does), which are smaller
@@ -54,8 +56,15 @@ plotly_widget <- function(
   if (is.null(layout$template)) {
     tpl <- default_template()
     layout$template <- if (identical(tpl, "none")) {
-      # plotly 4.x's margins, as defaults the layout can override side by side
-      list(layout = list(margin = DEFAULT_MARGIN))
+      # plotly 4.x's defaults (margins, viridis colorscales), which the
+      # figure's own properties override
+      tpl <- legacy_defaults_template()
+      types <- figure_trace_types(list(data = fig$data, frames = fig$frames))
+      tpl$data <- tpl$data[intersect(names(tpl$data), types)]
+      if (!length(tpl$data)) {
+        tpl$data <- NULL
+      }
+      tpl
     } else {
       get_template(tpl)
     }

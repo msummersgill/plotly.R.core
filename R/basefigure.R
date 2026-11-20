@@ -566,34 +566,17 @@ combine_patch <- function(patch, dots, fig = NULL) {
   out
 }
 
-#' Update a figure's layout
-#'
-#' Updates layout properties, merging nested objects (e.g. `xaxis`) with any
-#' existing values unless `overwrite = TRUE`. Properties can be given in
-#' `patch`, in `...`, or both; `...` is applied last. Nested properties are
-#' given as named lists, which are merged into the existing objects:
-#' `xaxis = list(title = list(text = "x"))` sets the x axis title and keeps
-#' its other properties.
-#'
-#' @param fig A `go_figure` object.
-#' @param patch A named list or [go_layout()] object of updates.
-#' @param ... Further named updates.
-#' @param overwrite If `TRUE`, replace nested objects instead of merging.
-#' @return The modified figure.
-#' @export
-#' @examples
-#' go_figure() |>
-#'   update_layout(title = "Title", xaxis = go_xaxis(range = c(0, 10))) |>
-#'   update_layout(xaxis = go_xaxis(title = "x"), yaxis = go_yaxis(type = "log"))
-update_layout <- function(fig, patch = NULL, ..., overwrite = FALSE) {
-  check_figure(fig)
-  layout <- update_object(
-    fig$layout,
-    "layout",
-    combine_patch(patch, list(...), fig),
-    overwrite
-  )
-  modify_figure(fig, layout = layout)
+# The arguments of a call's frame `env` among `names` that were given,
+# NULL included, as a named list.
+given_args <- function(env, names) {
+  given <- names[
+    !vapply(
+      names,
+      function(n) eval(call("missing", as.name(n)), env),
+      NA
+    )
+  ]
+  stats::setNames(lapply(given, function(n) get(n, envir = env)), given)
 }
 
 # Selecting ---------------------------------------------------------------------

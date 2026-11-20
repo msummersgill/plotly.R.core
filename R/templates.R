@@ -197,3 +197,33 @@ template_layout_value <- function(template, path) {
 # plotly 4.x's default margins (plot_ly()), which figures rendered with the
 # "none" default template get (see plotly_widget()).
 DEFAULT_MARGIN <- list(b = 40, l = 60, t = 25, r = 10)
+
+# The template figures rendered with the "none" default get: plotly 4.x's
+# margins, and its viridis colorscale for colour-mapped markers (the layout
+# colorscales) and for every trace type with a colorscale of its own.
+legacy_defaults_template <- function() {
+  if (is.null(the$legacy_template)) {
+    vir <- plotlyjs_colorscale("Viridis")
+    types <- available_trace_types()
+    types <- types[vapply(
+      types,
+      function(t) !is.null(get_validator(paste0(t, ".colorscale"))),
+      NA
+    )]
+    the$legacy_template <- list(
+      layout = list(
+        margin = DEFAULT_MARGIN,
+        colorscale = list(
+          sequential = vir,
+          sequentialminus = vir,
+          diverging = vir
+        )
+      ),
+      data = stats::setNames(
+        lapply(types, function(t) list(list(colorscale = vir))),
+        types
+      )
+    )
+  }
+  the$legacy_template
+}

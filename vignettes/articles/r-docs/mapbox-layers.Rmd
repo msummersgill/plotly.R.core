@@ -4,6 +4,7 @@ description: "How to make Mapbox maps in R with various base layers, with or wit
 display_as: maps
 order: 5
 source: 2019-09-20-mapbox-layers.Rmd
+thumbnail_figure: 2
 ---
 
 ```{r, echo = FALSE, message=FALSE}
@@ -51,7 +52,7 @@ library(plotly.core)
 
 us_cities <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/us-cities-top-1k.csv")
 
-fig <- us_cities |>
+us_cities |>
   go_figure() |>
   add_scattermap(
     lat = ~lat,
@@ -66,8 +67,6 @@ fig <- us_cities |>
       center = go_map_center(lon = -88, lat = 34)
     )
   )
-
-fig
 ```
 
 ### Base Map Below A Trace
@@ -79,7 +78,7 @@ library(plotly.core)
 
 us_cities <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/us-cities-top-1k.csv")
 
-fig <- us_cities |>
+us_cities |>
   go_figure() |>
   add_scattermap(
     lat = ~lat,
@@ -101,8 +100,6 @@ fig <- us_cities |>
       )
     )
   )
-
-fig
 ```
 
 #### Maps Below and Above A Trace
@@ -114,7 +111,7 @@ In addition, a WMS layer map from Environment Canada (which displays near-real-t
 ```{r}
 library(plotly.core)
 
-fig <- us_cities |>
+us_cities |>
   go_figure() |>
   add_scattermap(
     lat = ~lat,
@@ -140,8 +137,6 @@ fig <- us_cities |>
       )
     )
   )
-
-fig
 ```
 
 #### Dark Base Map
@@ -154,7 +149,7 @@ library(plotly.core)
 
 us_cities <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/us-cities-top-1k.csv")
 
-fig <- us_cities |>
+us_cities |>
   go_figure() |>
   add_scattermap(
     lat = ~lat,
@@ -169,8 +164,6 @@ fig <- us_cities |>
       center = go_map_center(lon = -88, lat = 34)
     )
   )
-
-fig
 ```
 
 #Reference

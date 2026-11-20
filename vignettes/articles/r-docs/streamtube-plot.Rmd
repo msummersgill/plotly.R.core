@@ -4,6 +4,7 @@ description: "How to create streamtube plots with Plotly."
 display_as: 3d_charts
 order: 6
 source: 2018-07-19-streamtube.Rmd
+thumbnail_figure: 2
 ---
 
 ```{r, echo = FALSE, message=FALSE}
@@ -22,7 +23,7 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/streamtube-basic.csv")
 
-fig <- df |>
+df |>
   go_figure() |>
   add_streamtube(
     x = ~x,
@@ -46,8 +47,6 @@ fig <- df |>
       )
     )
   )
-
-fig
 ```
 
 #### Starting Position and Segments
@@ -57,7 +56,7 @@ library(plotly.core)
 
 df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/streamtube-wind.csv")
 
-fig <- df |>
+df |>
   go_figure() |>
   add_streamtube(
     x = ~x,
@@ -79,8 +78,6 @@ fig <- df |>
     scene = go_scene(aspectratio = go_scene_aspectratio(x = 2, y = 1, z = 0.3)),
     margin = go_margin(t = 20, b = 20, l = 20, r = 20)
   )
-
-fig
 ```
 
 #### Reference
