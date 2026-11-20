@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static int fmt_num(double v, int f32, char *buf) {
+int fmt_num(double v, int f32, char *buf) {
   if (!R_FINITE(v)) {
     memcpy(buf, "null", 5);
     return 4;

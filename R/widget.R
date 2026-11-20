@@ -548,6 +548,17 @@ check_no_formulas <- function(fig) {
 # JSON serialiser used by the widget: length-1 vectors become scalars and
 # missing values become null, matching what plotly.js expects.
 to_JSON <- function(x, ...) {
+  # the C writer (src/json_write.c) writes what jsonlite would, without its
+  # per-object dispatch; jsonlite for other options, and for the values the
+  # C writer hands back (data frames, classed vectors such as dates)
+  if (!...length()) {
+    out <- .Call(C_json_write, x, to_JSON_jsonlite, environment())
+    return(structure(out, class = "json"))
+  }
+  to_JSON_jsonlite(x, ...)
+}
+
+to_JSON_jsonlite <- function(x, ...) {
   jsonlite::toJSON(
     prepare_json(x),
     # doubles are written by prepare_json(); 17 significant digits for any
@@ -667,15 +678,9 @@ new_blobs <- function() {
 
 blob_bucket <- function(v, kind, f32) {
   n <- length(v)
-  ends <- if (n) c(v[[1L]], v[[n]]) else numeric()
-  paste(
-    kind,
-    f32,
-    typeof(v),
-    n,
-    paste(format(ends, digits = 17L), collapse = ","),
-    sep = "|"
-  )
+  # %a: the end values exactly (hex), and much quicker than format()
+  ends <- if (n) as.double(c(v[[1L]], v[[n]])) else c(0, 0)
+  sprintf("%s|%d|%s|%d|%a|%a", kind, f32, typeof(v), n, ends[[1L]], ends[[2L]])
 }
 
 # Like convert_to_base64(): only named entries are encoded, unnamed lists

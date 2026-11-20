@@ -514,3 +514,42 @@ if (
   want[is.na(want)] <- "null"
   stopifnot(identical(unlist(got), want))
 }
+
+# the C JSON writer writes what jsonlite would
+cases <- list(
+  list(
+    a = NULL,
+    b = list(),
+    c = setNames(list(), character()),
+    d = NA,
+    e = NA_character_,
+    f = 1L,
+    g = c(TRUE, NA),
+    h = I(2L),
+    i = list(NULL, 1L)
+  ),
+  list(
+    s = paste0("a\"b\\c/ </script> é€", intToUtf8(c(1:31, 127))),
+    n = c(0.1, 1 / 3, 1e-300, Inf, NaN, NA, -0),
+    m = matrix(c(1.5, 2, 3, 4), 2),
+    one = 3.14,
+    onei = I(3.14)
+  ),
+  list(
+    d = as.Date("2020-01-02"),
+    dt = as.POSIXct("2020-01-02 03:04:05", tz = "UTC"),
+    lt = as.POSIXlt("2020-01-02 03:04:05", tz = "UTC"),
+    il = I(list(1, "a")),
+    f = factor(c("x", "y")),
+    df = data.frame(a = 1:2, b = c("p", "q")),
+    j = structure("{\"x\":1}", class = "json"),
+    cm = matrix(c("a", "b"), 1),
+    f32 = as_float32(c(0.1, 0.2))
+  )
+)
+for (x in cases) {
+  stopifnot(identical(
+    as.character(plotly.core:::to_JSON(x)),
+    as.character(plotly.core:::to_JSON_jsonlite(x))
+  ))
+}
