@@ -634,6 +634,26 @@ RE_SPACES_TO_REMOVE <- "(?<!(\\d|%|g)) | (?!\\d)"
 # unchanged; R color names (e.g. "gray50") are converted to rgba() strings.
 # Invalid colors become NA_character_ (input NAs stay NA).
 coerce_colors <- function(x) {
+  # a single colour (as each trace of a colour mapping has): cached, as the
+  # same few colours are checked again and again
+  if (length(x) == 1L && is.character(x) && !is.na(x)) {
+    if (is.null(the$color_cache)) {
+      the$color_cache <- new.env(hash = TRUE, parent = emptyenv())
+    }
+    hit <- the$color_cache[[x]]
+    if (!is.null(hit)) {
+      return(hit)
+    }
+    out <- coerce_colors_(x)
+    if (length(the$color_cache) < 10000L) {
+      assign(x, out, envir = the$color_cache)
+    }
+    return(out)
+  }
+  coerce_colors_(x)
+}
+
+coerce_colors_ <- function(x) {
   u <- unique(x[!is.na(x)])
   norm <- tolower(gsub(
     RE_SPACES_TO_REMOVE,
@@ -860,6 +880,19 @@ vc_flaglist <- function(v, key, entry, skip_invalid = FALSE) {
     raise_invalid_val(v, key, entry)
   }
   check_scalar_or_array(v, key, entry)
+  # a single value already in canonical form ("markers", "lines+markers"):
+  # the common case, checked without regular expressions
+  if (length(v) == 1L && !is.na(v)) {
+    if (
+      v %in% entry$flags || v %in% unlist(Filter(is.character, entry$extras))
+    ) {
+      return(v)
+    }
+    parts <- strsplit(v, "+", fixed = TRUE)[[1L]]
+    if (length(parts) > 1L && all(parts %in% entry$flags)) {
+      return(v)
+    }
+  }
   u <- unique(v[!is.na(v)])
   coerce1 <- function(s) {
     s <- trimws(s)

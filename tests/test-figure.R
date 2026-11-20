@@ -458,3 +458,29 @@ stopifnot(
   length(f$layout$shapes) == 2L,
   identical(f$layout$shapes[[2L]]$x0, 2L)
 )
+
+# without a data frame: formulas refer to vectors, which are split by group
+xv <- c(1, 2, 3, 4)
+gv <- c("b", "a", "b", "a")
+f <- go_figure() |>
+  add_scattergl(
+    x = ~xv,
+    y = ~xv,
+    mode = "markers",
+    marker = go_scattergl_marker(opacity = 0.5, color = ~gv)
+  )
+stopifnot(
+  identical(vapply(f$data, `[[`, "", "name"), c("a", "b")),
+  identical(f$data[[1L]]$x, c(2, 4)),
+  identical(f$data[[2L]]$marker$opacity, 0.5)
+)
+# per-point vectors given with split are split too
+f <- go_figure() |>
+  add_scatter(x = 1:4, y = c(1, 3, 2, 4), text = letters[1:4], split = gv)
+stopifnot(
+  identical(f$data[[1L]]$text, c("b", "d")),
+  identical(f$data[[2L]]$x, c(1L, 3L))
+)
+d <- data.frame(x = 1:4, g = gv)
+f <- d |> go_figure() |> add_scatter(x = ~x, y = c(10, 20, 30, 40), split = ~g)
+stopifnot(identical(f$data[[1L]]$y, c(20, 40)))

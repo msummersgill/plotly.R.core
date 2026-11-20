@@ -574,18 +574,17 @@ to_JSON <- function(x, ...) {
 # once: its first spec gets `"bid": k` and later ones are {"bref": k}, which
 # the widget's JavaScript turns back into the same object.
 widget_to_JSON <- function(x, ...) {
-  blobs <- new.env(parent = emptyenv())
-  blobs$list <- list()
-  blobs$seen <- list()
+  blobs <- new_blobs()
   if (is.list(x[["x"]])) {
     x[["x"]] <- b64_figure(x[["x"]], blobs)
   } else {
     x <- b64_figure(x, blobs)
   }
   json <- to_JSON(x, ...)
-  if (!length(blobs$list)) {
+  if (!blobs$n) {
     return(json)
   }
+  blobs$list <- mget(as.character(seq_len(blobs$n)), envir = blobs$data)
   for (k in unique(blobs$reused)) {
     # after the bdata string of the first spec: ,"bid":k
     blobs$list[[k]] <- c(blobs$list[[k]], charToRaw(paste0(',"bid":', k)))
@@ -628,15 +627,13 @@ b64_traces <- function(traces, blobs = NULL, dates = TRUE) {
 # which is quick for the same vector) were encoded before as blob k.
 shared_spec <- function(v, kind, blobs) {
   f32 <- kind == "array" && isTRUE(getOption("plotly.core.float32"))
-  for (s in blobs$seen) {
-    if (
-      s$kind == kind &&
-        s$f32 == f32 &&
-        length(s$v) == length(v) &&
-        identical(s$v, v)
-    ) {
-      blobs$reused <- c(blobs$reused, s$k)
-      return(list(bref = s$k))
+  # arrays seen before, bucketed by kind, length and end values, so only
+  # likely matches are compared (identical() is quick for the same vector)
+  bucket <- blob_bucket(v, kind, f32)
+  for (k in blobs$index[[bucket]]) {
+    if (identical(blobs$seen[[as.character(k)]], v)) {
+      blobs$reused <- c(blobs$reused, k)
+      return(list(bref = k))
     }
   }
   spec <- if (kind == "date") {
@@ -647,16 +644,38 @@ shared_spec <- function(v, kind, blobs) {
   if (is.null(spec)) {
     return(NULL)
   }
-  k <- length(blobs$list) + 1L
-  blobs$list[[k]] <- spec$bdata
-  blobs$seen[[length(blobs$seen) + 1L]] <- list(
-    v = v,
-    kind = kind,
-    f32 = f32,
-    k = k
-  )
+  k <- blobs$n <- blobs$n + 1L
+  key <- as.character(k)
+  assign(key, spec$bdata, envir = blobs$data)
+  assign(key, v, envir = blobs$seen)
+  blobs$index[[bucket]] <- c(blobs$index[[bucket]], k)
   spec$bdata <- structure(paste0("\001", k, "\001"), class = "json")
   spec
+}
+
+# The blobs of widget_to_JSON(): environments (hash tables) of the encoded
+# arrays (`data`, by number), the values they encode (`seen`) and the
+# numbers of the arrays in each bucket (`index`).
+new_blobs <- function() {
+  blobs <- new.env(parent = emptyenv())
+  blobs$n <- 0L
+  blobs$data <- new.env(hash = TRUE, parent = emptyenv())
+  blobs$seen <- new.env(hash = TRUE, parent = emptyenv())
+  blobs$index <- new.env(hash = TRUE, parent = emptyenv())
+  blobs
+}
+
+blob_bucket <- function(v, kind, f32) {
+  n <- length(v)
+  ends <- if (n) c(v[[1L]], v[[n]]) else numeric()
+  paste(
+    kind,
+    f32,
+    typeof(v),
+    n,
+    paste(format(ends, digits = 17L), collapse = ","),
+    sep = "|"
+  )
 }
 
 # Like convert_to_base64(): only named entries are encoded, unnamed lists

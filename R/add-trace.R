@@ -22,36 +22,151 @@ add_trace_with_data <- function(
   raw$type <- NULL
   n_before <- length(fig$data)
   groups <- trace_groups(raw, data, split, fig)
+  has_data <- is.data.frame(data)
+  # without a data frame, formulas refer to vectors in their environment:
+  # evaluate them once, and subset their values for each group
+  full <- if (!has_data && !is.null(groups[[1L]]$rows)) {
+    eval_trace(raw, data)
+  }
 
-  rows <- if (is.data.frame(data)) seq_len(nrow(data))
+  rows <- if (has_data) seq_len(nrow(data))
   added <- list()
+  traces <- list()
+  # the columns the formulas use, split into the groups in one pass (rather
+  # than subsetting the data frame for each group)
+  group_cols <- NULL
+  if (has_data && length(groups) > 1L) {
+    tr1 <- raw
+    for (p in groups[[1L]]$colors) {
+      tr1 <- set_path(tr1, p$path, p$color)
+    }
+    cols <- unclass(data)[intersect(names(data), formula_vars(tr1))]
+    # many groups: split each column in one pass; a few: subset per group
+    if (length(groups) > 50L) {
+      gid <- attr(groups, "id")
+      group_cols <- lapply(cols, function(col) unname(split(col, gid)))
+    }
+  }
   for (g in groups) {
     tr <- raw
     for (p in g$colors) {
       tr <- set_path(tr, p$path, p$color)
     }
-    sub <- if (is.null(g$rows)) data else data[g$rows, , drop = FALSE]
-    vals <- tr
-    vals[] <- lapply(names(tr), function(n) eval_formulas(tr[[n]], sub, n))
+    gi <- length(traces) + 1L
+    sub <- if (!is.null(group_cols)) {
+      lapply(group_cols, `[[`, gi)
+    } else if (has_data && !is.null(g$rows)) {
+      lapply(cols, `[`, g$rows)
+    } else {
+      data
+    }
+    vals <- if (!is.null(full)) {
+      subset_per_point(full, tr, g$rows, g$n, type)
+    } else {
+      eval_trace(tr, sub)
+    }
+    # vectors given for per-point properties are split like the data
+    if (!is.null(g$rows) && is.null(full)) {
+      vals <- subset_per_point(vals, tr, g$rows, g$n, type, formulas = FALSE)
+    }
     vals <- collapse_constant(vals, raw, type)
     vals <- data_defaults(vals, raw, type, g$label)
-    trace <- plotly_object(type, vals, skip_invalid = skip_invalid, data = sub)
-    before <- length(fig$data)
-    fig <- add_trace(
+    traces[[length(traces) + 1L]] <- plotly_object(
+      type,
+      vals,
+      skip_invalid = skip_invalid,
+      data = sub
+    )
+  }
+  # added together: adding traces one at a time copies the figure's traces
+  # each time
+  multi_cell <- !is.null(row) && is_multi_cell(row, col)
+  if (multi_cell || length(traces) == 1L) {
+    for (i in seq_along(traces)) {
+      before <- length(fig$data)
+      fig <- add_trace(
+        fig,
+        traces[[i]],
+        row = row,
+        col = col,
+        secondary_y = secondary_y
+      )
+      added[[i]] <- list(
+        traces = seq_len(length(fig$data) - before) + before,
+        rows = groups[[i]]$rows %||% rows
+      )
+    }
+  } else {
+    m <- length(traces)
+    fig <- add_traces(
       fig,
-      trace,
-      row = row,
-      col = col,
-      secondary_y = secondary_y
+      traces,
+      rows = if (!is.null(row)) rep(row, m),
+      cols = if (!is.null(col)) rep(col, m),
+      secondary_ys = if (!is.null(secondary_y)) rep(secondary_y, m)
     )
-    added[[length(added) + 1L]] <- list(
-      traces = seq_len(length(fig$data) - before) + before,
-      rows = g$rows %||% rows
-    )
+    added <- lapply(seq_len(m), function(i) {
+      list(traces = n_before + i, rows = groups[[i]]$rows %||% rows)
+    })
   }
 
   fig <- link_split_traces(fig, data, n_before, groups, added)
   layout_defaults(fig, raw, data, n_before, env)
+}
+
+# The variables a trace's formulas refer to.
+formula_vars <- function(x) {
+  x <- if (inherits(x, "plotly_obj")) unclass(x) else x
+  if (inherits(x, "formula")) {
+    return(all.vars(x))
+  }
+  if (is.list(x) && !is.data.frame(x)) {
+    return(unique(unlist(lapply(x, formula_vars), use.names = FALSE)))
+  }
+  character()
+}
+
+# The trace's properties with their formulas evaluated in `data`.
+eval_trace <- function(tr, data) {
+  vals <- tr
+  vals[] <- lapply(names(tr), function(n) eval_formulas(tr[[n]], data, n))
+  vals
+}
+
+# `vals` (the evaluated trace `tr`) with its per-point values subset to
+# `rows`: values with one element per point (`n`) of properties that take
+# arrays. `formulas = FALSE` leaves formula values alone (already evaluated
+# in the group's rows). Properties `tr` sets (the group's colours) are taken
+# from `tr`.
+subset_per_point <- function(vals, tr, rows, n, key, formulas = TRUE) {
+  tr <- if (inherits(tr, "plotly_obj")) unclass(tr) else tr
+  vals <- if (inherits(vals, "plotly_obj")) unclass(vals) else vals
+  for (nm in names(tr)) {
+    t <- tr[[nm]]
+    k <- paste(key, nm, sep = ".")
+    is_f <- inherits(t, "formula")
+    if (!is_f && is.list(t) && !is.data.frame(t)) {
+      if (is.list(vals[[nm]])) {
+        vals[[nm]] <- subset_per_point(vals[[nm]], t, rows, n, k, formulas)
+      }
+      next
+    }
+    if (!is_f) {
+      vals[nm] <- list(t)
+    }
+    v <- vals[[nm]]
+    if ((formulas || !is_f) && is.atomic(v) && length(v) == n && per_point(k)) {
+      vals[[nm]] <- v[rows]
+    }
+  }
+  vals
+}
+
+# Whether the property at schema key `key` takes one value per point.
+per_point <- function(key) {
+  v <- get_validator(key)
+  !is.null(v) &&
+    (identical(v$superclass, "DataArrayValidator") || isTRUE(v$array_ok))
 }
 
 # A formula for a property that takes one value (legendgroup = ~g) gives one
@@ -80,43 +195,44 @@ collapse_constant <- function(vals, raw, type) {
 # Each group has its rows (NULL: all), a label and the colours to set.
 trace_groups <- function(raw, data, split, fig) {
   single <- list(list(rows = NULL, label = NULL, colors = list()))
-  if (!is.data.frame(data)) {
-    if (!is.null(split)) {
-      stop(
-        "`split` needs data: pass `data` or pipe a data frame into go_figure()",
-        call. = FALSE
-      )
-    }
-    return(single)
-  }
+  # formulas without a data frame are evaluated in their environment
+  data_df <- if (is.data.frame(data)) data
   keys <- list()
   if (!is.null(split)) {
-    keys$split <- list(values = split_values(split, data))
+    v <- split_values(split, data_df)
+    keys$split <- list(values = v, factor = group_factor(v))
   }
   for (path in color_formula_paths(raw)) {
-    v <- eval_formulas(get_path(raw, path), data, paste(path, collapse = "."))
-    if (is_discrete_color(v)) {
-      keys[[paste(path, collapse = ".")]] <- list(values = v, path = path)
+    v <- eval_formulas(
+      get_path(raw, path),
+      data_df,
+      paste(path, collapse = ".")
+    )
+    f <- discrete_color_factor(v)
+    if (!is.null(f)) {
+      keys[[paste(path, collapse = ".")]] <- list(
+        values = v,
+        factor = f,
+        path = path
+      )
     }
   }
   if (!length(keys)) {
     return(single)
   }
-  n <- nrow(data)
+  n <- if (!is.null(data_df)) nrow(data_df) else length(keys[[1L]]$values)
   for (k in names(keys)) {
-    v <- keys[[k]]$values
-    if (length(v) != n) {
+    if (length(keys[[k]]$values) != n) {
       stop(
         sprintf(
-          "`%s` has %d values, not one per row of the data (%d)",
+          "`%s` has %d values, not one per point (%d)",
           k,
-          length(v),
+          length(keys[[k]]$values),
           n
         ),
         call. = FALSE
       )
     }
-    keys[[k]]$factor <- if (is.factor(v)) droplevels(v) else factor(v)
   }
   # colours of each discrete colour column's levels
   for (k in setdiff(names(keys), "split")) {
@@ -126,28 +242,46 @@ trace_groups <- function(raw, data, split, fig) {
       levels(f)
     )
   }
-  # one group per combination present, in level order
+  # one group per combination present, in level order; rows found in one
+  # pass over the data
   facs <- lapply(keys, `[[`, "factor")
-  id <- interaction(facs, drop = TRUE, lex.order = TRUE, sep = "\r")
-  lapply(levels(id), function(lev) {
-    rows <- which(id == lev)
-    parts <- strsplit(lev, "\r", fixed = TRUE)[[1L]]
-    names(parts) <- names(keys)
+  id <- if (length(facs) == 1L) {
+    facs[[1L]]
+  } else {
+    interaction(facs, drop = TRUE, lex.order = TRUE)
+  }
+  groups <- split(seq_len(n), id, drop = TRUE)
+  out <- lapply(groups, function(rows) {
+    parts <- vapply(facs, function(f) as.character(f[[rows[[1L]]]]), "")
     list(
       rows = rows,
+      n = n,
       label = paste(unique(parts), collapse = ", "),
       colors = lapply(setdiff(names(keys), "split"), function(k) {
         list(path = keys[[k]]$path, color = keys[[k]]$palette[[parts[[k]]]])
       })
     )
   })
+  # the group of each point, for splitting columns in one pass
+  structure(unname(out), id = id)
+}
+
+# Group values as a factor with only the levels present (factor levels in
+# order, other values sorted).
+group_factor <- function(v) {
+  if (is.factor(v)) droplevels(v) else factor(v)
 }
 
 split_values <- function(split, data) {
   if (inherits(split, "formula")) {
     return(eval_formulas(split, data, "split"))
   }
-  if (is.character(split) && length(split) == 1L && split %in% names(data)) {
+  if (
+    is.data.frame(data) &&
+      is.character(split) &&
+      length(split) == 1L &&
+      split %in% names(data)
+  ) {
     return(data[[split]])
   }
   split
@@ -172,14 +306,19 @@ color_formula_paths <- function(x, path = character()) {
   out
 }
 
-# A colour column to map to discrete colours: a factor, logical, or
-# character values that aren't all CSS colours ("red", "#ff0000",
-# "rgb(...)") themselves.
-is_discrete_color <- function(v) {
+# A colour column to map to discrete colours, as a group factor (NULL if it
+# isn't one): a factor, logical, or character values that aren't all CSS
+# colours ("red", "#ff0000", "rgb(...)") themselves. Only the distinct
+# values are checked.
+discrete_color_factor <- function(v) {
   if (is.factor(v) || is.logical(v)) {
-    return(TRUE)
+    return(group_factor(v))
   }
-  is.character(v) && !all(is_css_color(unique(v[!is.na(v)])))
+  if (!is.character(v)) {
+    return(NULL)
+  }
+  f <- factor(v)
+  if (all(is_css_color(levels(f)))) NULL else f
 }
 
 is_css_color <- function(x) {
@@ -342,8 +481,8 @@ layout_defaults <- function(fig, raw, data, n_before, env = NULL) {
 
 # A property's value as given (validation turns factors into character).
 given_value <- function(raw, name, data, env) {
-  if (is.data.frame(data) && inherits(raw[[name]], "formula")) {
-    eval_formulas(raw[[name]], data, name)
+  if (inherits(raw[[name]], "formula")) {
+    eval_formulas(raw[[name]], if (is.data.frame(data)) data, name)
   } else if (!is.null(env) && exists(name, envir = env, inherits = FALSE)) {
     get(name, envir = env, inherits = FALSE)
   }

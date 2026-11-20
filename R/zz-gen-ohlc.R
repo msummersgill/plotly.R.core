@@ -145,12 +145,14 @@
 #'   have no effect. Any value.
 #' @param showlegend Determines whether or not an item corresponding to
 #'   this trace is shown in the legend. Logical.
-#' @param split A column (\code{~col}) or vector, one value per row of the
-#'   data: one trace is added per value, named after it. Colour properties
-#'   given a discrete column (a factor, character or logical, e.g.
-#'   \code{marker = go_scatter_marker(color = ~group)}) split the data the
-#'   same way, each trace getting its own colour: evenly spaced viridis
-#'   colours for an ordered factor, otherwise the figure's colorway.
+#' @param split A column (\code{~col}) or vector with one value per point
+#'   (per row of the data, or of the vectors formulas refer to without
+#'   data): one trace is added per value, named after it, with the
+#'   per-point values split accordingly. Colour properties given a discrete
+#'   column (a factor, character or logical, e.g. \code{marker =
+#'   go_scatter_marker(color = ~group)}) split the data the same way, each
+#'   trace getting its own colour: evenly spaced viridis colours for an
+#'   ordered factor, otherwise the figure's colorway.
 #' @param text Sets hover text elements associated with each sample point.
 #'   If a single string, the same string appears over all the data points.
 #'   If an array of string, the items are mapped in order to this trace's
