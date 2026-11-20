@@ -484,3 +484,37 @@ stopifnot(
 d <- data.frame(x = 1:4, g = gv)
 f <- d |> go_figure() |> add_scatter(x = ~x, y = c(10, 20, 30, 40), split = ~g)
 stopifnot(identical(f$data[[1L]]$y, c(20, 40)))
+
+# groups after the first are filled into a validated template trace
+d <- data.frame(
+  x = 1:6,
+  y = c(2, 5, 3, 1, 4, 6),
+  g = c("a", "b", "a", "c", "b", "c"),
+  s = c(5, 10, 15, 20, 25, 30)
+)
+f <- d |>
+  go_figure() |>
+  add_scatter(
+    x = ~x,
+    y = ~y,
+    mode = "markers",
+    marker = go_scatter_marker(color = ~g, size = ~s, opacity = 0.5),
+    legendgroup = ~g
+  )
+stopifnot(
+  identical(vapply(f$data, `[[`, "", "legendgroup"), c("a", "b", "c")),
+  identical(f$data[[3L]]$marker$size, c(20, 30)),
+  identical(f$data[[2L]]$marker$opacity, 0.5),
+  inherits(f$data[[2L]]$marker, "go_scatter_marker")
+)
+# an invalid value in a later group is still reported
+expect_error(
+  d |>
+    go_figure() |>
+    add_scatter(
+      x = ~x,
+      y = ~y,
+      marker = go_scatter_marker(color = ~g, size = ~ ifelse(g == "c", -1, s))
+    ),
+  "size"
+)

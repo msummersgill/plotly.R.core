@@ -93,6 +93,11 @@ validate_coerce <- function(
       }
     )
   }
+  # in vc_compound()'s optimistic pass, errors are reported by its careful
+  # pass instead
+  if (isTRUE(the$optimistic)) {
+    return(validate_coerce_by_type(v, key, entry, skip_invalid))
+  }
   # validators convert values before checking them (numbers to strings, ...):
   # errors about the whole value report it as it was given
   tryCatch(
@@ -1056,6 +1061,24 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
   if (inherits(v, entry$data_class)) {
     return(v)
   } # already validated
+  # Validation is optimistic: a first pass without per-property error
+  # handlers (each costs a few microseconds, which adds up over thousands of
+  # traces); only if it fails is the object validated again carefully, to
+  # report every invalid property and the values as they were given.
+  if (!skip_invalid && !isTRUE(the$optimistic)) {
+    the$optimistic <- TRUE
+    res <- tryCatch(
+      vc_compound(v, key, entry),
+      error = function(e) e,
+      finally = the$optimistic <- FALSE
+    )
+    if (!inherits(res, "error")) {
+      return(res)
+    }
+    if (!inherits(res, INVALID_CONDITIONS)) {
+      stop(res)
+    }
+  }
   if (inherits(v, "plotly_obj") && !inherits(v, "plotly_shared")) {
     # an object made for another place: only where the schema has that object
     # (go_xaxis() in xaxis2), or one of the same shared type (a scene xaxis
@@ -1136,7 +1159,7 @@ vc_compound <- function(v, key, entry, skip_invalid = FALSE) {
   # invalid properties and values, all reported together (see raise_collected())
   problems <- list()
   collect <- function(expr) {
-    if (skip_invalid) {
+    if (skip_invalid || isTRUE(the$optimistic)) {
       return(expr)
     }
     tryCatch(expr, error = function(e) {

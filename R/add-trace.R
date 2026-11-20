@@ -32,6 +32,7 @@ add_trace_with_data <- function(
   rows <- if (has_data) seq_len(nrow(data))
   added <- list()
   traces <- list()
+  template <- varying <- NULL
   # the columns the formulas use, split into the groups in one pass (rather
   # than subsetting the data frame for each group)
   group_cols <- NULL
@@ -71,12 +72,24 @@ add_trace_with_data <- function(
     }
     vals <- collapse_constant(vals, raw, type)
     vals <- data_defaults(vals, raw, type, g$label)
-    traces[[length(traces) + 1L]] <- plotly_object(
-      type,
-      vals,
-      skip_invalid = skip_invalid,
-      data = sub
-    )
+    # the first group's trace is validated in full; the others are copies of
+    # it with the properties that differ between groups validated
+    trace <- if (!is.null(template)) {
+      fill_template(template, vals, varying, type, skip_invalid)
+    }
+    if (is.null(trace)) {
+      trace <- plotly_object(
+        type,
+        vals,
+        skip_invalid = skip_invalid,
+        data = sub
+      )
+      if (length(groups) > 1L && !skip_invalid) {
+        template <- trace
+        varying <- varying_paths(raw, g, groups, type)
+      }
+    }
+    traces[[length(traces) + 1L]] <- trace
   }
   # added together: adding traces one at a time copies the figure's traces
   # each time
@@ -112,6 +125,75 @@ add_trace_with_data <- function(
 
   fig <- link_split_traces(fig, data, n_before, groups, added)
   layout_defaults(fig, raw, data, n_before, env)
+}
+
+# The paths of a trace's properties that can differ between groups: its
+# formulas (evaluated per group), per-point vectors (split per group), the
+# groups' colours, and the name.
+varying_paths <- function(raw, g, groups, type) {
+  paths <- list("name")
+  walk <- function(x, path) {
+    x <- if (inherits(x, "plotly_obj")) unclass(x) else x
+    for (nm in names(x)) {
+      v <- x[[nm]]
+      p <- c(path, nm)
+      if (inherits(v, "formula")) {
+        paths[[length(paths) + 1L]] <<- p
+      } else if (is.list(v) && !is.data.frame(v)) {
+        walk(v, p)
+      } else if (
+        is.atomic(v) &&
+          length(v) == g$n &&
+          per_point(paste(c(type, p), collapse = "."))
+      ) {
+        paths[[length(paths) + 1L]] <<- p
+      }
+    }
+  }
+  walk(raw, character())
+  c(paths, lapply(g$colors, `[[`, "path"))
+}
+
+# `template` (a validated trace) with the values of `vals` at `paths`
+# validated and set; NULL (validate in full) if a path's object isn't in
+# the template.
+fill_template <- function(template, vals, paths, type, skip_invalid) {
+  out <- template
+  for (p in paths) {
+    parent <- p[-length(p)]
+    if (length(parent) && !inherits(get_path(out, parent), "plotly_obj")) {
+      return(NULL)
+    }
+    v <- get_path(vals, p)
+    if (!is.null(v)) {
+      v <- validate_coerce(
+        v,
+        paste(c(type, p), collapse = "."),
+        skip_invalid = skip_invalid
+      )
+    }
+    out <- set_validated(out, p, v)
+  }
+  out
+}
+
+# Set the validated `value` at `path` of the graph object `x`, keeping the
+# objects' classes.
+set_validated <- function(x, path, value) {
+  cls <- class(x)
+  x <- unclass(x)
+  x[path[[1L]]] <- list(
+    if (length(path) == 1L) {
+      value
+    } else {
+      set_validated(x[[path[[1L]]]], path[-1L], value)
+    }
+  )
+  if (is.null(x[[path[[1L]]]])) {
+    x[[path[[1L]]]] <- NULL
+  }
+  class(x) <- cls
+  x
 }
 
 # The variables a trace's formulas refer to.
