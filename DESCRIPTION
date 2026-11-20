@@ -71,6 +71,29 @@ Suggests:
     shiny,
     systemfonts
 VignetteBuilder: quarto
+Config/Needs/website:
+    class,
+    dplyr,
+    e1071,
+    geojsonsf,
+    ggplot2,
+    ggrepel,
+    igraph,
+    jpeg,
+    jsonlite,
+    MASS,
+    mvtnorm,
+    nnet,
+    plyr,
+    pracma,
+    RColorBrewer,
+    readr,
+    reshape2,
+    scales,
+    sf,
+    stringr,
+    tidyr,
+    viridisLite
 URL: https://msummersgill.github.io/plotly.R.core/, https://github.com/msummersgill/plotly.R.core
 BugReports: https://github.com/msummersgill/plotly.R.core/issues
 Encoding: UTF-8

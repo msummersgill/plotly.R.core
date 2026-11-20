@@ -1,0 +1,154 @@
+---
+title: "Mapbox Choropleth Maps"
+description: "How to make a Mapbox Choropleth Map of US Counties in R with Plotly."
+display_as: maps
+order: 7
+source: 2020-01-30-choropleth-rmapbox.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning=FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+
+A [Choropleth Map](https://en.wikipedia.org/wiki/Choropleth_map) is a map composed of colored polygons. It is used to represent spatial variations of a quantity. This page documents how to build **tile-map** choropleth maps, but you can also build [**outline** choropleth maps using the `choropleth` trace type](choropleth-maps.html).
+
+Below we show how to create Choropleth Maps using the plotly.core `add_choroplethmap()` trace (see `go_choroplethmap()`).
+
+### Base Map Configuration
+
+plotly.core bundles plotly.js 4, where the Mapbox-based `choroplethmapbox` trace was replaced by the MapLibre-based `choroplethmap` trace. Base map styles such as `"carto-positron"` and `"open-street-map"` need no access token. See our [Map Layers](mapbox-layers.html) documentation for more information.
+
+### Introduction: main parameters for choropleth tile maps
+
+Making choropleth tile maps requires two main types of input:
+
+1. GeoJSON-formatted geometry information where each feature has either an `id` field or some identifying value in `properties`.
+2. A list of values indexed by feature identifier.
+
+The GeoJSON data is passed to the `geojson` argument, and the data is passed into the `z` argument of `add_choroplethmap()`.
+
+**Note** the `geojson` attribute can also be the URL to a GeoJSON file, which can speed up map rendering in certain cases.
+
+#### GeoJSON with `feature.id`
+
+Here we load a GeoJSON file containing the geometry information for US counties, where `feature.id` is a [FIPS code](https://en.wikipedia.org/wiki/FIPS_county_code).
+
+```{r}
+library(jsonlite)
+url <- "https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json"
+json_file <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+json_file$features[[1]]$id
+```
+
+### Data indexed by `id`
+
+Here we load unemployment data by county, also indexed by [FIPS code](https://en.wikipedia.org/wiki/FIPS_county_code).
+
+```{r}
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv", header = T, colClasses = c("fips" = "character"))
+head(df)
+```
+### Tile Map Choropleth Map Using GeoJSON
+
+With `choroplethmap`, each row of the data frame is represented as a region of the choropleth.
+
+```{r}
+library(jsonlite)
+library(plotly.core)
+
+url <- "https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json"
+counties <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+url2 <- "https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv"
+df <- read.csv(url2, colClasses = c(fips = "character"))
+fig <- go_figure() |>
+  add_choroplethmap(
+    geojson = counties,
+    locations = df$fips,
+    z = df$unemp,
+    colorscale = "Viridis",
+    zmin = 0,
+    zmax = 12,
+    marker = go_choroplethmap_marker(
+      line = go_choroplethmap_marker_line(width = 0),
+      opacity = 0.5
+    )
+  ) |>
+  update_layout(
+    map = go_map(
+      style = "carto-positron",
+      zoom = 2,
+      center = go_map_center(lon = -95.71, lat = 37.09)
+    )
+  )
+fig
+```
+
+### Tile Map Choropleth Map Using GeoJSON with `featureidkey`
+If the GeoJSON you are using either does not have an `id` field or you wish you use one of the keys in the `properties` field, you may use the `featureidkey` parameter to specify where to match the values of locations.
+
+In the following GeoJSON object/data-file pairing, the values of `properties.district` match the values of the `district` column:
+```{r}
+library(plotly.core)
+library(jsonlite)
+
+url <- "https://raw.githubusercontent.com/plotly/datasets/master/election.geojson"
+geojson <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+url2 <- "https://raw.githubusercontent.com/plotly/datasets/master/election.csv"
+df <- read.csv(url2)
+fig <- go_figure() |>
+  add_choroplethmap(
+    geojson = geojson,
+    locations = df$district,
+    z = df$Bergeron,
+    colorscale = "Viridis",
+    featureidkey = "properties.district",
+    colorbar = go_colorbar(title = "Bergeron Votes")
+  ) |>
+  update_layout(
+    map = go_map(
+      style = "carto-positron",
+      zoom = 9,
+      center = go_map_center(lon = -73.7073, lat = 45.5517)
+    )
+  )
+fig
+```
+
+#### Carto Voyager base map: no token needed
+
+```{r}
+library(jsonlite)
+library(plotly.core)
+
+url <- "https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json"
+counties <- jsonlite::fromJSON(url, simplifyVector = FALSE)
+url2 <- "https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv"
+df <- read.csv(url2, colClasses = c(fips = "character"))
+
+fig <- go_figure() |>
+  add_choroplethmap(
+    geojson = counties,
+    locations = df$fips,
+    z = df$unemp,
+    colorscale = "Viridis",
+    zmin = 0,
+    zmax = 12,
+    marker = go_choroplethmap_marker(
+      line = go_choroplethmap_marker_line(width = 0),
+      opacity = 0.5
+    )
+  ) |>
+  update_layout(
+    map = go_map(
+      style = "carto-voyager",
+      zoom = 3,
+      center = go_map_center(lon = -95.7129, lat = 37.0902)
+    )
+  )
+fig
+```
+#Reference
+
+See `go_choroplethmap()` for more information and options!

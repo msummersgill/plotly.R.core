@@ -1,0 +1,380 @@
+---
+title: "Filled Area Plots"
+description: "How to make a filled area plot in R. An area chart displays a solid color between the traces of a graph."
+display_as: basic
+order: 7
+source: 2015-07-30-filled-area-plots.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning=FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+### Basic Filled Area Plot
+
+To make an area plot with interior filling set `fill` to `"tozeroy"` in the call for the second trace.
+For more informations and options about the `fill` option checkout `go_scatter()`
+
+```{r}
+library(plotly.core)
+
+density <- density(ggplot2::diamonds$carat)
+
+fig <- go_figure() |>
+  add_scatter(x = density$x, y = density$y, mode = "lines", fill = "tozeroy") |>
+  update_layout(
+    xaxis = go_xaxis(title = "Carat"),
+    yaxis = go_yaxis(title = "Density")
+  )
+
+fig
+```
+
+### Filled Area Plot with Multiple Traces
+
+To make a filled area plot set `fill` to `"tozeroy"`.
+
+```{r}
+library(plotly.core)
+
+diamonds <- ggplot2::diamonds
+diamonds1 <- diamonds[which(diamonds$cut == "Fair"), ]
+density1 <- density(diamonds1$carat)
+
+diamonds2 <- diamonds[which(diamonds$cut == "Ideal"), ]
+density2 <- density(diamonds2$carat)
+
+fig <- go_figure() |>
+  add_scatter(
+    x = density1$x,
+    y = density1$y,
+    mode = "lines",
+    name = "Fair cut",
+    fill = "tozeroy"
+  ) |>
+  add_scatter(
+    x = density2$x,
+    y = density2$y,
+    mode = "lines",
+    name = "Ideal cut",
+    fill = "tozeroy"
+  ) |>
+  update_layout(
+    xaxis = go_xaxis(title = "Carat"),
+    yaxis = go_yaxis(title = "Density")
+  )
+
+fig
+```
+
+### Selecting Hover Points 
+
+```{r}
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scatter(
+    x = c(0, 0.5, 1, 1.5, 2),
+    y = c(0, 1, 2, 1, 0),
+    fill = "toself",
+    fillcolor = "#ab63fa",
+    hoveron = "points+fills",
+    marker = go_scatter_marker(color = "#ab63fa"),
+    line = go_scatter_line(color = "#ab63fa"),
+    text = "Points + Fills",
+    hoverinfo = "text"
+  ) |>
+  add_scatter(
+    x = c(3, 3.5, 4, 4.5, 5),
+    y = c(0, 1, 2, 1, 0),
+    fill = "toself",
+    fillcolor = "#e763fa",
+    hoveron = "points",
+    marker = go_scatter_marker(color = "#e763fa"),
+    line = go_scatter_line(color = "#e763fa"),
+    text = "Points only",
+    hoverinfo = "text"
+  ) |>
+  update_layout(
+    title = "hover on <i>points</i> or <i>fill</i>",
+    xaxis = go_xaxis(range = c(0, 5.2)),
+    yaxis = go_yaxis(range = c(0, 3))
+  )
+
+fig
+```
+
+### Custom Colors
+
+```{r}
+library(plotly.core)
+
+diamonds <- ggplot2::diamonds
+diamonds1 <- diamonds[which(diamonds$cut == "Fair"), ]
+density1 <- density(diamonds1$carat)
+
+diamonds2 <- diamonds[which(diamonds$cut == "Ideal"), ]
+density2 <- density(diamonds2$carat)
+
+fig <- go_figure() |>
+  add_scatter(
+    x = density1$x,
+    y = density1$y,
+    mode = "lines",
+    name = "Fair cut",
+    fill = "tozeroy",
+    fillcolor = "rgba(168, 216, 234, 0.5)",
+    line = go_scatter_line(width = 0.5)
+  ) |>
+  add_scatter(
+    x = density2$x,
+    y = density2$y,
+    mode = "lines",
+    name = "Ideal cut",
+    fill = "tozeroy",
+    fillcolor = "rgba(255, 212, 96, 0.5)"
+  ) |>
+  update_layout(
+    xaxis = go_xaxis(title = "Carat"),
+    yaxis = go_yaxis(title = "Density")
+  )
+
+fig
+```
+
+### Area Plot without Lines
+
+To make an area plot without lines set `mode` to `"none"`.
+
+```{r}
+library(plotly.core)
+
+diamonds <- ggplot2::diamonds
+diamonds1 <- diamonds[which(diamonds$cut == "Fair"), ]
+density1 <- density(diamonds1$carat)
+
+diamonds2 <- diamonds[which(diamonds$cut == "Ideal"), ]
+density2 <- density(diamonds2$carat)
+
+fig <- go_figure() |>
+  add_scatter(
+    x = density1$x,
+    y = density1$y,
+    mode = "none",
+    name = "Fair cut",
+    fill = "tozeroy",
+    fillcolor = "rgba(168, 216, 234, 0.5)"
+  ) |>
+  add_scatter(
+    x = density2$x,
+    y = density2$y,
+    mode = "none",
+    name = "Ideal cut",
+    fill = "tozeroy",
+    fillcolor = "rgba(255, 212, 96, 0.5)"
+  ) |>
+  update_layout(
+    xaxis = go_xaxis(title = "Carat"),
+    yaxis = go_yaxis(title = "Density")
+  )
+
+fig
+```
+
+### Interior Filling for Area Chart
+
+To make an area plot with interior filling set `fill` to `"tonexty"` in the call for the second trace.
+For more informations and options about the `fill` option checkout `go_scatter()`
+
+```{r}
+library(plotly.core)
+
+month <- c("January", "February", "March", "April", "May", "June", "July",
+           "August", "September", "October", "November", "December")
+high_2014 <- c(28.8, 28.5, 37.0, 56.8, 69.7, 79.7, 78.5, 77.8, 74.1, 62.6, 45.3, 39.9)
+low_2014 <- c(12.7, 14.3, 18.6, 35.5, 49.9, 58.0, 60.0, 58.6, 51.7, 45.2, 32.2, 29.1)
+data <- data.frame(month, high_2014, low_2014)
+data$average_2014 <- rowMeans(data[, c("high_2014", "low_2014")])
+
+#The default order will be alphabetized unless specified as below:
+data$month <- factor(data$month, levels = data[["month"]])
+
+fig <- data |>
+  go_figure() |>
+  add_scatter(
+    x = ~month,
+    y = ~high_2014,
+    mode = "lines",
+    line = go_scatter_line(color = "rgba(0,100,80,1)"),
+    showlegend = FALSE,
+    name = "High 2014"
+  ) |>
+  add_scatter(
+    x = ~month,
+    y = ~low_2014,
+    mode = "lines",
+    fill = "tonexty",
+    fillcolor = "rgba(0,100,80,0.2)",
+    line = go_scatter_line(color = "rgba(0,100,80,1)"),
+    showlegend = FALSE,
+    name = "Low 2014"
+  ) |>
+  update_layout(
+    title = "High and Low Temperatures in New York",
+    paper_bgcolor = "rgb(255,255,255)",
+    plot_bgcolor = "rgb(229,229,229)",
+    xaxis = go_xaxis(
+      title = "Months",
+      gridcolor = "rgb(255,255,255)",
+      showgrid = TRUE,
+      showline = FALSE,
+      showticklabels = TRUE,
+      tickcolor = "rgb(127,127,127)",
+      ticks = "outside",
+      zeroline = FALSE
+    ),
+    yaxis = go_yaxis(
+      title = "Temperature (degrees F)",
+      gridcolor = "rgb(255,255,255)",
+      showgrid = TRUE,
+      showline = FALSE,
+      showticklabels = TRUE,
+      tickcolor = "rgb(127,127,127)",
+      ticks = "outside",
+      zeroline = FALSE
+    )
+  )
+
+fig
+```
+
+### Stacked Area Chart with Original Values
+
+```{r}
+library(plotly.core)
+
+data <- t(USPersonalExpenditure)
+data <- data.frame("year" = rownames(data), data)
+
+fig <- data |>
+  go_figure() |>
+  add_scatter(
+    x = ~year,
+    y = ~Food.and.Tobacco,
+    name = "Food and Tobacco",
+    mode = "none",
+    stackgroup = "one",
+    fillcolor = "#F5FF8D"
+  ) |>
+  add_scatter(
+    x = ~year,
+    y = ~Household.Operation,
+    name = "Household Operation",
+    mode = "none",
+    stackgroup = "one",
+    fillcolor = "#50CB86"
+  ) |>
+  add_scatter(
+    x = ~year,
+    y = ~Medical.and.Health,
+    name = "Medical and Health",
+    mode = "none",
+    stackgroup = "one",
+    fillcolor = "#4C74C9"
+  ) |>
+  add_scatter(
+    x = ~year,
+    y = ~Personal.Care,
+    name = "Personal Care",
+    mode = "none",
+    stackgroup = "one",
+    fillcolor = "#700961"
+  ) |>
+  add_scatter(
+    x = ~year,
+    y = ~Private.Education,
+    name = "Private Education",
+    mode = "none",
+    stackgroup = "one",
+    fillcolor = "#312F44"
+  ) |>
+  update_layout(
+    title = "United States Personal Expenditures by Categories",
+    xaxis = go_xaxis(title = "", showgrid = FALSE),
+    yaxis = go_yaxis(
+      title = "Expenditures (in billions of dollars)",
+      showgrid = FALSE
+    )
+  )
+
+fig
+```
+
+### Stacked Area Chart with Cumulative Values
+
+```{r}
+library(plotly.core)
+
+data <- t(USPersonalExpenditure)
+data <- data.frame("year" = rownames(data), data)
+
+fig <- data |>
+  go_figure() |>
+  add_scatter(
+    x = ~year,
+    y = ~Food.and.Tobacco,
+    name = "Food and Tobacco",
+    mode = "none",
+    stackgroup = "one",
+    groupnorm = "percent",
+    fillcolor = "#F5FF8D"
+  ) |>
+  add_scatter(
+    x = ~year,
+    y = ~Household.Operation,
+    name = "Household Operation",
+    mode = "none",
+    stackgroup = "one",
+    fillcolor = "#50CB86"
+  ) |>
+  add_scatter(
+    x = ~year,
+    y = ~Medical.and.Health,
+    name = "Medical and Health",
+    mode = "none",
+    stackgroup = "one",
+    fillcolor = "#4C74C9"
+  ) |>
+  add_scatter(
+    x = ~year,
+    y = ~Personal.Care,
+    name = "Personal Care",
+    mode = "none",
+    stackgroup = "one",
+    fillcolor = "#700961"
+  ) |>
+  add_scatter(
+    x = ~year,
+    y = ~Private.Education,
+    name = "Private Education",
+    mode = "none",
+    stackgroup = "one",
+    fillcolor = "#312F44"
+  ) |>
+  update_layout(
+    title = "United States Personal Expenditures by Categories",
+    xaxis = go_xaxis(title = "", showgrid = FALSE),
+    yaxis = go_yaxis(
+      title = "Proportion from the Total Expenditures",
+      showgrid = FALSE,
+      ticksuffix = "%"
+    )
+  )
+
+fig
+```
+
+#Reference
+
+See `go_scatter()` (`fill` and `stackgroup`) for more information and chart attribute options!

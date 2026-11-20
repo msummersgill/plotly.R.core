@@ -1,0 +1,343 @@
+---
+title: "Images"
+description: "How to add images to charts as background images or logos in R"
+display_as: file_settings
+order: 17
+source: 2021-08-06-images.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+
+### Add a Background Image
+
+In this page we explain how to add static, non-interactive images as background, logo or annotation images to a figure. For exploring image data in interactive charts, see the [tutorial on displaying image data](displaying-images.html).
+
+A background image can be added to the layout of a figure with `add_layout_image()`, or by setting the `images` layout attribute to a list of `go_layout_image()` objects. The
+`source` attribute of a layout image can be the URL of an image, or an image object.
+
+```{r}
+library(plotly.core)
+# Create figure
+go_figure() |>
+  # Add trace
+  add_scatter(
+    x = c(0, 0.5, 1, 2, 2.2),
+    y = c(1.23, 2.5, 0.42, 3, 1),
+    mode = "lines+markers"
+  ) |>
+  # Add images
+  add_layout_image(
+    source = "https://images.plot.ly/language-icons/api-home/r-logo.png?raw=true",
+    xref = "x",
+    yref = "y",
+    x = 0.2,
+    y = 3,
+    sizex = 2,
+    sizey = 2,
+    sizing = "stretch",
+    opacity = 0.4,
+    layer = "below"
+  ) |>
+  update_layout(
+    plot_bgcolor = "#e5ecf6",
+    xaxis = go_xaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff"),
+    yaxis = go_yaxis(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff")
+  )
+```
+
+### Add a Logo
+See more examples of [adding logos to charts](logos.html)!
+
+```{r}
+library(plotly.core)
+x= c("-35.3", "-15.9", "-15.8", "-15.6", "-11.1", 
+     "-9.6", "-9.2", "-3.5", "-1.9", "-0.9", 
+     "1.0", "1.4", "1.7", "2.0", "2.8", "6.2", 
+     "8.1", "8.5", "8.5", "8.6", "11.4", "12.5", 
+     "13.3", "13.7", "14.4", "17.5", "17.7", 
+     "18.9", "25.1", "28.9", "41.4") 
+ 
+y = c("Designers, musicians, artists, etc.", 
+      "Secretaries and administrative assistants", 
+      "Waiters and servers", "Archivists, curators, and librarians", 
+      "Sales and related", "Childcare workers, home car workers, etc.", 
+      "Food preparation occupations", "Janitors, maids, etc.", 
+      "Healthcare technicians, assistants. and aides", 
+      "Counselors, social and religious workers", 
+      "Physical, life and social scientists", "Construction", 
+      "Factory assembly workers", "Machinists, repairmen, etc.", 
+      "Media and communications workers", "Teachers", 
+      "Mechanics, repairmen, etc.", "Financial analysts and advisers", 
+      "Farming, fishing and forestry workers", 
+      "Truck drivers, heavy equipment operator, etc.", "Accountants and auditors", 
+      "Human resources, management analysts, etc.", "Managers", 
+      "Lawyers and judges", "Engineers, architects and surveyors", 
+      "Nurses", "Legal support workers", 
+      "Computer programmers and system admin.", "Police officers and firefighters", 
+      "Chief executives", "Doctors, dentists and surgeons") 
+ 
+df = data.frame(x,y,stringsAsFactors = FALSE) 
+
+m = go_margin(r = 20, l = 300, b = 75, t = 125)
+
+fig <- df |>
+  go_figure() |>
+  add_bar(
+    x = ~x,
+    y = ~y,
+    orientation = "h",
+    marker = go_bar_marker(
+      color = "rgb(253, 240, 54)",
+      line = go_bar_marker_line(width = 2, color = "rgb(0, 0, 0)")
+    )
+  ) |>
+  add_layout_image(
+    source = "https://raw.githubusercontent.com/cldougl/plot_images/add_r_img/vox.png",
+    xref = "paper",
+    yref = "paper",
+    x = 1.05,
+    y = 1.05,
+    sizex = 0.2,
+    sizey = 0.2,
+    xanchor = "right",
+    yanchor = "bottom"
+  ) |>
+  update_layout(
+    autosize = FALSE,
+    margin = m,
+    title = paste("Moving Up, Moving Down<br>",
+                  "<i>Percentile change in income between childhood and adulthood</i>"),
+    hovermode = "x",
+    plot_bgcolor = "#e5ecf6",
+    xaxis = go_xaxis(title = "", zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff"),
+    yaxis = go_yaxis(title = "", zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff")
+  )
+fig
+```
+
+### Zoom on Static Images
+
+```{r}
+library(plotly.core)
+ 
+#Constants 
+img_width = 1600 
+img_height = 900 
+scale_factor = 0.5 
+ 
+# Add invisible scatter trace. 
+# This trace is added to help the autoresize logic work. 
+fig <- go_figure() |>
+  add_scatter(
+    x = c(0, img_width * scale_factor),
+    y = c(0, img_height * scale_factor),
+    mode = "markers",
+    marker = go_scatter_marker(opacity = 0)
+  )
+ 
+# Configure axes 
+xconfig <- go_xaxis(
+  title = "",
+  zeroline = FALSE,
+  showline = FALSE,
+  showticklabels = FALSE,
+  showgrid = FALSE,
+  range = c(0, img_width * scale_factor)
+)
+ 
+yconfig <- go_yaxis(
+  title = "",
+  zeroline = FALSE,
+  showline = FALSE,
+  showticklabels = FALSE,
+  showgrid = FALSE,
+  range = c(0, img_height * scale_factor),
+  scaleanchor = "x"
+)
+ 
+fig <- fig |>
+  update_layout(
+    width = img_width * scale_factor,
+    height = img_height * scale_factor,
+    xaxis = xconfig,
+    yaxis = yconfig
+  )
+ 
+# Add image 
+fig <- fig |>
+  add_layout_image(
+    source = "https://raw.githubusercontent.com/michaelbabyn/plot_data/master/bridge.jpg",
+    x = 0,
+    sizex = img_width * scale_factor,
+    y = img_height * scale_factor,
+    sizey = img_height * scale_factor,
+    xref = "x",
+    yref = "y",
+    opacity = 1.0,
+    layer = "below",
+    sizing = "stretch"
+  )
+ 
+# Configure other layout 
+fig <- fig |>
+  update_layout(margin = go_margin(r = 0, l = 0, b = 0, t = 0)) |>
+  update_xaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
+  update_yaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
+  update_layout(plot_bgcolor = "#e5ecf6")
+fig
+```
+
+### Annotating layout image with shapes
+It can be useful to add shapes to a layout image, for highlighting an object, drawing bounding boxes as part of a machine learning training set, or identifying seeds for a segmentation algorithm.
+
+In order to enable shape drawing, you need to
+
++ define a dragmode corresponding to a drawing tool (`'drawline'`,`'drawopenpath'`, `'drawclosedpath'`, `'drawcircle'`, or `'drawrect'`)
+
++ add [modebar buttons](https://plotly-r.com/control-modebar.html) corresponding to the drawing tools you wish to use.
+
+The style of new shapes is specified by the `newshape` layout attribute (`go_newshape()`). Shapes can be selected and modified after they have been drawn. More details and examples are given in the [tutorial on shapes](shapes.html#drawing-shapes-on-cartesian-plots).
+
+Drawing or modifying a shape triggers a `relayout` event, which [can be captured by a callback inside a Dash application](https://dashr.plotly.com/interactive-graphing).
+
+```{r}
+library(plotly.core)
+ 
+#Constants 
+img_width = 1600 
+img_height = 900 
+scale_factor = 0.5 
+ 
+fig <- go_figure() |>
+  add_scatter(
+    x = c(0, img_width),
+    y = c(0, img_height),
+    mode = "markers",
+    marker = go_scatter_marker(opacity = 0)
+  ) |>
+  add_layout_image(
+    source = "https://raw.githubusercontent.com/michaelbabyn/plot_data/master/bridge.jpg",
+    x = 0,
+    sizex = img_width,
+    y = 0,
+    sizey = img_height,
+    xref = "x",
+    yref = "y",
+    opacity = 1.0,
+    layer = "below"
+  )
+ 
+xconfig <- go_xaxis(title = "", showgrid = FALSE, range = c(0, img_width))
+ 
+yconfig <- go_yaxis(
+  title = "",
+  showgrid = FALSE,
+  range = c(img_height, 0),
+  scaleanchor = "x"
+)
+ 
+fig <- fig |>
+  update_layout(xaxis = xconfig, yaxis = yconfig)
+ 
+#Add lineshape 
+fig <- fig |>
+  add_scatter(
+    x = c(650, 1080),
+    y = c(380, 180),
+    mode = "lines",
+    line = go_scatter_line(color = "cyan"),
+    showlegend = FALSE
+  )
+ 
+fig <- fig |>
+  update_layout(
+    dragmode = "drawrect",
+    newshape = go_newshape(line = go_newshape_line(color = "cyan")),
+    title = "Drag to add annotations - use modebar to change drawing tool"
+  )
+ 
+#Add modebar buttons 
+fig <- fig |>
+  config(modeBarButtonsToAdd = c("drawline",
+                                 "drawopenpath",
+                                 "drawclosedpath",
+                                 "drawcircle",
+                                 "drawrect",
+                                 "eraseshape")) |>
+  update_xaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
+  update_yaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
+  update_layout(plot_bgcolor = "#e5ecf6")
+ 
+fig
+```
+
+
+### Images Placed Relative to Axes
+
+Using `xref='x domain'` or `yref='y domain'`, images can be placed relative to
+axes. With `make_subplots()`, pass `row` and `col` to `add_layout_image()` to
+place the image relative to that subplot's axes. As an example, the following
+shows how to put an image in the top corner of each subplot (try panning and
+zooming the resulting figure):
+
+```{r}
+library(plotly.core)
+
+species <- c("setosa", "versicolor", "virginica")
+sources <- c(
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Iris_setosa_var._setosa_%282595031014%29.jpg/360px-Iris_setosa_var._setosa_%282595031014%29.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Iris_versicolor_quebec_1.jpg/320px-Iris_versicolor_quebec_1.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Iris_virginica_2.jpg/480px-Iris_virginica_2.jpg"
+)
+
+fig <- make_subplots(
+  rows = 1,
+  cols = 3,
+  shared_xaxes = TRUE,
+  shared_yaxes = TRUE,
+  subplot_titles = paste0("species=", species)
+)
+
+for (i in seq_along(species)) {
+  fig <- fig |>
+    add_scatter(
+      data = iris[iris$Species == species[[i]], ],
+      x = ~Sepal.Length,
+      y = ~Sepal.Width,
+      mode = "markers",
+      row = 1,
+      col = i
+    ) |>
+    # add images
+    add_layout_image(
+      source = sources[[i]],
+      xref = "x domain",
+      yref = "y domain",
+      x = 1,
+      y = 1,
+      xanchor = "right",
+      yanchor = "top",
+      sizex = 0.2,
+      sizey = 0.2,
+      row = 1,
+      col = i
+    )
+}
+
+fig <- fig |>
+  update_xaxes(range = c(4, 8)) |>
+  update_xaxes(title = "Sepal.Length", row = 1, col = 2) |>
+  update_annotations(font = go_font(size = 10)) |>
+  update_layout(showlegend = FALSE) |>
+  update_xaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
+  update_yaxes(zerolinecolor = "#ffff", zerolinewidth = 2, gridcolor = "#ffff") |>
+  update_layout(plot_bgcolor = "#e5ecf6")
+fig
+```
+
+#### Reference
+See `go_layout_image()` and `add_layout_image()` for more information and chart attribute options!

@@ -5,8 +5,12 @@ template:
 
 navbar:
   structure:
-    left: [reference, articles, news]
+    left: [reference, articles, examples, news]
     right: [search, github]
+  components:
+    examples:
+      text: Examples
+      href: articles/r-docs/index.html
 
 articles:
   - title: Articles
@@ -16,6 +20,12 @@ articles:
       - streaming
       - static-export
       - render-performance
+  - title: Plotly R examples
+    desc: >
+      The Plotly R documentation examples, written with plotly.core graph
+      objects (see the Examples gallery).
+    contents:
+      - starts_with("articles/r-docs/")
 reference:
   - title: Figures
     contents:

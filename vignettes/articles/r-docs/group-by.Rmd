@@ -1,0 +1,47 @@
+---
+title: "Group By"
+description: "How to use groupby transforms in R with Plotly."
+display_as: transforms
+order: 2
+source: 2017-10-26-groupby.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning=FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+#### Basic Example
+
+The `groupby` transform was removed from plotly.js. Split the data in R
+instead and add one trace per group, styling each one as needed.
+
+```{r}
+library(plotly.core)
+
+cyl_colors <- c("4" = "blue", "6" = "red", "8" = "black")
+
+fig <- go_figure()
+for (cyl in names(cyl_colors)) {
+  cars <- mtcars[mtcars$cyl == as.numeric(cyl), ]
+  fig <- fig |>
+    add_scatter(
+      x = cars$hp,
+      y = cars$qsec,
+      text = paste("Make: ", rownames(cars),
+                   "<br>hp: ", cars$hp,
+                   "<br>qsec: ", cars$qsec,
+                   "<br>Cyl: ", cars$cyl),
+      hoverinfo = "text",
+      mode = "markers",
+      name = cyl,
+      marker = go_scatter_marker(color = cyl_colors[[cyl]])
+    )
+}
+
+fig
+```
+
+#### Reference
+
+See `go_scatter()` for more information and options!

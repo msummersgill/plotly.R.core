@@ -1,0 +1,16 @@
+---
+title: "WebGL vs SVG in R"
+description: "How to create plots using WebGL"
+display_as: basic
+order: 6
+source: 2016-02-25-scattergl.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+# WebGL vs SVG in R
+
+This page is not available for plotly.core yet. Its only example converts a `ggplot2` graph to WebGL; with plotly.core, use WebGL trace types such as `add_scattergl()` directly.

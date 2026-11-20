@@ -1,0 +1,203 @@
+---
+title: "Cumulative Animations"
+description: "How to create cumulative animations in R with Plotly."
+display_as: animations
+order: 2
+source: 2017-05-28-cumulative-animations.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning=FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+### Frames
+
+Now, along with `data` and `layout`, `frames` is added to the keys that `figure` allows. Your `frames` key points to a list of figures, each of which will be cycled through upon instantiation of the plot. With plotly.core, build the frames yourself (each frame holds the trace values to show at that step) and add a play button with `go_updatemenu()` or a slider with `go_slider()`.
+
+### Cumulative Lines Animation
+
+```{r}
+library(plotly.core)
+library(dplyr)
+
+df <- ggplot2::txhousing |>
+  filter(year > 2005, city %in% c("Abilene", "Bay Area"))
+dates <- sort(unique(df$date))
+cities <- unique(df$city)
+
+# The data shown at each step: every row up to and including that date
+accumulate_to <- function(d) {
+  lapply(cities, function(cty) df[df$city == cty & df$date <= d, ])
+}
+
+fig <- go_figure()
+first <- accumulate_to(dates[1])
+for (k in seq_along(cities)) {
+  fig <- fig |>
+    add_scatter(
+      x = first[[k]]$date,
+      y = first[[k]]$median,
+      mode = "lines",
+      name = cities[k]
+    )
+}
+
+fig$frames <- lapply(dates, function(d) {
+  list(
+    name = as.character(d),
+    data = lapply(accumulate_to(d), function(sub) {
+      go_scatter(x = sub$date, y = sub$median)
+    })
+  )
+})
+
+fig <- fig |>
+  update_layout(
+    xaxis = go_xaxis(
+      title = "Date",
+      zeroline = FALSE,
+      range = range(dates)
+    ),
+    yaxis = go_yaxis(
+      title = "Median",
+      zeroline = FALSE,
+      range = range(df$median, na.rm = TRUE)
+    ),
+    updatemenus = list(
+      go_updatemenu(
+        type = "buttons",
+        showactive = FALSE,
+        x = 1,
+        xanchor = "right",
+        y = 0,
+        yanchor = "bottom",
+        buttons = list(
+          go_updatemenu_button(
+            label = "Play",
+            method = "animate",
+            args = list(
+              NULL,
+              list(
+                frame = list(duration = 100, redraw = FALSE),
+                transition = list(duration = 0),
+                fromcurrent = TRUE,
+                mode = "immediate"
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+
+fig
+```
+
+### Filled-Area Animation
+
+```{r}
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+df <- tail(df, 30)
+df$ID <- seq.int(nrow(df))
+
+frame_trace <- function(sub) {
+  go_scatter(
+    x = sub$ID,
+    y = sub$AAPL.Close,
+    text = paste("Day: ", sub$ID, "<br>Close: $", sub$AAPL.Close)
+  )
+}
+
+fig <- go_figure() |>
+  add_scatter(
+    data = df[1, ],
+    x = ~ID,
+    y = ~AAPL.Close,
+    mode = "lines",
+    fill = "tozeroy",
+    fillcolor = "rgba(114, 186, 59, 0.5)",
+    line = go_scatter_line(color = "rgb(114, 186, 59)"),
+    text = ~ paste("Day: ", ID, "<br>Close: $", AAPL.Close),
+    hoverinfo = "text"
+  )
+
+fig$frames <- lapply(df$ID, function(id) {
+  list(name = as.character(id), data = list(frame_trace(df[df$ID <= id, ])))
+})
+
+animate_args <- function(id) {
+  list(
+    list(as.character(id)),
+    list(
+      frame = list(duration = 100, redraw = FALSE),
+      transition = list(duration = 0),
+      mode = "immediate"
+    )
+  )
+}
+
+fig <- fig |>
+  update_layout(
+    title = "AAPL: Last 30 days",
+    yaxis = go_yaxis(
+      title = "Close",
+      range = c(0, 250),
+      zeroline = FALSE,
+      tickprefix = "$"
+    ),
+    xaxis = go_xaxis(
+      title = "Day",
+      range = c(0, 30),
+      zeroline = FALSE,
+      showgrid = FALSE
+    ),
+    updatemenus = list(
+      go_updatemenu(
+        type = "buttons",
+        showactive = FALSE,
+        x = 0,
+        xanchor = "right",
+        y = 0,
+        yanchor = "top",
+        pad = go_updatemenu_pad(t = 60, r = 10),
+        buttons = list(
+          go_updatemenu_button(
+            label = "Play",
+            method = "animate",
+            args = list(
+              NULL,
+              list(
+                frame = list(duration = 100, redraw = FALSE),
+                transition = list(duration = 0),
+                fromcurrent = TRUE,
+                mode = "immediate"
+              )
+            )
+          )
+        )
+      )
+    ),
+    sliders = list(
+      go_slider(
+        currentvalue = go_slider_currentvalue(prefix = "Day "),
+        pad = go_slider_pad(t = 50),
+        steps = lapply(df$ID, function(id) {
+          go_slider_step(
+            label = as.character(id),
+            method = "animate",
+            args = animate_args(id)
+          )
+        })
+      )
+    )
+  )
+
+fig
+```
+
+### Reference 
+
+To read more on animations see [The Plotly Book](https://cpsievert.github.io/plotly_book/key-frame-animations.html).

@@ -1,0 +1,47 @@
+---
+title: "LaTeX Typesetting in R Graphs"
+description: "How to add LaTeX to R graphs."
+display_as: file_settings
+order: 27
+source: 2015-07-30-LaTeX.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning=FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+#### LaTeX Typesetting
+
+`TeX()` wraps a string in `$...$` so plotly.js typesets it with MathJax.
+`config(mathjax = "cdn")` loads MathJax from a CDN; `config(mathjax = "local")`
+uses the copy bundled with plotly.core and works offline.
+
+```{r}
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scatter(
+    x = c(1, 2, 3, 4),
+    y = c(1, 4, 9, 16),
+    name = TeX("\\alpha_{1c} = 352 \\pm 11 \\text{ km s}^{-1}")
+  ) |>
+  add_scatter(
+    x = c(1, 2, 3, 4),
+    y = c(0.5, 2, 4.5, 8),
+    name = TeX("\\beta_{1c} = 25 \\pm 11 \\text{ km s}^{-1}")
+  ) |>
+  update_layout(
+    xaxis = go_xaxis(
+      title = TeX("\\sqrt{(n_\\text{c}(t|{T_\\text{early}}))}")
+    ),
+    yaxis = go_yaxis(title = TeX("d, r \\text{ (solar radius)}"))
+  ) |>
+  config(mathjax = "cdn")
+
+fig
+```
+
+#### Reference
+
+See `TeX()` and `config()` for more information.

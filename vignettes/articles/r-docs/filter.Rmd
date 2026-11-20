@@ -1,0 +1,38 @@
+---
+title: "Filter"
+description: "How to use filter in R with Plotly."
+display_as: transforms
+order: 1
+source: 2017-10-26-filter.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning=FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+#### Basic Example
+
+Trace transforms (including `filter`) were removed from plotly.js, so filter
+the data in R and plot the result.
+
+```{r}
+library(plotly.core)
+
+cars <- mtcars[mtcars$qsec > mean(mtcars$qsec), ]
+
+fig <- go_figure() |>
+  add_scatter(
+    x = cars$hp,
+    y = cars$qsec,
+    text = rownames(cars),
+    hoverinfo = "text",
+    mode = "markers"
+  )
+
+fig
+```
+
+#### Reference
+
+See `go_scatter()` for more information and options!

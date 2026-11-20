@@ -43,6 +43,13 @@
   set, as plotly 4.x does.
 * Figures rendered with the `"none"` default template have plotly 4.x's
   margins (`l = 60, r = 10, t = 25, b = 40` pixels) unless the layout sets them.
+* `options(plotly.core.plotlyjs = "cdn")` loads plotly.js from cdn.jsdelivr.net
+  instead of copying it next to the HTML, e.g. for websites with many pages.
+* `update_xaxes()`, `update_traces()` and the other `update_*()` /
+  `select_*()` functions accept vectors and `"all"` for `row` and `col`, as
+  documented.
+* The pkgdown site has an Examples gallery: the Plotly R documentation
+  examples rewritten with plotly.core graph objects.
 * htmlwidget rendering: numeric arrays are sent as base64 typed arrays, arrays
   repeated in a figure are sent once, `as_float32()` sends data in single
   precision, and `partial_bundle()` loads a smaller plotly.js bundle.

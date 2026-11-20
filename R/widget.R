@@ -34,6 +34,10 @@
 #'   to send other numbers in single precision. Dates and date-times are sent
 #'   as numbers and turned back into "YYYY-MM-DD HH:MM:SS" strings (in the
 #'   vector's time zone) in the browser before plotting.
+#'
+#'   plotly.js is copied next to the HTML (or embedded in self-contained
+#'   files). Set `options(plotly.core.plotlyjs = "cdn")` to load it from
+#'   cdn.jsdelivr.net instead, e.g. for a website with many pages of figures.
 #' @export
 #' @examples
 #' plotly_widget(list(data = list(list(type = "bar", x = 1:3, y = c(2, 5, 3)))))
@@ -395,18 +399,47 @@ plotlyjs_bundle_file <- function(bundle) {
 #' @rdname set_plotlyjs_dependency
 #' @export
 plotlyjs_dependency <- function(bundle = "full") {
+  version <- paste0(
+    plotlyjs_version(),
+    if (identical(bundle, "full")) {
+      ".2"
+    } else {
+      paste0(".1.", match(bundle, names(PLOTLYJS_BUNDLE_TRACES)))
+    }
+  )
+  script <- basename(plotlyjs_bundle_file(bundle))
+  source <- getOption("plotly.core.plotlyjs", "local")
+  if (!source %in% c("local", "cdn")) {
+    stop(
+      "The `plotly.core.plotlyjs` option must be \"local\" or \"cdn\"",
+      call. = FALSE
+    )
+  }
+  if (identical(source, "cdn")) {
+    # the plotly.js npm packages: plotly.js-dist-min, plotly.js-basic-dist-min, ...
+    npm <- if (identical(bundle, "full")) {
+      "plotly.js-dist-min"
+    } else {
+      sprintf("plotly.js-%s-dist-min", bundle)
+    }
+    return(htmltools::htmlDependency(
+      name = "plotly-main",
+      version = version,
+      src = c(
+        href = sprintf(
+          "https://cdn.jsdelivr.net/npm/%s@%s",
+          npm,
+          plotlyjs_version()
+        )
+      ),
+      script = script
+    ))
+  }
   htmltools::htmlDependency(
     name = "plotly-main",
-    version = paste0(
-      plotlyjs_version(),
-      if (identical(bundle, "full")) {
-        ".2"
-      } else {
-        paste0(".1.", match(bundle, names(PLOTLYJS_BUNDLE_TRACES)))
-      }
-    ),
+    version = version,
     src = "htmlwidgets/lib/plotlyjs",
-    script = basename(plotlyjs_bundle_file(bundle)),
+    script = script,
     package = "plotly.core",
     all_files = FALSE
   )

@@ -1,0 +1,36 @@
+---
+title: "WebGL in Plotly and R"
+description: "How to create plots using WebGL and Plotly"
+display_as: other
+order: 99
+source: 2016-02-25-scattergl-1Million.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+# WebGL with 1 Million points
+
+```{r}
+library(plotly.core)
+
+n <- 1e5
+x <- rnorm(n)
+y <- 2 * x + rnorm(n, sd = 5)
+
+fig <- go_figure() |>
+  add_scattergl(
+    x = x,
+    y = y,
+    mode = "markers",
+    marker = go_scattergl_marker(opacity = 0.01)
+  )
+
+fig
+```
+
+# Reference
+
+See `go_scattergl()` for more information.

@@ -62,6 +62,10 @@ JSON. Vectors of whole numbers are sent as integers; see \code{\link[=as_float32
 to send other numbers in single precision. Dates and date-times are sent
 as numbers and turned back into "YYYY-MM-DD HH:MM:SS" strings (in the
 vector's time zone) in the browser before plotting.
+
+plotly.js is copied next to the HTML (or embedded in self-contained
+files). Set \code{options(plotly.core.plotlyjs = "cdn")} to load it from
+cdn.jsdelivr.net instead, e.g. for a website with many pages of figures.
 }
 \examples{
 plotly_widget(list(data = list(list(type = "bar", x = 1:3, y = c(2, 5, 3)))))

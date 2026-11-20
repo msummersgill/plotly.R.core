@@ -1,0 +1,15 @@
+---
+title: "Distplots"
+description: "How to make interactive Distplots in R with Plotly."
+display_as: statistical
+order: 8
+source: 2021-08-24-distplot.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+
+This page is not available for plotly.core yet: all of its examples are `ggplot2` graphs converted with `ggplotly()`. See the [histograms](histograms.html) page for histograms built with `add_histogram()`.

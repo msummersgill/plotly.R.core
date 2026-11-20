@@ -1,0 +1,42 @@
+---
+title: "WebGL in Plotly and R"
+description: "How to create plots using WebGL and Plotly"
+display_as: other
+order: 99
+source: 2016-02-25-scattergl-timeseries.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+# WebGL for time series data (24381 points)
+
+```{r}
+library(plotly.core)
+library(readr)
+
+# Read some weather data
+df <- readr::read_csv(
+  "https://raw.githubusercontent.com/plotly/datasets/master/2016-weather-data-seattle.csv"
+)
+
+# Convert to dates
+df$Date <- as.Date(df$Date, format = "%m/%d/%Y")
+
+fig <- df |>
+  go_figure() |>
+  add_scattergl(
+    x = ~Date,
+    y = ~Mean_TemperatureC,
+    mode = "lines",
+    line = go_scattergl_line(color = "purple")
+  ) |>
+  update_layout(
+    title = "Mean Temparature in Seattle (1948 - 2015)",
+    yaxis = go_yaxis(title = "Temperature (<sup>o</sup>C)")
+  )
+
+fig
+```

@@ -1,0 +1,182 @@
+---
+title: "Treemap Charts"
+description: "How to make treemap charts in R with Plotly."
+display_as: basic
+order: 15
+source: 2020-02-25-treemap.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+[Treemap charts](https://en.wikipedia.org/wiki/Treemapping) visualize hierarchical data using nested rectangles. Just like with a [sunburst chart](sunburst-charts.html), the hierarchy of a treemap is defined by using the `labels`, and `parents` attributes of `go_treemap()`. 
+
+Treemaps created with Plotly's R graphing library are interactive by default! Click on individual sectors of the treemap chart to zoom in/out of that sector and to display a hierarchical pathbar at the top of the chart. You can use this pathbar to zoom in/out of chart sectors instead of clicking on the sectors directly. 
+
+### Basic Treemap
+
+```{r}
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_treemap(
+    labels = c("Eve", "Cain", "Seth", "Enos", "Noam", "Abel", "Awan", "Enoch", "Azura"),
+    parents = c("", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve")
+  )
+fig
+```
+### Customize Treemap Attributes
+
+You can customize several attributes of the treemaps you create with plotly.core, including:  
+
+1. `values`: a list of the values assigned to each chart sector.
+2. `textinfo`: determines the textual information that will appear in each chart sector. Valid values are `text`, `value`, `current path`, `percent root`, `percent entry`, `percent parent`, or any combination of the preceding.
+3. `pathbar` (`go_pathbar()`):  determines whether the pathbar is visible when users zoom into chart sectors.
+4. `branchvalues`: the method that has been used to calculate the `values` of chart sectors that have desendants. Valid values for this attribute are `total` and `remainder`; the default value is `remainder`. 
+  - When set to `remainder`, items in the `values` attribute which correspond to the root of the chart and the branches sectors are taken to be the extra part not part of the sum of the values at their leaves.
+  - When set to `total`, a brach's value is taken to be equal to the sum of the `values` of each chart sector that is a descendant of that branch. This behavior is demonstrated in the second trace in the example figure below- the value of the `Eva` branch is 65, which is the sum of the values of each chart sector that is a descendant of that branch (14 + 12 + 10 + 2 + 6 + 6 + 1 + 4).
+
+
+```{r}
+library(plotly.core)
+
+labels = c("Eve", "Cain", "Seth", "Enos", "Noam", "Abel", "Awan", "Enoch", "Azura")
+parents = c("", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve")
+
+fig <- go_figure() |>
+  add_treemap(
+    labels = labels,
+    parents = parents,
+    values = c(10, 14, 12, 10, 2, 6, 6, 1, 4),
+    textinfo = "label+value+percent parent+percent entry+percent root",
+    domain = go_domain(column = 0)
+  ) |>
+  add_treemap(
+    branchvalues = "total",
+    labels = labels,
+    parents = parents,
+    values = c(65, 14, 12, 10, 2, 6, 6, 1, 4),
+    textinfo = "label+value+percent parent+percent entry",
+    outsidetextfont = go_font(size = 20, color = "darkblue"),
+    marker = go_treemap_marker(line = go_treemap_marker_line(width = 2)),
+    pathbar = go_pathbar(visible = FALSE),
+    domain = go_domain(column = 1)
+  ) |>
+  update_layout(
+    grid = go_grid(columns = 2, rows = 1),
+    margin = go_margin(l = 0, r = 0, b = 0, t = 0)
+  )
+
+fig
+```
+
+### Set Color of Treemap Sectors
+
+There are three different attributes you can use to change the color of the sectors of treemaps you have created with plotly.core:
+
+1. `marker.colors` (`go_treemap_marker()`)
+2. `marker.colorscale` (`go_treemap_marker()`)
+3. `treemapcolorway` (`update_layout()`)
+
+The following examples show how to use each attribute. To use `marker.colors`, pass a list of valid CSS colors or hexadecimal color codes.
+
+```{r}
+library(plotly.core)
+
+labels = c("A1", "A2", "A3", "A4", "A5", "B1", "B2")
+parents = c("", "A1", "A2", "A3", "A4", "", "B1")
+
+fig <- go_figure() |>
+  add_treemap(
+    labels = labels,
+    parents = parents,
+    marker = go_treemap_marker(
+      colors = c("#000", "royalblue", "lightgray", "purple", "#FFF", "lightgray", "lightblue")
+    )
+  )
+fig
+```
+The following example uses the `marker.colorscale` attribute. Rather than using a list of colors, simply supply a colorscale. 
+
+The built-in colorscales are: `Greys`, `YlGnBu`, `Greens`, `YlOrRd`, `Bluered`, `RdBu`, `Reds`, `Blues`, `Picnic`, `Rainbow`, `Portland`, `Jet`, `Hot`, `Blackbody`, `Earth`, `Electric`, `Viridis`, and `Cividis`
+
+```{r}
+library(plotly.core)
+
+labels = c("A1", "A2", "A3", "A4", "A5", "B1", "B2")
+parents = c("", "A1", "A2", "A3", "A4", "", "B1")
+values = c(11, 12, 13, 14, 15, 20, 30)
+
+fig <- go_figure() |>
+  add_treemap(
+    labels = labels,
+    parents = parents,
+    values = values,
+    marker = go_treemap_marker(colorscale = "Reds")
+  )
+
+fig
+```
+
+The following example uses the `treemapcolorway` attribute, which should be set in the chart's layout.
+
+```{r}
+library(plotly.core)
+
+labels = c("A1", "A2", "A3", "A4", "A5", "B1", "B2")
+parents = c("", "A1", "A2", "A3", "A4", "", "B1")
+
+fig <- go_figure() |>
+  add_treemap(labels = labels, parents = parents) |>
+  update_layout(treemapcolorway = c("pink", "lightgray"))
+fig
+```
+### Nested Layers in Treemap
+
+The following example demonstrates how treemap charts can be used to reveal insights into the structure of hierarchical data that includes information about layers and grouping. The `maxdepth` attribute can be used to control how many levels of data are rendered; the default value of `-1` renders all the levels in the hierarchy.
+```{r}
+library(plotly.core)
+
+df1 = read.csv('https://raw.githubusercontent.com/plotly/datasets/718417069ead87650b90472464c7565dc8c2cb1c/sunburst-coffee-flavors-complete.csv')
+df2 = read.csv('https://raw.githubusercontent.com/plotly/datasets/718417069ead87650b90472464c7565dc8c2cb1c/coffee-flavors.csv')
+
+fig <- go_figure() |>
+  add_treemap(
+    data = df1,
+    ids = ~ids,
+    labels = ~labels,
+    parents = ~parents,
+    domain = go_domain(column = 0)
+  ) |>
+  add_treemap(
+    data = df2,
+    ids = ~ids,
+    labels = ~labels,
+    parents = ~parents,
+    maxdepth = 1,
+    domain = go_domain(column = 1)
+  ) |>
+  update_layout(grid = go_grid(columns = 2, rows = 1))
+fig
+
+
+```
+### Controlling Text Font Size with `uniformtext`
+
+By default, the font size of text labels in your treemap chart will vary to fit into the available space within a sector. However, if you want all the text labels in your treemap chart to have the same font size, you can use the `uniformtext` layout parameter. The `minsize` attribute sets the font size, and the `mode` attribute sets what happens to labels which cannot fit within a sector with the specified fontsize: either `hide` them or `show` them with overflow.
+
+```{r}
+library(plotly.core)
+df = read.csv('https://raw.githubusercontent.com/plotly/datasets/718417069ead87650b90472464c7565dc8c2cb1c/sunburst-coffee-flavors-complete.csv')
+fig <- df |>
+  go_figure() |>
+  add_treemap(ids = ~ids, labels = ~labels, parents = ~parents) |>
+  update_layout(uniformtext = go_uniformtext(minsize = 10, mode = "hide"))
+fig
+```
+
+### Reference
+
+See `go_treemap()` for more information and chart attribute options!

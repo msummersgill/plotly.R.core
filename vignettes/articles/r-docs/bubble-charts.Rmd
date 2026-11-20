@@ -1,0 +1,456 @@
+---
+title: "Bubble Charts"
+description: "How to make a bubble chart in R. A bubble chart is a scatter plot whose markers have variable color and size."
+display_as: basic
+order: 5
+source: 2015-07-30-bubble-charts.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning=FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+### Simple Bubble Chart
+
+```{r}
+library(plotly.core)
+
+data <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/school_earnings.csv")
+
+fig <- data |>
+  go_figure() |>
+  add_scatter(
+    x = ~Women,
+    y = ~Men,
+    text = ~School,
+    mode = "markers",
+    marker = go_scatter_marker(size = ~Gap, opacity = 0.5)
+  ) |>
+  update_layout(
+    title = "Gender Gap in Earnings per University",
+    xaxis = go_xaxis(showgrid = FALSE),
+    yaxis = go_yaxis(showgrid = FALSE)
+  )
+
+fig
+```
+
+### Setting Markers Color
+
+```{r}
+library(plotly.core)
+
+data <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/school_earnings.csv")
+
+fig <- data |>
+  go_figure() |>
+  add_scatter(
+    x = ~Women,
+    y = ~Men,
+    text = ~School,
+    mode = "markers",
+    marker = go_scatter_marker(size = ~Gap, opacity = 0.5, color = "rgb(255, 65, 54)")
+  ) |>
+  update_layout(
+    title = "Gender Gap in Earnings per University",
+    xaxis = go_xaxis(showgrid = FALSE),
+    yaxis = go_yaxis(showgrid = FALSE)
+  )
+
+fig
+```
+
+### Setting Multiple Colors
+
+```{r}
+library(plotly.core)
+
+data <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/school_earnings.csv")
+
+colors <- c('rgba(204,204,204,1)', 'rgba(222,45,38,0.8)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)',
+            'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)',
+            'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)',
+            'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)',
+            'rgba(204,204,204,1)')
+# Note: The colors will be assigned to each observations based on the order of the observations in the dataframe.
+
+
+fig <- data |>
+  go_figure() |>
+  add_scatter(
+    x = ~Women,
+    y = ~Men,
+    text = ~School,
+    mode = "markers",
+    marker = go_scatter_marker(size = ~Gap, opacity = 0.5, color = colors)
+  ) |>
+  update_layout(
+    title = "Gender Gap in Earnings per University",
+    xaxis = go_xaxis(showgrid = FALSE),
+    yaxis = go_yaxis(showgrid = FALSE)
+  )
+
+fig
+```
+
+### Mapping a Color Variable (Continuous)
+
+```{r}
+library(plotly.core)
+
+data <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/school_earnings.csv")
+
+fig <- data |>
+  go_figure() |>
+  add_scatter(
+    x = ~Women,
+    y = ~Men,
+    text = ~School,
+    mode = "markers",
+    marker = go_scatter_marker(
+      size = ~Gap,
+      opacity = 0.5,
+      color = ~Gap,
+      colorscale = "Reds",
+      showscale = TRUE
+    )
+  ) |>
+  update_layout(
+    title = "Gender Gap in Earnings per University",
+    xaxis = go_xaxis(showgrid = FALSE),
+    yaxis = go_yaxis(showgrid = FALSE)
+  )
+
+fig
+```
+
+### Mapping a Color Variable (Categorical)
+
+With a categorical color variable, add one trace per category. Here the bubble diameters are rescaled to between 10 and 100 pixels.
+
+```{r}
+library(plotly.core)
+
+data <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/school_earnings.csv")
+
+data$State <- as.factor(c('Massachusetts', 'California', 'Massachusetts', 'Pennsylvania', 'New Jersey', 'Illinois', 'Washington DC',
+                          'Massachusetts', 'Connecticut', 'New York', 'North Carolina', 'New Hampshire', 'New York', 'Indiana',
+                          'New York', 'Michigan', 'Rhode Island', 'California', 'Georgia', 'California', 'California'))
+
+# One color per state, interpolated from the "Paired" palette
+states <- levels(data$State)
+state_colors <- setNames(
+  colorRampPalette(RColorBrewer::brewer.pal(12, "Paired"))(length(states)),
+  states
+)
+data$size <- scales::rescale(data$Gap, to = c(10, 100))
+
+fig <- go_figure()
+for (st in states) {
+  fig <- fig |>
+    add_scatter(
+      data = data[data$State == st, ],
+      x = ~Women,
+      y = ~Men,
+      text = ~School,
+      mode = "markers",
+      name = st,
+      marker = go_scatter_marker(
+        size = ~size,
+        opacity = 0.5,
+        sizemode = "diameter",
+        color = state_colors[[st]]
+      )
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = "Gender Gap in Earnings per University",
+    xaxis = go_xaxis(showgrid = FALSE),
+    yaxis = go_yaxis(showgrid = FALSE),
+    showlegend = FALSE
+  )
+
+fig
+```
+
+### Scaling the Size of Bubble Charts
+
+Choose the range of the bubbles' sizes by rescaling the size variable yourself, here to between 10 and 50 pixels:
+
+```{r}
+library(plotly.core)
+
+data <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/school_earnings.csv")
+
+data$State <- as.factor(c('Massachusetts', 'California', 'Massachusetts', 'Pennsylvania', 'New Jersey', 'Illinois', 'Washington DC',
+                          'Massachusetts', 'Connecticut', 'New York', 'North Carolina', 'New Hampshire', 'New York', 'Indiana',
+                          'New York', 'Michigan', 'Rhode Island', 'California', 'Georgia', 'California', 'California'))
+
+# One color per state, interpolated from the "Paired" palette
+states <- levels(data$State)
+state_colors <- setNames(
+  colorRampPalette(RColorBrewer::brewer.pal(12, "Paired"))(length(states)),
+  states
+)
+data$size <- scales::rescale(data$Gap, to = c(10, 50))
+
+fig <- go_figure()
+for (st in states) {
+  fig <- fig |>
+    add_scatter(
+      data = data[data$State == st, ],
+      x = ~Women,
+      y = ~Men,
+      text = ~School,
+      mode = "markers",
+      name = st,
+      marker = go_scatter_marker(
+        size = ~size,
+        opacity = 0.5,
+        sizemode = "diameter",
+        color = state_colors[[st]]
+      )
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = "Gender Gap in Earnings per University",
+    xaxis = go_xaxis(showgrid = FALSE),
+    yaxis = go_yaxis(showgrid = FALSE),
+    showlegend = FALSE
+  )
+
+fig
+```
+
+### Scaling using Sizeref
+
+To scale the bubble size, use the attribute sizeref. We recommend using the following formula to calculate a sizeref value:<br><br>
+sizeref = 2. * max(array of size values) / (desired maximum marker size ** 2)
+<br><br>
+Note that setting sizeref to a value greater than 1 decreases the rendered marker sizes, while setting sizeref to less than 1 increases the rendered marker sizes. See `go_scatter_marker()` for more information.
+<br><br>
+Additionally, we recommend setting the sizemode attribute to area.
+
+
+```{r}
+library(plotly.core)
+
+data <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/school_earnings.csv")
+
+data$State <- as.factor(c('Massachusetts', 'California', 'Massachusetts', 'Pennsylvania', 'New Jersey', 'Illinois', 'Washington DC',
+                          'Massachusetts', 'Connecticut', 'New York', 'North Carolina', 'New Hampshire', 'New York', 'Indiana',
+                          'New York', 'Michigan', 'Rhode Island', 'California', 'Georgia', 'California', 'California'))
+
+# One color per state, interpolated from the "Paired" palette
+states <- levels(data$State)
+state_colors <- setNames(
+  colorRampPalette(RColorBrewer::brewer.pal(12, "Paired"))(length(states)),
+  states
+)
+
+#Use the ideal sizeref value
+desired_maximum_marker_size <- 40
+your_list_of_size_values <- data['Gap']
+sizeref <- 2.0 * max(your_list_of_size_values) / (desired_maximum_marker_size**2)
+
+fig <- go_figure()
+for (st in states) {
+  fig <- fig |>
+    add_scatter(
+      data = data[data$State == st, ],
+      x = ~Women,
+      y = ~Men,
+      text = ~School,
+      mode = "markers",
+      name = st,
+      marker = go_scatter_marker(
+        size = ~Gap,
+        opacity = 0.5,
+        sizemode = "area",
+        sizeref = sizeref,
+        color = state_colors[[st]]
+      )
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = "Gender Gap in Earnings per University",
+    xaxis = go_xaxis(showgrid = FALSE),
+    yaxis = go_yaxis(showgrid = FALSE),
+    showlegend = FALSE
+  )
+
+fig
+```
+
+### Scaling V2
+
+
+```{r}
+library(plotly.core)
+
+data <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/school_earnings.csv")
+
+data$State <- as.factor(c('Massachusetts', 'California', 'Massachusetts', 'Pennsylvania', 'New Jersey', 'Illinois', 'Washington DC',
+                          'Massachusetts', 'Connecticut', 'New York', 'North Carolina', 'New Hampshire', 'New York', 'Indiana',
+                          'New York', 'Michigan', 'Rhode Island', 'California', 'Georgia', 'California', 'California'))
+
+# One color per state, interpolated from the "Paired" palette
+states <- levels(data$State)
+state_colors <- setNames(
+  colorRampPalette(RColorBrewer::brewer.pal(12, "Paired"))(length(states)),
+  states
+)
+data$size <- scales::rescale(data$Gap, to = c(10, 50))
+
+fig <- go_figure()
+for (st in states) {
+  fig <- fig |>
+    add_scatter(
+      data = data[data$State == st, ],
+      x = ~Women,
+      y = ~Men,
+      text = ~School,
+      mode = "markers",
+      name = st,
+      marker = go_scatter_marker(
+        size = ~size,
+        opacity = 0.5,
+        sizemode = "diameter",
+        color = state_colors[[st]]
+      )
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = "Gender Gap in Earnings per University",
+    xaxis = go_xaxis(showgrid = FALSE),
+    yaxis = go_yaxis(showgrid = FALSE),
+    showlegend = FALSE
+  )
+
+fig
+```
+
+
+### Hover Text with Bubble Charts
+
+```{r}
+library(plotly.core)
+
+data <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/school_earnings.csv")
+
+data$State <- as.factor(c('Massachusetts', 'California', 'Massachusetts', 'Pennsylvania', 'New Jersey', 'Illinois', 'Washington DC',
+                          'Massachusetts', 'Connecticut', 'New York', 'North Carolina', 'New Hampshire', 'New York', 'Indiana',
+                          'New York', 'Michigan', 'Rhode Island', 'California', 'Georgia', 'California', 'California'))
+
+# One color per state, interpolated from the "Paired" palette
+states <- levels(data$State)
+state_colors <- setNames(
+  colorRampPalette(RColorBrewer::brewer.pal(12, "Paired"))(length(states)),
+  states
+)
+data$size <- scales::rescale(data$Gap, to = c(10, 50))
+
+fig <- go_figure()
+for (st in states) {
+  fig <- fig |>
+    add_scatter(
+      data = data[data$State == st, ],
+      x = ~Women,
+      y = ~Men,
+      text = ~ paste("School:", School, "<br>Gender Gap:", Gap),
+      mode = "markers",
+      name = st,
+      hoverinfo = "text",
+      marker = go_scatter_marker(
+        size = ~size,
+        opacity = 0.5,
+        sizemode = "diameter",
+        color = state_colors[[st]]
+      )
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = "Gender Gap in Earnings per University",
+    xaxis = go_xaxis(showgrid = FALSE),
+    yaxis = go_yaxis(showgrid = FALSE),
+    showlegend = FALSE
+  )
+
+fig
+```
+
+### Styled Buble Chart
+
+```{r}
+library(plotly.core)
+
+data <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/gapminderDataFiveYear.csv")
+
+data_2007 <- data[which(data$year == 2007),]
+data_2007 <- data_2007[order(data_2007$continent, data_2007$country),]
+slope <- 2.666051223553066e-05
+data_2007$size <- sqrt(data_2007$pop * slope)
+colors <- c('#4AC6B7', '#1972A4', '#965F8A', '#FF7070', '#C61951')
+continents <- sort(unique(data_2007$continent))
+names(colors) <- continents
+
+fig <- go_figure()
+for (cont in continents) {
+  fig <- fig |>
+    add_scatter(
+      data = data_2007[data_2007$continent == cont, ],
+      x = ~gdpPercap,
+      y = ~lifeExp,
+      mode = "markers",
+      name = cont,
+      marker = go_scatter_marker(
+        size = ~size,
+        color = colors[[cont]],
+        symbol = "circle",
+        sizemode = "diameter",
+        line = go_scatter_marker_line(width = 2, color = "#FFFFFF")
+      ),
+      text = ~ paste(
+        "Country:", country,
+        "<br>Life Expectancy:", lifeExp,
+        "<br>GDP:", gdpPercap,
+        "<br>Pop.:", pop
+      )
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = "Life Expectancy v. Per Capita GDP, 2007",
+    xaxis = go_xaxis(
+      title = "GDP per capita (2000 dollars)",
+      gridcolor = "rgb(255, 255, 255)",
+      range = c(2.003297660701705, 5.191505530708712),
+      type = "log",
+      zerolinewidth = 1,
+      ticklen = 5,
+      gridwidth = 2
+    ),
+    yaxis = go_yaxis(
+      title = "Life Expectancy (years)",
+      gridcolor = "rgb(255, 255, 255)",
+      range = c(36.12621671352166, 91.72921793264332),
+      zerolinewidth = 1,
+      ticklen = 5,
+      gridwidth = 2
+    ),
+    paper_bgcolor = "rgb(243, 243, 243)",
+    plot_bgcolor = "rgb(243, 243, 243)"
+  )
+
+fig
+```
+
+#Reference
+
+See `go_scatter()` and `go_scatter_marker()` for more information and chart attribute options!

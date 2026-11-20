@@ -1,0 +1,51 @@
+---
+title: "Lines on Mapbox"
+description: "How to draw a line on Map in R with plotly."
+display_as: maps
+order: 9
+source: 2019-09-27-lines-on-mapbox.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning=FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+### Map Tiles
+
+plotly.core bundles plotly.js 4, where the Mapbox-based traces were replaced by MapLibre-based "map" traces. The `"open-street-map"` and `carto-*` styles need no access token. See [Map Layers](mapbox-layers.html) for more information.
+
+### Lines on tile maps using "Scattermap" traces
+
+To draw a line on your map, you either can use `add_scattermap()` (see `go_scattermap()`) or `add_scattergeo()` (see `go_scattergeo()`) in plotly.core. This example uses scattermap and sets the drawing `mode` to the combination of markers and lines.
+
+```{r}
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_scattermap(
+    mode = "markers+lines",
+    lon = c(10, 20, 30),
+    lat = c(10, 20, 30),
+    marker = go_scattermap_marker(size = 10)
+  ) |>
+  add_scattermap(
+    mode = "markers+lines",
+    lon = c(-50, -60, 40),
+    lat = c(30, 10, -20),
+    marker = go_scattermap_marker(size = 10)
+  ) |>
+  update_layout(
+    map = go_map(
+      style = "open-street-map",
+      center = go_map_center(lon = 10, lat = 10),
+      zoom = 1
+    ),
+    margin = go_margin(l = 0, t = 0, b = 0, r = 0)
+  )
+
+fig
+```
+#Reference
+
+See `go_scattermap()` for more information and options!

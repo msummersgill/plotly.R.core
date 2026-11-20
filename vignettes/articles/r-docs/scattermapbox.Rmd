@@ -1,0 +1,145 @@
+---
+title: "Scattermapbox"
+description: "How to create scattermapbox plots in R with Plotly."
+display_as: maps
+order: 6
+source: 2017-02-27-scattermapbox.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning=FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+### Map Tiles
+
+plotly.core bundles plotly.js 4, where the Mapbox-based `scattermapbox` trace was replaced by the MapLibre-based `scattermap` trace (`add_scattermap()`). Styles such as `"open-street-map"` and `"carto-darkmatter"` need no access token. See [Map Layers](mapbox-layers.html) documentation for more information.
+
+### Basic Example
+
+```{r}
+library(plotly.core)
+library(dplyr)
+
+dat <- ggplot2::map_data("world", "canada")
+dat <- dat |> group_by(group)
+
+# one path per group, separated by NA so the lines are not joined
+paths <- dat |>
+  group_modify(~ add_row(.x, long = NA, lat = NA))
+
+fig <- go_figure() |>
+  add_scattermap(
+    data = paths,
+    lon = ~long,
+    lat = ~lat,
+    mode = "lines",
+    line = go_scattermap_line(width = 2)
+  ) |>
+  add_scattermap(
+    lon = c(-100, -50),
+    lat = c(50, 75),
+    mode = "lines"
+  ) |>
+  update_layout(
+    map = go_map(
+      style = "open-street-map",
+      zoom = 0,
+      center = go_map_center(lat = median(dat$lat), lon = median(dat$long))
+    )
+  )
+
+fig
+```
+
+### Multiple Markers
+
+```{r}
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/bcdunbar/datasets/master/meteorites_subset.csv")
+
+fig <- go_figure()
+for (cl in unique(df$class)) {
+  fig <- fig |>
+    add_scattermap(
+      data = df[df$class == cl, ],
+      lat = ~reclat,
+      lon = ~reclong,
+      mode = "markers",
+      marker = go_scattermap_marker(size = 2),
+      hoverinfo = "name",
+      name = cl
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = "Meteorites by Class",
+    font = go_font(color = "white"),
+    plot_bgcolor = "#191A1A",
+    paper_bgcolor = "#191A1A",
+    map = go_map(style = "carto-darkmatter"),
+    legend = go_legend(orientation = "h", font = go_font(size = 8)),
+    margin = go_margin(l = 25, r = 25, b = 25, t = 25, pad = 2)
+  )
+
+fig
+```
+
+### Adding lines to tile maps
+
+```{r}
+library(plotly.core)
+library(dplyr)
+
+# airport locations
+air <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2011_february_us_airport_traffic.csv")
+
+# flights between airports
+flights <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv")
+flights$id <- seq_len(nrow(flights))
+
+# one segment per flight, separated by NA
+seg_lon <- as.vector(rbind(flights$start_lon, flights$end_lon, NA))
+seg_lat <- as.vector(rbind(flights$start_lat, flights$end_lat, NA))
+
+fig <- go_figure() |>
+  add_scattermap(
+    data = air,
+    lon = ~long,
+    lat = ~lat,
+    mode = "markers",
+    text = ~airport,
+    marker = go_scattermap_marker(
+      color = "red",
+      size = ~scales::rescale(sqrt(cnt), to = c(3, 20)),
+      opacity = 0.5
+    ),
+    hoverinfo = "text"
+  ) |>
+  add_scattermap(
+    lon = seg_lon,
+    lat = seg_lat,
+    mode = "lines",
+    opacity = 0.3,
+    line = go_scattermap_line(width = 1, color = "red"),
+    hoverinfo = "none"
+  ) |>
+  update_layout(
+    plot_bgcolor = "#191A1A",
+    paper_bgcolor = "#191A1A",
+    map = go_map(
+      style = "carto-darkmatter",
+      zoom = 1.5,
+      center = go_map_center(lat = median(air$lat), lon = median(air$long))
+    ),
+    margin = go_margin(l = 0, r = 0, b = 0, t = 0, pad = 0),
+    showlegend = FALSE
+  )
+
+fig
+```
+
+#Reference
+
+See `go_scattermap()` for more information and options!

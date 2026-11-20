@@ -1,0 +1,46 @@
+---
+title: "3D Subplots"
+description: "How to create 3D subplots in R with Plotly."
+display_as: multiple_axes
+order: 5
+source: 2017-01-04-3d-subplots.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning=FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+### 3D Subplot
+
+```{r}
+library(plotly.core)
+
+# custom grid style
+axx <- go_scene_axis(
+  gridcolor = "rgb(255, 255, 255)",
+  zerolinecolor = "rgb(255, 255, 255)",
+  showbackground = TRUE,
+  backgroundcolor = "rgb(230, 230,230)"
+)
+
+scene_row <- list(list(type = "scene"), list(type = "scene"))
+
+fig <- make_subplots(rows = 2, cols = 2, specs = list(scene_row, scene_row))
+for (row in 1:2) {
+  for (col in 1:2) {
+    fig <- fig |>
+      add_surface(z = volcano, showscale = FALSE, row = row, col = col)
+  }
+}
+
+fig <- fig |>
+  update_scenes(xaxis = axx, yaxis = axx, zaxis = axx, aspectmode = "cube") |>
+  update_layout(title = "3D Subplots")
+
+fig
+```
+
+### Reference
+
+See `go_scene()` and `go_scene_axis()` for more information and options!

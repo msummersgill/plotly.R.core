@@ -1,0 +1,46 @@
+---
+title: "Mapbox Density"
+description: "How to make a Mapbox Density Heatmap in R"
+display_as: maps
+order: 3
+source: 2019-09-23-mapbox-density.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning=FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+### Map Tiles, no Token Needed
+
+plotly.core draws density heatmaps on MapLibre tile maps with `add_densitymap()`
+and `update_layout(map = go_map(...))`. The built-in styles (such as
+`"open-street-map"`, `"carto-positron"` or `"carto-darkmatter"`) need no access
+token. See [Map Layers](mapbox-layers.html) for more information.
+
+#### Open Street Map Tiles
+
+```{r}
+library(plotly.core)
+
+quakes <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/earthquakes-23k.csv")
+
+fig <- quakes |>
+  go_figure() |>
+  add_densitymap(
+    lat = ~Latitude,
+    lon = ~Longitude,
+    coloraxis = "coloraxis",
+    radius = 10
+  ) |>
+  update_layout(
+    map = go_map(style = "open-street-map", center = go_map_center(lon = 180)),
+    coloraxis = go_coloraxis(colorscale = "Viridis")
+  )
+
+fig
+```
+
+#Reference
+
+See `go_densitymap()` for more information and options!

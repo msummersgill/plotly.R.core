@@ -1,0 +1,118 @@
+---
+title: "Carpet Plot"
+description: "How to create carpet plots in R with Plotly."
+display_as: scientific
+order: 7
+source: 2017-04-24-carpet-plot.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning=FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+### Set the Coordinates
+
+To set the `x` and `y` coordinates use `x` and `y` attributes. If `x` coorindate values are ommitted a cheater plot will be created.
+
+```{r}
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_carpet(y = c(2, 3.5, 4, 3, 4.5, 5, 5.5, 6.5, 7.5, 8, 8.5, 10))
+```
+
+### Add Parameter Values
+
+To save parameter values use `a` and `b` attributes.
+
+```{r}
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_carpet(
+    a = c(4, 4, 4, 4.5, 4.5, 4.5, 5, 5, 5, 6, 6, 6),
+    b = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3),
+    y = c(2, 3.5, 4, 3, 4.5, 5, 5.5, 6.5, 7.5, 8, 8.5, 10)
+  )
+
+fig
+```
+
+### Add Carpet Axes
+
+Use `aaxis` and `baxis` (`go_carpet_aaxis()` and `go_carpet_baxis()`) to make changes to the axes. For a more detailed list of attributes refer to `go_carpet_aaxis()`.
+
+```{r}
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_carpet(
+    a = c(4, 4, 4, 4.5, 4.5, 4.5, 5, 5, 5, 6, 6, 6),
+    b = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3),
+    y = c(2, 3.5, 4, 3, 4.5, 5, 5.5, 6.5, 7.5, 8, 8.5, 10),
+    aaxis = go_carpet_aaxis(
+      tickprefix = "a = ",
+      ticksuffix = "m",
+      smoothing = 1,
+      minorgridcount = 9
+    ),
+    baxis = go_carpet_baxis(
+      tickprefix = "b = ",
+      ticksuffix = "Pa",
+      smoothing = 1,
+      minorgridcount = 9
+    )
+  )
+
+fig
+```
+
+### Style Carpet Axes
+
+```{r}
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_carpet(
+    a = c(4, 4, 4, 4.5, 4.5, 4.5, 5, 5, 5, 6, 6, 6),
+    b = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3),
+    y = c(2, 3.5, 4, 3, 4.5, 5, 5.5, 6.5, 7.5, 8, 8.5, 10),
+    aaxis = go_carpet_aaxis(
+      tickprefix = "a = ",
+      ticksuffix = "m",
+      smoothing = 1,
+      minorgridcount = 9,
+      minorgridwidth = 0.6,
+      minorgridcolor = "white",
+      gridcolor = "white",
+      color = "white"
+    ),
+    baxis = go_carpet_baxis(
+      tickprefix = "b = ",
+      ticksuffix = "Pa",
+      smoothing = 1,
+      minorgridcount = 9,
+      minorgridwidth = 0.6,
+      gridcolor = "white",
+      minorgridcolor = "white",
+      color = "white"
+    )
+  ) |>
+  update_layout(
+    plot_bgcolor = "black",
+    paper_bgcolor = "black",
+    xaxis = go_xaxis(showgrid = FALSE, showticklabels = FALSE),
+    yaxis = go_yaxis(showgrid = FALSE, showticklabels = FALSE)
+  )
+
+fig
+```
+
+### Add Points and Contours
+
+To add points and lines to see [Carpet Scatter Plots](carpet-scatter.html) or to add contours see [Carpet Contour Plots](carpet-contour.html)
+
+### Reference
+
+See `go_carpet()` for more information and options!

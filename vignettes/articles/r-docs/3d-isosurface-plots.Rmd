@@ -1,0 +1,103 @@
+---
+title: "3D Isosurface Plots"
+description: "How to create 3D isosurface plots with Plotly."
+display_as: 3d_charts
+order: 7
+source: 2019-04-16-isosurface.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning=FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+#### Basic Isosurface Plot
+
+```{r}
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_isosurface(
+    x = c(0, 0, 0, 0, 1, 1, 1, 1),
+    y = c(1, 0, 1, 0, 1, 0, 1, 0),
+    z = c(1, 1, 0, 0, 1, 1, 0, 0),
+    value = c(1, 2, 3, 4, 5, 6, 7, 8),
+    isomin = 2,
+    isomax = 6
+  )
+
+fig
+```
+
+#### Isosurface with Additional Slices
+
+```{r}
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/clebsch-cubic.csv")
+
+fig <- df |>
+  go_figure() |>
+  add_isosurface(
+    x = ~x,
+    y = ~y,
+    z = ~z,
+    value = ~value,
+    isomin = -100,
+    isomax = 100,
+    colorscale = "RdBu",
+    surface = go_isosurface_surface(show = TRUE, count = 1),
+    slices = go_slices(z = go_slices_axis(show = TRUE, locations = c(-0.3, 0.5))),
+    caps = go_caps(
+      x = go_caps_axis(show = FALSE),
+      y = go_caps_axis(show = FALSE),
+      z = go_caps_axis(show = FALSE)
+    )
+  ) |>
+  update_layout(
+    margin = go_margin(t = 0, l = 0, b = 0),
+    scene = go_scene(
+      camera = go_scene_camera(eye = go_scene_camera_eye(x = 1.86, y = 0.61, z = 0.98))
+    )
+  )
+
+fig
+```
+
+#### Multiple Isosurfaces with Caps
+
+```{r}
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/clebsch-cubic.csv")
+
+fig <- df |>
+  go_figure() |>
+  add_isosurface(
+    x = ~x,
+    y = ~y,
+    z = ~z,
+    value = ~value,
+    isomin = -10,
+    isomax = 10,
+    surface = go_isosurface_surface(show = TRUE, count = 4, fill = 0.8, pattern = "odd"),
+    caps = go_caps(
+      x = go_caps_axis(show = TRUE),
+      y = go_caps_axis(show = TRUE),
+      z = go_caps_axis(show = TRUE)
+    )
+  ) |>
+  update_layout(
+    margin = go_margin(t = 0, l = 0, b = 0),
+    scene = go_scene(
+      camera = go_scene_camera(eye = go_scene_camera_eye(x = 1.86, y = 0.61, z = 0.98))
+    )
+  )
+
+fig
+```
+
+
+#### Reference
+
+See `go_isosurface()` for more information and chart attribute options!.

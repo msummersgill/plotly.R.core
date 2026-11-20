@@ -3,7 +3,7 @@
 Interactive web graphics for R built on [plotly.js](https://github.com/plotly/plotly.js). 
 plotly.core is a rendering engine supporting the [plotly R package](https://github.com/plotly/plotly.R) and experimental [plotly.express R package](https://github.com/msummersgill/plotly.R.express) and can also be used stand-alone. 
 
-- **Faster plots, less browser memory** plotly.core leverages advances in plotly.js 
+- **Faster plots, less browser memory** plotly.core leverages [advances in plotly.js](https://plotly.com/blog/cutting-render-times-plotly-performance-update/) 
   to improve browser rendering performance, and implements optimizations to on
   the R backend to cut down plot generation time and size in memory. Rendering 
   large time series plots and heatmaps is 10-100x faster. DateTime optimizations and support

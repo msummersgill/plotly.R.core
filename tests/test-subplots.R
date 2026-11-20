@@ -287,3 +287,36 @@ expect_error(
   add_annotation(fig, text = "x", row = 1, col = 2),
   "subplot is of type domain"
 )
+
+# row/col may be vectors or "all"
+f <- make_subplots(rows = 3, cols = 2)
+for (r in 1:3) {
+  for (c in 1:2) {
+    f <- add_scatter(f, y = 1:3, row = r, col = c)
+  }
+}
+g <- update_xaxes(f, showticklabels = FALSE, row = 1:2)
+stopifnot(
+  identical(
+    vapply(
+      paste0("xaxis", c("", 2:6)),
+      function(k) isFALSE(g$layout[[k]]$showticklabels),
+      NA
+    ),
+    stats::setNames(rep(c(TRUE, FALSE), c(4, 2)), paste0("xaxis", c("", 2:6)))
+  )
+)
+g <- update_traces(f, name = "x", row = c(1, 3), col = 2)
+stopifnot(identical(
+  vapply(g$data, function(t) t$name %||% "-", ""),
+  c("-", "x", "-", "-", "-", "x")
+))
+g <- update_yaxes(f, title = "t", row = "all", col = 1)
+stopifnot(identical(
+  vapply(
+    paste0("yaxis", c("", 2:6)),
+    function(k) !is.null(g$layout[[k]]$title),
+    NA
+  ),
+  stats::setNames(rep(c(TRUE, FALSE), 3), paste0("yaxis", c("", 2:6)))
+))

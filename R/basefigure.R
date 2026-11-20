@@ -685,15 +685,15 @@ filter_by_selector <- function(objs, keep, selector) {
 # Subplot refs addressed by row/col/secondary_y (plotly.py select_traces).
 grid_subplot_refs <- function(fig, row, col, secondary_y) {
   grid_ref <- validate_grid_ref(fig)
-  cells <- if (is.null(row) && !is.null(col)) {
-    lapply(grid_ref, function(r) r[[col]])
-  } else if (!is.null(row) && is.null(col)) {
-    grid_ref[[row]]
-  } else if (!is.null(row) && !is.null(col)) {
-    list(grid_ref[[row]][[col]])
-  } else {
-    unlist(grid_ref, recursive = FALSE)
-  }
+  # NULL or "all" address every row (column); otherwise a vector of them
+  rows <- seq_along(grid_ref)
+  cols <- seq_along(grid_ref[[1L]])
+  rows <- rows[vapply(rows, in_selection, NA, sel = row)]
+  cols <- cols[vapply(cols, in_selection, NA, sel = col)]
+  cells <- unlist(
+    lapply(rows, function(r) lapply(cols, function(c) grid_ref[[r]][[c]])),
+    recursive = FALSE
+  )
   refs <- list()
   for (cell in cells) {
     if (is.null(cell)) {
@@ -854,6 +854,14 @@ container_cells <- function(fig, prefix) {
   out
 }
 
+# Whether a subplot row or column `value` is among those `sel` addresses:
+# NULL or "all" (every one), or a vector of numbers.
+in_selection <- function(value, sel) {
+  is.null(sel) ||
+    identical(sel, "all") ||
+    (length(value) == 1L && !is.na(value) && value %in% sel)
+}
+
 layout_subplot_keys <- function(
   fig,
   prefix,
@@ -870,8 +878,8 @@ layout_subplot_keys <- function(
       function(k) {
         cell <- cells[[k]]
         !is.null(cell) &&
-          (is.null(row) || cell$row == row) &&
-          (is.null(col) || cell$col == col) &&
+          in_selection(cell$row, row) &&
+          in_selection(cell$col, col) &&
           (is.null(secondary_y) || cell$secondary_y == secondary_y)
       },
       nms
@@ -978,8 +986,8 @@ layout_array_indices <- function(
       function(o) {
         xr <- o$xref %||% ""
         yr <- o$yref %||% ""
-        (is.null(col) || isTRUE(xref_col[[xr]] == col)) &&
-          (is.null(row) || isTRUE(yref_row[[yr]] == row)) &&
+        in_selection(xref_col[[xr]], col) &&
+          in_selection(yref_row[[yr]], row) &&
           (is.null(secondary_y) || isTRUE(yref_sec[[yr]] == secondary_y))
       },
       logical(1)

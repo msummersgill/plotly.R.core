@@ -1,0 +1,43 @@
+---
+title: "WebGL Heatmaps"
+description: "How to make webGL based heatmaps in R with Plotly."
+display_as: scientific
+order: 12
+source: 2018-08-03-heatmap-webgl.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning=FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+#### Heatmap from an Image
+
+The WebGL `heatmapgl` trace was removed from plotly.js; the regular heatmap
+trace (`add_heatmap()`) handles large images well.
+
+```{r}
+library(jpeg)
+library(plotly.core)
+
+# Image processing
+url <- "https://images.plot.ly/plotly-documentation/images/heatmap-galaxy.jpg"
+tmpf <- tempfile()
+download.file(url, tmpf, mode = "wb")
+data <- readJPEG(tmpf)
+fr <- file.remove(tmpf) # remove the downloaded temp file
+
+zdata <- rowSums(data * 255, dims = 2)
+
+fig <- go_figure() |>
+  add_heatmap(
+    z = zdata,
+    colorscale = c("blue", "white", "red")
+  )
+
+fig
+```
+
+#### Reference
+
+See `go_heatmap()` for more information and options!

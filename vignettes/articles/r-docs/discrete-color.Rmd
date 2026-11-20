@@ -1,0 +1,545 @@
+---
+title: "Discrete Colors"
+description: "How to use and configure discrete color sequences, also known as categorical or qualitative color scales in R."
+display_as: file_settings
+order: 21
+source: 2021-08-18-discrete-colors.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+
+### Discrete vs Continuous Color
+
+In the same way as the X or Y position of a mark in cartesian coordinates can be used to represent continuous values (i.e. amounts or moments in time) or categories (i.e. labels), color can be used to represent continuous or discrete data. This page is about using color to represent **categorical** data using discrete colors, but Plotly can also [represent continuous values with color](https://plotly.com/r/colorscales/).
+
+### Discrete Color Concepts
+
+This document explains the following discrete-color-related concepts:
+
+- **color sequences** are lists of colors to be mapped onto discrete data values. No interpolation occurs when using color sequences, unlike with [continuous color scales](https://plotly.com/r/colorscales/), and each color is used as-is. The default color sequence comes from the layout's `colorway` attribute and can be explicitly specified using a vector of colors, as in `update_layout(colorway = c(...))`.
+- **legends** are visible representations of the mapping between colors and data values. Legend markers also change shape when used with various kinds of traces, such as symbols or lines for scatter-like traces. [Legends are configurable](legend.html) under the `layout.legend` attribute (`go_legend()`). Legends are the discrete equivalent of [continuous color bars](https://plotly.com/r/colorscales/)
+
+### Discrete Color with Plotly
+
+With plotly.core, discrete colors come from adding **one trace per category**: each trace gets the next color of the color sequence and its own legend entry. Continuous color comes from passing **numeric** values to a marker's `color` together with a `colorscale`. This means that numeric strings must be parsed to be used for continuous color, and conversely, numbers used as category codes are best converted to strings.
+
+For example, in the `tips` dataset, the `smoker` column contains strings, so we add one trace per value:
+
+```{r}
+library(plotly.core)
+data("tips", package = "reshape2")
+
+fig <- go_figure()
+for (g in unique(tips$smoker)) {
+  fig <- fig |>
+    add_scatter(
+      data = tips[tips$smoker == g, ],
+      x = ~total_bill,
+      y = ~tip,
+      mode = "markers",
+      name = g
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = "String 'smoker' values mean discrete colors",
+    legend = go_legend(title = go_legend_title(text = "smoker")),
+    plot_bgcolor = "#e5ecf6",
+    xaxis = go_xaxis(
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    ),
+    yaxis = go_yaxis(
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    )
+  )
+fig
+```
+
+The `size` column, however, contains numbers:
+
+```{r}
+library(plotly.core)
+data("tips", package = "reshape2")
+
+fig <- tips |>
+  go_figure() |>
+  add_scatter(
+    x = ~total_bill,
+    y = ~tip,
+    mode = "markers",
+    marker = go_scatter_marker(
+      color = ~size,
+      colorscale = "Viridis",
+      showscale = TRUE
+    )
+  ) |>
+  update_layout(
+    title = "Numeric 'size' values mean continuous color",
+    plot_bgcolor = "#e5ecf6",
+    xaxis = go_xaxis(
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    ),
+    yaxis = go_yaxis(
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    )
+  )
+fig
+```
+
+Converting this column to strings is very straightforward, but note that the ordering in the legend follows the order in which the traces are added (see below for how to control discrete order):
+
+```{r}
+library(plotly.core)
+data("tips", package = "reshape2")
+
+tips$size <- as.character(tips$size) #convert to string
+
+fig <- go_figure()
+for (g in sort(unique(tips$size))) {
+  fig <- fig |>
+    add_scatter(
+      data = tips[tips$size == g, ],
+      x = ~total_bill,
+      y = ~tip,
+      mode = "markers",
+      name = g
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = "String 'size' values mean discrete colors",
+    plot_bgcolor = "#e5ecf6",
+    xaxis = go_xaxis(
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    ),
+    yaxis = go_yaxis(
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    )
+  )
+fig
+```
+
+### Discrete Colors in Dash
+
+[Dash for R](https://dashr.plotly.com/) is an open-source framework for building analytical applications, with no Javascript required, and it is tightly integrated with the Plotly graphing library.
+
+Learn about how to install Dash for R at https://dashr.plot.ly/installation.
+
+Everywhere in this page that you see fig, you can display the same figure in a Dash for R application by passing it to the figure argument.
+
+```{r eval=FALSE}
+
+library(dash)
+library(dashCoreComponents)
+library(dashHtmlComponents)
+library(plotly.core)
+
+app <- Dash$new()
+
+app$layout(
+  htmlDiv(
+    list(
+      dccGraph(id = "graph"),
+      htmlLabel("Color mode:"),
+      dccRadioItems(
+        id = "radio",
+        options = list(
+          list(label = "discrete", value = "d"),
+          list(label = "continuous", value = "c")
+        ),
+        value = "Secondary"
+      )
+    )
+  )
+)
+app$callback(
+  output(id = "graph", property = "figure"),
+  params = list(input(id = "radio", property = "value")),
+  function(value) {
+    data("tips", package = "reshape2")
+    if (value == "d") {
+      fig <- go_figure()
+      for (g in sort(unique(tips$size))) {
+        fig <- fig |>
+          add_scatter(
+            data = tips[tips$size == g, ],
+            x = ~total_bill,
+            y = ~tip,
+            mode = "markers",
+            name = as.character(g)
+          )
+      }
+      fig <- fig |>
+        update_layout(title = "'size' values mean discrete colors")
+
+      return(fig)
+    } else {
+      fig <- tips |>
+        go_figure() |>
+        add_scatter(
+          x = ~total_bill,
+          y = ~tip,
+          mode = "markers",
+          marker = go_scatter_marker(color = ~size, showscale = TRUE)
+        ) |>
+        update_layout(title = "'size' values mean continuous color")
+
+      return(fig)
+    }
+  }
+)
+```
+
+Use `app$run_server()` to run the dash app.
+
+### Color Sequences in Plotly
+
+By default, Plotly uses the color sequence from the layout's `colorway` attribute, which comes from the default `plotly` template. You can choose any of the following built-in qualitative color sequences however, or define your own.
+
+```{r eval=FALSE}
+
+library("RColorBrewer")
+display.brewer.all(type = "qual")
+```
+
+
+Here is an example that creates a scatter plot using Plotly, with points colored using the qualitative `Accent` color sequence from RColorBrewer, passed to `colorway`.
+
+```{r}
+library(plotly.core)
+library(gapminder)
+data("gapminder")
+
+fig <- go_figure()
+for (cont in levels(gapminder$continent)) {
+  fig <- fig |>
+    add_scatter(
+      data = gapminder[gapminder$continent == cont, ],
+      x = ~year,
+      y = ~lifeExp,
+      mode = "lines",
+      name = cont
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = "Built-in Accent color sequence",
+    legend = go_legend(title = go_legend_title(text = "continent")),
+    plot_bgcolor = "#e5ecf6",
+    xaxis = go_xaxis(
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    ),
+    yaxis = go_yaxis(
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    ),
+    colorway = RColorBrewer::brewer.pal(5, "Accent")
+  )
+fig
+
+```
+
+### Explicitly Constructing a Color Sequence
+
+The layout's `colorway` attribute accepts explicitly-constructed color sequences as well, as vectors of CSS colors:
+
+```{r}
+library(plotly.core)
+library(gapminder)
+data("gapminder")
+
+data <- gapminder[gapminder$year == 2007, ]
+
+fig <- go_figure()
+for (cont in levels(data$continent)) {
+  fig <- fig |>
+    add_bar(
+      data = data[data$continent == cont, ],
+      x = ~pop,
+      y = ~continent,
+      width = 1,
+      orientation = "h",
+      name = cont,
+      text = ~country,
+      hovertemplate = paste(
+        "<b>%{text}</b>",
+        "<br><b>Continent</b>: %{y}<br>",
+        "<i>pop</i>: $%{x}"
+      )
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = "Explicit color sequence",
+    legend = go_legend(title = go_legend_title(text = "continent")),
+    plot_bgcolor = "#e5ecf6",
+    xaxis = go_xaxis(
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    ),
+    yaxis = go_yaxis(
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    ),
+    colorway = c("red", "green", "blue", "goldenrod", "magenta")
+  )
+
+fig
+```
+
+**_Warning_**: If you give colors to fewer traces than the number of unique values in the column you are splitting on, the given colors will be used for some values and the default color sequence for the other values:
+
+```{r}
+library(plotly.core)
+data("tips", package = "reshape2")
+
+pal <- c("red", "blue")
+
+fig <- go_figure()
+days <- unique(tips$day)
+for (k in seq_along(days)) {
+  fig <- fig |>
+    add_scatter(
+      data = tips[tips$day == days[[k]], ],
+      x = ~total_bill,
+      y = ~tip,
+      mode = "markers",
+      name = as.character(days[[k]]),
+      marker = if (k <= length(pal)) go_scatter_marker(color = pal[[k]])
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = "Ambiguous! given colors mapped to some values only",
+    legend = go_legend(title = go_legend_title(text = "day")),
+    plot_bgcolor = "#e5ecf6",
+    xaxis = go_xaxis(
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    ),
+    yaxis = go_yaxis(
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    )
+  )
+
+fig
+```
+
+### Directly Mapping Colors to Data Values
+
+The example above assigned colors to data values on a first-come-first-served basis, but you can directly map colors to data values if this is important to your application, by looking up each trace's color in a named vector. Note that this does not change the order in which values appear in the figure or legend, as can be controlled below:
+
+```{r}
+library(plotly.core)
+library(gapminder)
+data("gapminder")
+
+pal <- c("red", "green", "blue", "goldenrod", "magenta")
+pal <- setNames(pal, c("Europe", "Asia", "Americas", "Oceania", "Africa"))
+
+fig <- go_figure()
+for (cont in levels(data$continent)) {
+  fig <- fig |>
+    add_bar(
+      data = data[data$continent == cont, ],
+      x = ~pop,
+      y = ~continent,
+      width = 1,
+      orientation = "h",
+      name = cont,
+      text = ~country,
+      hovertemplate = paste(
+        "<b>%{text}</b>",
+        "<br><b>Continent</b>: %{y}<br>",
+        "<i>pop</i>: $%{x}"
+      ),
+      marker = go_bar_marker(color = pal[[cont]])
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = "Explicit color mapping",
+    legend = go_legend(title = go_legend_title(text = "continent")),
+    plot_bgcolor = "#e5ecf6",
+    xaxis = go_xaxis(
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    ),
+    yaxis = go_yaxis(
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    )
+  )
+
+fig
+
+
+```
+
+If your data set already contains valid CSS colors which you wish to use directly, you can pass them to the marker's `color` (e.g. `go_bar_marker(color = ...)`) of a single trace, in which case there is no legend entry per color, and the color does not appear in the hover label:
+
+```{r}
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_bar(
+    x = c("a", "b", "c"),
+    y = c(1, 3, 2),
+    marker = go_bar_marker(color = c("red", "goldenrod", "#00D"))
+  ) |>
+  update_layout(
+    plot_bgcolor = "#e5ecf6",
+    xaxis = go_xaxis(
+      title = "x",
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    ),
+    yaxis = go_yaxis(
+      title = "y",
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    )
+  )
+
+fig
+```
+
+### Controlling Discrete Color Order
+
+Plotly lets you specify an ordering over categorical variables with `categoryorder`, which will apply to [axes](axes.html); the legend follows the order in which traces are added. This can be used with either `colorway` or explicitly mapped colors.
+
+```{r}
+library(plotly.core)
+library(gapminder)
+data("gapminder")
+
+data <- gapminder[gapminder$year == 2007, ]
+
+
+pal <- c("green", "blue", "magenta", "red", "goldenrod")
+pal <- setNames(pal, c("Europe", "Asia", "Americas", "Oceania", "Africa"))
+
+fig <- go_figure()
+for (cont in levels(data$continent)) {
+  fig <- fig |>
+    add_bar(
+      data = data[data$continent == cont, ],
+      x = ~pop,
+      y = ~continent,
+      width = 1,
+      orientation = "h",
+      name = cont,
+      text = ~country,
+      hovertemplate = paste(
+        "<b>%{text}</b>",
+        "<br><b>Continent</b>: %{y}<br>",
+        "<i>pop</i>: $%{x}"
+      ),
+      marker = go_bar_marker(color = pal[[cont]])
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = "Explicit color sequence with explicit ordering",
+    legend = go_legend(title = go_legend_title(text = "continent")),
+    plot_bgcolor = "#e5ecf6",
+    xaxis = go_xaxis(
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    ),
+    yaxis = go_yaxis(
+      categoryorder = "array",
+      categoryarray = c("Asia", "Oceania", "Europe", "Africa", "Americas"),
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    ),
+    bargap = 1
+  )
+
+fig
+
+```
+
+```{r}
+library(plotly.core)
+library(gapminder)
+data("gapminder")
+
+data <- gapminder[gapminder$year == 2007, ]
+
+
+pal <- c("red", "green", "blue", "goldenrod", "magenta")
+pal <- setNames(pal, c("Europe", "Asia", "Americas", "Oceania", "Africa"))
+
+fig <- go_figure()
+for (cont in levels(data$continent)) {
+  fig <- fig |>
+    add_bar(
+      data = data[data$continent == cont, ],
+      x = ~pop,
+      y = ~continent,
+      width = 1,
+      orientation = "h",
+      name = cont,
+      text = ~country,
+      hovertemplate = paste(
+        "<b>%{text}</b>",
+        "<br><b>Continent</b>: %{y}<br>",
+        "<i>pop</i>: $%{x}"
+      ),
+      marker = go_bar_marker(color = pal[[cont]])
+    )
+}
+fig <- fig |>
+  update_layout(
+    title = "Explicit color mapping with explicit ordering",
+    legend = go_legend(title = go_legend_title(text = "continent")),
+    plot_bgcolor = "#e5ecf6",
+    xaxis = go_xaxis(
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    ),
+    yaxis = go_yaxis(
+      categoryorder = "array",
+      categoryarray = c("Asia", "Oceania", "Europe", "Africa", "Americas"),
+      zerolinecolor = "#ffff",
+      zerolinewidth = 2,
+      gridcolor = "#ffff"
+    ),
+    bargap = 1
+  )
+
+fig
+
+```

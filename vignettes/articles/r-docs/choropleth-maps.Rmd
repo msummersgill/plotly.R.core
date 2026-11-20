@@ -1,0 +1,336 @@
+---
+title: "Choropleth Maps"
+description: "How to make a choropleth map in R. A choropleth map shades geographic regions by value."
+display_as: maps
+order: 1
+source: 2015-07-30-choropleth.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning=FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+
+A [Choropleth Map](https://en.wikipedia.org/wiki/Choropleth_map) is a map composed of colored polygons. It is used to represent spatial variations of a quantity. This page documents how to build **outline** choropleth maps, but you can also build [choropleth **tile maps** using `add_choroplethmap()`](mapbox-county-choropleth.html).
+
+### Base Map Configuration
+
+plotly.core figures have a `layout.geo` object (built with `go_geo()` and set with `update_layout(geo = ...)` or `update_geos()`) which can be used to control the appearance of the base map onto which data is plotted.
+
+### Introduction: main parameters for choropleth outline maps
+
+Making choropleth maps requires two main types of input:
+
+1. Geometry information:
+   1. This can either be a supplied GeoJSON file where each feature has either an `id` field or some identifying value in `properties`; or
+   2. one of the built-in geometries within plotly.js: US states and world countries (see below)
+2. A list of values indexed by feature identifier.
+
+The GeoJSON data is passed to the `geojson` argument, and the data is passed into the `z` argument of choropleth traces.
+
+**Note** the `geojson` attribute can also be the URL to a GeoJSON file, which can speed up map rendering in certain cases.
+
+### GeoJSON with `feature.id`
+
+Here we load a GeoJSON file containing the geometry information for US counties, where `feature.id` is a [FIPS code](https://en.wikipedia.org/wiki/FIPS_county_code).
+
+```{r}
+library(plotly.core)
+library(jsonlite)
+
+data <- fromJSON(
+  "https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json",
+  simplifyVector = FALSE
+)
+data$features[[1]]
+```
+
+#### Data indexed by `id`
+
+Here we load unemployment data by county, also indexed by [FIPS code](https://en.wikipedia.org/wiki/FIPS_county_code).
+
+```{r}
+df <- read.csv(
+  "https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv",
+  header = TRUE,
+  colClasses = c("fips" = "character")
+)
+head(df)
+```
+
+### Choropleth Map Using GeoJSON
+```{r}
+library(plotly.core)
+library(jsonlite)
+
+url <- "https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json"
+counties <- fromJSON(url, simplifyVector = FALSE)
+url2 <- "https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv"
+df <- read.csv(url2, colClasses = c(fips = "character"))
+g <- go_geo(
+  scope = "usa",
+  projection = go_geo_projection(type = "albers usa"),
+  showlakes = TRUE,
+  lakecolor = "white"
+)
+
+fig <- go_figure() |>
+  add_choropleth(
+    geojson = counties,
+    locations = df$fips,
+    z = df$unemp,
+    colorscale = "Viridis",
+    zmin = 0,
+    zmax = 12,
+    marker = go_choropleth_marker(line = go_choropleth_marker_line(width = 0)),
+    colorbar = go_colorbar(title = "Unemployment Rate (%)")
+  ) |>
+  update_layout(title = "2016 US Unemployment by County", geo = g)
+
+fig
+```
+**Note** In this example we set `layout.geo.scope` to usa to automatically configure the map to display USA-centric data in an appropriate projection.
+
+### Indexing by GeoJSON Properties
+
+If the GeoJSON you are using either does not have an `id` field or you wish you use one of the keys in the `properties` field, you may use the `featureidkey` parameter to specify where to match the values of locations.
+
+In the following GeoJSON object/data-file pairing, the values of `properties.district` match the values of the `district` column:
+```{r}
+library(plotly.core)
+library(jsonlite)
+
+url <- "https://raw.githubusercontent.com/plotly/datasets/master/election.geojson"
+geojson <- fromJSON(url, simplifyVector = FALSE)
+url2 <- "https://raw.githubusercontent.com/plotly/datasets/master/election.csv"
+df <- read.csv(url2)
+
+fig <- go_figure() |>
+  add_choropleth(
+    geojson = geojson,
+    locations = df$district,
+    z = df$Bergeron,
+    colorscale = "Viridis",
+    featureidkey = "properties.district",
+    colorbar = go_colorbar(title = "Bergeron Votes")
+  ) |>
+  update_layout(
+    geo = go_geo(fitbounds = "locations", visible = FALSE),
+    title = "2013 Montreal Election"
+  )
+
+fig
+```
+### Using Built-in Country and State Geometries
+Plotly comes with two built-in geometries which do not require an external GeoJSON file:
+
+1. USA States
+2. Countries as defined in the Natural Earth dataset.
+
+**Note and disclaimer:** cultural (as opposed to physical) features are by definition subject to change, debate and dispute. Plotly includes data from Natural Earth "as-is" and defers to the [Natural Earth policy regarding disputed borders](https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/) which read:
+
+> Natural Earth Vector draws boundaries of countries according to defacto status. We show who actually controls the situation on the ground.
+
+To use the built-in countries geometry, provide `locations` as [three-letter ISO country codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3).
+```{r}
+library(plotly.core)
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2014_world_gdp_with_codes.csv")
+df
+
+fig <- df |>
+  go_figure() |>
+  add_choropleth(
+    locations = ~CODE,
+    z = ~GDP..BILLIONS.,
+    text = ~COUNTRY,
+    colorscale = "Blues"
+  )
+
+fig
+```
+
+To use the USA States geometry, set `locationmode = "USA-states"` and provide `locations` as two-letter state abbreviations:
+```{r}
+library(plotly.core)
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2011_us_ag_exports.csv")
+df$hover <- with(df, paste(state, "<br>", "Beef", beef, "Dairy", dairy, "<br>",
+                           "Fruits", total.fruits, "Veggies", total.veggies,
+                           "<br>", "Wheat", wheat, "Corn", corn))
+
+fig <- df |>
+  go_figure() |>
+  add_choropleth(
+    locationmode = "USA-states",
+    z = ~total.exports,
+    text = ~hover,
+    locations = ~code,
+    colorscale = "Purples",
+    colorbar = go_colorbar(title = "Millions USD")
+  ) |>
+  update_layout(
+    title = "2011 US Agriculture Exports by State<br>(Hover for breakdown)"
+  )
+
+fig
+```
+
+### Customize choropleth chart
+```{r}
+library(plotly.core)
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2011_us_ag_exports.csv")
+df$hover <- with(df, paste(state, "<br>", "Beef", beef, "Dairy", dairy, "<br>",
+                           "Fruits", total.fruits, "Veggies", total.veggies,
+                           "<br>", "Wheat", wheat, "Corn", corn))
+# give state boundaries a white border
+l <- go_choropleth_marker_line(color = "white", width = 2)
+# specify some map projection/options
+g <- go_geo(
+  scope = "usa",
+  projection = go_geo_projection(type = "albers usa"),
+  showlakes = TRUE,
+  lakecolor = "white"
+)
+
+fig <- df |>
+  go_figure() |>
+  add_choropleth(
+    locationmode = "USA-states",
+    z = ~total.exports,
+    text = ~hover,
+    locations = ~code,
+    colorscale = "Purples",
+    marker = go_choropleth_marker(line = l),
+    colorbar = go_colorbar(title = "Millions USD")
+  ) |>
+  update_layout(
+    title = "2011 US Agriculture Exports by State<br>(Hover for breakdown)",
+    geo = g
+  )
+
+fig
+```
+
+**Note** In this example we set `layout.geo.scope` to `usa` to automatically configure the map to display USA-centric data in an appropriate projection.
+
+### World Choropleth Map
+
+```{r}
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2014_world_gdp_with_codes.csv")
+
+# light grey boundaries
+l <- go_choropleth_marker_line(color = "grey", width = 0.5)
+
+# specify map projection/options
+g <- go_geo(
+  showframe = FALSE,
+  showcoastlines = FALSE,
+  projection = go_geo_projection(type = "mercator")
+)
+
+fig <- df |>
+  go_figure() |>
+  add_choropleth(
+    z = ~GDP..BILLIONS.,
+    colorscale = "Blues",
+    text = ~COUNTRY,
+    locations = ~CODE,
+    marker = go_choropleth_marker(line = l),
+    colorbar = go_colorbar(title = "GDP Billions US$", tickprefix = "$")
+  ) |>
+  update_layout(
+    title = '2014 Global GDP<br>Source:<a href="https://www.cia.gov/library/publications/the-world-factbook/fields/2195.html">CIA World Factbook</a>',
+    geo = g
+  )
+
+fig
+```
+
+### Choropleth Inset Map
+
+```{r}
+library(plotly.core)
+
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2014_ebola.csv")
+# restrict from June to September
+df <- subset(df, Month %in% 6:9)
+# ordered factor variable with month abbreviations
+df$abbrev <- ordered(month.abb[df$Month], levels = month.abb[6:9])
+# September totals
+df9 <- subset(df, Month == 9)
+
+# main map
+g1 <- go_geo(
+  scope = "africa",
+  showframe = FALSE,
+  showland = TRUE,
+  landcolor = "rgb(229,229,229)",
+  resolution = 50,
+  showcoastlines = TRUE,
+  countrycolor = "white",
+  coastlinecolor = "white",
+  projection = go_geo_projection(type = "mercator"),
+  lonaxis = go_geo_lonaxis(range = c(-15, -5)),
+  lataxis = go_geo_lataxis(range = c(0, 12)),
+  domain = go_domain(x = c(0, 1), y = c(0, 1))
+)
+
+# inset map
+g2 <- go_geo(
+  scope = "africa",
+  showframe = FALSE,
+  showland = TRUE,
+  landcolor = "rgb(229,229,229)",
+  showcountries = FALSE,
+  bgcolor = "rgba(255,255,255,0)",
+  domain = go_domain(x = c(0, 0.6), y = c(0, 0.6))
+)
+
+# marker area proportional to the number of cases
+sizeref <- 2 * max(df$Value) / 40^2
+
+fig <- go_figure()
+for (m in levels(df$abbrev)) {
+  fig <- fig |>
+    add_scattergeo(
+      data = df[df$abbrev == m, ],
+      lat = ~Lat,
+      lon = ~Lon,
+      text = ~paste(Value, "cases"),
+      mode = "markers",
+      marker = go_scattergeo_marker(
+        size = ~Value,
+        sizemode = "area",
+        sizeref = sizeref
+      ),
+      name = m
+    )
+}
+fig <- fig |>
+  add_scattergeo(
+    lon = 21.0936,
+    lat = 7.1881,
+    text = "Africa",
+    mode = "text",
+    showlegend = FALSE,
+    geo = "geo2"
+  ) |>
+  add_choropleth(
+    data = df9,
+    z = ~Month,
+    locations = ~Country,
+    locationmode = "country names",
+    colorscale = list(c(0, "black"), c(1, "black")),
+    showscale = FALSE,
+    geo = "geo2"
+  ) |>
+  update_layout(
+    title = 'Ebola cases reported by month in West Africa 2014<br> Source: <a href="https://data.hdx.rwlabs.org/dataset/rowca-ebola-cases">HDX</a>',
+    geo = g1,
+    geo2 = g2
+  )
+
+fig
+```

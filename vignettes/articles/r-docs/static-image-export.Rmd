@@ -1,0 +1,38 @@
+---
+title: "Exporting Graphs as Static Images"
+description: "How to export R graphs as static images."
+display_as: file_settings
+order: 4
+source: 2020-01-20-static-image-export.Rmd
+---
+
+```{r, echo = FALSE, message=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning=FALSE)
+# plotly.js from the CDN, so the site's pages don't each copy it
+options(plotly.core.plotlyjs = "cdn")
+```
+### Supported File Formats
+
+With the `plotly.core` R package, you can export graphs you create as static images in the `.png`, `.jpg`/`.jpeg`, `.webp`, `.eps`, `.svg`, and/or `.pdf` formats using the `save_image()` function, which renders the figure in a headless Chrome browser.
+
+**Note:** It is important to be aware that R graphs containing WebGL-based traces (i.e. of type `scattergl`, `contourgl`, `scatter3d`, `surface`, `mesh3d`, `scatterpolargl`, `cone`, `streamtube`, `splom`, and/or `parcoords`) will include encapsulated rasters instead of vectors for some parts of the image if they are exported as static images in a vector format like `.eps`, `.svg`, and/or `.pdf`.
+
+**Note** Static image export runs entirely locally. No network requests are made to Chart Studio or any other web service when you invoke the `save_image()` function to export static images in your R session.
+
+### Install Chrome
+
+`save_image()` needs a Chrome or Chromium browser. It uses an installed Google Chrome (or another Chromium-based browser) when there is one; otherwise `install_chrome()` downloads Chrome Headless Shell for plotly.core to use. No Python is needed.
+
+### Export R Graphs As Static Images Using `save_image()`
+
+The `save_image()` function accepts two parameters. The first is the figure to be exported and second is the filename; the format is taken from the file extension. Optional `width`, `height` and `scale` arguments control the image size.
+
+For example, running the following commands in an R session would export the graph stored in `fig` in a file called `surface-plot.svg`:
+
+```{r, eval = FALSE}
+library(plotly.core)
+
+fig <- go_figure() |>
+  add_surface(z = volcano)
+save_image(fig, "surface-plot.svg")
+```

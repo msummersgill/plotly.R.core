@@ -10,3 +10,4 @@ vignettes/bench-out/
 vignettes/*_files/
 vignettes/*.html
 docs/
+vignettes/articles/**/figure/
