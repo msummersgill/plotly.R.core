@@ -33,6 +33,6 @@ For example, running the following commands in an R session would export the gra
 library(plotly.core)
 
 fig <- go_figure() |>
-  add_surface(z = volcano)
+  add_surface(z = ~volcano)
 save_image(fig, "surface-plot.svg")
 ```

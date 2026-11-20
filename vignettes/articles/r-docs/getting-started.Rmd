@@ -43,7 +43,7 @@ midwest <- ggplot2::midwest
 
 midwest |>
   go_figure() |>
-  add_box(x = ~percollege, split = ~state)
+  add_box(x = ~percollege, marker = go_box_marker(color = ~state))
 ```
 
 Simply printing the figure object will render the chart locally in your web browser or in the `RStudio` viewer.

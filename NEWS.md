@@ -51,7 +51,9 @@
   * axis titles, trace names and colorbar titles come from the formulas, and
     factor `x`/`y` values keep their level order, unless set.
 * `add_annotation()`, `add_shape()` and the other layout element functions
-  take vectors for single-value properties, adding one object per element.
+  take vectors for single-value properties, adding one object per element,
+  and formulas (`text = ~label`) evaluated in a `data` argument or the
+  figure's data, as plotly 4.x's `add_annotations()` did.
 * `update_layout()` has every layout property as an argument, documented in
   `?update_layout`.
 * Colorscale names plotly.js knows (`"Blues"`, `"Viridis"`, ...) use

@@ -8,6 +8,7 @@ add_shape(
   fig,
   arg = NULL,
   ...,
+  data = NULL,
   editable = NULL,
   fillcolor = NULL,
   fillrule = NULL,
@@ -55,6 +56,10 @@ arguments take precedence.}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
+
+\item{data}{A data frame in which formula properties (e.g. \code{x =
+~col}, \code{text = ~label}) are evaluated, giving one object per row.
+Default: the data given to \code{\link{go_figure}()}.}
 
 \item{editable}{Determines whether the shape could be activated for edit
 or not. Has no effect when the older editable shapes mode is enabled
@@ -284,8 +289,9 @@ Nested objects are named lists, e.g. \code{font = list(size = 14)}, or
 objects of the constructors their arguments name.
 }
 \details{
-Properties that take a single value may be given vectors to add several
-shapes at once, one per element; the other properties are recycled.
+Properties that take a single value may be given vectors, or formulas
+evaluated in \code{data} (\code{text = ~label}), to add several shapes at
+once, one per element; the other properties are recycled.
 }
 \seealso{
 \code{\link{update_shapes}()}, \code{\link{go_shape}()}

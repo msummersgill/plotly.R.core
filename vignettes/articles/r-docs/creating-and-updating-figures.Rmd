@@ -98,7 +98,7 @@ iris |>
     x = ~Sepal.Width,
     y = ~Sepal.Length,
     mode = "markers",
-    split = ~Species
+    marker = go_scatter_marker(color = ~Species)
   ) |>
   update_layout(
     title = "A Plotly Figure",
@@ -152,7 +152,7 @@ iris |>
     x = ~Sepal.Width,
     y = ~Sepal.Length,
     mode = "markers",
-    split = ~Species
+    marker = go_scatter_marker(color = ~Species)
   ) |>
   update_layout(
     title = "Using The add_trace() method With A Plotly Figure",

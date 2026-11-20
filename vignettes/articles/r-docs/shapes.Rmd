@@ -34,7 +34,7 @@ lines <- lapply(c(0, 3, 5, 7, 9, 13), function(i) {
 })
 
 go_figure() |>
-  add_scatter(x = s, y = sin(s), mode = "lines") |>
+  add_scatter(x = ~s, y = ~sin(s), mode = "lines") |>
   update_layout(title = "Highlighting with Lines", shapes = lines)
 ```
 

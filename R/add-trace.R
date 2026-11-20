@@ -384,6 +384,7 @@ add_layout_items <- function(
   arg,
   env,
   dots,
+  data,
   skip_invalid,
   row,
   col,
@@ -391,14 +392,26 @@ add_layout_items <- function(
   exclude_empty_subplots
 ) {
   entry <- get_validator(key)
+  # the starting properties of `arg` (anything else is reported by
+  # plotly_object())
   args <- list()
+  if (is.list(arg) && !is.data.frame(arg)) {
+    args <- unclass(arg)
+    arg <- NULL
+  }
   for (name in entry$children) {
     val <- get(name, envir = env, inherits = FALSE)
     if (!is.null(val)) {
       args[[name]] <- val
     }
   }
-  args <- c(args, dots)
+  args[names(dots)] <- dots
+  # formulas (text = ~label) are evaluated in `data` or the figure's data, as
+  # plotly 4.x's add_annotations() did
+  if (has_formula(args)) {
+    data <- trace_data(fig, data)
+    args[] <- lapply(names(args), function(n) eval_formulas(args[[n]], data, n))
+  }
   scalar <- vapply(
     names(args),
     function(nm) {

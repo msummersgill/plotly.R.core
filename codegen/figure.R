@@ -264,6 +264,7 @@ layout_array_source <- function(array_key, ctx) {
     "fig",
     "arg = NULL",
     "...",
+    "data = NULL",
     paste0(element$children, " = NULL"),
     "row = NULL",
     "col = NULL",
@@ -278,6 +279,7 @@ layout_array_source <- function(array_key, ctx) {
     "secondary_y",
     "exclude_empty_subplots"
   )]
+  fig_docs$data <- "A data frame in which formula properties (e.g. \\code{x = ~col}, \\code{text = ~label}) are evaluated, giving one object per row. Default: the data given to \\code{\\link{go_figure}()}."
   fig_docs$row <- "Subplot grid row whose axes the object refers to (figures created with \\code{\\link{make_subplots}()} only). May be \\code{\"all\"} or a vector to add the object to several cells."
   fig_docs$col <- "Subplot grid column whose axes the object refers to (see \\code{row})."
   fig_docs$secondary_y <- "If \\code{TRUE}, refer to the secondary y axis of the subplot."
@@ -296,7 +298,7 @@ layout_array_source <- function(array_key, ctx) {
     )),
     "#'",
     roxygen_lines(sprintf(
-      "Properties that take a single value may be given vectors to add several %s at once, one per element; the other properties are recycled.",
+      "Properties that take a single value may be given vectors, or formulas evaluated in \\code{data} (\\code{text = ~label}), to add several %s at once, one per element; the other properties are recycled.",
       prop
     )),
     "#'",
@@ -335,7 +337,7 @@ layout_array_source <- function(array_key, ctx) {
     ") {",
     "  # properties that take one value may be vectors: one object per element",
     sprintf(
-      '  add_layout_items(fig, "%s", "%s", arg, environment(), list(...), skip_invalid,',
+      '  add_layout_items(fig, "%s", "%s", arg, environment(), list(...), data, skip_invalid,',
       element_key,
       prop
     ),

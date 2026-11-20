@@ -8,6 +8,7 @@ add_selection(
   fig,
   arg = NULL,
   ...,
+  data = NULL,
   line = NULL,
   name = NULL,
   opacity = NULL,
@@ -35,6 +36,10 @@ arguments take precedence.}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
+
+\item{data}{A data frame in which formula properties (e.g. \code{x =
+~col}, \code{text = ~label}) are evaluated, giving one object per row.
+Default: the data given to \code{\link{go_figure}()}.}
 
 \item{line}{A \code{\link{go_selection_line}()} object or named list,
 with properties \code{color}, \code{dash} and \code{width} (see
@@ -126,7 +131,8 @@ The modified figure.
 list(size = 14)}, or objects of the constructors their arguments name.
 }
 \details{
-Properties that take a single value may be given vectors to add several
+Properties that take a single value may be given vectors, or formulas
+evaluated in \code{data} (\code{text = ~label}), to add several
 selections at once, one per element; the other properties are recycled.
 }
 \seealso{

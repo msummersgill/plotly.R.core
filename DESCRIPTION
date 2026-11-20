@@ -89,7 +89,6 @@ Config/Needs/website:
     pracma,
     R.utils,
     RColorBrewer,
-    readr,
     reshape2,
     scales,
     sf,

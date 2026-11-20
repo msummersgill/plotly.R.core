@@ -434,3 +434,27 @@ f <- go_figure(data.frame(x = 1:3, g = c("1", "2", "123"))) |>
   add_scatter(x = ~x, y = ~x, marker = go_scatter_marker(color = ~g))
 stopifnot(length(f$data) == 3L)
 expect_error(go_scatter(marker = go_scatter_marker(color = "1")), "color")
+
+# formulas in add_annotation()/add_shape(): evaluated in the data, one object per row
+d <- data.frame(x = 1:3, y = c(2, 5, 3), lab = c("a", "b", "c"))
+f <- d |>
+  go_figure() |>
+  add_bar(x = ~x, y = ~y) |>
+  add_annotation(x = ~x, y = ~y, text = ~lab, showarrow = FALSE)
+stopifnot(identical(
+  vapply(f$layout$annotations, `[[`, "", "text"),
+  c("a", "b", "c")
+))
+f <- go_figure() |>
+  add_shape(
+    type = "line",
+    x0 = ~a,
+    x1 = ~a,
+    y0 = 0,
+    y1 = 1,
+    data = data.frame(a = 1:2)
+  )
+stopifnot(
+  length(f$layout$shapes) == 2L,
+  identical(f$layout$shapes[[2L]]$x0, 2L)
+)

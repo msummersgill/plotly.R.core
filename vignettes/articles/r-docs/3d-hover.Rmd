@@ -69,7 +69,7 @@ library(plotly.core)
 
 go_figure() |>
   add_surface(
-    z = volcano,
+    z = ~volcano,
     contours = go_surface_contours(
       x = go_surface_contours_axis(highlight = TRUE, highlightcolor = "#41a7b3"),
       y = go_surface_contours_axis(highlight = FALSE),

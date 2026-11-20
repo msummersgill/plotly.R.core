@@ -22,7 +22,7 @@ y <- runif(50, 0, 1)
 z <- runif(50, 0, 1)
 
 go_figure() |>
-  add_mesh3d(x = x, y = y, z = z)
+  add_mesh3d(x = ~x, y = ~y, z = ~z)
 ```
 
 ### Tetrahedron Mesh Plot

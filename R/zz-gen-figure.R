@@ -1911,7 +1911,8 @@ for_each_yaxis <- function(fig, fn, selector = NULL, row = NULL, col = NULL, sec
 #' \code{annotations}. Nested objects are named lists, e.g. \code{font =
 #' list(size = 14)}, or objects of the constructors their arguments name.
 #'
-#' Properties that take a single value may be given vectors to add several
+#' Properties that take a single value may be given vectors, or formulas
+#' evaluated in \code{data} (\code{text = ~label}), to add several
 #' annotations at once, one per element; the other properties are recycled.
 #'
 #' @param arg Optional named list of properties to start from. Named
@@ -2013,6 +2014,9 @@ for_each_yaxis <- function(fig, fn, selector = NULL, row = NULL, col = NULL, sec
 #'   \code{"onout"}, \code{FALSE}.
 #' @param col Subplot grid column whose axes the object refers to (see
 #'   \code{row}).
+#' @param data A data frame in which formula properties (e.g. \code{x =
+#'   ~col}, \code{text = ~label}) are evaluated, giving one object per row.
+#'   Default: the data given to \code{\link{go_figure}()}.
 #' @param exclude_empty_subplots If \code{TRUE}, skip subplots that have no
 #'   traces or layout objects.
 #' @param fig A \code{go_figure} object.
@@ -2162,9 +2166,9 @@ for_each_yaxis <- function(fig, fn, selector = NULL, row = NULL, col = NULL, sec
 #' @noMd
 #' @export
 add_annotation <- function(
-    fig, arg = NULL, ..., align = NULL, arrowcolor = NULL, arrowhead = NULL,
-    arrowside = NULL, arrowsize = NULL, arrowwidth = NULL, ax = NULL,
-    axref = NULL, ay = NULL, ayref = NULL, bgcolor = NULL,
+    fig, arg = NULL, ..., data = NULL, align = NULL, arrowcolor = NULL,
+    arrowhead = NULL, arrowside = NULL, arrowsize = NULL, arrowwidth = NULL,
+    ax = NULL, axref = NULL, ay = NULL, ayref = NULL, bgcolor = NULL,
     bordercolor = NULL, borderpad = NULL, borderwidth = NULL,
     captureevents = NULL, clicktoshow = NULL, font = NULL, height = NULL,
     hoverlabel = NULL, hovertext = NULL, name = NULL, opacity = NULL,
@@ -2177,7 +2181,7 @@ add_annotation <- function(
     exclude_empty_subplots = FALSE, skip_invalid = FALSE
 ) {
   # properties that take one value may be vectors: one object per element
-  add_layout_items(fig, "layout.annotation", "annotations", arg, environment(), list(...), skip_invalid,
+  add_layout_items(fig, "layout.annotation", "annotations", arg, environment(), list(...), data, skip_invalid,
     row, col, secondary_y, exclude_empty_subplots)
 }
 
@@ -2230,13 +2234,17 @@ for_each_annotation <- function(fig, fn, selector = NULL, row = NULL, col = NULL
 #' \code{images}. Nested objects are named lists, e.g. \code{font =
 #' list(size = 14)}, or objects of the constructors their arguments name.
 #'
-#' Properties that take a single value may be given vectors to add several
-#' images at once, one per element; the other properties are recycled.
+#' Properties that take a single value may be given vectors, or formulas
+#' evaluated in \code{data} (\code{text = ~label}), to add several images at
+#' once, one per element; the other properties are recycled.
 #'
 #' @param arg Optional named list of properties to start from. Named
 #'   arguments take precedence.
 #' @param col Subplot grid column whose axes the object refers to (see
 #'   \code{row}).
+#' @param data A data frame in which formula properties (e.g. \code{x =
+#'   ~col}, \code{text = ~label}) are evaluated, giving one object per row.
+#'   Default: the data given to \code{\link{go_figure}()}.
 #' @param exclude_empty_subplots If \code{TRUE}, skip subplots that have no
 #'   traces or layout objects.
 #' @param fig A \code{go_figure} object.
@@ -2322,15 +2330,15 @@ for_each_annotation <- function(fig, fn, selector = NULL, row = NULL, col = NULL
 #' @noMd
 #' @export
 add_layout_image <- function(
-    fig, arg = NULL, ..., layer = NULL, name = NULL, opacity = NULL,
-    sizex = NULL, sizey = NULL, sizing = NULL, source = NULL,
-    templateitemname = NULL, visible = NULL, x = NULL, xanchor = NULL,
-    xref = NULL, y = NULL, yanchor = NULL, yref = NULL, row = NULL,
-    col = NULL, secondary_y = NULL, exclude_empty_subplots = FALSE,
-    skip_invalid = FALSE
+    fig, arg = NULL, ..., data = NULL, layer = NULL, name = NULL,
+    opacity = NULL, sizex = NULL, sizey = NULL, sizing = NULL,
+    source = NULL, templateitemname = NULL, visible = NULL, x = NULL,
+    xanchor = NULL, xref = NULL, y = NULL, yanchor = NULL, yref = NULL,
+    row = NULL, col = NULL, secondary_y = NULL,
+    exclude_empty_subplots = FALSE, skip_invalid = FALSE
 ) {
   # properties that take one value may be vectors: one object per element
-  add_layout_items(fig, "layout.image", "images", arg, environment(), list(...), skip_invalid,
+  add_layout_items(fig, "layout.image", "images", arg, environment(), list(...), data, skip_invalid,
     row, col, secondary_y, exclude_empty_subplots)
 }
 
@@ -2383,13 +2391,17 @@ for_each_layout_image <- function(fig, fn, selector = NULL, row = NULL, col = NU
 #' \code{selections}. Nested objects are named lists, e.g. \code{font =
 #' list(size = 14)}, or objects of the constructors their arguments name.
 #'
-#' Properties that take a single value may be given vectors to add several
+#' Properties that take a single value may be given vectors, or formulas
+#' evaluated in \code{data} (\code{text = ~label}), to add several
 #' selections at once, one per element; the other properties are recycled.
 #'
 #' @param arg Optional named list of properties to start from. Named
 #'   arguments take precedence.
 #' @param col Subplot grid column whose axes the object refers to (see
 #'   \code{row}).
+#' @param data A data frame in which formula properties (e.g. \code{x =
+#'   ~col}, \code{text = ~label}) are evaluated, giving one object per row.
+#'   Default: the data given to \code{\link{go_figure}()}.
 #' @param exclude_empty_subplots If \code{TRUE}, skip subplots that have no
 #'   traces or layout objects.
 #' @param fig A \code{go_figure} object.
@@ -2462,13 +2474,14 @@ for_each_layout_image <- function(fig, fn, selector = NULL, row = NULL, col = NU
 #' @noMd
 #' @export
 add_selection <- function(
-    fig, arg = NULL, ..., line = NULL, name = NULL, opacity = NULL,
-    path = NULL, templateitemname = NULL, type = NULL, x0 = NULL, x1 = NULL,
-    xref = NULL, y0 = NULL, y1 = NULL, yref = NULL, row = NULL, col = NULL,
-    secondary_y = NULL, exclude_empty_subplots = FALSE, skip_invalid = FALSE
+    fig, arg = NULL, ..., data = NULL, line = NULL, name = NULL,
+    opacity = NULL, path = NULL, templateitemname = NULL, type = NULL,
+    x0 = NULL, x1 = NULL, xref = NULL, y0 = NULL, y1 = NULL, yref = NULL,
+    row = NULL, col = NULL, secondary_y = NULL,
+    exclude_empty_subplots = FALSE, skip_invalid = FALSE
 ) {
   # properties that take one value may be vectors: one object per element
-  add_layout_items(fig, "layout.selection", "selections", arg, environment(), list(...), skip_invalid,
+  add_layout_items(fig, "layout.selection", "selections", arg, environment(), list(...), data, skip_invalid,
     row, col, secondary_y, exclude_empty_subplots)
 }
 
@@ -2521,13 +2534,17 @@ for_each_selection <- function(fig, fn, selector = NULL, row = NULL, col = NULL,
 #' Nested objects are named lists, e.g. \code{font = list(size = 14)}, or
 #' objects of the constructors their arguments name.
 #'
-#' Properties that take a single value may be given vectors to add several
-#' shapes at once, one per element; the other properties are recycled.
+#' Properties that take a single value may be given vectors, or formulas
+#' evaluated in \code{data} (\code{text = ~label}), to add several shapes at
+#' once, one per element; the other properties are recycled.
 #'
 #' @param arg Optional named list of properties to start from. Named
 #'   arguments take precedence.
 #' @param col Subplot grid column whose axes the object refers to (see
 #'   \code{row}).
+#' @param data A data frame in which formula properties (e.g. \code{x =
+#'   ~col}, \code{text = ~label}) are evaluated, giving one object per row.
+#'   Default: the data given to \code{\link{go_figure}()}.
 #' @param editable Determines whether the shape could be activated for edit
 #'   or not. Has no effect when the older editable shapes mode is enabled
 #'   via `config.editable` or `config.edits.shapePosition`. Logical.
@@ -2718,7 +2735,7 @@ for_each_selection <- function(fig, fn, selector = NULL, row = NULL, col = NULL,
 #' @noMd
 #' @export
 add_shape <- function(
-    fig, arg = NULL, ..., editable = NULL, fillcolor = NULL,
+    fig, arg = NULL, ..., data = NULL, editable = NULL, fillcolor = NULL,
     fillrule = NULL, label = NULL, layer = NULL, legend = NULL,
     legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
     legendwidth = NULL, line = NULL, name = NULL, opacity = NULL,
@@ -2730,7 +2747,7 @@ add_shape <- function(
     exclude_empty_subplots = FALSE, skip_invalid = FALSE
 ) {
   # properties that take one value may be vectors: one object per element
-  add_layout_items(fig, "layout.shape", "shapes", arg, environment(), list(...), skip_invalid,
+  add_layout_items(fig, "layout.shape", "shapes", arg, environment(), list(...), data, skip_invalid,
     row, col, secondary_y, exclude_empty_subplots)
 }
 

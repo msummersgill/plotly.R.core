@@ -18,7 +18,7 @@ options(plotly.core.plotlyjs = "cdn")
 library(plotly.core)
 
 go_figure() |>
-  add_contour(z = volcano)
+  add_contour(z = ~volcano)
 ```
 
 ### Set X and Y Coordinates
@@ -133,7 +133,7 @@ library(plotly.core)
 
 go_figure() |>
   add_contour(
-    z = volcano,
+    z = ~volcano,
     contours = go_contour_contours(showlabels = TRUE),
     colorbar = go_colorbar(title = go_colorbar_title(text = "Elevation <br> in meters"))
   )
