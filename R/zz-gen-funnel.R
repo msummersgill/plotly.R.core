@@ -20,6 +20,10 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param x Sets the x coordinates. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param y Sets the y coordinates. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
 #' @param alignmentgroup Set several traces linked to the same position
 #'   axis or matching axes to the same alignmentgroup. This controls
 #'   whether bars compute their positional range dependently or
@@ -49,7 +53,6 @@
 #'   to its crosstalk group (see \code{\link{highlight}()}).
 #' @param dx Sets the x coordinate step. See `x0` for more info. Number.
 #' @param dy Sets the y coordinate step. See `y0` for more info. Number.
-#' @param fig A \code{go_figure} object.
 #' @param hoverinfo Determines what trace information appears on hover. If
 #'   `none` or `skip` are set, no information is displayed upon hovering.
 #'   But, if `none` is set, click and hover events are still fired. Any
@@ -167,6 +170,8 @@
 #'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
 #'   \code{size}, \code{style}, \code{textcase}, \code{variant} and
 #'   \code{weight} (see \code{\link{go_font}()}).
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -265,8 +270,6 @@
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
 #' @param width Sets the bar width (in position axis units). Number in the
 #'   interval [0, Inf].
-#' @param x Sets the x coordinates. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param x0 Alternate to `x`. Builds a linear space of x coordinates. Use
 #'   with `dx` where `x0` is the starting coordinate and `dx` the step. Any
 #'   value.
@@ -297,8 +300,6 @@
 #' @param xperiodalignment Only relevant when the axis `type` is "date".
 #'   Sets the alignment of data points on the x axis. One of
 #'   \code{"start"}, \code{"middle"}, \code{"end"}.
-#' @param y Sets the y coordinates. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param y0 Alternate to `y`. Builds a linear space of y coordinates. Use
 #'   with `dy` where `y0` is the starting coordinate and `dy` the step. Any
 #'   value.
@@ -348,9 +349,9 @@
 #'   go_figure() |>
 #'   add_funnel(x = ~factor(cyl), y = ~mpg)
 go_funnel <- function(
-    ..., alignmentgroup = NULL, cliponaxis = NULL, connector = NULL,
-    constraintext = NULL, customdata = NULL, dx = NULL, dy = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    ..., x = NULL, y = NULL, alignmentgroup = NULL, cliponaxis = NULL,
+    connector = NULL, constraintext = NULL, customdata = NULL, dx = NULL,
+    dy = NULL, hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
     hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
     insidetextanchor = NULL, insidetextfont = NULL, legend = NULL,
     legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
@@ -359,11 +360,11 @@ go_funnel <- function(
     outsidetextfont = NULL, selectedpoints = NULL, showlegend = NULL,
     text = NULL, textangle = NULL, textfont = NULL, textinfo = NULL,
     textposition = NULL, texttemplate = NULL, texttemplatefallback = NULL,
-    uid = NULL, uirevision = NULL, visible = NULL, width = NULL, x = NULL,
-    x0 = NULL, xaxis = NULL, xhoverformat = NULL, xperiod = NULL,
-    xperiod0 = NULL, xperiodalignment = NULL, y = NULL, y0 = NULL,
-    yaxis = NULL, yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
-    yperiodalignment = NULL, zorder = NULL, skip_invalid = FALSE
+    uid = NULL, uirevision = NULL, visible = NULL, width = NULL, x0 = NULL,
+    xaxis = NULL, xhoverformat = NULL, xperiod = NULL, xperiod0 = NULL,
+    xperiodalignment = NULL, y0 = NULL, yaxis = NULL, yhoverformat = NULL,
+    yperiod = NULL, yperiod0 = NULL, yperiodalignment = NULL, zorder = NULL,
+    skip_invalid = FALSE
 ) {
   plotly_object("funnel", NULL, environment(), list(...), skip_invalid)
 }

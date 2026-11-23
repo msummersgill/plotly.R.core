@@ -6,13 +6,17 @@
 \alias{go_volume}
 \title{Volume traces}
 \usage{
-add_volume(fig, ...)
+add_volume(p, ...)
 
 \method{add_volume}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  value = NULL,
   autocolorscale = NULL,
   caps = NULL,
   cauto = NULL,
@@ -54,14 +58,10 @@ add_volume(fig, ...)
   text = NULL,
   uid = NULL,
   uirevision = NULL,
-  value = NULL,
   valuehoverformat = NULL,
   visible = NULL,
-  x = NULL,
   xhoverformat = NULL,
-  y = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zhoverformat = NULL,
   row = NULL,
   col = NULL,
@@ -70,6 +70,10 @@ add_volume(fig, ...)
 
 go_volume(
   ...,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  value = NULL,
   autocolorscale = NULL,
   caps = NULL,
   cauto = NULL,
@@ -111,20 +115,17 @@ go_volume(
   text = NULL,
   uid = NULL,
   uirevision = NULL,
-  value = NULL,
   valuehoverformat = NULL,
   visible = NULL,
-  x = NULL,
   xhoverformat = NULL,
-  y = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zhoverformat = NULL,
   skip_invalid = FALSE
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -143,6 +144,18 @@ column (a factor, character or logical, e.g. \code{marker =
 go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
+
+\item{x}{Sets the X coordinates of the vertices on X axis. Data array: a
+vector, factor, Date/POSIXct vector, matrix or list.}
+
+\item{y}{Sets the Y coordinates of the vertices on Y axis. Data array: a
+vector, factor, Date/POSIXct vector, matrix or list.}
+
+\item{z}{Sets the Z coordinates of the vertices on Z axis. Data array: a
+vector, factor, Date/POSIXct vector, matrix or list.}
+
+\item{value}{Sets the 4th dimension (value) of the vertices. Data array:
+a vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{autocolorscale}{Determines whether the colorscale is a default
 palette (`autocolorscale: true`) or the palette determined by
@@ -382,9 +395,6 @@ array, such that the same trace has a different index, you can still
 preserve user-driven changes if you give each trace a `uid` that stays
 with it as it moves. Any value.}
 
-\item{value}{Sets the 4th dimension (value) of the vertices. Data array:
-a vector, factor, Date/POSIXct vector, matrix or list.}
-
 \item{valuehoverformat}{Sets the hover text formatting rule for `value`
 using d3 formatting mini-languages which are very similar to those in
 Python. For numbers, see:
@@ -395,9 +405,6 @@ values are formatted using generic number format. String.}
 "legendonly", the trace is not drawn, but can appear as a legend item
 (provided that the legend itself is visible). One of
 \code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
-
-\item{x}{Sets the X coordinates of the vertices on X axis. Data array: a
-vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{xhoverformat}{Sets the hover text formatting rule for `x` using d3
 formatting mini-languages which are very similar to those in Python.
@@ -410,9 +417,6 @@ digits. For example, "2016-10-13 09:15:23.456" with tickformat
 "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 are formatted using `xaxis.hoverformat`. String.}
 
-\item{y}{Sets the Y coordinates of the vertices on Y axis. Data array: a
-vector, factor, Date/POSIXct vector, matrix or list.}
-
 \item{yhoverformat}{Sets the hover text formatting rule for `y` using d3
 formatting mini-languages which are very similar to those in Python.
 For numbers, see:
@@ -423,9 +427,6 @@ a decimal number as well as "\%\{n\}f" for fractional seconds with n
 digits. For example, "2016-10-13 09:15:23.456" with tickformat
 "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 are formatted using `yaxis.hoverformat`. String.}
-
-\item{z}{Sets the Z coordinates of the vertices on Z axis. Data array: a
-vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{zhoverformat}{Sets the hover text formatting rule for `z` using d3
 formatting mini-languages which are very similar to those in Python.

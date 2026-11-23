@@ -335,7 +335,9 @@ check_row_col_pair <- function(row, col, what = "row and col") {
 #' an S3 generic, so packages can add methods for their own figure classes
 #' (the plotly package does for `plot_ly()` objects).
 #'
-#' @param fig A `go_figure` object.
+#' @param p A `go_figure` object (for `add_trace()`; `p`, as in the plotly
+#'   package, so calls such as `add_trace(p = fig, ...)` keep working).
+#' @param fig A `go_figure` object (for `add_traces()`).
 #' @param trace A trace: a graph object such as [go_scatter()], or a named
 #'   list with a `type` element (default `"scatter"`).
 #' @param row,col Subplot grid cell for the trace (figures created with
@@ -363,13 +365,13 @@ NULL
 
 #' @rdname add_traces
 #' @export
-add_trace <- function(fig, ...) UseMethod("add_trace")
+add_trace <- function(p, ...) UseMethod("add_trace")
 
 #' @export
-add_trace.default <- function(fig, ...) {
+add_trace.default <- function(p, ...) {
   stop(
     "Don't know how to add a trace to an object of class ",
-    class(fig)[[1L]],
+    class(p)[[1L]],
     call. = FALSE
   )
 }
@@ -377,7 +379,7 @@ add_trace.default <- function(fig, ...) {
 #' @rdname add_traces
 #' @export
 add_trace.go_figure <- function(
-  fig,
+  p,
   trace,
   row = NULL,
   col = NULL,
@@ -385,6 +387,7 @@ add_trace.go_figure <- function(
   exclude_empty_subplots = FALSE,
   ...
 ) {
+  fig <- p
   check_figure(fig)
   check_row_col_pair(row, col)
   if (!is.null(row) && is_multi_cell(row, col)) {

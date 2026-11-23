@@ -21,6 +21,12 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param x Sets the x coordinates. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param y Sets the y coordinates. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param z Sets the z coordinates. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `colorscale`. In case `colorscale` is unspecified or `autocolorscale`
@@ -80,7 +86,6 @@
 #'   \code{\link{go_figure}()}. Only the evaluated values are added to the
 #'   trace. A \code{crosstalk::SharedData} works the same way, and links
 #'   the trace to its crosstalk group (see \code{\link{highlight}()}).
-#' @param fig A \code{go_figure} object.
 #' @param hidesurface Determines whether or not a surface is drawn. For
 #'   example, set `hidesurface` to FALSE `contours.x.show` to TRUE and
 #'   `contours.y.show` to TRUE to draw a wire frame plot. Logical.
@@ -183,6 +188,8 @@
 #'   middle would be more transparent Alternatively, `opacityscale` may be
 #'   a palette name string of the following list: 'min', 'max', 'extremes'
 #'   and 'uniform'. The default is 'uniform'. Any value.
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param reversescale Reverses the color mapping if true. If true, `cmin`
 #'   will correspond to the last color in the array and `cmax` will
 #'   correspond to the first color. Logical.
@@ -233,8 +240,6 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param x Sets the x coordinates. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param xcalendar Sets the calendar system to use with `x` date data. One
 #'   of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},
 #'   \code{"ethiopian"}, \code{"gregorian"}, \code{"hebrew"},
@@ -251,8 +256,6 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `xaxis.hoverformat`. String.
-#' @param y Sets the y coordinates. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param ycalendar Sets the calendar system to use with `y` date data. One
 #'   of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},
 #'   \code{"ethiopian"}, \code{"gregorian"}, \code{"hebrew"},
@@ -269,8 +272,6 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `yaxis.hoverformat`. String.
-#' @param z Sets the z coordinates. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param zcalendar Sets the calendar system to use with `z` date data. One
 #'   of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},
 #'   \code{"ethiopian"}, \code{"gregorian"}, \code{"hebrew"},
@@ -302,20 +303,19 @@
 #' go_figure() |>
 #'   add_surface(z = volcano)
 go_surface <- function(
-    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
-    cmin = NULL, coloraxis = NULL, colorbar = NULL, colorscale = NULL,
-    connectgaps = NULL, contours = NULL, customdata = NULL,
-    hidesurface = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, lighting = NULL,
-    lightposition = NULL, meta = NULL, name = NULL, opacity = NULL,
-    opacityscale = NULL, reversescale = NULL, scene = NULL,
+    ..., x = NULL, y = NULL, z = NULL, autocolorscale = NULL, cauto = NULL,
+    cmax = NULL, cmid = NULL, cmin = NULL, coloraxis = NULL,
+    colorbar = NULL, colorscale = NULL, connectgaps = NULL, contours = NULL,
+    customdata = NULL, hidesurface = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    lighting = NULL, lightposition = NULL, meta = NULL, name = NULL,
+    opacity = NULL, opacityscale = NULL, reversescale = NULL, scene = NULL,
     showlegend = NULL, showscale = NULL, surfacecolor = NULL, text = NULL,
-    uid = NULL, uirevision = NULL, visible = NULL, x = NULL,
-    xcalendar = NULL, xhoverformat = NULL, y = NULL, ycalendar = NULL,
-    yhoverformat = NULL, z = NULL, zcalendar = NULL, zhoverformat = NULL,
-    skip_invalid = FALSE
+    uid = NULL, uirevision = NULL, visible = NULL, xcalendar = NULL,
+    xhoverformat = NULL, ycalendar = NULL, yhoverformat = NULL,
+    zcalendar = NULL, zhoverformat = NULL, skip_invalid = FALSE
 ) {
   plotly_object("surface", NULL, environment(), list(...), skip_invalid)
 }

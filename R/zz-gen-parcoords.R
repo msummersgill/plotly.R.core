@@ -17,6 +17,12 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param dimensions List, each element a
+#'   \code{\link{go_parcoords_dimension}()} object or named list, with
+#'   properties \code{constraintrange}, \code{label}, \code{multiselect},
+#'   \code{name}, \code{range}, \code{templateitemname}, \code{tickformat},
+#'   \code{ticktext}, \code{tickvals}, \code{values} and \code{visible}
+#'   (see \code{\link{go_parcoords_dimension}()}).
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -30,16 +36,9 @@
 #'   evaluated values are added to the trace. A
 #'   \code{crosstalk::SharedData} works the same way, and links the trace
 #'   to its crosstalk group (see \code{\link{highlight}()}).
-#' @param dimensions List, each element a
-#'   \code{\link{go_parcoords_dimension}()} object or named list, with
-#'   properties \code{constraintrange}, \code{label}, \code{multiselect},
-#'   \code{name}, \code{range}, \code{templateitemname}, \code{tickformat},
-#'   \code{ticktext}, \code{tickvals}, \code{values} and \code{visible}
-#'   (see \code{\link{go_parcoords_dimension}()}).
 #' @param domain A \code{\link{go_domain}()} object or named list, with
 #'   properties \code{column}, \code{row}, \code{x} and \code{y} (see
 #'   \code{\link{go_domain}()}).
-#' @param fig A \code{go_figure} object.
 #' @param ids Assigns id labels to each datum. These ids for object
 #'   constancy of data points during animation. Should be an array of
 #'   strings, not numbers or any other type. Data array: a vector, factor,
@@ -93,6 +92,8 @@
 #'   `meta` and `n` is the trace index. Any value.
 #' @param name Sets the trace name. The trace name appears as the legend
 #'   item and on hover. String.
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param rangefont Sets the font for the `dimension` range values. A
 #'   \code{\link{go_font}()} object or named list, with properties
 #'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
@@ -158,7 +159,7 @@
 #'     )
 #'   )
 go_parcoords <- function(
-    ..., customdata = NULL, dimensions = NULL, domain = NULL, ids = NULL,
+    ..., dimensions = NULL, customdata = NULL, domain = NULL, ids = NULL,
     labelangle = NULL, labelfont = NULL, labelside = NULL, legend = NULL,
     legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
     line = NULL, meta = NULL, name = NULL, rangefont = NULL,

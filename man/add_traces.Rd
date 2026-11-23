@@ -6,10 +6,10 @@
 \alias{add_trace.go_figure}
 \title{Add traces to a figure}
 \usage{
-add_trace(fig, ...)
+add_trace(p, ...)
 
 \method{add_trace}{go_figure}(
-  fig,
+  p,
   trace,
   row = NULL,
   col = NULL,
@@ -28,7 +28,8 @@ add_traces(
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (for \code{add_trace()}; \code{p}, as in the plotly
+package, so calls such as \code{add_trace(p = fig, ...)} keep working).}
 
 \item{...}{Unused.}
 
@@ -44,6 +45,8 @@ trace to several cells.}
 
 \item{exclude_empty_subplots}{If \code{TRUE}, don't add the trace to subplots
 that have no traces or layout objects yet.}
+
+\item{fig}{A \code{go_figure} object (for \code{add_traces()}).}
 
 \item{data}{A list of traces.}
 

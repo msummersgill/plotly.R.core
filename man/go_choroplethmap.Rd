@@ -8,6 +8,8 @@
 \usage{
 go_choroplethmap(
   ...,
+  locations = NULL,
+  z = NULL,
   autocolorscale = NULL,
   below = NULL,
   coloraxis = NULL,
@@ -27,7 +29,6 @@ go_choroplethmap(
   legendgrouptitle = NULL,
   legendrank = NULL,
   legendwidth = NULL,
-  locations = NULL,
   marker = NULL,
   meta = NULL,
   name = NULL,
@@ -42,7 +43,6 @@ go_choroplethmap(
   uirevision = NULL,
   unselected = NULL,
   visible = NULL,
-  z = NULL,
   zauto = NULL,
   zmax = NULL,
   zmid = NULL,
@@ -50,13 +50,15 @@ go_choroplethmap(
   skip_invalid = FALSE
 )
 
-add_choroplethmap(fig, ...)
+add_choroplethmap(p, ...)
 
 \method{add_choroplethmap}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  locations = NULL,
+  z = NULL,
   autocolorscale = NULL,
   below = NULL,
   coloraxis = NULL,
@@ -76,7 +78,6 @@ add_choroplethmap(fig, ...)
   legendgrouptitle = NULL,
   legendrank = NULL,
   legendwidth = NULL,
-  locations = NULL,
   marker = NULL,
   meta = NULL,
   name = NULL,
@@ -91,7 +92,6 @@ add_choroplethmap(fig, ...)
   uirevision = NULL,
   unselected = NULL,
   visible = NULL,
-  z = NULL,
   zauto = NULL,
   zmax = NULL,
   zmid = NULL,
@@ -104,6 +104,13 @@ add_choroplethmap(fig, ...)
 \arguments{
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
+
+\item{locations}{Sets which features found in "geojson" to plot using
+their feature `id` field. Data array: a vector, factor, Date/POSIXct
+vector, matrix or list.}
+
+\item{z}{Sets the color values. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
 
 \item{autocolorscale}{Determines whether the colorscale is a default
 palette (`autocolorscale: true`) or the palette determined by
@@ -235,10 +242,6 @@ to their order in data and layout. Number.}
 \item{legendwidth}{Sets the width (in px or fraction) of the legend for
 this trace. Number in the interval [0, Inf].}
 
-\item{locations}{Sets which features found in "geojson" to plot using
-their feature `id` field. Data array: a vector, factor, Date/POSIXct
-vector, matrix or list.}
-
 \item{marker}{A \code{\link{go_choroplethmap_marker}()} object or named
 list, with properties \code{line} and \code{opacity} (see
 \code{\link{go_choroplethmap_marker}()}).}
@@ -310,9 +313,6 @@ with properties \code{marker} (see \code{\link{go_unselected}()}).}
 (provided that the legend itself is visible). One of
 \code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
 
-\item{z}{Sets the color values. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
-
 \item{zauto}{Determines whether or not the color domain is computed with
 respect to the input data (here in `z`) or the bounds set in `zmin`
 and `zmax` Defaults to `false` when `zmin` and `zmax` are set by the
@@ -333,7 +333,8 @@ Number.}
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
 
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{data}{A data frame in which formula properties (e.g. \code{z =
 ~col}) are evaluated. Default: the data given to

@@ -19,6 +19,10 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param r Sets the radial coordinates Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param theta Sets the angular coordinates Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -38,7 +42,6 @@
 #' @param dtheta Sets the theta coordinate step. By default, the `dtheta`
 #'   step equals the subplot's period divided by the length of the `r`
 #'   coordinates. Number.
-#' @param fig A \code{go_figure} object.
 #' @param fill Sets the area to fill with a solid color. Defaults to "none"
 #'   unless this trace is stacked, then it gets "tonexty" ("tonextx") if
 #'   `orientation` is "v" ("h") Use with `fillcolor` if not "none".
@@ -161,8 +164,8 @@
 #'   item and on hover. String.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
-#' @param r Sets the radial coordinates Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param r0 Alternate to `r`. Builds a linear space of r coordinates. Use
 #'   with `dr` where `r0` is the starting coordinate and `dr` the step. Any
 #'   value.
@@ -229,8 +232,6 @@
 #'   variable referenced in a template is missing. If the boolean value
 #'   'false' is passed in, the specifier with the missing variable will be
 #'   displayed. Any value.
-#' @param theta Sets the angular coordinates Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param theta0 Alternate to `theta`. Builds a linear space of theta
 #'   coordinates. Use with `dtheta` where `theta0` is the starting
 #'   coordinate and `dtheta` the step. Any value.
@@ -276,17 +277,18 @@
 #'   go_figure() |>
 #'   add_scatterpolargl(r = ~mpg, theta = ~hp)
 go_scatterpolargl <- function(
-    ..., connectgaps = NULL, customdata = NULL, dr = NULL, dtheta = NULL,
-    fill = NULL, fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    ..., r = NULL, theta = NULL, connectgaps = NULL, customdata = NULL,
+    dr = NULL, dtheta = NULL, fill = NULL, fillcolor = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
-    meta = NULL, mode = NULL, name = NULL, opacity = NULL, r = NULL,
-    r0 = NULL, selected = NULL, selectedpoints = NULL, showlegend = NULL,
+    meta = NULL, mode = NULL, name = NULL, opacity = NULL, r0 = NULL,
+    selected = NULL, selectedpoints = NULL, showlegend = NULL,
     subplot = NULL, text = NULL, textfont = NULL, textposition = NULL,
-    texttemplate = NULL, texttemplatefallback = NULL, theta = NULL,
-    theta0 = NULL, thetaunit = NULL, uid = NULL, uirevision = NULL,
-    unselected = NULL, visible = NULL, skip_invalid = FALSE
+    texttemplate = NULL, texttemplatefallback = NULL, theta0 = NULL,
+    thetaunit = NULL, uid = NULL, uirevision = NULL, unselected = NULL,
+    visible = NULL, skip_invalid = FALSE
 ) {
   plotly_object("scatterpolargl", NULL, environment(), list(...), skip_invalid)
 }

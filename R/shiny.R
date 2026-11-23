@@ -1,255 +1,125 @@
-# Shiny integration and figure-level widget settings (config, event source,
-# registered events). The functions match the legacy plotly R package's.
-#
-# For go_figure objects the settings are stored as attributes
-# ("plotly_config", "plotly_source", ...); htmlwidgets (including the plotly
-# package's plot_ly() objects) store them in p$x.
+#' Shiny bindings for plotly
+#'
+#' Output and render functions for using plotly within Shiny
+#' applications and interactive Rmd documents.
+#'
+#' @param outputId output variable to read from
+#' @param width,height Must be a valid CSS unit (like \code{"100\%"},
+#'   `"400px"`, `"auto"`) or a number, which will be coerced to a
+#'   string and have `"px"` appended. Note that, for height, using "auto"
+#'   or "100%" generally will not work as expected, because of how
+#'   height is computed with HTML/CSS.
+#' @param inline use an inline (`span()`) or block container
+#' (`div()`) for the output
+#' @param reportTheme whether or not to report CSS styles.
+#' @param expr An expression that generates a [go_figure()] or a plotly
+#'   htmlwidget (or a promise of one)
+#' @param env The environment in which to evaluate `expr`.
+#' @param quoted Is `expr` a quoted expression (with `quote()`)? This
+#'   is useful if you want to save an expression in a variable.
+#' @param fill see [htmlwidgets::shinyWidgetOutput()] for explanation.
+#' @return `plotlyOutput()` returns a Shiny UI element; `renderPlotly()` a
+#'   Shiny render function.
+#' @seealso [event_data()], [plotlyProxy()]
+#' @name plotly-shiny
+#' @author Carson Sievert
+#'
+#' @export
+plotlyOutput <- function(
+  outputId,
+  width = "100%",
+  height = "400px",
+  inline = FALSE,
+  reportTheme = TRUE,
+  fill = !inline
+) {
+  htmlwidgets::shinyWidgetOutput(
+    outputId = outputId,
+    name = "plotly_core",
+    width = width,
+    height = height,
+    inline = inline,
+    package = "plotly.core",
+    reportSize = TRUE,
+    reportTheme = reportTheme,
+    fill = fill
+  )
+}
 
-get_widget_setting <- function(p, name) {
-  if (inherits(p, "htmlwidget")) {
-    p$x[[name]]
+#' @rdname plotly-shiny
+#' @export
+renderPlotly <- function(expr, env = parent.frame(), quoted = FALSE) {
+  if (!quoted) {
+    quoted <- TRUE
+    expr <- substitute(expr)
+  }
+  # Install the (user-supplied) expression as a function
+  # This way, if the user-supplied expression contains a return()
+  # statement, we can capture that return value and pass it along
+  # to prepareWidget()
+  # prepareWidget() makes it possible to pass different objects to
+  # renderPlotly() (e.g., go_figure(), htmlwidgets, promises). It also is used
+  # to inform event_data about what events have been registered
+  shiny::installExprFunction(expr, "func", env, quoted)
+  expr2 <- quote(getFromNamespace("prepareWidget", "plotly.core")(func()))
+  htmlwidgets::shinyRenderWidget(
+    expr2,
+    plotlyOutput,
+    environment(),
+    quoted,
+    cacheHint = list(label = "renderPlotly", userExpr = expr)
+  )
+}
+
+# Converts a plot, OR a promise of a plot, to a plotly.core widget.
+# promises is a Suggests: it is always installed with shiny, and this only
+# runs inside renderPlotly().
+prepareWidget <- function(x) {
+  if (promises::is.promising(x)) {
+    promises::then(
+      promises::then(x, as_widget),
+      register_plot_events
+    )
   } else {
-    attr(p, paste0("plotly_", name), exact = TRUE)
+    register_plot_events(as_widget(x))
   }
 }
 
-#' @rdname plotly.core-extending
-#' @export
-set_widget_setting <- function(p, name, value) {
-  if (inherits(p, "htmlwidget")) {
-    p$x[[name]] <- value
-  } else {
-    check_figure(p)
-    attr(p, paste0("plotly_", name)) <- value
-  }
+register_plot_events <- function(p) {
+  session <- shiny::getDefaultReactiveDomain()
+  eventIDs <- paste(p$x$shinyEvents, p$x$source, sep = "-")
+  session$userData$plotlyShinyEventIDs <- unique(c(
+    session$userData$plotlyShinyEventIDs,
+    eventIDs
+  ))
   p
 }
 
-#' Set plotly.js configuration options
+
+#' Access plotly user input event data in shiny
 #'
-#' Sets options of the plotly.js `config` object (e.g. `displayModeBar`,
-#' `scrollZoom`, `toImageButtonOptions`), which control interaction rather
-#' than appearance. Options are merged with any set previously.
-#' `config()` is an S3 generic, so packages can handle options of their own
-#' plot classes before the default method validates them.
+#' This function must be called within a reactive shiny context.
 #'
-#' @param p A [go_figure()] or plotly htmlwidget.
-#' @param ... Named configuration options; see
-#'   <https://plotly.com/javascript/configuration-options/>.
-#' @param locale A locale such as `"de"` or `"fr-ch"`, for translated
-#'   modebar text and number/date formatting.
-#' @param mathjax Load MathJax so LaTeX in `$...$` text (see [TeX()]) is
-#'   rendered: `"local"` (or `TRUE`) for the MathJax 3 bundled with the
-#'   package, which works offline and is embedded in self-contained HTML
-#'   (about 2 MB), or `"cdn"` to load it from cdn.jsdelivr.net.
-#' @param cloud,showSendToCloud Show the modebar button that sends the chart
-#'   to Plotly Cloud (`plotlyServerURL`)? Off by default, because clicking it
-#'   uploads the chart data to an external server. `cloud` is the legacy
-#'   plotly package's name for it.
-#' @return The modified figure.
+#' @param event The type of plotly event. All supported events are listed in the
+#' function signature above (i.e., the usage section).
+#' @param source a character string of length 1. Match the value of this string
+#' with the source id set with [event_source()] to respond to
+#' events emitted from that specific plot.
+#' @param session a shiny session object (the default should almost always be used).
+#' @param priority the priority of the corresponding shiny input value.
+#' If equal to `"event"`, then [event_data()] always triggers re-execution,
+#' instead of re-executing only when the relevant shiny input value changes
+#' (the default).
+#' @return Event data, or `NULL` before any such event. Point events (click,
+#'   hover, selected, ...) return a data frame with `curveNumber`,
+#'   `pointNumber`, `x`, `y` and, where available, `z`, `customdata` and
+#'   `key`; `plotly_relayout` returns the changed layout properties.
 #' @export
-#' @examples
-#' go_figure(go_scatter(y = 1:3)) |>
-#'   config(displayModeBar = FALSE, scrollZoom = TRUE, locale = "de")
-config <- function(p, ...) UseMethod("config")
-
-#' @rdname config
-#' @export
-config.default <- function(
-  p,
-  ...,
-  locale = NULL,
-  mathjax = NULL,
-  cloud = FALSE,
-  showSendToCloud = cloud
-) {
-  opts <- list(...)
-  if (length(opts) && (is.null(names(opts)) || any(!nzchar(names(opts))))) {
-    stop("All config options must be named", call. = FALSE)
-  }
-  bad <- setdiff(names(opts), .config_options)
-  if (length(bad)) {
-    stop(
-      sprintf(
-        "Invalid config option(s): %s\n    Valid options: %s",
-        paste(bad, collapse = ", "),
-        paste(.config_options, collapse = ", ")
-      ),
-      call. = FALSE
-    )
-  }
-  if (!is.null(locale)) {
-    # plotly.js locale names are lower case ("zh-cn"); "zh-CN" also works
-    if (
-      !locale %in% available_locales() &&
-        tolower(locale) %in% available_locales()
-    ) {
-      locale <- tolower(locale)
-    }
-    if (!locale %in% available_locales()) {
-      stop(
-        sprintf(
-          "Unknown locale '%s'. Available locales: %s",
-          locale,
-          paste(available_locales(), collapse = ", ")
-        ),
-        call. = FALSE
-      )
-    }
-    opts$locale <- locale
-  }
-  if (!is.null(mathjax)) {
-    if (isTRUE(mathjax)) {
-      mathjax <- "local"
-    }
-    if (
-      !is.character(mathjax) ||
-        length(mathjax) != 1L ||
-        !mathjax %in% c("local", "cdn")
-    ) {
-      stop("`mathjax` must be \"local\" (or TRUE) or \"cdn\"", call. = FALSE)
-    }
-    p <- set_widget_setting(p, "mathjax", mathjax)
-  }
-  if (!missing(cloud) || !missing(showSendToCloud)) {
-    opts$showSendToCloud <- isTRUE(showSendToCloud)
-  }
-  current <- get_widget_setting(p, "config") %||% list()
-  set_widget_setting(p, "config", utils::modifyList(current, opts))
-}
-
-available_locales <- function() {
-  sub(
-    "[.]js$",
-    "",
-    list.files(
-      system.file(
-        "htmlwidgets",
-        "lib",
-        "plotlyjs",
-        "locales",
-        package = "plotly.core"
-      ),
-      "[.]js$"
-    )
-  )
-}
-
-#' Wrap text for LaTeX rendering
-#'
-#' Wraps a string in `$...$` so plotly.js renders it with MathJax (requires
-#' `config(p, mathjax = "local")`, or `"cdn"`; [save_image()] needs nothing).
-#'
-#' @param x A character string of LaTeX.
-#' @return The wrapped string.
-#' @export
-#' @examples
-#' go_figure() |>
-#'   update_layout(title = TeX("\\alpha + \\beta x")) |>
-#'   config(mathjax = "local")
-TeX <- function(x) paste0("$", x, "$")
-
-# Shiny events -----------------------------------------------------------------------
-
-EVENT_NAMES <- c(
-  "plotly_hover",
-  "plotly_unhover",
-  "plotly_click",
-  "plotly_doubleclick",
-  "plotly_selected",
-  "plotly_selecting",
-  "plotly_brushed",
-  "plotly_brushing",
-  "plotly_deselect",
-  "plotly_relayout",
-  "plotly_restyle",
-  "plotly_legendclick",
-  "plotly_legenddoubleclick",
-  "plotly_clickannotation",
-  "plotly_afterplot",
-  "plotly_sunburstclick"
-)
-
-DEFAULT_EVENTS <- c(
-  "plotly_hover",
-  "plotly_click",
-  "plotly_selected",
-  "plotly_relayout",
-  "plotly_brushed",
-  "plotly_brushing",
-  "plotly_clickannotation",
-  "plotly_doubleclick",
-  "plotly_deselect",
-  "plotly_afterplot",
-  "plotly_sunburstclick"
-)
-
-#' Register plotly events for Shiny
-#'
-#' Plots send these events to Shiny by default: `plotly_hover`,
-#' `plotly_click`, `plotly_selected`, `plotly_relayout`, `plotly_brushed`,
-#' `plotly_brushing`, `plotly_clickannotation`, `plotly_doubleclick`,
-#' `plotly_deselect`, `plotly_afterplot` and `plotly_sunburstclick`.
-#' `event_register()` adds others (e.g. `plotly_legendclick`);
-#' `event_unregister()` removes events. `event_source()` sets the source id
-#' that [event_data()] uses to tell plots apart (default `"A"`).
-#'
-#' @param p A [go_figure()] or plotly htmlwidget.
-#' @param event An event name (see [event_data()]).
-#' @param source A string identifying the plot.
-#' @return The modified figure.
-#' @export
-#' @examples
-#' fig <- go_figure(go_scatter(y = 1:3)) |>
-#'   event_source("scatter") |>
-#'   event_register("plotly_legendclick")
-event_register <- function(p, event = NULL) {
-  event <- match.arg(event, EVENT_NAMES)
-  set_widget_setting(
-    p,
-    "shinyEvents",
-    unique(c(get_widget_setting(p, "shinyEvents") %||% DEFAULT_EVENTS, event))
-  )
-}
-
-#' @rdname event_register
-#' @export
-event_unregister <- function(p, event = NULL) {
-  event <- match.arg(event, EVENT_NAMES)
-  set_widget_setting(
-    p,
-    "shinyEvents",
-    setdiff(get_widget_setting(p, "shinyEvents") %||% DEFAULT_EVENTS, event)
-  )
-}
-
-#' @rdname event_register
-#' @export
-event_source <- function(p, source) {
-  if (!is.character(source) || length(source) != 1L) {
-    stop("`source` must be a single string", call. = FALSE)
-  }
-  set_widget_setting(p, "source", source)
-}
-
-#' Access plotly events in Shiny
-#'
-#' Returns the data of the most recent plotly event of a given type, from
-#' the plot with the given `source` (see [event_source()]); `NULL` before any
-#' such event. Must be called in a reactive context of a Shiny app.
-#'
-#' Point events (click, hover, selected, ...) return a data frame with
-#' `curveNumber`, `pointNumber`, `x`, `y` and, where available, `z`,
-#' `customdata` and `key`. `plotly_relayout` returns the changed layout
-#' properties (e.g. axis ranges after zooming).
-#'
-#' @param event The event type.
-#' @param source The source id of the plot.
-#' @param session The Shiny session.
-#' @param priority `"input"` (default) triggers reactivity only when the
-#'   value changes; `"event"` on every event, even with the same value.
-#' @return Event data, or `NULL`.
-#' @export
+#' @seealso [event_register], [event_unregister]
+#' @references
+#'   * <https://plotly-r.com/linking-views-with-shiny.html#shiny-plotly-inputs>
+#'   * <https://plotly.com/javascript/plotlyjs-function-reference/>
+#' @author Carson Sievert
 #' @examples
 #' if (interactive() && requireNamespace("shiny", quietly = TRUE)) {
 #'   ui <- shiny::fluidPage(plotlyOutput("plot"), shiny::verbatimTextOutput("click"))
@@ -286,36 +156,59 @@ event_data <- function(
 ) {
   if (is.null(session)) {
     stop(
-      "No reactive domain detected. This function can only be called \nfrom within a reactive shiny context.",
-      call. = FALSE
+      "No reactive domain detected. This function can only be called \n",
+      "from within a reactive shiny context."
     )
   }
+
   event <- match.arg(event)
-  event_id <- paste(event, source, sep = "-")
-  session$onFlushed(function() {
-    if (!event_id %in% session$userData$plotlyShinyEventIDs) {
-      warning(
-        "The '",
-        event,
-        "' event tied a source ID of '",
-        source,
-        "' is not registered. ",
-        "In order to obtain this event data, please add `event_register(p, '",
-        event,
-        "')` to the plot (`p`) that you wish to obtain event data from.",
-        call. = FALSE
-      )
+  eventID <- paste(event, source, sep = "-")
+
+  # It's possible for event_data() to execute before any
+  # relevant input values have been registered (i.e, before
+  # relevant plotly graphs have been executed). Therefore,
+  # we delay checking that a relevant input value has been
+  # registered until shiny flushes
+  session$onFlushed(
+    function() {
+      eventIDRegistered <- eventID %in% session$userData$plotlyShinyEventIDs
+      if (!eventIDRegistered) {
+        warning(
+          "The '",
+          event,
+          "' event tied a source ID of '",
+          source,
+          "' ",
+          "is not registered. In order to obtain this event data, ",
+          "please add `event_register(p, '",
+          event,
+          "')` to the plot (`p`) ",
+          "that you wish to obtain event data from.",
+          call. = FALSE
+        )
+      }
     }
-  })
-  parse <- if (event %in% c("plotly_legendclick", "plotly_legenddoubleclick")) {
+  )
+
+  # legend clicking returns trace(s), which shouldn't be simplified...
+  parseJSON <- if (
+    event %in% c("plotly_legendclick", "plotly_legenddoubleclick")
+  ) {
     function(x) jsonlite::parse_json(x, simplifyVector = FALSE)
   } else {
     function(x) jsonlite::parse_json(x, simplifyVector = TRUE)
   }
-  parsed_input <- function() {
-    v <- session$rootScope()$input[[event_id]]
-    if (is.null(v)) v else parse(v)
+
+  # Handle NULL sensibly
+  parseJSONVal <- function(x) {
+    if (is.null(x)) x else parseJSON(x)
   }
+
+  parsedInputValue <- function() {
+    parseJSONVal(session$rootScope()$input[[eventID]])
+  }
+
+  # events that don't emit any data should _always_ be treated with event priority
   priority <- if (
     event %in% c("plotly_doubleclick", "plotly_deselect", "plotly_afterplot")
   ) {
@@ -323,217 +216,109 @@ event_data <- function(
   } else {
     match.arg(priority)
   }
+
   if (priority == "event") {
-    return(parsed_input())
-  }
-  store <- session$userData$plotlyInputStore
-  if (!event_id %in% shiny::isolate(names(store))) {
-    session$userData$plotlyInputStore <- store %||% shiny::reactiveValues()
-    session$userData$plotlyInputStore[[
-      event_id
-    ]] <- shiny::isolate(parsed_input())
-    shiny::observe(
-      {
-        session$userData$plotlyInputStore[[event_id]] <- parsed_input()
-      },
-      priority = 10000,
-      domain = session
-    )
-  }
-  session$userData$plotlyInputStore[[event_id]]
-}
-
-#' Shiny bindings for plotly figures
-#'
-#' `plotlyOutput()` creates a plot output element in a Shiny UI;
-#' `renderPlotly()` renders a [go_figure()] or a plotly htmlwidget (or a
-#' promise of one) into it.
-#'
-#' @param outputId Output variable to read the plot from.
-#' @param width,height Size of the plot output, as a valid CSS unit (e.g.
-#'   `"100%"`, `"400px"`).
-#' @param inline Use an inline (`span()`) container instead of a block one.
-#' @param reportTheme Report CSS colors and fonts to the server (see
-#'   [shiny::getCurrentOutputInfo()]).
-#' @param fill Whether the plot fills its container in fillable layouts.
-#' @param expr An expression that returns a figure.
-#' @param env The environment in which to evaluate `expr`.
-#' @param quoted Is `expr` a quoted expression?
-#' @return `plotlyOutput()` returns a Shiny UI element; `renderPlotly()` a
-#'   Shiny render function.
-#' @seealso [event_data()], [plotlyProxy()]
-#' @export
-plotlyOutput <- function(
-  outputId,
-  width = "100%",
-  height = "400px",
-  inline = FALSE,
-  reportTheme = TRUE,
-  fill = !inline
-) {
-  htmlwidgets::shinyWidgetOutput(
-    outputId,
-    name = "plotly_core",
-    width = width,
-    height = height,
-    package = "plotly.core",
-    inline = inline,
-    reportSize = TRUE,
-    reportTheme = reportTheme,
-    fill = fill
-  )
-}
-
-#' @rdname plotlyOutput
-#' @export
-renderPlotly <- function(expr, env = parent.frame(), quoted = FALSE) {
-  if (!quoted) {
-    quoted <- TRUE
-    expr <- substitute(expr)
-  }
-  shiny::installExprFunction(expr, "func", env, quoted)
-  expr2 <- quote(getFromNamespace(
-    "prepare_shiny_widget",
-    "plotly.core"
-  )(func()))
-  htmlwidgets::shinyRenderWidget(
-    expr2,
-    plotlyOutput,
-    environment(),
-    quoted,
-    cacheHint = list(label = "renderPlotly", userExpr = expr)
-  )
-}
-
-# Turn a figure (or a promise of one) into a widget and record its events so
-# event_data() can warn about unregistered ones. promises is a Suggests: it is
-# always installed with shiny, and this only runs inside renderPlotly().
-prepare_shiny_widget <- function(x) {
-  register <- function(fig) {
-    w <- as_widget(fig)
-    session <- shiny::getDefaultReactiveDomain()
-    if (!is.null(session)) {
-      ids <- paste(w$x$shinyEvents, w$x$source, sep = "-")
-      session$userData$plotlyShinyEventIDs <- unique(c(
-        session$userData$plotlyShinyEventIDs,
-        ids
-      ))
-    }
-    w
-  }
-  if (promises::is.promising(x)) promises::then(x, register) else register(x)
-}
-
-# Proxies ------------------------------------------------------------------------------
-
-#' Modify a plotly figure in Shiny without re-rendering it
-#'
-#' `plotlyProxy()` refers to a plot rendered with [renderPlotly()];
-#' `plotlyProxyInvoke()` calls a plotly.js function on it, e.g.
-#' `"restyle"`, `"relayout"`, `"update"`, `"addTraces"`, `"deleteTraces"`,
-#' `"extendTraces"` or `"animate"`. Arguments are passed to the plotly.js
-#' function after the plot element (see
-#' <https://plotly.com/javascript/plotlyjs-function-reference/>);
-#' `"reconfig"` sets a new `config`.
-#'
-#' @param outputId The output id of the plot.
-#' @param session The Shiny session.
-#' @param deferUntilFlush Send the message after Shiny's next flush (so the
-#'   plot exists).
-#' @param p A proxy from `plotlyProxy()`.
-#' @param method A plotly.js function name.
-#' @param ... Arguments to the plotly.js function. Graph objects and data
-#'   frames are serialised like figures (data frames as rows).
-#' @return The proxy, invisibly for `plotlyProxyInvoke()`.
-#' @export
-#' @examples
-#' if (interactive() && requireNamespace("shiny", quietly = TRUE)) {
-#'   ui <- shiny::fluidPage(shiny::actionButton("add", "Add a point"), plotlyOutput("plot"))
-#'   server <- function(input, output, session) {
-#'     output$plot <- renderPlotly(go_figure(go_scatter(y = c(1, 3, 2))))
-#'     shiny::observeEvent(input$add, {
-#'       plotlyProxy("plot", session) |>
-#'         plotlyProxyInvoke("extendTraces", list(y = list(list(stats::runif(1)))), list(0))
-#'     })
-#'   }
-#'   shiny::shinyApp(ui, server)
-#' }
-plotlyProxy <- function(
-  outputId,
-  session = shiny::getDefaultReactiveDomain(),
-  deferUntilFlush = TRUE
-) {
-  if (is.null(session)) {
-    stop(
-      "plotlyProxy must be called from the server function of a Shiny app",
-      call. = FALSE
-    )
-  }
-  if (
-    !is.null(session$ns) &&
-      nzchar(session$ns(NULL)) &&
-      !startsWith(outputId, session$ns(""))
-  ) {
-    outputId <- session$ns(outputId)
-  }
-  structure(
-    list(session = session, id = outputId, deferUntilFlush = deferUntilFlush),
-    class = "plotly_proxy"
-  )
-}
-
-PLOTLYJS_METHODS <- c(
-  "restyle",
-  "relayout",
-  "update",
-  "addTraces",
-  "deleteTraces",
-  "moveTraces",
-  "extendTraces",
-  "prependTraces",
-  "purge",
-  "toImage",
-  "downloadImage",
-  "animate",
-  "newPlot",
-  "react",
-  "validate",
-  "makeTemplate",
-  "validateTemplate",
-  "addFrames",
-  "reconfig"
-)
-
-#' @rdname plotlyProxy
-#' @export
-plotlyProxyInvoke <- function(p, method, ...) {
-  if (!inherits(p, "plotly_proxy")) {
-    stop("p must be a proxy object. See `help(plotlyProxy)`", call. = FALSE)
-  }
-  if (missing(method)) {
-    stop(
-      "Must provide a plotly.js method (as a character string of length 1).\n",
-      sprintf(
-        "Valid options include: '%s'",
-        paste(PLOTLYJS_METHODS, collapse = "', '")
-      ),
-      call. = FALSE
-    )
-  }
-  method <- match.arg(method, PLOTLYJS_METHODS)
-  args <- lapply(list(...), function(a) {
-    if (inherits(a, "plotly_obj")) unclass(a) else a
-  })
-  msg <- list(
-    id = p$id,
-    method = method,
-    args = as.character(to_JSON(unname(args)))
-  )
-  send <- function() p$session$sendCustomMessage("plotly-calls", msg)
-  if (isTRUE(p$deferUntilFlush)) {
-    p$session$onFlushed(send, once = TRUE)
+    # Shiny.setInputValue() is always called with event priority
+    # so simply return the parse input value
+    return(parsedInputValue())
   } else {
-    send()
+    eventHasStorage <- eventID %in%
+      shiny::isolate(names(session$userData$plotlyInputStore))
+
+    if (!eventHasStorage) {
+      # store input value as a reactive value to leverage caching
+      session$userData$plotlyInputStore <- session$userData$plotlyInputStore %||%
+        shiny::reactiveValues()
+      session$userData$plotlyInputStore[[eventID]] <- shiny::isolate(
+        parsedInputValue()
+      )
+      shiny::observe(
+        {
+          session$userData$plotlyInputStore[[eventID]] <- parsedInputValue()
+        },
+        priority = 10000,
+        domain = session
+      )
+    }
+
+    session$userData$plotlyInputStore[[eventID]]
   }
-  invisible(p)
+}
+
+
+#' Register a shiny input value
+#'
+#' @inheritParams event_data
+#' @param p a [go_figure()] or plotly htmlwidget.
+#' @return The modified figure.
+#' @seealso [event_data]
+#' @export
+#' @author Carson Sievert
+event_register <- function(p, event = NULL) {
+  event <- match.arg(event, event_data_events())
+  shiny_event_add(p, event)
+}
+
+#' Un-register a shiny input value
+#'
+#' @inheritParams event_data
+#' @param p a [go_figure()] or plotly htmlwidget.
+#' @return The modified figure.
+#' @seealso [event_data]
+#' @export
+#' @author Carson Sievert
+event_unregister <- function(p, event = NULL) {
+  event <- match.arg(event, event_data_events())
+  shiny_event_remove(p, event)
+}
+
+
+# helpers
+# Figures keep the registered events as a widget setting (see
+# get_widget_setting()); htmlwidgets in p$x$shinyEvents, as plotly does
+
+shiny_event_add <- function(p, event) {
+  p <- shiny_defaults_set(p)
+  set_widget_setting(
+    p,
+    "shinyEvents",
+    unique(c(get_widget_setting(p, "shinyEvents"), event))
+  )
+}
+
+shiny_event_remove <- function(p, event) {
+  p <- shiny_defaults_set(p)
+  set_widget_setting(
+    p,
+    "shinyEvents",
+    setdiff(get_widget_setting(p, "shinyEvents"), event)
+  )
+}
+
+shiny_defaults_set <- function(p) {
+  set_widget_setting(
+    p,
+    "shinyEvents",
+    get_widget_setting(p, "shinyEvents") %||% shiny_event_defaults()
+  )
+}
+
+shiny_event_defaults <- function() {
+  c(
+    "plotly_hover",
+    "plotly_click",
+    "plotly_selected",
+    "plotly_relayout",
+    "plotly_brushed",
+    "plotly_brushing",
+    "plotly_clickannotation",
+    "plotly_doubleclick",
+    "plotly_deselect",
+    "plotly_afterplot",
+    "plotly_sunburstclick"
+  )
+}
+
+event_data_events <- function() {
+  eval(formals(event_data)$event)
 }

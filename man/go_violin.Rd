@@ -6,13 +6,15 @@
 \alias{go_violin}
 \title{Violin traces}
 \usage{
-add_violin(fig, ...)
+add_violin(p, ...)
 
 \method{add_violin}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
   alignmentgroup = NULL,
   bandwidth = NULL,
   box = NULL,
@@ -56,11 +58,9 @@ add_violin(fig, ...)
   unselected = NULL,
   visible = NULL,
   width = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xhoverformat = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   yhoverformat = NULL,
@@ -73,6 +73,8 @@ add_violin(fig, ...)
 
 go_violin(
   ...,
+  x = NULL,
+  y = NULL,
   alignmentgroup = NULL,
   bandwidth = NULL,
   box = NULL,
@@ -116,11 +118,9 @@ go_violin(
   unselected = NULL,
   visible = NULL,
   width = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xhoverformat = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   yhoverformat = NULL,
@@ -129,7 +129,8 @@ go_violin(
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -148,6 +149,14 @@ column (a factor, character or logical, e.g. \code{marker =
 go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
+
+\item{x}{Sets the x sample data or coordinates. See overview for more
+info. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
+
+\item{y}{Sets the y sample data or coordinates. See overview for more
+info. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
 
 \item{alignmentgroup}{Set several traces linked to the same position
 axis or matching axes to the same alignmentgroup. This controls
@@ -409,10 +418,6 @@ with properties \code{marker} (see \code{\link{go_unselected}()}).}
 positions of other violin traces in the same subplot. Number in the
 interval [0, Inf].}
 
-\item{x}{Sets the x sample data or coordinates. See overview for more
-info. Data array: a vector, factor, Date/POSIXct vector, matrix or
-list.}
-
 \item{x0}{Sets the x coordinate for single-box traces or the starting
 coordinate for multi-box traces set using q1/median/q3. See overview
 for more info. Any value.}
@@ -433,10 +438,6 @@ a decimal number as well as "\%\{n\}f" for fractional seconds with n
 digits. For example, "2016-10-13 09:15:23.456" with tickformat
 "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 are formatted using `xaxis.hoverformat`. String.}
-
-\item{y}{Sets the y sample data or coordinates. See overview for more
-info. Data array: a vector, factor, Date/POSIXct vector, matrix or
-list.}
 
 \item{y0}{Sets the y coordinate for single-box traces or the starting
 coordinate for multi-box traces set using q1/median/q3. See overview

@@ -18,6 +18,42 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param x Sets the X coordinates of the vertices. The nth element of
+#'   vectors `x`, `y` and `z` jointly represent the X, Y and Z coordinates
+#'   of the nth vertex. Data array: a vector, factor, Date/POSIXct vector,
+#'   matrix or list.
+#' @param y Sets the Y coordinates of the vertices. The nth element of
+#'   vectors `x`, `y` and `z` jointly represent the X, Y and Z coordinates
+#'   of the nth vertex. Data array: a vector, factor, Date/POSIXct vector,
+#'   matrix or list.
+#' @param z Sets the Z coordinates of the vertices. The nth element of
+#'   vectors `x`, `y` and `z` jointly represent the X, Y and Z coordinates
+#'   of the nth vertex. Data array: a vector, factor, Date/POSIXct vector,
+#'   matrix or list.
+#' @param i A vector of vertex indices, i.e. integer values between 0 and
+#'   the length of the vertex vectors, representing the "first" vertex of a
+#'   triangle. For example, `\{i[m], j[m], k[m]\}` together represent face
+#'   m (triangle m) in the mesh, where `i[m] = n` points to the triplet
+#'   `\{x[n], y[n], z[n]\}` in the vertex arrays. Therefore, each element
+#'   in `i` represents a point in space, which is the first vertex of a
+#'   triangle. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#'   list.
+#' @param j A vector of vertex indices, i.e. integer values between 0 and
+#'   the length of the vertex vectors, representing the "second" vertex of
+#'   a triangle. For example, `\{i[m], j[m], k[m]\}` together represent
+#'   face m (triangle m) in the mesh, where `j[m] = n` points to the
+#'   triplet `\{x[n], y[n], z[n]\}` in the vertex arrays. Therefore, each
+#'   element in `j` represents a point in space, which is the second vertex
+#'   of a triangle. Data array: a vector, factor, Date/POSIXct vector,
+#'   matrix or list.
+#' @param k A vector of vertex indices, i.e. integer values between 0 and
+#'   the length of the vertex vectors, representing the "third" vertex of a
+#'   triangle. For example, `\{i[m], j[m], k[m]\}` together represent face
+#'   m (triangle m) in the mesh, where `k[m] = n` points to the triplet
+#'   `\{x[n], y[n], z[n]\}` in the vertex arrays. Therefore, each element
+#'   in `k` represents a point in space, which is the third vertex of a
+#'   triangle. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#'   list.
 #' @param alphahull Determines how the mesh surface triangles are derived
 #'   from the set of vertices (points) represented by the `x`, `y` and `z`
 #'   arrays, if the `i`, `j`, `k` arrays are not supplied. For general use
@@ -100,7 +136,6 @@
 #' @param facecolor Sets the color of each face Overrides "color" and
 #'   "vertexcolor". Data array: a vector, factor, Date/POSIXct vector,
 #'   matrix or list.
-#' @param fig A \code{go_figure} object.
 #' @param flatshading Determines whether or not normal smoothing is applied
 #'   to the meshes, creating meshes with an angular, low-poly look via flat
 #'   reflections. Logical.
@@ -146,14 +181,6 @@
 #'   'false' is passed in, the specifier with the missing variable will be
 #'   displayed. Any value.
 #' @param hovertext Same as `text`. String, or a vector of these.
-#' @param i A vector of vertex indices, i.e. integer values between 0 and
-#'   the length of the vertex vectors, representing the "first" vertex of a
-#'   triangle. For example, `\{i[m], j[m], k[m]\}` together represent face
-#'   m (triangle m) in the mesh, where `i[m] = n` points to the triplet
-#'   `\{x[n], y[n], z[n]\}` in the vertex arrays. Therefore, each element
-#'   in `i` represents a point in space, which is the first vertex of a
-#'   triangle. Data array: a vector, factor, Date/POSIXct vector, matrix or
-#'   list.
 #' @param ids Assigns id labels to each datum. These ids for object
 #'   constancy of data points during animation. Should be an array of
 #'   strings, not numbers or any other type. Data array: a vector, factor,
@@ -164,22 +191,6 @@
 #'   list.
 #' @param intensitymode Determines the source of `intensity` values. One of
 #'   \code{"vertex"}, \code{"cell"}.
-#' @param j A vector of vertex indices, i.e. integer values between 0 and
-#'   the length of the vertex vectors, representing the "second" vertex of
-#'   a triangle. For example, `\{i[m], j[m], k[m]\}` together represent
-#'   face m (triangle m) in the mesh, where `j[m] = n` points to the
-#'   triplet `\{x[n], y[n], z[n]\}` in the vertex arrays. Therefore, each
-#'   element in `j` represents a point in space, which is the second vertex
-#'   of a triangle. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
-#' @param k A vector of vertex indices, i.e. integer values between 0 and
-#'   the length of the vertex vectors, representing the "third" vertex of a
-#'   triangle. For example, `\{i[m], j[m], k[m]\}` together represent face
-#'   m (triangle m) in the mesh, where `k[m] = n` points to the triplet
-#'   `\{x[n], y[n], z[n]\}` in the vertex arrays. Therefore, each element
-#'   in `k` represents a point in space, which is the third vertex of a
-#'   triangle. Data array: a vector, factor, Date/POSIXct vector, matrix or
-#'   list.
 #' @param legend Sets the reference to a legend to show this trace in.
 #'   References to these legends are "legend", "legend2", "legend3", etc.
 #'   Settings for these legends are set in the layout, under
@@ -226,6 +237,8 @@
 #'   overlay of multiple transparent surfaces may not perfectly be sorted
 #'   in depth by the webgl API. This behavior may be improved in the near
 #'   future and is subject to change. Number in the interval [0, 1].
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param reversescale Reverses the color mapping if true. If true, `cmin`
 #'   will correspond to the last color in the array and `cmax` will
 #'   correspond to the first color. Logical.
@@ -278,10 +291,6 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param x Sets the X coordinates of the vertices. The nth element of
-#'   vectors `x`, `y` and `z` jointly represent the X, Y and Z coordinates
-#'   of the nth vertex. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
 #' @param xcalendar Sets the calendar system to use with `x` date data. One
 #'   of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},
 #'   \code{"ethiopian"}, \code{"gregorian"}, \code{"hebrew"},
@@ -298,10 +307,6 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `xaxis.hoverformat`. String.
-#' @param y Sets the Y coordinates of the vertices. The nth element of
-#'   vectors `x`, `y` and `z` jointly represent the X, Y and Z coordinates
-#'   of the nth vertex. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
 #' @param ycalendar Sets the calendar system to use with `y` date data. One
 #'   of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},
 #'   \code{"ethiopian"}, \code{"gregorian"}, \code{"hebrew"},
@@ -318,10 +323,6 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `yaxis.hoverformat`. String.
-#' @param z Sets the Z coordinates of the vertices. The nth element of
-#'   vectors `x`, `y` and `z` jointly represent the X, Y and Z coordinates
-#'   of the nth vertex. Data array: a vector, factor, Date/POSIXct vector,
-#'   matrix or list.
 #' @param zcalendar Sets the calendar system to use with `z` date data. One
 #'   of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},
 #'   \code{"ethiopian"}, \code{"gregorian"}, \code{"hebrew"},
@@ -354,20 +355,20 @@
 #'   go_figure() |>
 #'   add_mesh3d(x = ~wt, y = ~hp, z = ~mpg)
 go_mesh3d <- function(
-    ..., alphahull = NULL, autocolorscale = NULL, cauto = NULL, cmax = NULL,
+    ..., x = NULL, y = NULL, z = NULL, i = NULL, j = NULL, k = NULL,
+    alphahull = NULL, autocolorscale = NULL, cauto = NULL, cmax = NULL,
     cmid = NULL, cmin = NULL, color = NULL, coloraxis = NULL,
     colorbar = NULL, colorscale = NULL, contour = NULL, customdata = NULL,
     delaunayaxis = NULL, facecolor = NULL, flatshading = NULL,
     hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, i = NULL, ids = NULL,
-    intensity = NULL, intensitymode = NULL, j = NULL, k = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, lighting = NULL,
-    lightposition = NULL, meta = NULL, name = NULL, opacity = NULL,
-    reversescale = NULL, scene = NULL, showlegend = NULL, showscale = NULL,
-    text = NULL, uid = NULL, uirevision = NULL, vertexcolor = NULL,
-    visible = NULL, x = NULL, xcalendar = NULL, xhoverformat = NULL,
-    y = NULL, ycalendar = NULL, yhoverformat = NULL, z = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
+    intensity = NULL, intensitymode = NULL, legend = NULL,
+    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    legendwidth = NULL, lighting = NULL, lightposition = NULL, meta = NULL,
+    name = NULL, opacity = NULL, reversescale = NULL, scene = NULL,
+    showlegend = NULL, showscale = NULL, text = NULL, uid = NULL,
+    uirevision = NULL, vertexcolor = NULL, visible = NULL, xcalendar = NULL,
+    xhoverformat = NULL, ycalendar = NULL, yhoverformat = NULL,
     zcalendar = NULL, zhoverformat = NULL, skip_invalid = FALSE
 ) {
   plotly_object("mesh3d", NULL, environment(), list(...), skip_invalid)

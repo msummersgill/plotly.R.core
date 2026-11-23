@@ -19,6 +19,10 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param x Sets the x coordinates of the vector arrow locations. Data
+#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param y Sets the y coordinates of the vector arrow locations. Data
+#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param anchor Sets the vector arrows' anchor with respect to their (x,y)
 #'   positions. Use "tail" to place (x,y) at the base, "tip" to place (x,y)
 #'   at the head, or "center" to center the vector arrow on (x,y). One of
@@ -44,7 +48,6 @@
 #'   to its crosstalk group (see \code{\link{highlight}()}).
 #' @param dx Sets the x coordinate step. See `x0` for more info. Number.
 #' @param dy Sets the y coordinate step. See `y0` for more info. Number.
-#' @param fig A \code{go_figure} object.
 #' @param hoverinfo Determines what trace information appears on hover. If
 #'   `none` or `skip` are set, no information is displayed upon hovering.
 #'   But, if `none` is set, click and hover events are still fired. Any
@@ -135,6 +138,8 @@
 #'   item and on hover. String.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -212,8 +217,6 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param x Sets the x coordinates of the vector arrow locations. Data
-#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param x0 Alternate to `x`. Builds a linear space of x coordinates. Use
 #'   with `dx` where `x0` is the starting coordinate and `dx` the step. Any
 #'   value.
@@ -232,8 +235,6 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `xaxis.hoverformat`. String.
-#' @param y Sets the y coordinates of the vector arrow locations. Data
-#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param y0 Alternate to `y`. Builds a linear space of y coordinates. Use
 #'   with `dy` where `y0` is the starting coordinate and `dy` the step. Any
 #'   value.
@@ -269,17 +270,18 @@
 #'   go_figure() |>
 #'   add_quiver(x = ~x, y = ~y, u = ~y / 10, v = ~-x / 10)
 go_quiver <- function(
-    ..., anchor = NULL, arrowref = NULL, customdata = NULL, dx = NULL,
-    dy = NULL, hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, lengthfactor = NULL,
-    lengthmode = NULL, marker = NULL, meta = NULL, name = NULL,
-    opacity = NULL, selected = NULL, selectedpoints = NULL,
-    showlegend = NULL, text = NULL, textfont = NULL, textposition = NULL,
-    u = NULL, uhoverformat = NULL, uid = NULL, uirevision = NULL,
-    unselected = NULL, v = NULL, vhoverformat = NULL, visible = NULL,
-    x = NULL, x0 = NULL, xaxis = NULL, xhoverformat = NULL, y = NULL,
-    y0 = NULL, yaxis = NULL, yhoverformat = NULL, skip_invalid = FALSE
+    ..., x = NULL, y = NULL, anchor = NULL, arrowref = NULL,
+    customdata = NULL, dx = NULL, dy = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, ids = NULL, legend = NULL,
+    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    legendwidth = NULL, lengthfactor = NULL, lengthmode = NULL,
+    marker = NULL, meta = NULL, name = NULL, opacity = NULL,
+    selected = NULL, selectedpoints = NULL, showlegend = NULL, text = NULL,
+    textfont = NULL, textposition = NULL, u = NULL, uhoverformat = NULL,
+    uid = NULL, uirevision = NULL, unselected = NULL, v = NULL,
+    vhoverformat = NULL, visible = NULL, x0 = NULL, xaxis = NULL,
+    xhoverformat = NULL, y0 = NULL, yaxis = NULL, yhoverformat = NULL,
+    skip_invalid = FALSE
 ) {
   plotly_object("quiver", NULL, environment(), list(...), skip_invalid)
 }

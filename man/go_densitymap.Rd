@@ -8,6 +8,9 @@
 \usage{
 go_densitymap(
   ...,
+  lat = NULL,
+  lon = NULL,
+  z = NULL,
   autocolorscale = NULL,
   below = NULL,
   coloraxis = NULL,
@@ -20,13 +23,11 @@ go_densitymap(
   hovertemplatefallback = NULL,
   hovertext = NULL,
   ids = NULL,
-  lat = NULL,
   legend = NULL,
   legendgroup = NULL,
   legendgrouptitle = NULL,
   legendrank = NULL,
   legendwidth = NULL,
-  lon = NULL,
   meta = NULL,
   name = NULL,
   opacity = NULL,
@@ -39,7 +40,6 @@ go_densitymap(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  z = NULL,
   zauto = NULL,
   zmax = NULL,
   zmid = NULL,
@@ -47,13 +47,16 @@ go_densitymap(
   skip_invalid = FALSE
 )
 
-add_densitymap(fig, ...)
+add_densitymap(p, ...)
 
 \method{add_densitymap}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  lat = NULL,
+  lon = NULL,
+  z = NULL,
   autocolorscale = NULL,
   below = NULL,
   coloraxis = NULL,
@@ -66,13 +69,11 @@ add_densitymap(fig, ...)
   hovertemplatefallback = NULL,
   hovertext = NULL,
   ids = NULL,
-  lat = NULL,
   legend = NULL,
   legendgroup = NULL,
   legendgrouptitle = NULL,
   legendrank = NULL,
   legendwidth = NULL,
-  lon = NULL,
   meta = NULL,
   name = NULL,
   opacity = NULL,
@@ -85,7 +86,6 @@ add_densitymap(fig, ...)
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  z = NULL,
   zauto = NULL,
   zmax = NULL,
   zmid = NULL,
@@ -98,6 +98,16 @@ add_densitymap(fig, ...)
 \arguments{
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
+
+\item{lat}{Sets the latitude coordinates (in degrees North). Data array:
+a vector, factor, Date/POSIXct vector, matrix or list.}
+
+\item{lon}{Sets the longitude coordinates (in degrees East). Data array:
+a vector, factor, Date/POSIXct vector, matrix or list.}
+
+\item{z}{Sets the points' weight. For example, a value of 10 would be
+equivalent to having 10 points of weight 1 in the same spot Data
+array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{autocolorscale}{Determines whether the colorscale is a default
 palette (`autocolorscale: true`) or the palette determined by
@@ -197,9 +207,6 @@ constancy of data points during animation. Should be an array of
 strings, not numbers or any other type. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.}
 
-\item{lat}{Sets the latitude coordinates (in degrees North). Data array:
-a vector, factor, Date/POSIXct vector, matrix or list.}
-
 \item{legend}{Sets the reference to a legend to show this trace in.
 References to these legends are "legend", "legend2", "legend3", etc.
 Settings for these legends are set in the layout, under
@@ -225,9 +232,6 @@ to their order in data and layout. Number.}
 
 \item{legendwidth}{Sets the width (in px or fraction) of the legend for
 this trace. Number in the interval [0, Inf].}
-
-\item{lon}{Sets the longitude coordinates (in degrees East). Data array:
-a vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{meta}{Assigns extra meta information associated with this trace
 that can be used in various text attributes. Attributes such as trace
@@ -294,10 +298,6 @@ with it as it moves. Any value.}
 (provided that the legend itself is visible). One of
 \code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
 
-\item{z}{Sets the points' weight. For example, a value of 10 would be
-equivalent to having 10 points of weight 1 in the same spot Data
-array: a vector, factor, Date/POSIXct vector, matrix or list.}
-
 \item{zauto}{Determines whether or not the color domain is computed with
 respect to the input data (here in `z`) or the bounds set in `zmin`
 and `zmax` Defaults to `false` when `zmin` and `zmax` are set by the
@@ -318,7 +318,8 @@ Number.}
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
 
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{data}{A data frame in which formula properties (e.g. \code{z =
 ~col}) are evaluated. Default: the data given to

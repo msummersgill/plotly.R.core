@@ -8,6 +8,8 @@
 \usage{
 go_barpolar(
   ...,
+  r = NULL,
+  theta = NULL,
   base = NULL,
   customdata = NULL,
   dr = NULL,
@@ -28,14 +30,12 @@ go_barpolar(
   name = NULL,
   offset = NULL,
   opacity = NULL,
-  r = NULL,
   r0 = NULL,
   selected = NULL,
   selectedpoints = NULL,
   showlegend = NULL,
   subplot = NULL,
   text = NULL,
-  theta = NULL,
   theta0 = NULL,
   thetaunit = NULL,
   uid = NULL,
@@ -46,13 +46,15 @@ go_barpolar(
   skip_invalid = FALSE
 )
 
-add_barpolar(fig, ...)
+add_barpolar(p, ...)
 
 \method{add_barpolar}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  r = NULL,
+  theta = NULL,
   base = NULL,
   customdata = NULL,
   dr = NULL,
@@ -73,14 +75,12 @@ add_barpolar(fig, ...)
   name = NULL,
   offset = NULL,
   opacity = NULL,
-  r = NULL,
   r0 = NULL,
   selected = NULL,
   selectedpoints = NULL,
   showlegend = NULL,
   subplot = NULL,
   text = NULL,
-  theta = NULL,
   theta0 = NULL,
   thetaunit = NULL,
   uid = NULL,
@@ -96,6 +96,12 @@ add_barpolar(fig, ...)
 \arguments{
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
+
+\item{r}{Sets the radial coordinates Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
+
+\item{theta}{Sets the angular coordinates Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
 
 \item{base}{Sets where the bar base is drawn (in radial axis units). In
 "stack" barmode, traces that set "base" will be excluded and drawn in
@@ -216,9 +222,6 @@ item and on hover. String.}
 \item{opacity}{Sets the opacity of the trace. Number in the interval [0,
 1].}
 
-\item{r}{Sets the radial coordinates Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
-
 \item{r0}{Alternate to `r`. Builds a linear space of r coordinates. Use
 with `dr` where `r0` is the starting coordinate and `dr` the step. Any
 value.}
@@ -246,9 +249,6 @@ on. Subplot id: \code{"polar"}, \code{"polar2"}, \code{"polar3"}, ....}
 single string, the same string appears over all bars. If an array of
 string, the items are mapped in order to the this trace's coordinates.
 String, or a vector of these.}
-
-\item{theta}{Sets the angular coordinates Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
 
 \item{theta0}{Alternate to `theta`. Builds a linear space of theta
 coordinates. Use with `dtheta` where `theta0` is the starting
@@ -291,7 +291,8 @@ in the interval [0, Inf], or a vector of these.}
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
 
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{data}{A data frame in which formula properties (e.g. \code{r =
 ~col}, \code{marker = go_barpolar_marker(color = ~col)}) are

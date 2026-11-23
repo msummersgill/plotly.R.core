@@ -6,13 +6,16 @@
 \alias{go_surface}
 \title{Surface traces}
 \usage{
-add_surface(fig, ...)
+add_surface(p, ...)
 
 \method{add_surface}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
   autocolorscale = NULL,
   cauto = NULL,
   cmax = NULL,
@@ -51,13 +54,10 @@ add_surface(fig, ...)
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   xcalendar = NULL,
   xhoverformat = NULL,
-  y = NULL,
   ycalendar = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zcalendar = NULL,
   zhoverformat = NULL,
   row = NULL,
@@ -67,6 +67,9 @@ add_surface(fig, ...)
 
 go_surface(
   ...,
+  x = NULL,
+  y = NULL,
+  z = NULL,
   autocolorscale = NULL,
   cauto = NULL,
   cmax = NULL,
@@ -105,20 +108,18 @@ go_surface(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   xcalendar = NULL,
   xhoverformat = NULL,
-  y = NULL,
   ycalendar = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zcalendar = NULL,
   zhoverformat = NULL,
   skip_invalid = FALSE
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -137,6 +138,15 @@ column (a factor, character or logical, e.g. \code{marker =
 go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
+
+\item{x}{Sets the x coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
+
+\item{y}{Sets the y coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
+
+\item{z}{Sets the z coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
 
 \item{autocolorscale}{Determines whether the colorscale is a default
 palette (`autocolorscale: true`) or the palette determined by
@@ -368,9 +378,6 @@ with it as it moves. Any value.}
 (provided that the legend itself is visible). One of
 \code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
 
-\item{x}{Sets the x coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
-
 \item{xcalendar}{Sets the calendar system to use with `x` date data. One
 of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},
 \code{"ethiopian"}, \code{"gregorian"}, \code{"hebrew"},
@@ -389,9 +396,6 @@ digits. For example, "2016-10-13 09:15:23.456" with tickformat
 "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 are formatted using `xaxis.hoverformat`. String.}
 
-\item{y}{Sets the y coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
-
 \item{ycalendar}{Sets the calendar system to use with `y` date data. One
 of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},
 \code{"ethiopian"}, \code{"gregorian"}, \code{"hebrew"},
@@ -409,9 +413,6 @@ a decimal number as well as "\%\{n\}f" for fractional seconds with n
 digits. For example, "2016-10-13 09:15:23.456" with tickformat
 "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 are formatted using `yaxis.hoverformat`. String.}
-
-\item{z}{Sets the z coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
 
 \item{zcalendar}{Sets the calendar system to use with `z` date data. One
 of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},

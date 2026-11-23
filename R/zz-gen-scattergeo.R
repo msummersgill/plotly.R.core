@@ -17,6 +17,14 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param lat Sets the latitude coordinates (in degrees North). Data array:
+#'   a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param lon Sets the longitude coordinates (in degrees East). Data array:
+#'   a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param locations Sets the coordinates via location IDs or names.
+#'   Coordinates correspond to the centroid of each location given. See
+#'   `locationmode` for more info. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -36,7 +44,6 @@
 #'   to match the items included in the `locations` array. Only has an
 #'   effect when `geojson` is set. Support nested property, for example
 #'   "properties.name". String.
-#' @param fig A \code{go_figure} object.
 #' @param fill Sets the area to fill with a solid color. Use with
 #'   `fillcolor` if not "none". "toself" connects the endpoints of the
 #'   trace (or each segment of the trace if it has gaps) into a closed
@@ -105,8 +112,6 @@
 #'   constancy of data points during animation. Should be an array of
 #'   strings, not numbers or any other type. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
-#' @param lat Sets the latitude coordinates (in degrees North). Data array:
-#'   a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param legend Sets the reference to a legend to show this trace in.
 #'   References to these legends are "legend", "legend2", "legend3", etc.
 #'   Settings for these legends are set in the layout, under
@@ -139,12 +144,6 @@
 #'   two-letter abbreviations (e.g. "CA") and full state names (e.g.
 #'   "California"). One of \code{"ISO-3"}, \code{"USA-states"},
 #'   \code{"country names"}, \code{"geojson-id"}.
-#' @param locations Sets the coordinates via location IDs or names.
-#'   Coordinates correspond to the centroid of each location given. See
-#'   `locationmode` for more info. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
-#' @param lon Sets the longitude coordinates (in degrees East). Data array:
-#'   a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param marker A \code{\link{go_scattergeo_marker}()} object or named
 #'   list, with properties \code{angle}, \code{angleref},
 #'   \code{autocolorscale}, \code{cauto}, \code{cmax}, \code{cmid},
@@ -171,6 +170,8 @@
 #'   item and on hover. String.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -271,18 +272,17 @@
 #'   go_figure() |>
 #'   add_scattergeo(lat = ~lat, lon = ~long)
 go_scattergeo <- function(
-    ..., connectgaps = NULL, customdata = NULL, featureidkey = NULL,
-    fill = NULL, fillcolor = NULL, geo = NULL, geojson = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL, lat = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    ..., lat = NULL, lon = NULL, locations = NULL, connectgaps = NULL,
+    customdata = NULL, featureidkey = NULL, fill = NULL, fillcolor = NULL,
+    geo = NULL, geojson = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, line = NULL, locationmode = NULL,
-    locations = NULL, lon = NULL, marker = NULL, meta = NULL, mode = NULL,
-    name = NULL, opacity = NULL, selected = NULL, selectedpoints = NULL,
-    showlegend = NULL, text = NULL, textfont = NULL, textposition = NULL,
-    texttemplate = NULL, texttemplatefallback = NULL, uid = NULL,
-    uirevision = NULL, unselected = NULL, visible = NULL,
-    skip_invalid = FALSE
+    marker = NULL, meta = NULL, mode = NULL, name = NULL, opacity = NULL,
+    selected = NULL, selectedpoints = NULL, showlegend = NULL, text = NULL,
+    textfont = NULL, textposition = NULL, texttemplate = NULL,
+    texttemplatefallback = NULL, uid = NULL, uirevision = NULL,
+    unselected = NULL, visible = NULL, skip_invalid = FALSE
 ) {
   plotly_object("scattergeo", NULL, environment(), list(...), skip_invalid)
 }

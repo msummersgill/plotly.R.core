@@ -6,19 +6,19 @@
 \alias{go_table}
 \title{Table traces}
 \usage{
-add_table(fig, ...)
+add_table(p, ...)
 
 \method{add_table}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  header = NULL,
   cells = NULL,
   columnorder = NULL,
   columnwidth = NULL,
   customdata = NULL,
   domain = NULL,
-  header = NULL,
   hoverinfo = NULL,
   hoverlabel = NULL,
   ids = NULL,
@@ -38,12 +38,12 @@ add_table(fig, ...)
 
 go_table(
   ...,
+  header = NULL,
   cells = NULL,
   columnorder = NULL,
   columnwidth = NULL,
   customdata = NULL,
   domain = NULL,
-  header = NULL,
   hoverinfo = NULL,
   hoverlabel = NULL,
   ids = NULL,
@@ -60,7 +60,8 @@ go_table(
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -80,6 +81,11 @@ column (a factor, character or logical, e.g. \code{marker =
 go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
+
+\item{header}{A \code{\link{go_table_header}()} object or named list,
+with properties \code{align}, \code{fill}, \code{font}, \code{format},
+\code{height}, \code{line}, \code{prefix}, \code{suffix} and
+\code{values} (see \code{\link{go_table_header}()}).}
 
 \item{cells}{A \code{\link{go_table_cells}()} object or named list, with
 properties \code{align}, \code{fill}, \code{font}, \code{format},
@@ -104,11 +110,6 @@ array: a vector, factor, Date/POSIXct vector, matrix or list.}
 \item{domain}{A \code{\link{go_domain}()} object or named list, with
 properties \code{column}, \code{row}, \code{x} and \code{y} (see
 \code{\link{go_domain}()}).}
-
-\item{header}{A \code{\link{go_table_header}()} object or named list,
-with properties \code{align}, \code{fill}, \code{font}, \code{format},
-\code{height}, \code{line}, \code{prefix}, \code{suffix} and
-\code{values} (see \code{\link{go_table_header}()}).}
 
 \item{hoverinfo}{Determines what trace information appears on hover. If
 `none` or `skip` are set, no information is displayed upon hovering.

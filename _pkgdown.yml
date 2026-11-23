@@ -76,9 +76,12 @@ reference:
       - plotlyProxy
       - event_data
       - event_register
+      - event_unregister
+      - event_source
   - title: Linked views (crosstalk)
     contents:
       - highlight
+      - attrs_selected
       - set_crosstalk_keys
   - title: Templates, schema and validation
     contents:

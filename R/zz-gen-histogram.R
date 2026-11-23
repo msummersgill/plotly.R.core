@@ -18,6 +18,10 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param x Sets the sample data to be binned on the x axis. Data array: a
+#'   vector, factor, Date/POSIXct vector, matrix or list.
+#' @param y Sets the sample data to be binned on the y axis. Data array: a
+#'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param alignmentgroup Set several traces linked to the same position
 #'   axis or matching axes to the same alignmentgroup. This controls
 #'   whether bars compute their positional range dependently or
@@ -71,7 +75,6 @@
 #'   \code{symmetric}, \code{thickness}, \code{traceref},
 #'   \code{tracerefminus}, \code{type}, \code{value}, \code{valueminus},
 #'   \code{visible} and \code{width} (see \code{\link{go_error_bar}()}).
-#' @param fig A \code{go_figure} object.
 #' @param histfunc Specifies the binning function used for this histogram
 #'   trace. If "count", the histogram values are computed by counting the
 #'   number of values lying inside each bin. If "sum", "avg", "min", "max",
@@ -207,6 +210,8 @@
 #'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
 #'   \code{size}, \code{style}, \code{textcase}, \code{variant} and
 #'   \code{weight} (see \code{\link{go_font}()}).
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -297,8 +302,6 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param x Sets the sample data to be binned on the x axis. Data array: a
-#'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param xaxis Sets a reference between this trace's x coordinates and a
 #'   2D cartesian x axis. If "x" (the default value), the x coordinates
 #'   refer to `layout.xaxis`. If "x2", the x coordinates refer to
@@ -323,8 +326,6 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `xaxis.hoverformat`. String.
-#' @param y Sets the sample data to be binned on the y axis. Data array: a
-#'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param yaxis Sets a reference between this trace's y coordinates and a
 #'   2D cartesian y axis. If "y" (the default value), the y coordinates
 #'   refer to `layout.yaxis`. If "y2", the y coordinates refer to
@@ -368,23 +369,24 @@
 #'   go_figure() |>
 #'   add_histogram(x = ~mpg)
 go_histogram <- function(
-    ..., alignmentgroup = NULL, autobinx = NULL, autobiny = NULL,
-    bingroup = NULL, cliponaxis = NULL, constraintext = NULL,
-    cumulative = NULL, customdata = NULL, error_x = NULL, error_y = NULL,
-    histfunc = NULL, histnorm = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, insidetextanchor = NULL, insidetextfont = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
-    name = NULL, nbinsx = NULL, nbinsy = NULL, offsetgroup = NULL,
-    opacity = NULL, orientation = NULL, outsidetextfont = NULL,
-    selected = NULL, selectedpoints = NULL, showlegend = NULL, text = NULL,
-    textangle = NULL, textfont = NULL, textposition = NULL,
-    texttemplate = NULL, texttemplatefallback = NULL, uid = NULL,
-    uirevision = NULL, unselected = NULL, visible = NULL, x = NULL,
-    xaxis = NULL, xbins = NULL, xcalendar = NULL, xhoverformat = NULL,
-    y = NULL, yaxis = NULL, ybins = NULL, ycalendar = NULL,
-    yhoverformat = NULL, zorder = NULL, skip_invalid = FALSE
+    ..., x = NULL, y = NULL, alignmentgroup = NULL, autobinx = NULL,
+    autobiny = NULL, bingroup = NULL, cliponaxis = NULL,
+    constraintext = NULL, cumulative = NULL, customdata = NULL,
+    error_x = NULL, error_y = NULL, histfunc = NULL, histnorm = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
+    insidetextanchor = NULL, insidetextfont = NULL, legend = NULL,
+    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    legendwidth = NULL, marker = NULL, meta = NULL, name = NULL,
+    nbinsx = NULL, nbinsy = NULL, offsetgroup = NULL, opacity = NULL,
+    orientation = NULL, outsidetextfont = NULL, selected = NULL,
+    selectedpoints = NULL, showlegend = NULL, text = NULL, textangle = NULL,
+    textfont = NULL, textposition = NULL, texttemplate = NULL,
+    texttemplatefallback = NULL, uid = NULL, uirevision = NULL,
+    unselected = NULL, visible = NULL, xaxis = NULL, xbins = NULL,
+    xcalendar = NULL, xhoverformat = NULL, yaxis = NULL, ybins = NULL,
+    ycalendar = NULL, yhoverformat = NULL, zorder = NULL,
+    skip_invalid = FALSE
 ) {
   plotly_object("histogram", NULL, environment(), list(...), skip_invalid)
 }

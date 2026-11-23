@@ -17,6 +17,11 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param locations Sets the coordinates via location IDs or names. See
+#'   `locationmode` for more info. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param z Sets the color values. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `colorscale`. In case `colorscale` is unspecified or `autocolorscale`
@@ -61,7 +66,6 @@
 #'   to match the items included in the `locations` array. Only has an
 #'   effect when `geojson` is set. Support nested property, for example
 #'   "properties.name". String.
-#' @param fig A \code{go_figure} object.
 #' @param geo Sets a reference between this trace's geospatial coordinates
 #'   and a geographic map. If "geo" (the default value), the geospatial
 #'   coordinates refer to `layout.geo`. If "geo2", the geospatial
@@ -147,9 +151,6 @@
 #'   two-letter abbreviations (e.g. "CA") and full state names (e.g.
 #'   "California"). One of \code{"ISO-3"}, \code{"USA-states"},
 #'   \code{"country names"}, \code{"geojson-id"}.
-#' @param locations Sets the coordinates via location IDs or names. See
-#'   `locationmode` for more info. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param marker A \code{\link{go_choropleth_marker}()} object or named
 #'   list, with properties \code{line} and \code{opacity} (see
 #'   \code{\link{go_choropleth_marker}()}).
@@ -164,6 +165,8 @@
 #'   `meta` and `n` is the trace index. Any value.
 #' @param name Sets the trace name. The trace name appears as the legend
 #'   item and on hover. String.
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param reversescale Reverses the color mapping if true. If true, `zmin`
 #'   will correspond to the last color in the array and `zmax` will
 #'   correspond to the first color. Logical.
@@ -214,8 +217,6 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param z Sets the color values. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param zauto Determines whether or not the color domain is computed with
 #'   respect to the input data (here in `z`) or the bounds set in `zmin`
 #'   and `zmax` Defaults to `false` when `zmin` and `zmax` are set by the
@@ -250,18 +251,17 @@
 #'   ) |>
 #'   update_layout(geo = go_geo(scope = "usa"))
 go_choropleth <- function(
-    ..., autocolorscale = NULL, coloraxis = NULL, colorbar = NULL,
-    colorscale = NULL, customdata = NULL, featureidkey = NULL, geo = NULL,
-    geojson = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, locationmode = NULL,
-    locations = NULL, marker = NULL, meta = NULL, name = NULL,
+    ..., locations = NULL, z = NULL, autocolorscale = NULL,
+    coloraxis = NULL, colorbar = NULL, colorscale = NULL, customdata = NULL,
+    featureidkey = NULL, geo = NULL, geojson = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    locationmode = NULL, marker = NULL, meta = NULL, name = NULL,
     reversescale = NULL, selected = NULL, selectedpoints = NULL,
     showlegend = NULL, showscale = NULL, text = NULL, uid = NULL,
-    uirevision = NULL, unselected = NULL, visible = NULL, z = NULL,
-    zauto = NULL, zmax = NULL, zmid = NULL, zmin = NULL,
-    skip_invalid = FALSE
+    uirevision = NULL, unselected = NULL, visible = NULL, zauto = NULL,
+    zmax = NULL, zmid = NULL, zmin = NULL, skip_invalid = FALSE
 ) {
   plotly_object("choropleth", NULL, environment(), list(...), skip_invalid)
 }

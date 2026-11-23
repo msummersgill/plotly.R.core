@@ -6,13 +6,16 @@
 \alias{go_heatmap}
 \title{Heatmap traces}
 \usage{
-add_heatmap(fig, ...)
+add_heatmap(p, ...)
 
 \method{add_heatmap}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
   autocolorscale = NULL,
   coloraxis = NULL,
   colorbar = NULL,
@@ -47,7 +50,6 @@ add_heatmap(fig, ...)
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -57,7 +59,6 @@ add_heatmap(fig, ...)
   xperiod0 = NULL,
   xperiodalignment = NULL,
   xtype = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -67,7 +68,6 @@ add_heatmap(fig, ...)
   yperiod0 = NULL,
   yperiodalignment = NULL,
   ytype = NULL,
-  z = NULL,
   zauto = NULL,
   zhoverformat = NULL,
   zmax = NULL,
@@ -83,6 +83,9 @@ add_heatmap(fig, ...)
 
 go_heatmap(
   ...,
+  x = NULL,
+  y = NULL,
+  z = NULL,
   autocolorscale = NULL,
   coloraxis = NULL,
   colorbar = NULL,
@@ -117,7 +120,6 @@ go_heatmap(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -127,7 +129,6 @@ go_heatmap(
   xperiod0 = NULL,
   xperiodalignment = NULL,
   xtype = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -137,7 +138,6 @@ go_heatmap(
   yperiod0 = NULL,
   yperiodalignment = NULL,
   ytype = NULL,
-  z = NULL,
   zauto = NULL,
   zhoverformat = NULL,
   zmax = NULL,
@@ -149,7 +149,8 @@ go_heatmap(
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -168,6 +169,15 @@ column (a factor, character or logical, e.g. \code{marker =
 go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
+
+\item{x}{Sets the x coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
+
+\item{y}{Sets the y coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
+
+\item{z}{Sets the z data. Data array: a vector, factor, Date/POSIXct
+vector, matrix or list.}
 
 \item{autocolorscale}{Determines whether the colorscale is a default
 palette (`autocolorscale: true`) or the palette determined by
@@ -382,9 +392,6 @@ with it as it moves. Any value.}
 (provided that the legend itself is visible). One of
 \code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
 
-\item{x}{Sets the x coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
-
 \item{x0}{Alternate to `x`. Builds a linear space of x coordinates. Use
 with `dx` where `x0` is the starting coordinate and `dx` the step. Any
 value.}
@@ -437,9 +444,6 @@ heatmap's x coordinates are given by "x0" and "dx" (the default
 behavior when `x` is not provided). One of \code{"array"},
 \code{"scaled"}.}
 
-\item{y}{Sets the y coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
-
 \item{y0}{Alternate to `y`. Builds a linear space of y coordinates. Use
 with `dy` where `y0` is the starting coordinate and `dy` the step. Any
 value.}
@@ -490,9 +494,6 @@ Sets the alignment of data points on the y axis. One of
 (the default behavior when `y` is provided) If "scaled", the heatmap's
 y coordinates are given by "y0" and "dy" (the default behavior when
 `y` is not provided) One of \code{"array"}, \code{"scaled"}.}
-
-\item{z}{Sets the z data. Data array: a vector, factor, Date/POSIXct
-vector, matrix or list.}
 
 \item{zauto}{Determines whether or not the color domain is computed with
 respect to the input data (here in `z`) or the bounds set in `zmin`

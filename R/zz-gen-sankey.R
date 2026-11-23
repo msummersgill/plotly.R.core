@@ -18,6 +18,20 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param node The nodes of the Sankey plot. A
+#'   \code{\link{go_sankey_node}()} object or named list, with properties
+#'   \code{align}, \code{color}, \code{customdata}, \code{groups},
+#'   \code{hoverinfo}, \code{hoverlabel}, \code{hovertemplate},
+#'   \code{hovertemplatefallback}, \code{label}, \code{line}, \code{pad},
+#'   \code{sort}, \code{thickness}, \code{x} and \code{y} (see
+#'   \code{\link{go_sankey_node}()}).
+#' @param link The links of the Sankey plot. A
+#'   \code{\link{go_sankey_link}()} object or named list, with properties
+#'   \code{arrowlen}, \code{color}, \code{colorscales}, \code{customdata},
+#'   \code{hovercolor}, \code{hoverinfo}, \code{hoverlabel},
+#'   \code{hovertemplate}, \code{hovertemplatefallback}, \code{label},
+#'   \code{line}, \code{sort}, \code{source}, \code{target} and
+#'   \code{value} (see \code{\link{go_sankey_link}()}).
 #' @param arrangement If value is `snap` (the default), the node
 #'   arrangement is assisted by automatic snapping of elements to preserve
 #'   space between nodes specified via `nodepad`. If value is
@@ -47,7 +61,6 @@
 #' @param domain A \code{\link{go_domain}()} object or named list, with
 #'   properties \code{column}, \code{row}, \code{x} and \code{y} (see
 #'   \code{\link{go_domain}()}).
-#' @param fig A \code{go_figure} object.
 #' @param hoverinfo Determines what trace information appears on hover. If
 #'   `none` or `skip` are set, no information is displayed upon hovering.
 #'   But, if `none` is set, click and hover events are still fired. Note
@@ -81,13 +94,6 @@
 #'   to their order in data and layout. Number.
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param link The links of the Sankey plot. A
-#'   \code{\link{go_sankey_link}()} object or named list, with properties
-#'   \code{arrowlen}, \code{color}, \code{colorscales}, \code{customdata},
-#'   \code{hovercolor}, \code{hoverinfo}, \code{hoverlabel},
-#'   \code{hovertemplate}, \code{hovertemplatefallback}, \code{label},
-#'   \code{line}, \code{sort}, \code{source}, \code{target} and
-#'   \code{value} (see \code{\link{go_sankey_link}()}).
 #' @param meta Assigns extra meta information associated with this trace
 #'   that can be used in various text attributes. Attributes such as trace
 #'   `name`, graph, axis and colorbar `title.text`, annotation `text`
@@ -99,17 +105,12 @@
 #'   `meta` and `n` is the trace index. Any value.
 #' @param name Sets the trace name. The trace name appears as the legend
 #'   item and on hover. String.
-#' @param node The nodes of the Sankey plot. A
-#'   \code{\link{go_sankey_node}()} object or named list, with properties
-#'   \code{align}, \code{color}, \code{customdata}, \code{groups},
-#'   \code{hoverinfo}, \code{hoverlabel}, \code{hovertemplate},
-#'   \code{hovertemplatefallback}, \code{label}, \code{line}, \code{pad},
-#'   \code{sort}, \code{thickness}, \code{x} and \code{y} (see
-#'   \code{\link{go_sankey_node}()}).
 #' @param orientation Sets the orientation of the Sankey diagram. With `h`
 #'   (the default), the flow runs horizontally. With `v`, the flow runs
 #'   vertically. Use `direction` to control which side the sources are
 #'   placed on. One of \code{"v"}, \code{"h"}.
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -180,13 +181,13 @@
 #'     link = go_sankey_link(source = ~source, target = ~target, value = ~Freq)
 #'   )
 go_sankey <- function(
-    ..., arrangement = NULL, customdata = NULL, direction = NULL,
-    domain = NULL, hoverinfo = NULL, hoverlabel = NULL, ids = NULL,
-    legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, link = NULL, meta = NULL, name = NULL, node = NULL,
-    orientation = NULL, selectedpoints = NULL, textfont = NULL, uid = NULL,
-    uirevision = NULL, valueformat = NULL, valuesuffix = NULL,
-    visible = NULL, skip_invalid = FALSE
+    ..., node = NULL, link = NULL, arrangement = NULL, customdata = NULL,
+    direction = NULL, domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    ids = NULL, legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    legendwidth = NULL, meta = NULL, name = NULL, orientation = NULL,
+    selectedpoints = NULL, textfont = NULL, uid = NULL, uirevision = NULL,
+    valueformat = NULL, valuesuffix = NULL, visible = NULL,
+    skip_invalid = FALSE
 ) {
   plotly_object("sankey", NULL, environment(), list(...), skip_invalid)
 }

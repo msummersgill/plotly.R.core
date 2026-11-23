@@ -19,6 +19,7 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param value Sets the number to be displayed. Number.
 #' @param align Sets the horizontal alignment of the `text` within the box.
 #'   Note that this attribute has no effect if an angular gauge is
 #'   displayed: in this case, it is always centered One of \code{"left"},
@@ -43,7 +44,6 @@
 #' @param domain A \code{\link{go_domain}()} object or named list, with
 #'   properties \code{column}, \code{row}, \code{x} and \code{y} (see
 #'   \code{\link{go_domain}()}).
-#' @param fig A \code{go_figure} object.
 #' @param gauge The gauge of the Indicator plot. A
 #'   \code{\link{go_indicator_gauge}()} object or named list, with
 #'   properties \code{axis}, \code{bar}, \code{bgcolor},
@@ -90,6 +90,8 @@
 #' @param number A \code{\link{go_indicator_number}()} object or named
 #'   list, with properties \code{font}, \code{prefix}, \code{suffix} and
 #'   \code{valueformat} (see \code{\link{go_indicator_number}()}).
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -121,7 +123,6 @@
 #'   array, such that the same trace has a different index, you can still
 #'   preserve user-driven changes if you give each trace a `uid` that stays
 #'   with it as it moves. Any value.
-#' @param value Sets the number to be displayed. Number.
 #' @param visible Determines whether or not this trace is visible. If
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
@@ -146,11 +147,11 @@
 #'     title = go_indicator_title(text = "mean mpg")
 #'   )
 go_indicator <- function(
-    ..., align = NULL, customdata = NULL, delta = NULL, domain = NULL,
-    gauge = NULL, ids = NULL, legend = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, meta = NULL, mode = NULL,
-    name = NULL, number = NULL, title = NULL, uid = NULL, uirevision = NULL,
-    value = NULL, visible = NULL, skip_invalid = FALSE
+    ..., value = NULL, align = NULL, customdata = NULL, delta = NULL,
+    domain = NULL, gauge = NULL, ids = NULL, legend = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    meta = NULL, mode = NULL, name = NULL, number = NULL, title = NULL,
+    uid = NULL, uirevision = NULL, visible = NULL, skip_invalid = FALSE
 ) {
   plotly_object("indicator", NULL, environment(), list(...), skip_invalid)
 }

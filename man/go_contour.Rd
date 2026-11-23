@@ -8,6 +8,9 @@
 \usage{
 go_contour(
   ...,
+  x = NULL,
+  y = NULL,
+  z = NULL,
   autocolorscale = NULL,
   autocontour = NULL,
   coloraxis = NULL,
@@ -47,7 +50,6 @@ go_contour(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -56,7 +58,6 @@ go_contour(
   xperiod0 = NULL,
   xperiodalignment = NULL,
   xtype = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -65,7 +66,6 @@ go_contour(
   yperiod0 = NULL,
   yperiodalignment = NULL,
   ytype = NULL,
-  z = NULL,
   zauto = NULL,
   zhoverformat = NULL,
   zmax = NULL,
@@ -75,13 +75,16 @@ go_contour(
   skip_invalid = FALSE
 )
 
-add_contour(fig, ...)
+add_contour(p, ...)
 
 \method{add_contour}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
   autocolorscale = NULL,
   autocontour = NULL,
   coloraxis = NULL,
@@ -121,7 +124,6 @@ add_contour(fig, ...)
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -130,7 +132,6 @@ add_contour(fig, ...)
   xperiod0 = NULL,
   xperiodalignment = NULL,
   xtype = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -139,7 +140,6 @@ add_contour(fig, ...)
   yperiod0 = NULL,
   yperiodalignment = NULL,
   ytype = NULL,
-  z = NULL,
   zauto = NULL,
   zhoverformat = NULL,
   zmax = NULL,
@@ -155,6 +155,15 @@ add_contour(fig, ...)
 \arguments{
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
+
+\item{x}{Sets the x coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
+
+\item{y}{Sets the y coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
+
+\item{z}{Sets the z data. Data array: a vector, factor, Date/POSIXct
+vector, matrix or list.}
 
 \item{autocolorscale}{Determines whether the colorscale is a default
 palette (`autocolorscale: true`) or the palette determined by
@@ -398,9 +407,6 @@ with it as it moves. Any value.}
 (provided that the legend itself is visible). One of
 \code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
 
-\item{x}{Sets the x coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
-
 \item{x0}{Alternate to `x`. Builds a linear space of x coordinates. Use
 with `dx` where `x0` is the starting coordinate and `dx` the step. Any
 value.}
@@ -450,9 +456,6 @@ heatmap's x coordinates are given by "x0" and "dx" (the default
 behavior when `x` is not provided). One of \code{"array"},
 \code{"scaled"}.}
 
-\item{y}{Sets the y coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
-
 \item{y0}{Alternate to `y`. Builds a linear space of y coordinates. Use
 with `dy` where `y0` is the starting coordinate and `dy` the step. Any
 value.}
@@ -501,9 +504,6 @@ Sets the alignment of data points on the y axis. One of
 y coordinates are given by "y0" and "dy" (the default behavior when
 `y` is not provided) One of \code{"array"}, \code{"scaled"}.}
 
-\item{z}{Sets the z data. Data array: a vector, factor, Date/POSIXct
-vector, matrix or list.}
-
 \item{zauto}{Determines whether or not the color domain is computed with
 respect to the input data (here in `z`) or the bounds set in `zmin`
 and `zmax` Defaults to `false` when `zmin` and `zmax` are set by the
@@ -534,7 +534,8 @@ to other SVG traces on the same subplot. SVG traces with higher
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
 
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
 ~col}) are evaluated. Default: the data given to

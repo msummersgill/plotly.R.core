@@ -19,6 +19,12 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param x Sets the sample data to be binned on the x axis. Data array: a
+#'   vector, factor, Date/POSIXct vector, matrix or list.
+#' @param y Sets the sample data to be binned on the y axis. Data array: a
+#'   vector, factor, Date/POSIXct vector, matrix or list.
+#' @param z Sets the aggregation data. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
 #' @param autobinx Obsolete: since v1.42 each bin attribute is
 #'   auto-determined separately and `autobinx` is not needed. However, we
 #'   accept `autobinx: true` or `false` and will update `xbins` accordingly
@@ -71,7 +77,6 @@
 #'   the evaluated values are added to the trace. A
 #'   \code{crosstalk::SharedData} works the same way, and links the trace
 #'   to its crosstalk group (see \code{\link{highlight}()}).
-#' @param fig A \code{go_figure} object.
 #' @param histfunc Specifies the binning function used for this histogram
 #'   trace. If "count", the histogram values are computed by counting the
 #'   number of values lying inside each bin. If "sum", "avg", "min", "max",
@@ -184,6 +189,8 @@
 #'   Ignored if `ybins.size` is provided. Integer in the interval [0, Inf].
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param reversescale Reverses the color mapping if true. If true, `zmin`
 #'   will correspond to the last color in the array and `zmax` will
 #'   correspond to the first color. Logical.
@@ -250,8 +257,6 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param x Sets the sample data to be binned on the x axis. Data array: a
-#'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param xaxis Sets a reference between this trace's x coordinates and a
 #'   2D cartesian x axis. If "x" (the default value), the x coordinates
 #'   refer to `layout.xaxis`. If "x2", the x coordinates refer to
@@ -283,8 +288,6 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `xaxis.hoverformat`. String.
-#' @param y Sets the sample data to be binned on the y axis. Data array: a
-#'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param yaxis Sets a reference between this trace's y coordinates and a
 #'   2D cartesian y axis. If "y" (the default value), the y coordinates
 #'   refer to `layout.yaxis`. If "y2", the y coordinates refer to
@@ -316,8 +319,6 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `yaxis.hoverformat`. String.
-#' @param z Sets the aggregation data. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param zauto Determines whether or not the color domain is computed with
 #'   respect to the input data (here in `z`) or the bounds set in `zmin`
 #'   and `zmax` Defaults to `false` when `zmin` and `zmax` are set by the
@@ -354,21 +355,22 @@
 #'   go_figure() |>
 #'   add_histogram2d(x = ~eruptions, y = ~waiting)
 go_histogram2d <- function(
-    ..., autobinx = NULL, autobiny = NULL, autocolorscale = NULL,
-    bingroup = NULL, coloraxis = NULL, colorbar = NULL, colorscale = NULL,
-    customdata = NULL, histfunc = NULL, histnorm = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    ..., x = NULL, y = NULL, z = NULL, autobinx = NULL, autobiny = NULL,
+    autocolorscale = NULL, bingroup = NULL, coloraxis = NULL,
+    colorbar = NULL, colorscale = NULL, customdata = NULL, histfunc = NULL,
+    histnorm = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, ids = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
     name = NULL, nbinsx = NULL, nbinsy = NULL, opacity = NULL,
     reversescale = NULL, showlegend = NULL, showscale = NULL,
     textfont = NULL, texttemplate = NULL, texttemplatefallback = NULL,
-    uid = NULL, uirevision = NULL, visible = NULL, x = NULL, xaxis = NULL,
+    uid = NULL, uirevision = NULL, visible = NULL, xaxis = NULL,
     xbingroup = NULL, xbins = NULL, xcalendar = NULL, xgap = NULL,
-    xhoverformat = NULL, y = NULL, yaxis = NULL, ybingroup = NULL,
-    ybins = NULL, ycalendar = NULL, ygap = NULL, yhoverformat = NULL,
-    z = NULL, zauto = NULL, zhoverformat = NULL, zmax = NULL, zmid = NULL,
-    zmin = NULL, zsmooth = NULL, skip_invalid = FALSE
+    xhoverformat = NULL, yaxis = NULL, ybingroup = NULL, ybins = NULL,
+    ycalendar = NULL, ygap = NULL, yhoverformat = NULL, zauto = NULL,
+    zhoverformat = NULL, zmax = NULL, zmid = NULL, zmin = NULL,
+    zsmooth = NULL, skip_invalid = FALSE
 ) {
   plotly_object("histogram2d", NULL, environment(), list(...), skip_invalid)
 }

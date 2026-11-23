@@ -8,10 +8,13 @@
 \usage{
 go_candlestick(
   ...,
+  x = NULL,
+  open = NULL,
+  high = NULL,
+  low = NULL,
   close = NULL,
   customdata = NULL,
   decreasing = NULL,
-  high = NULL,
   hoverinfo = NULL,
   hoverlabel = NULL,
   hovertemplate = NULL,
@@ -25,11 +28,9 @@ go_candlestick(
   legendrank = NULL,
   legendwidth = NULL,
   line = NULL,
-  low = NULL,
   meta = NULL,
   name = NULL,
   opacity = NULL,
-  open = NULL,
   selectedpoints = NULL,
   showlegend = NULL,
   text = NULL,
@@ -37,7 +38,6 @@ go_candlestick(
   uirevision = NULL,
   visible = NULL,
   whiskerwidth = NULL,
-  x = NULL,
   xaxis = NULL,
   xcalendar = NULL,
   xhoverformat = NULL,
@@ -50,17 +50,20 @@ go_candlestick(
   skip_invalid = FALSE
 )
 
-add_candlestick(fig, ...)
+add_candlestick(p, ...)
 
 \method{add_candlestick}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  open = NULL,
+  high = NULL,
+  low = NULL,
   close = NULL,
   customdata = NULL,
   decreasing = NULL,
-  high = NULL,
   hoverinfo = NULL,
   hoverlabel = NULL,
   hovertemplate = NULL,
@@ -74,11 +77,9 @@ add_candlestick(fig, ...)
   legendrank = NULL,
   legendwidth = NULL,
   line = NULL,
-  low = NULL,
   meta = NULL,
   name = NULL,
   opacity = NULL,
-  open = NULL,
   selectedpoints = NULL,
   showlegend = NULL,
   text = NULL,
@@ -86,7 +87,6 @@ add_candlestick(fig, ...)
   uirevision = NULL,
   visible = NULL,
   whiskerwidth = NULL,
-  x = NULL,
   xaxis = NULL,
   xcalendar = NULL,
   xhoverformat = NULL,
@@ -106,6 +106,19 @@ add_candlestick(fig, ...)
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
 
+\item{x}{Sets the x coordinates. If absent, linear coordinate will be
+generated. Data array: a vector, factor, Date/POSIXct vector, matrix
+or list.}
+
+\item{open}{Sets the open values. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
+
+\item{high}{Sets the high values. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
+
+\item{low}{Sets the low values. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
+
 \item{close}{Sets the close values. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.}
 
@@ -117,9 +130,6 @@ array: a vector, factor, Date/POSIXct vector, matrix or list.}
 \item{decreasing}{A \code{\link{go_candlestick_decreasing}()} object or
 named list, with properties \code{fillcolor} and \code{line} (see
 \code{\link{go_candlestick_decreasing}()}).}
-
-\item{high}{Sets the high values. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
 
 \item{hoverinfo}{Determines what trace information appears on hover. If
 `none` or `skip` are set, no information is displayed upon hovering.
@@ -208,9 +218,6 @@ this trace. Number in the interval [0, Inf].}
 with properties \code{width} (see
 \code{\link{go_candlestick_line}()}).}
 
-\item{low}{Sets the low values. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
-
 \item{meta}{Assigns extra meta information associated with this trace
 that can be used in various text attributes. Attributes such as trace
 `name`, graph, axis and colorbar `title.text`, annotation `text`
@@ -226,9 +233,6 @@ item and on hover. String.}
 
 \item{opacity}{Sets the opacity of the trace. Number in the interval [0,
 1].}
-
-\item{open}{Sets the open values. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
 
 \item{selectedpoints}{Array containing integer indices of selected
 points. Has an effect only for traces that support selections. Note
@@ -271,10 +275,6 @@ with it as it moves. Any value.}
 \item{whiskerwidth}{Sets the width of the whiskers relative to the box
 width. For example, with 1, the whiskers are as wide as the box(es).
 Number in the interval [0, 1].}
-
-\item{x}{Sets the x coordinates. If absent, linear coordinate will be
-generated. Data array: a vector, factor, Date/POSIXct vector, matrix
-or list.}
 
 \item{xaxis}{Sets a reference between this trace's x coordinates and a
 2D cartesian x axis. If "x" (the default value), the x coordinates
@@ -339,7 +339,8 @@ to other SVG traces on the same subplot. SVG traces with higher
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
 
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
 ~col}) are evaluated. Default: the data given to

@@ -8,6 +8,8 @@
 \usage{
 go_bar(
   ...,
+  x = NULL,
+  y = NULL,
   alignmentgroup = NULL,
   base = NULL,
   cliponaxis = NULL,
@@ -52,7 +54,6 @@ go_bar(
   unselected = NULL,
   visible = NULL,
   width = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -60,7 +61,6 @@ go_bar(
   xperiod = NULL,
   xperiod0 = NULL,
   xperiodalignment = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -72,13 +72,15 @@ go_bar(
   skip_invalid = FALSE
 )
 
-add_bar(fig, ...)
+add_bar(p, ...)
 
 \method{add_bar}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
   alignmentgroup = NULL,
   base = NULL,
   cliponaxis = NULL,
@@ -123,7 +125,6 @@ add_bar(fig, ...)
   unselected = NULL,
   visible = NULL,
   width = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -131,7 +132,6 @@ add_bar(fig, ...)
   xperiod = NULL,
   xperiod0 = NULL,
   xperiodalignment = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -149,6 +149,12 @@ add_bar(fig, ...)
 \arguments{
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
+
+\item{x}{Sets the x coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
+
+\item{y}{Sets the y coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
 
 \item{alignmentgroup}{Set several traces linked to the same position
 axis or matching axes to the same alignmentgroup. This controls
@@ -421,9 +427,6 @@ with properties \code{marker} and \code{textfont} (see
 \item{width}{Sets the bar width (in position axis units). Number in the
 interval [0, Inf], or a vector of these.}
 
-\item{x}{Sets the x coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
-
 \item{x0}{Alternate to `x`. Builds a linear space of x coordinates. Use
 with `dx` where `x0` is the starting coordinate and `dx` the step. Any
 value.}
@@ -466,9 +469,6 @@ default would be on a Sunday i.e. 2000-01-02, otherwise it would be at
 \item{xperiodalignment}{Only relevant when the axis `type` is "date".
 Sets the alignment of data points on the x axis. One of
 \code{"start"}, \code{"middle"}, \code{"end"}.}
-
-\item{y}{Sets the y coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
 
 \item{y0}{Alternate to `y`. Builds a linear space of y coordinates. Use
 with `dy` where `y0` is the starting coordinate and `dy` the step. Any
@@ -520,7 +520,8 @@ to other SVG traces on the same subplot. SVG traces with higher
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
 
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
 ~col}, \code{marker = go_bar_marker(color = ~col)}) are evaluated.

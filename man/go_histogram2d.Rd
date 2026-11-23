@@ -6,13 +6,16 @@
 \alias{go_histogram2d}
 \title{Histogram2d traces}
 \usage{
-add_histogram2d(fig, ...)
+add_histogram2d(p, ...)
 
 \method{add_histogram2d}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
   autobinx = NULL,
   autobiny = NULL,
   autocolorscale = NULL,
@@ -48,21 +51,18 @@ add_histogram2d(fig, ...)
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   xaxis = NULL,
   xbingroup = NULL,
   xbins = NULL,
   xcalendar = NULL,
   xgap = NULL,
   xhoverformat = NULL,
-  y = NULL,
   yaxis = NULL,
   ybingroup = NULL,
   ybins = NULL,
   ycalendar = NULL,
   ygap = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zauto = NULL,
   zhoverformat = NULL,
   zmax = NULL,
@@ -77,6 +77,9 @@ add_histogram2d(fig, ...)
 
 go_histogram2d(
   ...,
+  x = NULL,
+  y = NULL,
+  z = NULL,
   autobinx = NULL,
   autobiny = NULL,
   autocolorscale = NULL,
@@ -112,21 +115,18 @@ go_histogram2d(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   xaxis = NULL,
   xbingroup = NULL,
   xbins = NULL,
   xcalendar = NULL,
   xgap = NULL,
   xhoverformat = NULL,
-  y = NULL,
   yaxis = NULL,
   ybingroup = NULL,
   ybins = NULL,
   ycalendar = NULL,
   ygap = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zauto = NULL,
   zhoverformat = NULL,
   zmax = NULL,
@@ -137,7 +137,8 @@ go_histogram2d(
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -157,6 +158,15 @@ column (a factor, character or logical, e.g. \code{marker =
 go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
+
+\item{x}{Sets the sample data to be binned on the x axis. Data array: a
+vector, factor, Date/POSIXct vector, matrix or list.}
+
+\item{y}{Sets the sample data to be binned on the y axis. Data array: a
+vector, factor, Date/POSIXct vector, matrix or list.}
+
+\item{z}{Sets the aggregation data. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
 
 \item{autobinx}{Obsolete: since v1.42 each bin attribute is
 auto-determined separately and `autobinx` is not needed. However, we
@@ -401,9 +411,6 @@ with it as it moves. Any value.}
 (provided that the legend itself is visible). One of
 \code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
 
-\item{x}{Sets the sample data to be binned on the x axis. Data array: a
-vector, factor, Date/POSIXct vector, matrix or list.}
-
 \item{xaxis}{Sets a reference between this trace's x coordinates and a
 2D cartesian x axis. If "x" (the default value), the x coordinates
 refer to `layout.xaxis`. If "x2", the x coordinates refer to
@@ -441,9 +448,6 @@ digits. For example, "2016-10-13 09:15:23.456" with tickformat
 "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 are formatted using `xaxis.hoverformat`. String.}
 
-\item{y}{Sets the sample data to be binned on the y axis. Data array: a
-vector, factor, Date/POSIXct vector, matrix or list.}
-
 \item{yaxis}{Sets a reference between this trace's y coordinates and a
 2D cartesian y axis. If "y" (the default value), the y coordinates
 refer to `layout.yaxis`. If "y2", the y coordinates refer to
@@ -480,9 +484,6 @@ a decimal number as well as "\%\{n\}f" for fractional seconds with n
 digits. For example, "2016-10-13 09:15:23.456" with tickformat
 "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 are formatted using `yaxis.hoverformat`. String.}
-
-\item{z}{Sets the aggregation data. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
 
 \item{zauto}{Determines whether or not the color domain is computed with
 respect to the input data (here in `z`) or the bounds set in `zmin`

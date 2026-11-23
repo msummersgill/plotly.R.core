@@ -11,6 +11,7 @@
 # Arguments of generated functions that are not object properties.
 FIGURE_RESERVED_ARGS <- c(
   "fig",
+  "p",
   "split",
   "arg",
   "skip_invalid",
@@ -69,11 +70,11 @@ add_trace_source <- function(trace, validators) {
   fn <- paste0("add_", trace)
   extra <- c("row = NULL", "col = NULL", if (has_xy) "secondary_y = NULL")
   args <- c(
-    "fig",
+    "p",
     "...",
     "data = NULL",
     "split = NULL",
-    paste0(props, " = NULL"),
+    paste0(order_props(trace, props), " = NULL"),
     extra,
     "skip_invalid = FALSE"
   )
@@ -82,7 +83,7 @@ add_trace_source <- function(trace, validators) {
   c(
     sprintf("#' @rdname %s", entry$data_class), # documented with go_<trace>()
     "#' @export",
-    sprintf('%s <- function(fig, ...) UseMethod("%s")', fn, fn),
+    sprintf('%s <- function(p, ...) UseMethod("%s")', fn, fn),
     "",
     sprintf("#' @rdname %s", entry$data_class),
     "#' @export",
@@ -93,7 +94,7 @@ add_trace_source <- function(trace, validators) {
     "  # trace per group of `split` and of discrete colour columns",
     "  add_trace_with_data(",
     sprintf(
-      '    fig, "%s", environment(), list(...), data, split, skip_invalid,',
+      '    p, "%s", environment(), list(...), data, split, skip_invalid,',
       trace
     ),
     sprintf(

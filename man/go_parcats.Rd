@@ -6,17 +6,17 @@
 \alias{go_parcats}
 \title{Parcats traces}
 \usage{
-add_parcats(fig, ...)
+add_parcats(p, ...)
 
 \method{add_parcats}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  dimensions = NULL,
   arrangement = NULL,
   bundlecolors = NULL,
   counts = NULL,
-  dimensions = NULL,
   domain = NULL,
   hoverinfo = NULL,
   hoveron = NULL,
@@ -40,10 +40,10 @@ add_parcats(fig, ...)
 
 go_parcats(
   ...,
+  dimensions = NULL,
   arrangement = NULL,
   bundlecolors = NULL,
   counts = NULL,
-  dimensions = NULL,
   domain = NULL,
   hoverinfo = NULL,
   hoveron = NULL,
@@ -64,7 +64,8 @@ go_parcats(
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -85,6 +86,12 @@ go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
 
+\item{dimensions}{List, each element a
+\code{\link{go_parcats_dimension}()} object or named list, with
+properties \code{categoryarray}, \code{categoryorder},
+\code{displayindex}, \code{label}, \code{ticktext}, \code{values} and
+\code{visible} (see \code{\link{go_parcats_dimension}()}).}
+
 \item{arrangement}{Sets the drag interaction mode for categories and
 dimensions. If `perpendicular`, the categories can only move along a
 line perpendicular to the paths. If `freeform`, the categories can
@@ -98,12 +105,6 @@ within each category. Logical.}
 \item{counts}{The number of observations represented by each state.
 Defaults to 1 so that each state represents one observation Number in
 the interval [0, Inf], or a vector of these.}
-
-\item{dimensions}{List, each element a
-\code{\link{go_parcats_dimension}()} object or named list, with
-properties \code{categoryarray}, \code{categoryorder},
-\code{displayindex}, \code{label}, \code{ticktext}, \code{values} and
-\code{visible} (see \code{\link{go_parcats_dimension}()}).}
 
 \item{domain}{A \code{\link{go_domain}()} object or named list, with
 properties \code{column}, \code{row}, \code{x} and \code{y} (see

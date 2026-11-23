@@ -2,7 +2,7 @@
 % Please edit documentation in R/shiny.R
 \name{event_data}
 \alias{event_data}
-\title{Access plotly events in Shiny}
+\title{Access plotly user input event data in shiny}
 \usage{
 event_data(
   event = c("plotly_hover", "plotly_unhover", "plotly_click", "plotly_doubleclick",
@@ -16,28 +16,28 @@ event_data(
 )
 }
 \arguments{
-\item{event}{The event type.}
+\item{event}{The type of plotly event. All supported events are listed in the
+function signature above (i.e., the usage section).}
 
-\item{source}{The source id of the plot.}
+\item{source}{a character string of length 1. Match the value of this string
+with the source id set with \code{\link[=event_source]{event_source()}} to respond to
+events emitted from that specific plot.}
 
-\item{session}{The Shiny session.}
+\item{session}{a shiny session object (the default should almost always be used).}
 
-\item{priority}{\code{"input"} (default) triggers reactivity only when the
-value changes; \code{"event"} on every event, even with the same value.}
+\item{priority}{the priority of the corresponding shiny input value.
+If equal to \code{"event"}, then \code{\link[=event_data]{event_data()}} always triggers re-execution,
+instead of re-executing only when the relevant shiny input value changes
+(the default).}
 }
 \value{
-Event data, or \code{NULL}.
+Event data, or \code{NULL} before any such event. Point events (click,
+hover, selected, ...) return a data frame with \code{curveNumber},
+\code{pointNumber}, \code{x}, \code{y} and, where available, \code{z}, \code{customdata} and
+\code{key}; \code{plotly_relayout} returns the changed layout properties.
 }
 \description{
-Returns the data of the most recent plotly event of a given type, from
-the plot with the given \code{source} (see \code{\link[=event_source]{event_source()}}); \code{NULL} before any
-such event. Must be called in a reactive context of a Shiny app.
-}
-\details{
-Point events (click, hover, selected, ...) return a data frame with
-\code{curveNumber}, \code{pointNumber}, \code{x}, \code{y} and, where available, \code{z},
-\code{customdata} and \code{key}. \code{plotly_relayout} returns the changed layout
-properties (e.g. axis ranges after zooming).
+This function must be called within a reactive shiny context.
 }
 \examples{
 if (interactive() && requireNamespace("shiny", quietly = TRUE)) {
@@ -50,4 +50,16 @@ if (interactive() && requireNamespace("shiny", quietly = TRUE)) {
   }
   shiny::shinyApp(ui, server)
 }
+}
+\references{
+\itemize{
+\item \url{https://plotly-r.com/linking-views-with-shiny.html#shiny-plotly-inputs}
+\item \url{https://plotly.com/javascript/plotlyjs-function-reference/}
+}
+}
+\seealso{
+\link{event_register}, \link{event_unregister}
+}
+\author{
+Carson Sievert
 }

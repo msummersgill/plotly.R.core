@@ -22,6 +22,18 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param x Sets the x coordinates of the vector field. Data array: a
+#'   vector, factor, Date/POSIXct vector, matrix or list.
+#' @param y Sets the y coordinates of the vector field. Data array: a
+#'   vector, factor, Date/POSIXct vector, matrix or list.
+#' @param z Sets the z coordinates of the vector field. Data array: a
+#'   vector, factor, Date/POSIXct vector, matrix or list.
+#' @param u Sets the x components of the vector field. Data array: a
+#'   vector, factor, Date/POSIXct vector, matrix or list.
+#' @param v Sets the y components of the vector field. Data array: a
+#'   vector, factor, Date/POSIXct vector, matrix or list.
+#' @param w Sets the z components of the vector field. Data array: a
+#'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `colorscale`. In case `colorscale` is unspecified or `autocolorscale`
@@ -76,7 +88,6 @@
 #'   \code{\link{go_figure}()}. Only the evaluated values are added to the
 #'   trace. A \code{crosstalk::SharedData} works the same way, and links
 #'   the trace to its crosstalk group (see \code{\link{highlight}()}).
-#' @param fig A \code{go_figure} object.
 #' @param hoverinfo Determines what trace information appears on hover. If
 #'   `none` or `skip` are set, no information is displayed upon hovering.
 #'   But, if `none` is set, click and hover events are still fired. Any
@@ -174,6 +185,8 @@
 #'   overlay of multiple transparent surfaces may not perfectly be sorted
 #'   in depth by the webgl API. This behavior may be improved in the near
 #'   future and is subject to change. Number in the interval [0, 1].
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param reversescale Reverses the color mapping if true. If true, `cmin`
 #'   will correspond to the last color in the array and `cmax` will
 #'   correspond to the first color. Logical.
@@ -207,8 +220,6 @@
 #'   `hoverinfo` contains a "text" flag, this text element will be seen in
 #'   all hover labels. Note that streamtube traces do not support array
 #'   `text` values. String.
-#' @param u Sets the x components of the vector field. Data array: a
-#'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param uhoverformat Sets the hover text formatting rule for `u` using d3
 #'   formatting mini-languages which are very similar to those in Python.
 #'   For numbers, see:
@@ -230,8 +241,6 @@
 #'   array, such that the same trace has a different index, you can still
 #'   preserve user-driven changes if you give each trace a `uid` that stays
 #'   with it as it moves. Any value.
-#' @param v Sets the y components of the vector field. Data array: a
-#'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param vhoverformat Sets the hover text formatting rule for `v` using d3
 #'   formatting mini-languages which are very similar to those in Python.
 #'   For numbers, see:
@@ -241,15 +250,11 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param w Sets the z components of the vector field. Data array: a
-#'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param whoverformat Sets the hover text formatting rule for `w` using d3
 #'   formatting mini-languages which are very similar to those in Python.
 #'   For numbers, see:
 #'   https://github.com/d3/d3-format/tree/v1.4.5#d3-format.By default the
 #'   values are formatted using generic number format. String.
-#' @param x Sets the x coordinates of the vector field. Data array: a
-#'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param xhoverformat Sets the hover text formatting rule for `x` using d3
 #'   formatting mini-languages which are very similar to those in Python.
 #'   For numbers, see:
@@ -260,8 +265,6 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `xaxis.hoverformat`. String.
-#' @param y Sets the y coordinates of the vector field. Data array: a
-#'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param yhoverformat Sets the hover text formatting rule for `y` using d3
 #'   formatting mini-languages which are very similar to those in Python.
 #'   For numbers, see:
@@ -272,8 +275,6 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `yaxis.hoverformat`. String.
-#' @param z Sets the z coordinates of the vector field. Data array: a
-#'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param zhoverformat Sets the hover text formatting rule for `z` using d3
 #'   formatting mini-languages which are very similar to those in Python.
 #'   For numbers, see:
@@ -301,7 +302,8 @@
 #'   go_figure() |>
 #'   add_streamtube(x = ~x, y = ~y, z = ~z, u = ~y, v = ~-x, w = ~z)
 go_streamtube <- function(
-    ..., autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    ..., x = NULL, y = NULL, z = NULL, u = NULL, v = NULL, w = NULL,
+    autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
     cmin = NULL, coloraxis = NULL, colorbar = NULL, colorscale = NULL,
     customdata = NULL, hoverinfo = NULL, hoverlabel = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
@@ -309,11 +311,10 @@ go_streamtube <- function(
     legendrank = NULL, legendwidth = NULL, lighting = NULL,
     lightposition = NULL, maxdisplayed = NULL, meta = NULL, name = NULL,
     opacity = NULL, reversescale = NULL, scene = NULL, showlegend = NULL,
-    showscale = NULL, sizeref = NULL, starts = NULL, text = NULL, u = NULL,
-    uhoverformat = NULL, uid = NULL, uirevision = NULL, v = NULL,
-    vhoverformat = NULL, visible = NULL, w = NULL, whoverformat = NULL,
-    x = NULL, xhoverformat = NULL, y = NULL, yhoverformat = NULL, z = NULL,
-    zhoverformat = NULL, skip_invalid = FALSE
+    showscale = NULL, sizeref = NULL, starts = NULL, text = NULL,
+    uhoverformat = NULL, uid = NULL, uirevision = NULL, vhoverformat = NULL,
+    visible = NULL, whoverformat = NULL, xhoverformat = NULL,
+    yhoverformat = NULL, zhoverformat = NULL, skip_invalid = FALSE
 ) {
   plotly_object("streamtube", NULL, environment(), list(...), skip_invalid)
 }

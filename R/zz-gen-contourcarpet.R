@@ -19,6 +19,10 @@
 #'
 #' @param a Sets the x coordinates. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
+#' @param b Sets the y coordinates. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param z Sets the z data. Data array: a vector, factor, Date/POSIXct
+#'   vector, matrix or list.
 #' @param a0 Alternate to `x`. Builds a linear space of x coordinates. Use
 #'   with `dx` where `x0` is the starting coordinate and `dx` the step. Any
 #'   value.
@@ -37,8 +41,6 @@
 #'   attributes are picked by an algorithm. If TRUE, the number of contour
 #'   levels can be set in `ncontours`. If FALSE, set the contour level
 #'   attributes in `contours`. Logical.
-#' @param b Sets the y coordinates. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param b0 Alternate to `y`. Builds a linear space of y coordinates. Use
 #'   with `dy` where `y0` is the starting coordinate and `dy` the step. Any
 #'   value.
@@ -90,7 +92,6 @@
 #'   trace. A \code{crosstalk::SharedData} works the same way, and links
 #'   the trace to its crosstalk group (see \code{\link{highlight}()}).
 #' @param db Sets the y coordinate step. See `y0` for more info. Number.
-#' @param fig A \code{go_figure} object.
 #' @param fillcolor Sets the fill color if `contours.type` is "constraint".
 #'   Defaults to a half-transparent variant of the line color, marker
 #'   color, or marker line color, whichever is available. Color: a CSS
@@ -144,6 +145,8 @@
 #'   Inf].
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param reversescale Reverses the color mapping if true. If true, `zmin`
 #'   will correspond to the last color in the array and `zmax` will
 #'   correspond to the first color. Logical.
@@ -197,8 +200,6 @@
 #'   refer to `layout.yaxis`. If "y2", the y coordinates refer to
 #'   `layout.yaxis2`, and so on. Subplot id: \code{"y"}, \code{"y2"},
 #'   \code{"y3"}, ....
-#' @param z Sets the z data. Data array: a vector, factor, Date/POSIXct
-#'   vector, matrix or list.
 #' @param zauto Determines whether or not the color domain is computed with
 #'   respect to the input data (here in `z`) or the bounds set in `zmin`
 #'   and `zmax` Defaults to `false` when `zmin` and `zmax` are set by the
@@ -234,17 +235,18 @@
 #'   add_carpet(a = ~a, b = ~b, y = ~y, carpet = "c") |>
 #'   add_contourcarpet(a = ~a, b = ~b, z = ~y, carpet = "c")
 go_contourcarpet <- function(
-    ..., a = NULL, a0 = NULL, atype = NULL, autocolorscale = NULL,
-    autocontour = NULL, b = NULL, b0 = NULL, btype = NULL, carpet = NULL,
-    coloraxis = NULL, colorbar = NULL, colorscale = NULL, contours = NULL,
-    customdata = NULL, da = NULL, db = NULL, fillcolor = NULL,
-    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    line = NULL, meta = NULL, name = NULL, ncontours = NULL, opacity = NULL,
-    reversescale = NULL, showlegend = NULL, showscale = NULL, text = NULL,
-    transpose = NULL, uid = NULL, uirevision = NULL, visible = NULL,
-    xaxis = NULL, yaxis = NULL, z = NULL, zauto = NULL, zmax = NULL,
-    zmid = NULL, zmin = NULL, zorder = NULL, skip_invalid = FALSE
+    ..., a = NULL, b = NULL, z = NULL, a0 = NULL, atype = NULL,
+    autocolorscale = NULL, autocontour = NULL, b0 = NULL, btype = NULL,
+    carpet = NULL, coloraxis = NULL, colorbar = NULL, colorscale = NULL,
+    contours = NULL, customdata = NULL, da = NULL, db = NULL,
+    fillcolor = NULL, hovertext = NULL, ids = NULL, legend = NULL,
+    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    legendwidth = NULL, line = NULL, meta = NULL, name = NULL,
+    ncontours = NULL, opacity = NULL, reversescale = NULL,
+    showlegend = NULL, showscale = NULL, text = NULL, transpose = NULL,
+    uid = NULL, uirevision = NULL, visible = NULL, xaxis = NULL,
+    yaxis = NULL, zauto = NULL, zmax = NULL, zmid = NULL, zmin = NULL,
+    zorder = NULL, skip_invalid = FALSE
 ) {
   plotly_object("contourcarpet", NULL, environment(), list(...), skip_invalid)
 }

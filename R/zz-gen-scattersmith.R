@@ -20,6 +20,13 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param real Sets the real component of the data, in units of normalized
+#'   impedance such that real=1, imag=0 is the center of the chart. Data
+#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param imag Sets the imaginary component of the data, in units of
+#'   normalized impedance such that real=1, imag=0 is the center of the
+#'   chart. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#'   list.
 #' @param cliponaxis Determines whether or not markers and text nodes are
 #'   clipped about the subplot axes. To show markers and text nodes above
 #'   axis lines and tick labels, make sure to set `xaxis.layer` and
@@ -39,7 +46,6 @@
 #'   the evaluated values are added to the trace. A
 #'   \code{crosstalk::SharedData} works the same way, and links the trace
 #'   to its crosstalk group (see \code{\link{highlight}()}).
-#' @param fig A \code{go_figure} object.
 #' @param fill Sets the area to fill with a solid color. Use with
 #'   `fillcolor` if not "none". scattersmith has a subset of the options
 #'   available to scatter. "toself" connects the endpoints of the trace (or
@@ -107,10 +113,6 @@
 #'   constancy of data points during animation. Should be an array of
 #'   strings, not numbers or any other type. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
-#' @param imag Sets the imaginary component of the data, in units of
-#'   normalized impedance such that real=1, imag=0 is the center of the
-#'   chart. Data array: a vector, factor, Date/POSIXct vector, matrix or
-#'   list.
 #' @param legend Sets the reference to a legend to show this trace in.
 #'   References to these legends are "legend", "legend2", "legend3", etc.
 #'   Settings for these legends are set in the layout, under
@@ -162,9 +164,8 @@
 #'   item and on hover. String.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
-#' @param real Sets the real component of the data, in units of normalized
-#'   impedance such that real=1, imag=0 is the center of the chart. Data
-#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -268,13 +269,13 @@
 #'   go_figure() |>
 #'   add_scattersmith(real = ~wt, imag = ~drat)
 go_scattersmith <- function(
-    ..., cliponaxis = NULL, connectgaps = NULL, customdata = NULL,
-    fill = NULL, fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hoveron = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    hovertext = NULL, ids = NULL, imag = NULL, legend = NULL,
-    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, line = NULL, marker = NULL, meta = NULL,
-    mode = NULL, name = NULL, opacity = NULL, real = NULL, selected = NULL,
+    ..., real = NULL, imag = NULL, cliponaxis = NULL, connectgaps = NULL,
+    customdata = NULL, fill = NULL, fillcolor = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hoveron = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
+    meta = NULL, mode = NULL, name = NULL, opacity = NULL, selected = NULL,
     selectedpoints = NULL, showlegend = NULL, subplot = NULL, text = NULL,
     textfont = NULL, textposition = NULL, texttemplate = NULL,
     texttemplatefallback = NULL, uid = NULL, uirevision = NULL,

@@ -9,11 +9,12 @@
 go_contourcarpet(
   ...,
   a = NULL,
+  b = NULL,
+  z = NULL,
   a0 = NULL,
   atype = NULL,
   autocolorscale = NULL,
   autocontour = NULL,
-  b = NULL,
   b0 = NULL,
   btype = NULL,
   carpet = NULL,
@@ -47,7 +48,6 @@ go_contourcarpet(
   visible = NULL,
   xaxis = NULL,
   yaxis = NULL,
-  z = NULL,
   zauto = NULL,
   zmax = NULL,
   zmid = NULL,
@@ -56,19 +56,20 @@ go_contourcarpet(
   skip_invalid = FALSE
 )
 
-add_contourcarpet(fig, ...)
+add_contourcarpet(p, ...)
 
 \method{add_contourcarpet}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
   a = NULL,
+  b = NULL,
+  z = NULL,
   a0 = NULL,
   atype = NULL,
   autocolorscale = NULL,
   autocontour = NULL,
-  b = NULL,
   b0 = NULL,
   btype = NULL,
   carpet = NULL,
@@ -102,7 +103,6 @@ add_contourcarpet(fig, ...)
   visible = NULL,
   xaxis = NULL,
   yaxis = NULL,
-  z = NULL,
   zauto = NULL,
   zmax = NULL,
   zmid = NULL,
@@ -120,6 +120,12 @@ abbreviated or unknown name is an error that suggests the right one.}
 
 \item{a}{Sets the x coordinates. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.}
+
+\item{b}{Sets the y coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
+
+\item{z}{Sets the z data. Data array: a vector, factor, Date/POSIXct
+vector, matrix or list.}
 
 \item{a0}{Alternate to `x`. Builds a linear space of x coordinates. Use
 with `dx` where `x0` is the starting coordinate and `dx` the step. Any
@@ -142,9 +148,6 @@ Logical.}
 attributes are picked by an algorithm. If TRUE, the number of contour
 levels can be set in `ncontours`. If FALSE, set the contour level
 attributes in `contours`. Logical.}
-
-\item{b}{Sets the y coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
 
 \item{b0}{Alternate to `y`. Builds a linear space of y coordinates. Use
 with `dy` where `y0` is the starting coordinate and `dy` the step. Any
@@ -315,9 +318,6 @@ refer to `layout.yaxis`. If "y2", the y coordinates refer to
 `layout.yaxis2`, and so on. Subplot id: \code{"y"}, \code{"y2"},
 \code{"y3"}, ....}
 
-\item{z}{Sets the z data. Data array: a vector, factor, Date/POSIXct
-vector, matrix or list.}
-
 \item{zauto}{Determines whether or not the color domain is computed with
 respect to the input data (here in `z`) or the bounds set in `zmin`
 and `zmax` Defaults to `false` when `zmin` and `zmax` are set by the
@@ -342,7 +342,8 @@ to other SVG traces on the same subplot. SVG traces with higher
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
 
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{data}{A data frame in which formula properties (e.g. \code{z =
 ~col}) are evaluated. Default: the data given to

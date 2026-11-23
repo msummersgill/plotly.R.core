@@ -18,6 +18,14 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param labels Sets the sector labels. If `labels` entries are
+#'   duplicated, we sum associated `values` or simply count occurrences if
+#'   `values` is not provided. For other array attributes (including color)
+#'   we use the first non-empty entry among all occurrences of the label.
+#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param values Sets the values of the sectors. If omitted, we count
+#'   occurrences of each label. Data array: a vector, factor, Date/POSIXct
+#'   vector, matrix or list.
 #' @param aspectratio Sets the ratio between height and width Number in the
 #'   interval [0, Inf].
 #' @param baseratio Sets the ratio between bottom length and maximum top
@@ -39,7 +47,6 @@
 #' @param domain A \code{\link{go_domain}()} object or named list, with
 #'   properties \code{column}, \code{row}, \code{x} and \code{y} (see
 #'   \code{\link{go_domain}()}).
-#' @param fig A \code{go_figure} object.
 #' @param hoverinfo Determines what trace information appears on hover.
 #'   Flags are rendered in a fixed order; use `hovertemplate` if you need
 #'   explicit control over the rendered string, including the order of
@@ -100,11 +107,6 @@
 #' @param label0 Alternate to `labels`. Builds a numeric set of labels. Use
 #'   with `dlabel` where `label0` is the starting label and `dlabel` the
 #'   step. Number.
-#' @param labels Sets the sector labels. If `labels` entries are
-#'   duplicated, we sum associated `values` or simply count occurrences if
-#'   `values` is not provided. For other array attributes (including color)
-#'   we use the first non-empty entry among all occurrences of the label.
-#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param legend Sets the reference to a legend to show this trace in.
 #'   References to these legends are "legend", "legend2", "legend3", etc.
 #'   Settings for these legends are set in the layout, under
@@ -142,6 +144,8 @@
 #'   item and on hover. String.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -218,9 +222,6 @@
 #'   array, such that the same trace has a different index, you can still
 #'   preserve user-driven changes if you give each trace a `uid` that stays
 #'   with it as it moves. Any value.
-#' @param values Sets the values of the sectors. If omitted, we count
-#'   occurrences of each label. Data array: a vector, factor, Date/POSIXct
-#'   vector, matrix or list.
 #' @param visible Determines whether or not this trace is visible. If
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
@@ -242,17 +243,16 @@
 #'   go_figure() |>
 #'   add_funnelarea(labels = ~cylinders, values = ~Freq)
 go_funnelarea <- function(
-    ..., aspectratio = NULL, baseratio = NULL, customdata = NULL,
-    dlabel = NULL, domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, insidetextfont = NULL, label0 = NULL, labels = NULL,
+    ..., labels = NULL, values = NULL, aspectratio = NULL, baseratio = NULL,
+    customdata = NULL, dlabel = NULL, domain = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    hovertext = NULL, ids = NULL, insidetextfont = NULL, label0 = NULL,
     legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
     name = NULL, opacity = NULL, scalegroup = NULL, showlegend = NULL,
     text = NULL, textfont = NULL, textinfo = NULL, textposition = NULL,
     texttemplate = NULL, texttemplatefallback = NULL, title = NULL,
-    uid = NULL, uirevision = NULL, values = NULL, visible = NULL,
-    skip_invalid = FALSE
+    uid = NULL, uirevision = NULL, visible = NULL, skip_invalid = FALSE
 ) {
   plotly_object("funnelarea", NULL, environment(), list(...), skip_invalid)
 }

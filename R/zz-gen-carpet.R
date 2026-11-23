@@ -22,6 +22,14 @@
 #'
 #' @param a An array containing values of the first parameter value Data
 #'   array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param b A two dimensional array of y coordinates at each carpet point.
+#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param x A two dimensional array of x coordinates at each carpet point.
+#'   If omitted, the plot is a cheater plot and the xaxis is hidden by
+#'   default. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#'   list.
+#' @param y A two dimensional array of y coordinates at each carpet point.
+#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param a0 Alternate to `a`. Builds a linear space of a coordinates. Use
 #'   with `da` where `a0` is the starting coordinate and `da` the step.
 #'   Number.
@@ -31,8 +39,6 @@
 #'   \code{categoryorder}, \code{cheatertype}, \code{color}, \code{dtick},
 #'   \code{endline}, \code{endlinecolor}, \code{endlinewidth} and 42 more
 #'   (see \code{\link{go_carpet_aaxis}()}).
-#' @param b A two dimensional array of y coordinates at each carpet point.
-#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param b0 Alternate to `b`. Builds a linear space of a coordinates. Use
 #'   with `db` where `b0` is the starting coordinate and `db` the step.
 #'   Number.
@@ -65,7 +71,6 @@
 #'   trace. A \code{crosstalk::SharedData} works the same way, and links
 #'   the trace to its crosstalk group (see \code{\link{highlight}()}).
 #' @param db Sets the b coordinate step. See `b0` for more info. Number.
-#' @param fig A \code{go_figure} object.
 #' @param font The default font used for axis & tick labels on this carpet
 #'   A \code{\link{go_font}()} object or named list, with properties
 #'   \code{color}, \code{family}, \code{lineposition}, \code{shadow},
@@ -106,6 +111,8 @@
 #'   item and on hover. String.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -139,17 +146,11 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param x A two dimensional array of x coordinates at each carpet point.
-#'   If omitted, the plot is a cheater plot and the xaxis is hidden by
-#'   default. Data array: a vector, factor, Date/POSIXct vector, matrix or
-#'   list.
 #' @param xaxis Sets a reference between this trace's x coordinates and a
 #'   2D cartesian x axis. If "x" (the default value), the x coordinates
 #'   refer to `layout.xaxis`. If "x2", the x coordinates refer to
 #'   `layout.xaxis2`, and so on. Subplot id: \code{"x"}, \code{"x2"},
 #'   \code{"x3"}, ....
-#' @param y A two dimensional array of y coordinates at each carpet point.
-#'   Data array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param yaxis Sets a reference between this trace's y coordinates and a
 #'   2D cartesian y axis. If "y" (the default value), the y coordinates
 #'   refer to `layout.yaxis`. If "y2", the y coordinates refer to
@@ -176,13 +177,13 @@
 #'   go_figure() |>
 #'   add_carpet(a = ~a, b = ~b, y = ~y)
 go_carpet <- function(
-    ..., a = NULL, a0 = NULL, aaxis = NULL, b = NULL, b0 = NULL,
-    baxis = NULL, carpet = NULL, cheaterslope = NULL, color = NULL,
-    customdata = NULL, da = NULL, db = NULL, font = NULL, ids = NULL,
-    legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    ..., a = NULL, b = NULL, x = NULL, y = NULL, a0 = NULL, aaxis = NULL,
+    b0 = NULL, baxis = NULL, carpet = NULL, cheaterslope = NULL,
+    color = NULL, customdata = NULL, da = NULL, db = NULL, font = NULL,
+    ids = NULL, legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
     legendwidth = NULL, meta = NULL, name = NULL, opacity = NULL,
-    uid = NULL, uirevision = NULL, visible = NULL, x = NULL, xaxis = NULL,
-    y = NULL, yaxis = NULL, zorder = NULL, skip_invalid = FALSE
+    uid = NULL, uirevision = NULL, visible = NULL, xaxis = NULL,
+    yaxis = NULL, zorder = NULL, skip_invalid = FALSE
 ) {
   plotly_object("carpet", NULL, environment(), list(...), skip_invalid)
 }

@@ -6,13 +6,15 @@
 \alias{go_scatterpolar}
 \title{Scatterpolar traces}
 \usage{
-add_scatterpolar(fig, ...)
+add_scatterpolar(p, ...)
 
 \method{add_scatterpolar}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  r = NULL,
+  theta = NULL,
   cliponaxis = NULL,
   connectgaps = NULL,
   customdata = NULL,
@@ -38,7 +40,6 @@ add_scatterpolar(fig, ...)
   mode = NULL,
   name = NULL,
   opacity = NULL,
-  r = NULL,
   r0 = NULL,
   selected = NULL,
   selectedpoints = NULL,
@@ -49,7 +50,6 @@ add_scatterpolar(fig, ...)
   textposition = NULL,
   texttemplate = NULL,
   texttemplatefallback = NULL,
-  theta = NULL,
   theta0 = NULL,
   thetaunit = NULL,
   uid = NULL,
@@ -63,6 +63,8 @@ add_scatterpolar(fig, ...)
 
 go_scatterpolar(
   ...,
+  r = NULL,
+  theta = NULL,
   cliponaxis = NULL,
   connectgaps = NULL,
   customdata = NULL,
@@ -88,7 +90,6 @@ go_scatterpolar(
   mode = NULL,
   name = NULL,
   opacity = NULL,
-  r = NULL,
   r0 = NULL,
   selected = NULL,
   selectedpoints = NULL,
@@ -99,7 +100,6 @@ go_scatterpolar(
   textposition = NULL,
   texttemplate = NULL,
   texttemplatefallback = NULL,
-  theta = NULL,
   theta0 = NULL,
   thetaunit = NULL,
   uid = NULL,
@@ -110,7 +110,8 @@ go_scatterpolar(
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -130,6 +131,12 @@ column (a factor, character or logical, e.g. \code{marker =
 go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
+
+\item{r}{Sets the radial coordinates Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
+
+\item{theta}{Sets the angular coordinates Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
 
 \item{cliponaxis}{Determines whether or not markers and text nodes are
 clipped about the subplot axes. To show markers and text nodes above
@@ -288,9 +295,6 @@ item and on hover. String.}
 \item{opacity}{Sets the opacity of the trace. Number in the interval [0,
 1].}
 
-\item{r}{Sets the radial coordinates Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
-
 \item{r0}{Alternate to `r`. Builds a linear space of r coordinates. Use
 with `dr` where `r0` is the starting coordinate and `dr` the step. Any
 value.}
@@ -356,9 +360,6 @@ String, or a vector of these.}
 variable referenced in a template is missing. If the boolean value
 'false' is passed in, the specifier with the missing variable will be
 displayed. Any value.}
-
-\item{theta}{Sets the angular coordinates Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
 
 \item{theta0}{Alternate to `theta`. Builds a linear space of theta
 coordinates. Use with `dtheta` where `theta0` is the starting

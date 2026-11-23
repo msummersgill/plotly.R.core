@@ -20,6 +20,12 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param x Sets the x coordinates. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param y Sets the y coordinates. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param z Sets the z data. Data array: a vector, factor, Date/POSIXct
+#'   vector, matrix or list.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `colorscale`. In case `colorscale` is unspecified or `autocolorscale`
@@ -75,7 +81,6 @@
 #'   the trace to its crosstalk group (see \code{\link{highlight}()}).
 #' @param dx Sets the x coordinate step. See `x0` for more info. Number.
 #' @param dy Sets the y coordinate step. See `y0` for more info. Number.
-#' @param fig A \code{go_figure} object.
 #' @param fillcolor Sets the fill color if `contours.type` is "constraint".
 #'   Defaults to a half-transparent variant of the line color, marker
 #'   color, or marker line color, whichever is available. Color: a CSS
@@ -173,6 +178,8 @@
 #'   Inf].
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param reversescale Reverses the color mapping if true. If true, `zmin`
 #'   will correspond to the last color in the array and `zmax` will
 #'   correspond to the first color. Logical.
@@ -245,8 +252,6 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param x Sets the x coordinates. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param x0 Alternate to `x`. Builds a linear space of x coordinates. Use
 #'   with `dx` where `x0` is the starting coordinate and `dx` the step. Any
 #'   value.
@@ -288,8 +293,6 @@
 #'   heatmap's x coordinates are given by "x0" and "dx" (the default
 #'   behavior when `x` is not provided). One of \code{"array"},
 #'   \code{"scaled"}.
-#' @param y Sets the y coordinates. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param y0 Alternate to `y`. Builds a linear space of y coordinates. Use
 #'   with `dy` where `y0` is the starting coordinate and `dy` the step. Any
 #'   value.
@@ -330,8 +333,6 @@
 #'   (the default behavior when `y` is provided) If "scaled", the heatmap's
 #'   y coordinates are given by "y0" and "dy" (the default behavior when
 #'   `y` is not provided) One of \code{"array"}, \code{"scaled"}.
-#' @param z Sets the z data. Data array: a vector, factor, Date/POSIXct
-#'   vector, matrix or list.
 #' @param zauto Determines whether or not the color domain is computed with
 #'   respect to the input data (here in `z`) or the bounds set in `zmin`
 #'   and `zmax` Defaults to `false` when `zmin` and `zmax` are set by the
@@ -369,8 +370,9 @@
 #'   go_figure() |>
 #'   add_contour(x = ~Day, y = ~Month, z = ~Temp)
 go_contour <- function(
-    ..., autocolorscale = NULL, autocontour = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, connectgaps = NULL, contours = NULL,
+    ..., x = NULL, y = NULL, z = NULL, autocolorscale = NULL,
+    autocontour = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, connectgaps = NULL, contours = NULL,
     customdata = NULL, dx = NULL, dy = NULL, fillcolor = NULL,
     hoverinfo = NULL, hoverlabel = NULL, hoverongaps = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
@@ -379,13 +381,13 @@ go_contour <- function(
     name = NULL, ncontours = NULL, opacity = NULL, reversescale = NULL,
     showlegend = NULL, showscale = NULL, text = NULL, textfont = NULL,
     texttemplate = NULL, texttemplatefallback = NULL, transpose = NULL,
-    uid = NULL, uirevision = NULL, visible = NULL, x = NULL, x0 = NULL,
-    xaxis = NULL, xcalendar = NULL, xhoverformat = NULL, xperiod = NULL,
-    xperiod0 = NULL, xperiodalignment = NULL, xtype = NULL, y = NULL,
-    y0 = NULL, yaxis = NULL, ycalendar = NULL, yhoverformat = NULL,
-    yperiod = NULL, yperiod0 = NULL, yperiodalignment = NULL, ytype = NULL,
-    z = NULL, zauto = NULL, zhoverformat = NULL, zmax = NULL, zmid = NULL,
-    zmin = NULL, zorder = NULL, skip_invalid = FALSE
+    uid = NULL, uirevision = NULL, visible = NULL, x0 = NULL, xaxis = NULL,
+    xcalendar = NULL, xhoverformat = NULL, xperiod = NULL, xperiod0 = NULL,
+    xperiodalignment = NULL, xtype = NULL, y0 = NULL, yaxis = NULL,
+    ycalendar = NULL, yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
+    yperiodalignment = NULL, ytype = NULL, zauto = NULL,
+    zhoverformat = NULL, zmax = NULL, zmid = NULL, zmin = NULL,
+    zorder = NULL, skip_invalid = FALSE
 ) {
   plotly_object("contour", NULL, environment(), list(...), skip_invalid)
 }

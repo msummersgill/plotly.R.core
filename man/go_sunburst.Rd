@@ -6,13 +6,17 @@
 \alias{go_sunburst}
 \title{Sunburst traces}
 \usage{
-add_sunburst(fig, ...)
+add_sunburst(p, ...)
 
 \method{add_sunburst}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  labels = NULL,
+  parents = NULL,
+  values = NULL,
+  ids = NULL,
   branchvalues = NULL,
   count = NULL,
   customdata = NULL,
@@ -22,10 +26,8 @@ add_sunburst(fig, ...)
   hovertemplate = NULL,
   hovertemplatefallback = NULL,
   hovertext = NULL,
-  ids = NULL,
   insidetextfont = NULL,
   insidetextorientation = NULL,
-  labels = NULL,
   leaf = NULL,
   legend = NULL,
   legendgrouptitle = NULL,
@@ -38,7 +40,6 @@ add_sunburst(fig, ...)
   name = NULL,
   opacity = NULL,
   outsidetextfont = NULL,
-  parents = NULL,
   root = NULL,
   rotation = NULL,
   sort = NULL,
@@ -49,7 +50,6 @@ add_sunburst(fig, ...)
   texttemplatefallback = NULL,
   uid = NULL,
   uirevision = NULL,
-  values = NULL,
   visible = NULL,
   row = NULL,
   col = NULL,
@@ -58,6 +58,10 @@ add_sunburst(fig, ...)
 
 go_sunburst(
   ...,
+  labels = NULL,
+  parents = NULL,
+  values = NULL,
+  ids = NULL,
   branchvalues = NULL,
   count = NULL,
   customdata = NULL,
@@ -67,10 +71,8 @@ go_sunburst(
   hovertemplate = NULL,
   hovertemplatefallback = NULL,
   hovertext = NULL,
-  ids = NULL,
   insidetextfont = NULL,
   insidetextorientation = NULL,
-  labels = NULL,
   leaf = NULL,
   legend = NULL,
   legendgrouptitle = NULL,
@@ -83,7 +85,6 @@ go_sunburst(
   name = NULL,
   opacity = NULL,
   outsidetextfont = NULL,
-  parents = NULL,
   root = NULL,
   rotation = NULL,
   sort = NULL,
@@ -94,13 +95,13 @@ go_sunburst(
   texttemplatefallback = NULL,
   uid = NULL,
   uirevision = NULL,
-  values = NULL,
   visible = NULL,
   skip_invalid = FALSE
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -120,6 +121,25 @@ column (a factor, character or logical, e.g. \code{marker =
 go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
+
+\item{labels}{Sets the labels of each of the sectors. Data array: a
+vector, factor, Date/POSIXct vector, matrix or list.}
+
+\item{parents}{Sets the parent sectors for each of the sectors. Empty
+string items '' are understood to reference the root node in the
+hierarchy. If `ids` is filled, `parents` items are understood to be
+"ids" themselves. When `ids` is not set, plotly attempts to find
+matching items in `labels`, but beware they must be unique. Data
+array: a vector, factor, Date/POSIXct vector, matrix or list.}
+
+\item{values}{Sets the values associated with each of the sectors. Use
+with `branchvalues` to determine how the values are summed. Data
+array: a vector, factor, Date/POSIXct vector, matrix or list.}
+
+\item{ids}{Assigns id labels to each datum. These ids for object
+constancy of data points during animation. Should be an array of
+strings, not numbers or any other type. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
 
 \item{branchvalues}{Determines how the items in `values` are summed.
 When set to "total", items in `values` are taken to be value of all
@@ -197,11 +217,6 @@ array of string, the items are mapped in order of this trace's
 sectors. To be seen, trace `hoverinfo` must contain a "text" flag.
 String, or a vector of these.}
 
-\item{ids}{Assigns id labels to each datum. These ids for object
-constancy of data points during animation. Should be an array of
-strings, not numbers or any other type. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
-
 \item{insidetextfont}{Sets the font used for `textinfo` lying inside the
 sector. A \code{\link{go_font}()} object or named list, with
 properties \code{color}, \code{family}, \code{lineposition},
@@ -217,9 +232,6 @@ The "radial" option orients text along the radius of the sector. The
 "tangential" option orients text perpendicular to the radius of the
 sector. One of \code{"horizontal"}, \code{"radial"},
 \code{"tangential"}, \code{"auto"}.}
-
-\item{labels}{Sets the labels of each of the sectors. Data array: a
-vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{leaf}{A \code{\link{go_leaf}()} object or named list, with
 properties \code{opacity} (see \code{\link{go_leaf}()}).}
@@ -287,13 +299,6 @@ named list, with properties \code{color}, \code{family},
 \code{lineposition}, \code{shadow}, \code{size}, \code{style},
 \code{textcase}, \code{variant} and \code{weight} (see
 \code{\link{go_font}()}).}
-
-\item{parents}{Sets the parent sectors for each of the sectors. Empty
-string items '' are understood to reference the root node in the
-hierarchy. If `ids` is filled, `parents` items are understood to be
-"ids" themselves. When `ids` is not set, plotly attempts to find
-matching items in `labels`, but beware they must be unique. Data
-array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{root}{A \code{\link{go_root}()} object or named list, with
 properties \code{color} (see \code{\link{go_root}()}).}
@@ -367,10 +372,6 @@ So if your app can add/remove traces before the end of the `data`
 array, such that the same trace has a different index, you can still
 preserve user-driven changes if you give each trace a `uid` that stays
 with it as it moves. Any value.}
-
-\item{values}{Sets the values associated with each of the sectors. Use
-with `branchvalues` to determine how the values are summed. Data
-array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{visible}{Determines whether or not this trace is visible. If
 "legendonly", the trace is not drawn, but can appear as a legend item

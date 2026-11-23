@@ -17,6 +17,10 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param x Sets the x coordinates. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param y Sets the y coordinates. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -45,7 +49,6 @@
 #'   \code{symmetric}, \code{thickness}, \code{traceref},
 #'   \code{tracerefminus}, \code{type}, \code{value}, \code{valueminus},
 #'   \code{visible} and \code{width} (see \code{\link{go_error_bar}()}).
-#' @param fig A \code{go_figure} object.
 #' @param fill Sets the area to fill with a solid color. Defaults to "none"
 #'   unless this trace is stacked, then it gets "tonexty" ("tonextx") if
 #'   `orientation` is "v" ("h") Use with `fillcolor` if not "none".
@@ -163,6 +166,8 @@
 #'   item and on hover. String.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -246,8 +251,6 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param x Sets the x coordinates. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param x0 Alternate to `x`. Builds a linear space of x coordinates. Use
 #'   with `dx` where `x0` is the starting coordinate and `dx` the step. Any
 #'   value.
@@ -284,8 +287,6 @@
 #' @param xperiodalignment Only relevant when the axis `type` is "date".
 #'   Sets the alignment of data points on the x axis. One of
 #'   \code{"start"}, \code{"middle"}, \code{"end"}.
-#' @param y Sets the y coordinates. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param y0 Alternate to `y`. Builds a linear space of y coordinates. Use
 #'   with `dy` where `y0` is the starting coordinate and `dy` the step. Any
 #'   value.
@@ -338,21 +339,20 @@
 #'   go_figure() |>
 #'   add_scattergl(x = ~wt, y = ~mpg, mode = "markers")
 go_scattergl <- function(
-    ..., connectgaps = NULL, customdata = NULL, dx = NULL, dy = NULL,
-    error_x = NULL, error_y = NULL, fill = NULL, fillcolor = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    ..., x = NULL, y = NULL, connectgaps = NULL, customdata = NULL,
+    dx = NULL, dy = NULL, error_x = NULL, error_y = NULL, fill = NULL,
+    fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
     meta = NULL, mode = NULL, name = NULL, opacity = NULL, selected = NULL,
     selectedpoints = NULL, showlegend = NULL, text = NULL, textfont = NULL,
     textposition = NULL, texttemplate = NULL, texttemplatefallback = NULL,
     uid = NULL, uirevision = NULL, unselected = NULL, visible = NULL,
-    x = NULL, x0 = NULL, xaxis = NULL, xcalendar = NULL,
-    xhoverformat = NULL, xperiod = NULL, xperiod0 = NULL,
-    xperiodalignment = NULL, y = NULL, y0 = NULL, yaxis = NULL,
-    ycalendar = NULL, yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
-    yperiodalignment = NULL, skip_invalid = FALSE
+    x0 = NULL, xaxis = NULL, xcalendar = NULL, xhoverformat = NULL,
+    xperiod = NULL, xperiod0 = NULL, xperiodalignment = NULL, y0 = NULL,
+    yaxis = NULL, ycalendar = NULL, yhoverformat = NULL, yperiod = NULL,
+    yperiod0 = NULL, yperiodalignment = NULL, skip_invalid = FALSE
 ) {
   plotly_object("scattergl", NULL, environment(), list(...), skip_invalid)
 }

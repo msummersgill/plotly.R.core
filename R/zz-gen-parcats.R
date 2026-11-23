@@ -15,6 +15,11 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param dimensions List, each element a
+#'   \code{\link{go_parcats_dimension}()} object or named list, with
+#'   properties \code{categoryarray}, \code{categoryorder},
+#'   \code{displayindex}, \code{label}, \code{ticktext}, \code{values} and
+#'   \code{visible} (see \code{\link{go_parcats_dimension}()}).
 #' @param arrangement Sets the drag interaction mode for categories and
 #'   dimensions. If `perpendicular`, the categories can only move along a
 #'   line perpendicular to the paths. If `freeform`, the categories can
@@ -35,15 +40,9 @@
 #'   the trace. A \code{crosstalk::SharedData} works the same way, and
 #'   links the trace to its crosstalk group (see
 #'   \code{\link{highlight}()}).
-#' @param dimensions List, each element a
-#'   \code{\link{go_parcats_dimension}()} object or named list, with
-#'   properties \code{categoryarray}, \code{categoryorder},
-#'   \code{displayindex}, \code{label}, \code{ticktext}, \code{values} and
-#'   \code{visible} (see \code{\link{go_parcats_dimension}()}).
 #' @param domain A \code{\link{go_domain}()} object or named list, with
 #'   properties \code{column}, \code{row}, \code{x} and \code{y} (see
 #'   \code{\link{go_domain}()}).
-#' @param fig A \code{go_figure} object.
 #' @param hoverinfo Determines what trace information appears on hover. If
 #'   `none` or `skip` are set, no information is displayed upon hovering.
 #'   But, if `none` is set, click and hover events are still fired. Any
@@ -113,6 +112,8 @@
 #'   `meta` and `n` is the trace index. Any value.
 #' @param name Sets the trace name. The trace name appears as the legend
 #'   item and on hover. String.
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -175,8 +176,8 @@
 #'     )
 #'   )
 go_parcats <- function(
-    ..., arrangement = NULL, bundlecolors = NULL, counts = NULL,
-    dimensions = NULL, domain = NULL, hoverinfo = NULL, hoveron = NULL,
+    ..., dimensions = NULL, arrangement = NULL, bundlecolors = NULL,
+    counts = NULL, domain = NULL, hoverinfo = NULL, hoveron = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, labelfont = NULL,
     legendgrouptitle = NULL, legendwidth = NULL, line = NULL, meta = NULL,
     name = NULL, sortpaths = NULL, tickfont = NULL, uid = NULL,

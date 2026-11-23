@@ -19,6 +19,12 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param x Sets the x sample data or coordinates. See overview for more
+#'   info. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#'   list.
+#' @param y Sets the y sample data or coordinates. See overview for more
+#'   info. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#'   list.
 #' @param alignmentgroup Set several traces linked to the same position
 #'   axis or matching axes to the same alignmentgroup. This controls
 #'   whether bars compute their positional range dependently or
@@ -41,7 +47,6 @@
 #'   \code{\link{go_figure}()}. Only the evaluated values are added to the
 #'   trace. A \code{crosstalk::SharedData} works the same way, and links
 #'   the trace to its crosstalk group (see \code{\link{highlight}()}).
-#' @param fig A \code{go_figure} object.
 #' @param fillcolor Sets the fill color. Defaults to a half-transparent
 #'   variant of the line color, marker color, or marker line color,
 #'   whichever is available. Color: a CSS color string or R color name.
@@ -153,6 +158,8 @@
 #' @param orientation Sets the orientation of the violin(s). If "v" ("h"),
 #'   the distribution is visualized along the vertical (horizontal). One of
 #'   \code{"v"}, \code{"h"}.
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param pointpos Sets the position of the sample points in relation to
 #'   the violins. If 0, the sample points are places over the center of the
 #'   violins. Positive (negative) values correspond to positions to the
@@ -258,9 +265,6 @@
 #'   (default value) the width is automatically selected based on the
 #'   positions of other violin traces in the same subplot. Number in the
 #'   interval [0, Inf].
-#' @param x Sets the x sample data or coordinates. See overview for more
-#'   info. Data array: a vector, factor, Date/POSIXct vector, matrix or
-#'   list.
 #' @param x0 Sets the x coordinate for single-box traces or the starting
 #'   coordinate for multi-box traces set using q1/median/q3. See overview
 #'   for more info. Any value.
@@ -279,9 +283,6 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `xaxis.hoverformat`. String.
-#' @param y Sets the y sample data or coordinates. See overview for more
-#'   info. Data array: a vector, factor, Date/POSIXct vector, matrix or
-#'   list.
 #' @param y0 Sets the y coordinate for single-box traces or the starting
 #'   coordinate for multi-box traces set using q1/median/q3. See overview
 #'   for more info. Any value.
@@ -319,8 +320,8 @@
 #'   go_figure() |>
 #'   add_violin(x = ~factor(cyl), y = ~mpg)
 go_violin <- function(
-    ..., alignmentgroup = NULL, bandwidth = NULL, box = NULL,
-    customdata = NULL, fillcolor = NULL, hoverinfo = NULL,
+    ..., x = NULL, y = NULL, alignmentgroup = NULL, bandwidth = NULL,
+    box = NULL, customdata = NULL, fillcolor = NULL, hoverinfo = NULL,
     hoverlabel = NULL, hoveron = NULL, hovertemplate = NULL,
     hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
     jitter = NULL, legend = NULL, legendgroup = NULL,
@@ -331,9 +332,9 @@ go_violin <- function(
     scalemode = NULL, selected = NULL, selectedpoints = NULL,
     showlegend = NULL, side = NULL, span = NULL, spanmode = NULL,
     text = NULL, uid = NULL, uirevision = NULL, unselected = NULL,
-    visible = NULL, width = NULL, x = NULL, x0 = NULL, xaxis = NULL,
-    xhoverformat = NULL, y = NULL, y0 = NULL, yaxis = NULL,
-    yhoverformat = NULL, zorder = NULL, skip_invalid = FALSE
+    visible = NULL, width = NULL, x0 = NULL, xaxis = NULL,
+    xhoverformat = NULL, y0 = NULL, yaxis = NULL, yhoverformat = NULL,
+    zorder = NULL, skip_invalid = FALSE
 ) {
   plotly_object("violin", NULL, environment(), list(...), skip_invalid)
 }

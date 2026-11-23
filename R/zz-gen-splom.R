@@ -20,6 +20,11 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param dimensions List, each element a
+#'   \code{\link{go_splom_dimension}()} object or named list, with
+#'   properties \code{axis}, \code{label}, \code{name},
+#'   \code{templateitemname}, \code{values} and \code{visible} (see
+#'   \code{\link{go_splom_dimension}()}).
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -36,12 +41,6 @@
 #' @param diagonal A \code{\link{go_splom_diagonal}()} object or named
 #'   list, with properties \code{visible} (see
 #'   \code{\link{go_splom_diagonal}()}).
-#' @param dimensions List, each element a
-#'   \code{\link{go_splom_dimension}()} object or named list, with
-#'   properties \code{axis}, \code{label}, \code{name},
-#'   \code{templateitemname}, \code{values} and \code{visible} (see
-#'   \code{\link{go_splom_dimension}()}).
-#' @param fig A \code{go_figure} object.
 #' @param hoverinfo Determines what trace information appears on hover. If
 #'   `none` or `skip` are set, no information is displayed upon hovering.
 #'   But, if `none` is set, click and hover events are still fired. Any
@@ -127,6 +126,8 @@
 #'   item and on hover. String.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -232,7 +233,7 @@
 #'     )
 #'   )
 go_splom <- function(
-    ..., customdata = NULL, diagonal = NULL, dimensions = NULL,
+    ..., dimensions = NULL, customdata = NULL, diagonal = NULL,
     hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
     hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
     legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,

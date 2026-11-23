@@ -8,6 +8,12 @@
 \usage{
 go_cone(
   ...,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  u = NULL,
+  v = NULL,
+  w = NULL,
   anchor = NULL,
   autocolorscale = NULL,
   cauto = NULL,
@@ -41,31 +47,31 @@ go_cone(
   sizemode = NULL,
   sizeref = NULL,
   text = NULL,
-  u = NULL,
   uhoverformat = NULL,
   uid = NULL,
   uirevision = NULL,
-  v = NULL,
   vhoverformat = NULL,
   visible = NULL,
-  w = NULL,
   whoverformat = NULL,
-  x = NULL,
   xhoverformat = NULL,
-  y = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zhoverformat = NULL,
   skip_invalid = FALSE
 )
 
-add_cone(fig, ...)
+add_cone(p, ...)
 
 \method{add_cone}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  u = NULL,
+  v = NULL,
+  w = NULL,
   anchor = NULL,
   autocolorscale = NULL,
   cauto = NULL,
@@ -99,20 +105,14 @@ add_cone(fig, ...)
   sizemode = NULL,
   sizeref = NULL,
   text = NULL,
-  u = NULL,
   uhoverformat = NULL,
   uid = NULL,
   uirevision = NULL,
-  v = NULL,
   vhoverformat = NULL,
   visible = NULL,
-  w = NULL,
   whoverformat = NULL,
-  x = NULL,
   xhoverformat = NULL,
-  y = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zhoverformat = NULL,
   row = NULL,
   col = NULL,
@@ -122,6 +122,27 @@ add_cone(fig, ...)
 \arguments{
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
+
+\item{x}{Sets the x coordinates of the vector field and of the displayed
+cones. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
+
+\item{y}{Sets the y coordinates of the vector field and of the displayed
+cones. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
+
+\item{z}{Sets the z coordinates of the vector field and of the displayed
+cones. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
+
+\item{u}{Sets the x components of the vector field. Data array: a
+vector, factor, Date/POSIXct vector, matrix or list.}
+
+\item{v}{Sets the y components of the vector field. Data array: a
+vector, factor, Date/POSIXct vector, matrix or list.}
+
+\item{w}{Sets the z components of the vector field. Data array: a
+vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{anchor}{Sets the cones' anchor with respect to their x/y/z
 positions. Note that "cm" denote the cone's center of mass which
@@ -331,9 +352,6 @@ the sample's maximum vector norm. Number in the interval [0, Inf].}
 elements will be seen in the hover labels. String, or a vector of
 these.}
 
-\item{u}{Sets the x components of the vector field. Data array: a
-vector, factor, Date/POSIXct vector, matrix or list.}
-
 \item{uhoverformat}{Sets the hover text formatting rule for `u` using d3
 formatting mini-languages which are very similar to those in Python.
 For numbers, see:
@@ -358,9 +376,6 @@ array, such that the same trace has a different index, you can still
 preserve user-driven changes if you give each trace a `uid` that stays
 with it as it moves. Any value.}
 
-\item{v}{Sets the y components of the vector field. Data array: a
-vector, factor, Date/POSIXct vector, matrix or list.}
-
 \item{vhoverformat}{Sets the hover text formatting rule for `v` using d3
 formatting mini-languages which are very similar to those in Python.
 For numbers, see:
@@ -372,18 +387,11 @@ values are formatted using generic number format. String.}
 (provided that the legend itself is visible). One of
 \code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
 
-\item{w}{Sets the z components of the vector field. Data array: a
-vector, factor, Date/POSIXct vector, matrix or list.}
-
 \item{whoverformat}{Sets the hover text formatting rule for `w` using d3
 formatting mini-languages which are very similar to those in Python.
 For numbers, see:
 https://github.com/d3/d3-format/tree/v1.4.5#d3-format.By default the
 values are formatted using generic number format. String.}
-
-\item{x}{Sets the x coordinates of the vector field and of the displayed
-cones. Data array: a vector, factor, Date/POSIXct vector, matrix or
-list.}
 
 \item{xhoverformat}{Sets the hover text formatting rule for `x` using d3
 formatting mini-languages which are very similar to those in Python.
@@ -396,10 +404,6 @@ digits. For example, "2016-10-13 09:15:23.456" with tickformat
 "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 are formatted using `xaxis.hoverformat`. String.}
 
-\item{y}{Sets the y coordinates of the vector field and of the displayed
-cones. Data array: a vector, factor, Date/POSIXct vector, matrix or
-list.}
-
 \item{yhoverformat}{Sets the hover text formatting rule for `y` using d3
 formatting mini-languages which are very similar to those in Python.
 For numbers, see:
@@ -410,10 +414,6 @@ a decimal number as well as "\%\{n\}f" for fractional seconds with n
 digits. For example, "2016-10-13 09:15:23.456" with tickformat
 "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 are formatted using `yaxis.hoverformat`. String.}
-
-\item{z}{Sets the z coordinates of the vector field and of the displayed
-cones. Data array: a vector, factor, Date/POSIXct vector, matrix or
-list.}
 
 \item{zhoverformat}{Sets the hover text formatting rule for `z` using d3
 formatting mini-languages which are very similar to those in Python.
@@ -429,7 +429,8 @@ are formatted using `zaxis.hoverformat`. String.}
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
 
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
 ~col}) are evaluated. Default: the data given to

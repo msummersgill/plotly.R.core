@@ -6,13 +6,15 @@
 \alias{go_pie}
 \title{Pie traces}
 \usage{
-add_pie(fig, ...)
+add_pie(p, ...)
 
 \method{add_pie}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  labels = NULL,
+  values = NULL,
   automargin = NULL,
   customdata = NULL,
   direction = NULL,
@@ -28,7 +30,6 @@ add_pie(fig, ...)
   insidetextfont = NULL,
   insidetextorientation = NULL,
   label0 = NULL,
-  labels = NULL,
   legend = NULL,
   legendgroup = NULL,
   legendgrouptitle = NULL,
@@ -53,7 +54,6 @@ add_pie(fig, ...)
   title = NULL,
   uid = NULL,
   uirevision = NULL,
-  values = NULL,
   visible = NULL,
   row = NULL,
   col = NULL,
@@ -62,6 +62,8 @@ add_pie(fig, ...)
 
 go_pie(
   ...,
+  labels = NULL,
+  values = NULL,
   automargin = NULL,
   customdata = NULL,
   direction = NULL,
@@ -77,7 +79,6 @@ go_pie(
   insidetextfont = NULL,
   insidetextorientation = NULL,
   label0 = NULL,
-  labels = NULL,
   legend = NULL,
   legendgroup = NULL,
   legendgrouptitle = NULL,
@@ -102,13 +103,13 @@ go_pie(
   title = NULL,
   uid = NULL,
   uirevision = NULL,
-  values = NULL,
   visible = NULL,
   skip_invalid = FALSE
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -128,6 +129,16 @@ column (a factor, character or logical, e.g. \code{marker =
 go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
+
+\item{labels}{Sets the sector labels. If `labels` entries are
+duplicated, we sum associated `values` or simply count occurrences if
+`values` is not provided. For other array attributes (including color)
+we use the first non-empty entry among all occurrences of the label.
+Data array: a vector, factor, Date/POSIXct vector, matrix or list.}
+
+\item{values}{Sets the values of the sectors. If omitted, we count
+occurrences of each label. Data array: a vector, factor, Date/POSIXct
+vector, matrix or list.}
 
 \item{automargin}{Determines whether outside text labels can push the
 margins. Logical.}
@@ -227,12 +238,6 @@ sector. One of \code{"horizontal"}, \code{"radial"},
 \item{label0}{Alternate to `labels`. Builds a numeric set of labels. Use
 with `dlabel` where `label0` is the starting label and `dlabel` the
 step. Number.}
-
-\item{labels}{Sets the sector labels. If `labels` entries are
-duplicated, we sum associated `values` or simply count occurrences if
-`values` is not provided. For other array attributes (including color)
-we use the first non-empty entry among all occurrences of the label.
-Data array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{legend}{Sets the reference to a legend to show the pie slices in.
 Can be an array if `values` is set. In that case, each entry specifies
@@ -377,10 +382,6 @@ So if your app can add/remove traces before the end of the `data`
 array, such that the same trace has a different index, you can still
 preserve user-driven changes if you give each trace a `uid` that stays
 with it as it moves. Any value.}
-
-\item{values}{Sets the values of the sectors. If omitted, we count
-occurrences of each label. Data array: a vector, factor, Date/POSIXct
-vector, matrix or list.}
 
 \item{visible}{Determines whether or not this trace is visible. If
 "legendonly", the trace is not drawn, but can appear as a legend item

@@ -19,6 +19,12 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param z A 2-dimensional array in which each element is an array of 3 or
+#'   4 numbers representing a color. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param source Specifies the data URI of the image to be visualized. The
+#'   URI consists of "data:image/[<media
+#'   subtype\\\\>][;base64\\\\],<data\\\\>" String.
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -38,7 +44,6 @@
 #'   the trace to its crosstalk group (see \code{\link{highlight}()}).
 #' @param dx Set the pixel's horizontal size. Number.
 #' @param dy Set the pixel's vertical size Number.
-#' @param fig A \code{go_figure} object.
 #' @param hoverinfo Determines what trace information appears on hover. If
 #'   `none` or `skip` are set, no information is displayed upon hovering.
 #'   But, if `none` is set, click and hover events are still fired. Any
@@ -118,14 +123,13 @@
 #'   item and on hover. String.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
 #' @param secondary_y If \code{TRUE}, use the secondary y axis of the
 #'   subplot.
-#' @param source Specifies the data URI of the image to be visualized. The
-#'   URI consists of "data:image/[<media
-#'   subtype\\\\>][;base64\\\\],<data\\\\>" String.
 #' @param split A column (\code{~col}) or vector with one value per point
 #'   (per row of the data, or of the vectors formulas refer to without
 #'   data): one trace is added per value, named after it, with the
@@ -175,9 +179,6 @@
 #'   refer to `layout.yaxis`. If "y2", the y coordinates refer to
 #'   `layout.yaxis2`, and so on. Subplot id: \code{"y"}, \code{"y2"},
 #'   \code{"y3"}, ....
-#' @param z A 2-dimensional array in which each element is an array of 3 or
-#'   4 numbers representing a color. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param zmax Array defining the higher bound for each color component.
 #'   Note that the default value will depend on the colormodel. For the
 #'   `rgb` colormodel, it is [255, 255, 255]. For the `rgba` colormodel, it
@@ -214,15 +215,14 @@
 #' go_figure() |>
 #'   add_image(z = z)
 go_image <- function(
-    ..., colormodel = NULL, customdata = NULL, dx = NULL, dy = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
-    legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    ..., z = NULL, source = NULL, colormodel = NULL, customdata = NULL,
+    dx = NULL, dy = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
     legendwidth = NULL, meta = NULL, name = NULL, opacity = NULL,
-    source = NULL, text = NULL, uid = NULL, uirevision = NULL,
-    visible = NULL, x0 = NULL, xaxis = NULL, y0 = NULL, yaxis = NULL,
-    z = NULL, zmax = NULL, zmin = NULL, zorder = NULL, zsmooth = NULL,
-    skip_invalid = FALSE
+    text = NULL, uid = NULL, uirevision = NULL, visible = NULL, x0 = NULL,
+    xaxis = NULL, y0 = NULL, yaxis = NULL, zmax = NULL, zmin = NULL,
+    zorder = NULL, zsmooth = NULL, skip_invalid = FALSE
 ) {
   plotly_object("image", NULL, environment(), list(...), skip_invalid)
 }

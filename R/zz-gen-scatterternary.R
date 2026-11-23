@@ -51,7 +51,6 @@
 #'   the evaluated values are added to the trace. A
 #'   \code{crosstalk::SharedData} works the same way, and links the trace
 #'   to its crosstalk group (see \code{\link{highlight}()}).
-#' @param fig A \code{go_figure} object.
 #' @param fill Sets the area to fill with a solid color. Use with
 #'   `fillcolor` if not "none". scatterternary has a subset of the options
 #'   available to scatter. "toself" connects the endpoints of the trace (or
@@ -170,6 +169,8 @@
 #'   item and on hover. String.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.

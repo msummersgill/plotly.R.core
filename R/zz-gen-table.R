@@ -18,6 +18,10 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param header A \code{\link{go_table_header}()} object or named list,
+#'   with properties \code{align}, \code{fill}, \code{font}, \code{format},
+#'   \code{height}, \code{line}, \code{prefix}, \code{suffix} and
+#'   \code{values} (see \code{\link{go_table_header}()}).
 #' @param cells A \code{\link{go_table_cells}()} object or named list, with
 #'   properties \code{align}, \code{fill}, \code{font}, \code{format},
 #'   \code{height}, \code{line}, \code{prefix}, \code{suffix} and
@@ -46,11 +50,6 @@
 #' @param domain A \code{\link{go_domain}()} object or named list, with
 #'   properties \code{column}, \code{row}, \code{x} and \code{y} (see
 #'   \code{\link{go_domain}()}).
-#' @param fig A \code{go_figure} object.
-#' @param header A \code{\link{go_table_header}()} object or named list,
-#'   with properties \code{align}, \code{fill}, \code{font}, \code{format},
-#'   \code{height}, \code{line}, \code{prefix}, \code{suffix} and
-#'   \code{values} (see \code{\link{go_table_header}()}).
 #' @param hoverinfo Determines what trace information appears on hover. If
 #'   `none` or `skip` are set, no information is displayed upon hovering.
 #'   But, if `none` is set, click and hover events are still fired. Any
@@ -94,6 +93,8 @@
 #'   `meta` and `n` is the trace index. Any value.
 #' @param name Sets the trace name. The trace name appears as the legend
 #'   item and on hover. String.
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -145,8 +146,8 @@
 #'     cells = go_table_cells(values = d)
 #'   )
 go_table <- function(
-    ..., cells = NULL, columnorder = NULL, columnwidth = NULL,
-    customdata = NULL, domain = NULL, header = NULL, hoverinfo = NULL,
+    ..., header = NULL, cells = NULL, columnorder = NULL,
+    columnwidth = NULL, customdata = NULL, domain = NULL, hoverinfo = NULL,
     hoverlabel = NULL, ids = NULL, legend = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, meta = NULL, name = NULL,
     uid = NULL, uirevision = NULL, visible = NULL, skip_invalid = FALSE

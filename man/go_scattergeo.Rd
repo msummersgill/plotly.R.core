@@ -6,13 +6,16 @@
 \alias{go_scattergeo}
 \title{Scattergeo traces}
 \usage{
-add_scattergeo(fig, ...)
+add_scattergeo(p, ...)
 
 \method{add_scattergeo}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  lat = NULL,
+  lon = NULL,
+  locations = NULL,
   connectgaps = NULL,
   customdata = NULL,
   featureidkey = NULL,
@@ -26,7 +29,6 @@ add_scattergeo(fig, ...)
   hovertemplatefallback = NULL,
   hovertext = NULL,
   ids = NULL,
-  lat = NULL,
   legend = NULL,
   legendgroup = NULL,
   legendgrouptitle = NULL,
@@ -34,8 +36,6 @@ add_scattergeo(fig, ...)
   legendwidth = NULL,
   line = NULL,
   locationmode = NULL,
-  locations = NULL,
-  lon = NULL,
   marker = NULL,
   meta = NULL,
   mode = NULL,
@@ -60,6 +60,9 @@ add_scattergeo(fig, ...)
 
 go_scattergeo(
   ...,
+  lat = NULL,
+  lon = NULL,
+  locations = NULL,
   connectgaps = NULL,
   customdata = NULL,
   featureidkey = NULL,
@@ -73,7 +76,6 @@ go_scattergeo(
   hovertemplatefallback = NULL,
   hovertext = NULL,
   ids = NULL,
-  lat = NULL,
   legend = NULL,
   legendgroup = NULL,
   legendgrouptitle = NULL,
@@ -81,8 +83,6 @@ go_scattergeo(
   legendwidth = NULL,
   line = NULL,
   locationmode = NULL,
-  locations = NULL,
-  lon = NULL,
   marker = NULL,
   meta = NULL,
   mode = NULL,
@@ -104,7 +104,8 @@ go_scattergeo(
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -124,6 +125,17 @@ column (a factor, character or logical, e.g. \code{marker =
 go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
+
+\item{lat}{Sets the latitude coordinates (in degrees North). Data array:
+a vector, factor, Date/POSIXct vector, matrix or list.}
+
+\item{lon}{Sets the longitude coordinates (in degrees East). Data array:
+a vector, factor, Date/POSIXct vector, matrix or list.}
+
+\item{locations}{Sets the coordinates via location IDs or names.
+Coordinates correspond to the centroid of each location given. See
+`locationmode` for more info. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
 
 \item{connectgaps}{Determines whether or not gaps (i.e. \{nan\} or
 missing values) in the provided data arrays are connected. Logical.}
@@ -216,9 +228,6 @@ constancy of data points during animation. Should be an array of
 strings, not numbers or any other type. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.}
 
-\item{lat}{Sets the latitude coordinates (in degrees North). Data array:
-a vector, factor, Date/POSIXct vector, matrix or list.}
-
 \item{legend}{Sets the reference to a legend to show this trace in.
 References to these legends are "legend", "legend2", "legend3", etc.
 Settings for these legends are set in the layout, under
@@ -257,14 +266,6 @@ linked to the `geojson` attribute. "USA-states" accepts both
 two-letter abbreviations (e.g. "CA") and full state names (e.g.
 "California"). One of \code{"ISO-3"}, \code{"USA-states"},
 \code{"country names"}, \code{"geojson-id"}.}
-
-\item{locations}{Sets the coordinates via location IDs or names.
-Coordinates correspond to the centroid of each location given. See
-`locationmode` for more info. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
-
-\item{lon}{Sets the longitude coordinates (in degrees East). Data array:
-a vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{marker}{A \code{\link{go_scattergeo_marker}()} object or named
 list, with properties \code{angle}, \code{angleref},

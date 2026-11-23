@@ -17,6 +17,21 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param labels Sets the labels of each of the sectors. Data array: a
+#'   vector, factor, Date/POSIXct vector, matrix or list.
+#' @param parents Sets the parent sectors for each of the sectors. Empty
+#'   string items '' are understood to reference the root node in the
+#'   hierarchy. If `ids` is filled, `parents` items are understood to be
+#'   "ids" themselves. When `ids` is not set, plotly attempts to find
+#'   matching items in `labels`, but beware they must be unique. Data
+#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param values Sets the values associated with each of the sectors. Use
+#'   with `branchvalues` to determine how the values are summed. Data
+#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param ids Assigns id labels to each datum. These ids for object
+#'   constancy of data points during animation. Should be an array of
+#'   strings, not numbers or any other type. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
 #' @param branchvalues Determines how the items in `values` are summed.
 #'   When set to "total", items in `values` are taken to be value of all
 #'   its descendants. When set to "remainder", items in `values`
@@ -43,7 +58,6 @@
 #' @param domain A \code{\link{go_domain}()} object or named list, with
 #'   properties \code{column}, \code{row}, \code{x} and \code{y} (see
 #'   \code{\link{go_domain}()}).
-#' @param fig A \code{go_figure} object.
 #' @param hoverinfo Determines what trace information appears on hover.
 #'   Flags are rendered in a fixed order; use `hovertemplate` if you need
 #'   explicit control over the rendered string, including the order of
@@ -94,17 +108,11 @@
 #'   array of string, the items are mapped in order of this trace's
 #'   sectors. To be seen, trace `hoverinfo` must contain a "text" flag.
 #'   String, or a vector of these.
-#' @param ids Assigns id labels to each datum. These ids for object
-#'   constancy of data points during animation. Should be an array of
-#'   strings, not numbers or any other type. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param insidetextfont Sets the font used for `textinfo` lying inside the
 #'   sector. A \code{\link{go_font}()} object or named list, with
 #'   properties \code{color}, \code{family}, \code{lineposition},
 #'   \code{shadow}, \code{size}, \code{style}, \code{textcase},
 #'   \code{variant} and \code{weight} (see \code{\link{go_font}()}).
-#' @param labels Sets the labels of each of the sectors. Data array: a
-#'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param legend Sets the reference to a legend to show this trace in.
 #'   References to these legends are "legend", "legend2", "legend3", etc.
 #'   Settings for these legends are set in the layout, under
@@ -159,12 +167,8 @@
 #'   \code{lineposition}, \code{shadow}, \code{size}, \code{style},
 #'   \code{textcase}, \code{variant} and \code{weight} (see
 #'   \code{\link{go_font}()}).
-#' @param parents Sets the parent sectors for each of the sectors. Empty
-#'   string items '' are understood to reference the root node in the
-#'   hierarchy. If `ids` is filled, `parents` items are understood to be
-#'   "ids" themselves. When `ids` is not set, plotly attempts to find
-#'   matching items in `labels`, but beware they must be unique. Data
-#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param pathbar A \code{\link{go_pathbar}()} object or named list, with
 #'   properties \code{edgeshape}, \code{side}, \code{textfont},
 #'   \code{thickness} and \code{visible} (see \code{\link{go_pathbar}()}).
@@ -246,9 +250,6 @@
 #'   array, such that the same trace has a different index, you can still
 #'   preserve user-driven changes if you give each trace a `uid` that stays
 #'   with it as it moves. Any value.
-#' @param values Sets the values associated with each of the sectors. Use
-#'   with `branchvalues` to determine how the values are summed. Data
-#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param visible Determines whether or not this trace is visible. If
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
@@ -275,17 +276,17 @@
 #'   go_figure() |>
 #'   add_treemap(labels = ~labels, parents = ~parents, values = ~values)
 go_treemap <- function(
-    ..., branchvalues = NULL, count = NULL, customdata = NULL,
-    domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, insidetextfont = NULL, labels = NULL, legend = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    level = NULL, marker = NULL, maxdepth = NULL, meta = NULL, name = NULL,
-    opacity = NULL, outsidetextfont = NULL, parents = NULL, pathbar = NULL,
-    root = NULL, sort = NULL, text = NULL, textfont = NULL, textinfo = NULL,
-    textposition = NULL, texttemplate = NULL, texttemplatefallback = NULL,
-    tiling = NULL, uid = NULL, uirevision = NULL, values = NULL,
-    visible = NULL, skip_invalid = FALSE
+    ..., labels = NULL, parents = NULL, values = NULL, ids = NULL,
+    branchvalues = NULL, count = NULL, customdata = NULL, domain = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, insidetextfont = NULL,
+    legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    legendwidth = NULL, level = NULL, marker = NULL, maxdepth = NULL,
+    meta = NULL, name = NULL, opacity = NULL, outsidetextfont = NULL,
+    pathbar = NULL, root = NULL, sort = NULL, text = NULL, textfont = NULL,
+    textinfo = NULL, textposition = NULL, texttemplate = NULL,
+    texttemplatefallback = NULL, tiling = NULL, uid = NULL,
+    uirevision = NULL, visible = NULL, skip_invalid = FALSE
 ) {
   plotly_object("treemap", NULL, environment(), list(...), skip_invalid)
 }

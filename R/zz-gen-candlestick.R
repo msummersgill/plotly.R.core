@@ -21,6 +21,15 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param x Sets the x coordinates. If absent, linear coordinate will be
+#'   generated. Data array: a vector, factor, Date/POSIXct vector, matrix
+#'   or list.
+#' @param open Sets the open values. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param high Sets the high values. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param low Sets the low values. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
 #' @param close Sets the close values. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
 #' @param col Subplot grid column (figures created with
@@ -38,9 +47,6 @@
 #' @param decreasing A \code{\link{go_candlestick_decreasing}()} object or
 #'   named list, with properties \code{fillcolor} and \code{line} (see
 #'   \code{\link{go_candlestick_decreasing}()}).
-#' @param fig A \code{go_figure} object.
-#' @param high Sets the high values. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param hoverinfo Determines what trace information appears on hover. If
 #'   `none` or `skip` are set, no information is displayed upon hovering.
 #'   But, if `none` is set, click and hover events are still fired. Any
@@ -115,8 +121,6 @@
 #' @param line A \code{\link{go_candlestick_line}()} object or named list,
 #'   with properties \code{width} (see
 #'   \code{\link{go_candlestick_line}()}).
-#' @param low Sets the low values. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param meta Assigns extra meta information associated with this trace
 #'   that can be used in various text attributes. Attributes such as trace
 #'   `name`, graph, axis and colorbar `title.text`, annotation `text`
@@ -130,8 +134,8 @@
 #'   item and on hover. String.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
-#' @param open Sets the open values. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -180,9 +184,6 @@
 #' @param whiskerwidth Sets the width of the whiskers relative to the box
 #'   width. For example, with 1, the whiskers are as wide as the box(es).
 #'   Number in the interval [0, 1].
-#' @param x Sets the x coordinates. If absent, linear coordinate will be
-#'   generated. Data array: a vector, factor, Date/POSIXct vector, matrix
-#'   or list.
 #' @param xaxis Sets a reference between this trace's x coordinates and a
 #'   2D cartesian x axis. If "x" (the default value), the x coordinates
 #'   refer to `layout.xaxis`. If "x2", the x coordinates refer to
@@ -260,16 +261,16 @@
 #'     close = ~close
 #'   )
 go_candlestick <- function(
-    ..., close = NULL, customdata = NULL, decreasing = NULL, high = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
-    increasing = NULL, legend = NULL, legendgroup = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    line = NULL, low = NULL, meta = NULL, name = NULL, opacity = NULL,
-    open = NULL, selectedpoints = NULL, showlegend = NULL, text = NULL,
+    ..., x = NULL, open = NULL, high = NULL, low = NULL, close = NULL,
+    customdata = NULL, decreasing = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    hovertext = NULL, ids = NULL, increasing = NULL, legend = NULL,
+    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    legendwidth = NULL, line = NULL, meta = NULL, name = NULL,
+    opacity = NULL, selectedpoints = NULL, showlegend = NULL, text = NULL,
     uid = NULL, uirevision = NULL, visible = NULL, whiskerwidth = NULL,
-    x = NULL, xaxis = NULL, xcalendar = NULL, xhoverformat = NULL,
-    xperiod = NULL, xperiod0 = NULL, xperiodalignment = NULL, yaxis = NULL,
+    xaxis = NULL, xcalendar = NULL, xhoverformat = NULL, xperiod = NULL,
+    xperiod0 = NULL, xperiodalignment = NULL, yaxis = NULL,
     yhoverformat = NULL, zorder = NULL, skip_invalid = FALSE
 ) {
   plotly_object("candlestick", NULL, environment(), list(...), skip_invalid)

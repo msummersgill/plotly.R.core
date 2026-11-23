@@ -8,6 +8,8 @@
 \usage{
 go_box(
   ...,
+  x = NULL,
+  y = NULL,
   alignmentgroup = NULL,
   boxmean = NULL,
   boxpoints = NULL,
@@ -60,7 +62,6 @@ go_box(
   visible = NULL,
   whiskerwidth = NULL,
   width = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -68,7 +69,6 @@ go_box(
   xperiod = NULL,
   xperiod0 = NULL,
   xperiodalignment = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -80,13 +80,15 @@ go_box(
   skip_invalid = FALSE
 )
 
-add_box(fig, ...)
+add_box(p, ...)
 
 \method{add_box}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
   alignmentgroup = NULL,
   boxmean = NULL,
   boxpoints = NULL,
@@ -139,7 +141,6 @@ add_box(fig, ...)
   visible = NULL,
   whiskerwidth = NULL,
   width = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -147,7 +148,6 @@ add_box(fig, ...)
   xperiod = NULL,
   xperiod0 = NULL,
   xperiodalignment = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -165,6 +165,14 @@ add_box(fig, ...)
 \arguments{
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
+
+\item{x}{Sets the x sample data or coordinates. See overview for more
+info. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
+
+\item{y}{Sets the y sample data or coordinates. See overview for more
+info. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
 
 \item{alignmentgroup}{Set several traces linked to the same position
 axis or matching axes to the same alignmentgroup. This controls
@@ -471,10 +479,6 @@ Number in the interval [0, 1].}
 value) the width is automatically selected based on the positions of
 other box traces in the same subplot. Number in the interval [0, Inf].}
 
-\item{x}{Sets the x sample data or coordinates. See overview for more
-info. Data array: a vector, factor, Date/POSIXct vector, matrix or
-list.}
-
 \item{x0}{Sets the x coordinate for single-box traces or the starting
 coordinate for multi-box traces set using q1/median/q3. See overview
 for more info. Any value.}
@@ -517,10 +521,6 @@ default would be on a Sunday i.e. 2000-01-02, otherwise it would be at
 \item{xperiodalignment}{Only relevant when the axis `type` is "date".
 Sets the alignment of data points on the x axis. One of
 \code{"start"}, \code{"middle"}, \code{"end"}.}
-
-\item{y}{Sets the y sample data or coordinates. See overview for more
-info. Data array: a vector, factor, Date/POSIXct vector, matrix or
-list.}
 
 \item{y0}{Sets the y coordinate for single-box traces or the starting
 coordinate for multi-box traces set using q1/median/q3. See overview
@@ -572,7 +572,8 @@ to other SVG traces on the same subplot. SVG traces with higher
 \item{skip_invalid}{If \code{TRUE}, silently drop invalid properties
 instead of raising an error.}
 
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{data}{A data frame in which formula properties (e.g. \code{x =
 ~col}) are evaluated. Default: the data given to

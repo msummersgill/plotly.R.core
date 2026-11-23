@@ -6,13 +6,14 @@
 \alias{go_indicator}
 \title{Indicator traces}
 \usage{
-add_indicator(fig, ...)
+add_indicator(p, ...)
 
 \method{add_indicator}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  value = NULL,
   align = NULL,
   customdata = NULL,
   delta = NULL,
@@ -30,7 +31,6 @@ add_indicator(fig, ...)
   title = NULL,
   uid = NULL,
   uirevision = NULL,
-  value = NULL,
   visible = NULL,
   row = NULL,
   col = NULL,
@@ -39,6 +39,7 @@ add_indicator(fig, ...)
 
 go_indicator(
   ...,
+  value = NULL,
   align = NULL,
   customdata = NULL,
   delta = NULL,
@@ -56,13 +57,13 @@ go_indicator(
   title = NULL,
   uid = NULL,
   uirevision = NULL,
-  value = NULL,
   visible = NULL,
   skip_invalid = FALSE
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -81,6 +82,8 @@ column (a factor, character or logical, e.g. \code{marker =
 go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
+
+\item{value}{Sets the number to be displayed. Number.}
 
 \item{align}{Sets the horizontal alignment of the `text` within the box.
 Note that this attribute has no effect if an angular gauge is
@@ -180,8 +183,6 @@ So if your app can add/remove traces before the end of the `data`
 array, such that the same trace has a different index, you can still
 preserve user-driven changes if you give each trace a `uid` that stays
 with it as it moves. Any value.}
-
-\item{value}{Sets the number to be displayed. Number.}
 
 \item{visible}{Determines whether or not this trace is visible. If
 "legendonly", the trace is not drawn, but can appear as a legend item

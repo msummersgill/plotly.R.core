@@ -6,15 +6,15 @@
 \alias{go_parcoords}
 \title{Parcoords traces}
 \usage{
-add_parcoords(fig, ...)
+add_parcoords(p, ...)
 
 \method{add_parcoords}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
-  customdata = NULL,
   dimensions = NULL,
+  customdata = NULL,
   domain = NULL,
   ids = NULL,
   labelangle = NULL,
@@ -40,8 +40,8 @@ add_parcoords(fig, ...)
 
 go_parcoords(
   ...,
-  customdata = NULL,
   dimensions = NULL,
+  customdata = NULL,
   domain = NULL,
   ids = NULL,
   labelangle = NULL,
@@ -64,7 +64,8 @@ go_parcoords(
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -85,17 +86,17 @@ go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
 
-\item{customdata}{Assigns extra data each datum. This may be useful when
-listening to hover, click and selection events. Note that, "scatter"
-traces also appends customdata items in the markers DOM elements Data
-array: a vector, factor, Date/POSIXct vector, matrix or list.}
-
 \item{dimensions}{List, each element a
 \code{\link{go_parcoords_dimension}()} object or named list, with
 properties \code{constraintrange}, \code{label}, \code{multiselect},
 \code{name}, \code{range}, \code{templateitemname}, \code{tickformat},
 \code{ticktext}, \code{tickvals}, \code{values} and \code{visible}
 (see \code{\link{go_parcoords_dimension}()}).}
+
+\item{customdata}{Assigns extra data each datum. This may be useful when
+listening to hover, click and selection events. Note that, "scatter"
+traces also appends customdata items in the markers DOM elements Data
+array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{domain}{A \code{\link{go_domain}()} object or named list, with
 properties \code{column}, \code{row}, \code{x} and \code{y} (see

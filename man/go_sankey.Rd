@@ -6,13 +6,15 @@
 \alias{go_sankey}
 \title{Sankey traces}
 \usage{
-add_sankey(fig, ...)
+add_sankey(p, ...)
 
 \method{add_sankey}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  node = NULL,
+  link = NULL,
   arrangement = NULL,
   customdata = NULL,
   direction = NULL,
@@ -24,10 +26,8 @@ add_sankey(fig, ...)
   legendgrouptitle = NULL,
   legendrank = NULL,
   legendwidth = NULL,
-  link = NULL,
   meta = NULL,
   name = NULL,
-  node = NULL,
   orientation = NULL,
   selectedpoints = NULL,
   textfont = NULL,
@@ -43,6 +43,8 @@ add_sankey(fig, ...)
 
 go_sankey(
   ...,
+  node = NULL,
+  link = NULL,
   arrangement = NULL,
   customdata = NULL,
   direction = NULL,
@@ -54,10 +56,8 @@ go_sankey(
   legendgrouptitle = NULL,
   legendrank = NULL,
   legendwidth = NULL,
-  link = NULL,
   meta = NULL,
   name = NULL,
-  node = NULL,
   orientation = NULL,
   selectedpoints = NULL,
   textfont = NULL,
@@ -70,7 +70,8 @@ go_sankey(
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -90,6 +91,22 @@ column (a factor, character or logical, e.g. \code{marker =
 go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
+
+\item{node}{The nodes of the Sankey plot. A
+\code{\link{go_sankey_node}()} object or named list, with properties
+\code{align}, \code{color}, \code{customdata}, \code{groups},
+\code{hoverinfo}, \code{hoverlabel}, \code{hovertemplate},
+\code{hovertemplatefallback}, \code{label}, \code{line}, \code{pad},
+\code{sort}, \code{thickness}, \code{x} and \code{y} (see
+\code{\link{go_sankey_node}()}).}
+
+\item{link}{The links of the Sankey plot. A
+\code{\link{go_sankey_link}()} object or named list, with properties
+\code{arrowlen}, \code{color}, \code{colorscales}, \code{customdata},
+\code{hovercolor}, \code{hoverinfo}, \code{hoverlabel},
+\code{hovertemplate}, \code{hovertemplatefallback}, \code{label},
+\code{line}, \code{sort}, \code{source}, \code{target} and
+\code{value} (see \code{\link{go_sankey_link}()}).}
 
 \item{arrangement}{If value is `snap` (the default), the node
 arrangement is assisted by automatic snapping of elements to preserve
@@ -155,14 +172,6 @@ to their order in data and layout. Number.}
 \item{legendwidth}{Sets the width (in px or fraction) of the legend for
 this trace. Number in the interval [0, Inf].}
 
-\item{link}{The links of the Sankey plot. A
-\code{\link{go_sankey_link}()} object or named list, with properties
-\code{arrowlen}, \code{color}, \code{colorscales}, \code{customdata},
-\code{hovercolor}, \code{hoverinfo}, \code{hoverlabel},
-\code{hovertemplate}, \code{hovertemplatefallback}, \code{label},
-\code{line}, \code{sort}, \code{source}, \code{target} and
-\code{value} (see \code{\link{go_sankey_link}()}).}
-
 \item{meta}{Assigns extra meta information associated with this trace
 that can be used in various text attributes. Attributes such as trace
 `name`, graph, axis and colorbar `title.text`, annotation `text`
@@ -175,14 +184,6 @@ use `\%\{data[n[.meta[i]\}` where `i` is the index or key of the
 
 \item{name}{Sets the trace name. The trace name appears as the legend
 item and on hover. String.}
-
-\item{node}{The nodes of the Sankey plot. A
-\code{\link{go_sankey_node}()} object or named list, with properties
-\code{align}, \code{color}, \code{customdata}, \code{groups},
-\code{hoverinfo}, \code{hoverlabel}, \code{hovertemplate},
-\code{hovertemplatefallback}, \code{label}, \code{line}, \code{pad},
-\code{sort}, \code{thickness}, \code{x} and \code{y} (see
-\code{\link{go_sankey_node}()}).}
 
 \item{orientation}{Sets the orientation of the Sankey diagram. With `h`
 (the default), the flow runs horizontally. With `v`, the flow runs

@@ -19,6 +19,12 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param x Sets the x coordinates. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param y Sets the y coordinates. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
+#' @param z Sets the z coordinates. Data array: a vector, factor,
+#'   Date/POSIXct vector, matrix or list.
 #' @param col Subplot grid column (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -51,7 +57,6 @@
 #'   \code{symmetric}, \code{thickness}, \code{traceref},
 #'   \code{tracerefminus}, \code{type}, \code{value}, \code{valueminus},
 #'   \code{visible} and \code{width} (see \code{\link{go_error_bar}()}).
-#' @param fig A \code{go_figure} object.
 #' @param hoverinfo Determines what trace information appears on hover. If
 #'   `none` or `skip` are set, no information is displayed upon hovering.
 #'   But, if `none` is set, click and hover events are still fired. Any
@@ -155,6 +160,8 @@
 #'   item and on hover. String.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param projection A \code{\link{go_scatter3d_projection}()} object or
 #'   named list, with properties \code{x}, \code{y} and \code{z} (see
 #'   \code{\link{go_scatter3d_projection}()}).
@@ -238,8 +245,6 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param x Sets the x coordinates. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param xcalendar Sets the calendar system to use with `x` date data. One
 #'   of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},
 #'   \code{"ethiopian"}, \code{"gregorian"}, \code{"hebrew"},
@@ -256,8 +261,6 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `xaxis.hoverformat`. String.
-#' @param y Sets the y coordinates. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param ycalendar Sets the calendar system to use with `y` date data. One
 #'   of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},
 #'   \code{"ethiopian"}, \code{"gregorian"}, \code{"hebrew"},
@@ -274,8 +277,6 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `yaxis.hoverformat`. String.
-#' @param z Sets the z coordinates. Data array: a vector, factor,
-#'   Date/POSIXct vector, matrix or list.
 #' @param zcalendar Sets the calendar system to use with `z` date data. One
 #'   of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},
 #'   \code{"ethiopian"}, \code{"gregorian"}, \code{"hebrew"},
@@ -308,18 +309,19 @@
 #'   go_figure() |>
 #'   add_scatter3d(x = ~wt, y = ~hp, z = ~mpg)
 go_scatter3d <- function(
-    ..., connectgaps = NULL, customdata = NULL, error_x = NULL,
-    error_y = NULL, error_z = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    ..., x = NULL, y = NULL, z = NULL, connectgaps = NULL,
+    customdata = NULL, error_x = NULL, error_y = NULL, error_z = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
     meta = NULL, mode = NULL, name = NULL, opacity = NULL,
     projection = NULL, scene = NULL, showlegend = NULL, surfaceaxis = NULL,
     surfacecolor = NULL, text = NULL, textfont = NULL, textposition = NULL,
     texttemplate = NULL, texttemplatefallback = NULL, uid = NULL,
-    uirevision = NULL, visible = NULL, x = NULL, xcalendar = NULL,
-    xhoverformat = NULL, y = NULL, ycalendar = NULL, yhoverformat = NULL,
-    z = NULL, zcalendar = NULL, zhoverformat = NULL, skip_invalid = FALSE
+    uirevision = NULL, visible = NULL, xcalendar = NULL,
+    xhoverformat = NULL, ycalendar = NULL, yhoverformat = NULL,
+    zcalendar = NULL, zhoverformat = NULL, skip_invalid = FALSE
 ) {
   plotly_object("scatter3d", NULL, environment(), list(...), skip_invalid)
 }

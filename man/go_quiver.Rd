@@ -6,13 +6,15 @@
 \alias{go_quiver}
 \title{Quiver traces}
 \usage{
-add_quiver(fig, ...)
+add_quiver(p, ...)
 
 \method{add_quiver}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
   anchor = NULL,
   arrowref = NULL,
   customdata = NULL,
@@ -47,11 +49,9 @@ add_quiver(fig, ...)
   v = NULL,
   vhoverformat = NULL,
   visible = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xhoverformat = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   yhoverformat = NULL,
@@ -63,6 +63,8 @@ add_quiver(fig, ...)
 
 go_quiver(
   ...,
+  x = NULL,
+  y = NULL,
   anchor = NULL,
   arrowref = NULL,
   customdata = NULL,
@@ -97,11 +99,9 @@ go_quiver(
   v = NULL,
   vhoverformat = NULL,
   visible = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xhoverformat = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   yhoverformat = NULL,
@@ -109,7 +109,8 @@ go_quiver(
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -129,6 +130,12 @@ column (a factor, character or logical, e.g. \code{marker =
 go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
+
+\item{x}{Sets the x coordinates of the vector arrow locations. Data
+array: a vector, factor, Date/POSIXct vector, matrix or list.}
+
+\item{y}{Sets the y coordinates of the vector arrow locations. Data
+array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{anchor}{Sets the vector arrows' anchor with respect to their (x,y)
 positions. Use "tail" to place (x,y) at the base, "tip" to place (x,y)
@@ -334,9 +341,6 @@ values are formatted using generic number format. String.}
 (provided that the legend itself is visible). One of
 \code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
 
-\item{x}{Sets the x coordinates of the vector arrow locations. Data
-array: a vector, factor, Date/POSIXct vector, matrix or list.}
-
 \item{x0}{Alternate to `x`. Builds a linear space of x coordinates. Use
 with `dx` where `x0` is the starting coordinate and `dx` the step. Any
 value.}
@@ -357,9 +361,6 @@ a decimal number as well as "\%\{n\}f" for fractional seconds with n
 digits. For example, "2016-10-13 09:15:23.456" with tickformat
 "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 are formatted using `xaxis.hoverformat`. String.}
-
-\item{y}{Sets the y coordinates of the vector arrow locations. Data
-array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{y0}{Alternate to `y`. Builds a linear space of y coordinates. Use
 with `dy` where `y0` is the starting coordinate and `dy` the step. Any

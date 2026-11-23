@@ -6,13 +6,15 @@
 \alias{go_scattersmith}
 \title{Scattersmith traces}
 \usage{
-add_scattersmith(fig, ...)
+add_scattersmith(p, ...)
 
 \method{add_scattersmith}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  real = NULL,
+  imag = NULL,
   cliponaxis = NULL,
   connectgaps = NULL,
   customdata = NULL,
@@ -25,7 +27,6 @@ add_scattersmith(fig, ...)
   hovertemplatefallback = NULL,
   hovertext = NULL,
   ids = NULL,
-  imag = NULL,
   legend = NULL,
   legendgroup = NULL,
   legendgrouptitle = NULL,
@@ -37,7 +38,6 @@ add_scattersmith(fig, ...)
   mode = NULL,
   name = NULL,
   opacity = NULL,
-  real = NULL,
   selected = NULL,
   selectedpoints = NULL,
   showlegend = NULL,
@@ -58,6 +58,8 @@ add_scattersmith(fig, ...)
 
 go_scattersmith(
   ...,
+  real = NULL,
+  imag = NULL,
   cliponaxis = NULL,
   connectgaps = NULL,
   customdata = NULL,
@@ -70,7 +72,6 @@ go_scattersmith(
   hovertemplatefallback = NULL,
   hovertext = NULL,
   ids = NULL,
-  imag = NULL,
   legend = NULL,
   legendgroup = NULL,
   legendgrouptitle = NULL,
@@ -82,7 +83,6 @@ go_scattersmith(
   mode = NULL,
   name = NULL,
   opacity = NULL,
-  real = NULL,
   selected = NULL,
   selectedpoints = NULL,
   showlegend = NULL,
@@ -100,7 +100,8 @@ go_scattersmith(
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -120,6 +121,15 @@ column (a factor, character or logical, e.g. \code{marker =
 go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
+
+\item{real}{Sets the real component of the data, in units of normalized
+impedance such that real=1, imag=0 is the center of the chart. Data
+array: a vector, factor, Date/POSIXct vector, matrix or list.}
+
+\item{imag}{Sets the imaginary component of the data, in units of
+normalized impedance such that real=1, imag=0 is the center of the
+chart. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
 
 \item{cliponaxis}{Determines whether or not markers and text nodes are
 clipped about the subplot axes. To show markers and text nodes above
@@ -210,11 +220,6 @@ constancy of data points during animation. Should be an array of
 strings, not numbers or any other type. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.}
 
-\item{imag}{Sets the imaginary component of the data, in units of
-normalized impedance such that real=1, imag=0 is the center of the
-chart. Data array: a vector, factor, Date/POSIXct vector, matrix or
-list.}
-
 \item{legend}{Sets the reference to a legend to show this trace in.
 References to these legends are "legend", "legend2", "legend3", etc.
 Settings for these legends are set in the layout, under
@@ -276,10 +281,6 @@ item and on hover. String.}
 
 \item{opacity}{Sets the opacity of the trace. Number in the interval [0,
 1].}
-
-\item{real}{Sets the real component of the data, in units of normalized
-impedance such that real=1, imag=0 is the center of the chart. Data
-array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
 \item{selected}{A \code{\link{go_selected}()} object or named list, with
 properties \code{marker} and \code{textfont} (see

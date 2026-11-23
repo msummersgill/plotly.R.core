@@ -19,6 +19,14 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param x Sets the X coordinates of the vertices on X axis. Data array: a
+#'   vector, factor, Date/POSIXct vector, matrix or list.
+#' @param y Sets the Y coordinates of the vertices on Y axis. Data array: a
+#'   vector, factor, Date/POSIXct vector, matrix or list.
+#' @param z Sets the Z coordinates of the vertices on Z axis. Data array: a
+#'   vector, factor, Date/POSIXct vector, matrix or list.
+#' @param value Sets the 4th dimension (value) of the vertices. Data array:
+#'   a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `colorscale`. In case `colorscale` is unspecified or `autocolorscale`
@@ -78,7 +86,6 @@
 #'   \code{\link{go_figure}()}. Only the evaluated values are added to the
 #'   trace. A \code{crosstalk::SharedData} works the same way, and links
 #'   the trace to its crosstalk group (see \code{\link{highlight}()}).
-#' @param fig A \code{go_figure} object.
 #' @param flatshading Determines whether or not normal smoothing is applied
 #'   to the meshes, creating meshes with an angular, low-poly look via flat
 #'   reflections. Logical.
@@ -176,6 +183,8 @@
 #'   overlay of multiple transparent surfaces may not perfectly be sorted
 #'   in depth by the webgl API. This behavior may be improved in the near
 #'   future and is subject to change. Number in the interval [0, 1].
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param reversescale Reverses the color mapping if true. If true, `cmin`
 #'   will correspond to the last color in the array and `cmax` will
 #'   correspond to the first color. Logical.
@@ -228,8 +237,6 @@
 #'   array, such that the same trace has a different index, you can still
 #'   preserve user-driven changes if you give each trace a `uid` that stays
 #'   with it as it moves. Any value.
-#' @param value Sets the 4th dimension (value) of the vertices. Data array:
-#'   a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param valuehoverformat Sets the hover text formatting rule for `value`
 #'   using d3 formatting mini-languages which are very similar to those in
 #'   Python. For numbers, see:
@@ -239,8 +246,6 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param x Sets the X coordinates of the vertices on X axis. Data array: a
-#'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param xhoverformat Sets the hover text formatting rule for `x` using d3
 #'   formatting mini-languages which are very similar to those in Python.
 #'   For numbers, see:
@@ -251,8 +256,6 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `xaxis.hoverformat`. String.
-#' @param y Sets the Y coordinates of the vertices on Y axis. Data array: a
-#'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param yhoverformat Sets the hover text formatting rule for `y` using d3
 #'   formatting mini-languages which are very similar to those in Python.
 #'   For numbers, see:
@@ -263,8 +266,6 @@
 #'   digits. For example, "2016-10-13 09:15:23.456" with tickformat
 #'   "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 #'   are formatted using `yaxis.hoverformat`. String.
-#' @param z Sets the Z coordinates of the vertices on Z axis. Data array: a
-#'   vector, factor, Date/POSIXct vector, matrix or list.
 #' @param zhoverformat Sets the hover text formatting rule for `z` using d3
 #'   formatting mini-languages which are very similar to those in Python.
 #'   For numbers, see:
@@ -299,20 +300,20 @@
 #'     isomax = 50
 #'   )
 go_isosurface <- function(
-    ..., autocolorscale = NULL, caps = NULL, cauto = NULL, cmax = NULL,
-    cmid = NULL, cmin = NULL, coloraxis = NULL, colorbar = NULL,
-    colorscale = NULL, contour = NULL, customdata = NULL,
-    flatshading = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, isomax = NULL, isomin = NULL, legend = NULL,
-    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, lighting = NULL, lightposition = NULL, meta = NULL,
-    name = NULL, opacity = NULL, reversescale = NULL, scene = NULL,
-    showlegend = NULL, showscale = NULL, slices = NULL, spaceframe = NULL,
-    surface = NULL, text = NULL, uid = NULL, uirevision = NULL,
-    value = NULL, valuehoverformat = NULL, visible = NULL, x = NULL,
-    xhoverformat = NULL, y = NULL, yhoverformat = NULL, z = NULL,
-    zhoverformat = NULL, skip_invalid = FALSE
+    ..., x = NULL, y = NULL, z = NULL, value = NULL, autocolorscale = NULL,
+    caps = NULL, cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL,
+    coloraxis = NULL, colorbar = NULL, colorscale = NULL, contour = NULL,
+    customdata = NULL, flatshading = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    hovertext = NULL, ids = NULL, isomax = NULL, isomin = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, lighting = NULL,
+    lightposition = NULL, meta = NULL, name = NULL, opacity = NULL,
+    reversescale = NULL, scene = NULL, showlegend = NULL, showscale = NULL,
+    slices = NULL, spaceframe = NULL, surface = NULL, text = NULL,
+    uid = NULL, uirevision = NULL, valuehoverformat = NULL, visible = NULL,
+    xhoverformat = NULL, yhoverformat = NULL, zhoverformat = NULL,
+    skip_invalid = FALSE
 ) {
   plotly_object("isosurface", NULL, environment(), list(...), skip_invalid)
 }

@@ -226,3 +226,51 @@ read_named_colors <- function(
   x <- readLines(path)
   x[nzchar(x) & !startsWith(x, "#")]
 }
+
+# The core dimensional properties of each trace type: listed first in its
+# go_<trace>() and add_<trace>() arguments and documentation (the rest are
+# alphabetical). Types not listed use x, y, z.
+TRACE_DIMENSIONS <- list(
+  scatterpolar = c("r", "theta"),
+  scatterpolargl = c("r", "theta"),
+  barpolar = c("r", "theta"),
+  scattergeo = c("lat", "lon", "locations"),
+  scattermap = c("lat", "lon"),
+  densitymap = c("lat", "lon", "z"),
+  choropleth = c("locations", "z"),
+  choroplethmap = c("locations", "z"),
+  ohlc = c("x", "open", "high", "low", "close"),
+  candlestick = c("x", "open", "high", "low", "close"),
+  scatterternary = c("a", "b", "c"),
+  scattersmith = c("real", "imag"),
+  scattercarpet = c("a", "b"),
+  carpet = c("a", "b", "x", "y"),
+  contourcarpet = c("a", "b", "z"),
+  pie = c("labels", "values"),
+  funnelarea = c("labels", "values"),
+  sunburst = c("labels", "parents", "values", "ids"),
+  treemap = c("labels", "parents", "values", "ids"),
+  icicle = c("labels", "parents", "values", "ids"),
+  sankey = c("node", "link"),
+  table = c("header", "cells"),
+  parcoords = "dimensions",
+  parcats = "dimensions",
+  splom = "dimensions",
+  indicator = "value",
+  cone = c("x", "y", "z", "u", "v", "w"),
+  streamtube = c("x", "y", "z", "u", "v", "w"),
+  mesh3d = c("x", "y", "z", "i", "j", "k"),
+  isosurface = c("x", "y", "z", "value"),
+  volume = c("x", "y", "z", "value"),
+  image = c("z", "source")
+)
+
+# `props` (property names of schema key `key`) in argument order: a trace's
+# dimensions first, then the rest as given.
+order_props <- function(key, props) {
+  if (grepl(".", key, fixed = TRUE)) {
+    return(props)
+  }
+  dims <- intersect(TRACE_DIMENSIONS[[key]] %||% c("x", "y", "z"), props)
+  c(dims, setdiff(props, dims))
+}

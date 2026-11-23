@@ -450,6 +450,7 @@ object_roots_for <- function(nodes, shared_of) {
 # Arguments of figure functions documented on constructor pages.
 FIGURE_ARG_DOCS <- list(
   fig = "A \\code{go_figure} object.",
+  p = "A \\code{go_figure} object (or, through methods for its class, another figure, e.g. a \\code{plot_ly()} figure of the plotly package).",
   data = paste(
     "A data frame in which formula properties (e.g. \\code{x = ~col})",
     "are evaluated. Default: the data given to",
@@ -791,7 +792,8 @@ property_params <- function(key, root, ctx, extra = list()) {
     ch$name
   )
   texts <- c(texts, extra[setdiff(names(extra), names(texts))])
-  unlist(lapply(sort(names(texts)), function(n) param_block(n, texts[[n]])))
+  props <- order_props(key, sort(names(texts)))
+  unlist(lapply(props, function(n) param_block(n, texts[[n]])))
 }
 
 # \describe{} lines for the properties of `key`.
@@ -1331,10 +1333,11 @@ constructor_code <- function(
   fn = validators[[key]]$data_class
 ) {
   ch <- child_nodes(key, nodes)
-  # Properties come after `...` so they must be named in full (no partial matching).
+  # Properties come after `...` so they must be named in full (no partial
+  # matching); a trace's dimensions (x, y, ...) first.
   args <- c(
     "...",
-    paste0(ch$name, " = NULL"),
+    paste0(order_props(key, ch$name), " = NULL"),
     "skip_invalid = FALSE"
   )
   c(
@@ -1359,7 +1362,7 @@ page_figure_fns <- function(page, validators) {
   has_xy <- all(c("xaxis", "yaxis") %in% entry$children)
   list(list(
     fn = paste0("add_", page),
-    args = c("fig", "data", "split", "row", "col", if (has_xy) "secondary_y")
+    args = c("p", "data", "split", "row", "col", if (has_xy) "secondary_y")
   ))
 }
 

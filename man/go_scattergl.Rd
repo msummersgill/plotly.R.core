@@ -6,13 +6,15 @@
 \alias{go_scattergl}
 \title{Scattergl traces}
 \usage{
-add_scattergl(fig, ...)
+add_scattergl(p, ...)
 
 \method{add_scattergl}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
   connectgaps = NULL,
   customdata = NULL,
   dx = NULL,
@@ -50,7 +52,6 @@ add_scattergl(fig, ...)
   uirevision = NULL,
   unselected = NULL,
   visible = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -58,7 +59,6 @@ add_scattergl(fig, ...)
   xperiod = NULL,
   xperiod0 = NULL,
   xperiodalignment = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -74,6 +74,8 @@ add_scattergl(fig, ...)
 
 go_scattergl(
   ...,
+  x = NULL,
+  y = NULL,
   connectgaps = NULL,
   customdata = NULL,
   dx = NULL,
@@ -111,7 +113,6 @@ go_scattergl(
   uirevision = NULL,
   unselected = NULL,
   visible = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -119,7 +120,6 @@ go_scattergl(
   xperiod = NULL,
   xperiod0 = NULL,
   xperiodalignment = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -131,7 +131,8 @@ go_scattergl(
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -151,6 +152,12 @@ column (a factor, character or logical, e.g. \code{marker =
 go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
+
+\item{x}{Sets the x coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
+
+\item{y}{Sets the y coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
 
 \item{connectgaps}{Determines whether or not gaps (i.e. \{nan\} or
 missing values) in the provided data arrays are connected. Logical.}
@@ -395,9 +402,6 @@ with properties \code{marker} and \code{textfont} (see
 (provided that the legend itself is visible). One of
 \code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
 
-\item{x}{Sets the x coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
-
 \item{x0}{Alternate to `x`. Builds a linear space of x coordinates. Use
 with `dx` where `x0` is the starting coordinate and `dx` the step. Any
 value.}
@@ -440,9 +444,6 @@ default would be on a Sunday i.e. 2000-01-02, otherwise it would be at
 \item{xperiodalignment}{Only relevant when the axis `type` is "date".
 Sets the alignment of data points on the x axis. One of
 \code{"start"}, \code{"middle"}, \code{"end"}.}
-
-\item{y}{Sets the y coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
 
 \item{y0}{Alternate to `y`. Builds a linear space of y coordinates. Use
 with `dy` where `y0` is the starting coordinate and `dy` the step. Any

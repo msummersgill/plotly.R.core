@@ -6,13 +6,15 @@
 \alias{go_image}
 \title{Image traces}
 \usage{
-add_image(fig, ...)
+add_image(p, ...)
 
 \method{add_image}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  z = NULL,
+  source = NULL,
   colormodel = NULL,
   customdata = NULL,
   dx = NULL,
@@ -30,7 +32,6 @@ add_image(fig, ...)
   meta = NULL,
   name = NULL,
   opacity = NULL,
-  source = NULL,
   text = NULL,
   uid = NULL,
   uirevision = NULL,
@@ -39,7 +40,6 @@ add_image(fig, ...)
   xaxis = NULL,
   y0 = NULL,
   yaxis = NULL,
-  z = NULL,
   zmax = NULL,
   zmin = NULL,
   zorder = NULL,
@@ -52,6 +52,8 @@ add_image(fig, ...)
 
 go_image(
   ...,
+  z = NULL,
+  source = NULL,
   colormodel = NULL,
   customdata = NULL,
   dx = NULL,
@@ -69,7 +71,6 @@ go_image(
   meta = NULL,
   name = NULL,
   opacity = NULL,
-  source = NULL,
   text = NULL,
   uid = NULL,
   uirevision = NULL,
@@ -78,7 +79,6 @@ go_image(
   xaxis = NULL,
   y0 = NULL,
   yaxis = NULL,
-  z = NULL,
   zmax = NULL,
   zmin = NULL,
   zorder = NULL,
@@ -87,7 +87,8 @@ go_image(
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -106,6 +107,14 @@ column (a factor, character or logical, e.g. \code{marker =
 go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
+
+\item{z}{A 2-dimensional array in which each element is an array of 3 or
+4 numbers representing a color. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.}
+
+\item{source}{Specifies the data URI of the image to be visualized. The
+URI consists of "data:image/[<media
+subtype\\\\>][;base64\\\\],<data\\\\>" String.}
 
 \item{colormodel}{Color model used to map the numerical color components
 described in `z` into colors. If `source` is specified, this attribute
@@ -214,10 +223,6 @@ item and on hover. String.}
 \item{opacity}{Sets the opacity of the trace. Number in the interval [0,
 1].}
 
-\item{source}{Specifies the data URI of the image to be visualized. The
-URI consists of "data:image/[<media
-subtype\\\\>][;base64\\\\],<data\\\\>" String.}
-
 \item{text}{Sets the text elements associated with each z value. Data
 array: a vector, factor, Date/POSIXct vector, matrix or list.}
 
@@ -266,10 +271,6 @@ an explicit y axis range. Any value.}
 refer to `layout.yaxis`. If "y2", the y coordinates refer to
 `layout.yaxis2`, and so on. Subplot id: \code{"y"}, \code{"y2"},
 \code{"y3"}, ....}
-
-\item{z}{A 2-dimensional array in which each element is an array of 3 or
-4 numbers representing a color. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.}
 
 \item{zmax}{Array defining the higher bound for each color component.
 Note that the default value will depend on the colormodel. For the

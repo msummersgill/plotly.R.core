@@ -6,16 +6,16 @@
 \alias{go_splom}
 \title{Splom traces}
 \usage{
-add_splom(fig, ...)
+add_splom(p, ...)
 
 \method{add_splom}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  dimensions = NULL,
   customdata = NULL,
   diagonal = NULL,
-  dimensions = NULL,
   hoverinfo = NULL,
   hoverlabel = NULL,
   hovertemplate = NULL,
@@ -52,9 +52,9 @@ add_splom(fig, ...)
 
 go_splom(
   ...,
+  dimensions = NULL,
   customdata = NULL,
   diagonal = NULL,
-  dimensions = NULL,
   hoverinfo = NULL,
   hoverlabel = NULL,
   hovertemplate = NULL,
@@ -88,7 +88,8 @@ go_splom(
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -109,6 +110,12 @@ go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
 
+\item{dimensions}{List, each element a
+\code{\link{go_splom_dimension}()} object or named list, with
+properties \code{axis}, \code{label}, \code{name},
+\code{templateitemname}, \code{values} and \code{visible} (see
+\code{\link{go_splom_dimension}()}).}
+
 \item{customdata}{Assigns extra data each datum. This may be useful when
 listening to hover, click and selection events. Note that, "scatter"
 traces also appends customdata items in the markers DOM elements Data
@@ -117,12 +124,6 @@ array: a vector, factor, Date/POSIXct vector, matrix or list.}
 \item{diagonal}{A \code{\link{go_splom_diagonal}()} object or named
 list, with properties \code{visible} (see
 \code{\link{go_splom_diagonal}()}).}
-
-\item{dimensions}{List, each element a
-\code{\link{go_splom_dimension}()} object or named list, with
-properties \code{axis}, \code{label}, \code{name},
-\code{templateitemname}, \code{values} and \code{visible} (see
-\code{\link{go_splom_dimension}()}).}
 
 \item{hoverinfo}{Determines what trace information appears on hover. If
 `none` or `skip` are set, no information is displayed upon hovering.

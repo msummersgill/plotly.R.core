@@ -17,6 +17,10 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param lat Sets the latitude coordinates (in degrees North). Data array:
+#'   a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param lon Sets the longitude coordinates (in degrees East). Data array:
+#'   a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param below Determines if this scattermap trace's layers are to be
 #'   inserted before the layer with the specified ID. By default,
 #'   scattermap layers are inserted above all the base layers. To place the
@@ -41,7 +45,6 @@
 #'   the evaluated values are added to the trace. A
 #'   \code{crosstalk::SharedData} works the same way, and links the trace
 #'   to its crosstalk group (see \code{\link{highlight}()}).
-#' @param fig A \code{go_figure} object.
 #' @param fill Sets the area to fill with a solid color. Use with
 #'   `fillcolor` if not "none". "toself" connects the endpoints of the
 #'   trace (or each segment of the trace if it has gaps) into a closed
@@ -99,8 +102,6 @@
 #'   constancy of data points during animation. Should be an array of
 #'   strings, not numbers or any other type. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
-#' @param lat Sets the latitude coordinates (in degrees North). Data array:
-#'   a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param legend Sets the reference to a legend to show this trace in.
 #'   References to these legends are "legend", "legend2", "legend3", etc.
 #'   Settings for these legends are set in the layout, under
@@ -125,8 +126,6 @@
 #' @param line A \code{\link{go_scattermap_line}()} object or named list,
 #'   with properties \code{color} and \code{width} (see
 #'   \code{\link{go_scattermap_line}()}).
-#' @param lon Sets the longitude coordinates (in degrees East). Data array:
-#'   a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param marker A \code{\link{go_scattermap_marker}()} object or named
 #'   list, with properties \code{allowoverlap}, \code{angle},
 #'   \code{autocolorscale}, \code{cauto}, \code{cmax}, \code{cmid},
@@ -151,6 +150,8 @@
 #'   item and on hover. String.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param row Subplot grid row (figures created with
 #'   \code{\link{make_subplots}()} only). May be \code{"all"} or a vector
 #'   to address several cells.
@@ -253,13 +254,13 @@
 #'   go_figure() |>
 #'   add_scattermap(lat = ~lat, lon = ~long)
 go_scattermap <- function(
-    ..., below = NULL, cluster = NULL, connectgaps = NULL,
-    customdata = NULL, fill = NULL, fillcolor = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    hovertext = NULL, ids = NULL, lat = NULL, legend = NULL,
-    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, line = NULL, lon = NULL, marker = NULL, meta = NULL,
-    mode = NULL, name = NULL, opacity = NULL, selected = NULL,
+    ..., lat = NULL, lon = NULL, below = NULL, cluster = NULL,
+    connectgaps = NULL, customdata = NULL, fill = NULL, fillcolor = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
+    meta = NULL, mode = NULL, name = NULL, opacity = NULL, selected = NULL,
     selectedpoints = NULL, showlegend = NULL, subplot = NULL, text = NULL,
     textfont = NULL, textposition = NULL, texttemplate = NULL,
     texttemplatefallback = NULL, uid = NULL, uirevision = NULL,

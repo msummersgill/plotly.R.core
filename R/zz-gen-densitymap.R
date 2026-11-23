@@ -16,6 +16,13 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param lat Sets the latitude coordinates (in degrees North). Data array:
+#'   a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param lon Sets the longitude coordinates (in degrees East). Data array:
+#'   a vector, factor, Date/POSIXct vector, matrix or list.
+#' @param z Sets the points' weight. For example, a value of 10 would be
+#'   equivalent to having 10 points of weight 1 in the same spot Data
+#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param autocolorscale Determines whether the colorscale is a default
 #'   palette (`autocolorscale: true`) or the palette determined by
 #'   `colorscale`. In case `colorscale` is unspecified or `autocolorscale`
@@ -60,7 +67,6 @@
 #'   \code{\link{go_figure}()}. Only the evaluated values are added to the
 #'   trace. A \code{crosstalk::SharedData} works the same way, and links
 #'   the trace to its crosstalk group (see \code{\link{highlight}()}).
-#' @param fig A \code{go_figure} object.
 #' @param hoverinfo Determines what trace information appears on hover. If
 #'   `none` or `skip` are set, no information is displayed upon hovering.
 #'   But, if `none` is set, click and hover events are still fired. Any
@@ -111,8 +117,6 @@
 #'   constancy of data points during animation. Should be an array of
 #'   strings, not numbers or any other type. Data array: a vector, factor,
 #'   Date/POSIXct vector, matrix or list.
-#' @param lat Sets the latitude coordinates (in degrees North). Data array:
-#'   a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param legend Sets the reference to a legend to show this trace in.
 #'   References to these legends are "legend", "legend2", "legend3", etc.
 #'   Settings for these legends are set in the layout, under
@@ -134,8 +138,6 @@
 #'   to their order in data and layout. Number.
 #' @param legendwidth Sets the width (in px or fraction) of the legend for
 #'   this trace. Number in the interval [0, Inf].
-#' @param lon Sets the longitude coordinates (in degrees East). Data array:
-#'   a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param meta Assigns extra meta information associated with this trace
 #'   that can be used in various text attributes. Attributes such as trace
 #'   `name`, graph, axis and colorbar `title.text`, annotation `text`
@@ -149,6 +151,8 @@
 #'   item and on hover. String.
 #' @param opacity Sets the opacity of the trace. Number in the interval [0,
 #'   1].
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param radius Sets the radius of influence of one `lon` / `lat` point in
 #'   pixels. Increasing the value makes the densitymap trace smoother, but
 #'   less detailed. Number in the interval [1, Inf], or a vector of these.
@@ -200,9 +204,6 @@
 #'   "legendonly", the trace is not drawn, but can appear as a legend item
 #'   (provided that the legend itself is visible). One of
 #'   \code{"legendonly"}, \code{TRUE}, \code{FALSE}.
-#' @param z Sets the points' weight. For example, a value of 10 would be
-#'   equivalent to having 10 points of weight 1 in the same spot Data
-#'   array: a vector, factor, Date/POSIXct vector, matrix or list.
 #' @param zauto Determines whether or not the color domain is computed with
 #'   respect to the input data (here in `z`) or the bounds set in `zmin`
 #'   and `zmax` Defaults to `false` when `zmin` and `zmax` are set by the
@@ -232,15 +233,15 @@
 #'   go_figure() |>
 #'   add_densitymap(lat = ~lat, lon = ~long, z = ~mag)
 go_densitymap <- function(
-    ..., autocolorscale = NULL, below = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, customdata = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    hovertext = NULL, ids = NULL, lat = NULL, legend = NULL,
-    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, lon = NULL, meta = NULL, name = NULL,
+    ..., lat = NULL, lon = NULL, z = NULL, autocolorscale = NULL,
+    below = NULL, coloraxis = NULL, colorbar = NULL, colorscale = NULL,
+    customdata = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, meta = NULL, name = NULL,
     opacity = NULL, radius = NULL, reversescale = NULL, showlegend = NULL,
     showscale = NULL, subplot = NULL, text = NULL, uid = NULL,
-    uirevision = NULL, visible = NULL, z = NULL, zauto = NULL, zmax = NULL,
+    uirevision = NULL, visible = NULL, zauto = NULL, zmax = NULL,
     zmid = NULL, zmin = NULL, skip_invalid = FALSE
 ) {
   plotly_object("densitymap", NULL, environment(), list(...), skip_invalid)

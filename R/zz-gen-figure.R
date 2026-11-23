@@ -69,27 +69,27 @@ LAYOUT_PROPERTIES <- c("activeselection", "activeshape", "annotations", "autosiz
 
 #' @rdname go_bar
 #' @export
-add_bar <- function(fig, ...) UseMethod("add_bar")
+add_bar <- function(p, ...) UseMethod("add_bar")
 
 #' @rdname go_bar
 #' @export
 add_bar.default <- function(
-    fig, ..., data = NULL, split = NULL, alignmentgroup = NULL, base = NULL,
-    cliponaxis = NULL, constraintext = NULL, customdata = NULL, dx = NULL,
-    dy = NULL, error_x = NULL, error_y = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    hovertext = NULL, ids = NULL, insidetextanchor = NULL,
-    insidetextfont = NULL, legend = NULL, legendgroup = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    marker = NULL, meta = NULL, name = NULL, offset = NULL,
-    offsetgroup = NULL, opacity = NULL, orientation = NULL,
-    outsidetextfont = NULL, selected = NULL, selectedpoints = NULL,
-    showlegend = NULL, text = NULL, textangle = NULL, textfont = NULL,
-    textposition = NULL, texttemplate = NULL, texttemplatefallback = NULL,
-    uid = NULL, uirevision = NULL, unselected = NULL, visible = NULL,
-    width = NULL, x = NULL, x0 = NULL, xaxis = NULL, xcalendar = NULL,
-    xhoverformat = NULL, xperiod = NULL, xperiod0 = NULL,
-    xperiodalignment = NULL, y = NULL, y0 = NULL, yaxis = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL,
+    alignmentgroup = NULL, base = NULL, cliponaxis = NULL,
+    constraintext = NULL, customdata = NULL, dx = NULL, dy = NULL,
+    error_x = NULL, error_y = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, insidetextanchor = NULL, insidetextfont = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
+    name = NULL, offset = NULL, offsetgroup = NULL, opacity = NULL,
+    orientation = NULL, outsidetextfont = NULL, selected = NULL,
+    selectedpoints = NULL, showlegend = NULL, text = NULL, textangle = NULL,
+    textfont = NULL, textposition = NULL, texttemplate = NULL,
+    texttemplatefallback = NULL, uid = NULL, uirevision = NULL,
+    unselected = NULL, visible = NULL, width = NULL, x0 = NULL,
+    xaxis = NULL, xcalendar = NULL, xhoverformat = NULL, xperiod = NULL,
+    xperiod0 = NULL, xperiodalignment = NULL, y0 = NULL, yaxis = NULL,
     ycalendar = NULL, yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
     yperiodalignment = NULL, zorder = NULL, row = NULL, col = NULL,
     secondary_y = NULL, skip_invalid = FALSE
@@ -97,222 +97,223 @@ add_bar.default <- function(
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "bar", environment(), list(...), data, split, skip_invalid,
+    p, "bar", environment(), list(...), data, split, skip_invalid,
     row = row, col = col, secondary_y = secondary_y
   )
 }
 
 #' @rdname go_barpolar
 #' @export
-add_barpolar <- function(fig, ...) UseMethod("add_barpolar")
+add_barpolar <- function(p, ...) UseMethod("add_barpolar")
 
 #' @rdname go_barpolar
 #' @export
 add_barpolar.default <- function(
-    fig, ..., data = NULL, split = NULL, base = NULL, customdata = NULL,
-    dr = NULL, dtheta = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
-    name = NULL, offset = NULL, opacity = NULL, r = NULL, r0 = NULL,
-    selected = NULL, selectedpoints = NULL, showlegend = NULL,
-    subplot = NULL, text = NULL, theta = NULL, theta0 = NULL,
-    thetaunit = NULL, uid = NULL, uirevision = NULL, unselected = NULL,
-    visible = NULL, width = NULL, row = NULL, col = NULL,
-    skip_invalid = FALSE
+    p, ..., data = NULL, split = NULL, r = NULL, theta = NULL, base = NULL,
+    customdata = NULL, dr = NULL, dtheta = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    marker = NULL, meta = NULL, name = NULL, offset = NULL, opacity = NULL,
+    r0 = NULL, selected = NULL, selectedpoints = NULL, showlegend = NULL,
+    subplot = NULL, text = NULL, theta0 = NULL, thetaunit = NULL,
+    uid = NULL, uirevision = NULL, unselected = NULL, visible = NULL,
+    width = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "barpolar", environment(), list(...), data, split, skip_invalid,
+    p, "barpolar", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_box
 #' @export
-add_box <- function(fig, ...) UseMethod("add_box")
+add_box <- function(p, ...) UseMethod("add_box")
 
 #' @rdname go_box
 #' @export
 add_box.default <- function(
-    fig, ..., data = NULL, split = NULL, alignmentgroup = NULL,
-    boxmean = NULL, boxpoints = NULL, customdata = NULL, dx = NULL,
-    dy = NULL, fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hoveron = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    hovertext = NULL, ids = NULL, jitter = NULL, legend = NULL,
-    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, line = NULL, lowerfence = NULL, marker = NULL,
-    mean = NULL, median = NULL, meta = NULL, name = NULL, notched = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL,
+    alignmentgroup = NULL, boxmean = NULL, boxpoints = NULL,
+    customdata = NULL, dx = NULL, dy = NULL, fillcolor = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, jitter = NULL, legend = NULL, legendgroup = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    line = NULL, lowerfence = NULL, marker = NULL, mean = NULL,
+    median = NULL, meta = NULL, name = NULL, notched = NULL,
     notchspan = NULL, notchwidth = NULL, offsetgroup = NULL, opacity = NULL,
     orientation = NULL, pointpos = NULL, q1 = NULL, q3 = NULL,
     quartilemethod = NULL, sd = NULL, sdmultiple = NULL, selected = NULL,
     selectedpoints = NULL, showlegend = NULL, showwhiskers = NULL,
     sizemode = NULL, text = NULL, uid = NULL, uirevision = NULL,
     unselected = NULL, upperfence = NULL, visible = NULL,
-    whiskerwidth = NULL, width = NULL, x = NULL, x0 = NULL, xaxis = NULL,
+    whiskerwidth = NULL, width = NULL, x0 = NULL, xaxis = NULL,
     xcalendar = NULL, xhoverformat = NULL, xperiod = NULL, xperiod0 = NULL,
-    xperiodalignment = NULL, y = NULL, y0 = NULL, yaxis = NULL,
-    ycalendar = NULL, yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
+    xperiodalignment = NULL, y0 = NULL, yaxis = NULL, ycalendar = NULL,
+    yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
     yperiodalignment = NULL, zorder = NULL, row = NULL, col = NULL,
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "box", environment(), list(...), data, split, skip_invalid,
+    p, "box", environment(), list(...), data, split, skip_invalid,
     row = row, col = col, secondary_y = secondary_y
   )
 }
 
 #' @rdname go_candlestick
 #' @export
-add_candlestick <- function(fig, ...) UseMethod("add_candlestick")
+add_candlestick <- function(p, ...) UseMethod("add_candlestick")
 
 #' @rdname go_candlestick
 #' @export
 add_candlestick.default <- function(
-    fig, ..., data = NULL, split = NULL, close = NULL, customdata = NULL,
-    decreasing = NULL, high = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, increasing = NULL, legend = NULL, legendgroup = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, open = NULL, high = NULL,
+    low = NULL, close = NULL, customdata = NULL, decreasing = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
+    increasing = NULL, legend = NULL, legendgroup = NULL,
     legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    line = NULL, low = NULL, meta = NULL, name = NULL, opacity = NULL,
-    open = NULL, selectedpoints = NULL, showlegend = NULL, text = NULL,
-    uid = NULL, uirevision = NULL, visible = NULL, whiskerwidth = NULL,
-    x = NULL, xaxis = NULL, xcalendar = NULL, xhoverformat = NULL,
-    xperiod = NULL, xperiod0 = NULL, xperiodalignment = NULL, yaxis = NULL,
-    yhoverformat = NULL, zorder = NULL, row = NULL, col = NULL,
-    secondary_y = NULL, skip_invalid = FALSE
+    line = NULL, meta = NULL, name = NULL, opacity = NULL,
+    selectedpoints = NULL, showlegend = NULL, text = NULL, uid = NULL,
+    uirevision = NULL, visible = NULL, whiskerwidth = NULL, xaxis = NULL,
+    xcalendar = NULL, xhoverformat = NULL, xperiod = NULL, xperiod0 = NULL,
+    xperiodalignment = NULL, yaxis = NULL, yhoverformat = NULL,
+    zorder = NULL, row = NULL, col = NULL, secondary_y = NULL,
+    skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "candlestick", environment(), list(...), data, split, skip_invalid,
+    p, "candlestick", environment(), list(...), data, split, skip_invalid,
     row = row, col = col, secondary_y = secondary_y
   )
 }
 
 #' @rdname go_carpet
 #' @export
-add_carpet <- function(fig, ...) UseMethod("add_carpet")
+add_carpet <- function(p, ...) UseMethod("add_carpet")
 
 #' @rdname go_carpet
 #' @export
 add_carpet.default <- function(
-    fig, ..., data = NULL, split = NULL, a = NULL, a0 = NULL, aaxis = NULL,
-    b = NULL, b0 = NULL, baxis = NULL, carpet = NULL, cheaterslope = NULL,
-    color = NULL, customdata = NULL, da = NULL, db = NULL, font = NULL,
-    ids = NULL, legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, meta = NULL, name = NULL, opacity = NULL,
-    uid = NULL, uirevision = NULL, visible = NULL, x = NULL, xaxis = NULL,
-    y = NULL, yaxis = NULL, zorder = NULL, row = NULL, col = NULL,
-    secondary_y = NULL, skip_invalid = FALSE
+    p, ..., data = NULL, split = NULL, a = NULL, b = NULL, x = NULL,
+    y = NULL, a0 = NULL, aaxis = NULL, b0 = NULL, baxis = NULL,
+    carpet = NULL, cheaterslope = NULL, color = NULL, customdata = NULL,
+    da = NULL, db = NULL, font = NULL, ids = NULL, legend = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    meta = NULL, name = NULL, opacity = NULL, uid = NULL, uirevision = NULL,
+    visible = NULL, xaxis = NULL, yaxis = NULL, zorder = NULL, row = NULL,
+    col = NULL, secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "carpet", environment(), list(...), data, split, skip_invalid,
+    p, "carpet", environment(), list(...), data, split, skip_invalid,
     row = row, col = col, secondary_y = secondary_y
   )
 }
 
 #' @rdname go_choropleth
 #' @export
-add_choropleth <- function(fig, ...) UseMethod("add_choropleth")
+add_choropleth <- function(p, ...) UseMethod("add_choropleth")
 
 #' @rdname go_choropleth
 #' @export
 add_choropleth.default <- function(
-    fig, ..., data = NULL, split = NULL, autocolorscale = NULL,
-    coloraxis = NULL, colorbar = NULL, colorscale = NULL, customdata = NULL,
-    featureidkey = NULL, geo = NULL, geojson = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    locationmode = NULL, locations = NULL, marker = NULL, meta = NULL,
-    name = NULL, reversescale = NULL, selected = NULL,
-    selectedpoints = NULL, showlegend = NULL, showscale = NULL, text = NULL,
-    uid = NULL, uirevision = NULL, unselected = NULL, visible = NULL,
-    z = NULL, zauto = NULL, zmax = NULL, zmid = NULL, zmin = NULL,
-    row = NULL, col = NULL, skip_invalid = FALSE
-) {
-  # formulas (x = ~col) are evaluated in `data` or the figure's data, one
-  # trace per group of `split` and of discrete colour columns
-  add_trace_with_data(
-    fig, "choropleth", environment(), list(...), data, split, skip_invalid,
-    row = row, col = col
-  )
-}
-
-#' @rdname go_choroplethmap
-#' @export
-add_choroplethmap <- function(fig, ...) UseMethod("add_choroplethmap")
-
-#' @rdname go_choroplethmap
-#' @export
-add_choroplethmap.default <- function(
-    fig, ..., data = NULL, split = NULL, autocolorscale = NULL,
-    below = NULL, coloraxis = NULL, colorbar = NULL, colorscale = NULL,
-    customdata = NULL, featureidkey = NULL, geojson = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, locations = NULL, marker = NULL,
-    meta = NULL, name = NULL, reversescale = NULL, selected = NULL,
-    selectedpoints = NULL, showlegend = NULL, showscale = NULL,
-    subplot = NULL, text = NULL, uid = NULL, uirevision = NULL,
-    unselected = NULL, visible = NULL, z = NULL, zauto = NULL, zmax = NULL,
+    p, ..., data = NULL, split = NULL, locations = NULL, z = NULL,
+    autocolorscale = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, customdata = NULL, featureidkey = NULL, geo = NULL,
+    geojson = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, locationmode = NULL,
+    marker = NULL, meta = NULL, name = NULL, reversescale = NULL,
+    selected = NULL, selectedpoints = NULL, showlegend = NULL,
+    showscale = NULL, text = NULL, uid = NULL, uirevision = NULL,
+    unselected = NULL, visible = NULL, zauto = NULL, zmax = NULL,
     zmid = NULL, zmin = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "choroplethmap", environment(), list(...), data, split, skip_invalid,
+    p, "choropleth", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
-#' @rdname go_cone
+#' @rdname go_choroplethmap
 #' @export
-add_cone <- function(fig, ...) UseMethod("add_cone")
+add_choroplethmap <- function(p, ...) UseMethod("add_choroplethmap")
 
-#' @rdname go_cone
+#' @rdname go_choroplethmap
 #' @export
-add_cone.default <- function(
-    fig, ..., data = NULL, split = NULL, anchor = NULL,
-    autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
-    cmin = NULL, coloraxis = NULL, colorbar = NULL, colorscale = NULL,
-    customdata = NULL, hoverinfo = NULL, hoverlabel = NULL,
+add_choroplethmap.default <- function(
+    p, ..., data = NULL, split = NULL, locations = NULL, z = NULL,
+    autocolorscale = NULL, below = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, customdata = NULL, featureidkey = NULL,
+    geojson = NULL, hoverinfo = NULL, hoverlabel = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, lighting = NULL,
-    lightposition = NULL, meta = NULL, name = NULL, opacity = NULL,
-    reversescale = NULL, scene = NULL, showlegend = NULL, showscale = NULL,
-    sizemode = NULL, sizeref = NULL, text = NULL, u = NULL,
-    uhoverformat = NULL, uid = NULL, uirevision = NULL, v = NULL,
-    vhoverformat = NULL, visible = NULL, w = NULL, whoverformat = NULL,
-    x = NULL, xhoverformat = NULL, y = NULL, yhoverformat = NULL, z = NULL,
-    zhoverformat = NULL, row = NULL, col = NULL, skip_invalid = FALSE
+    legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
+    name = NULL, reversescale = NULL, selected = NULL,
+    selectedpoints = NULL, showlegend = NULL, showscale = NULL,
+    subplot = NULL, text = NULL, uid = NULL, uirevision = NULL,
+    unselected = NULL, visible = NULL, zauto = NULL, zmax = NULL,
+    zmid = NULL, zmin = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "cone", environment(), list(...), data, split, skip_invalid,
+    p, "choroplethmap", environment(), list(...), data, split, skip_invalid,
+    row = row, col = col
+  )
+}
+
+#' @rdname go_cone
+#' @export
+add_cone <- function(p, ...) UseMethod("add_cone")
+
+#' @rdname go_cone
+#' @export
+add_cone.default <- function(
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL, z = NULL,
+    u = NULL, v = NULL, w = NULL, anchor = NULL, autocolorscale = NULL,
+    cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL, coloraxis = NULL,
+    colorbar = NULL, colorscale = NULL, customdata = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    lighting = NULL, lightposition = NULL, meta = NULL, name = NULL,
+    opacity = NULL, reversescale = NULL, scene = NULL, showlegend = NULL,
+    showscale = NULL, sizemode = NULL, sizeref = NULL, text = NULL,
+    uhoverformat = NULL, uid = NULL, uirevision = NULL, vhoverformat = NULL,
+    visible = NULL, whoverformat = NULL, xhoverformat = NULL,
+    yhoverformat = NULL, zhoverformat = NULL, row = NULL, col = NULL,
+    skip_invalid = FALSE
+) {
+  # formulas (x = ~col) are evaluated in `data` or the figure's data, one
+  # trace per group of `split` and of discrete colour columns
+  add_trace_with_data(
+    p, "cone", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_contour
 #' @export
-add_contour <- function(fig, ...) UseMethod("add_contour")
+add_contour <- function(p, ...) UseMethod("add_contour")
 
 #' @rdname go_contour
 #' @export
 add_contour.default <- function(
-    fig, ..., data = NULL, split = NULL, autocolorscale = NULL,
-    autocontour = NULL, coloraxis = NULL, colorbar = NULL,
-    colorscale = NULL, connectgaps = NULL, contours = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL, z = NULL,
+    autocolorscale = NULL, autocontour = NULL, coloraxis = NULL,
+    colorbar = NULL, colorscale = NULL, connectgaps = NULL, contours = NULL,
     customdata = NULL, dx = NULL, dy = NULL, fillcolor = NULL,
     hoverinfo = NULL, hoverlabel = NULL, hoverongaps = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
@@ -321,361 +322,361 @@ add_contour.default <- function(
     name = NULL, ncontours = NULL, opacity = NULL, reversescale = NULL,
     showlegend = NULL, showscale = NULL, text = NULL, textfont = NULL,
     texttemplate = NULL, texttemplatefallback = NULL, transpose = NULL,
-    uid = NULL, uirevision = NULL, visible = NULL, x = NULL, x0 = NULL,
-    xaxis = NULL, xcalendar = NULL, xhoverformat = NULL, xperiod = NULL,
-    xperiod0 = NULL, xperiodalignment = NULL, xtype = NULL, y = NULL,
-    y0 = NULL, yaxis = NULL, ycalendar = NULL, yhoverformat = NULL,
-    yperiod = NULL, yperiod0 = NULL, yperiodalignment = NULL, ytype = NULL,
-    z = NULL, zauto = NULL, zhoverformat = NULL, zmax = NULL, zmid = NULL,
-    zmin = NULL, zorder = NULL, row = NULL, col = NULL, secondary_y = NULL,
+    uid = NULL, uirevision = NULL, visible = NULL, x0 = NULL, xaxis = NULL,
+    xcalendar = NULL, xhoverformat = NULL, xperiod = NULL, xperiod0 = NULL,
+    xperiodalignment = NULL, xtype = NULL, y0 = NULL, yaxis = NULL,
+    ycalendar = NULL, yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
+    yperiodalignment = NULL, ytype = NULL, zauto = NULL,
+    zhoverformat = NULL, zmax = NULL, zmid = NULL, zmin = NULL,
+    zorder = NULL, row = NULL, col = NULL, secondary_y = NULL,
     skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "contour", environment(), list(...), data, split, skip_invalid,
+    p, "contour", environment(), list(...), data, split, skip_invalid,
     row = row, col = col, secondary_y = secondary_y
   )
 }
 
 #' @rdname go_contourcarpet
 #' @export
-add_contourcarpet <- function(fig, ...) UseMethod("add_contourcarpet")
+add_contourcarpet <- function(p, ...) UseMethod("add_contourcarpet")
 
 #' @rdname go_contourcarpet
 #' @export
 add_contourcarpet.default <- function(
-    fig, ..., data = NULL, split = NULL, a = NULL, a0 = NULL, atype = NULL,
-    autocolorscale = NULL, autocontour = NULL, b = NULL, b0 = NULL,
-    btype = NULL, carpet = NULL, coloraxis = NULL, colorbar = NULL,
-    colorscale = NULL, contours = NULL, customdata = NULL, da = NULL,
-    db = NULL, fillcolor = NULL, hovertext = NULL, ids = NULL,
+    p, ..., data = NULL, split = NULL, a = NULL, b = NULL, z = NULL,
+    a0 = NULL, atype = NULL, autocolorscale = NULL, autocontour = NULL,
+    b0 = NULL, btype = NULL, carpet = NULL, coloraxis = NULL,
+    colorbar = NULL, colorscale = NULL, contours = NULL, customdata = NULL,
+    da = NULL, db = NULL, fillcolor = NULL, hovertext = NULL, ids = NULL,
     legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, line = NULL, meta = NULL,
     name = NULL, ncontours = NULL, opacity = NULL, reversescale = NULL,
     showlegend = NULL, showscale = NULL, text = NULL, transpose = NULL,
     uid = NULL, uirevision = NULL, visible = NULL, xaxis = NULL,
-    yaxis = NULL, z = NULL, zauto = NULL, zmax = NULL, zmid = NULL,
-    zmin = NULL, zorder = NULL, row = NULL, col = NULL, secondary_y = NULL,
+    yaxis = NULL, zauto = NULL, zmax = NULL, zmid = NULL, zmin = NULL,
+    zorder = NULL, row = NULL, col = NULL, secondary_y = NULL,
     skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "contourcarpet", environment(), list(...), data, split, skip_invalid,
+    p, "contourcarpet", environment(), list(...), data, split, skip_invalid,
     row = row, col = col, secondary_y = secondary_y
   )
 }
 
 #' @rdname go_densitymap
 #' @export
-add_densitymap <- function(fig, ...) UseMethod("add_densitymap")
+add_densitymap <- function(p, ...) UseMethod("add_densitymap")
 
 #' @rdname go_densitymap
 #' @export
 add_densitymap.default <- function(
-    fig, ..., data = NULL, split = NULL, autocolorscale = NULL,
-    below = NULL, coloraxis = NULL, colorbar = NULL, colorscale = NULL,
-    customdata = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, lat = NULL, legend = NULL, legendgroup = NULL,
+    p, ..., data = NULL, split = NULL, lat = NULL, lon = NULL, z = NULL,
+    autocolorscale = NULL, below = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, customdata = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
     legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    lon = NULL, meta = NULL, name = NULL, opacity = NULL, radius = NULL,
+    meta = NULL, name = NULL, opacity = NULL, radius = NULL,
     reversescale = NULL, showlegend = NULL, showscale = NULL,
     subplot = NULL, text = NULL, uid = NULL, uirevision = NULL,
-    visible = NULL, z = NULL, zauto = NULL, zmax = NULL, zmid = NULL,
-    zmin = NULL, row = NULL, col = NULL, skip_invalid = FALSE
-) {
-  # formulas (x = ~col) are evaluated in `data` or the figure's data, one
-  # trace per group of `split` and of discrete colour columns
-  add_trace_with_data(
-    fig, "densitymap", environment(), list(...), data, split, skip_invalid,
-    row = row, col = col
-  )
-}
-
-#' @rdname go_funnel
-#' @export
-add_funnel <- function(fig, ...) UseMethod("add_funnel")
-
-#' @rdname go_funnel
-#' @export
-add_funnel.default <- function(
-    fig, ..., data = NULL, split = NULL, alignmentgroup = NULL,
-    cliponaxis = NULL, connector = NULL, constraintext = NULL,
-    customdata = NULL, dx = NULL, dy = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    hovertext = NULL, ids = NULL, insidetextanchor = NULL,
-    insidetextfont = NULL, legend = NULL, legendgroup = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    marker = NULL, meta = NULL, name = NULL, offset = NULL,
-    offsetgroup = NULL, opacity = NULL, orientation = NULL,
-    outsidetextfont = NULL, selectedpoints = NULL, showlegend = NULL,
-    text = NULL, textangle = NULL, textfont = NULL, textinfo = NULL,
-    textposition = NULL, texttemplate = NULL, texttemplatefallback = NULL,
-    uid = NULL, uirevision = NULL, visible = NULL, width = NULL, x = NULL,
-    x0 = NULL, xaxis = NULL, xhoverformat = NULL, xperiod = NULL,
-    xperiod0 = NULL, xperiodalignment = NULL, y = NULL, y0 = NULL,
-    yaxis = NULL, yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
-    yperiodalignment = NULL, zorder = NULL, row = NULL, col = NULL,
-    secondary_y = NULL, skip_invalid = FALSE
-) {
-  # formulas (x = ~col) are evaluated in `data` or the figure's data, one
-  # trace per group of `split` and of discrete colour columns
-  add_trace_with_data(
-    fig, "funnel", environment(), list(...), data, split, skip_invalid,
-    row = row, col = col, secondary_y = secondary_y
-  )
-}
-
-#' @rdname go_funnelarea
-#' @export
-add_funnelarea <- function(fig, ...) UseMethod("add_funnelarea")
-
-#' @rdname go_funnelarea
-#' @export
-add_funnelarea.default <- function(
-    fig, ..., data = NULL, split = NULL, aspectratio = NULL,
-    baseratio = NULL, customdata = NULL, dlabel = NULL, domain = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
-    insidetextfont = NULL, label0 = NULL, labels = NULL, legend = NULL,
-    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, marker = NULL, meta = NULL, name = NULL,
-    opacity = NULL, scalegroup = NULL, showlegend = NULL, text = NULL,
-    textfont = NULL, textinfo = NULL, textposition = NULL,
-    texttemplate = NULL, texttemplatefallback = NULL, title = NULL,
-    uid = NULL, uirevision = NULL, values = NULL, visible = NULL,
+    visible = NULL, zauto = NULL, zmax = NULL, zmid = NULL, zmin = NULL,
     row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "funnelarea", environment(), list(...), data, split, skip_invalid,
+    p, "densitymap", environment(), list(...), data, split, skip_invalid,
+    row = row, col = col
+  )
+}
+
+#' @rdname go_funnel
+#' @export
+add_funnel <- function(p, ...) UseMethod("add_funnel")
+
+#' @rdname go_funnel
+#' @export
+add_funnel.default <- function(
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL,
+    alignmentgroup = NULL, cliponaxis = NULL, connector = NULL,
+    constraintext = NULL, customdata = NULL, dx = NULL, dy = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
+    insidetextanchor = NULL, insidetextfont = NULL, legend = NULL,
+    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    legendwidth = NULL, marker = NULL, meta = NULL, name = NULL,
+    offset = NULL, offsetgroup = NULL, opacity = NULL, orientation = NULL,
+    outsidetextfont = NULL, selectedpoints = NULL, showlegend = NULL,
+    text = NULL, textangle = NULL, textfont = NULL, textinfo = NULL,
+    textposition = NULL, texttemplate = NULL, texttemplatefallback = NULL,
+    uid = NULL, uirevision = NULL, visible = NULL, width = NULL, x0 = NULL,
+    xaxis = NULL, xhoverformat = NULL, xperiod = NULL, xperiod0 = NULL,
+    xperiodalignment = NULL, y0 = NULL, yaxis = NULL, yhoverformat = NULL,
+    yperiod = NULL, yperiod0 = NULL, yperiodalignment = NULL, zorder = NULL,
+    row = NULL, col = NULL, secondary_y = NULL, skip_invalid = FALSE
+) {
+  # formulas (x = ~col) are evaluated in `data` or the figure's data, one
+  # trace per group of `split` and of discrete colour columns
+  add_trace_with_data(
+    p, "funnel", environment(), list(...), data, split, skip_invalid,
+    row = row, col = col, secondary_y = secondary_y
+  )
+}
+
+#' @rdname go_funnelarea
+#' @export
+add_funnelarea <- function(p, ...) UseMethod("add_funnelarea")
+
+#' @rdname go_funnelarea
+#' @export
+add_funnelarea.default <- function(
+    p, ..., data = NULL, split = NULL, labels = NULL, values = NULL,
+    aspectratio = NULL, baseratio = NULL, customdata = NULL, dlabel = NULL,
+    domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, insidetextfont = NULL, label0 = NULL, legend = NULL,
+    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    legendwidth = NULL, marker = NULL, meta = NULL, name = NULL,
+    opacity = NULL, scalegroup = NULL, showlegend = NULL, text = NULL,
+    textfont = NULL, textinfo = NULL, textposition = NULL,
+    texttemplate = NULL, texttemplatefallback = NULL, title = NULL,
+    uid = NULL, uirevision = NULL, visible = NULL, row = NULL, col = NULL,
+    skip_invalid = FALSE
+) {
+  # formulas (x = ~col) are evaluated in `data` or the figure's data, one
+  # trace per group of `split` and of discrete colour columns
+  add_trace_with_data(
+    p, "funnelarea", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_heatmap
 #' @export
-add_heatmap <- function(fig, ...) UseMethod("add_heatmap")
+add_heatmap <- function(p, ...) UseMethod("add_heatmap")
 
 #' @rdname go_heatmap
 #' @export
 add_heatmap.default <- function(
-    fig, ..., data = NULL, split = NULL, autocolorscale = NULL,
-    coloraxis = NULL, colorbar = NULL, colorscale = NULL,
-    connectgaps = NULL, customdata = NULL, dx = NULL, dy = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hoverongaps = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL, z = NULL,
+    autocolorscale = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, connectgaps = NULL, customdata = NULL, dx = NULL,
+    dy = NULL, hoverinfo = NULL, hoverlabel = NULL, hoverongaps = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, meta = NULL, name = NULL,
     opacity = NULL, reversescale = NULL, showlegend = NULL,
     showscale = NULL, text = NULL, textfont = NULL, texttemplate = NULL,
     texttemplatefallback = NULL, transpose = NULL, uid = NULL,
-    uirevision = NULL, visible = NULL, x = NULL, x0 = NULL, xaxis = NULL,
+    uirevision = NULL, visible = NULL, x0 = NULL, xaxis = NULL,
     xcalendar = NULL, xgap = NULL, xhoverformat = NULL, xperiod = NULL,
-    xperiod0 = NULL, xperiodalignment = NULL, xtype = NULL, y = NULL,
-    y0 = NULL, yaxis = NULL, ycalendar = NULL, ygap = NULL,
-    yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
-    yperiodalignment = NULL, ytype = NULL, z = NULL, zauto = NULL,
-    zhoverformat = NULL, zmax = NULL, zmid = NULL, zmin = NULL,
-    zorder = NULL, zsmooth = NULL, row = NULL, col = NULL,
+    xperiod0 = NULL, xperiodalignment = NULL, xtype = NULL, y0 = NULL,
+    yaxis = NULL, ycalendar = NULL, ygap = NULL, yhoverformat = NULL,
+    yperiod = NULL, yperiod0 = NULL, yperiodalignment = NULL, ytype = NULL,
+    zauto = NULL, zhoverformat = NULL, zmax = NULL, zmid = NULL,
+    zmin = NULL, zorder = NULL, zsmooth = NULL, row = NULL, col = NULL,
     secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "heatmap", environment(), list(...), data, split, skip_invalid,
+    p, "heatmap", environment(), list(...), data, split, skip_invalid,
     row = row, col = col, secondary_y = secondary_y
   )
 }
 
 #' @rdname go_histogram
 #' @export
-add_histogram <- function(fig, ...) UseMethod("add_histogram")
+add_histogram <- function(p, ...) UseMethod("add_histogram")
 
 #' @rdname go_histogram
 #' @export
 add_histogram.default <- function(
-    fig, ..., data = NULL, split = NULL, alignmentgroup = NULL,
-    autobinx = NULL, autobiny = NULL, bingroup = NULL, cliponaxis = NULL,
-    constraintext = NULL, cumulative = NULL, customdata = NULL,
-    error_x = NULL, error_y = NULL, histfunc = NULL, histnorm = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
-    insidetextanchor = NULL, insidetextfont = NULL, legend = NULL,
-    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, marker = NULL, meta = NULL, name = NULL,
-    nbinsx = NULL, nbinsy = NULL, offsetgroup = NULL, opacity = NULL,
-    orientation = NULL, outsidetextfont = NULL, selected = NULL,
-    selectedpoints = NULL, showlegend = NULL, text = NULL, textangle = NULL,
-    textfont = NULL, textposition = NULL, texttemplate = NULL,
-    texttemplatefallback = NULL, uid = NULL, uirevision = NULL,
-    unselected = NULL, visible = NULL, x = NULL, xaxis = NULL, xbins = NULL,
-    xcalendar = NULL, xhoverformat = NULL, y = NULL, yaxis = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL,
+    alignmentgroup = NULL, autobinx = NULL, autobiny = NULL,
+    bingroup = NULL, cliponaxis = NULL, constraintext = NULL,
+    cumulative = NULL, customdata = NULL, error_x = NULL, error_y = NULL,
+    histfunc = NULL, histnorm = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, insidetextanchor = NULL, insidetextfont = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
+    name = NULL, nbinsx = NULL, nbinsy = NULL, offsetgroup = NULL,
+    opacity = NULL, orientation = NULL, outsidetextfont = NULL,
+    selected = NULL, selectedpoints = NULL, showlegend = NULL, text = NULL,
+    textangle = NULL, textfont = NULL, textposition = NULL,
+    texttemplate = NULL, texttemplatefallback = NULL, uid = NULL,
+    uirevision = NULL, unselected = NULL, visible = NULL, xaxis = NULL,
+    xbins = NULL, xcalendar = NULL, xhoverformat = NULL, yaxis = NULL,
     ybins = NULL, ycalendar = NULL, yhoverformat = NULL, zorder = NULL,
     row = NULL, col = NULL, secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "histogram", environment(), list(...), data, split, skip_invalid,
+    p, "histogram", environment(), list(...), data, split, skip_invalid,
     row = row, col = col, secondary_y = secondary_y
   )
 }
 
 #' @rdname go_histogram2d
 #' @export
-add_histogram2d <- function(fig, ...) UseMethod("add_histogram2d")
+add_histogram2d <- function(p, ...) UseMethod("add_histogram2d")
 
 #' @rdname go_histogram2d
 #' @export
 add_histogram2d.default <- function(
-    fig, ..., data = NULL, split = NULL, autobinx = NULL, autobiny = NULL,
-    autocolorscale = NULL, bingroup = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, customdata = NULL, histfunc = NULL,
-    histnorm = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, ids = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL, z = NULL,
+    autobinx = NULL, autobiny = NULL, autocolorscale = NULL,
+    bingroup = NULL, coloraxis = NULL, colorbar = NULL, colorscale = NULL,
+    customdata = NULL, histfunc = NULL, histnorm = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
     name = NULL, nbinsx = NULL, nbinsy = NULL, opacity = NULL,
     reversescale = NULL, showlegend = NULL, showscale = NULL,
     textfont = NULL, texttemplate = NULL, texttemplatefallback = NULL,
-    uid = NULL, uirevision = NULL, visible = NULL, x = NULL, xaxis = NULL,
+    uid = NULL, uirevision = NULL, visible = NULL, xaxis = NULL,
     xbingroup = NULL, xbins = NULL, xcalendar = NULL, xgap = NULL,
-    xhoverformat = NULL, y = NULL, yaxis = NULL, ybingroup = NULL,
-    ybins = NULL, ycalendar = NULL, ygap = NULL, yhoverformat = NULL,
-    z = NULL, zauto = NULL, zhoverformat = NULL, zmax = NULL, zmid = NULL,
-    zmin = NULL, zsmooth = NULL, row = NULL, col = NULL, secondary_y = NULL,
-    skip_invalid = FALSE
-) {
-  # formulas (x = ~col) are evaluated in `data` or the figure's data, one
-  # trace per group of `split` and of discrete colour columns
-  add_trace_with_data(
-    fig, "histogram2d", environment(), list(...), data, split, skip_invalid,
-    row = row, col = col, secondary_y = secondary_y
-  )
-}
-
-#' @rdname go_histogram2dcontour
-#' @export
-add_histogram2dcontour <- function(fig, ...) UseMethod("add_histogram2dcontour")
-
-#' @rdname go_histogram2dcontour
-#' @export
-add_histogram2dcontour.default <- function(
-    fig, ..., data = NULL, split = NULL, autobinx = NULL, autobiny = NULL,
-    autocolorscale = NULL, autocontour = NULL, bingroup = NULL,
-    coloraxis = NULL, colorbar = NULL, colorscale = NULL, contours = NULL,
-    customdata = NULL, histfunc = NULL, histnorm = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
-    meta = NULL, name = NULL, nbinsx = NULL, nbinsy = NULL,
-    ncontours = NULL, opacity = NULL, reversescale = NULL,
-    showlegend = NULL, showscale = NULL, textfont = NULL,
-    texttemplate = NULL, texttemplatefallback = NULL, uid = NULL,
-    uirevision = NULL, visible = NULL, x = NULL, xaxis = NULL,
-    xbingroup = NULL, xbins = NULL, xcalendar = NULL, xhoverformat = NULL,
-    y = NULL, yaxis = NULL, ybingroup = NULL, ybins = NULL,
-    ycalendar = NULL, yhoverformat = NULL, z = NULL, zauto = NULL,
-    zhoverformat = NULL, zmax = NULL, zmid = NULL, zmin = NULL, row = NULL,
-    col = NULL, secondary_y = NULL, skip_invalid = FALSE
-) {
-  # formulas (x = ~col) are evaluated in `data` or the figure's data, one
-  # trace per group of `split` and of discrete colour columns
-  add_trace_with_data(
-    fig, "histogram2dcontour", environment(), list(...), data, split, skip_invalid,
-    row = row, col = col, secondary_y = secondary_y
-  )
-}
-
-#' @rdname go_icicle
-#' @export
-add_icicle <- function(fig, ...) UseMethod("add_icicle")
-
-#' @rdname go_icicle
-#' @export
-add_icicle.default <- function(
-    fig, ..., data = NULL, split = NULL, branchvalues = NULL, count = NULL,
-    customdata = NULL, domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, insidetextfont = NULL, labels = NULL, leaf = NULL,
-    legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, level = NULL, marker = NULL, maxdepth = NULL,
-    meta = NULL, name = NULL, opacity = NULL, outsidetextfont = NULL,
-    parents = NULL, pathbar = NULL, root = NULL, sort = NULL, text = NULL,
-    textfont = NULL, textinfo = NULL, textposition = NULL,
-    texttemplate = NULL, texttemplatefallback = NULL, tiling = NULL,
-    uid = NULL, uirevision = NULL, values = NULL, visible = NULL,
-    row = NULL, col = NULL, skip_invalid = FALSE
-) {
-  # formulas (x = ~col) are evaluated in `data` or the figure's data, one
-  # trace per group of `split` and of discrete colour columns
-  add_trace_with_data(
-    fig, "icicle", environment(), list(...), data, split, skip_invalid,
-    row = row, col = col
-  )
-}
-
-#' @rdname go_image
-#' @export
-add_image <- function(fig, ...) UseMethod("add_image")
-
-#' @rdname go_image
-#' @export
-add_image.default <- function(
-    fig, ..., data = NULL, split = NULL, colormodel = NULL,
-    customdata = NULL, dx = NULL, dy = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    hovertext = NULL, ids = NULL, legend = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, meta = NULL, name = NULL,
-    opacity = NULL, source = NULL, text = NULL, uid = NULL,
-    uirevision = NULL, visible = NULL, x0 = NULL, xaxis = NULL, y0 = NULL,
-    yaxis = NULL, z = NULL, zmax = NULL, zmin = NULL, zorder = NULL,
+    xhoverformat = NULL, yaxis = NULL, ybingroup = NULL, ybins = NULL,
+    ycalendar = NULL, ygap = NULL, yhoverformat = NULL, zauto = NULL,
+    zhoverformat = NULL, zmax = NULL, zmid = NULL, zmin = NULL,
     zsmooth = NULL, row = NULL, col = NULL, secondary_y = NULL,
     skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "image", environment(), list(...), data, split, skip_invalid,
+    p, "histogram2d", environment(), list(...), data, split, skip_invalid,
+    row = row, col = col, secondary_y = secondary_y
+  )
+}
+
+#' @rdname go_histogram2dcontour
+#' @export
+add_histogram2dcontour <- function(p, ...) UseMethod("add_histogram2dcontour")
+
+#' @rdname go_histogram2dcontour
+#' @export
+add_histogram2dcontour.default <- function(
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL, z = NULL,
+    autobinx = NULL, autobiny = NULL, autocolorscale = NULL,
+    autocontour = NULL, bingroup = NULL, coloraxis = NULL, colorbar = NULL,
+    colorscale = NULL, contours = NULL, customdata = NULL, histfunc = NULL,
+    histnorm = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, ids = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
+    meta = NULL, name = NULL, nbinsx = NULL, nbinsy = NULL,
+    ncontours = NULL, opacity = NULL, reversescale = NULL,
+    showlegend = NULL, showscale = NULL, textfont = NULL,
+    texttemplate = NULL, texttemplatefallback = NULL, uid = NULL,
+    uirevision = NULL, visible = NULL, xaxis = NULL, xbingroup = NULL,
+    xbins = NULL, xcalendar = NULL, xhoverformat = NULL, yaxis = NULL,
+    ybingroup = NULL, ybins = NULL, ycalendar = NULL, yhoverformat = NULL,
+    zauto = NULL, zhoverformat = NULL, zmax = NULL, zmid = NULL,
+    zmin = NULL, row = NULL, col = NULL, secondary_y = NULL,
+    skip_invalid = FALSE
+) {
+  # formulas (x = ~col) are evaluated in `data` or the figure's data, one
+  # trace per group of `split` and of discrete colour columns
+  add_trace_with_data(
+    p, "histogram2dcontour", environment(), list(...), data, split, skip_invalid,
+    row = row, col = col, secondary_y = secondary_y
+  )
+}
+
+#' @rdname go_icicle
+#' @export
+add_icicle <- function(p, ...) UseMethod("add_icicle")
+
+#' @rdname go_icicle
+#' @export
+add_icicle.default <- function(
+    p, ..., data = NULL, split = NULL, labels = NULL, parents = NULL,
+    values = NULL, ids = NULL, branchvalues = NULL, count = NULL,
+    customdata = NULL, domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    insidetextfont = NULL, leaf = NULL, legend = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    level = NULL, marker = NULL, maxdepth = NULL, meta = NULL, name = NULL,
+    opacity = NULL, outsidetextfont = NULL, pathbar = NULL, root = NULL,
+    sort = NULL, text = NULL, textfont = NULL, textinfo = NULL,
+    textposition = NULL, texttemplate = NULL, texttemplatefallback = NULL,
+    tiling = NULL, uid = NULL, uirevision = NULL, visible = NULL,
+    row = NULL, col = NULL, skip_invalid = FALSE
+) {
+  # formulas (x = ~col) are evaluated in `data` or the figure's data, one
+  # trace per group of `split` and of discrete colour columns
+  add_trace_with_data(
+    p, "icicle", environment(), list(...), data, split, skip_invalid,
+    row = row, col = col
+  )
+}
+
+#' @rdname go_image
+#' @export
+add_image <- function(p, ...) UseMethod("add_image")
+
+#' @rdname go_image
+#' @export
+add_image.default <- function(
+    p, ..., data = NULL, split = NULL, z = NULL, source = NULL,
+    colormodel = NULL, customdata = NULL, dx = NULL, dy = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
+    legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    legendwidth = NULL, meta = NULL, name = NULL, opacity = NULL,
+    text = NULL, uid = NULL, uirevision = NULL, visible = NULL, x0 = NULL,
+    xaxis = NULL, y0 = NULL, yaxis = NULL, zmax = NULL, zmin = NULL,
+    zorder = NULL, zsmooth = NULL, row = NULL, col = NULL,
+    secondary_y = NULL, skip_invalid = FALSE
+) {
+  # formulas (x = ~col) are evaluated in `data` or the figure's data, one
+  # trace per group of `split` and of discrete colour columns
+  add_trace_with_data(
+    p, "image", environment(), list(...), data, split, skip_invalid,
     row = row, col = col, secondary_y = secondary_y
   )
 }
 
 #' @rdname go_indicator
 #' @export
-add_indicator <- function(fig, ...) UseMethod("add_indicator")
+add_indicator <- function(p, ...) UseMethod("add_indicator")
 
 #' @rdname go_indicator
 #' @export
 add_indicator.default <- function(
-    fig, ..., data = NULL, split = NULL, align = NULL, customdata = NULL,
-    delta = NULL, domain = NULL, gauge = NULL, ids = NULL, legend = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    meta = NULL, mode = NULL, name = NULL, number = NULL, title = NULL,
-    uid = NULL, uirevision = NULL, value = NULL, visible = NULL, row = NULL,
-    col = NULL, skip_invalid = FALSE
+    p, ..., data = NULL, split = NULL, value = NULL, align = NULL,
+    customdata = NULL, delta = NULL, domain = NULL, gauge = NULL,
+    ids = NULL, legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    legendwidth = NULL, meta = NULL, mode = NULL, name = NULL,
+    number = NULL, title = NULL, uid = NULL, uirevision = NULL,
+    visible = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "indicator", environment(), list(...), data, split, skip_invalid,
+    p, "indicator", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_isosurface
 #' @export
-add_isosurface <- function(fig, ...) UseMethod("add_isosurface")
+add_isosurface <- function(p, ...) UseMethod("add_isosurface")
 
 #' @rdname go_isosurface
 #' @export
 add_isosurface.default <- function(
-    fig, ..., data = NULL, split = NULL, autocolorscale = NULL, caps = NULL,
-    cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL, coloraxis = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL, z = NULL,
+    value = NULL, autocolorscale = NULL, caps = NULL, cauto = NULL,
+    cmax = NULL, cmid = NULL, cmin = NULL, coloraxis = NULL,
     colorbar = NULL, colorscale = NULL, contour = NULL, customdata = NULL,
     flatshading = NULL, hoverinfo = NULL, hoverlabel = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
@@ -685,88 +686,88 @@ add_isosurface.default <- function(
     name = NULL, opacity = NULL, reversescale = NULL, scene = NULL,
     showlegend = NULL, showscale = NULL, slices = NULL, spaceframe = NULL,
     surface = NULL, text = NULL, uid = NULL, uirevision = NULL,
-    value = NULL, valuehoverformat = NULL, visible = NULL, x = NULL,
-    xhoverformat = NULL, y = NULL, yhoverformat = NULL, z = NULL,
-    zhoverformat = NULL, row = NULL, col = NULL, skip_invalid = FALSE
+    valuehoverformat = NULL, visible = NULL, xhoverformat = NULL,
+    yhoverformat = NULL, zhoverformat = NULL, row = NULL, col = NULL,
+    skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "isosurface", environment(), list(...), data, split, skip_invalid,
+    p, "isosurface", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_mesh3d
 #' @export
-add_mesh3d <- function(fig, ...) UseMethod("add_mesh3d")
+add_mesh3d <- function(p, ...) UseMethod("add_mesh3d")
 
 #' @rdname go_mesh3d
 #' @export
 add_mesh3d.default <- function(
-    fig, ..., data = NULL, split = NULL, alphahull = NULL,
-    autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
-    cmin = NULL, color = NULL, coloraxis = NULL, colorbar = NULL,
-    colorscale = NULL, contour = NULL, customdata = NULL,
-    delaunayaxis = NULL, facecolor = NULL, flatshading = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, i = NULL, ids = NULL,
-    intensity = NULL, intensitymode = NULL, j = NULL, k = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, lighting = NULL,
-    lightposition = NULL, meta = NULL, name = NULL, opacity = NULL,
-    reversescale = NULL, scene = NULL, showlegend = NULL, showscale = NULL,
-    text = NULL, uid = NULL, uirevision = NULL, vertexcolor = NULL,
-    visible = NULL, x = NULL, xcalendar = NULL, xhoverformat = NULL,
-    y = NULL, ycalendar = NULL, yhoverformat = NULL, z = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL, z = NULL,
+    i = NULL, j = NULL, k = NULL, alphahull = NULL, autocolorscale = NULL,
+    cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL, color = NULL,
+    coloraxis = NULL, colorbar = NULL, colorscale = NULL, contour = NULL,
+    customdata = NULL, delaunayaxis = NULL, facecolor = NULL,
+    flatshading = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, intensity = NULL, intensitymode = NULL, legend = NULL,
+    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    legendwidth = NULL, lighting = NULL, lightposition = NULL, meta = NULL,
+    name = NULL, opacity = NULL, reversescale = NULL, scene = NULL,
+    showlegend = NULL, showscale = NULL, text = NULL, uid = NULL,
+    uirevision = NULL, vertexcolor = NULL, visible = NULL, xcalendar = NULL,
+    xhoverformat = NULL, ycalendar = NULL, yhoverformat = NULL,
     zcalendar = NULL, zhoverformat = NULL, row = NULL, col = NULL,
     skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "mesh3d", environment(), list(...), data, split, skip_invalid,
+    p, "mesh3d", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_ohlc
 #' @export
-add_ohlc <- function(fig, ...) UseMethod("add_ohlc")
+add_ohlc <- function(p, ...) UseMethod("add_ohlc")
 
 #' @rdname go_ohlc
 #' @export
 add_ohlc.default <- function(
-    fig, ..., data = NULL, split = NULL, close = NULL, customdata = NULL,
-    decreasing = NULL, high = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, increasing = NULL, legend = NULL, legendgroup = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, open = NULL, high = NULL,
+    low = NULL, close = NULL, customdata = NULL, decreasing = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
+    increasing = NULL, legend = NULL, legendgroup = NULL,
     legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    line = NULL, low = NULL, meta = NULL, name = NULL, opacity = NULL,
-    open = NULL, selectedpoints = NULL, showlegend = NULL, text = NULL,
-    tickwidth = NULL, uid = NULL, uirevision = NULL, visible = NULL,
-    x = NULL, xaxis = NULL, xcalendar = NULL, xhoverformat = NULL,
-    xperiod = NULL, xperiod0 = NULL, xperiodalignment = NULL, yaxis = NULL,
-    yhoverformat = NULL, zorder = NULL, row = NULL, col = NULL,
-    secondary_y = NULL, skip_invalid = FALSE
+    line = NULL, meta = NULL, name = NULL, opacity = NULL,
+    selectedpoints = NULL, showlegend = NULL, text = NULL, tickwidth = NULL,
+    uid = NULL, uirevision = NULL, visible = NULL, xaxis = NULL,
+    xcalendar = NULL, xhoverformat = NULL, xperiod = NULL, xperiod0 = NULL,
+    xperiodalignment = NULL, yaxis = NULL, yhoverformat = NULL,
+    zorder = NULL, row = NULL, col = NULL, secondary_y = NULL,
+    skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "ohlc", environment(), list(...), data, split, skip_invalid,
+    p, "ohlc", environment(), list(...), data, split, skip_invalid,
     row = row, col = col, secondary_y = secondary_y
   )
 }
 
 #' @rdname go_parcats
 #' @export
-add_parcats <- function(fig, ...) UseMethod("add_parcats")
+add_parcats <- function(p, ...) UseMethod("add_parcats")
 
 #' @rdname go_parcats
 #' @export
 add_parcats.default <- function(
-    fig, ..., data = NULL, split = NULL, arrangement = NULL,
-    bundlecolors = NULL, counts = NULL, dimensions = NULL, domain = NULL,
+    p, ..., data = NULL, split = NULL, dimensions = NULL,
+    arrangement = NULL, bundlecolors = NULL, counts = NULL, domain = NULL,
     hoverinfo = NULL, hoveron = NULL, hovertemplate = NULL,
     hovertemplatefallback = NULL, labelfont = NULL, legendgrouptitle = NULL,
     legendwidth = NULL, line = NULL, meta = NULL, name = NULL,
@@ -776,105 +777,105 @@ add_parcats.default <- function(
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "parcats", environment(), list(...), data, split, skip_invalid,
+    p, "parcats", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_parcoords
 #' @export
-add_parcoords <- function(fig, ...) UseMethod("add_parcoords")
+add_parcoords <- function(p, ...) UseMethod("add_parcoords")
 
 #' @rdname go_parcoords
 #' @export
 add_parcoords.default <- function(
-    fig, ..., data = NULL, split = NULL, customdata = NULL,
-    dimensions = NULL, domain = NULL, ids = NULL, labelangle = NULL,
-    labelfont = NULL, labelside = NULL, legend = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    line = NULL, meta = NULL, name = NULL, rangefont = NULL,
-    tickfont = NULL, uid = NULL, uirevision = NULL, unselected = NULL,
-    visible = NULL, row = NULL, col = NULL, skip_invalid = FALSE
+    p, ..., data = NULL, split = NULL, dimensions = NULL, customdata = NULL,
+    domain = NULL, ids = NULL, labelangle = NULL, labelfont = NULL,
+    labelside = NULL, legend = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, line = NULL, meta = NULL,
+    name = NULL, rangefont = NULL, tickfont = NULL, uid = NULL,
+    uirevision = NULL, unselected = NULL, visible = NULL, row = NULL,
+    col = NULL, skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "parcoords", environment(), list(...), data, split, skip_invalid,
+    p, "parcoords", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_pie
 #' @export
-add_pie <- function(fig, ...) UseMethod("add_pie")
+add_pie <- function(p, ...) UseMethod("add_pie")
 
 #' @rdname go_pie
 #' @export
 add_pie.default <- function(
-    fig, ..., data = NULL, split = NULL, automargin = NULL,
-    customdata = NULL, direction = NULL, dlabel = NULL, domain = NULL,
-    hole = NULL, hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
-    insidetextfont = NULL, insidetextorientation = NULL, label0 = NULL,
-    labels = NULL, legend = NULL, legendgroup = NULL,
+    p, ..., data = NULL, split = NULL, labels = NULL, values = NULL,
+    automargin = NULL, customdata = NULL, direction = NULL, dlabel = NULL,
+    domain = NULL, hole = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, insidetextfont = NULL, insidetextorientation = NULL,
+    label0 = NULL, legend = NULL, legendgroup = NULL,
     legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
     marker = NULL, meta = NULL, name = NULL, opacity = NULL,
     outsidetextfont = NULL, pull = NULL, rotation = NULL, scalegroup = NULL,
     showlegend = NULL, sort = NULL, text = NULL, textfont = NULL,
     textinfo = NULL, textposition = NULL, texttemplate = NULL,
     texttemplatefallback = NULL, title = NULL, uid = NULL,
-    uirevision = NULL, values = NULL, visible = NULL, row = NULL,
-    col = NULL, skip_invalid = FALSE
+    uirevision = NULL, visible = NULL, row = NULL, col = NULL,
+    skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "pie", environment(), list(...), data, split, skip_invalid,
+    p, "pie", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_quiver
 #' @export
-add_quiver <- function(fig, ...) UseMethod("add_quiver")
+add_quiver <- function(p, ...) UseMethod("add_quiver")
 
 #' @rdname go_quiver
 #' @export
 add_quiver.default <- function(
-    fig, ..., data = NULL, split = NULL, anchor = NULL, arrowref = NULL,
-    customdata = NULL, dx = NULL, dy = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hovertemplate = NULL, ids = NULL, legend = NULL,
-    legendgroup = NULL, legendgrouptitle = NULL, legendrank = NULL,
-    legendwidth = NULL, lengthfactor = NULL, lengthmode = NULL,
-    marker = NULL, meta = NULL, name = NULL, opacity = NULL,
-    selected = NULL, selectedpoints = NULL, showlegend = NULL, text = NULL,
-    textfont = NULL, textposition = NULL, u = NULL, uhoverformat = NULL,
-    uid = NULL, uirevision = NULL, unselected = NULL, v = NULL,
-    vhoverformat = NULL, visible = NULL, x = NULL, x0 = NULL, xaxis = NULL,
-    xhoverformat = NULL, y = NULL, y0 = NULL, yaxis = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL, anchor = NULL,
+    arrowref = NULL, customdata = NULL, dx = NULL, dy = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL, ids = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, lengthfactor = NULL,
+    lengthmode = NULL, marker = NULL, meta = NULL, name = NULL,
+    opacity = NULL, selected = NULL, selectedpoints = NULL,
+    showlegend = NULL, text = NULL, textfont = NULL, textposition = NULL,
+    u = NULL, uhoverformat = NULL, uid = NULL, uirevision = NULL,
+    unselected = NULL, v = NULL, vhoverformat = NULL, visible = NULL,
+    x0 = NULL, xaxis = NULL, xhoverformat = NULL, y0 = NULL, yaxis = NULL,
     yhoverformat = NULL, row = NULL, col = NULL, secondary_y = NULL,
     skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "quiver", environment(), list(...), data, split, skip_invalid,
+    p, "quiver", environment(), list(...), data, split, skip_invalid,
     row = row, col = col, secondary_y = secondary_y
   )
 }
 
 #' @rdname go_sankey
 #' @export
-add_sankey <- function(fig, ...) UseMethod("add_sankey")
+add_sankey <- function(p, ...) UseMethod("add_sankey")
 
 #' @rdname go_sankey
 #' @export
 add_sankey.default <- function(
-    fig, ..., data = NULL, split = NULL, arrangement = NULL,
-    customdata = NULL, direction = NULL, domain = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, ids = NULL, legend = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, link = NULL, meta = NULL,
-    name = NULL, node = NULL, orientation = NULL, selectedpoints = NULL,
+    p, ..., data = NULL, split = NULL, node = NULL, link = NULL,
+    arrangement = NULL, customdata = NULL, direction = NULL, domain = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, ids = NULL, legend = NULL,
+    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
+    meta = NULL, name = NULL, orientation = NULL, selectedpoints = NULL,
     textfont = NULL, uid = NULL, uirevision = NULL, valueformat = NULL,
     valuesuffix = NULL, visible = NULL, row = NULL, col = NULL,
     skip_invalid = FALSE
@@ -882,22 +883,22 @@ add_sankey.default <- function(
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "sankey", environment(), list(...), data, split, skip_invalid,
+    p, "sankey", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_scatter
 #' @export
-add_scatter <- function(fig, ...) UseMethod("add_scatter")
+add_scatter <- function(p, ...) UseMethod("add_scatter")
 
 #' @rdname go_scatter
 #' @export
 add_scatter.default <- function(
-    fig, ..., data = NULL, split = NULL, alignmentgroup = NULL,
-    cliponaxis = NULL, connectgaps = NULL, customdata = NULL, dx = NULL,
-    dy = NULL, error_x = NULL, error_y = NULL, fill = NULL,
-    fillcolor = NULL, fillgradient = NULL, fillpattern = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL,
+    alignmentgroup = NULL, cliponaxis = NULL, connectgaps = NULL,
+    customdata = NULL, dx = NULL, dy = NULL, error_x = NULL, error_y = NULL,
+    fill = NULL, fillcolor = NULL, fillgradient = NULL, fillpattern = NULL,
     groupnorm = NULL, hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
@@ -907,59 +908,59 @@ add_scatter.default <- function(
     selectedpoints = NULL, showlegend = NULL, stackgaps = NULL,
     stackgroup = NULL, text = NULL, textfont = NULL, textposition = NULL,
     texttemplate = NULL, texttemplatefallback = NULL, uid = NULL,
-    uirevision = NULL, unselected = NULL, visible = NULL, x = NULL,
-    x0 = NULL, xaxis = NULL, xcalendar = NULL, xhoverformat = NULL,
-    xperiod = NULL, xperiod0 = NULL, xperiodalignment = NULL, y = NULL,
-    y0 = NULL, yaxis = NULL, ycalendar = NULL, yhoverformat = NULL,
-    yperiod = NULL, yperiod0 = NULL, yperiodalignment = NULL, zorder = NULL,
-    row = NULL, col = NULL, secondary_y = NULL, skip_invalid = FALSE
+    uirevision = NULL, unselected = NULL, visible = NULL, x0 = NULL,
+    xaxis = NULL, xcalendar = NULL, xhoverformat = NULL, xperiod = NULL,
+    xperiod0 = NULL, xperiodalignment = NULL, y0 = NULL, yaxis = NULL,
+    ycalendar = NULL, yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
+    yperiodalignment = NULL, zorder = NULL, row = NULL, col = NULL,
+    secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "scatter", environment(), list(...), data, split, skip_invalid,
+    p, "scatter", environment(), list(...), data, split, skip_invalid,
     row = row, col = col, secondary_y = secondary_y
   )
 }
 
 #' @rdname go_scatter3d
 #' @export
-add_scatter3d <- function(fig, ...) UseMethod("add_scatter3d")
+add_scatter3d <- function(p, ...) UseMethod("add_scatter3d")
 
 #' @rdname go_scatter3d
 #' @export
 add_scatter3d.default <- function(
-    fig, ..., data = NULL, split = NULL, connectgaps = NULL,
-    customdata = NULL, error_x = NULL, error_y = NULL, error_z = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL, z = NULL,
+    connectgaps = NULL, customdata = NULL, error_x = NULL, error_y = NULL,
+    error_z = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
     meta = NULL, mode = NULL, name = NULL, opacity = NULL,
     projection = NULL, scene = NULL, showlegend = NULL, surfaceaxis = NULL,
     surfacecolor = NULL, text = NULL, textfont = NULL, textposition = NULL,
     texttemplate = NULL, texttemplatefallback = NULL, uid = NULL,
-    uirevision = NULL, visible = NULL, x = NULL, xcalendar = NULL,
-    xhoverformat = NULL, y = NULL, ycalendar = NULL, yhoverformat = NULL,
-    z = NULL, zcalendar = NULL, zhoverformat = NULL, row = NULL, col = NULL,
+    uirevision = NULL, visible = NULL, xcalendar = NULL,
+    xhoverformat = NULL, ycalendar = NULL, yhoverformat = NULL,
+    zcalendar = NULL, zhoverformat = NULL, row = NULL, col = NULL,
     skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "scatter3d", environment(), list(...), data, split, skip_invalid,
+    p, "scatter3d", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_scattercarpet
 #' @export
-add_scattercarpet <- function(fig, ...) UseMethod("add_scattercarpet")
+add_scattercarpet <- function(p, ...) UseMethod("add_scattercarpet")
 
 #' @rdname go_scattercarpet
 #' @export
 add_scattercarpet.default <- function(
-    fig, ..., data = NULL, split = NULL, a = NULL, b = NULL, carpet = NULL,
+    p, ..., data = NULL, split = NULL, a = NULL, b = NULL, carpet = NULL,
     connectgaps = NULL, customdata = NULL, fill = NULL, fillcolor = NULL,
     hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
@@ -975,25 +976,25 @@ add_scattercarpet.default <- function(
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "scattercarpet", environment(), list(...), data, split, skip_invalid,
+    p, "scattercarpet", environment(), list(...), data, split, skip_invalid,
     row = row, col = col, secondary_y = secondary_y
   )
 }
 
 #' @rdname go_scattergeo
 #' @export
-add_scattergeo <- function(fig, ...) UseMethod("add_scattergeo")
+add_scattergeo <- function(p, ...) UseMethod("add_scattergeo")
 
 #' @rdname go_scattergeo
 #' @export
 add_scattergeo.default <- function(
-    fig, ..., data = NULL, split = NULL, connectgaps = NULL,
-    customdata = NULL, featureidkey = NULL, fill = NULL, fillcolor = NULL,
-    geo = NULL, geojson = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    p, ..., data = NULL, split = NULL, lat = NULL, lon = NULL,
+    locations = NULL, connectgaps = NULL, customdata = NULL,
+    featureidkey = NULL, fill = NULL, fillcolor = NULL, geo = NULL,
+    geojson = NULL, hoverinfo = NULL, hoverlabel = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, lat = NULL, legend = NULL, legendgroup = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    line = NULL, locationmode = NULL, locations = NULL, lon = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, line = NULL, locationmode = NULL,
     marker = NULL, meta = NULL, mode = NULL, name = NULL, opacity = NULL,
     selected = NULL, selectedpoints = NULL, showlegend = NULL, text = NULL,
     textfont = NULL, textposition = NULL, texttemplate = NULL,
@@ -1004,165 +1005,164 @@ add_scattergeo.default <- function(
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "scattergeo", environment(), list(...), data, split, skip_invalid,
+    p, "scattergeo", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_scattergl
 #' @export
-add_scattergl <- function(fig, ...) UseMethod("add_scattergl")
+add_scattergl <- function(p, ...) UseMethod("add_scattergl")
 
 #' @rdname go_scattergl
 #' @export
 add_scattergl.default <- function(
-    fig, ..., data = NULL, split = NULL, connectgaps = NULL,
-    customdata = NULL, dx = NULL, dy = NULL, error_x = NULL, error_y = NULL,
-    fill = NULL, fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL,
+    connectgaps = NULL, customdata = NULL, dx = NULL, dy = NULL,
+    error_x = NULL, error_y = NULL, fill = NULL, fillcolor = NULL,
+    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
     meta = NULL, mode = NULL, name = NULL, opacity = NULL, selected = NULL,
     selectedpoints = NULL, showlegend = NULL, text = NULL, textfont = NULL,
     textposition = NULL, texttemplate = NULL, texttemplatefallback = NULL,
     uid = NULL, uirevision = NULL, unselected = NULL, visible = NULL,
-    x = NULL, x0 = NULL, xaxis = NULL, xcalendar = NULL,
-    xhoverformat = NULL, xperiod = NULL, xperiod0 = NULL,
-    xperiodalignment = NULL, y = NULL, y0 = NULL, yaxis = NULL,
-    ycalendar = NULL, yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
-    yperiodalignment = NULL, row = NULL, col = NULL, secondary_y = NULL,
-    skip_invalid = FALSE
+    x0 = NULL, xaxis = NULL, xcalendar = NULL, xhoverformat = NULL,
+    xperiod = NULL, xperiod0 = NULL, xperiodalignment = NULL, y0 = NULL,
+    yaxis = NULL, ycalendar = NULL, yhoverformat = NULL, yperiod = NULL,
+    yperiod0 = NULL, yperiodalignment = NULL, row = NULL, col = NULL,
+    secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "scattergl", environment(), list(...), data, split, skip_invalid,
+    p, "scattergl", environment(), list(...), data, split, skip_invalid,
     row = row, col = col, secondary_y = secondary_y
   )
 }
 
 #' @rdname go_scattermap
 #' @export
-add_scattermap <- function(fig, ...) UseMethod("add_scattermap")
+add_scattermap <- function(p, ...) UseMethod("add_scattermap")
 
 #' @rdname go_scattermap
 #' @export
 add_scattermap.default <- function(
-    fig, ..., data = NULL, split = NULL, below = NULL, cluster = NULL,
-    connectgaps = NULL, customdata = NULL, fill = NULL, fillcolor = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
-    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL, lat = NULL,
-    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, line = NULL, lon = NULL,
-    marker = NULL, meta = NULL, mode = NULL, name = NULL, opacity = NULL,
-    selected = NULL, selectedpoints = NULL, showlegend = NULL,
-    subplot = NULL, text = NULL, textfont = NULL, textposition = NULL,
-    texttemplate = NULL, texttemplatefallback = NULL, uid = NULL,
-    uirevision = NULL, unselected = NULL, visible = NULL, row = NULL,
-    col = NULL, skip_invalid = FALSE
-) {
-  # formulas (x = ~col) are evaluated in `data` or the figure's data, one
-  # trace per group of `split` and of discrete colour columns
-  add_trace_with_data(
-    fig, "scattermap", environment(), list(...), data, split, skip_invalid,
-    row = row, col = col
-  )
-}
-
-#' @rdname go_scatterpolar
-#' @export
-add_scatterpolar <- function(fig, ...) UseMethod("add_scatterpolar")
-
-#' @rdname go_scatterpolar
-#' @export
-add_scatterpolar.default <- function(
-    fig, ..., data = NULL, split = NULL, cliponaxis = NULL,
-    connectgaps = NULL, customdata = NULL, dr = NULL, dtheta = NULL,
-    fill = NULL, fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL,
-    hoveron = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    line = NULL, marker = NULL, meta = NULL, mode = NULL, name = NULL,
-    opacity = NULL, r = NULL, r0 = NULL, selected = NULL,
-    selectedpoints = NULL, showlegend = NULL, subplot = NULL, text = NULL,
-    textfont = NULL, textposition = NULL, texttemplate = NULL,
-    texttemplatefallback = NULL, theta = NULL, theta0 = NULL,
-    thetaunit = NULL, uid = NULL, uirevision = NULL, unselected = NULL,
-    visible = NULL, row = NULL, col = NULL, skip_invalid = FALSE
-) {
-  # formulas (x = ~col) are evaluated in `data` or the figure's data, one
-  # trace per group of `split` and of discrete colour columns
-  add_trace_with_data(
-    fig, "scatterpolar", environment(), list(...), data, split, skip_invalid,
-    row = row, col = col
-  )
-}
-
-#' @rdname go_scatterpolargl
-#' @export
-add_scatterpolargl <- function(fig, ...) UseMethod("add_scatterpolargl")
-
-#' @rdname go_scatterpolargl
-#' @export
-add_scatterpolargl.default <- function(
-    fig, ..., data = NULL, split = NULL, connectgaps = NULL,
-    customdata = NULL, dr = NULL, dtheta = NULL, fill = NULL,
+    p, ..., data = NULL, split = NULL, lat = NULL, lon = NULL, below = NULL,
+    cluster = NULL, connectgaps = NULL, customdata = NULL, fill = NULL,
     fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
-    meta = NULL, mode = NULL, name = NULL, opacity = NULL, r = NULL,
-    r0 = NULL, selected = NULL, selectedpoints = NULL, showlegend = NULL,
-    subplot = NULL, text = NULL, textfont = NULL, textposition = NULL,
-    texttemplate = NULL, texttemplatefallback = NULL, theta = NULL,
-    theta0 = NULL, thetaunit = NULL, uid = NULL, uirevision = NULL,
+    meta = NULL, mode = NULL, name = NULL, opacity = NULL, selected = NULL,
+    selectedpoints = NULL, showlegend = NULL, subplot = NULL, text = NULL,
+    textfont = NULL, textposition = NULL, texttemplate = NULL,
+    texttemplatefallback = NULL, uid = NULL, uirevision = NULL,
     unselected = NULL, visible = NULL, row = NULL, col = NULL,
     skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "scatterpolargl", environment(), list(...), data, split, skip_invalid,
+    p, "scattermap", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
-#' @rdname go_scattersmith
+#' @rdname go_scatterpolar
 #' @export
-add_scattersmith <- function(fig, ...) UseMethod("add_scattersmith")
+add_scatterpolar <- function(p, ...) UseMethod("add_scatterpolar")
 
-#' @rdname go_scattersmith
+#' @rdname go_scatterpolar
 #' @export
-add_scattersmith.default <- function(
-    fig, ..., data = NULL, split = NULL, cliponaxis = NULL,
-    connectgaps = NULL, customdata = NULL, fill = NULL, fillcolor = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
-    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, imag = NULL, legend = NULL, legendgroup = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    line = NULL, marker = NULL, meta = NULL, mode = NULL, name = NULL,
-    opacity = NULL, real = NULL, selected = NULL, selectedpoints = NULL,
-    showlegend = NULL, subplot = NULL, text = NULL, textfont = NULL,
-    textposition = NULL, texttemplate = NULL, texttemplatefallback = NULL,
-    uid = NULL, uirevision = NULL, unselected = NULL, visible = NULL,
-    row = NULL, col = NULL, skip_invalid = FALSE
+add_scatterpolar.default <- function(
+    p, ..., data = NULL, split = NULL, r = NULL, theta = NULL,
+    cliponaxis = NULL, connectgaps = NULL, customdata = NULL, dr = NULL,
+    dtheta = NULL, fill = NULL, fillcolor = NULL, hoverinfo = NULL,
+    hoverlabel = NULL, hoveron = NULL, hovertemplate = NULL,
+    hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
+    legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
+    meta = NULL, mode = NULL, name = NULL, opacity = NULL, r0 = NULL,
+    selected = NULL, selectedpoints = NULL, showlegend = NULL,
+    subplot = NULL, text = NULL, textfont = NULL, textposition = NULL,
+    texttemplate = NULL, texttemplatefallback = NULL, theta0 = NULL,
+    thetaunit = NULL, uid = NULL, uirevision = NULL, unselected = NULL,
+    visible = NULL, row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "scattersmith", environment(), list(...), data, split, skip_invalid,
+    p, "scatterpolar", environment(), list(...), data, split, skip_invalid,
+    row = row, col = col
+  )
+}
+
+#' @rdname go_scatterpolargl
+#' @export
+add_scatterpolargl <- function(p, ...) UseMethod("add_scatterpolargl")
+
+#' @rdname go_scatterpolargl
+#' @export
+add_scatterpolargl.default <- function(
+    p, ..., data = NULL, split = NULL, r = NULL, theta = NULL,
+    connectgaps = NULL, customdata = NULL, dr = NULL, dtheta = NULL,
+    fill = NULL, fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
+    meta = NULL, mode = NULL, name = NULL, opacity = NULL, r0 = NULL,
+    selected = NULL, selectedpoints = NULL, showlegend = NULL,
+    subplot = NULL, text = NULL, textfont = NULL, textposition = NULL,
+    texttemplate = NULL, texttemplatefallback = NULL, theta0 = NULL,
+    thetaunit = NULL, uid = NULL, uirevision = NULL, unselected = NULL,
+    visible = NULL, row = NULL, col = NULL, skip_invalid = FALSE
+) {
+  # formulas (x = ~col) are evaluated in `data` or the figure's data, one
+  # trace per group of `split` and of discrete colour columns
+  add_trace_with_data(
+    p, "scatterpolargl", environment(), list(...), data, split, skip_invalid,
+    row = row, col = col
+  )
+}
+
+#' @rdname go_scattersmith
+#' @export
+add_scattersmith <- function(p, ...) UseMethod("add_scattersmith")
+
+#' @rdname go_scattersmith
+#' @export
+add_scattersmith.default <- function(
+    p, ..., data = NULL, split = NULL, real = NULL, imag = NULL,
+    cliponaxis = NULL, connectgaps = NULL, customdata = NULL, fill = NULL,
+    fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, line = NULL, marker = NULL,
+    meta = NULL, mode = NULL, name = NULL, opacity = NULL, selected = NULL,
+    selectedpoints = NULL, showlegend = NULL, subplot = NULL, text = NULL,
+    textfont = NULL, textposition = NULL, texttemplate = NULL,
+    texttemplatefallback = NULL, uid = NULL, uirevision = NULL,
+    unselected = NULL, visible = NULL, row = NULL, col = NULL,
+    skip_invalid = FALSE
+) {
+  # formulas (x = ~col) are evaluated in `data` or the figure's data, one
+  # trace per group of `split` and of discrete colour columns
+  add_trace_with_data(
+    p, "scattersmith", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_scatterternary
 #' @export
-add_scatterternary <- function(fig, ...) UseMethod("add_scatterternary")
+add_scatterternary <- function(p, ...) UseMethod("add_scatterternary")
 
 #' @rdname go_scatterternary
 #' @export
 add_scatterternary.default <- function(
-    fig, ..., data = NULL, split = NULL, a = NULL, b = NULL, c = NULL,
+    p, ..., data = NULL, split = NULL, a = NULL, b = NULL, c = NULL,
     cliponaxis = NULL, connectgaps = NULL, customdata = NULL, fill = NULL,
     fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
@@ -1178,20 +1178,20 @@ add_scatterternary.default <- function(
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "scatterternary", environment(), list(...), data, split, skip_invalid,
+    p, "scatterternary", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_splom
 #' @export
-add_splom <- function(fig, ...) UseMethod("add_splom")
+add_splom <- function(p, ...) UseMethod("add_splom")
 
 #' @rdname go_splom
 #' @export
 add_splom.default <- function(
-    fig, ..., data = NULL, split = NULL, customdata = NULL, diagonal = NULL,
-    dimensions = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    p, ..., data = NULL, split = NULL, dimensions = NULL, customdata = NULL,
+    diagonal = NULL, hoverinfo = NULL, hoverlabel = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
     legendrank = NULL, legendwidth = NULL, marker = NULL, meta = NULL,
@@ -1204,20 +1204,21 @@ add_splom.default <- function(
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "splom", environment(), list(...), data, split, skip_invalid,
+    p, "splom", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_streamtube
 #' @export
-add_streamtube <- function(fig, ...) UseMethod("add_streamtube")
+add_streamtube <- function(p, ...) UseMethod("add_streamtube")
 
 #' @rdname go_streamtube
 #' @export
 add_streamtube.default <- function(
-    fig, ..., data = NULL, split = NULL, autocolorscale = NULL,
-    cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL, coloraxis = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL, z = NULL,
+    u = NULL, v = NULL, w = NULL, autocolorscale = NULL, cauto = NULL,
+    cmax = NULL, cmid = NULL, cmin = NULL, coloraxis = NULL,
     colorbar = NULL, colorscale = NULL, customdata = NULL, hoverinfo = NULL,
     hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
     hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
@@ -1225,137 +1226,139 @@ add_streamtube.default <- function(
     lighting = NULL, lightposition = NULL, maxdisplayed = NULL, meta = NULL,
     name = NULL, opacity = NULL, reversescale = NULL, scene = NULL,
     showlegend = NULL, showscale = NULL, sizeref = NULL, starts = NULL,
-    text = NULL, u = NULL, uhoverformat = NULL, uid = NULL,
-    uirevision = NULL, v = NULL, vhoverformat = NULL, visible = NULL,
-    w = NULL, whoverformat = NULL, x = NULL, xhoverformat = NULL, y = NULL,
-    yhoverformat = NULL, z = NULL, zhoverformat = NULL, row = NULL,
-    col = NULL, skip_invalid = FALSE
+    text = NULL, uhoverformat = NULL, uid = NULL, uirevision = NULL,
+    vhoverformat = NULL, visible = NULL, whoverformat = NULL,
+    xhoverformat = NULL, yhoverformat = NULL, zhoverformat = NULL,
+    row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "streamtube", environment(), list(...), data, split, skip_invalid,
+    p, "streamtube", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_sunburst
 #' @export
-add_sunburst <- function(fig, ...) UseMethod("add_sunburst")
+add_sunburst <- function(p, ...) UseMethod("add_sunburst")
 
 #' @rdname go_sunburst
 #' @export
 add_sunburst.default <- function(
-    fig, ..., data = NULL, split = NULL, branchvalues = NULL, count = NULL,
+    p, ..., data = NULL, split = NULL, labels = NULL, parents = NULL,
+    values = NULL, ids = NULL, branchvalues = NULL, count = NULL,
     customdata = NULL, domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, insidetextfont = NULL, insidetextorientation = NULL,
-    labels = NULL, leaf = NULL, legend = NULL, legendgrouptitle = NULL,
-    legendrank = NULL, legendwidth = NULL, level = NULL, marker = NULL,
-    maxdepth = NULL, meta = NULL, name = NULL, opacity = NULL,
-    outsidetextfont = NULL, parents = NULL, root = NULL, rotation = NULL,
-    sort = NULL, text = NULL, textfont = NULL, textinfo = NULL,
-    texttemplate = NULL, texttemplatefallback = NULL, uid = NULL,
-    uirevision = NULL, values = NULL, visible = NULL, row = NULL,
-    col = NULL, skip_invalid = FALSE
+    insidetextfont = NULL, insidetextorientation = NULL, leaf = NULL,
+    legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    legendwidth = NULL, level = NULL, marker = NULL, maxdepth = NULL,
+    meta = NULL, name = NULL, opacity = NULL, outsidetextfont = NULL,
+    root = NULL, rotation = NULL, sort = NULL, text = NULL, textfont = NULL,
+    textinfo = NULL, texttemplate = NULL, texttemplatefallback = NULL,
+    uid = NULL, uirevision = NULL, visible = NULL, row = NULL, col = NULL,
+    skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "sunburst", environment(), list(...), data, split, skip_invalid,
+    p, "sunburst", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_surface
 #' @export
-add_surface <- function(fig, ...) UseMethod("add_surface")
+add_surface <- function(p, ...) UseMethod("add_surface")
 
 #' @rdname go_surface
 #' @export
 add_surface.default <- function(
-    fig, ..., data = NULL, split = NULL, autocolorscale = NULL,
-    cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL, coloraxis = NULL,
-    colorbar = NULL, colorscale = NULL, connectgaps = NULL, contours = NULL,
-    customdata = NULL, hidesurface = NULL, hoverinfo = NULL,
-    hoverlabel = NULL, hovertemplate = NULL, hovertemplatefallback = NULL,
-    hovertext = NULL, ids = NULL, legend = NULL, legendgroup = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    lighting = NULL, lightposition = NULL, meta = NULL, name = NULL,
-    opacity = NULL, opacityscale = NULL, reversescale = NULL, scene = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL, z = NULL,
+    autocolorscale = NULL, cauto = NULL, cmax = NULL, cmid = NULL,
+    cmin = NULL, coloraxis = NULL, colorbar = NULL, colorscale = NULL,
+    connectgaps = NULL, contours = NULL, customdata = NULL,
+    hidesurface = NULL, hoverinfo = NULL, hoverlabel = NULL,
+    hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
+    ids = NULL, legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, lighting = NULL,
+    lightposition = NULL, meta = NULL, name = NULL, opacity = NULL,
+    opacityscale = NULL, reversescale = NULL, scene = NULL,
     showlegend = NULL, showscale = NULL, surfacecolor = NULL, text = NULL,
-    uid = NULL, uirevision = NULL, visible = NULL, x = NULL,
-    xcalendar = NULL, xhoverformat = NULL, y = NULL, ycalendar = NULL,
-    yhoverformat = NULL, z = NULL, zcalendar = NULL, zhoverformat = NULL,
-    row = NULL, col = NULL, skip_invalid = FALSE
+    uid = NULL, uirevision = NULL, visible = NULL, xcalendar = NULL,
+    xhoverformat = NULL, ycalendar = NULL, yhoverformat = NULL,
+    zcalendar = NULL, zhoverformat = NULL, row = NULL, col = NULL,
+    skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "surface", environment(), list(...), data, split, skip_invalid,
+    p, "surface", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_table
 #' @export
-add_table <- function(fig, ...) UseMethod("add_table")
+add_table <- function(p, ...) UseMethod("add_table")
 
 #' @rdname go_table
 #' @export
 add_table.default <- function(
-    fig, ..., data = NULL, split = NULL, cells = NULL, columnorder = NULL,
-    columnwidth = NULL, customdata = NULL, domain = NULL, header = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, ids = NULL, legend = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    meta = NULL, name = NULL, uid = NULL, uirevision = NULL, visible = NULL,
-    row = NULL, col = NULL, skip_invalid = FALSE
+    p, ..., data = NULL, split = NULL, header = NULL, cells = NULL,
+    columnorder = NULL, columnwidth = NULL, customdata = NULL,
+    domain = NULL, hoverinfo = NULL, hoverlabel = NULL, ids = NULL,
+    legend = NULL, legendgrouptitle = NULL, legendrank = NULL,
+    legendwidth = NULL, meta = NULL, name = NULL, uid = NULL,
+    uirevision = NULL, visible = NULL, row = NULL, col = NULL,
+    skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "table", environment(), list(...), data, split, skip_invalid,
+    p, "table", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_treemap
 #' @export
-add_treemap <- function(fig, ...) UseMethod("add_treemap")
+add_treemap <- function(p, ...) UseMethod("add_treemap")
 
 #' @rdname go_treemap
 #' @export
 add_treemap.default <- function(
-    fig, ..., data = NULL, split = NULL, branchvalues = NULL, count = NULL,
+    p, ..., data = NULL, split = NULL, labels = NULL, parents = NULL,
+    values = NULL, ids = NULL, branchvalues = NULL, count = NULL,
     customdata = NULL, domain = NULL, hoverinfo = NULL, hoverlabel = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
-    ids = NULL, insidetextfont = NULL, labels = NULL, legend = NULL,
-    legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
-    level = NULL, marker = NULL, maxdepth = NULL, meta = NULL, name = NULL,
-    opacity = NULL, outsidetextfont = NULL, parents = NULL, pathbar = NULL,
-    root = NULL, sort = NULL, text = NULL, textfont = NULL, textinfo = NULL,
-    textposition = NULL, texttemplate = NULL, texttemplatefallback = NULL,
-    tiling = NULL, uid = NULL, uirevision = NULL, values = NULL,
-    visible = NULL, row = NULL, col = NULL, skip_invalid = FALSE
+    insidetextfont = NULL, legend = NULL, legendgrouptitle = NULL,
+    legendrank = NULL, legendwidth = NULL, level = NULL, marker = NULL,
+    maxdepth = NULL, meta = NULL, name = NULL, opacity = NULL,
+    outsidetextfont = NULL, pathbar = NULL, root = NULL, sort = NULL,
+    text = NULL, textfont = NULL, textinfo = NULL, textposition = NULL,
+    texttemplate = NULL, texttemplatefallback = NULL, tiling = NULL,
+    uid = NULL, uirevision = NULL, visible = NULL, row = NULL, col = NULL,
+    skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "treemap", environment(), list(...), data, split, skip_invalid,
+    p, "treemap", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_violin
 #' @export
-add_violin <- function(fig, ...) UseMethod("add_violin")
+add_violin <- function(p, ...) UseMethod("add_violin")
 
 #' @rdname go_violin
 #' @export
 add_violin.default <- function(
-    fig, ..., data = NULL, split = NULL, alignmentgroup = NULL,
-    bandwidth = NULL, box = NULL, customdata = NULL, fillcolor = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL,
+    alignmentgroup = NULL, bandwidth = NULL, box = NULL, customdata = NULL,
+    fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, jitter = NULL, legend = NULL, legendgroup = NULL,
     legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
@@ -1365,28 +1368,29 @@ add_violin.default <- function(
     scalemode = NULL, selected = NULL, selectedpoints = NULL,
     showlegend = NULL, side = NULL, span = NULL, spanmode = NULL,
     text = NULL, uid = NULL, uirevision = NULL, unselected = NULL,
-    visible = NULL, width = NULL, x = NULL, x0 = NULL, xaxis = NULL,
-    xhoverformat = NULL, y = NULL, y0 = NULL, yaxis = NULL,
-    yhoverformat = NULL, zorder = NULL, row = NULL, col = NULL,
-    secondary_y = NULL, skip_invalid = FALSE
+    visible = NULL, width = NULL, x0 = NULL, xaxis = NULL,
+    xhoverformat = NULL, y0 = NULL, yaxis = NULL, yhoverformat = NULL,
+    zorder = NULL, row = NULL, col = NULL, secondary_y = NULL,
+    skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "violin", environment(), list(...), data, split, skip_invalid,
+    p, "violin", environment(), list(...), data, split, skip_invalid,
     row = row, col = col, secondary_y = secondary_y
   )
 }
 
 #' @rdname go_volume
 #' @export
-add_volume <- function(fig, ...) UseMethod("add_volume")
+add_volume <- function(p, ...) UseMethod("add_volume")
 
 #' @rdname go_volume
 #' @export
 add_volume.default <- function(
-    fig, ..., data = NULL, split = NULL, autocolorscale = NULL, caps = NULL,
-    cauto = NULL, cmax = NULL, cmid = NULL, cmin = NULL, coloraxis = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL, z = NULL,
+    value = NULL, autocolorscale = NULL, caps = NULL, cauto = NULL,
+    cmax = NULL, cmid = NULL, cmin = NULL, coloraxis = NULL,
     colorbar = NULL, colorscale = NULL, contour = NULL, customdata = NULL,
     flatshading = NULL, hoverinfo = NULL, hoverlabel = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
@@ -1396,30 +1400,29 @@ add_volume.default <- function(
     name = NULL, opacity = NULL, opacityscale = NULL, reversescale = NULL,
     scene = NULL, showlegend = NULL, showscale = NULL, slices = NULL,
     spaceframe = NULL, surface = NULL, text = NULL, uid = NULL,
-    uirevision = NULL, value = NULL, valuehoverformat = NULL,
-    visible = NULL, x = NULL, xhoverformat = NULL, y = NULL,
-    yhoverformat = NULL, z = NULL, zhoverformat = NULL, row = NULL,
-    col = NULL, skip_invalid = FALSE
+    uirevision = NULL, valuehoverformat = NULL, visible = NULL,
+    xhoverformat = NULL, yhoverformat = NULL, zhoverformat = NULL,
+    row = NULL, col = NULL, skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "volume", environment(), list(...), data, split, skip_invalid,
+    p, "volume", environment(), list(...), data, split, skip_invalid,
     row = row, col = col
   )
 }
 
 #' @rdname go_waterfall
 #' @export
-add_waterfall <- function(fig, ...) UseMethod("add_waterfall")
+add_waterfall <- function(p, ...) UseMethod("add_waterfall")
 
 #' @rdname go_waterfall
 #' @export
 add_waterfall.default <- function(
-    fig, ..., data = NULL, split = NULL, alignmentgroup = NULL, base = NULL,
-    cliponaxis = NULL, connector = NULL, constraintext = NULL,
-    customdata = NULL, decreasing = NULL, dx = NULL, dy = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
+    p, ..., data = NULL, split = NULL, x = NULL, y = NULL,
+    alignmentgroup = NULL, base = NULL, cliponaxis = NULL, connector = NULL,
+    constraintext = NULL, customdata = NULL, decreasing = NULL, dx = NULL,
+    dy = NULL, hoverinfo = NULL, hoverlabel = NULL, hovertemplate = NULL,
     hovertemplatefallback = NULL, hovertext = NULL, ids = NULL,
     increasing = NULL, insidetextanchor = NULL, insidetextfont = NULL,
     legend = NULL, legendgroup = NULL, legendgrouptitle = NULL,
@@ -1429,17 +1432,16 @@ add_waterfall.default <- function(
     showlegend = NULL, text = NULL, textangle = NULL, textfont = NULL,
     textinfo = NULL, textposition = NULL, texttemplate = NULL,
     texttemplatefallback = NULL, totals = NULL, uid = NULL,
-    uirevision = NULL, visible = NULL, width = NULL, x = NULL, x0 = NULL,
+    uirevision = NULL, visible = NULL, width = NULL, x0 = NULL,
     xaxis = NULL, xhoverformat = NULL, xperiod = NULL, xperiod0 = NULL,
-    xperiodalignment = NULL, y = NULL, y0 = NULL, yaxis = NULL,
-    yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
-    yperiodalignment = NULL, zorder = NULL, row = NULL, col = NULL,
-    secondary_y = NULL, skip_invalid = FALSE
+    xperiodalignment = NULL, y0 = NULL, yaxis = NULL, yhoverformat = NULL,
+    yperiod = NULL, yperiod0 = NULL, yperiodalignment = NULL, zorder = NULL,
+    row = NULL, col = NULL, secondary_y = NULL, skip_invalid = FALSE
 ) {
   # formulas (x = ~col) are evaluated in `data` or the figure's data, one
   # trace per group of `split` and of discrete colour columns
   add_trace_with_data(
-    fig, "waterfall", environment(), list(...), data, split, skip_invalid,
+    p, "waterfall", environment(), list(...), data, split, skip_invalid,
     row = row, col = col, secondary_y = secondary_y
   )
 }

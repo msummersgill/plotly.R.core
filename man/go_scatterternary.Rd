@@ -6,10 +6,10 @@
 \alias{go_scatterternary}
 \title{Scatterternary traces}
 \usage{
-add_scatterternary(fig, ...)
+add_scatterternary(p, ...)
 
 \method{add_scatterternary}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
@@ -104,7 +104,8 @@ go_scatterternary(
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}

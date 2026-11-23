@@ -6,13 +6,19 @@
 \alias{go_mesh3d}
 \title{Mesh3d traces}
 \usage{
-add_mesh3d(fig, ...)
+add_mesh3d(p, ...)
 
 \method{add_mesh3d}{default}(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  i = NULL,
+  j = NULL,
+  k = NULL,
   alphahull = NULL,
   autocolorscale = NULL,
   cauto = NULL,
@@ -33,12 +39,9 @@ add_mesh3d(fig, ...)
   hovertemplate = NULL,
   hovertemplatefallback = NULL,
   hovertext = NULL,
-  i = NULL,
   ids = NULL,
   intensity = NULL,
   intensitymode = NULL,
-  j = NULL,
-  k = NULL,
   legend = NULL,
   legendgroup = NULL,
   legendgrouptitle = NULL,
@@ -58,13 +61,10 @@ add_mesh3d(fig, ...)
   uirevision = NULL,
   vertexcolor = NULL,
   visible = NULL,
-  x = NULL,
   xcalendar = NULL,
   xhoverformat = NULL,
-  y = NULL,
   ycalendar = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zcalendar = NULL,
   zhoverformat = NULL,
   row = NULL,
@@ -74,6 +74,12 @@ add_mesh3d(fig, ...)
 
 go_mesh3d(
   ...,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  i = NULL,
+  j = NULL,
+  k = NULL,
   alphahull = NULL,
   autocolorscale = NULL,
   cauto = NULL,
@@ -94,12 +100,9 @@ go_mesh3d(
   hovertemplate = NULL,
   hovertemplatefallback = NULL,
   hovertext = NULL,
-  i = NULL,
   ids = NULL,
   intensity = NULL,
   intensitymode = NULL,
-  j = NULL,
-  k = NULL,
   legend = NULL,
   legendgroup = NULL,
   legendgrouptitle = NULL,
@@ -119,20 +122,18 @@ go_mesh3d(
   uirevision = NULL,
   vertexcolor = NULL,
   visible = NULL,
-  x = NULL,
   xcalendar = NULL,
   xhoverformat = NULL,
-  y = NULL,
   ycalendar = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zcalendar = NULL,
   zhoverformat = NULL,
   skip_invalid = FALSE
 )
 }
 \arguments{
-\item{fig}{A \code{go_figure} object.}
+\item{p}{A \code{go_figure} object (or, through methods for its class,
+another figure, e.g. a \code{plot_ly()} figure of the plotly package).}
 
 \item{...}{Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.}
@@ -151,6 +152,48 @@ column (a factor, character or logical, e.g. \code{marker =
 go_scatter_marker(color = ~group)}) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.}
+
+\item{x}{Sets the X coordinates of the vertices. The nth element of
+vectors `x`, `y` and `z` jointly represent the X, Y and Z coordinates
+of the nth vertex. Data array: a vector, factor, Date/POSIXct vector,
+matrix or list.}
+
+\item{y}{Sets the Y coordinates of the vertices. The nth element of
+vectors `x`, `y` and `z` jointly represent the X, Y and Z coordinates
+of the nth vertex. Data array: a vector, factor, Date/POSIXct vector,
+matrix or list.}
+
+\item{z}{Sets the Z coordinates of the vertices. The nth element of
+vectors `x`, `y` and `z` jointly represent the X, Y and Z coordinates
+of the nth vertex. Data array: a vector, factor, Date/POSIXct vector,
+matrix or list.}
+
+\item{i}{A vector of vertex indices, i.e. integer values between 0 and
+the length of the vertex vectors, representing the "first" vertex of a
+triangle. For example, `\{i[m], j[m], k[m]\}` together represent face
+m (triangle m) in the mesh, where `i[m] = n` points to the triplet
+`\{x[n], y[n], z[n]\}` in the vertex arrays. Therefore, each element
+in `i` represents a point in space, which is the first vertex of a
+triangle. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
+
+\item{j}{A vector of vertex indices, i.e. integer values between 0 and
+the length of the vertex vectors, representing the "second" vertex of
+a triangle. For example, `\{i[m], j[m], k[m]\}` together represent
+face m (triangle m) in the mesh, where `j[m] = n` points to the
+triplet `\{x[n], y[n], z[n]\}` in the vertex arrays. Therefore, each
+element in `j` represents a point in space, which is the second vertex
+of a triangle. Data array: a vector, factor, Date/POSIXct vector,
+matrix or list.}
+
+\item{k}{A vector of vertex indices, i.e. integer values between 0 and
+the length of the vertex vectors, representing the "third" vertex of a
+triangle. For example, `\{i[m], j[m], k[m]\}` together represent face
+m (triangle m) in the mesh, where `k[m] = n` points to the triplet
+`\{x[n], y[n], z[n]\}` in the vertex arrays. Therefore, each element
+in `k` represents a point in space, which is the third vertex of a
+triangle. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.}
 
 \item{alphahull}{Determines how the mesh surface triangles are derived
 from the set of vertices (points) represented by the `x`, `y` and `z`
@@ -291,15 +334,6 @@ displayed. Any value.}
 
 \item{hovertext}{Same as `text`. String, or a vector of these.}
 
-\item{i}{A vector of vertex indices, i.e. integer values between 0 and
-the length of the vertex vectors, representing the "first" vertex of a
-triangle. For example, `\{i[m], j[m], k[m]\}` together represent face
-m (triangle m) in the mesh, where `i[m] = n` points to the triplet
-`\{x[n], y[n], z[n]\}` in the vertex arrays. Therefore, each element
-in `i` represents a point in space, which is the first vertex of a
-triangle. Data array: a vector, factor, Date/POSIXct vector, matrix or
-list.}
-
 \item{ids}{Assigns id labels to each datum. These ids for object
 constancy of data points during animation. Should be an array of
 strings, not numbers or any other type. Data array: a vector, factor,
@@ -312,24 +346,6 @@ list.}
 
 \item{intensitymode}{Determines the source of `intensity` values. One of
 \code{"vertex"}, \code{"cell"}.}
-
-\item{j}{A vector of vertex indices, i.e. integer values between 0 and
-the length of the vertex vectors, representing the "second" vertex of
-a triangle. For example, `\{i[m], j[m], k[m]\}` together represent
-face m (triangle m) in the mesh, where `j[m] = n` points to the
-triplet `\{x[n], y[n], z[n]\}` in the vertex arrays. Therefore, each
-element in `j` represents a point in space, which is the second vertex
-of a triangle. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.}
-
-\item{k}{A vector of vertex indices, i.e. integer values between 0 and
-the length of the vertex vectors, representing the "third" vertex of a
-triangle. For example, `\{i[m], j[m], k[m]\}` together represent face
-m (triangle m) in the mesh, where `k[m] = n` points to the triplet
-`\{x[n], y[n], z[n]\}` in the vertex arrays. Therefore, each element
-in `k` represents a point in space, which is the third vertex of a
-triangle. Data array: a vector, factor, Date/POSIXct vector, matrix or
-list.}
 
 \item{legend}{Sets the reference to a legend to show this trace in.
 References to these legends are "legend", "legend2", "legend3", etc.
@@ -437,11 +453,6 @@ factor, Date/POSIXct vector, matrix or list.}
 (provided that the legend itself is visible). One of
 \code{"legendonly"}, \code{TRUE}, \code{FALSE}.}
 
-\item{x}{Sets the X coordinates of the vertices. The nth element of
-vectors `x`, `y` and `z` jointly represent the X, Y and Z coordinates
-of the nth vertex. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.}
-
 \item{xcalendar}{Sets the calendar system to use with `x` date data. One
 of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},
 \code{"ethiopian"}, \code{"gregorian"}, \code{"hebrew"},
@@ -460,11 +471,6 @@ digits. For example, "2016-10-13 09:15:23.456" with tickformat
 "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 are formatted using `xaxis.hoverformat`. String.}
 
-\item{y}{Sets the Y coordinates of the vertices. The nth element of
-vectors `x`, `y` and `z` jointly represent the X, Y and Z coordinates
-of the nth vertex. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.}
-
 \item{ycalendar}{Sets the calendar system to use with `y` date data. One
 of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},
 \code{"ethiopian"}, \code{"gregorian"}, \code{"hebrew"},
@@ -482,11 +488,6 @@ a decimal number as well as "\%\{n\}f" for fractional seconds with n
 digits. For example, "2016-10-13 09:15:23.456" with tickformat
 "\%H~\%M~\%S.\%2f" would display "09~15~23.46"By default the values
 are formatted using `yaxis.hoverformat`. String.}
-
-\item{z}{Sets the Z coordinates of the vertices. The nth element of
-vectors `x`, `y` and `z` jointly represent the X, Y and Z coordinates
-of the nth vertex. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.}
 
 \item{zcalendar}{Sets the calendar system to use with `z` date data. One
 of \code{"chinese"}, \code{"coptic"}, \code{"discworld"},

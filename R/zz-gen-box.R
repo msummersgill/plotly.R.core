@@ -34,6 +34,12 @@
 #' evaluated in the data, and then checked, when the trace is added with
 #' \code{add_<trace>()} or \code{add_trace()}.
 #'
+#' @param x Sets the x sample data or coordinates. See overview for more
+#'   info. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#'   list.
+#' @param y Sets the y sample data or coordinates. See overview for more
+#'   info. Data array: a vector, factor, Date/POSIXct vector, matrix or
+#'   list.
 #' @param alignmentgroup Set several traces linked to the same position
 #'   axis or matching axes to the same alignmentgroup. This controls
 #'   whether bars compute their positional range dependently or
@@ -69,7 +75,6 @@
 #'   q1/median/q3. Number.
 #' @param dy Sets the y coordinate step for multi-box traces set using
 #'   q1/median/q3. Number.
-#' @param fig A \code{go_figure} object.
 #' @param fillcolor Sets the fill color. Defaults to a half-transparent
 #'   variant of the line color, marker color, or marker line color,
 #'   whichever is available. Color: a CSS color string or R color name.
@@ -208,6 +213,8 @@
 #' @param orientation Sets the orientation of the box(es). If "v" ("h"),
 #'   the distribution is visualized along the vertical (horizontal). One of
 #'   \code{"v"}, \code{"h"}.
+#' @param p A \code{go_figure} object (or, through methods for its class,
+#'   another figure, e.g. a \code{plot_ly()} figure of the plotly package).
 #' @param pointpos Sets the position of the sample points in relation to
 #'   the box(es). If 0, the sample points are places over the center of the
 #'   box(es). Positive (negative) values correspond to positions to the
@@ -309,9 +316,6 @@
 #' @param width Sets the width of the box in data coordinate If 0 (default
 #'   value) the width is automatically selected based on the positions of
 #'   other box traces in the same subplot. Number in the interval [0, Inf].
-#' @param x Sets the x sample data or coordinates. See overview for more
-#'   info. Data array: a vector, factor, Date/POSIXct vector, matrix or
-#'   list.
 #' @param x0 Sets the x coordinate for single-box traces or the starting
 #'   coordinate for multi-box traces set using q1/median/q3. See overview
 #'   for more info. Any value.
@@ -348,9 +352,6 @@
 #' @param xperiodalignment Only relevant when the axis `type` is "date".
 #'   Sets the alignment of data points on the x axis. One of
 #'   \code{"start"}, \code{"middle"}, \code{"end"}.
-#' @param y Sets the y sample data or coordinates. See overview for more
-#'   info. Data array: a vector, factor, Date/POSIXct vector, matrix or
-#'   list.
 #' @param y0 Sets the y coordinate for single-box traces or the starting
 #'   coordinate for multi-box traces set using q1/median/q3. See overview
 #'   for more info. Any value.
@@ -406,9 +407,9 @@
 #'   go_figure() |>
 #'   add_box(x = ~factor(cyl), y = ~mpg)
 go_box <- function(
-    ..., alignmentgroup = NULL, boxmean = NULL, boxpoints = NULL,
-    customdata = NULL, dx = NULL, dy = NULL, fillcolor = NULL,
-    hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
+    ..., x = NULL, y = NULL, alignmentgroup = NULL, boxmean = NULL,
+    boxpoints = NULL, customdata = NULL, dx = NULL, dy = NULL,
+    fillcolor = NULL, hoverinfo = NULL, hoverlabel = NULL, hoveron = NULL,
     hovertemplate = NULL, hovertemplatefallback = NULL, hovertext = NULL,
     ids = NULL, jitter = NULL, legend = NULL, legendgroup = NULL,
     legendgrouptitle = NULL, legendrank = NULL, legendwidth = NULL,
@@ -420,10 +421,10 @@ go_box <- function(
     selectedpoints = NULL, showlegend = NULL, showwhiskers = NULL,
     sizemode = NULL, text = NULL, uid = NULL, uirevision = NULL,
     unselected = NULL, upperfence = NULL, visible = NULL,
-    whiskerwidth = NULL, width = NULL, x = NULL, x0 = NULL, xaxis = NULL,
+    whiskerwidth = NULL, width = NULL, x0 = NULL, xaxis = NULL,
     xcalendar = NULL, xhoverformat = NULL, xperiod = NULL, xperiod0 = NULL,
-    xperiodalignment = NULL, y = NULL, y0 = NULL, yaxis = NULL,
-    ycalendar = NULL, yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
+    xperiodalignment = NULL, y0 = NULL, yaxis = NULL, ycalendar = NULL,
+    yhoverformat = NULL, yperiod = NULL, yperiod0 = NULL,
     yperiodalignment = NULL, zorder = NULL, skip_invalid = FALSE
 ) {
   plotly_object("box", NULL, environment(), list(...), skip_invalid)
