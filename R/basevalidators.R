@@ -774,7 +774,8 @@ vc_colorscale <- function(v, key, entry) {
     } else if (
       is.list(v) &&
         length(v) > 0L &&
-        all(vapply(v, function(e) length(e) == 2L, logical(1)))
+        all(vapply(v, function(e) length(e) == 2L, logical(1))) &&
+        !is_colorscale_columns(v)
     ) {
       stops <- vapply(
         v,
@@ -782,6 +783,10 @@ vc_colorscale <- function(v, key, entry) {
         numeric(1)
       )
       cols <- vapply(v, function(e) as.character(e[[2L]]), character(1))
+    } else if (is_colorscale_columns(v)) {
+      # list(stops, colours), as the plotly package takes it
+      stops <- v[[1L]]
+      cols <- as.character(v[[2L]])
     } else {
       raise_invalid_val(v, key, entry)
     }
@@ -792,6 +797,22 @@ vc_colorscale <- function(v, key, entry) {
     }
   }
   unname(Map(function(s, col) list(s, col), stops, cols))
+}
+
+# A colorscale given as list(stops, colours): two vectors of the same length,
+# numbers and colours (list(c(0, 1), c("red", "blue"))), not c(stop, colour)
+# pairs.
+is_colorscale_columns <- function(v) {
+  if (!is.list(v) || length(v) != 2L || !is.null(names(v))) {
+    return(FALSE)
+  }
+  stops <- suppressWarnings(as.numeric(v[[1L]]))
+  is.atomic(v[[1L]]) &&
+    is.atomic(v[[2L]]) &&
+    length(v[[1L]]) == length(v[[2L]]) &&
+    length(v[[1L]]) > 0L &&
+    !anyNA(stops) &&
+    !anyNA(coerce_colors(as.character(v[[2L]])))
 }
 
 # A plotly.js built-in colorscale (case-insensitive; "_r" reverses) as a
@@ -1273,6 +1294,20 @@ vc_title <- function(v, key, entry, skip_invalid = FALSE) {
 }
 
 vc_compound_array <- function(v, key, entry, skip_invalid = FALSE) {
+  element <- get_validator(entry$element_key)
+  # a single object (annotations = list(text = "a", x = 1), shapes =
+  # go_shape(...)) is an array of one, as the plotly package has it
+  if (
+    is.list(v) &&
+      !is.data.frame(v) &&
+      (inherits(v, element$data_class) ||
+        (is.null(oldClass(v)) &&
+          length(v) &&
+          !is.null(names(v)) &&
+          all(names(v) %in% element$children)))
+  ) {
+    v <- list(v)
+  }
   if (
     is.data.frame(v) ||
       !is.list(v) ||
@@ -1281,7 +1316,6 @@ vc_compound_array <- function(v, key, entry, skip_invalid = FALSE) {
   ) {
     raise_invalid_val(v, key, entry)
   }
-  element <- get_validator(entry$element_key)
   lapply(
     v,
     validate_coerce,

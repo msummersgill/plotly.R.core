@@ -28,7 +28,8 @@ modebar text and number/date formatting.}
 \item{mathjax}{Load MathJax so LaTeX in \verb{$...$} text (see \code{\link[=TeX]{TeX()}}) is
 rendered: \code{"local"} (or \code{TRUE}) for the MathJax 3 bundled with the
 package, which works offline and is embedded in self-contained HTML
-(about 2 MB), or \code{"cdn"} to load it from cdn.jsdelivr.net.}
+(about 2 MB), or \code{"cdn"} to load it from cdn.jsdelivr.net. A figure
+with TeX gets the bundled MathJax without this.}
 
 \item{cloud, showSendToCloud}{Show the modebar button that sends the chart
 to Plotly Cloud (\code{plotlyServerURL})? Off by default, because clicking it

@@ -2,8 +2,9 @@
 #'
 #' This function makes it slightly easier to render TeX in a plotly graph --
 #' it ensures the provided string is surrounded with `$` (this is what plotly.js
-#' uses to declare a string as TeX). MathJax must be included with
-#' `config(p, mathjax = "local")` (or `"cdn"`); [save_image()] needs nothing.
+#' uses to declare a string as TeX). A figure with TeX includes MathJax
+#' (plotly.core's copy) when it's drawn; `config(p, mathjax = "cdn")` loads
+#' it from a CDN instead. [save_image()] needs nothing.
 #'
 #' @param x a character vector
 #' @return `x`, surrounded with `$`.

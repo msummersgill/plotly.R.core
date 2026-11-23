@@ -553,3 +553,12 @@ for (x in cases) {
     as.character(plotly.core:::to_JSON_jsonlite(x))
   ))
 }
+
+# a figure with TeX gets MathJax
+dep_names <- function(w) vapply(w$dependencies, `[[`, "", "name")
+w <- plotly_widget(
+  go_figure() |> add_scatter(y = 1:2) |> update_layout(title = TeX("\\alpha"))
+)
+stopifnot("mathjax" %in% dep_names(w))
+w <- plotly_widget(go_figure() |> add_scatter(y = 1:2, text = c("$1", "$2")))
+stopifnot(!"mathjax" %in% dep_names(w))

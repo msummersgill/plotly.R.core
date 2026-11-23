@@ -41,7 +41,8 @@ set_widget_setting <- function(p, name, value) {
 #' @param mathjax Load MathJax so LaTeX in `$...$` text (see [TeX()]) is
 #'   rendered: `"local"` (or `TRUE`) for the MathJax 3 bundled with the
 #'   package, which works offline and is embedded in self-contained HTML
-#'   (about 2 MB), or `"cdn"` to load it from cdn.jsdelivr.net.
+#'   (about 2 MB), or `"cdn"` to load it from cdn.jsdelivr.net. A figure
+#'   with TeX gets the bundled MathJax without this.
 #' @param cloud,showSendToCloud Show the modebar button that sends the chart
 #'   to Plotly Cloud (`plotlyServerURL`)? Off by default, because clicking it
 #'   uploads the chart data to an external server. `cloud` is the legacy

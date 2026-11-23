@@ -101,8 +101,11 @@ plotly_widget <- function(
   if (!is.null(cfg$locale) && cfg$locale != "en") {
     deps <- c(deps, list(locale_dependency(cfg$locale)))
   }
-  if (!is.null(setting("mathjax"))) {
-    deps <- c(deps, list(mathjax_dependency(setting("mathjax"))))
+  # MathJax for TeX ($...$, see TeX()): as configured, or the bundled copy
+  # when the figure has TeX and none was configured
+  mathjax <- setting("mathjax") %||% if (has_tex(x)) "local"
+  if (!is.null(mathjax)) {
+    deps <- c(deps, list(mathjax_dependency(mathjax)))
   }
   if (!is.null(x$sets)) {
     deps <- c(deps, crosstalk_deps(x$highlight))
@@ -966,3 +969,25 @@ json_strings <- function(x) {
 }
 
 `%||%` <- function(x, y) if (is.null(x)) y else x
+
+# Whether a widget payload has TeX ("$...$" strings) in its traces, layout or
+# frames. Long vectors (data, not labels) aren't searched.
+has_tex <- function(x) {
+  found <- FALSE
+  walk <- function(v) {
+    if (found) {
+      return()
+    }
+    if (is.character(v)) {
+      if (length(v) <= 1000L && any(grepl("^\\$.+\\$$", v))) {
+        found <<- TRUE
+      }
+    } else if (is.list(v) && !is.data.frame(v)) {
+      for (e in v) {
+        walk(e)
+      }
+    }
+  }
+  walk(x[c("data", "layout", "frames")])
+  found
+}

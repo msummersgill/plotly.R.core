@@ -201,8 +201,13 @@ stopifnot(
     list(list(bounds = list("sat", "mon")))
   )
 )
+# a single object is an array of one
+stopifnot(
+  length(vc(list(bounds = c("sat", "mon")), "layout.xaxis.rangebreaks")) == 1L
+)
+# but not a named list that isn't one of its objects
 expect_error(
-  vc(list(bounds = c("sat", "mon")), "layout.xaxis.rangebreaks"),
+  vc(list(nope = 1), "layout.xaxis.rangebreaks"),
   "list of objects"
 )
 
@@ -358,3 +363,19 @@ local({
     inherits(go_surface(x = df)$x, "data.frame")
   )
 })
+
+# colorscales as list(stops, colours), as the plotly package takes them
+stopifnot(
+  identical(
+    vc(list(c(0, 1), c("red", "blue")), "scatter.marker.colorscale"),
+    list(list(0, "red"), list(1, "blue"))
+  ),
+  identical(
+    vc(list(c(0, "red"), c(1, "blue")), "scatter.marker.colorscale"),
+    list(list(0, "red"), list(1, "blue"))
+  )
+)
+# a single object for an object array is an array of one
+a <- vc(list(text = "a", x = 1), "layout.annotations")
+stopifnot(length(a) == 1L, identical(a[[1L]]$text, "a"))
+stopifnot(length(vc(go_shape(type = "line"), "layout.shapes")) == 1L)
