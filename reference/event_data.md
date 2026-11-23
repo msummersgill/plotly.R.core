@@ -1,10 +1,6 @@
-# Access plotly events in Shiny
+# Access plotly user input event data in shiny
 
-Returns the data of the most recent plotly event of a given type, from
-the plot with the given `source` (see
-[`event_source()`](https://msummersgill.github.io/plotly.R.core/reference/event_register.md));
-`NULL` before any such event. Must be called in a reactive context of a
-Shiny app.
+This function must be called within a reactive shiny context.
 
 ## Usage
 
@@ -25,31 +21,48 @@ event_data(
 
 - event:
 
-  The event type.
+  The type of plotly event. All supported events are listed in the
+  function signature above (i.e., the usage section).
 
 - source:
 
-  The source id of the plot.
+  a character string of length 1. Match the value of this string with
+  the source id set with
+  [`event_source()`](https://msummersgill.github.io/plotly.R.core/reference/event_source.md)
+  to respond to events emitted from that specific plot.
 
 - session:
 
-  The Shiny session.
+  a shiny session object (the default should almost always be used).
 
 - priority:
 
-  `"input"` (default) triggers reactivity only when the value changes;
-  `"event"` on every event, even with the same value.
+  the priority of the corresponding shiny input value. If equal to
+  `"event"`, then `event_data()` always triggers re-execution, instead
+  of re-executing only when the relevant shiny input value changes (the
+  default).
 
 ## Value
 
-Event data, or `NULL`.
+Event data, or `NULL` before any such event. Point events (click, hover,
+selected, ...) return a data frame with `curveNumber`, `pointNumber`,
+`x`, `y` and, where available, `z`, `customdata` and `key`;
+`plotly_relayout` returns the changed layout properties.
 
-## Details
+## References
 
-Point events (click, hover, selected, ...) return a data frame with
-`curveNumber`, `pointNumber`, `x`, `y` and, where available, `z`,
-`customdata` and `key`. `plotly_relayout` returns the changed layout
-properties (e.g. axis ranges after zooming).
+- <https://plotly-r.com/linking-views-with-shiny.html#shiny-plotly-inputs>
+
+- <https://plotly.com/javascript/plotlyjs-function-reference/>
+
+## See also
+
+[event_register](https://msummersgill.github.io/plotly.R.core/reference/event_register.md),
+[event_unregister](https://msummersgill.github.io/plotly.R.core/reference/event_unregister.md)
+
+## Author
+
+Carson Sievert
 
 ## Examples
 

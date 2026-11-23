@@ -10,6 +10,12 @@ positions given by \`x\`, \`y\` and \`z\`.
 ``` r
 go_cone(
   ...,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  u = NULL,
+  v = NULL,
+  w = NULL,
   anchor = NULL,
   autocolorscale = NULL,
   cauto = NULL,
@@ -43,32 +49,32 @@ go_cone(
   sizemode = NULL,
   sizeref = NULL,
   text = NULL,
-  u = NULL,
   uhoverformat = NULL,
   uid = NULL,
   uirevision = NULL,
-  v = NULL,
   vhoverformat = NULL,
   visible = NULL,
-  w = NULL,
   whoverformat = NULL,
-  x = NULL,
   xhoverformat = NULL,
-  y = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zhoverformat = NULL,
   skip_invalid = FALSE
 )
 
-add_cone(fig, ...)
+add_cone(p, ...)
 
 # Default S3 method
 add_cone(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  u = NULL,
+  v = NULL,
+  w = NULL,
   anchor = NULL,
   autocolorscale = NULL,
   cauto = NULL,
@@ -102,20 +108,14 @@ add_cone(
   sizemode = NULL,
   sizeref = NULL,
   text = NULL,
-  u = NULL,
   uhoverformat = NULL,
   uid = NULL,
   uirevision = NULL,
-  v = NULL,
   vhoverformat = NULL,
   visible = NULL,
-  w = NULL,
   whoverformat = NULL,
-  x = NULL,
   xhoverformat = NULL,
-  y = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zhoverformat = NULL,
   row = NULL,
   col = NULL,
@@ -129,6 +129,36 @@ add_cone(
 
   Not for properties, which must be named in full: an abbreviated or
   unknown name is an error that suggests the right one.
+
+- x:
+
+  Sets the x coordinates of the vector field and of the displayed cones.
+  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
+
+- y:
+
+  Sets the y coordinates of the vector field and of the displayed cones.
+  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
+
+- z:
+
+  Sets the z coordinates of the vector field and of the displayed cones.
+  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
+
+- u:
+
+  Sets the x components of the vector field. Data array: a vector,
+  factor, Date/POSIXct vector, matrix or list.
+
+- v:
+
+  Sets the y components of the vector field. Data array: a vector,
+  factor, Date/POSIXct vector, matrix or list.
+
+- w:
+
+  Sets the z components of the vector field. Data array: a vector,
+  factor, Date/POSIXct vector, matrix or list.
 
 - anchor:
 
@@ -408,11 +438,6 @@ add_cone(
   elements will be seen in the hover labels. String, or a vector of
   these.
 
-- u:
-
-  Sets the x components of the vector field. Data array: a vector,
-  factor, Date/POSIXct vector, matrix or list.
-
 - uhoverformat:
 
   Sets the hover text formatting rule for \`u\` using d3 formatting
@@ -443,11 +468,6 @@ add_cone(
   user-driven changes if you give each trace a \`uid\` that stays with
   it as it moves. Any value.
 
-- v:
-
-  Sets the y components of the vector field. Data array: a vector,
-  factor, Date/POSIXct vector, matrix or list.
-
 - vhoverformat:
 
   Sets the hover text formatting rule for \`v\` using d3 formatting
@@ -461,22 +481,12 @@ add_cone(
   trace is not drawn, but can appear as a legend item (provided that the
   legend itself is visible). One of `"legendonly"`, `TRUE`, `FALSE`.
 
-- w:
-
-  Sets the z components of the vector field. Data array: a vector,
-  factor, Date/POSIXct vector, matrix or list.
-
 - whoverformat:
 
   Sets the hover text formatting rule for \`w\` using d3 formatting
   mini-languages which are very similar to those in Python. For numbers,
   see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format.By default
   the values are formatted using generic number format. String.
-
-- x:
-
-  Sets the x coordinates of the vector field and of the displayed cones.
-  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
 
 - xhoverformat:
 
@@ -491,11 +501,6 @@ add_cone(
   "%H~%M~%S.%2f" would display "09~15~23.46"By default the values are
   formatted using \`xaxis.hoverformat\`. String.
 
-- y:
-
-  Sets the y coordinates of the vector field and of the displayed cones.
-  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-
 - yhoverformat:
 
   Sets the hover text formatting rule for \`y\` using d3 formatting
@@ -508,11 +513,6 @@ add_cone(
   digits. For example, "2016-10-13 09:15:23.456" with tickformat
   "%H~%M~%S.%2f" would display "09~15~23.46"By default the values are
   formatted using \`yaxis.hoverformat\`. String.
-
-- z:
-
-  Sets the z coordinates of the vector field and of the displayed cones.
-  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
 
 - zhoverformat:
 
@@ -532,9 +532,10 @@ add_cone(
   If `TRUE`, silently drop invalid properties instead of raising an
   error.
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - data:
 

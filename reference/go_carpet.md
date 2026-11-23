@@ -13,9 +13,11 @@ that of \`a\` and \`b\`.
 go_carpet(
   ...,
   a = NULL,
+  b = NULL,
+  x = NULL,
+  y = NULL,
   a0 = NULL,
   aaxis = NULL,
-  b = NULL,
   b0 = NULL,
   baxis = NULL,
   carpet = NULL,
@@ -36,26 +38,26 @@ go_carpet(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   xaxis = NULL,
-  y = NULL,
   yaxis = NULL,
   zorder = NULL,
   skip_invalid = FALSE
 )
 
-add_carpet(fig, ...)
+add_carpet(p, ...)
 
 # Default S3 method
 add_carpet(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
   a = NULL,
+  b = NULL,
+  x = NULL,
+  y = NULL,
   a0 = NULL,
   aaxis = NULL,
-  b = NULL,
   b0 = NULL,
   baxis = NULL,
   carpet = NULL,
@@ -76,9 +78,7 @@ add_carpet(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   xaxis = NULL,
-  y = NULL,
   yaxis = NULL,
   zorder = NULL,
   row = NULL,
@@ -100,6 +100,23 @@ add_carpet(
   An array containing values of the first parameter value Data array: a
   vector, factor, Date/POSIXct vector, matrix or list.
 
+- b:
+
+  A two dimensional array of y coordinates at each carpet point. Data
+  array: a vector, factor, Date/POSIXct vector, matrix or list.
+
+- x:
+
+  A two dimensional array of x coordinates at each carpet point. If
+  omitted, the plot is a cheater plot and the xaxis is hidden by
+  default. Data array: a vector, factor, Date/POSIXct vector, matrix or
+  list.
+
+- y:
+
+  A two dimensional array of y coordinates at each carpet point. Data
+  array: a vector, factor, Date/POSIXct vector, matrix or list.
+
 - a0:
 
   Alternate to \`a\`. Builds a linear space of a coordinates. Use with
@@ -115,11 +132,6 @@ add_carpet(
   `cheatertype`, `color`, `dtick`, `endline`, `endlinecolor`,
   `endlinewidth` and 42 more (see
   [`go_carpet_aaxis()`](https://msummersgill.github.io/plotly.R.core/reference/go_carpet_aaxis.md)).
-
-- b:
-
-  A two dimensional array of y coordinates at each carpet point. Data
-  array: a vector, factor, Date/POSIXct vector, matrix or list.
 
 - b0:
 
@@ -268,24 +280,12 @@ add_carpet(
   trace is not drawn, but can appear as a legend item (provided that the
   legend itself is visible). One of `"legendonly"`, `TRUE`, `FALSE`.
 
-- x:
-
-  A two dimensional array of x coordinates at each carpet point. If
-  omitted, the plot is a cheater plot and the xaxis is hidden by
-  default. Data array: a vector, factor, Date/POSIXct vector, matrix or
-  list.
-
 - xaxis:
 
   Sets a reference between this trace's x coordinates and a 2D cartesian
   x axis. If "x" (the default value), the x coordinates refer to
   \`layout.xaxis\`. If "x2", the x coordinates refer to
   \`layout.xaxis2\`, and so on. Subplot id: `"x"`, `"x2"`, `"x3"`, ....
-
-- y:
-
-  A two dimensional array of y coordinates at each carpet point. Data
-  array: a vector, factor, Date/POSIXct vector, matrix or list.
 
 - yaxis:
 
@@ -305,9 +305,10 @@ add_carpet(
   If `TRUE`, silently drop invalid properties instead of raising an
   error.
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - data:
 

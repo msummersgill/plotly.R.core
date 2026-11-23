@@ -58,14 +58,16 @@ used.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_sankey</span><span class="op">(</span><span class="va">fig</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_sankey</span><span class="op">(</span><span class="va">p</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">add_sankey</span><span class="op">(</span></span>
-<span>  <span class="va">fig</span>,</span>
+<span>  <span class="va">p</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  node <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  link <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  arrangement <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  direction <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -77,10 +79,8 @@ used.</p>
 <span>  legendgrouptitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendrank <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendwidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  link <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  meta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  node <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  orientation <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  selectedpoints <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  textfont <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -96,6 +96,8 @@ used.</p>
 <span></span>
 <span><span class="fu">go_sankey</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
+<span>  node <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  link <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  arrangement <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  direction <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -107,10 +109,8 @@ used.</p>
 <span>  legendgrouptitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendrank <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendwidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  link <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  meta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  node <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  orientation <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  selectedpoints <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  textfont <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -127,8 +127,9 @@ used.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A <code>go_figure</code> object.</p></dd>
+<dl><dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>A <code>go_figure</code> object (or, through methods for its class,
+another figure, e.g. a <code>plot_ly()</code> figure of the plotly package).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -154,6 +155,26 @@ column (a factor, character or logical, e.g. <code>marker =
 go_scatter_marker(color = ~group)</code>) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.</p></dd>
+
+
+<dt id="arg-node">node<a class="anchor" aria-label="anchor" href="#arg-node"></a></dt>
+<dd><p>The nodes of the Sankey plot. A
+<code><a href="go_sankey_node.html">go_sankey_node()</a></code> object or named list, with properties
+<code>align</code>, <code>color</code>, <code>customdata</code>, <code>groups</code>,
+<code>hoverinfo</code>, <code>hoverlabel</code>, <code>hovertemplate</code>,
+<code>hovertemplatefallback</code>, <code>label</code>, <code>line</code>, <code>pad</code>,
+<code>sort</code>, <code>thickness</code>, <code>x</code> and <code>y</code> (see
+<code><a href="go_sankey_node.html">go_sankey_node()</a></code>).</p></dd>
+
+
+<dt id="arg-link">link<a class="anchor" aria-label="anchor" href="#arg-link"></a></dt>
+<dd><p>The links of the Sankey plot. A
+<code><a href="go_sankey_link.html">go_sankey_link()</a></code> object or named list, with properties
+<code>arrowlen</code>, <code>color</code>, <code>colorscales</code>, <code>customdata</code>,
+<code>hovercolor</code>, <code>hoverinfo</code>, <code>hoverlabel</code>,
+<code>hovertemplate</code>, <code>hovertemplatefallback</code>, <code>label</code>,
+<code>line</code>, <code>sort</code>, <code>source</code>, <code>target</code> and
+<code>value</code> (see <code><a href="go_sankey_link.html">go_sankey_link()</a></code>).</p></dd>
 
 
 <dt id="arg-arrangement">arrangement<a class="anchor" aria-label="anchor" href="#arg-arrangement"></a></dt>
@@ -242,16 +263,6 @@ to their order in data and layout. Number.</p></dd>
 this trace. Number in the interval [0, Inf].</p></dd>
 
 
-<dt id="arg-link">link<a class="anchor" aria-label="anchor" href="#arg-link"></a></dt>
-<dd><p>The links of the Sankey plot. A
-<code><a href="go_sankey_link.html">go_sankey_link()</a></code> object or named list, with properties
-<code>arrowlen</code>, <code>color</code>, <code>colorscales</code>, <code>customdata</code>,
-<code>hovercolor</code>, <code>hoverinfo</code>, <code>hoverlabel</code>,
-<code>hovertemplate</code>, <code>hovertemplatefallback</code>, <code>label</code>,
-<code>line</code>, <code>sort</code>, <code>source</code>, <code>target</code> and
-<code>value</code> (see <code><a href="go_sankey_link.html">go_sankey_link()</a></code>).</p></dd>
-
-
 <dt id="arg-meta">meta<a class="anchor" aria-label="anchor" href="#arg-meta"></a></dt>
 <dd><p>Assigns extra meta information associated with this trace
 that can be used in various text attributes. Attributes such as trace
@@ -267,16 +278,6 @@ use `%{data[n[.meta[i]}` where `i` is the index or key of the
 <dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
 <dd><p>Sets the trace name. The trace name appears as the legend
 item and on hover. String.</p></dd>
-
-
-<dt id="arg-node">node<a class="anchor" aria-label="anchor" href="#arg-node"></a></dt>
-<dd><p>The nodes of the Sankey plot. A
-<code><a href="go_sankey_node.html">go_sankey_node()</a></code> object or named list, with properties
-<code>align</code>, <code>color</code>, <code>customdata</code>, <code>groups</code>,
-<code>hoverinfo</code>, <code>hoverlabel</code>, <code>hovertemplate</code>,
-<code>hovertemplatefallback</code>, <code>label</code>, <code>line</code>, <code>pad</code>,
-<code>sort</code>, <code>thickness</code>, <code>x</code> and <code>y</code> (see
-<code><a href="go_sankey_node.html">go_sankey_node()</a></code>).</p></dd>
 
 
 <dt id="arg-orientation">orientation<a class="anchor" aria-label="anchor" href="#arg-orientation"></a></dt>

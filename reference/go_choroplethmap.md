@@ -9,6 +9,8 @@ and \`z\`.
 ``` r
 go_choroplethmap(
   ...,
+  locations = NULL,
+  z = NULL,
   autocolorscale = NULL,
   below = NULL,
   coloraxis = NULL,
@@ -28,7 +30,6 @@ go_choroplethmap(
   legendgrouptitle = NULL,
   legendrank = NULL,
   legendwidth = NULL,
-  locations = NULL,
   marker = NULL,
   meta = NULL,
   name = NULL,
@@ -43,7 +44,6 @@ go_choroplethmap(
   uirevision = NULL,
   unselected = NULL,
   visible = NULL,
-  z = NULL,
   zauto = NULL,
   zmax = NULL,
   zmid = NULL,
@@ -51,14 +51,16 @@ go_choroplethmap(
   skip_invalid = FALSE
 )
 
-add_choroplethmap(fig, ...)
+add_choroplethmap(p, ...)
 
 # Default S3 method
 add_choroplethmap(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  locations = NULL,
+  z = NULL,
   autocolorscale = NULL,
   below = NULL,
   coloraxis = NULL,
@@ -78,7 +80,6 @@ add_choroplethmap(
   legendgrouptitle = NULL,
   legendrank = NULL,
   legendwidth = NULL,
-  locations = NULL,
   marker = NULL,
   meta = NULL,
   name = NULL,
@@ -93,7 +94,6 @@ add_choroplethmap(
   uirevision = NULL,
   unselected = NULL,
   visible = NULL,
-  z = NULL,
   zauto = NULL,
   zmax = NULL,
   zmid = NULL,
@@ -110,6 +110,17 @@ add_choroplethmap(
 
   Not for properties, which must be named in full: an abbreviated or
   unknown name is an error that suggests the right one.
+
+- locations:
+
+  Sets which features found in "geojson" to plot using their feature
+  \`id\` field. Data array: a vector, factor, Date/POSIXct vector,
+  matrix or list.
+
+- z:
+
+  Sets the color values. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
 
 - autocolorscale:
 
@@ -283,12 +294,6 @@ add_choroplethmap(
   Sets the width (in px or fraction) of the legend for this trace.
   Number in the interval \[0, Inf\].
 
-- locations:
-
-  Sets which features found in "geojson" to plot using their feature
-  \`id\` field. Data array: a vector, factor, Date/POSIXct vector,
-  matrix or list.
-
 - marker:
 
   A
@@ -394,11 +399,6 @@ add_choroplethmap(
   trace is not drawn, but can appear as a legend item (provided that the
   legend itself is visible). One of `"legendonly"`, `TRUE`, `FALSE`.
 
-- z:
-
-  Sets the color values. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
-
 - zauto:
 
   Determines whether or not the color domain is computed with respect to
@@ -427,9 +427,10 @@ add_choroplethmap(
   If `TRUE`, silently drop invalid properties instead of raising an
   error.
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - data:
 

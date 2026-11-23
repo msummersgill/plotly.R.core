@@ -67,9 +67,11 @@ either be 2D arrays matching with each dimension matching that of `a` and
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">go_carpet</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
 <span>  a <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  b <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  a0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  aaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  b <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  b0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  baxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  carpet <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -90,26 +92,26 @@ either be 2D arrays matching with each dimension matching that of `a` and
 <span>  uid <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  yaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zorder <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">add_carpet</span><span class="op">(</span><span class="va">fig</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">add_carpet</span><span class="op">(</span><span class="va">p</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">add_carpet</span><span class="op">(</span></span>
-<span>  <span class="va">fig</span>,</span>
+<span>  <span class="va">p</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  a <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  b <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  a0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  aaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  b <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  b0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  baxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  carpet <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -130,9 +132,7 @@ either be 2D arrays matching with each dimension matching that of `a` and
 <span>  uid <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  yaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zorder <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  row <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -156,6 +156,23 @@ abbreviated or unknown name is an error that suggests the right one.</p></dd>
 array: a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
 
 
+<dt id="arg-b">b<a class="anchor" aria-label="anchor" href="#arg-b"></a></dt>
+<dd><p>A two dimensional array of y coordinates at each carpet point.
+Data array: a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
+
+
+<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>A two dimensional array of x coordinates at each carpet point.
+If omitted, the plot is a cheater plot and the xaxis is hidden by
+default. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.</p></dd>
+
+
+<dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
+<dd><p>A two dimensional array of y coordinates at each carpet point.
+Data array: a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
+
+
 <dt id="arg-a-">a0<a class="anchor" aria-label="anchor" href="#arg-a-"></a></dt>
 <dd><p>Alternate to `a`. Builds a linear space of a coordinates. Use
 with `da` where `a0` is the starting coordinate and `da` the step.
@@ -169,11 +186,6 @@ with properties <code>arraydtick</code>, <code>arraytick0</code>,
 <code>categoryorder</code>, <code>cheatertype</code>, <code>color</code>, <code>dtick</code>,
 <code>endline</code>, <code>endlinecolor</code>, <code>endlinewidth</code> and 42 more
 (see <code><a href="go_carpet_aaxis.html">go_carpet_aaxis()</a></code>).</p></dd>
-
-
-<dt id="arg-b">b<a class="anchor" aria-label="anchor" href="#arg-b"></a></dt>
-<dd><p>A two dimensional array of y coordinates at each carpet point.
-Data array: a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-b-">b0<a class="anchor" aria-label="anchor" href="#arg-b-"></a></dt>
@@ -320,24 +332,12 @@ with it as it moves. Any value.</p></dd>
 <code>"legendonly"</code>, <code>TRUE</code>, <code>FALSE</code>.</p></dd>
 
 
-<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>A two dimensional array of x coordinates at each carpet point.
-If omitted, the plot is a cheater plot and the xaxis is hidden by
-default. Data array: a vector, factor, Date/POSIXct vector, matrix or
-list.</p></dd>
-
-
 <dt id="arg-xaxis">xaxis<a class="anchor" aria-label="anchor" href="#arg-xaxis"></a></dt>
 <dd><p>Sets a reference between this trace's x coordinates and a
 2D cartesian x axis. If "x" (the default value), the x coordinates
 refer to `layout.xaxis`. If "x2", the x coordinates refer to
 `layout.xaxis2`, and so on. Subplot id: <code>"x"</code>, <code>"x2"</code>,
 <code>"x3"</code>, ....</p></dd>
-
-
-<dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>A two dimensional array of y coordinates at each carpet point.
-Data array: a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-yaxis">yaxis<a class="anchor" aria-label="anchor" href="#arg-yaxis"></a></dt>
@@ -359,8 +359,9 @@ to other SVG traces on the same subplot. SVG traces with higher
 instead of raising an error.</p></dd>
 
 
-<dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A <code>go_figure</code> object.</p></dd>
+<dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>A <code>go_figure</code> object (or, through methods for its class,
+another figure, e.g. a <code>plot_ly()</code> figure of the plotly package).</p></dd>
 
 
 <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>

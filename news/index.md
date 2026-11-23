@@ -139,8 +139,8 @@
   [`?available_fonts`](https://msummersgill.github.io/plotly.R.core/reference/available_fonts.md)
   for local versus viewer fonts.
 - Shiny
-  ([`plotlyOutput()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyOutput.md),
-  [`renderPlotly()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyOutput.md),
+  ([`plotlyOutput()`](https://msummersgill.github.io/plotly.R.core/reference/plotly-shiny.md),
+  [`renderPlotly()`](https://msummersgill.github.io/plotly.R.core/reference/plotly-shiny.md),
   [`event_data()`](https://msummersgill.github.io/plotly.R.core/reference/event_data.md),
   [`plotlyProxy()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyProxy.md)),
   knitr/Quarto output, and static image export

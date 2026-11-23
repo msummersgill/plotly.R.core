@@ -7,11 +7,11 @@ classes (the plotly package does for `plot_ly()` objects).
 ## Usage
 
 ``` r
-add_trace(fig, ...)
+add_trace(p, ...)
 
 # S3 method for class 'go_figure'
 add_trace(
-  fig,
+  p,
   trace,
   row = NULL,
   col = NULL,
@@ -32,9 +32,10 @@ add_traces(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (for `add_trace()`; `p`, as in the plotly
+  package, so calls such as `add_trace(p = fig, ...)` keep working).
 
 - ...:
 
@@ -63,6 +64,10 @@ add_traces(
 
   If `TRUE`, don't add the trace to subplots that have no traces or
   layout objects yet.
+
+- fig:
+
+  A `go_figure` object (for `add_traces()`).
 
 - data:
 

@@ -9,14 +9,16 @@ positioned with \`name\` or with \`x0\` (\`y0\`) if provided.
 ## Usage
 
 ``` r
-add_violin(fig, ...)
+add_violin(p, ...)
 
 # Default S3 method
 add_violin(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
   alignmentgroup = NULL,
   bandwidth = NULL,
   box = NULL,
@@ -60,11 +62,9 @@ add_violin(
   unselected = NULL,
   visible = NULL,
   width = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xhoverformat = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   yhoverformat = NULL,
@@ -77,6 +77,8 @@ add_violin(
 
 go_violin(
   ...,
+  x = NULL,
+  y = NULL,
   alignmentgroup = NULL,
   bandwidth = NULL,
   box = NULL,
@@ -120,11 +122,9 @@ go_violin(
   unselected = NULL,
   visible = NULL,
   width = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xhoverformat = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   yhoverformat = NULL,
@@ -135,9 +135,10 @@ go_violin(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -164,6 +165,16 @@ go_violin(
   `marker = go_scatter_marker(color = ~group)`) split the data the same
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
+
+- x:
+
+  Sets the x sample data or coordinates. See overview for more info.
+  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
+
+- y:
+
+  Sets the y sample data or coordinates. See overview for more info.
+  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
 
 - alignmentgroup:
 
@@ -517,11 +528,6 @@ go_violin(
   the width is automatically selected based on the positions of other
   violin traces in the same subplot. Number in the interval \[0, Inf\].
 
-- x:
-
-  Sets the x sample data or coordinates. See overview for more info.
-  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-
 - x0:
 
   Sets the x coordinate for single-box traces or the starting coordinate
@@ -547,11 +553,6 @@ go_violin(
   digits. For example, "2016-10-13 09:15:23.456" with tickformat
   "%H~%M~%S.%2f" would display "09~15~23.46"By default the values are
   formatted using \`xaxis.hoverformat\`. String.
-
-- y:
-
-  Sets the y sample data or coordinates. See overview for more info.
-  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
 
 - y0:
 

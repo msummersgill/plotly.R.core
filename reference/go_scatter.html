@@ -61,14 +61,16 @@ and/or `marker.color` to numerical arrays.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_scatter</span><span class="op">(</span><span class="va">fig</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_scatter</span><span class="op">(</span><span class="va">p</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">add_scatter</span><span class="op">(</span></span>
-<span>  <span class="va">fig</span>,</span>
+<span>  <span class="va">p</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  alignmentgroup <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cliponaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  connectgaps <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -116,7 +118,6 @@ and/or `marker.color` to numerical arrays.</p>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  unselected <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  x0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xcalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -124,7 +125,6 @@ and/or `marker.color` to numerical arrays.</p>
 <span>  xperiod <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xperiod0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xperiodalignment <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  y0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  yaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ycalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -141,6 +141,8 @@ and/or `marker.color` to numerical arrays.</p>
 <span></span>
 <span><span class="fu">go_scatter</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  alignmentgroup <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cliponaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  connectgaps <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -188,7 +190,6 @@ and/or `marker.color` to numerical arrays.</p>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  unselected <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  x0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xcalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -196,7 +197,6 @@ and/or `marker.color` to numerical arrays.</p>
 <span>  xperiod <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xperiod0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xperiodalignment <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  y0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  yaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ycalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -213,8 +213,9 @@ and/or `marker.color` to numerical arrays.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A <code>go_figure</code> object.</p></dd>
+<dl><dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>A <code>go_figure</code> object (or, through methods for its class,
+another figure, e.g. a <code>plot_ly()</code> figure of the plotly package).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -240,6 +241,16 @@ column (a factor, character or logical, e.g. <code>marker =
 go_scatter_marker(color = ~group)</code>) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.</p></dd>
+
+
+<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>Sets the x coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.</p></dd>
+
+
+<dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
+<dd><p>Sets the y coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-alignmentgroup">alignmentgroup<a class="anchor" aria-label="anchor" href="#arg-alignmentgroup"></a></dt>
@@ -658,11 +669,6 @@ with properties <code>marker</code> and <code>textfont</code> (see
 <code>"legendonly"</code>, <code>TRUE</code>, <code>FALSE</code>.</p></dd>
 
 
-<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>Sets the x coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.</p></dd>
-
-
 <dt id="arg-x-">x0<a class="anchor" aria-label="anchor" href="#arg-x-"></a></dt>
 <dd><p>Alternate to `x`. Builds a linear space of x coordinates. Use
 with `dx` where `x0` is the starting coordinate and `dx` the step. Any
@@ -718,11 +724,6 @@ default would be on a Sunday i.e. 2000-01-02, otherwise it would be at
 <dd><p>Only relevant when the axis `type` is "date".
 Sets the alignment of data points on the x axis. One of
 <code>"start"</code>, <code>"middle"</code>, <code>"end"</code>.</p></dd>
-
-
-<dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>Sets the y coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-y-">y0<a class="anchor" aria-label="anchor" href="#arg-y-"></a></dt>

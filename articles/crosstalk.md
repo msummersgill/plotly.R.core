@@ -65,7 +65,7 @@ the same `group` and keys, is a view of the same selection. Here 2007’s
 rows and all years’ rows are linked through the group “countries”:
 selecting countries with a box or lasso in the first plot shows their
 histories in the second, where
-[`attrs_selected()`](https://msummersgill.github.io/plotly.R.core/reference/highlight.md)
+[`attrs_selected()`](https://msummersgill.github.io/plotly.R.core/reference/attrs_selected.md)
 draws the selected points as lines.
 
 ``` r

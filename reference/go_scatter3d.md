@@ -9,14 +9,17 @@ only) is via \`text\`. Bubble charts are achieved by setting
 ## Usage
 
 ``` r
-add_scatter3d(fig, ...)
+add_scatter3d(p, ...)
 
 # Default S3 method
 add_scatter3d(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
   connectgaps = NULL,
   customdata = NULL,
   error_x = NULL,
@@ -52,13 +55,10 @@ add_scatter3d(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   xcalendar = NULL,
   xhoverformat = NULL,
-  y = NULL,
   ycalendar = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zcalendar = NULL,
   zhoverformat = NULL,
   row = NULL,
@@ -68,6 +68,9 @@ add_scatter3d(
 
 go_scatter3d(
   ...,
+  x = NULL,
+  y = NULL,
+  z = NULL,
   connectgaps = NULL,
   customdata = NULL,
   error_x = NULL,
@@ -103,13 +106,10 @@ go_scatter3d(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   xcalendar = NULL,
   xhoverformat = NULL,
-  y = NULL,
   ycalendar = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zcalendar = NULL,
   zhoverformat = NULL,
   skip_invalid = FALSE
@@ -118,9 +118,10 @@ go_scatter3d(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -148,6 +149,21 @@ go_scatter3d(
   `marker = go_scatter_marker(color = ~group)`) split the data the same
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
+
+- x:
+
+  Sets the x coordinates. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
+- y:
+
+  Sets the y coordinates. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
+- z:
+
+  Sets the z coordinates. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
 
 - connectgaps:
 
@@ -452,11 +468,6 @@ go_scatter3d(
   trace is not drawn, but can appear as a legend item (provided that the
   legend itself is visible). One of `"legendonly"`, `TRUE`, `FALSE`.
 
-- x:
-
-  Sets the x coordinates. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
-
 - xcalendar:
 
   Sets the calendar system to use with \`x\` date data. One of
@@ -478,11 +489,6 @@ go_scatter3d(
   "%H~%M~%S.%2f" would display "09~15~23.46"By default the values are
   formatted using \`xaxis.hoverformat\`. String.
 
-- y:
-
-  Sets the y coordinates. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
-
 - ycalendar:
 
   Sets the calendar system to use with \`y\` date data. One of
@@ -503,11 +509,6 @@ go_scatter3d(
   digits. For example, "2016-10-13 09:15:23.456" with tickformat
   "%H~%M~%S.%2f" would display "09~15~23.46"By default the values are
   formatted using \`yaxis.hoverformat\`. String.
-
-- z:
-
-  Sets the z coordinates. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
 
 - zcalendar:
 

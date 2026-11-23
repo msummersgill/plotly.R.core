@@ -55,16 +55,16 @@ samples are specified in `dimensions`. The colors are set in
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_parcoords</span><span class="op">(</span><span class="va">fig</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_parcoords</span><span class="op">(</span><span class="va">p</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">add_parcoords</span><span class="op">(</span></span>
-<span>  <span class="va">fig</span>,</span>
+<span>  <span class="va">p</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  dimensions <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  domain <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ids <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  labelangle <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -90,8 +90,8 @@ samples are specified in `dimensions`. The colors are set in
 <span></span>
 <span><span class="fu">go_parcoords</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
-<span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  dimensions <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  domain <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ids <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  labelangle <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -118,8 +118,9 @@ samples are specified in `dimensions`. The colors are set in
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A <code>go_figure</code> object.</p></dd>
+<dl><dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>A <code>go_figure</code> object (or, through methods for its class,
+another figure, e.g. a <code>plot_ly()</code> figure of the plotly package).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -147,13 +148,6 @@ trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.</p></dd>
 
 
-<dt id="arg-customdata">customdata<a class="anchor" aria-label="anchor" href="#arg-customdata"></a></dt>
-<dd><p>Assigns extra data each datum. This may be useful when
-listening to hover, click and selection events. Note that, "scatter"
-traces also appends customdata items in the markers DOM elements Data
-array: a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
-
-
 <dt id="arg-dimensions">dimensions<a class="anchor" aria-label="anchor" href="#arg-dimensions"></a></dt>
 <dd><p>List, each element a
 <code><a href="go_parcoords_dimension.html">go_parcoords_dimension()</a></code> object or named list, with
@@ -161,6 +155,13 @@ properties <code>constraintrange</code>, <code>label</code>, <code>multiselect</
 <code>name</code>, <code>range</code>, <code>templateitemname</code>, <code>tickformat</code>,
 <code>ticktext</code>, <code>tickvals</code>, <code>values</code> and <code>visible</code>
 (see <code><a href="go_parcoords_dimension.html">go_parcoords_dimension()</a></code>).</p></dd>
+
+
+<dt id="arg-customdata">customdata<a class="anchor" aria-label="anchor" href="#arg-customdata"></a></dt>
+<dd><p>Assigns extra data each datum. This may be useful when
+listening to hover, click and selection events. Note that, "scatter"
+traces also appends customdata items in the markers DOM elements Data
+array: a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-domain">domain<a class="anchor" aria-label="anchor" href="#arg-domain"></a></dt>

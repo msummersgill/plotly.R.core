@@ -13,10 +13,13 @@ are drawn in green whereas decreasing are drawn in red.
 ``` r
 go_candlestick(
   ...,
+  x = NULL,
+  open = NULL,
+  high = NULL,
+  low = NULL,
   close = NULL,
   customdata = NULL,
   decreasing = NULL,
-  high = NULL,
   hoverinfo = NULL,
   hoverlabel = NULL,
   hovertemplate = NULL,
@@ -30,11 +33,9 @@ go_candlestick(
   legendrank = NULL,
   legendwidth = NULL,
   line = NULL,
-  low = NULL,
   meta = NULL,
   name = NULL,
   opacity = NULL,
-  open = NULL,
   selectedpoints = NULL,
   showlegend = NULL,
   text = NULL,
@@ -42,7 +43,6 @@ go_candlestick(
   uirevision = NULL,
   visible = NULL,
   whiskerwidth = NULL,
-  x = NULL,
   xaxis = NULL,
   xcalendar = NULL,
   xhoverformat = NULL,
@@ -55,18 +55,21 @@ go_candlestick(
   skip_invalid = FALSE
 )
 
-add_candlestick(fig, ...)
+add_candlestick(p, ...)
 
 # Default S3 method
 add_candlestick(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  open = NULL,
+  high = NULL,
+  low = NULL,
   close = NULL,
   customdata = NULL,
   decreasing = NULL,
-  high = NULL,
   hoverinfo = NULL,
   hoverlabel = NULL,
   hovertemplate = NULL,
@@ -80,11 +83,9 @@ add_candlestick(
   legendrank = NULL,
   legendwidth = NULL,
   line = NULL,
-  low = NULL,
   meta = NULL,
   name = NULL,
   opacity = NULL,
-  open = NULL,
   selectedpoints = NULL,
   showlegend = NULL,
   text = NULL,
@@ -92,7 +93,6 @@ add_candlestick(
   uirevision = NULL,
   visible = NULL,
   whiskerwidth = NULL,
-  x = NULL,
   xaxis = NULL,
   xcalendar = NULL,
   xhoverformat = NULL,
@@ -116,6 +116,27 @@ add_candlestick(
   Not for properties, which must be named in full: an abbreviated or
   unknown name is an error that suggests the right one.
 
+- x:
+
+  Sets the x coordinates. If absent, linear coordinate will be
+  generated. Data array: a vector, factor, Date/POSIXct vector, matrix
+  or list.
+
+- open:
+
+  Sets the open values. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
+- high:
+
+  Sets the high values. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
+- low:
+
+  Sets the low values. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
 - close:
 
   Sets the close values. Data array: a vector, factor, Date/POSIXct
@@ -134,11 +155,6 @@ add_candlestick(
   [`go_candlestick_decreasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick_decreasing.md)
   object or named list, with properties `fillcolor` and `line` (see
   [`go_candlestick_decreasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick_decreasing.md)).
-
-- high:
-
-  Sets the high values. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
 
 - hoverinfo:
 
@@ -255,11 +271,6 @@ add_candlestick(
   object or named list, with properties `width` (see
   [`go_candlestick_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_candlestick_line.md)).
 
-- low:
-
-  Sets the low values. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
-
 - meta:
 
   Assigns extra meta information associated with this trace that can be
@@ -281,11 +292,6 @@ add_candlestick(
 - opacity:
 
   Sets the opacity of the trace. Number in the interval \[0, 1\].
-
-- open:
-
-  Sets the open values. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
 
 - selectedpoints:
 
@@ -342,12 +348,6 @@ add_candlestick(
   Sets the width of the whiskers relative to the box width. For example,
   with 1, the whiskers are as wide as the box(es). Number in the
   interval \[0, 1\].
-
-- x:
-
-  Sets the x coordinates. If absent, linear coordinate will be
-  generated. Data array: a vector, factor, Date/POSIXct vector, matrix
-  or list.
 
 - xaxis:
 
@@ -428,9 +428,10 @@ add_candlestick(
   If `TRUE`, silently drop invalid properties instead of raising an
   error.
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - data:
 

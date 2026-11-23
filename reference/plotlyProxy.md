@@ -1,13 +1,6 @@
-# Modify a plotly figure in Shiny without re-rendering it
+# Modify a plotly object inside a shiny app
 
-`plotlyProxy()` refers to a plot rendered with
-[`renderPlotly()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyOutput.md);
-`plotlyProxyInvoke()` calls a plotly.js function on it, e.g.
-`"restyle"`, `"relayout"`, `"update"`, `"addTraces"`, `"deleteTraces"`,
-`"extendTraces"` or `"animate"`. Arguments are passed to the plotly.js
-function after the plot element (see
-<https://plotly.com/javascript/plotlyjs-function-reference/>);
-`"reconfig"` sets a new `config`.
+Modify a plotly object inside a shiny app
 
 ## Usage
 
@@ -25,32 +18,43 @@ plotlyProxyInvoke(p, method, ...)
 
 - outputId:
 
-  The output id of the plot.
+  single-element character vector indicating the output ID map to modify
+  (if invoked from a Shiny module, the namespace will be added
+  automatically)
 
 - session:
 
-  The Shiny session.
+  the Shiny session object to which the map belongs; usually the default
+  value will suffice.
 
 - deferUntilFlush:
 
-  Send the message after Shiny's next flush (so the plot exists).
+  indicates whether actions performed against this instance should be
+  carried out right away, or whether they should be held until after the
+  next time all of the outputs are updated.
 
 - p:
 
-  A proxy from `plotlyProxy()`.
+  a plotly proxy object (created with `plotlyProxy`)
 
 - method:
 
-  A plotly.js function name.
+  a plotlyjs method to invoke. For a list of options, visit
+  <https://plotly.com/javascript/plotlyjs-function-reference/>
 
 - ...:
 
-  Arguments to the plotly.js function. Graph objects and data frames are
-  serialised like figures (data frames as rows).
+  unnamed arguments passed onto the plotly.js method. Graph objects and
+  data frames are serialised as in figures (data frames as rows).
 
 ## Value
 
-The proxy, invisibly for `plotlyProxyInvoke()`.
+`plotlyProxy()` returns a proxy object; `plotlyProxyInvoke()` returns it
+invisibly.
+
+## Author
+
+Carson Sievert
 
 ## Examples
 

@@ -57,6 +57,8 @@ in `locations`.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">go_choropleth</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
+<span>  locations <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  autocolorscale <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  coloraxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  colorbar <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -77,7 +79,6 @@ in `locations`.</p>
 <span>  legendrank <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendwidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  locationmode <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  locations <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  marker <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  meta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -91,7 +92,6 @@ in `locations`.</p>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  unselected <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zauto <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zmax <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zmid <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -99,14 +99,16 @@ in `locations`.</p>
 <span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">add_choropleth</span><span class="op">(</span><span class="va">fig</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">add_choropleth</span><span class="op">(</span><span class="va">p</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">add_choropleth</span><span class="op">(</span></span>
-<span>  <span class="va">fig</span>,</span>
+<span>  <span class="va">p</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  locations <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  autocolorscale <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  coloraxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  colorbar <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -127,7 +129,6 @@ in `locations`.</p>
 <span>  legendrank <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendwidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  locationmode <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  locations <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  marker <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  meta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -141,7 +142,6 @@ in `locations`.</p>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  unselected <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zauto <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zmax <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zmid <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -159,6 +159,17 @@ in `locations`.</p>
 <dl><dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.</p></dd>
+
+
+<dt id="arg-locations">locations<a class="anchor" aria-label="anchor" href="#arg-locations"></a></dt>
+<dd><p>Sets the coordinates via location IDs or names. See
+`locationmode` for more info. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.</p></dd>
+
+
+<dt id="arg-z">z<a class="anchor" aria-label="anchor" href="#arg-z"></a></dt>
+<dd><p>Sets the color values. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-autocolorscale">autocolorscale<a class="anchor" aria-label="anchor" href="#arg-autocolorscale"></a></dt>
@@ -342,12 +353,6 @@ two-letter abbreviations (e.g. "CA") and full state names (e.g.
 <code>"country names"</code>, <code>"geojson-id"</code>.</p></dd>
 
 
-<dt id="arg-locations">locations<a class="anchor" aria-label="anchor" href="#arg-locations"></a></dt>
-<dd><p>Sets the coordinates via location IDs or names. See
-`locationmode` for more info. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.</p></dd>
-
-
 <dt id="arg-marker">marker<a class="anchor" aria-label="anchor" href="#arg-marker"></a></dt>
 <dd><p>A <code><a href="go_choropleth_marker.html">go_choropleth_marker()</a></code> object or named
 list, with properties <code>line</code> and <code>opacity</code> (see
@@ -440,11 +445,6 @@ with properties <code>marker</code> (see <code><a href="go_unselected.html">go_u
 <code>"legendonly"</code>, <code>TRUE</code>, <code>FALSE</code>.</p></dd>
 
 
-<dt id="arg-z">z<a class="anchor" aria-label="anchor" href="#arg-z"></a></dt>
-<dd><p>Sets the color values. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.</p></dd>
-
-
 <dt id="arg-zauto">zauto<a class="anchor" aria-label="anchor" href="#arg-zauto"></a></dt>
 <dd><p>Determines whether or not the color domain is computed with
 respect to the input data (here in `z`) or the bounds set in `zmin`
@@ -475,8 +475,9 @@ Number.</p></dd>
 instead of raising an error.</p></dd>
 
 
-<dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A <code>go_figure</code> object.</p></dd>
+<dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>A <code>go_figure</code> object (or, through methods for its class,
+another figure, e.g. a <code>plot_ly()</code> figure of the plotly package).</p></dd>
 
 
 <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>

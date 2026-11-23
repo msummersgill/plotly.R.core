@@ -6,11 +6,11 @@ with a matching \`carpet\` attribute.
 ## Usage
 
 ``` r
-add_scattercarpet(fig, ...)
+add_scattercarpet(p, ...)
 
 # Default S3 method
 add_scattercarpet(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
@@ -108,9 +108,10 @@ go_scattercarpet(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 

@@ -41,7 +41,7 @@ be used stand-alone.
   features and behavior deprecated between the last CRAN release
   plotly.js/2.25.2 and plotly-js/latest
 - **Shiny, R Markdown, Quarto, and static image export**
-  [`plotlyOutput()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyOutput.md)/[`renderPlotly()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyOutput.md),
+  [`plotlyOutput()`](https://msummersgill.github.io/plotly.R.core/reference/plotly-shiny.md)/[`renderPlotly()`](https://msummersgill.github.io/plotly.R.core/reference/plotly-shiny.md),
   [`event_data()`](https://msummersgill.github.io/plotly.R.core/reference/event_data.md)
   and
   [`plotlyProxy()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyProxy.md)

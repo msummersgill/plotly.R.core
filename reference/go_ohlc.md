@@ -11,18 +11,21 @@ items are drawn in green whereas decreasing are drawn in red.
 ## Usage
 
 ``` r
-add_ohlc(fig, ...)
+add_ohlc(p, ...)
 
 # Default S3 method
 add_ohlc(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  open = NULL,
+  high = NULL,
+  low = NULL,
   close = NULL,
   customdata = NULL,
   decreasing = NULL,
-  high = NULL,
   hoverinfo = NULL,
   hoverlabel = NULL,
   hovertemplate = NULL,
@@ -36,11 +39,9 @@ add_ohlc(
   legendrank = NULL,
   legendwidth = NULL,
   line = NULL,
-  low = NULL,
   meta = NULL,
   name = NULL,
   opacity = NULL,
-  open = NULL,
   selectedpoints = NULL,
   showlegend = NULL,
   text = NULL,
@@ -48,7 +49,6 @@ add_ohlc(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   xaxis = NULL,
   xcalendar = NULL,
   xhoverformat = NULL,
@@ -66,10 +66,13 @@ add_ohlc(
 
 go_ohlc(
   ...,
+  x = NULL,
+  open = NULL,
+  high = NULL,
+  low = NULL,
   close = NULL,
   customdata = NULL,
   decreasing = NULL,
-  high = NULL,
   hoverinfo = NULL,
   hoverlabel = NULL,
   hovertemplate = NULL,
@@ -83,11 +86,9 @@ go_ohlc(
   legendrank = NULL,
   legendwidth = NULL,
   line = NULL,
-  low = NULL,
   meta = NULL,
   name = NULL,
   opacity = NULL,
-  open = NULL,
   selectedpoints = NULL,
   showlegend = NULL,
   text = NULL,
@@ -95,7 +96,6 @@ go_ohlc(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   xaxis = NULL,
   xcalendar = NULL,
   xhoverformat = NULL,
@@ -111,9 +111,10 @@ go_ohlc(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -141,6 +142,27 @@ go_ohlc(
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
 
+- x:
+
+  Sets the x coordinates. If absent, linear coordinate will be
+  generated. Data array: a vector, factor, Date/POSIXct vector, matrix
+  or list.
+
+- open:
+
+  Sets the open values. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
+- high:
+
+  Sets the high values. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
+- low:
+
+  Sets the low values. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
 - close:
 
   Sets the close values. Data array: a vector, factor, Date/POSIXct
@@ -159,11 +181,6 @@ go_ohlc(
   [`go_ohlc_decreasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc_decreasing.md)
   object or named list, with properties `line` (see
   [`go_ohlc_decreasing()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc_decreasing.md)).
-
-- high:
-
-  Sets the high values. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
 
 - hoverinfo:
 
@@ -280,11 +297,6 @@ go_ohlc(
   object or named list, with properties `dash` and `width` (see
   [`go_ohlc_line()`](https://msummersgill.github.io/plotly.R.core/reference/go_ohlc_line.md)).
 
-- low:
-
-  Sets the low values. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
-
 - meta:
 
   Assigns extra meta information associated with this trace that can be
@@ -306,11 +318,6 @@ go_ohlc(
 - opacity:
 
   Sets the opacity of the trace. Number in the interval \[0, 1\].
-
-- open:
-
-  Sets the open values. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
 
 - selectedpoints:
 
@@ -366,12 +373,6 @@ go_ohlc(
   Determines whether or not this trace is visible. If "legendonly", the
   trace is not drawn, but can appear as a legend item (provided that the
   legend itself is visible). One of `"legendonly"`, `TRUE`, `FALSE`.
-
-- x:
-
-  Sets the x coordinates. If absent, linear coordinate will be
-  generated. Data array: a vector, factor, Date/POSIXct vector, matrix
-  or list.
 
 - xaxis:
 

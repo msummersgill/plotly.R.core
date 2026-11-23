@@ -9,6 +9,9 @@ colorscale.
 ``` r
 go_densitymap(
   ...,
+  lat = NULL,
+  lon = NULL,
+  z = NULL,
   autocolorscale = NULL,
   below = NULL,
   coloraxis = NULL,
@@ -21,13 +24,11 @@ go_densitymap(
   hovertemplatefallback = NULL,
   hovertext = NULL,
   ids = NULL,
-  lat = NULL,
   legend = NULL,
   legendgroup = NULL,
   legendgrouptitle = NULL,
   legendrank = NULL,
   legendwidth = NULL,
-  lon = NULL,
   meta = NULL,
   name = NULL,
   opacity = NULL,
@@ -40,7 +41,6 @@ go_densitymap(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  z = NULL,
   zauto = NULL,
   zmax = NULL,
   zmid = NULL,
@@ -48,14 +48,17 @@ go_densitymap(
   skip_invalid = FALSE
 )
 
-add_densitymap(fig, ...)
+add_densitymap(p, ...)
 
 # Default S3 method
 add_densitymap(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  lat = NULL,
+  lon = NULL,
+  z = NULL,
   autocolorscale = NULL,
   below = NULL,
   coloraxis = NULL,
@@ -68,13 +71,11 @@ add_densitymap(
   hovertemplatefallback = NULL,
   hovertext = NULL,
   ids = NULL,
-  lat = NULL,
   legend = NULL,
   legendgroup = NULL,
   legendgrouptitle = NULL,
   legendrank = NULL,
   legendwidth = NULL,
-  lon = NULL,
   meta = NULL,
   name = NULL,
   opacity = NULL,
@@ -87,7 +88,6 @@ add_densitymap(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  z = NULL,
   zauto = NULL,
   zmax = NULL,
   zmid = NULL,
@@ -104,6 +104,22 @@ add_densitymap(
 
   Not for properties, which must be named in full: an abbreviated or
   unknown name is an error that suggests the right one.
+
+- lat:
+
+  Sets the latitude coordinates (in degrees North). Data array: a
+  vector, factor, Date/POSIXct vector, matrix or list.
+
+- lon:
+
+  Sets the longitude coordinates (in degrees East). Data array: a
+  vector, factor, Date/POSIXct vector, matrix or list.
+
+- z:
+
+  Sets the points' weight. For example, a value of 10 would be
+  equivalent to having 10 points of weight 1 in the same spot Data
+  array: a vector, factor, Date/POSIXct vector, matrix or list.
 
 - autocolorscale:
 
@@ -230,11 +246,6 @@ add_densitymap(
   numbers or any other type. Data array: a vector, factor, Date/POSIXct
   vector, matrix or list.
 
-- lat:
-
-  Sets the latitude coordinates (in degrees North). Data array: a
-  vector, factor, Date/POSIXct vector, matrix or list.
-
 - legend:
 
   Sets the reference to a legend to show this trace in. References to
@@ -271,11 +282,6 @@ add_densitymap(
 
   Sets the width (in px or fraction) of the legend for this trace.
   Number in the interval \[0, Inf\].
-
-- lon:
-
-  Sets the longitude coordinates (in degrees East). Data array: a
-  vector, factor, Date/POSIXct vector, matrix or list.
 
 - meta:
 
@@ -366,12 +372,6 @@ add_densitymap(
   trace is not drawn, but can appear as a legend item (provided that the
   legend itself is visible). One of `"legendonly"`, `TRUE`, `FALSE`.
 
-- z:
-
-  Sets the points' weight. For example, a value of 10 would be
-  equivalent to having 10 points of weight 1 in the same spot Data
-  array: a vector, factor, Date/POSIXct vector, matrix or list.
-
 - zauto:
 
   Determines whether or not the color domain is computed with respect to
@@ -400,9 +400,10 @@ add_densitymap(
   If `TRUE`, silently drop invalid properties instead of raising an
   error.
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - data:
 

@@ -10,17 +10,17 @@ for more control over the axis positioning and style.
 ## Usage
 
 ``` r
-add_splom(fig, ...)
+add_splom(p, ...)
 
 # Default S3 method
 add_splom(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  dimensions = NULL,
   customdata = NULL,
   diagonal = NULL,
-  dimensions = NULL,
   hoverinfo = NULL,
   hoverlabel = NULL,
   hovertemplate = NULL,
@@ -57,9 +57,9 @@ add_splom(
 
 go_splom(
   ...,
+  dimensions = NULL,
   customdata = NULL,
   diagonal = NULL,
-  dimensions = NULL,
   hoverinfo = NULL,
   hoverlabel = NULL,
   hovertemplate = NULL,
@@ -95,9 +95,10 @@ go_splom(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -126,6 +127,14 @@ go_splom(
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
 
+- dimensions:
+
+  List, each element a
+  [`go_splom_dimension()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom_dimension.md)
+  object or named list, with properties `axis`, `label`, `name`,
+  `templateitemname`, `values` and `visible` (see
+  [`go_splom_dimension()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom_dimension.md)).
+
 - customdata:
 
   Assigns extra data each datum. This may be useful when listening to
@@ -139,14 +148,6 @@ go_splom(
   [`go_splom_diagonal()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom_diagonal.md)
   object or named list, with properties `visible` (see
   [`go_splom_diagonal()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom_diagonal.md)).
-
-- dimensions:
-
-  List, each element a
-  [`go_splom_dimension()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom_dimension.md)
-  object or named list, with properties `axis`, `label`, `name`,
-  `templateitemname`, `values` and `visible` (see
-  [`go_splom_dimension()`](https://msummersgill.github.io/plotly.R.core/reference/go_splom_dimension.md)).
 
 - hoverinfo:
 

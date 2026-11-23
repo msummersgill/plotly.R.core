@@ -8,20 +8,20 @@ represented as a vector of column vectors.
 ## Usage
 
 ``` r
-add_table(fig, ...)
+add_table(p, ...)
 
 # Default S3 method
 add_table(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  header = NULL,
   cells = NULL,
   columnorder = NULL,
   columnwidth = NULL,
   customdata = NULL,
   domain = NULL,
-  header = NULL,
   hoverinfo = NULL,
   hoverlabel = NULL,
   ids = NULL,
@@ -41,12 +41,12 @@ add_table(
 
 go_table(
   ...,
+  header = NULL,
   cells = NULL,
   columnorder = NULL,
   columnwidth = NULL,
   customdata = NULL,
   domain = NULL,
-  header = NULL,
   hoverinfo = NULL,
   hoverlabel = NULL,
   ids = NULL,
@@ -65,9 +65,10 @@ go_table(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -95,6 +96,14 @@ go_table(
   `marker = go_scatter_marker(color = ~group)`) split the data the same
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
+
+- header:
+
+  A
+  [`go_table_header()`](https://msummersgill.github.io/plotly.R.core/reference/go_table_header.md)
+  object or named list, with properties `align`, `fill`, `font`,
+  `format`, `height`, `line`, `prefix`, `suffix` and `values` (see
+  [`go_table_header()`](https://msummersgill.github.io/plotly.R.core/reference/go_table_header.md)).
 
 - cells:
 
@@ -132,14 +141,6 @@ go_table(
   object or named list, with properties `column`, `row`, `x` and `y`
   (see
   [`go_domain()`](https://msummersgill.github.io/plotly.R.core/reference/go_domain.md)).
-
-- header:
-
-  A
-  [`go_table_header()`](https://msummersgill.github.io/plotly.R.core/reference/go_table_header.md)
-  object or named list, with properties `align`, `fill`, `font`,
-  `format`, `height`, `line`, `prefix`, `suffix` and `values` (see
-  [`go_table_header()`](https://msummersgill.github.io/plotly.R.core/reference/go_table_header.md)).
 
 - hoverinfo:
 

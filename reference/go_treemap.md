@@ -7,14 +7,18 @@ in "labels" or "ids" and in "parents".
 ## Usage
 
 ``` r
-add_treemap(fig, ...)
+add_treemap(p, ...)
 
 # Default S3 method
 add_treemap(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  labels = NULL,
+  parents = NULL,
+  values = NULL,
+  ids = NULL,
   branchvalues = NULL,
   count = NULL,
   customdata = NULL,
@@ -24,9 +28,7 @@ add_treemap(
   hovertemplate = NULL,
   hovertemplatefallback = NULL,
   hovertext = NULL,
-  ids = NULL,
   insidetextfont = NULL,
-  labels = NULL,
   legend = NULL,
   legendgrouptitle = NULL,
   legendrank = NULL,
@@ -38,7 +40,6 @@ add_treemap(
   name = NULL,
   opacity = NULL,
   outsidetextfont = NULL,
-  parents = NULL,
   pathbar = NULL,
   root = NULL,
   sort = NULL,
@@ -51,7 +52,6 @@ add_treemap(
   tiling = NULL,
   uid = NULL,
   uirevision = NULL,
-  values = NULL,
   visible = NULL,
   row = NULL,
   col = NULL,
@@ -60,6 +60,10 @@ add_treemap(
 
 go_treemap(
   ...,
+  labels = NULL,
+  parents = NULL,
+  values = NULL,
+  ids = NULL,
   branchvalues = NULL,
   count = NULL,
   customdata = NULL,
@@ -69,9 +73,7 @@ go_treemap(
   hovertemplate = NULL,
   hovertemplatefallback = NULL,
   hovertext = NULL,
-  ids = NULL,
   insidetextfont = NULL,
-  labels = NULL,
   legend = NULL,
   legendgrouptitle = NULL,
   legendrank = NULL,
@@ -83,7 +85,6 @@ go_treemap(
   name = NULL,
   opacity = NULL,
   outsidetextfont = NULL,
-  parents = NULL,
   pathbar = NULL,
   root = NULL,
   sort = NULL,
@@ -96,7 +97,6 @@ go_treemap(
   tiling = NULL,
   uid = NULL,
   uirevision = NULL,
-  values = NULL,
   visible = NULL,
   skip_invalid = FALSE
 )
@@ -104,9 +104,10 @@ go_treemap(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -134,6 +135,33 @@ go_treemap(
   `marker = go_scatter_marker(color = ~group)`) split the data the same
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
+
+- labels:
+
+  Sets the labels of each of the sectors. Data array: a vector, factor,
+  Date/POSIXct vector, matrix or list.
+
+- parents:
+
+  Sets the parent sectors for each of the sectors. Empty string items ”
+  are understood to reference the root node in the hierarchy. If \`ids\`
+  is filled, \`parents\` items are understood to be "ids" themselves.
+  When \`ids\` is not set, plotly attempts to find matching items in
+  \`labels\`, but beware they must be unique. Data array: a vector,
+  factor, Date/POSIXct vector, matrix or list.
+
+- values:
+
+  Sets the values associated with each of the sectors. Use with
+  \`branchvalues\` to determine how the values are summed. Data array: a
+  vector, factor, Date/POSIXct vector, matrix or list.
+
+- ids:
+
+  Assigns id labels to each datum. These ids for object constancy of
+  data points during animation. Should be an array of strings, not
+  numbers or any other type. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
 
 - branchvalues:
 
@@ -229,13 +257,6 @@ go_treemap(
   seen, trace \`hoverinfo\` must contain a "text" flag. String, or a
   vector of these.
 
-- ids:
-
-  Assigns id labels to each datum. These ids for object constancy of
-  data points during animation. Should be an array of strings, not
-  numbers or any other type. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
-
 - insidetextfont:
 
   Sets the font used for \`textinfo\` lying inside the sector. A
@@ -244,11 +265,6 @@ go_treemap(
   `lineposition`, `shadow`, `size`, `style`, `textcase`, `variant` and
   `weight` (see
   [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)).
-
-- labels:
-
-  Sets the labels of each of the sectors. Data array: a vector, factor,
-  Date/POSIXct vector, matrix or list.
 
 - legend:
 
@@ -338,15 +354,6 @@ go_treemap(
   `lineposition`, `shadow`, `size`, `style`, `textcase`, `variant` and
   `weight` (see
   [`go_font()`](https://msummersgill.github.io/plotly.R.core/reference/go_font.md)).
-
-- parents:
-
-  Sets the parent sectors for each of the sectors. Empty string items ”
-  are understood to reference the root node in the hierarchy. If \`ids\`
-  is filled, \`parents\` items are understood to be "ids" themselves.
-  When \`ids\` is not set, plotly attempts to find matching items in
-  \`labels\`, but beware they must be unique. Data array: a vector,
-  factor, Date/POSIXct vector, matrix or list.
 
 - pathbar:
 
@@ -459,12 +466,6 @@ go_treemap(
   that the same trace has a different index, you can still preserve
   user-driven changes if you give each trace a \`uid\` that stays with
   it as it moves. Any value.
-
-- values:
-
-  Sets the values associated with each of the sectors. Use with
-  \`branchvalues\` to determine how the values are summed. Data array: a
-  vector, factor, Date/POSIXct vector, matrix or list.
 
 - visible:
 

@@ -457,7 +457,7 @@ function(el) {
 ## Notes
 
 - **One plot per session.**
-  [`renderPlotly()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyOutput.md)
+  [`renderPlotly()`](https://msummersgill.github.io/plotly.R.core/reference/plotly-shiny.md)
   and the observer run for each browser session, so every viewer gets
   their own stream; they stop when the session ends.
 - **A window by points, not time.** `maxPoints` keeps the last 600

@@ -9,6 +9,8 @@ set in \`locations\`.
 ``` r
 go_choropleth(
   ...,
+  locations = NULL,
+  z = NULL,
   autocolorscale = NULL,
   coloraxis = NULL,
   colorbar = NULL,
@@ -29,7 +31,6 @@ go_choropleth(
   legendrank = NULL,
   legendwidth = NULL,
   locationmode = NULL,
-  locations = NULL,
   marker = NULL,
   meta = NULL,
   name = NULL,
@@ -43,7 +44,6 @@ go_choropleth(
   uirevision = NULL,
   unselected = NULL,
   visible = NULL,
-  z = NULL,
   zauto = NULL,
   zmax = NULL,
   zmid = NULL,
@@ -51,14 +51,16 @@ go_choropleth(
   skip_invalid = FALSE
 )
 
-add_choropleth(fig, ...)
+add_choropleth(p, ...)
 
 # Default S3 method
 add_choropleth(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  locations = NULL,
+  z = NULL,
   autocolorscale = NULL,
   coloraxis = NULL,
   colorbar = NULL,
@@ -79,7 +81,6 @@ add_choropleth(
   legendrank = NULL,
   legendwidth = NULL,
   locationmode = NULL,
-  locations = NULL,
   marker = NULL,
   meta = NULL,
   name = NULL,
@@ -93,7 +94,6 @@ add_choropleth(
   uirevision = NULL,
   unselected = NULL,
   visible = NULL,
-  z = NULL,
   zauto = NULL,
   zmax = NULL,
   zmid = NULL,
@@ -110,6 +110,17 @@ add_choropleth(
 
   Not for properties, which must be named in full: an abbreviated or
   unknown name is an error that suggests the right one.
+
+- locations:
+
+  Sets the coordinates via location IDs or names. See \`locationmode\`
+  for more info. Data array: a vector, factor, Date/POSIXct vector,
+  matrix or list.
+
+- z:
+
+  Sets the color values. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
 
 - autocolorscale:
 
@@ -295,12 +306,6 @@ add_choropleth(
   abbreviations (e.g. "CA") and full state names (e.g. "California").
   One of `"ISO-3"`, `"USA-states"`, `"country names"`, `"geojson-id"`.
 
-- locations:
-
-  Sets the coordinates via location IDs or names. See \`locationmode\`
-  for more info. Data array: a vector, factor, Date/POSIXct vector,
-  matrix or list.
-
 - marker:
 
   A
@@ -399,11 +404,6 @@ add_choropleth(
   trace is not drawn, but can appear as a legend item (provided that the
   legend itself is visible). One of `"legendonly"`, `TRUE`, `FALSE`.
 
-- z:
-
-  Sets the color values. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
-
 - zauto:
 
   Determines whether or not the color domain is computed with respect to
@@ -432,9 +432,10 @@ add_choropleth(
   If `TRUE`, silently drop invalid properties instead of raising an
   error.
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - data:
 

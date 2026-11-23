@@ -20,9 +20,9 @@ empty_object()
 
 validate_trace(trace, skip_invalid = FALSE)
 
-pad_list(x, n)
-
 set_widget_setting(p, name, value)
+
+pad_list(x, n)
 
 subplot_type_for_trace_type(trace_type)
 
@@ -59,6 +59,10 @@ format_datetime(x)
 
   Whether to drop invalid properties instead of raising an error.
 
+- value:
+
+  A widget setting value.
+
 - x:
 
   A vector of date-times, or a list.
@@ -66,10 +70,6 @@ format_datetime(x)
 - n:
 
   A length.
-
-- value:
-
-  A widget setting value.
 
 - trace_type:
 

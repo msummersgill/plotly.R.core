@@ -66,6 +66,9 @@ behavior is flipped.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">go_contour</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  autocolorscale <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  autocontour <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  coloraxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -105,7 +108,6 @@ behavior is flipped.</p>
 <span>  uid <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  x0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xcalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -114,7 +116,6 @@ behavior is flipped.</p>
 <span>  xperiod0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xperiodalignment <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xtype <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  y0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  yaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ycalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -123,7 +124,6 @@ behavior is flipped.</p>
 <span>  yperiod0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  yperiodalignment <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ytype <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zauto <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zhoverformat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zmax <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -133,14 +133,17 @@ behavior is flipped.</p>
 <span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">add_contour</span><span class="op">(</span><span class="va">fig</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">add_contour</span><span class="op">(</span><span class="va">p</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">add_contour</span><span class="op">(</span></span>
-<span>  <span class="va">fig</span>,</span>
+<span>  <span class="va">p</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  autocolorscale <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  autocontour <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  coloraxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -180,7 +183,6 @@ behavior is flipped.</p>
 <span>  uid <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  x0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xcalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -189,7 +191,6 @@ behavior is flipped.</p>
 <span>  xperiod0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xperiodalignment <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xtype <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  y0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  yaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ycalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -198,7 +199,6 @@ behavior is flipped.</p>
 <span>  yperiod0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  yperiodalignment <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ytype <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zauto <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zhoverformat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zmax <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -219,6 +219,21 @@ behavior is flipped.</p>
 <dl><dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.</p></dd>
+
+
+<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>Sets the x coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.</p></dd>
+
+
+<dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
+<dd><p>Sets the y coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.</p></dd>
+
+
+<dt id="arg-z">z<a class="anchor" aria-label="anchor" href="#arg-z"></a></dt>
+<dd><p>Sets the z data. Data array: a vector, factor, Date/POSIXct
+vector, matrix or list.</p></dd>
 
 
 <dt id="arg-autocolorscale">autocolorscale<a class="anchor" aria-label="anchor" href="#arg-autocolorscale"></a></dt>
@@ -541,11 +556,6 @@ with it as it moves. Any value.</p></dd>
 <code>"legendonly"</code>, <code>TRUE</code>, <code>FALSE</code>.</p></dd>
 
 
-<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>Sets the x coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.</p></dd>
-
-
 <dt id="arg-x-">x0<a class="anchor" aria-label="anchor" href="#arg-x-"></a></dt>
 <dd><p>Alternate to `x`. Builds a linear space of x coordinates. Use
 with `dx` where `x0` is the starting coordinate and `dx` the step. Any
@@ -609,11 +619,6 @@ Sets the alignment of data points on the x axis. One of
 heatmap's x coordinates are given by "x0" and "dx" (the default
 behavior when `x` is not provided). One of <code>"array"</code>,
 <code>"scaled"</code>.</p></dd>
-
-
-<dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>Sets the y coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-y-">y0<a class="anchor" aria-label="anchor" href="#arg-y-"></a></dt>
@@ -680,11 +685,6 @@ y coordinates are given by "y0" and "dy" (the default behavior when
 `y` is not provided) One of <code>"array"</code>, <code>"scaled"</code>.</p></dd>
 
 
-<dt id="arg-z">z<a class="anchor" aria-label="anchor" href="#arg-z"></a></dt>
-<dd><p>Sets the z data. Data array: a vector, factor, Date/POSIXct
-vector, matrix or list.</p></dd>
-
-
 <dt id="arg-zauto">zauto<a class="anchor" aria-label="anchor" href="#arg-zauto"></a></dt>
 <dd><p>Determines whether or not the color domain is computed with
 respect to the input data (here in `z`) or the bounds set in `zmin`
@@ -729,8 +729,9 @@ to other SVG traces on the same subplot. SVG traces with higher
 instead of raising an error.</p></dd>
 
 
-<dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A <code>go_figure</code> object.</p></dd>
+<dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>A <code>go_figure</code> object (or, through methods for its class,
+another figure, e.g. a <code>plot_ly()</code> figure of the plotly package).</p></dd>
 
 
 <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>

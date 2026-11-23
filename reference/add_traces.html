@@ -55,11 +55,11 @@ an S3 generic, so packages can add methods for their own figure classes
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_trace</span><span class="op">(</span><span class="va">fig</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_trace</span><span class="op">(</span><span class="va">p</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'go_figure'</span></span>
 <span><span class="fu">add_trace</span><span class="op">(</span></span>
-<span>  <span class="va">fig</span>,</span>
+<span>  <span class="va">p</span>,</span>
 <span>  <span class="va">trace</span>,</span>
 <span>  row <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  col <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -82,8 +82,9 @@ an S3 generic, so packages can add methods for their own figure classes
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A <code>go_figure</code> object.</p></dd>
+<dl><dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>A <code>go_figure</code> object (for <code>add_trace()</code>; <code>p</code>, as in the plotly
+package, so calls such as <code>add_trace(p = fig, ...)</code> keep working).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -109,6 +110,10 @@ trace to several cells.</p></dd>
 <dt id="arg-exclude-empty-subplots">exclude_empty_subplots<a class="anchor" aria-label="anchor" href="#arg-exclude-empty-subplots"></a></dt>
 <dd><p>If <code>TRUE</code>, don't add the trace to subplots
 that have no traces or layout objects yet.</p></dd>
+
+
+<dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
+<dd><p>A <code>go_figure</code> object (for <code>add_traces()</code>).</p></dd>
 
 
 <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>

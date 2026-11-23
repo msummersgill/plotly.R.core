@@ -9,14 +9,16 @@ determined by \`u\` and \`v\` components.
 ## Usage
 
 ``` r
-add_quiver(fig, ...)
+add_quiver(p, ...)
 
 # Default S3 method
 add_quiver(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
   anchor = NULL,
   arrowref = NULL,
   customdata = NULL,
@@ -51,11 +53,9 @@ add_quiver(
   v = NULL,
   vhoverformat = NULL,
   visible = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xhoverformat = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   yhoverformat = NULL,
@@ -67,6 +67,8 @@ add_quiver(
 
 go_quiver(
   ...,
+  x = NULL,
+  y = NULL,
   anchor = NULL,
   arrowref = NULL,
   customdata = NULL,
@@ -101,11 +103,9 @@ go_quiver(
   v = NULL,
   vhoverformat = NULL,
   visible = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xhoverformat = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   yhoverformat = NULL,
@@ -115,9 +115,10 @@ go_quiver(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -145,6 +146,16 @@ go_quiver(
   `marker = go_scatter_marker(color = ~group)`) split the data the same
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
+
+- x:
+
+  Sets the x coordinates of the vector arrow locations. Data array: a
+  vector, factor, Date/POSIXct vector, matrix or list.
+
+- y:
+
+  Sets the y coordinates of the vector arrow locations. Data array: a
+  vector, factor, Date/POSIXct vector, matrix or list.
 
 - anchor:
 
@@ -421,11 +432,6 @@ go_quiver(
   trace is not drawn, but can appear as a legend item (provided that the
   legend itself is visible). One of `"legendonly"`, `TRUE`, `FALSE`.
 
-- x:
-
-  Sets the x coordinates of the vector arrow locations. Data array: a
-  vector, factor, Date/POSIXct vector, matrix or list.
-
 - x0:
 
   Alternate to \`x\`. Builds a linear space of x coordinates. Use with
@@ -451,11 +457,6 @@ go_quiver(
   digits. For example, "2016-10-13 09:15:23.456" with tickformat
   "%H~%M~%S.%2f" would display "09~15~23.46"By default the values are
   formatted using \`xaxis.hoverformat\`. String.
-
-- y:
-
-  Sets the y coordinates of the vector arrow locations. Data array: a
-  vector, factor, Date/POSIXct vector, matrix or list.
 
 - y0:
 

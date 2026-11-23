@@ -19,14 +19,17 @@ where \`z\` is a 1D vector, the x and y coordinates must be provided in
 ## Usage
 
 ``` r
-add_heatmap(fig, ...)
+add_heatmap(p, ...)
 
 # Default S3 method
 add_heatmap(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
   autocolorscale = NULL,
   coloraxis = NULL,
   colorbar = NULL,
@@ -61,7 +64,6 @@ add_heatmap(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -71,7 +73,6 @@ add_heatmap(
   xperiod0 = NULL,
   xperiodalignment = NULL,
   xtype = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -81,7 +82,6 @@ add_heatmap(
   yperiod0 = NULL,
   yperiodalignment = NULL,
   ytype = NULL,
-  z = NULL,
   zauto = NULL,
   zhoverformat = NULL,
   zmax = NULL,
@@ -97,6 +97,9 @@ add_heatmap(
 
 go_heatmap(
   ...,
+  x = NULL,
+  y = NULL,
+  z = NULL,
   autocolorscale = NULL,
   coloraxis = NULL,
   colorbar = NULL,
@@ -131,7 +134,6 @@ go_heatmap(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -141,7 +143,6 @@ go_heatmap(
   xperiod0 = NULL,
   xperiodalignment = NULL,
   xtype = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -151,7 +152,6 @@ go_heatmap(
   yperiod0 = NULL,
   yperiodalignment = NULL,
   ytype = NULL,
-  z = NULL,
   zauto = NULL,
   zhoverformat = NULL,
   zmax = NULL,
@@ -165,9 +165,10 @@ go_heatmap(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -194,6 +195,21 @@ go_heatmap(
   `marker = go_scatter_marker(color = ~group)`) split the data the same
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
+
+- x:
+
+  Sets the x coordinates. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
+- y:
+
+  Sets the y coordinates. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
+- z:
+
+  Sets the z data. Data array: a vector, factor, Date/POSIXct vector,
+  matrix or list.
 
 - autocolorscale:
 
@@ -479,11 +495,6 @@ go_heatmap(
   trace is not drawn, but can appear as a legend item (provided that the
   legend itself is visible). One of `"legendonly"`, `TRUE`, `FALSE`.
 
-- x:
-
-  Sets the x coordinates. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
-
 - x0:
 
   Alternate to \`x\`. Builds a linear space of x coordinates. Use with
@@ -550,11 +561,6 @@ go_heatmap(
   coordinates are given by "x0" and "dx" (the default behavior when
   \`x\` is not provided). One of `"array"`, `"scaled"`.
 
-- y:
-
-  Sets the y coordinates. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
-
 - y0:
 
   Alternate to \`y\`. Builds a linear space of y coordinates. Use with
@@ -620,11 +626,6 @@ go_heatmap(
   behavior when \`y\` is provided) If "scaled", the heatmap's y
   coordinates are given by "y0" and "dy" (the default behavior when
   \`y\` is not provided) One of `"array"`, `"scaled"`.
-
-- z:
-
-  Sets the z data. Data array: a vector, factor, Date/POSIXct vector,
-  matrix or list.
 
 - zauto:
 

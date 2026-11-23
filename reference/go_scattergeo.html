@@ -55,14 +55,17 @@ respectively or by geographic location IDs or names in `locations`.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_scattergeo</span><span class="op">(</span><span class="va">fig</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_scattergeo</span><span class="op">(</span><span class="va">p</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">add_scattergeo</span><span class="op">(</span></span>
-<span>  <span class="va">fig</span>,</span>
+<span>  <span class="va">p</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lat <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lon <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  locations <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  connectgaps <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  featureidkey <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -76,7 +79,6 @@ respectively or by geographic location IDs or names in `locations`.</p>
 <span>  hovertemplatefallback <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hovertext <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ids <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  lat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legend <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgroup <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgrouptitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -84,8 +86,6 @@ respectively or by geographic location IDs or names in `locations`.</p>
 <span>  legendwidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  line <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  locationmode <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  locations <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  lon <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  marker <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  meta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  mode <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -110,6 +110,9 @@ respectively or by geographic location IDs or names in `locations`.</p>
 <span></span>
 <span><span class="fu">go_scattergeo</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
+<span>  lat <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lon <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  locations <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  connectgaps <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  featureidkey <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -123,7 +126,6 @@ respectively or by geographic location IDs or names in `locations`.</p>
 <span>  hovertemplatefallback <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hovertext <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ids <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  lat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legend <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgroup <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgrouptitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -131,8 +133,6 @@ respectively or by geographic location IDs or names in `locations`.</p>
 <span>  legendwidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  line <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  locationmode <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  locations <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  lon <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  marker <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  meta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  mode <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -158,8 +158,9 @@ respectively or by geographic location IDs or names in `locations`.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A <code>go_figure</code> object.</p></dd>
+<dl><dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>A <code>go_figure</code> object (or, through methods for its class,
+another figure, e.g. a <code>plot_ly()</code> figure of the plotly package).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -185,6 +186,23 @@ column (a factor, character or logical, e.g. <code>marker =
 go_scatter_marker(color = ~group)</code>) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.</p></dd>
+
+
+<dt id="arg-lat">lat<a class="anchor" aria-label="anchor" href="#arg-lat"></a></dt>
+<dd><p>Sets the latitude coordinates (in degrees North). Data array:
+a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
+
+
+<dt id="arg-lon">lon<a class="anchor" aria-label="anchor" href="#arg-lon"></a></dt>
+<dd><p>Sets the longitude coordinates (in degrees East). Data array:
+a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
+
+
+<dt id="arg-locations">locations<a class="anchor" aria-label="anchor" href="#arg-locations"></a></dt>
+<dd><p>Sets the coordinates via location IDs or names.
+Coordinates correspond to the centroid of each location given. See
+`locationmode` for more info. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-connectgaps">connectgaps<a class="anchor" aria-label="anchor" href="#arg-connectgaps"></a></dt>
@@ -304,11 +322,6 @@ strings, not numbers or any other type. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.</p></dd>
 
 
-<dt id="arg-lat">lat<a class="anchor" aria-label="anchor" href="#arg-lat"></a></dt>
-<dd><p>Sets the latitude coordinates (in degrees North). Data array:
-a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
-
-
 <dt id="arg-legend">legend<a class="anchor" aria-label="anchor" href="#arg-legend"></a></dt>
 <dd><p>Sets the reference to a legend to show this trace in.
 References to these legends are "legend", "legend2", "legend3", etc.
@@ -360,18 +373,6 @@ linked to the `geojson` attribute. "USA-states" accepts both
 two-letter abbreviations (e.g. "CA") and full state names (e.g.
 "California"). One of <code>"ISO-3"</code>, <code>"USA-states"</code>,
 <code>"country names"</code>, <code>"geojson-id"</code>.</p></dd>
-
-
-<dt id="arg-locations">locations<a class="anchor" aria-label="anchor" href="#arg-locations"></a></dt>
-<dd><p>Sets the coordinates via location IDs or names.
-Coordinates correspond to the centroid of each location given. See
-`locationmode` for more info. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.</p></dd>
-
-
-<dt id="arg-lon">lon<a class="anchor" aria-label="anchor" href="#arg-lon"></a></dt>
-<dd><p>Sets the longitude coordinates (in degrees East). Data array:
-a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-marker">marker<a class="anchor" aria-label="anchor" href="#arg-marker"></a></dt>

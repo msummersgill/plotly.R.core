@@ -69,10 +69,13 @@ green whereas decreasing are drawn in red.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">go_candlestick</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  open <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  high <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  low <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  close <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  decreasing <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  high <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hoverinfo <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hoverlabel <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hovertemplate <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -86,11 +89,9 @@ green whereas decreasing are drawn in red.</p>
 <span>  legendrank <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendwidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  line <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  low <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  meta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  opacity <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  open <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  selectedpoints <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  showlegend <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  text <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -98,7 +99,6 @@ green whereas decreasing are drawn in red.</p>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  whiskerwidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xcalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xhoverformat <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -111,18 +111,21 @@ green whereas decreasing are drawn in red.</p>
 <span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">add_candlestick</span><span class="op">(</span><span class="va">fig</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">add_candlestick</span><span class="op">(</span><span class="va">p</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">add_candlestick</span><span class="op">(</span></span>
-<span>  <span class="va">fig</span>,</span>
+<span>  <span class="va">p</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  open <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  high <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  low <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  close <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  decreasing <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  high <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hoverinfo <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hoverlabel <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hovertemplate <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -136,11 +139,9 @@ green whereas decreasing are drawn in red.</p>
 <span>  legendrank <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendwidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  line <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  low <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  meta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  opacity <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  open <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  selectedpoints <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  showlegend <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  text <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -148,7 +149,6 @@ green whereas decreasing are drawn in red.</p>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  whiskerwidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xcalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xhoverformat <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -174,6 +174,27 @@ green whereas decreasing are drawn in red.</p>
 abbreviated or unknown name is an error that suggests the right one.</p></dd>
 
 
+<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>Sets the x coordinates. If absent, linear coordinate will be
+generated. Data array: a vector, factor, Date/POSIXct vector, matrix
+or list.</p></dd>
+
+
+<dt id="arg-open">open<a class="anchor" aria-label="anchor" href="#arg-open"></a></dt>
+<dd><p>Sets the open values. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.</p></dd>
+
+
+<dt id="arg-high">high<a class="anchor" aria-label="anchor" href="#arg-high"></a></dt>
+<dd><p>Sets the high values. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.</p></dd>
+
+
+<dt id="arg-low">low<a class="anchor" aria-label="anchor" href="#arg-low"></a></dt>
+<dd><p>Sets the low values. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.</p></dd>
+
+
 <dt id="arg-close">close<a class="anchor" aria-label="anchor" href="#arg-close"></a></dt>
 <dd><p>Sets the close values. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.</p></dd>
@@ -190,11 +211,6 @@ array: a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
 <dd><p>A <code><a href="go_candlestick_decreasing.html">go_candlestick_decreasing()</a></code> object or
 named list, with properties <code>fillcolor</code> and <code>line</code> (see
 <code><a href="go_candlestick_decreasing.html">go_candlestick_decreasing()</a></code>).</p></dd>
-
-
-<dt id="arg-high">high<a class="anchor" aria-label="anchor" href="#arg-high"></a></dt>
-<dd><p>Sets the high values. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-hoverinfo">hoverinfo<a class="anchor" aria-label="anchor" href="#arg-hoverinfo"></a></dt>
@@ -310,11 +326,6 @@ with properties <code>width</code> (see
 <code><a href="go_candlestick_line.html">go_candlestick_line()</a></code>).</p></dd>
 
 
-<dt id="arg-low">low<a class="anchor" aria-label="anchor" href="#arg-low"></a></dt>
-<dd><p>Sets the low values. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.</p></dd>
-
-
 <dt id="arg-meta">meta<a class="anchor" aria-label="anchor" href="#arg-meta"></a></dt>
 <dd><p>Assigns extra meta information associated with this trace
 that can be used in various text attributes. Attributes such as trace
@@ -335,11 +346,6 @@ item and on hover. String.</p></dd>
 <dt id="arg-opacity">opacity<a class="anchor" aria-label="anchor" href="#arg-opacity"></a></dt>
 <dd><p>Sets the opacity of the trace. Number in the interval [0,
 1].</p></dd>
-
-
-<dt id="arg-open">open<a class="anchor" aria-label="anchor" href="#arg-open"></a></dt>
-<dd><p>Sets the open values. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-selectedpoints">selectedpoints<a class="anchor" aria-label="anchor" href="#arg-selectedpoints"></a></dt>
@@ -396,12 +402,6 @@ with it as it moves. Any value.</p></dd>
 <dd><p>Sets the width of the whiskers relative to the box
 width. For example, with 1, the whiskers are as wide as the box(es).
 Number in the interval [0, 1].</p></dd>
-
-
-<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>Sets the x coordinates. If absent, linear coordinate will be
-generated. Data array: a vector, factor, Date/POSIXct vector, matrix
-or list.</p></dd>
 
 
 <dt id="arg-xaxis">xaxis<a class="anchor" aria-label="anchor" href="#arg-xaxis"></a></dt>
@@ -487,8 +487,9 @@ to other SVG traces on the same subplot. SVG traces with higher
 instead of raising an error.</p></dd>
 
 
-<dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A <code>go_figure</code> object.</p></dd>
+<dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>A <code>go_figure</code> object (or, through methods for its class,
+another figure, e.g. a <code>plot_ly()</code> figure of the plotly package).</p></dd>
 
 
 <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>

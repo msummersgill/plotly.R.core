@@ -2546,7 +2546,7 @@
           <code><a href="TeX.html">TeX()</a></code>
 
         </dt>
-        <dd>Wrap text for LaTeX rendering</dd>
+        <dd>Render TeX in a plotly graph using MathJax</dd>
 
         <dt>
 
@@ -2566,31 +2566,45 @@
 
       <dl><dt>
 
-          <code><a href="plotlyOutput.html">plotlyOutput()</a></code> <code><a href="plotlyOutput.html">renderPlotly()</a></code>
+          <code><a href="plotly-shiny.html">plotlyOutput()</a></code> <code><a href="plotly-shiny.html">renderPlotly()</a></code>
 
         </dt>
-        <dd>Shiny bindings for plotly figures</dd>
+        <dd>Shiny bindings for plotly</dd>
 
         <dt>
 
           <code><a href="plotlyProxy.html">plotlyProxy()</a></code> <code><a href="plotlyProxy.html">plotlyProxyInvoke()</a></code>
 
         </dt>
-        <dd>Modify a plotly figure in Shiny without re-rendering it</dd>
+        <dd>Modify a plotly object inside a shiny app</dd>
 
         <dt>
 
           <code><a href="event_data.html">event_data()</a></code>
 
         </dt>
-        <dd>Access plotly events in Shiny</dd>
+        <dd>Access plotly user input event data in shiny</dd>
 
         <dt>
 
-          <code><a href="event_register.html">event_register()</a></code> <code><a href="event_register.html">event_unregister()</a></code> <code><a href="event_register.html">event_source()</a></code>
+          <code><a href="event_register.html">event_register()</a></code>
 
         </dt>
-        <dd>Register plotly events for Shiny</dd>
+        <dd>Register a shiny input value</dd>
+
+        <dt>
+
+          <code><a href="event_unregister.html">event_unregister()</a></code>
+
+        </dt>
+        <dd>Un-register a shiny input value</dd>
+
+        <dt>
+
+          <code><a href="event_source.html">event_source()</a></code>
+
+        </dt>
+        <dd>Set the source id of a plot's events</dd>
       </dl></div><div class="section level2">
       <h2 id="linked-views-crosstalk-">Linked views (crosstalk)<a class="anchor" aria-label="anchor" href="#linked-views-crosstalk-"></a></h2>
 
@@ -2603,10 +2617,17 @@
 
       <dl><dt>
 
-          <code><a href="highlight.html">highlight()</a></code> <code><a href="highlight.html">attrs_selected()</a></code>
+          <code><a href="highlight.html">highlight()</a></code>
 
         </dt>
-        <dd>Highlight linked selections</dd>
+        <dd>Query graphical elements in multiple linked views</dd>
+
+        <dt>
+
+          <code><a href="attrs_selected.html">attrs_selected()</a></code>
+
+        </dt>
+        <dd>Specify attributes of selection traces</dd>
 
         <dt>
 

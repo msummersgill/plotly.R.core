@@ -58,14 +58,16 @@ no aggregation data is provided.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_histogram</span><span class="op">(</span><span class="va">fig</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_histogram</span><span class="op">(</span><span class="va">p</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">add_histogram</span><span class="op">(</span></span>
-<span>  <span class="va">fig</span>,</span>
+<span>  <span class="va">p</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  alignmentgroup <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  autobinx <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  autobiny <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -113,12 +115,10 @@ no aggregation data is provided.</p>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  unselected <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xbins <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xcalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xhoverformat <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  yaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ybins <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ycalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -132,6 +132,8 @@ no aggregation data is provided.</p>
 <span></span>
 <span><span class="fu">go_histogram</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  alignmentgroup <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  autobinx <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  autobiny <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -179,12 +181,10 @@ no aggregation data is provided.</p>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  unselected <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xbins <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xcalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xhoverformat <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  yaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ybins <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ycalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -198,8 +198,9 @@ no aggregation data is provided.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A <code>go_figure</code> object.</p></dd>
+<dl><dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>A <code>go_figure</code> object (or, through methods for its class,
+another figure, e.g. a <code>plot_ly()</code> figure of the plotly package).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -225,6 +226,16 @@ column (a factor, character or logical, e.g. <code>marker =
 go_scatter_marker(color = ~group)</code>) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.</p></dd>
+
+
+<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>Sets the sample data to be binned on the x axis. Data array: a
+vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
+
+
+<dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
+<dd><p>Sets the sample data to be binned on the y axis. Data array: a
+vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-alignmentgroup">alignmentgroup<a class="anchor" aria-label="anchor" href="#arg-alignmentgroup"></a></dt>
@@ -624,11 +635,6 @@ with properties <code>marker</code> and <code>textfont</code> (see
 <code>"legendonly"</code>, <code>TRUE</code>, <code>FALSE</code>.</p></dd>
 
 
-<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>Sets the sample data to be binned on the x axis. Data array: a
-vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
-
-
 <dt id="arg-xaxis">xaxis<a class="anchor" aria-label="anchor" href="#arg-xaxis"></a></dt>
 <dd><p>Sets a reference between this trace's x coordinates and a
 2D cartesian x axis. If "x" (the default value), the x coordinates
@@ -663,11 +669,6 @@ a decimal number as well as "%{n}f" for fractional seconds with n
 digits. For example, "2016-10-13 09:15:23.456" with tickformat
 "%H~%M~%S.%2f" would display "09~15~23.46"By default the values
 are formatted using `xaxis.hoverformat`. String.</p></dd>
-
-
-<dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>Sets the sample data to be binned on the y axis. Data array: a
-vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-yaxis">yaxis<a class="anchor" aria-label="anchor" href="#arg-yaxis"></a></dt>

@@ -9,14 +9,15 @@ angular or bullet (aka linear) gauges.
 ## Usage
 
 ``` r
-add_indicator(fig, ...)
+add_indicator(p, ...)
 
 # Default S3 method
 add_indicator(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  value = NULL,
   align = NULL,
   customdata = NULL,
   delta = NULL,
@@ -34,7 +35,6 @@ add_indicator(
   title = NULL,
   uid = NULL,
   uirevision = NULL,
-  value = NULL,
   visible = NULL,
   row = NULL,
   col = NULL,
@@ -43,6 +43,7 @@ add_indicator(
 
 go_indicator(
   ...,
+  value = NULL,
   align = NULL,
   customdata = NULL,
   delta = NULL,
@@ -60,7 +61,6 @@ go_indicator(
   title = NULL,
   uid = NULL,
   uirevision = NULL,
-  value = NULL,
   visible = NULL,
   skip_invalid = FALSE
 )
@@ -68,9 +68,10 @@ go_indicator(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -97,6 +98,10 @@ go_indicator(
   `marker = go_scatter_marker(color = ~group)`) split the data the same
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
+
+- value:
+
+  Sets the number to be displayed. Number.
 
 - align:
 
@@ -238,10 +243,6 @@ go_indicator(
   that the same trace has a different index, you can still preserve
   user-driven changes if you give each trace a \`uid\` that stays with
   it as it moves. Any value.
-
-- value:
-
-  Sets the number to be displayed. Number.
 
 - visible:
 

@@ -7,14 +7,16 @@ using the WebGL plotting engine. Bubble charts are achieved by setting
 ## Usage
 
 ``` r
-add_scattergl(fig, ...)
+add_scattergl(p, ...)
 
 # Default S3 method
 add_scattergl(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
   connectgaps = NULL,
   customdata = NULL,
   dx = NULL,
@@ -52,7 +54,6 @@ add_scattergl(
   uirevision = NULL,
   unselected = NULL,
   visible = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -60,7 +61,6 @@ add_scattergl(
   xperiod = NULL,
   xperiod0 = NULL,
   xperiodalignment = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -76,6 +76,8 @@ add_scattergl(
 
 go_scattergl(
   ...,
+  x = NULL,
+  y = NULL,
   connectgaps = NULL,
   customdata = NULL,
   dx = NULL,
@@ -113,7 +115,6 @@ go_scattergl(
   uirevision = NULL,
   unselected = NULL,
   visible = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -121,7 +122,6 @@ go_scattergl(
   xperiod = NULL,
   xperiod0 = NULL,
   xperiodalignment = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -135,9 +135,10 @@ go_scattergl(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -165,6 +166,16 @@ go_scattergl(
   `marker = go_scatter_marker(color = ~group)`) split the data the same
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
+
+- x:
+
+  Sets the x coordinates. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
+- y:
+
+  Sets the y coordinates. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
 
 - connectgaps:
 
@@ -488,11 +499,6 @@ go_scattergl(
   trace is not drawn, but can appear as a legend item (provided that the
   legend itself is visible). One of `"legendonly"`, `TRUE`, `FALSE`.
 
-- x:
-
-  Sets the x coordinates. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
-
 - x0:
 
   Alternate to \`x\`. Builds a linear space of x coordinates. Use with
@@ -546,11 +552,6 @@ go_scattergl(
 
   Only relevant when the axis \`type\` is "date". Sets the alignment of
   data points on the x axis. One of `"start"`, `"middle"`, `"end"`.
-
-- y:
-
-  Sets the y coordinates. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
 
 - y0:
 

@@ -27,6 +27,8 @@ and the inner length corresponding the sample size.
 ``` r
 go_box(
   ...,
+  x = NULL,
+  y = NULL,
   alignmentgroup = NULL,
   boxmean = NULL,
   boxpoints = NULL,
@@ -79,7 +81,6 @@ go_box(
   visible = NULL,
   whiskerwidth = NULL,
   width = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -87,7 +88,6 @@ go_box(
   xperiod = NULL,
   xperiod0 = NULL,
   xperiodalignment = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -99,14 +99,16 @@ go_box(
   skip_invalid = FALSE
 )
 
-add_box(fig, ...)
+add_box(p, ...)
 
 # Default S3 method
 add_box(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
   alignmentgroup = NULL,
   boxmean = NULL,
   boxpoints = NULL,
@@ -159,7 +161,6 @@ add_box(
   visible = NULL,
   whiskerwidth = NULL,
   width = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -167,7 +168,6 @@ add_box(
   xperiod = NULL,
   xperiod0 = NULL,
   xperiodalignment = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -189,6 +189,16 @@ add_box(
 
   Not for properties, which must be named in full: an abbreviated or
   unknown name is an error that suggests the right one.
+
+- x:
+
+  Sets the x sample data or coordinates. See overview for more info.
+  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
+
+- y:
+
+  Sets the y sample data or coordinates. See overview for more info.
+  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
 
 - alignmentgroup:
 
@@ -600,11 +610,6 @@ add_box(
   width is automatically selected based on the positions of other box
   traces in the same subplot. Number in the interval \[0, Inf\].
 
-- x:
-
-  Sets the x sample data or coordinates. See overview for more info.
-  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
-
 - x0:
 
   Sets the x coordinate for single-box traces or the starting coordinate
@@ -658,11 +663,6 @@ add_box(
 
   Only relevant when the axis \`type\` is "date". Sets the alignment of
   data points on the x axis. One of `"start"`, `"middle"`, `"end"`.
-
-- y:
-
-  Sets the y sample data or coordinates. See overview for more info.
-  Data array: a vector, factor, Date/POSIXct vector, matrix or list.
 
 - y0:
 
@@ -729,9 +729,10 @@ add_box(
   If `TRUE`, silently drop invalid properties instead of raising an
   error.
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - data:
 

@@ -41,7 +41,7 @@ be used stand-alone.
   features and behavior deprecated between the last CRAN release
   plotly.js/2.25.2 and plotly-js/latest
 - **Shiny, R Markdown, Quarto, and static image export**
-  [`plotlyOutput()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyOutput.md)/[`renderPlotly()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyOutput.md),
+  [`plotlyOutput()`](https://msummersgill.github.io/plotly.R.core/reference/plotly-shiny.md)/[`renderPlotly()`](https://msummersgill.github.io/plotly.R.core/reference/plotly-shiny.md),
   [`event_data()`](https://msummersgill.github.io/plotly.R.core/reference/event_data.md)
   and
   [`plotlyProxy()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyProxy.md)
@@ -1124,30 +1124,33 @@ Objects used in several places in traces and layouts.
 - [`plotly_json()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_json.md)
   : JSON of a plot
 - [`TeX()`](https://msummersgill.github.io/plotly.R.core/reference/TeX.md)
-  : Wrap text for LaTeX rendering
+  : Render TeX in a plotly graph using MathJax
 - [`plotlyjs_version()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyjs_version.md)
   : Version of the bundled plotly.js library
 
 ## Shiny
 
-- [`plotlyOutput()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyOutput.md)
-  [`renderPlotly()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyOutput.md)
-  : Shiny bindings for plotly figures
+- [`plotlyOutput()`](https://msummersgill.github.io/plotly.R.core/reference/plotly-shiny.md)
+  [`renderPlotly()`](https://msummersgill.github.io/plotly.R.core/reference/plotly-shiny.md)
+  : Shiny bindings for plotly
 - [`plotlyProxy()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyProxy.md)
   [`plotlyProxyInvoke()`](https://msummersgill.github.io/plotly.R.core/reference/plotlyProxy.md)
-  : Modify a plotly figure in Shiny without re-rendering it
+  : Modify a plotly object inside a shiny app
 - [`event_data()`](https://msummersgill.github.io/plotly.R.core/reference/event_data.md)
-  : Access plotly events in Shiny
+  : Access plotly user input event data in shiny
 - [`event_register()`](https://msummersgill.github.io/plotly.R.core/reference/event_register.md)
-  [`event_unregister()`](https://msummersgill.github.io/plotly.R.core/reference/event_register.md)
-  [`event_source()`](https://msummersgill.github.io/plotly.R.core/reference/event_register.md)
-  : Register plotly events for Shiny
+  : Register a shiny input value
+- [`event_unregister()`](https://msummersgill.github.io/plotly.R.core/reference/event_unregister.md)
+  : Un-register a shiny input value
+- [`event_source()`](https://msummersgill.github.io/plotly.R.core/reference/event_source.md)
+  : Set the source id of a plot's events
 
 ## Linked views (crosstalk)
 
 - [`highlight()`](https://msummersgill.github.io/plotly.R.core/reference/highlight.md)
-  [`attrs_selected()`](https://msummersgill.github.io/plotly.R.core/reference/highlight.md)
-  : Highlight linked selections
+  : Query graphical elements in multiple linked views
+- [`attrs_selected()`](https://msummersgill.github.io/plotly.R.core/reference/attrs_selected.md)
+  : Specify attributes of selection traces
 - [`set_crosstalk_keys()`](https://msummersgill.github.io/plotly.R.core/reference/set_crosstalk_keys.md)
   : Link traces to a crosstalk group
 

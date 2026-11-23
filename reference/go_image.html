@@ -61,14 +61,16 @@ image is displayed in a subplot, its y axis will be reversed (ie.
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_image</span><span class="op">(</span><span class="va">fig</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_image</span><span class="op">(</span><span class="va">p</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">add_image</span><span class="op">(</span></span>
-<span>  <span class="va">fig</span>,</span>
+<span>  <span class="va">p</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  source <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  colormodel <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  dx <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -86,7 +88,6 @@ image is displayed in a subplot, its y axis will be reversed (ie.
 <span>  meta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  opacity <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  source <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  text <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uid <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -95,7 +96,6 @@ image is displayed in a subplot, its y axis will be reversed (ie.
 <span>  xaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  y0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  yaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zmax <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zmin <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zorder <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -108,6 +108,8 @@ image is displayed in a subplot, its y axis will be reversed (ie.
 <span></span>
 <span><span class="fu">go_image</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
+<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  source <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  colormodel <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  dx <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -125,7 +127,6 @@ image is displayed in a subplot, its y axis will be reversed (ie.
 <span>  meta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  opacity <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  source <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  text <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uid <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -134,7 +135,6 @@ image is displayed in a subplot, its y axis will be reversed (ie.
 <span>  xaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  y0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  yaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zmax <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zmin <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zorder <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -147,8 +147,9 @@ image is displayed in a subplot, its y axis will be reversed (ie.
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A <code>go_figure</code> object.</p></dd>
+<dl><dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>A <code>go_figure</code> object (or, through methods for its class,
+another figure, e.g. a <code>plot_ly()</code> figure of the plotly package).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -173,6 +174,18 @@ column (a factor, character or logical, e.g. <code>marker =
 go_scatter_marker(color = ~group)</code>) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.</p></dd>
+
+
+<dt id="arg-z">z<a class="anchor" aria-label="anchor" href="#arg-z"></a></dt>
+<dd><p>A 2-dimensional array in which each element is an array of 3 or
+4 numbers representing a color. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.</p></dd>
+
+
+<dt id="arg-source">source<a class="anchor" aria-label="anchor" href="#arg-source"></a></dt>
+<dd><p>Specifies the data URI of the image to be visualized. The
+URI consists of "data:image/[&lt;media
+subtype\\&gt;][;base64\\],&lt;data\\&gt;" String.</p></dd>
 
 
 <dt id="arg-colormodel">colormodel<a class="anchor" aria-label="anchor" href="#arg-colormodel"></a></dt>
@@ -316,12 +329,6 @@ item and on hover. String.</p></dd>
 1].</p></dd>
 
 
-<dt id="arg-source">source<a class="anchor" aria-label="anchor" href="#arg-source"></a></dt>
-<dd><p>Specifies the data URI of the image to be visualized. The
-URI consists of "data:image/[&lt;media
-subtype\\&gt;][;base64\\],&lt;data\\&gt;" String.</p></dd>
-
-
 <dt id="arg-text">text<a class="anchor" aria-label="anchor" href="#arg-text"></a></dt>
 <dd><p>Sets the text elements associated with each z value. Data
 array: a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
@@ -385,12 +392,6 @@ an explicit y axis range. Any value.</p></dd>
 refer to `layout.yaxis`. If "y2", the y coordinates refer to
 `layout.yaxis2`, and so on. Subplot id: <code>"y"</code>, <code>"y2"</code>,
 <code>"y3"</code>, ....</p></dd>
-
-
-<dt id="arg-z">z<a class="anchor" aria-label="anchor" href="#arg-z"></a></dt>
-<dd><p>A 2-dimensional array in which each element is an array of 3 or
-4 numbers representing a color. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-zmax">zmax<a class="anchor" aria-label="anchor" href="#arg-zmax"></a></dt>

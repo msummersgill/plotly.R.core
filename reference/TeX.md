@@ -1,9 +1,11 @@
-# Wrap text for LaTeX rendering
+# Render TeX in a plotly graph using MathJax
 
-Wraps a string in `$...$` so plotly.js renders it with MathJax (requires
-`config(p, mathjax = "local")`, or `"cdn"`;
+This function makes it slightly easier to render TeX in a plotly graph –
+it ensures the provided string is surrounded with `$` (this is what
+plotly.js uses to declare a string as TeX). MathJax must be included
+with `config(p, mathjax = "local")` (or `"cdn"`);
 [`save_image()`](https://msummersgill.github.io/plotly.R.core/reference/save_image.md)
-needs nothing).
+needs nothing.
 
 ## Usage
 
@@ -15,16 +17,24 @@ TeX(x)
 
 - x:
 
-  A character string of LaTeX.
+  a character vector
 
 ## Value
 
-The wrapped string.
+`x`, surrounded with `$`.
+
+## See also
+
+[config](https://msummersgill.github.io/plotly.R.core/reference/config.md)
+
+## Author
+
+Carson Sievert
 
 ## Examples
 
 ``` r
 go_figure() |>
-  update_layout(title = TeX("\\alpha + \\beta x")) |>
-  config(mathjax = "local")
+  update_layout(title = TeX("\\text{Some mathjax: }\\alpha+\\beta x")) |>
+  config(mathjax = "cdn")
 ```

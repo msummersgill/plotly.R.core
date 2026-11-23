@@ -61,14 +61,16 @@ The data visualized as scatter point or lines is set in `r` (radial) and
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_scatterpolargl</span><span class="op">(</span><span class="va">fig</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_scatterpolargl</span><span class="op">(</span><span class="va">p</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">add_scatterpolargl</span><span class="op">(</span></span>
-<span>  <span class="va">fig</span>,</span>
+<span>  <span class="va">p</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  r <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  theta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  connectgaps <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  dr <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -92,7 +94,6 @@ The data visualized as scatter point or lines is set in `r` (radial) and
 <span>  mode <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  opacity <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  r <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  r0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  selected <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  selectedpoints <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -103,7 +104,6 @@ The data visualized as scatter point or lines is set in `r` (radial) and
 <span>  textposition <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  texttemplate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  texttemplatefallback <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  theta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  theta0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  thetaunit <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uid <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -117,6 +117,8 @@ The data visualized as scatter point or lines is set in `r` (radial) and
 <span></span>
 <span><span class="fu">go_scatterpolargl</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
+<span>  r <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  theta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  connectgaps <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  dr <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -140,7 +142,6 @@ The data visualized as scatter point or lines is set in `r` (radial) and
 <span>  mode <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  opacity <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  r <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  r0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  selected <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  selectedpoints <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -151,7 +152,6 @@ The data visualized as scatter point or lines is set in `r` (radial) and
 <span>  textposition <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  texttemplate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  texttemplatefallback <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  theta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  theta0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  thetaunit <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uid <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -166,8 +166,9 @@ The data visualized as scatter point or lines is set in `r` (radial) and
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A <code>go_figure</code> object.</p></dd>
+<dl><dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>A <code>go_figure</code> object (or, through methods for its class,
+another figure, e.g. a <code>plot_ly()</code> figure of the plotly package).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -193,6 +194,16 @@ column (a factor, character or logical, e.g. <code>marker =
 go_scatter_marker(color = ~group)</code>) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.</p></dd>
+
+
+<dt id="arg-r">r<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>
+<dd><p>Sets the radial coordinates Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.</p></dd>
+
+
+<dt id="arg-theta">theta<a class="anchor" aria-label="anchor" href="#arg-theta"></a></dt>
+<dd><p>Sets the angular coordinates Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-connectgaps">connectgaps<a class="anchor" aria-label="anchor" href="#arg-connectgaps"></a></dt>
@@ -396,11 +407,6 @@ item and on hover. String.</p></dd>
 1].</p></dd>
 
 
-<dt id="arg-r">r<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>
-<dd><p>Sets the radial coordinates Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.</p></dd>
-
-
 <dt id="arg-r-">r0<a class="anchor" aria-label="anchor" href="#arg-r-"></a></dt>
 <dd><p>Alternate to `r`. Builds a linear space of r coordinates. Use
 with `dr` where `r0` is the starting coordinate and `dr` the step. Any
@@ -484,11 +490,6 @@ String, or a vector of these.</p></dd>
 variable referenced in a template is missing. If the boolean value
 'false' is passed in, the specifier with the missing variable will be
 displayed. Any value.</p></dd>
-
-
-<dt id="arg-theta">theta<a class="anchor" aria-label="anchor" href="#arg-theta"></a></dt>
-<dd><p>Sets the angular coordinates Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-theta-">theta0<a class="anchor" aria-label="anchor" href="#arg-theta-"></a></dt>

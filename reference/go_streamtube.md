@@ -12,14 +12,20 @@ the divergence of (u, v, w).
 ## Usage
 
 ``` r
-add_streamtube(fig, ...)
+add_streamtube(p, ...)
 
 # Default S3 method
 add_streamtube(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  u = NULL,
+  v = NULL,
+  w = NULL,
   autocolorscale = NULL,
   cauto = NULL,
   cmax = NULL,
@@ -53,20 +59,14 @@ add_streamtube(
   sizeref = NULL,
   starts = NULL,
   text = NULL,
-  u = NULL,
   uhoverformat = NULL,
   uid = NULL,
   uirevision = NULL,
-  v = NULL,
   vhoverformat = NULL,
   visible = NULL,
-  w = NULL,
   whoverformat = NULL,
-  x = NULL,
   xhoverformat = NULL,
-  y = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zhoverformat = NULL,
   row = NULL,
   col = NULL,
@@ -75,6 +75,12 @@ add_streamtube(
 
 go_streamtube(
   ...,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  u = NULL,
+  v = NULL,
+  w = NULL,
   autocolorscale = NULL,
   cauto = NULL,
   cmax = NULL,
@@ -108,20 +114,14 @@ go_streamtube(
   sizeref = NULL,
   starts = NULL,
   text = NULL,
-  u = NULL,
   uhoverformat = NULL,
   uid = NULL,
   uirevision = NULL,
-  v = NULL,
   vhoverformat = NULL,
   visible = NULL,
-  w = NULL,
   whoverformat = NULL,
-  x = NULL,
   xhoverformat = NULL,
-  y = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zhoverformat = NULL,
   skip_invalid = FALSE
 )
@@ -129,9 +129,10 @@ go_streamtube(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -158,6 +159,36 @@ go_streamtube(
   `marker = go_scatter_marker(color = ~group)`) split the data the same
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
+
+- x:
+
+  Sets the x coordinates of the vector field. Data array: a vector,
+  factor, Date/POSIXct vector, matrix or list.
+
+- y:
+
+  Sets the y coordinates of the vector field. Data array: a vector,
+  factor, Date/POSIXct vector, matrix or list.
+
+- z:
+
+  Sets the z coordinates of the vector field. Data array: a vector,
+  factor, Date/POSIXct vector, matrix or list.
+
+- u:
+
+  Sets the x components of the vector field. Data array: a vector,
+  factor, Date/POSIXct vector, matrix or list.
+
+- v:
+
+  Sets the y components of the vector field. Data array: a vector,
+  factor, Date/POSIXct vector, matrix or list.
+
+- w:
+
+  Sets the z components of the vector field. Data array: a vector,
+  factor, Date/POSIXct vector, matrix or list.
 
 - autocolorscale:
 
@@ -429,11 +460,6 @@ go_streamtube(
   labels. Note that streamtube traces do not support array \`text\`
   values. String.
 
-- u:
-
-  Sets the x components of the vector field. Data array: a vector,
-  factor, Date/POSIXct vector, matrix or list.
-
 - uhoverformat:
 
   Sets the hover text formatting rule for \`u\` using d3 formatting
@@ -464,11 +490,6 @@ go_streamtube(
   user-driven changes if you give each trace a \`uid\` that stays with
   it as it moves. Any value.
 
-- v:
-
-  Sets the y components of the vector field. Data array: a vector,
-  factor, Date/POSIXct vector, matrix or list.
-
 - vhoverformat:
 
   Sets the hover text formatting rule for \`v\` using d3 formatting
@@ -482,22 +503,12 @@ go_streamtube(
   trace is not drawn, but can appear as a legend item (provided that the
   legend itself is visible). One of `"legendonly"`, `TRUE`, `FALSE`.
 
-- w:
-
-  Sets the z components of the vector field. Data array: a vector,
-  factor, Date/POSIXct vector, matrix or list.
-
 - whoverformat:
 
   Sets the hover text formatting rule for \`w\` using d3 formatting
   mini-languages which are very similar to those in Python. For numbers,
   see: https://github.com/d3/d3-format/tree/v1.4.5#d3-format.By default
   the values are formatted using generic number format. String.
-
-- x:
-
-  Sets the x coordinates of the vector field. Data array: a vector,
-  factor, Date/POSIXct vector, matrix or list.
 
 - xhoverformat:
 
@@ -512,11 +523,6 @@ go_streamtube(
   "%H~%M~%S.%2f" would display "09~15~23.46"By default the values are
   formatted using \`xaxis.hoverformat\`. String.
 
-- y:
-
-  Sets the y coordinates of the vector field. Data array: a vector,
-  factor, Date/POSIXct vector, matrix or list.
-
 - yhoverformat:
 
   Sets the hover text formatting rule for \`y\` using d3 formatting
@@ -529,11 +535,6 @@ go_streamtube(
   digits. For example, "2016-10-13 09:15:23.456" with tickformat
   "%H~%M~%S.%2f" would display "09~15~23.46"By default the values are
   formatted using \`yaxis.hoverformat\`. String.
-
-- z:
-
-  Sets the z coordinates of the vector field. Data array: a vector,
-  factor, Date/POSIXct vector, matrix or list.
 
 - zhoverformat:
 

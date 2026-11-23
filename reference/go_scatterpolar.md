@@ -10,14 +10,16 @@ only) is via \`text\`. Bubble charts are achieved by setting
 ## Usage
 
 ``` r
-add_scatterpolar(fig, ...)
+add_scatterpolar(p, ...)
 
 # Default S3 method
 add_scatterpolar(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  r = NULL,
+  theta = NULL,
   cliponaxis = NULL,
   connectgaps = NULL,
   customdata = NULL,
@@ -43,7 +45,6 @@ add_scatterpolar(
   mode = NULL,
   name = NULL,
   opacity = NULL,
-  r = NULL,
   r0 = NULL,
   selected = NULL,
   selectedpoints = NULL,
@@ -54,7 +55,6 @@ add_scatterpolar(
   textposition = NULL,
   texttemplate = NULL,
   texttemplatefallback = NULL,
-  theta = NULL,
   theta0 = NULL,
   thetaunit = NULL,
   uid = NULL,
@@ -68,6 +68,8 @@ add_scatterpolar(
 
 go_scatterpolar(
   ...,
+  r = NULL,
+  theta = NULL,
   cliponaxis = NULL,
   connectgaps = NULL,
   customdata = NULL,
@@ -93,7 +95,6 @@ go_scatterpolar(
   mode = NULL,
   name = NULL,
   opacity = NULL,
-  r = NULL,
   r0 = NULL,
   selected = NULL,
   selectedpoints = NULL,
@@ -104,7 +105,6 @@ go_scatterpolar(
   textposition = NULL,
   texttemplate = NULL,
   texttemplatefallback = NULL,
-  theta = NULL,
   theta0 = NULL,
   thetaunit = NULL,
   uid = NULL,
@@ -117,9 +117,10 @@ go_scatterpolar(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -147,6 +148,16 @@ go_scatterpolar(
   `marker = go_scatter_marker(color = ~group)`) split the data the same
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
+
+- r:
+
+  Sets the radial coordinates Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
+- theta:
+
+  Sets the angular coordinates Data array: a vector, factor,
+  Date/POSIXct vector, matrix or list.
 
 - cliponaxis:
 
@@ -355,11 +366,6 @@ go_scatterpolar(
 
   Sets the opacity of the trace. Number in the interval \[0, 1\].
 
-- r:
-
-  Sets the radial coordinates Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
-
 - r0:
 
   Alternate to \`r\`. Builds a linear space of r coordinates. Use with
@@ -445,11 +451,6 @@ go_scatterpolar(
   Fallback string that's displayed when a variable referenced in a
   template is missing. If the boolean value 'false' is passed in, the
   specifier with the missing variable will be displayed. Any value.
-
-- theta:
-
-  Sets the angular coordinates Data array: a vector, factor,
-  Date/POSIXct vector, matrix or list.
 
 - theta0:
 

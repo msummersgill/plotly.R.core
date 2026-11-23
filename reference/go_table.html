@@ -58,20 +58,20 @@ represented as a vector of column vectors.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_table</span><span class="op">(</span><span class="va">fig</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_table</span><span class="op">(</span><span class="va">p</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">add_table</span><span class="op">(</span></span>
-<span>  <span class="va">fig</span>,</span>
+<span>  <span class="va">p</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  header <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cells <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columnorder <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columnwidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  domain <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  header <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hoverinfo <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hoverlabel <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ids <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -91,12 +91,12 @@ represented as a vector of column vectors.</p>
 <span></span>
 <span><span class="fu">go_table</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
+<span>  header <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cells <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columnorder <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columnwidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  domain <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  header <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hoverinfo <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hoverlabel <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ids <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -117,8 +117,9 @@ represented as a vector of column vectors.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A <code>go_figure</code> object.</p></dd>
+<dl><dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>A <code>go_figure</code> object (or, through methods for its class,
+another figure, e.g. a <code>plot_ly()</code> figure of the plotly package).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -144,6 +145,13 @@ column (a factor, character or logical, e.g. <code>marker =
 go_scatter_marker(color = ~group)</code>) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.</p></dd>
+
+
+<dt id="arg-header">header<a class="anchor" aria-label="anchor" href="#arg-header"></a></dt>
+<dd><p>A <code><a href="go_table_header.html">go_table_header()</a></code> object or named list,
+with properties <code>align</code>, <code>fill</code>, <code>font</code>, <code>format</code>,
+<code>height</code>, <code>line</code>, <code>prefix</code>, <code>suffix</code> and
+<code>values</code> (see <code><a href="go_table_header.html">go_table_header()</a></code>).</p></dd>
 
 
 <dt id="arg-cells">cells<a class="anchor" aria-label="anchor" href="#arg-cells"></a></dt>
@@ -178,13 +186,6 @@ array: a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
 <dd><p>A <code><a href="go_domain.html">go_domain()</a></code> object or named list, with
 properties <code>column</code>, <code>row</code>, <code>x</code> and <code>y</code> (see
 <code><a href="go_domain.html">go_domain()</a></code>).</p></dd>
-
-
-<dt id="arg-header">header<a class="anchor" aria-label="anchor" href="#arg-header"></a></dt>
-<dd><p>A <code><a href="go_table_header.html">go_table_header()</a></code> object or named list,
-with properties <code>align</code>, <code>fill</code>, <code>font</code>, <code>format</code>,
-<code>height</code>, <code>line</code>, <code>prefix</code>, <code>suffix</code> and
-<code>values</code> (see <code><a href="go_table_header.html">go_table_header()</a></code>).</p></dd>
 
 
 <dt id="arg-hoverinfo">hoverinfo<a class="anchor" aria-label="anchor" href="#arg-hoverinfo"></a></dt>

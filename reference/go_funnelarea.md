@@ -8,14 +8,16 @@ can be used to show data in a part-to-whole representation similar to a
 ## Usage
 
 ``` r
-add_funnelarea(fig, ...)
+add_funnelarea(p, ...)
 
 # Default S3 method
 add_funnelarea(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  labels = NULL,
+  values = NULL,
   aspectratio = NULL,
   baseratio = NULL,
   customdata = NULL,
@@ -29,7 +31,6 @@ add_funnelarea(
   ids = NULL,
   insidetextfont = NULL,
   label0 = NULL,
-  labels = NULL,
   legend = NULL,
   legendgroup = NULL,
   legendgrouptitle = NULL,
@@ -50,7 +51,6 @@ add_funnelarea(
   title = NULL,
   uid = NULL,
   uirevision = NULL,
-  values = NULL,
   visible = NULL,
   row = NULL,
   col = NULL,
@@ -59,6 +59,8 @@ add_funnelarea(
 
 go_funnelarea(
   ...,
+  labels = NULL,
+  values = NULL,
   aspectratio = NULL,
   baseratio = NULL,
   customdata = NULL,
@@ -72,7 +74,6 @@ go_funnelarea(
   ids = NULL,
   insidetextfont = NULL,
   label0 = NULL,
-  labels = NULL,
   legend = NULL,
   legendgroup = NULL,
   legendgrouptitle = NULL,
@@ -93,7 +94,6 @@ go_funnelarea(
   title = NULL,
   uid = NULL,
   uirevision = NULL,
-  values = NULL,
   visible = NULL,
   skip_invalid = FALSE
 )
@@ -101,9 +101,10 @@ go_funnelarea(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -131,6 +132,20 @@ go_funnelarea(
   `marker = go_scatter_marker(color = ~group)`) split the data the same
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
+
+- labels:
+
+  Sets the sector labels. If \`labels\` entries are duplicated, we sum
+  associated \`values\` or simply count occurrences if \`values\` is not
+  provided. For other array attributes (including color) we use the
+  first non-empty entry among all occurrences of the label. Data array:
+  a vector, factor, Date/POSIXct vector, matrix or list.
+
+- values:
+
+  Sets the values of the sectors. If omitted, we count occurrences of
+  each label. Data array: a vector, factor, Date/POSIXct vector, matrix
+  or list.
 
 - aspectratio:
 
@@ -245,14 +260,6 @@ go_funnelarea(
   Alternate to \`labels\`. Builds a numeric set of labels. Use with
   \`dlabel\` where \`label0\` is the starting label and \`dlabel\` the
   step. Number.
-
-- labels:
-
-  Sets the sector labels. If \`labels\` entries are duplicated, we sum
-  associated \`values\` or simply count occurrences if \`values\` is not
-  provided. For other array attributes (including color) we use the
-  first non-empty entry among all occurrences of the label. Data array:
-  a vector, factor, Date/POSIXct vector, matrix or list.
 
 - legend:
 
@@ -419,12 +426,6 @@ go_funnelarea(
   that the same trace has a different index, you can still preserve
   user-driven changes if you give each trace a \`uid\` that stays with
   it as it moves. Any value.
-
-- values:
-
-  Sets the values of the sectors. If omitted, we count occurrences of
-  each label. Data array: a vector, factor, Date/POSIXct vector, matrix
-  or list.
 
 - visible:
 

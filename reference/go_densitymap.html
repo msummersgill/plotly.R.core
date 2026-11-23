@@ -54,6 +54,9 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">go_densitymap</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
+<span>  lat <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lon <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  autocolorscale <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  below <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  coloraxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -66,13 +69,11 @@
 <span>  hovertemplatefallback <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hovertext <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ids <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  lat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legend <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgroup <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgrouptitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendrank <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendwidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  lon <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  meta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  opacity <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -85,7 +86,6 @@
 <span>  uid <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zauto <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zmax <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zmid <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -93,14 +93,17 @@
 <span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">add_densitymap</span><span class="op">(</span><span class="va">fig</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">add_densitymap</span><span class="op">(</span><span class="va">p</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">add_densitymap</span><span class="op">(</span></span>
-<span>  <span class="va">fig</span>,</span>
+<span>  <span class="va">p</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lat <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lon <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  autocolorscale <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  below <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  coloraxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -113,13 +116,11 @@
 <span>  hovertemplatefallback <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hovertext <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ids <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  lat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legend <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgroup <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgrouptitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendrank <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendwidth <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  lon <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  meta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  opacity <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -132,7 +133,6 @@
 <span>  uid <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zauto <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zmax <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zmid <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -150,6 +150,22 @@
 <dl><dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Not for properties, which must be named in full: an
 abbreviated or unknown name is an error that suggests the right one.</p></dd>
+
+
+<dt id="arg-lat">lat<a class="anchor" aria-label="anchor" href="#arg-lat"></a></dt>
+<dd><p>Sets the latitude coordinates (in degrees North). Data array:
+a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
+
+
+<dt id="arg-lon">lon<a class="anchor" aria-label="anchor" href="#arg-lon"></a></dt>
+<dd><p>Sets the longitude coordinates (in degrees East). Data array:
+a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
+
+
+<dt id="arg-z">z<a class="anchor" aria-label="anchor" href="#arg-z"></a></dt>
+<dd><p>Sets the points' weight. For example, a value of 10 would be
+equivalent to having 10 points of weight 1 in the same spot Data
+array: a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-autocolorscale">autocolorscale<a class="anchor" aria-label="anchor" href="#arg-autocolorscale"></a></dt>
@@ -274,11 +290,6 @@ strings, not numbers or any other type. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.</p></dd>
 
 
-<dt id="arg-lat">lat<a class="anchor" aria-label="anchor" href="#arg-lat"></a></dt>
-<dd><p>Sets the latitude coordinates (in degrees North). Data array:
-a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
-
-
 <dt id="arg-legend">legend<a class="anchor" aria-label="anchor" href="#arg-legend"></a></dt>
 <dd><p>Sets the reference to a legend to show this trace in.
 References to these legends are "legend", "legend2", "legend3", etc.
@@ -313,11 +324,6 @@ to their order in data and layout. Number.</p></dd>
 <dt id="arg-legendwidth">legendwidth<a class="anchor" aria-label="anchor" href="#arg-legendwidth"></a></dt>
 <dd><p>Sets the width (in px or fraction) of the legend for
 this trace. Number in the interval [0, Inf].</p></dd>
-
-
-<dt id="arg-lon">lon<a class="anchor" aria-label="anchor" href="#arg-lon"></a></dt>
-<dd><p>Sets the longitude coordinates (in degrees East). Data array:
-a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-meta">meta<a class="anchor" aria-label="anchor" href="#arg-meta"></a></dt>
@@ -409,12 +415,6 @@ with it as it moves. Any value.</p></dd>
 <code>"legendonly"</code>, <code>TRUE</code>, <code>FALSE</code>.</p></dd>
 
 
-<dt id="arg-z">z<a class="anchor" aria-label="anchor" href="#arg-z"></a></dt>
-<dd><p>Sets the points' weight. For example, a value of 10 would be
-equivalent to having 10 points of weight 1 in the same spot Data
-array: a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
-
-
 <dt id="arg-zauto">zauto<a class="anchor" aria-label="anchor" href="#arg-zauto"></a></dt>
 <dd><p>Determines whether or not the color domain is computed with
 respect to the input data (here in `z`) or the bounds set in `zmin`
@@ -445,8 +445,9 @@ Number.</p></dd>
 instead of raising an error.</p></dd>
 
 
-<dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A <code>go_figure</code> object.</p></dd>
+<dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>A <code>go_figure</code> object (or, through methods for its class,
+another figure, e.g. a <code>plot_ly()</code> figure of the plotly package).</p></dd>
 
 
 <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>

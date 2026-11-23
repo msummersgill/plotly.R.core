@@ -134,10 +134,13 @@
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/add_shape.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/add_traces.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/as_float32.html</loc></url>
+<url><loc>https://msummersgill.github.io/plotly.R.core/reference/attrs_selected.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/available_fonts.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/config.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/event_data.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/event_register.html</loc></url>
+<url><loc>https://msummersgill.github.io/plotly.R.core/reference/event_source.html</loc></url>
+<url><loc>https://msummersgill.github.io/plotly.R.core/reference/event_unregister.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/get_template.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/get_validator.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/go_activeselection.html</loc></url>
@@ -457,9 +460,9 @@
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/last_plot.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/make_subplots.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/partial_bundle.html</loc></url>
+<url><loc>https://msummersgill.github.io/plotly.R.core/reference/plotly-shiny.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/plotly.core-extending.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/plotly.core-package.html</loc></url>
-<url><loc>https://msummersgill.github.io/plotly.R.core/reference/plotlyOutput.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/plotlyProxy.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/plotly_colors.html</loc></url>
 <url><loc>https://msummersgill.github.io/plotly.R.core/reference/plotly_json.html</loc></url>

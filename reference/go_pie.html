@@ -55,14 +55,16 @@ sector labels are set in `labels`. The sector colors are set in
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_pie</span><span class="op">(</span><span class="va">fig</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_pie</span><span class="op">(</span><span class="va">p</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">add_pie</span><span class="op">(</span></span>
-<span>  <span class="va">fig</span>,</span>
+<span>  <span class="va">p</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  values <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  automargin <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  direction <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -78,7 +80,6 @@ sector labels are set in `labels`. The sector colors are set in
 <span>  insidetextfont <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  insidetextorientation <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  label0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legend <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgroup <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgrouptitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -103,7 +104,6 @@ sector labels are set in `labels`. The sector colors are set in
 <span>  title <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uid <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  values <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  row <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  col <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -112,6 +112,8 @@ sector labels are set in `labels`. The sector colors are set in
 <span></span>
 <span><span class="fu">go_pie</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
+<span>  labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  values <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  automargin <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  direction <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -127,7 +129,6 @@ sector labels are set in `labels`. The sector colors are set in
 <span>  insidetextfont <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  insidetextorientation <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  label0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legend <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgroup <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgrouptitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -152,7 +153,6 @@ sector labels are set in `labels`. The sector colors are set in
 <span>  title <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uid <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  values <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -162,8 +162,9 @@ sector labels are set in `labels`. The sector colors are set in
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A <code>go_figure</code> object.</p></dd>
+<dl><dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>A <code>go_figure</code> object (or, through methods for its class,
+another figure, e.g. a <code>plot_ly()</code> figure of the plotly package).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -189,6 +190,20 @@ column (a factor, character or logical, e.g. <code>marker =
 go_scatter_marker(color = ~group)</code>) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.</p></dd>
+
+
+<dt id="arg-labels">labels<a class="anchor" aria-label="anchor" href="#arg-labels"></a></dt>
+<dd><p>Sets the sector labels. If `labels` entries are
+duplicated, we sum associated `values` or simply count occurrences if
+`values` is not provided. For other array attributes (including color)
+we use the first non-empty entry among all occurrences of the label.
+Data array: a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
+
+
+<dt id="arg-values">values<a class="anchor" aria-label="anchor" href="#arg-values"></a></dt>
+<dd><p>Sets the values of the sectors. If omitted, we count
+occurrences of each label. Data array: a vector, factor, Date/POSIXct
+vector, matrix or list.</p></dd>
 
 
 <dt id="arg-automargin">automargin<a class="anchor" aria-label="anchor" href="#arg-automargin"></a></dt>
@@ -318,14 +333,6 @@ sector. One of <code>"horizontal"</code>, <code>"radial"</code>,
 <dd><p>Alternate to `labels`. Builds a numeric set of labels. Use
 with `dlabel` where `label0` is the starting label and `dlabel` the
 step. Number.</p></dd>
-
-
-<dt id="arg-labels">labels<a class="anchor" aria-label="anchor" href="#arg-labels"></a></dt>
-<dd><p>Sets the sector labels. If `labels` entries are
-duplicated, we sum associated `values` or simply count occurrences if
-`values` is not provided. For other array attributes (including color)
-we use the first non-empty entry among all occurrences of the label.
-Data array: a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-legend">legend<a class="anchor" aria-label="anchor" href="#arg-legend"></a></dt>
@@ -518,12 +525,6 @@ So if your app can add/remove traces before the end of the `data`
 array, such that the same trace has a different index, you can still
 preserve user-driven changes if you give each trace a `uid` that stays
 with it as it moves. Any value.</p></dd>
-
-
-<dt id="arg-values">values<a class="anchor" aria-label="anchor" href="#arg-values"></a></dt>
-<dd><p>Sets the values of the sectors. If omitted, we count
-occurrences of each label. Data array: a vector, factor, Date/POSIXct
-vector, matrix or list.</p></dd>
 
 
 <dt id="arg-visible">visible<a class="anchor" aria-label="anchor" href="#arg-visible"></a></dt>

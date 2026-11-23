@@ -9,6 +9,8 @@ The data visualized by the span of the bars is set in \`y\` if
 ``` r
 go_bar(
   ...,
+  x = NULL,
+  y = NULL,
   alignmentgroup = NULL,
   base = NULL,
   cliponaxis = NULL,
@@ -53,7 +55,6 @@ go_bar(
   unselected = NULL,
   visible = NULL,
   width = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -61,7 +62,6 @@ go_bar(
   xperiod = NULL,
   xperiod0 = NULL,
   xperiodalignment = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -73,14 +73,16 @@ go_bar(
   skip_invalid = FALSE
 )
 
-add_bar(fig, ...)
+add_bar(p, ...)
 
 # Default S3 method
 add_bar(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
   alignmentgroup = NULL,
   base = NULL,
   cliponaxis = NULL,
@@ -125,7 +127,6 @@ add_bar(
   unselected = NULL,
   visible = NULL,
   width = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -133,7 +134,6 @@ add_bar(
   xperiod = NULL,
   xperiod0 = NULL,
   xperiodalignment = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -155,6 +155,16 @@ add_bar(
 
   Not for properties, which must be named in full: an abbreviated or
   unknown name is an error that suggests the right one.
+
+- x:
+
+  Sets the x coordinates. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
+- y:
+
+  Sets the y coordinates. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
 
 - alignmentgroup:
 
@@ -515,11 +525,6 @@ add_bar(
   Sets the bar width (in position axis units). Number in the interval
   \[0, Inf\], or a vector of these.
 
-- x:
-
-  Sets the x coordinates. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
-
 - x0:
 
   Alternate to \`x\`. Builds a linear space of x coordinates. Use with
@@ -573,11 +578,6 @@ add_bar(
 
   Only relevant when the axis \`type\` is "date". Sets the alignment of
   data points on the x axis. One of `"start"`, `"middle"`, `"end"`.
-
-- y:
-
-  Sets the y coordinates. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
 
 - y0:
 
@@ -644,9 +644,10 @@ add_bar(
   If `TRUE`, silently drop invalid properties instead of raising an
   error.
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - data:
 

@@ -10,14 +10,17 @@ heatmap.
 ## Usage
 
 ``` r
-add_histogram2d(fig, ...)
+add_histogram2d(p, ...)
 
 # Default S3 method
 add_histogram2d(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
   autobinx = NULL,
   autobiny = NULL,
   autocolorscale = NULL,
@@ -53,21 +56,18 @@ add_histogram2d(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   xaxis = NULL,
   xbingroup = NULL,
   xbins = NULL,
   xcalendar = NULL,
   xgap = NULL,
   xhoverformat = NULL,
-  y = NULL,
   yaxis = NULL,
   ybingroup = NULL,
   ybins = NULL,
   ycalendar = NULL,
   ygap = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zauto = NULL,
   zhoverformat = NULL,
   zmax = NULL,
@@ -82,6 +82,9 @@ add_histogram2d(
 
 go_histogram2d(
   ...,
+  x = NULL,
+  y = NULL,
+  z = NULL,
   autobinx = NULL,
   autobiny = NULL,
   autocolorscale = NULL,
@@ -117,21 +120,18 @@ go_histogram2d(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   xaxis = NULL,
   xbingroup = NULL,
   xbins = NULL,
   xcalendar = NULL,
   xgap = NULL,
   xhoverformat = NULL,
-  y = NULL,
   yaxis = NULL,
   ybingroup = NULL,
   ybins = NULL,
   ycalendar = NULL,
   ygap = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zauto = NULL,
   zhoverformat = NULL,
   zmax = NULL,
@@ -144,9 +144,10 @@ go_histogram2d(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -174,6 +175,21 @@ go_histogram2d(
   `marker = go_scatter_marker(color = ~group)`) split the data the same
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
+
+- x:
+
+  Sets the sample data to be binned on the x axis. Data array: a vector,
+  factor, Date/POSIXct vector, matrix or list.
+
+- y:
+
+  Sets the sample data to be binned on the y axis. Data array: a vector,
+  factor, Date/POSIXct vector, matrix or list.
+
+- z:
+
+  Sets the aggregation data. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
 
 - autobinx:
 
@@ -491,11 +507,6 @@ go_histogram2d(
   trace is not drawn, but can appear as a legend item (provided that the
   legend itself is visible). One of `"legendonly"`, `TRUE`, `FALSE`.
 
-- x:
-
-  Sets the sample data to be binned on the x axis. Data array: a vector,
-  factor, Date/POSIXct vector, matrix or list.
-
 - xaxis:
 
   Sets a reference between this trace's x coordinates and a 2D cartesian
@@ -544,11 +555,6 @@ go_histogram2d(
   "%H~%M~%S.%2f" would display "09~15~23.46"By default the values are
   formatted using \`xaxis.hoverformat\`. String.
 
-- y:
-
-  Sets the sample data to be binned on the y axis. Data array: a vector,
-  factor, Date/POSIXct vector, matrix or list.
-
 - yaxis:
 
   Sets a reference between this trace's y coordinates and a 2D cartesian
@@ -596,11 +602,6 @@ go_histogram2d(
   digits. For example, "2016-10-13 09:15:23.456" with tickformat
   "%H~%M~%S.%2f" would display "09~15~23.46"By default the values are
   formatted using \`yaxis.hoverformat\`. String.
-
-- z:
-
-  Sets the aggregation data. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
 
 - zauto:
 

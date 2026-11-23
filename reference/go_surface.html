@@ -67,14 +67,17 @@ matrix, where its bounds can be controlled using `cmin` and `cmax`.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_surface</span><span class="op">(</span><span class="va">fig</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_surface</span><span class="op">(</span><span class="va">p</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">add_surface</span><span class="op">(</span></span>
-<span>  <span class="va">fig</span>,</span>
+<span>  <span class="va">p</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  autocolorscale <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cauto <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cmax <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -113,13 +116,10 @@ matrix, where its bounds can be controlled using `cmin` and `cmax`.</p>
 <span>  uid <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xcalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xhoverformat <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ycalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  yhoverformat <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zcalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zhoverformat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  row <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -129,6 +129,9 @@ matrix, where its bounds can be controlled using `cmin` and `cmax`.</p>
 <span></span>
 <span><span class="fu">go_surface</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  autocolorscale <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cauto <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cmax <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -167,13 +170,10 @@ matrix, where its bounds can be controlled using `cmin` and `cmax`.</p>
 <span>  uid <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xcalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xhoverformat <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ycalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  yhoverformat <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zcalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zhoverformat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -184,8 +184,9 @@ matrix, where its bounds can be controlled using `cmin` and `cmax`.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A <code>go_figure</code> object.</p></dd>
+<dl><dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>A <code>go_figure</code> object (or, through methods for its class,
+another figure, e.g. a <code>plot_ly()</code> figure of the plotly package).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -210,6 +211,21 @@ column (a factor, character or logical, e.g. <code>marker =
 go_scatter_marker(color = ~group)</code>) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.</p></dd>
+
+
+<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>Sets the x coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.</p></dd>
+
+
+<dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
+<dd><p>Sets the y coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.</p></dd>
+
+
+<dt id="arg-z">z<a class="anchor" aria-label="anchor" href="#arg-z"></a></dt>
+<dd><p>Sets the z coordinates. Data array: a vector, factor,
+Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-autocolorscale">autocolorscale<a class="anchor" aria-label="anchor" href="#arg-autocolorscale"></a></dt>
@@ -518,11 +534,6 @@ with it as it moves. Any value.</p></dd>
 <code>"legendonly"</code>, <code>TRUE</code>, <code>FALSE</code>.</p></dd>
 
 
-<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>Sets the x coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.</p></dd>
-
-
 <dt id="arg-xcalendar">xcalendar<a class="anchor" aria-label="anchor" href="#arg-xcalendar"></a></dt>
 <dd><p>Sets the calendar system to use with `x` date data. One
 of <code>"chinese"</code>, <code>"coptic"</code>, <code>"discworld"</code>,
@@ -545,11 +556,6 @@ digits. For example, "2016-10-13 09:15:23.456" with tickformat
 are formatted using `xaxis.hoverformat`. String.</p></dd>
 
 
-<dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>Sets the y coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.</p></dd>
-
-
 <dt id="arg-ycalendar">ycalendar<a class="anchor" aria-label="anchor" href="#arg-ycalendar"></a></dt>
 <dd><p>Sets the calendar system to use with `y` date data. One
 of <code>"chinese"</code>, <code>"coptic"</code>, <code>"discworld"</code>,
@@ -570,11 +576,6 @@ a decimal number as well as "%{n}f" for fractional seconds with n
 digits. For example, "2016-10-13 09:15:23.456" with tickformat
 "%H~%M~%S.%2f" would display "09~15~23.46"By default the values
 are formatted using `yaxis.hoverformat`. String.</p></dd>
-
-
-<dt id="arg-z">z<a class="anchor" aria-label="anchor" href="#arg-z"></a></dt>
-<dd><p>Sets the z coordinates. Data array: a vector, factor,
-Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-zcalendar">zcalendar<a class="anchor" aria-label="anchor" href="#arg-zcalendar"></a></dt>

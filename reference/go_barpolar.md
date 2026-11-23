@@ -7,6 +7,8 @@ The data visualized by the radial span of the bars is set in \`r\`
 ``` r
 go_barpolar(
   ...,
+  r = NULL,
+  theta = NULL,
   base = NULL,
   customdata = NULL,
   dr = NULL,
@@ -27,14 +29,12 @@ go_barpolar(
   name = NULL,
   offset = NULL,
   opacity = NULL,
-  r = NULL,
   r0 = NULL,
   selected = NULL,
   selectedpoints = NULL,
   showlegend = NULL,
   subplot = NULL,
   text = NULL,
-  theta = NULL,
   theta0 = NULL,
   thetaunit = NULL,
   uid = NULL,
@@ -45,14 +45,16 @@ go_barpolar(
   skip_invalid = FALSE
 )
 
-add_barpolar(fig, ...)
+add_barpolar(p, ...)
 
 # Default S3 method
 add_barpolar(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  r = NULL,
+  theta = NULL,
   base = NULL,
   customdata = NULL,
   dr = NULL,
@@ -73,14 +75,12 @@ add_barpolar(
   name = NULL,
   offset = NULL,
   opacity = NULL,
-  r = NULL,
   r0 = NULL,
   selected = NULL,
   selectedpoints = NULL,
   showlegend = NULL,
   subplot = NULL,
   text = NULL,
-  theta = NULL,
   theta0 = NULL,
   thetaunit = NULL,
   uid = NULL,
@@ -100,6 +100,16 @@ add_barpolar(
 
   Not for properties, which must be named in full: an abbreviated or
   unknown name is an error that suggests the right one.
+
+- r:
+
+  Sets the radial coordinates Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
+- theta:
+
+  Sets the angular coordinates Data array: a vector, factor,
+  Date/POSIXct vector, matrix or list.
 
 - base:
 
@@ -261,11 +271,6 @@ add_barpolar(
 
   Sets the opacity of the trace. Number in the interval \[0, 1\].
 
-- r:
-
-  Sets the radial coordinates Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
-
 - r0:
 
   Alternate to \`r\`. Builds a linear space of r coordinates. Use with
@@ -306,11 +311,6 @@ add_barpolar(
   the same string appears over all bars. If an array of string, the
   items are mapped in order to the this trace's coordinates. String, or
   a vector of these.
-
-- theta:
-
-  Sets the angular coordinates Data array: a vector, factor,
-  Date/POSIXct vector, matrix or list.
 
 - theta0:
 
@@ -369,9 +369,10 @@ add_barpolar(
   If `TRUE`, silently drop invalid properties instead of raising an
   error.
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - data:
 

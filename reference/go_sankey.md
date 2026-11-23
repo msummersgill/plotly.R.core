@@ -8,14 +8,16 @@ otherwise defaults are used.
 ## Usage
 
 ``` r
-add_sankey(fig, ...)
+add_sankey(p, ...)
 
 # Default S3 method
 add_sankey(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  node = NULL,
+  link = NULL,
   arrangement = NULL,
   customdata = NULL,
   direction = NULL,
@@ -27,10 +29,8 @@ add_sankey(
   legendgrouptitle = NULL,
   legendrank = NULL,
   legendwidth = NULL,
-  link = NULL,
   meta = NULL,
   name = NULL,
-  node = NULL,
   orientation = NULL,
   selectedpoints = NULL,
   textfont = NULL,
@@ -46,6 +46,8 @@ add_sankey(
 
 go_sankey(
   ...,
+  node = NULL,
+  link = NULL,
   arrangement = NULL,
   customdata = NULL,
   direction = NULL,
@@ -57,10 +59,8 @@ go_sankey(
   legendgrouptitle = NULL,
   legendrank = NULL,
   legendwidth = NULL,
-  link = NULL,
   meta = NULL,
   name = NULL,
-  node = NULL,
   orientation = NULL,
   selectedpoints = NULL,
   textfont = NULL,
@@ -75,9 +75,10 @@ go_sankey(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -105,6 +106,26 @@ go_sankey(
   `marker = go_scatter_marker(color = ~group)`) split the data the same
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
+
+- node:
+
+  The nodes of the Sankey plot. A
+  [`go_sankey_node()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey_node.md)
+  object or named list, with properties `align`, `color`, `customdata`,
+  `groups`, `hoverinfo`, `hoverlabel`, `hovertemplate`,
+  `hovertemplatefallback`, `label`, `line`, `pad`, `sort`, `thickness`,
+  `x` and `y` (see
+  [`go_sankey_node()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey_node.md)).
+
+- link:
+
+  The links of the Sankey plot. A
+  [`go_sankey_link()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey_link.md)
+  object or named list, with properties `arrowlen`, `color`,
+  `colorscales`, `customdata`, `hovercolor`, `hoverinfo`, `hoverlabel`,
+  `hovertemplate`, `hovertemplatefallback`, `label`, `line`, `sort`,
+  `source`, `target` and `value` (see
+  [`go_sankey_link()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey_link.md)).
 
 - arrangement:
 
@@ -193,16 +214,6 @@ go_sankey(
   Sets the width (in px or fraction) of the legend for this trace.
   Number in the interval \[0, Inf\].
 
-- link:
-
-  The links of the Sankey plot. A
-  [`go_sankey_link()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey_link.md)
-  object or named list, with properties `arrowlen`, `color`,
-  `colorscales`, `customdata`, `hovercolor`, `hoverinfo`, `hoverlabel`,
-  `hovertemplate`, `hovertemplatefallback`, `label`, `line`, `sort`,
-  `source`, `target` and `value` (see
-  [`go_sankey_link()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey_link.md)).
-
 - meta:
 
   Assigns extra meta information associated with this trace that can be
@@ -220,16 +231,6 @@ go_sankey(
 
   Sets the trace name. The trace name appears as the legend item and on
   hover. String.
-
-- node:
-
-  The nodes of the Sankey plot. A
-  [`go_sankey_node()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey_node.md)
-  object or named list, with properties `align`, `color`, `customdata`,
-  `groups`, `hoverinfo`, `hoverlabel`, `hovertemplate`,
-  `hovertemplatefallback`, `label`, `line`, `pad`, `sort`, `thickness`,
-  `x` and `y` (see
-  [`go_sankey_node()`](https://msummersgill.github.io/plotly.R.core/reference/go_sankey_node.md)).
 
 - orientation:
 

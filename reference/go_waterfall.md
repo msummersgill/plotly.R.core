@@ -9,14 +9,16 @@ data visualized by the span of the bars is set in \`y\` if
 ## Usage
 
 ``` r
-add_waterfall(fig, ...)
+add_waterfall(p, ...)
 
 # Default S3 method
 add_waterfall(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
   alignmentgroup = NULL,
   base = NULL,
   cliponaxis = NULL,
@@ -62,14 +64,12 @@ add_waterfall(
   uirevision = NULL,
   visible = NULL,
   width = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xhoverformat = NULL,
   xperiod = NULL,
   xperiod0 = NULL,
   xperiodalignment = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   yhoverformat = NULL,
@@ -85,6 +85,8 @@ add_waterfall(
 
 go_waterfall(
   ...,
+  x = NULL,
+  y = NULL,
   alignmentgroup = NULL,
   base = NULL,
   cliponaxis = NULL,
@@ -130,14 +132,12 @@ go_waterfall(
   uirevision = NULL,
   visible = NULL,
   width = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xhoverformat = NULL,
   xperiod = NULL,
   xperiod0 = NULL,
   xperiodalignment = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   yhoverformat = NULL,
@@ -151,9 +151,10 @@ go_waterfall(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -181,6 +182,16 @@ go_waterfall(
   `marker = go_scatter_marker(color = ~group)`) split the data the same
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
+
+- x:
+
+  Sets the x coordinates. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
+- y:
+
+  Sets the y coordinates. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
 
 - alignmentgroup:
 
@@ -545,11 +556,6 @@ go_waterfall(
   Sets the bar width (in position axis units). Number in the interval
   \[0, Inf\], or a vector of these.
 
-- x:
-
-  Sets the x coordinates. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
-
 - x0:
 
   Alternate to \`x\`. Builds a linear space of x coordinates. Use with
@@ -595,11 +601,6 @@ go_waterfall(
 
   Only relevant when the axis \`type\` is "date". Sets the alignment of
   data points on the x axis. One of `"start"`, `"middle"`, `"end"`.
-
-- y:
-
-  Sets the y coordinates. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
 
 - y0:
 

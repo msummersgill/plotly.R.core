@@ -12,6 +12,9 @@ to TRUE, the above behavior is flipped.
 ``` r
 go_contour(
   ...,
+  x = NULL,
+  y = NULL,
+  z = NULL,
   autocolorscale = NULL,
   autocontour = NULL,
   coloraxis = NULL,
@@ -51,7 +54,6 @@ go_contour(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -60,7 +62,6 @@ go_contour(
   xperiod0 = NULL,
   xperiodalignment = NULL,
   xtype = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -69,7 +70,6 @@ go_contour(
   yperiod0 = NULL,
   yperiodalignment = NULL,
   ytype = NULL,
-  z = NULL,
   zauto = NULL,
   zhoverformat = NULL,
   zmax = NULL,
@@ -79,14 +79,17 @@ go_contour(
   skip_invalid = FALSE
 )
 
-add_contour(fig, ...)
+add_contour(p, ...)
 
 # Default S3 method
 add_contour(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
   autocolorscale = NULL,
   autocontour = NULL,
   coloraxis = NULL,
@@ -126,7 +129,6 @@ add_contour(
   uid = NULL,
   uirevision = NULL,
   visible = NULL,
-  x = NULL,
   x0 = NULL,
   xaxis = NULL,
   xcalendar = NULL,
@@ -135,7 +137,6 @@ add_contour(
   xperiod0 = NULL,
   xperiodalignment = NULL,
   xtype = NULL,
-  y = NULL,
   y0 = NULL,
   yaxis = NULL,
   ycalendar = NULL,
@@ -144,7 +145,6 @@ add_contour(
   yperiod0 = NULL,
   yperiodalignment = NULL,
   ytype = NULL,
-  z = NULL,
   zauto = NULL,
   zhoverformat = NULL,
   zmax = NULL,
@@ -164,6 +164,21 @@ add_contour(
 
   Not for properties, which must be named in full: an abbreviated or
   unknown name is an error that suggests the right one.
+
+- x:
+
+  Sets the x coordinates. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
+- y:
+
+  Sets the y coordinates. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
+- z:
+
+  Sets the z data. Data array: a vector, factor, Date/POSIXct vector,
+  matrix or list.
 
 - autocolorscale:
 
@@ -489,11 +504,6 @@ add_contour(
   trace is not drawn, but can appear as a legend item (provided that the
   legend itself is visible). One of `"legendonly"`, `TRUE`, `FALSE`.
 
-- x:
-
-  Sets the x coordinates. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
-
 - x0:
 
   Alternate to \`x\`. Builds a linear space of x coordinates. Use with
@@ -554,11 +564,6 @@ add_contour(
   behavior when \`x\` is provided). If "scaled", the heatmap's x
   coordinates are given by "x0" and "dx" (the default behavior when
   \`x\` is not provided). One of `"array"`, `"scaled"`.
-
-- y:
-
-  Sets the y coordinates. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
 
 - y0:
 
@@ -621,11 +626,6 @@ add_contour(
   coordinates are given by "y0" and "dy" (the default behavior when
   \`y\` is not provided) One of `"array"`, `"scaled"`.
 
-- z:
-
-  Sets the z data. Data array: a vector, factor, Date/POSIXct vector,
-  matrix or list.
-
 - zauto:
 
   Determines whether or not the color domain is computed with respect to
@@ -667,9 +667,10 @@ add_contour(
   If `TRUE`, silently drop invalid properties instead of raising an
   error.
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - data:
 

@@ -7,16 +7,16 @@ samples are specified in \`dimensions\`. The colors are set in
 ## Usage
 
 ``` r
-add_parcoords(fig, ...)
+add_parcoords(p, ...)
 
 # Default S3 method
 add_parcoords(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
-  customdata = NULL,
   dimensions = NULL,
+  customdata = NULL,
   domain = NULL,
   ids = NULL,
   labelangle = NULL,
@@ -42,8 +42,8 @@ add_parcoords(
 
 go_parcoords(
   ...,
-  customdata = NULL,
   dimensions = NULL,
+  customdata = NULL,
   domain = NULL,
   ids = NULL,
   labelangle = NULL,
@@ -68,9 +68,10 @@ go_parcoords(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -99,13 +100,6 @@ go_parcoords(
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
 
-- customdata:
-
-  Assigns extra data each datum. This may be useful when listening to
-  hover, click and selection events. Note that, "scatter" traces also
-  appends customdata items in the markers DOM elements Data array: a
-  vector, factor, Date/POSIXct vector, matrix or list.
-
 - dimensions:
 
   List, each element a
@@ -114,6 +108,13 @@ go_parcoords(
   `multiselect`, `name`, `range`, `templateitemname`, `tickformat`,
   `ticktext`, `tickvals`, `values` and `visible` (see
   [`go_parcoords_dimension()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcoords_dimension.md)).
+
+- customdata:
+
+  Assigns extra data each datum. This may be useful when listening to
+  hover, click and selection events. Note that, "scatter" traces also
+  appends customdata items in the markers DOM elements Data array: a
+  vector, factor, Date/POSIXct vector, matrix or list.
 
 - domain:
 

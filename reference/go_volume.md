@@ -9,14 +9,18 @@ iso-min and iso-max values could also be drawn using this trace.
 ## Usage
 
 ``` r
-add_volume(fig, ...)
+add_volume(p, ...)
 
 # Default S3 method
 add_volume(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  value = NULL,
   autocolorscale = NULL,
   caps = NULL,
   cauto = NULL,
@@ -58,14 +62,10 @@ add_volume(
   text = NULL,
   uid = NULL,
   uirevision = NULL,
-  value = NULL,
   valuehoverformat = NULL,
   visible = NULL,
-  x = NULL,
   xhoverformat = NULL,
-  y = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zhoverformat = NULL,
   row = NULL,
   col = NULL,
@@ -74,6 +74,10 @@ add_volume(
 
 go_volume(
   ...,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  value = NULL,
   autocolorscale = NULL,
   caps = NULL,
   cauto = NULL,
@@ -115,14 +119,10 @@ go_volume(
   text = NULL,
   uid = NULL,
   uirevision = NULL,
-  value = NULL,
   valuehoverformat = NULL,
   visible = NULL,
-  x = NULL,
   xhoverformat = NULL,
-  y = NULL,
   yhoverformat = NULL,
-  z = NULL,
   zhoverformat = NULL,
   skip_invalid = FALSE
 )
@@ -130,9 +130,10 @@ go_volume(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -159,6 +160,26 @@ go_volume(
   `marker = go_scatter_marker(color = ~group)`) split the data the same
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
+
+- x:
+
+  Sets the X coordinates of the vertices on X axis. Data array: a
+  vector, factor, Date/POSIXct vector, matrix or list.
+
+- y:
+
+  Sets the Y coordinates of the vertices on Y axis. Data array: a
+  vector, factor, Date/POSIXct vector, matrix or list.
+
+- z:
+
+  Sets the Z coordinates of the vertices on Z axis. Data array: a
+  vector, factor, Date/POSIXct vector, matrix or list.
+
+- value:
+
+  Sets the 4th dimension (value) of the vertices. Data array: a vector,
+  factor, Date/POSIXct vector, matrix or list.
 
 - autocolorscale:
 
@@ -492,11 +513,6 @@ go_volume(
   user-driven changes if you give each trace a \`uid\` that stays with
   it as it moves. Any value.
 
-- value:
-
-  Sets the 4th dimension (value) of the vertices. Data array: a vector,
-  factor, Date/POSIXct vector, matrix or list.
-
 - valuehoverformat:
 
   Sets the hover text formatting rule for \`value\` using d3 formatting
@@ -509,11 +525,6 @@ go_volume(
   Determines whether or not this trace is visible. If "legendonly", the
   trace is not drawn, but can appear as a legend item (provided that the
   legend itself is visible). One of `"legendonly"`, `TRUE`, `FALSE`.
-
-- x:
-
-  Sets the X coordinates of the vertices on X axis. Data array: a
-  vector, factor, Date/POSIXct vector, matrix or list.
 
 - xhoverformat:
 
@@ -528,11 +539,6 @@ go_volume(
   "%H~%M~%S.%2f" would display "09~15~23.46"By default the values are
   formatted using \`xaxis.hoverformat\`. String.
 
-- y:
-
-  Sets the Y coordinates of the vertices on Y axis. Data array: a
-  vector, factor, Date/POSIXct vector, matrix or list.
-
 - yhoverformat:
 
   Sets the hover text formatting rule for \`y\` using d3 formatting
@@ -545,11 +551,6 @@ go_volume(
   digits. For example, "2016-10-13 09:15:23.456" with tickformat
   "%H~%M~%S.%2f" would display "09~15~23.46"By default the values are
   formatted using \`yaxis.hoverformat\`. String.
-
-- z:
-
-  Sets the Z coordinates of the vertices on Z axis. Data array: a
-  vector, factor, Date/POSIXct vector, matrix or list.
 
 - zhoverformat:
 

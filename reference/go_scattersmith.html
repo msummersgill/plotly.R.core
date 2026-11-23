@@ -64,14 +64,16 @@ coordinates Text (appearing either on the chart or on hover only) is via
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_scattersmith</span><span class="op">(</span><span class="va">fig</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_scattersmith</span><span class="op">(</span><span class="va">p</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">add_scattersmith</span><span class="op">(</span></span>
-<span>  <span class="va">fig</span>,</span>
+<span>  <span class="va">p</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  real <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  imag <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cliponaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  connectgaps <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -84,7 +86,6 @@ coordinates Text (appearing either on the chart or on hover only) is via
 <span>  hovertemplatefallback <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hovertext <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ids <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  imag <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legend <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgroup <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgrouptitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -96,7 +97,6 @@ coordinates Text (appearing either on the chart or on hover only) is via
 <span>  mode <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  opacity <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  real <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  selected <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  selectedpoints <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  showlegend <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -117,6 +117,8 @@ coordinates Text (appearing either on the chart or on hover only) is via
 <span></span>
 <span><span class="fu">go_scattersmith</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
+<span>  real <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  imag <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cliponaxis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  connectgaps <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  customdata <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -129,7 +131,6 @@ coordinates Text (appearing either on the chart or on hover only) is via
 <span>  hovertemplatefallback <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hovertext <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ids <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  imag <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legend <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgroup <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgrouptitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -141,7 +142,6 @@ coordinates Text (appearing either on the chart or on hover only) is via
 <span>  mode <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  opacity <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  real <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  selected <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  selectedpoints <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  showlegend <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -163,8 +163,9 @@ coordinates Text (appearing either on the chart or on hover only) is via
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A <code>go_figure</code> object.</p></dd>
+<dl><dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>A <code>go_figure</code> object (or, through methods for its class,
+another figure, e.g. a <code>plot_ly()</code> figure of the plotly package).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -190,6 +191,19 @@ column (a factor, character or logical, e.g. <code>marker =
 go_scatter_marker(color = ~group)</code>) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.</p></dd>
+
+
+<dt id="arg-real">real<a class="anchor" aria-label="anchor" href="#arg-real"></a></dt>
+<dd><p>Sets the real component of the data, in units of normalized
+impedance such that real=1, imag=0 is the center of the chart. Data
+array: a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
+
+
+<dt id="arg-imag">imag<a class="anchor" aria-label="anchor" href="#arg-imag"></a></dt>
+<dd><p>Sets the imaginary component of the data, in units of
+normalized impedance such that real=1, imag=0 is the center of the
+chart. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.</p></dd>
 
 
 <dt id="arg-cliponaxis">cliponaxis<a class="anchor" aria-label="anchor" href="#arg-cliponaxis"></a></dt>
@@ -305,13 +319,6 @@ strings, not numbers or any other type. Data array: a vector, factor,
 Date/POSIXct vector, matrix or list.</p></dd>
 
 
-<dt id="arg-imag">imag<a class="anchor" aria-label="anchor" href="#arg-imag"></a></dt>
-<dd><p>Sets the imaginary component of the data, in units of
-normalized impedance such that real=1, imag=0 is the center of the
-chart. Data array: a vector, factor, Date/POSIXct vector, matrix or
-list.</p></dd>
-
-
 <dt id="arg-legend">legend<a class="anchor" aria-label="anchor" href="#arg-legend"></a></dt>
 <dd><p>Sets the reference to a legend to show this trace in.
 References to these legends are "legend", "legend2", "legend3", etc.
@@ -394,12 +401,6 @@ item and on hover. String.</p></dd>
 <dt id="arg-opacity">opacity<a class="anchor" aria-label="anchor" href="#arg-opacity"></a></dt>
 <dd><p>Sets the opacity of the trace. Number in the interval [0,
 1].</p></dd>
-
-
-<dt id="arg-real">real<a class="anchor" aria-label="anchor" href="#arg-real"></a></dt>
-<dd><p>Sets the real component of the data, in units of normalized
-impedance such that real=1, imag=0 is the center of the chart. Data
-array: a vector, factor, Date/POSIXct vector, matrix or list.</p></dd>
 
 
 <dt id="arg-selected">selected<a class="anchor" aria-label="anchor" href="#arg-selected"></a></dt>

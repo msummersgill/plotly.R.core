@@ -9,14 +9,16 @@ image is displayed in a subplot, its y axis will be reversed (ie.
 ## Usage
 
 ``` r
-add_image(fig, ...)
+add_image(p, ...)
 
 # Default S3 method
 add_image(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  z = NULL,
+  source = NULL,
   colormodel = NULL,
   customdata = NULL,
   dx = NULL,
@@ -34,7 +36,6 @@ add_image(
   meta = NULL,
   name = NULL,
   opacity = NULL,
-  source = NULL,
   text = NULL,
   uid = NULL,
   uirevision = NULL,
@@ -43,7 +44,6 @@ add_image(
   xaxis = NULL,
   y0 = NULL,
   yaxis = NULL,
-  z = NULL,
   zmax = NULL,
   zmin = NULL,
   zorder = NULL,
@@ -56,6 +56,8 @@ add_image(
 
 go_image(
   ...,
+  z = NULL,
+  source = NULL,
   colormodel = NULL,
   customdata = NULL,
   dx = NULL,
@@ -73,7 +75,6 @@ go_image(
   meta = NULL,
   name = NULL,
   opacity = NULL,
-  source = NULL,
   text = NULL,
   uid = NULL,
   uirevision = NULL,
@@ -82,7 +83,6 @@ go_image(
   xaxis = NULL,
   y0 = NULL,
   yaxis = NULL,
-  z = NULL,
   zmax = NULL,
   zmin = NULL,
   zorder = NULL,
@@ -93,9 +93,10 @@ go_image(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -122,6 +123,18 @@ go_image(
   `marker = go_scatter_marker(color = ~group)`) split the data the same
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
+
+- z:
+
+  A 2-dimensional array in which each element is an array of 3 or 4
+  numbers representing a color. Data array: a vector, factor,
+  Date/POSIXct vector, matrix or list.
+
+- source:
+
+  Specifies the data URI of the image to be visualized. The URI consists
+  of "data:image/\[\<media subtype\\\>\]\[;base64\\\],\<data\\\>"
+  String.
 
 - colormodel:
 
@@ -264,12 +277,6 @@ go_image(
 
   Sets the opacity of the trace. Number in the interval \[0, 1\].
 
-- source:
-
-  Specifies the data URI of the image to be visualized. The URI consists
-  of "data:image/\[\<media subtype\\\>\]\[;base64\\\],\<data\\\>"
-  String.
-
 - text:
 
   Sets the text elements associated with each z value. Data array: a
@@ -332,12 +339,6 @@ go_image(
   y axis. If "y" (the default value), the y coordinates refer to
   \`layout.yaxis\`. If "y2", the y coordinates refer to
   \`layout.yaxis2\`, and so on. Subplot id: `"y"`, `"y2"`, `"y3"`, ....
-
-- z:
-
-  A 2-dimensional array in which each element is an array of 3 or 4
-  numbers representing a color. Data array: a vector, factor,
-  Date/POSIXct vector, matrix or list.
 
 - zmax:
 

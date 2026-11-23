@@ -10,11 +10,12 @@ that of the corresponding carpet axis.
 go_contourcarpet(
   ...,
   a = NULL,
+  b = NULL,
+  z = NULL,
   a0 = NULL,
   atype = NULL,
   autocolorscale = NULL,
   autocontour = NULL,
-  b = NULL,
   b0 = NULL,
   btype = NULL,
   carpet = NULL,
@@ -48,7 +49,6 @@ go_contourcarpet(
   visible = NULL,
   xaxis = NULL,
   yaxis = NULL,
-  z = NULL,
   zauto = NULL,
   zmax = NULL,
   zmid = NULL,
@@ -57,20 +57,21 @@ go_contourcarpet(
   skip_invalid = FALSE
 )
 
-add_contourcarpet(fig, ...)
+add_contourcarpet(p, ...)
 
 # Default S3 method
 add_contourcarpet(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
   a = NULL,
+  b = NULL,
+  z = NULL,
   a0 = NULL,
   atype = NULL,
   autocolorscale = NULL,
   autocontour = NULL,
-  b = NULL,
   b0 = NULL,
   btype = NULL,
   carpet = NULL,
@@ -104,7 +105,6 @@ add_contourcarpet(
   visible = NULL,
   xaxis = NULL,
   yaxis = NULL,
-  z = NULL,
   zauto = NULL,
   zmax = NULL,
   zmid = NULL,
@@ -128,6 +128,16 @@ add_contourcarpet(
 
   Sets the x coordinates. Data array: a vector, factor, Date/POSIXct
   vector, matrix or list.
+
+- b:
+
+  Sets the y coordinates. Data array: a vector, factor, Date/POSIXct
+  vector, matrix or list.
+
+- z:
+
+  Sets the z data. Data array: a vector, factor, Date/POSIXct vector,
+  matrix or list.
 
 - a0:
 
@@ -157,11 +167,6 @@ add_contourcarpet(
   an algorithm. If TRUE, the number of contour levels can be set in
   \`ncontours\`. If FALSE, set the contour level attributes in
   \`contours\`. Logical.
-
-- b:
-
-  Sets the y coordinates. Data array: a vector, factor, Date/POSIXct
-  vector, matrix or list.
 
 - b0:
 
@@ -403,11 +408,6 @@ add_contourcarpet(
   \`layout.yaxis\`. If "y2", the y coordinates refer to
   \`layout.yaxis2\`, and so on. Subplot id: `"y"`, `"y2"`, `"y3"`, ....
 
-- z:
-
-  Sets the z data. Data array: a vector, factor, Date/POSIXct vector,
-  matrix or list.
-
 - zauto:
 
   Determines whether or not the color domain is computed with respect to
@@ -442,9 +442,10 @@ add_contourcarpet(
   If `TRUE`, silently drop invalid properties instead of raising an
   error.
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - data:
 

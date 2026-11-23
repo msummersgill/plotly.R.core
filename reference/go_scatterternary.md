@@ -7,11 +7,11 @@ phase diagram. The data is provided by at least two arrays out of \`a\`,
 ## Usage
 
 ``` r
-add_scatterternary(fig, ...)
+add_scatterternary(p, ...)
 
 # Default S3 method
 add_scatterternary(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
@@ -108,9 +108,10 @@ go_scatterternary(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 

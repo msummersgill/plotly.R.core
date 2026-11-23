@@ -5,18 +5,18 @@ Parallel categories diagram for multidimensional categorical data.
 ## Usage
 
 ``` r
-add_parcats(fig, ...)
+add_parcats(p, ...)
 
 # Default S3 method
 add_parcats(
-  fig,
+  p,
   ...,
   data = NULL,
   split = NULL,
+  dimensions = NULL,
   arrangement = NULL,
   bundlecolors = NULL,
   counts = NULL,
-  dimensions = NULL,
   domain = NULL,
   hoverinfo = NULL,
   hoveron = NULL,
@@ -40,10 +40,10 @@ add_parcats(
 
 go_parcats(
   ...,
+  dimensions = NULL,
   arrangement = NULL,
   bundlecolors = NULL,
   counts = NULL,
-  dimensions = NULL,
   domain = NULL,
   hoverinfo = NULL,
   hoveron = NULL,
@@ -66,9 +66,10 @@ go_parcats(
 
 ## Arguments
 
-- fig:
+- p:
 
-  A `go_figure` object.
+  A `go_figure` object (or, through methods for its class, another
+  figure, e.g. a `plot_ly()` figure of the plotly package).
 
 - ...:
 
@@ -97,6 +98,15 @@ go_parcats(
   way, each trace getting its own colour: evenly spaced viridis colours
   for an ordered factor, otherwise the figure's colorway.
 
+- dimensions:
+
+  List, each element a
+  [`go_parcats_dimension()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats_dimension.md)
+  object or named list, with properties `categoryarray`,
+  `categoryorder`, `displayindex`, `label`, `ticktext`, `values` and
+  `visible` (see
+  [`go_parcats_dimension()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats_dimension.md)).
+
 - arrangement:
 
   Sets the drag interaction mode for categories and dimensions. If
@@ -115,15 +125,6 @@ go_parcats(
   The number of observations represented by each state. Defaults to 1 so
   that each state represents one observation Number in the interval \[0,
   Inf\], or a vector of these.
-
-- dimensions:
-
-  List, each element a
-  [`go_parcats_dimension()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats_dimension.md)
-  object or named list, with properties `categoryarray`,
-  `categoryorder`, `displayindex`, `label`, `ticktext`, `values` and
-  `visible` (see
-  [`go_parcats_dimension()`](https://msummersgill.github.io/plotly.R.core/reference/go_parcats_dimension.md)).
 
 - domain:
 

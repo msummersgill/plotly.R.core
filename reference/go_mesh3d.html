@@ -58,14 +58,20 @@ Convex-hull algorithm</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_mesh3d</span><span class="op">(</span><span class="va">fig</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_mesh3d</span><span class="op">(</span><span class="va">p</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">add_mesh3d</span><span class="op">(</span></span>
-<span>  <span class="va">fig</span>,</span>
+<span>  <span class="va">p</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  i <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  j <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  k <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  alphahull <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  autocolorscale <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cauto <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -86,12 +92,9 @@ Convex-hull algorithm</p>
 <span>  hovertemplate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hovertemplatefallback <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hovertext <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  i <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ids <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  intensity <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  intensitymode <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  j <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  k <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legend <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgroup <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgrouptitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -111,13 +114,10 @@ Convex-hull algorithm</p>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  vertexcolor <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xcalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xhoverformat <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ycalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  yhoverformat <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zcalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zhoverformat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  row <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -127,6 +127,12 @@ Convex-hull algorithm</p>
 <span></span>
 <span><span class="fu">go_mesh3d</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  i <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  j <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  k <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  alphahull <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  autocolorscale <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cauto <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -147,12 +153,9 @@ Convex-hull algorithm</p>
 <span>  hovertemplate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hovertemplatefallback <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hovertext <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  i <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ids <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  intensity <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  intensitymode <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  j <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  k <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legend <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgroup <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  legendgrouptitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -172,13 +175,10 @@ Convex-hull algorithm</p>
 <span>  uirevision <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  vertexcolor <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  visible <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xcalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  xhoverformat <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ycalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  yhoverformat <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zcalendar <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zhoverformat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  skip_invalid <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -189,8 +189,9 @@ Convex-hull algorithm</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-fig">fig<a class="anchor" aria-label="anchor" href="#arg-fig"></a></dt>
-<dd><p>A <code>go_figure</code> object.</p></dd>
+<dl><dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>A <code>go_figure</code> object (or, through methods for its class,
+another figure, e.g. a <code>plot_ly()</code> figure of the plotly package).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -215,6 +216,60 @@ column (a factor, character or logical, e.g. <code>marker =
 go_scatter_marker(color = ~group)</code>) split the data the same way, each
 trace getting its own colour: evenly spaced viridis colours for an
 ordered factor, otherwise the figure's colorway.</p></dd>
+
+
+<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>Sets the X coordinates of the vertices. The nth element of
+vectors `x`, `y` and `z` jointly represent the X, Y and Z coordinates
+of the nth vertex. Data array: a vector, factor, Date/POSIXct vector,
+matrix or list.</p></dd>
+
+
+<dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
+<dd><p>Sets the Y coordinates of the vertices. The nth element of
+vectors `x`, `y` and `z` jointly represent the X, Y and Z coordinates
+of the nth vertex. Data array: a vector, factor, Date/POSIXct vector,
+matrix or list.</p></dd>
+
+
+<dt id="arg-z">z<a class="anchor" aria-label="anchor" href="#arg-z"></a></dt>
+<dd><p>Sets the Z coordinates of the vertices. The nth element of
+vectors `x`, `y` and `z` jointly represent the X, Y and Z coordinates
+of the nth vertex. Data array: a vector, factor, Date/POSIXct vector,
+matrix or list.</p></dd>
+
+
+<dt id="arg-i">i<a class="anchor" aria-label="anchor" href="#arg-i"></a></dt>
+<dd><p>A vector of vertex indices, i.e. integer values between 0 and
+the length of the vertex vectors, representing the "first" vertex of a
+triangle. For example, `{i[m], j[m], k[m]}` together represent face
+m (triangle m) in the mesh, where `i[m] = n` points to the triplet
+`{x[n], y[n], z[n]}` in the vertex arrays. Therefore, each element
+in `i` represents a point in space, which is the first vertex of a
+triangle. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.</p></dd>
+
+
+<dt id="arg-j">j<a class="anchor" aria-label="anchor" href="#arg-j"></a></dt>
+<dd><p>A vector of vertex indices, i.e. integer values between 0 and
+the length of the vertex vectors, representing the "second" vertex of
+a triangle. For example, `{i[m], j[m], k[m]}` together represent
+face m (triangle m) in the mesh, where `j[m] = n` points to the
+triplet `{x[n], y[n], z[n]}` in the vertex arrays. Therefore, each
+element in `j` represents a point in space, which is the second vertex
+of a triangle. Data array: a vector, factor, Date/POSIXct vector,
+matrix or list.</p></dd>
+
+
+<dt id="arg-k">k<a class="anchor" aria-label="anchor" href="#arg-k"></a></dt>
+<dd><p>A vector of vertex indices, i.e. integer values between 0 and
+the length of the vertex vectors, representing the "third" vertex of a
+triangle. For example, `{i[m], j[m], k[m]}` together represent face
+m (triangle m) in the mesh, where `k[m] = n` points to the triplet
+`{x[n], y[n], z[n]}` in the vertex arrays. Therefore, each element
+in `k` represents a point in space, which is the third vertex of a
+triangle. Data array: a vector, factor, Date/POSIXct vector, matrix or
+list.</p></dd>
 
 
 <dt id="arg-alphahull">alphahull<a class="anchor" aria-label="anchor" href="#arg-alphahull"></a></dt>
@@ -396,17 +451,6 @@ displayed. Any value.</p></dd>
 <dd><p>Same as `text`. String, or a vector of these.</p></dd>
 
 
-<dt id="arg-i">i<a class="anchor" aria-label="anchor" href="#arg-i"></a></dt>
-<dd><p>A vector of vertex indices, i.e. integer values between 0 and
-the length of the vertex vectors, representing the "first" vertex of a
-triangle. For example, `{i[m], j[m], k[m]}` together represent face
-m (triangle m) in the mesh, where `i[m] = n` points to the triplet
-`{x[n], y[n], z[n]}` in the vertex arrays. Therefore, each element
-in `i` represents a point in space, which is the first vertex of a
-triangle. Data array: a vector, factor, Date/POSIXct vector, matrix or
-list.</p></dd>
-
-
 <dt id="arg-ids">ids<a class="anchor" aria-label="anchor" href="#arg-ids"></a></dt>
 <dd><p>Assigns id labels to each datum. These ids for object
 constancy of data points during animation. Should be an array of
@@ -424,28 +468,6 @@ list.</p></dd>
 <dt id="arg-intensitymode">intensitymode<a class="anchor" aria-label="anchor" href="#arg-intensitymode"></a></dt>
 <dd><p>Determines the source of `intensity` values. One of
 <code>"vertex"</code>, <code>"cell"</code>.</p></dd>
-
-
-<dt id="arg-j">j<a class="anchor" aria-label="anchor" href="#arg-j"></a></dt>
-<dd><p>A vector of vertex indices, i.e. integer values between 0 and
-the length of the vertex vectors, representing the "second" vertex of
-a triangle. For example, `{i[m], j[m], k[m]}` together represent
-face m (triangle m) in the mesh, where `j[m] = n` points to the
-triplet `{x[n], y[n], z[n]}` in the vertex arrays. Therefore, each
-element in `j` represents a point in space, which is the second vertex
-of a triangle. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.</p></dd>
-
-
-<dt id="arg-k">k<a class="anchor" aria-label="anchor" href="#arg-k"></a></dt>
-<dd><p>A vector of vertex indices, i.e. integer values between 0 and
-the length of the vertex vectors, representing the "third" vertex of a
-triangle. For example, `{i[m], j[m], k[m]}` together represent face
-m (triangle m) in the mesh, where `k[m] = n` points to the triplet
-`{x[n], y[n], z[n]}` in the vertex arrays. Therefore, each element
-in `k` represents a point in space, which is the third vertex of a
-triangle. Data array: a vector, factor, Date/POSIXct vector, matrix or
-list.</p></dd>
 
 
 <dt id="arg-legend">legend<a class="anchor" aria-label="anchor" href="#arg-legend"></a></dt>
@@ -592,13 +614,6 @@ factor, Date/POSIXct vector, matrix or list.</p></dd>
 <code>"legendonly"</code>, <code>TRUE</code>, <code>FALSE</code>.</p></dd>
 
 
-<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>Sets the X coordinates of the vertices. The nth element of
-vectors `x`, `y` and `z` jointly represent the X, Y and Z coordinates
-of the nth vertex. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.</p></dd>
-
-
 <dt id="arg-xcalendar">xcalendar<a class="anchor" aria-label="anchor" href="#arg-xcalendar"></a></dt>
 <dd><p>Sets the calendar system to use with `x` date data. One
 of <code>"chinese"</code>, <code>"coptic"</code>, <code>"discworld"</code>,
@@ -621,13 +636,6 @@ digits. For example, "2016-10-13 09:15:23.456" with tickformat
 are formatted using `xaxis.hoverformat`. String.</p></dd>
 
 
-<dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>Sets the Y coordinates of the vertices. The nth element of
-vectors `x`, `y` and `z` jointly represent the X, Y and Z coordinates
-of the nth vertex. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.</p></dd>
-
-
 <dt id="arg-ycalendar">ycalendar<a class="anchor" aria-label="anchor" href="#arg-ycalendar"></a></dt>
 <dd><p>Sets the calendar system to use with `y` date data. One
 of <code>"chinese"</code>, <code>"coptic"</code>, <code>"discworld"</code>,
@@ -648,13 +656,6 @@ a decimal number as well as "%{n}f" for fractional seconds with n
 digits. For example, "2016-10-13 09:15:23.456" with tickformat
 "%H~%M~%S.%2f" would display "09~15~23.46"By default the values
 are formatted using `yaxis.hoverformat`. String.</p></dd>
-
-
-<dt id="arg-z">z<a class="anchor" aria-label="anchor" href="#arg-z"></a></dt>
-<dd><p>Sets the Z coordinates of the vertices. The nth element of
-vectors `x`, `y` and `z` jointly represent the X, Y and Z coordinates
-of the nth vertex. Data array: a vector, factor, Date/POSIXct vector,
-matrix or list.</p></dd>
 
 
 <dt id="arg-zcalendar">zcalendar<a class="anchor" aria-label="anchor" href="#arg-zcalendar"></a></dt>
