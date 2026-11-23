@@ -5,7 +5,7 @@ Returns the JSON plotly.js receives for a plot.
 ## Usage
 
 ``` r
-plotly_json(p = last_plot(), jsonedit = interactive(), pretty = TRUE, ...)
+plotly_json(p, jsonedit = interactive(), pretty = TRUE, ...)
 ```
 
 ## Arguments
@@ -16,7 +16,7 @@ plotly_json(p = last_plot(), jsonedit = interactive(), pretty = TRUE, ...)
   [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
   or anything
   [`as_widget()`](https://msummersgill.github.io/plotly.R.core/reference/plotly_widget.md)
-  accepts (default: the last plot printed).
+  accepts.
 
 - jsonedit:
 

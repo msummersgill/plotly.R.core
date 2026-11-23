@@ -285,8 +285,7 @@ and
 [`config()`](https://msummersgill.github.io/plotly.R.core/reference/config.md)),
 plus
 [`get_validator()`](https://msummersgill.github.io/plotly.R.core/reference/get_validator.md)
-and
-[`set_last_plot()`](https://msummersgill.github.io/plotly.R.core/reference/last_plot.md).
+and `set_last_plot()`.
 
 ## Development
 

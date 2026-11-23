@@ -19,9 +19,6 @@
 - [`` `$<-`( ``*`<plotly_obj>`*`)`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)
   [`` `[[<-`( ``*`<plotly_obj>`*`)`](https://msummersgill.github.io/plotly.R.core/reference/plotly_obj-modify.md)
   : Modify graph objects
-- [`last_plot()`](https://msummersgill.github.io/plotly.R.core/reference/last_plot.md)
-  [`set_last_plot()`](https://msummersgill.github.io/plotly.R.core/reference/last_plot.md)
-  : The last plot
 - [`print(`*`<go_figure>`*`)`](https://msummersgill.github.io/plotly.R.core/reference/print.go_figure.md)
   [`knit_print(`*`<go_figure>`*`)`](https://msummersgill.github.io/plotly.R.core/reference/print.go_figure.md)
   : Print or knit a figure

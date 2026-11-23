@@ -46,7 +46,8 @@ config(
   [`TeX()`](https://msummersgill.github.io/plotly.R.core/reference/TeX.md))
   is rendered: `"local"` (or `TRUE`) for the MathJax 3 bundled with the
   package, which works offline and is embedded in self-contained HTML
-  (about 2 MB), or `"cdn"` to load it from cdn.jsdelivr.net.
+  (about 2 MB), or `"cdn"` to load it from cdn.jsdelivr.net. A figure
+  with TeX gets the bundled MathJax without this.
 
 - cloud, showSendToCloud:
 
