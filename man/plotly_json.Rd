@@ -4,11 +4,10 @@
 \alias{plotly_json}
 \title{JSON of a plot}
 \usage{
-plotly_json(p = last_plot(), jsonedit = interactive(), pretty = TRUE, ...)
+plotly_json(p, jsonedit = interactive(), pretty = TRUE, ...)
 }
 \arguments{
-\item{p}{A \code{\link[=go_figure]{go_figure()}} or anything \code{\link[=as_widget]{as_widget()}} accepts (default: the
-last plot printed).}
+\item{p}{A \code{\link[=go_figure]{go_figure()}} or anything \code{\link[=as_widget]{as_widget()}} accepts.}
 
 \item{jsonedit}{Show it in an interactive viewer (needs the listviewer
 package)?}

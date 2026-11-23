@@ -389,8 +389,8 @@ color_formula_paths <- function(x, path = character()) {
 }
 
 # A colour column to map to discrete colours, as a group factor (NULL if it
-# isn't one): a factor, logical, or character values that aren't all CSS
-# colours ("red", "#ff0000", "rgb(...)") themselves. Only the distinct
+# isn't one): a factor, logical, or character values that aren't all colours
+# ("red", "#ff0000", "rgb(...)", "steelblue2") themselves. Only the distinct
 # values are checked.
 discrete_color_factor <- function(v) {
   if (is.factor(v) || is.logical(v)) {
@@ -403,11 +403,14 @@ discrete_color_factor <- function(v) {
   if (all(is_css_color(levels(f)))) NULL else f
 }
 
+# CSS colours and R colour names ("steelblue2"), which the validators accept;
+# not codes such as "123" (hex without "#") or "1" (an R palette index)
 is_css_color <- function(x) {
   norm <- tolower(gsub("\\s+", "", x))
   grepl(RE_HEX, norm, perl = TRUE) |
     grepl(RE_RGB_ETC, norm, perl = TRUE) |
-    norm %in% .named_colors
+    norm %in% .named_colors |
+    norm %in% grDevices::colors()
 }
 
 # Colours for n levels: evenly spaced viridis for an ordered factor (as

@@ -518,3 +518,14 @@ expect_error(
     ),
   "size"
 )
+
+# R colour names are literal colours too: a palette lookup doesn't split
+pal <- c(a = "steelblue2", b = "steelblue4")
+d <- data.frame(x = 1:4, y = 1:4, g = c("a", "b", "a", "b"))
+f <- d |>
+  go_figure() |>
+  add_bar(x = ~x, y = ~y, split = ~g, marker = go_bar_marker(color = ~ pal[g]))
+stopifnot(
+  identical(vapply(f$data, `[[`, "", "name"), c("a", "b")),
+  identical(unique(f$data[[2L]]$marker$color), "rgba(54,100,139,1)")
+)

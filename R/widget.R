@@ -180,8 +180,7 @@ crosstalk_deps <- function(highlight = list()) {
 #'
 #' Returns the JSON plotly.js receives for a plot.
 #'
-#' @param p A [go_figure()] or anything [as_widget()] accepts (default: the
-#'   last plot printed).
+#' @param p A [go_figure()] or anything [as_widget()] accepts.
 #' @param jsonedit Show it in an interactive viewer (needs the listviewer
 #'   package)?
 #' @param pretty Pretty-print the JSON?
@@ -191,7 +190,7 @@ crosstalk_deps <- function(highlight = list()) {
 #' @examples
 #' cat(plotly_json(go_figure(go_bar(y = 1:3)), jsonedit = FALSE))
 plotly_json <- function(
-  p = last_plot(),
+  p,
   jsonedit = interactive(),
   pretty = TRUE,
   ...
@@ -203,30 +202,6 @@ plotly_json <- function(
   } else {
     json
   }
-}
-
-#' The last plot
-#'
-#' `last_plot()` returns the plot most recently printed (or, for the plotly
-#' package's `plot_ly()` objects, built). `set_last_plot()` records one; it is
-#' for packages that build plots of their own classes.
-#'
-#' @param p A plot.
-#' @return `last_plot()`: the plot. `set_last_plot()`: `p`, invisibly.
-#' @export
-last_plot <- function() {
-  p <- the$last_plot
-  if (is.null(p)) {
-    stop("The last plot doesn't exist", call. = FALSE)
-  }
-  p
-}
-
-#' @rdname last_plot
-#' @export
-set_last_plot <- function(p) {
-  the$last_plot <- p
-  invisible(p)
 }
 
 # plotly.js bundles -------------------------------------------------------------

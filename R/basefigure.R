@@ -222,7 +222,6 @@ set_figure_part <- function(fig, name, value) {
 #' @return `x`, invisibly, for `print()`.
 #' @export
 print.go_figure <- function(x, ...) {
-  set_last_plot(x)
   print(plotly_widget(x), ...)
   invisible(x)
 }

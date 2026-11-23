@@ -35,7 +35,6 @@ reference:
       - print_grid
       - select_traces
       - plotly_obj-modify
-      - last_plot
       - print.go_figure
       - print.plotly_obj
   - title: Updating figures
