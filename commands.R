@@ -136,7 +136,7 @@ install_plotlyjs_from <- function(root) {
       sprintf('plotlyjs_version <- function() "%s"', version),
       "",
       "# Trace types in each partial bundle shipped in inst/htmlwidgets/lib/plotlyjs",
-      "PLOTLYJS_BUNDLE_TRACES <- list(",
+      "bundleTraceMap <- list(",
       paste0(
         "  ",
         PARTIAL_BUNDLES,

@@ -462,7 +462,7 @@ local({
     ),
     # every bundle file exists
     all(file.exists(vapply(
-      c("full", names(plotly.core:::PLOTLYJS_BUNDLE_TRACES)),
+      c("full", names(plotly.core:::bundleTraceMap)),
       plotly.core:::plotlyjs_bundle_file,
       ""
     )))

@@ -9,7 +9,7 @@
 plotlyjs_version <- function() "4.3.0"
 
 # Trace types in each partial bundle shipped in inst/htmlwidgets/lib/plotlyjs
-PLOTLYJS_BUNDLE_TRACES <- list(
+bundleTraceMap <- list(
   basic = c("bar", "pie", "scatter"),
   cartesian = c(
     "bar",
