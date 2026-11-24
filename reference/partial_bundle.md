@@ -1,10 +1,9 @@
-# Use a smaller plotly.js bundle
+# Use a partial bundle of plotly.js
 
-By default, figures load the full plotly.js bundle (about 4.8 MB).
-plotly.js also publishes partial bundles with fewer trace types, which
-make pages (and files saved with
-[`htmlwidgets::saveWidget()`](https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html))
-much smaller:
+Leveraging plotly.js' partial bundles can lead to smaller file sizes and
+faster rendering. The full list of available bundles, and the trace
+types that they support, are available
+[here](https://github.com/plotly/plotly.js/blob/master/dist/README.md#partial-bundles)
 
 ## Usage
 
@@ -16,24 +15,31 @@ partial_bundle(p, type = "auto", local = TRUE, minified = TRUE)
 
 - p:
 
-  A
+  a
   [`go_figure()`](https://msummersgill.github.io/plotly.R.core/reference/go_figure.md)
   or htmlwidget.
 
 - type:
 
-  `"auto"`, `"full"`, or the name of a partial bundle.
+  name of the (partial) bundle. The default, `'auto'`, attempts to find
+  the smallest single bundle that can render `p` (including the traces
+  of its animation frames). If no single partial bundle can render `p`,
+  then the full bundle (`'full'`) is used.
 
 - local, minified:
 
-  Unused: the bundles are always the minified ones shipped with the
-  package (kept for compatibility with the plotly package).
+  unused: the bundles are the minified ones shipped with the package,
+  which work without an internet connection (kept for compatibility with
+  the plotly package).
 
 ## Value
 
-The figure, which renders with that bundle.
+`p`, which renders with that bundle.
 
 ## Details
+
+By default, figures load the full plotly.js bundle (about 4.8 MB). The
+partial bundles shipped with plotly.core (and their trace types) are:
 
 - `"basic"`: bar, pie, scatter (about 1.2 MB)
 
@@ -52,21 +58,58 @@ The figure, which renders with that bundle.
 
 - `"map"`: choroplethmap, densitymap, scatter, scattermap
 
-`type = "auto"` uses the smallest bundle with all the figure's trace
-types (including those in animation frames), or the full bundle if none
-has them all. Use `options(plotly.core.bundle = "auto")` to do this for
-every figure.
+Use `options(plotly.core.bundle = "auto")` to use the smallest bundle
+for every figure. `partial_bundle()` is an S3 generic, so packages can
+add methods for their own figure classes (the plotly package does for
+`plot_ly()` objects).
 
-A page has a single plotly.js: when it shows several figures, they
-should use the same bundle (or the full one, which is used if any figure
-needs it).
+WARNING: use this function with caution when rendering multiple plotly
+graphs on a single website. That's because a page loads a single
+plotly.js: if multiple plotly.js bundles are used, one bundle (the full
+bundle, if any graph uses it) is loaded for all of them, and graphs with
+trace types it doesn't have won't render. See the examples section for
+an example.
 
-`partial_bundle()` is an S3 generic, so packages can add methods for
-their own figure classes (the plotly package does for `plot_ly()`
-objects).
+## Author
+
+Carson Sievert
 
 ## Examples
 
 ``` r
-fig <- go_figure(go_bar(x = c("a", "b"), y = 1:2)) |> partial_bundle()
+
+# ----------------------------------------------------------------------
+# This function is always safe to use when rendering a single
+# plotly graph. In this case, we get a 3x file reduction.
+# ----------------------------------------------------------------------
+
+if (FALSE) { # \dontrun{
+library(plotly.core)
+p <- go_figure() |> add_scatter(x = 1:10, y = 1:10, mode = "markers")
+save_widget <- function(p, f) {
+  write_html(p, f)
+  mb <- round(file.info(f)$size / 1e6, 3)
+  message("File is: ", mb, " MB")
+}
+f1 <- tempfile(fileext = ".html")
+f2 <- tempfile(fileext = ".html")
+save_widget(p, f1)
+save_widget(partial_bundle(p), f2)
+
+# ----------------------------------------------------------------------
+# But, since a page loads one plotly.js,
+# be careful when putting multiple graphs in a larger document!
+# Here the page loads the full bundle, which the surface (part of the
+# gl3d bundle, not the cartesian one) needs.
+# ----------------------------------------------------------------------
+
+library(htmltools)
+p1 <- go_figure() |>
+  add_heatmap(z = volcano) |>
+  partial_bundle()
+p2 <- go_figure() |>
+  add_surface(z = volcano) |>
+  partial_bundle(type = "full")
+browsable(tagList(plotly_widget(p1), plotly_widget(p2)))
+} # }
 ```

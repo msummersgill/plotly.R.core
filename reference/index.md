@@ -793,7 +793,7 @@ Objects used in several places in traces and layouts.
 - [`as_float32()`](https://msummersgill.github.io/plotly.R.core/reference/as_float32.md)
   : Send numeric data to the browser in single precision
 - [`partial_bundle()`](https://msummersgill.github.io/plotly.R.core/reference/partial_bundle.md)
-  : Use a smaller plotly.js bundle
+  : Use a partial bundle of plotly.js
 - [`config()`](https://msummersgill.github.io/plotly.R.core/reference/config.md)
   : Set plotly.js configuration options
 - [`write_html()`](https://msummersgill.github.io/plotly.R.core/reference/write_html.md)
